@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:getout/models/category.dart';
-import 'package:getout/pages/home.dart';
+import 'package:getout/layouts/home.dart';
 
 Map<int, Color> colorMap = {
   50: const Color.fromRGBO(88, 76, 244, .1),

@@ -6,7 +6,7 @@
 */
 
 import "package:flutter/material.dart";
-import "package:getout/playground/preferences.dart";
+import 'package:getout/playgrounds/preference/checklist.dart';
 import "package:getout/models/category.dart";
 
 class PlaygroundPage extends StatefulWidget {

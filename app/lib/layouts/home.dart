@@ -6,7 +6,7 @@
 */
 
 import "package:flutter/material.dart";
-import "package:getout/playground/playground.dart";
+import "package:getout/playgrounds/main_playground.dart";
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
             shape: const RoundedRectangleBorder(),
               onPressed: () =>
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => PlaygroundPage())),
+                      MaterialPageRoute(builder: (context) => MainPlaygroundPage())),
               child: const Text('Go to playground',
                   style: TextStyle(
                     color: Colors.white,

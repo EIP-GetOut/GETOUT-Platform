@@ -7,34 +7,22 @@
 
 import 'package:flutter/material.dart';
 import 'package:getout/models/category.dart';
-import 'package:getout/pages/home.dart';
+import 'package:getout/layouts/home.dart';
 
-class PreferencesPage extends StatefulWidget {
-  const PreferencesPage({Key? key, required this.title, required this.categories}) : super(key: key);
+class ChecklistPage extends StatefulWidget {
+  const ChecklistPage({Key? key, required this.title, required this.categories}) : super(key: key);
 
   final String title;
   final List<Category> categories;
   @override
-  State<PreferencesPage> createState() => _PreferencesPageState();
+  State<ChecklistPage> createState() => _ChecklistPageState();
 }
 
-class _PreferencesPageState extends State<PreferencesPage> {
+class _ChecklistPageState extends State<ChecklistPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: const Text(
-            'VOS PRÉFÉRENCES',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          backgroundColor: Colors.white,
-          centerTitle: true,
-        ),
         body: Column(children: [
           const SizedBox(
               height: 110, child: Center(child: Text("-  -  -  -", style: TextStyle(color: Color(0xFF584CF4), fontSize: 50, fontWeight: FontWeight.bold)))),
