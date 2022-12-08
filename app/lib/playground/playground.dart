@@ -12,10 +12,11 @@ import "package:getout/models/category.dart";
 class PlaygroundPage extends StatefulWidget {
   PlaygroundPage({Key? key}) : super(key: key);
   final List<Category> categories = [
-    Category(title: 'Horreur'),
-    Category(title: 'Comedie'),
+    Category(title: 'Action'),
     Category(title: 'Policier'),
-    Category(title: 'Science-Fiction'),
+    Category(title: 'Western'),
+    Category(title: 'Horreur'),
+    Category(title: 'Comédie'),
   ];
   @override
   State<PlaygroundPage> createState() => _PlaygroundPageState();
@@ -24,6 +25,6 @@ class PlaygroundPage extends StatefulWidget {
 class _PlaygroundPageState extends State<PlaygroundPage> {
   @override
   Widget build(BuildContext context) {
-    return PreferencesPage(title: 'Film', categories: widget.categories);
+    return PreferencesPage(title: 'Genres Cinématographiques :', categories: widget.categories);
   }
 }
