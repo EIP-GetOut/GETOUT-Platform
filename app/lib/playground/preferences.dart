@@ -10,9 +10,7 @@ import 'package:getout/models/category.dart';
 import 'package:getout/pages/home.dart';
 
 class PreferencesPage extends StatefulWidget {
-  const PreferencesPage(
-      {Key? key, required this.title, required this.categories})
-      : super(key: key);
+  const PreferencesPage({Key? key, required this.title, required this.categories}) : super(key: key);
 
   final String title;
   final List<Category> categories;
@@ -38,13 +36,8 @@ class _PreferencesPageState extends State<PreferencesPage> {
           centerTitle: true,
         ),
         body: Column(children: [
-          const SizedBox(height: 110,
-          child: Center(child: Text("-  -  -  -",
-              style: TextStyle(
-                  color: Color(0xFF584CF4),
-                  fontSize: 50,
-                  fontWeight: FontWeight.bold
-              )))),
+          const SizedBox(
+              height: 110, child: Center(child: Text("-  -  -  -", style: TextStyle(color: Color(0xFF584CF4), fontSize: 50, fontWeight: FontWeight.bold)))),
           preferenceTitle(context, widget.title),
           const SizedBox(height: 60),
           Expanded(
@@ -65,7 +58,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
         color: Colors.black,
         fontSize: 24,
         fontWeight: FontWeight.bold,
-        decoration: TextDecoration.underline,
+        //decoration: TextDecoration.underline,
       ),
     );
   }
@@ -75,11 +68,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
         width: 320,
         height: 70,
         child: FloatingActionButton(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(50.0))),
+            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
             backgroundColor: const Color(0xFF584CF4),
-            onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const HomePage())),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage())),
             child: const Text('Suivant',
                 style: TextStyle(
                   color: Colors.white,
@@ -93,41 +84,33 @@ class _PreferencesPageState extends State<PreferencesPage> {
     return Column(children: [
       const SizedBox(height: 10),
       SizedBox(
+          width: 300,
           height: 50,
-          width: 330,
-          child: Card(
-              margin: const EdgeInsets.symmetric(),
-              shape: selected
-                  ? RoundedRectangleBorder(
-                      side:
-                          const BorderSide(color: Color(0xFF584CF4), width: 3.0),
-                      borderRadius: BorderRadius.circular(0),
-                    )
-                  : RoundedRectangleBorder(
-                      side: const BorderSide(color: Colors.black, width: 0.3),
-                      borderRadius: BorderRadius.circular(0),
-                    ),
-              child: CheckboxListTile(
-                          title: Center(
-                              child: Text(
-                            one.title,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )),
-                          value: one.isSwitched,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              one.isSwitched = value!;
-                            });
-                          },
-                          controlAffinity: ListTileControlAffinity.leading,
-                          activeColor: const Color(0xff584CF4),
-                          checkColor: Colors.transparent,
-                        )
-                      ))
+          child: OutlinedButton(
+              onPressed: () => setState(() => one.isSwitched = selected ? false : true),
+              style: OutlinedButton.styleFrom(side: selected ?
+                          const BorderSide(color: Color(0xFF584CF4), width: 3)
+                          : const BorderSide(color: Colors.black, width: 0.4)),
+              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                SizedBox(
+                    height: 24.0,
+                    width: 24.0,
+                    child: Checkbox(
+                        value: one.isSwitched,
+                        onChanged: (value) {
+                          setState(() => one.isSwitched = value);
+                        },
+                        checkColor: Colors.transparent)),
+                const SizedBox(width: 80),
+                Text(
+                    textAlign: TextAlign.center,
+                    one.title,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    )),
+              ])))
     ]);
   }
 }
