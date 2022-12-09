@@ -5,7 +5,6 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:getout/playgrounds/preference/checklist.dart';
@@ -15,6 +14,9 @@ class PreferencesPage extends StatefulWidget {
   PreferencesPage({
     Key? key,
   }) : super(key: key);
+
+  double time_lost = 0;
+
   final List<Category> social = [
     Category(title: 'Facebook'),
     Category(title: 'Snapchat'),
@@ -28,6 +30,8 @@ class PreferencesPage extends StatefulWidget {
     Category(title: 'Short (<30sec) '),
     Category(title: 'Vidéo (>3min)'),
   ];
+
+  double usage_date = 0;
 
   final List<Category> interest = [
     Category(title: 'Technologie'),
@@ -62,7 +66,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
   @override
   Widget build(BuildContext context) {
     final PageController controller = PageController();
-    double _value = 20;
+    double _value = 0;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -82,11 +86,22 @@ class _PreferencesPageState extends State<PreferencesPage> {
             child: PageView(
           /// [PageView.scrollDirection] defaults to [Axis.horizontal].
           /// Use [Axis.vertical] to scroll vertically.
-          controller: controller,
           scrollDirection: Axis.horizontal,
           children: <Widget>[
             Center(
-              child: Text("Lost Time"),
+                child: SizedBox(
+                    height: 100,
+                    child: Slider(
+                        min: 0.0,
+                        max: 10.0,
+                        value: widget.time_lost,
+                        onChanged: (value) {
+                            setState(() {
+                                widget.time_lost = value;
+                            });
+                        }
+                    )
+                )
             ),
             Center(
               child: ChecklistPage(title: "Réseaux Sociaux utilisés:", categories: widget.social),
@@ -95,19 +110,19 @@ class _PreferencesPageState extends State<PreferencesPage> {
               child: ChecklistPage(title: "Format de contenues préférés:", categories: widget.content),
             ),
             Center(
-              child: Container(
-                width: double.maxFinite,
-                child: CupertinoSlider(
-                  min: 0.0,
-                  max: 100.0,
-                  value: _value,
-                  onChanged: (value) {
-                    setState(() {
-                      _value = value;
-                    });
-                  },
-                ),
-              ),
+                child: SizedBox(
+                    height: 100,
+                    child: Slider(
+                        min: 0.0,
+                        max: 24.0,
+                        value: widget.usage_date,
+                        onChanged: (value) {
+                          setState(() {
+                            widget.usage_date = value;
+                          });
+                        }
+                    )
+                )
             ),
             Center(
               child: ChecklistPage(title: "Centre d'interet:", categories: widget.interest),
