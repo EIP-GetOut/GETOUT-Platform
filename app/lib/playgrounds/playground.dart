@@ -6,8 +6,8 @@
 */
 
 import "package:flutter/material.dart";
-import 'package:getout/playgrounds/preference/checklist.dart';
 import "package:getout/models/category.dart";
+import 'package:getout/playgrounds/preference/preference.dart';
 
 class PlaygroundPage extends StatefulWidget {
   PlaygroundPage({Key? key}) : super(key: key);
@@ -25,6 +25,6 @@ class PlaygroundPage extends StatefulWidget {
 class _PlaygroundPageState extends State<PlaygroundPage> {
   @override
   Widget build(BuildContext context) {
-    return PreferencesPage(title: 'Genres Cinématographiques :', categories: widget.categories);
+    return PreferencesPage();
   }
 }

@@ -6,7 +6,6 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:getout/playgrounds/preference/checklist.dart';
 import 'package:getout/models/category.dart';
 
@@ -65,13 +64,15 @@ class PreferencesPage extends StatefulWidget {
 class _PreferencesPageState extends State<PreferencesPage> {
   @override
   Widget build(BuildContext context) {
-    final PageController controller = PageController();
-    double _value = 0;
+    PageController controller = PageController(viewportFraction: 1);
+//    controller.position = ScrollPosition(physics: ScrollPhysics());
+    //controller.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.linear);
+    //controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.linear);
+//    controller.jumpToPage(controller.initialPage);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text(
-          'Préférences',
+        title: const Text('Preferences',
           style: TextStyle(
             color: Colors.black,
             fontSize: 35,
@@ -84,57 +85,84 @@ class _PreferencesPageState extends State<PreferencesPage> {
       body: Column(children: [
         Expanded(
             child: PageView(
-          /// [PageView.scrollDirection] defaults to [Axis.horizontal].
-          /// Use [Axis.vertical] to scroll vertically.
-          scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            Center(
-                child: SizedBox(
-                    height: 100,
-                    child: Slider(
-                        min: 0.0,
-                        max: 10.0,
-                        value: widget.time_lost,
-                        onChanged: (value) {
-                            setState(() {
+              scrollDirection: Axis.horizontal,
+              physics: const NeverScrollableScrollPhysics(),
+              controller: controller,
+              padEnds: false,
+              children: <Widget>[
+                Center(
+                    child: SizedBox(
+                        height: 100,
+                        child: Slider(
+                            min: 0.0,
+                            max: 10.0,
+                            value: widget.time_lost,
+                            onChanged: (value) {
+                              setState(() {
                                 widget.time_lost = value;
-                            });
-                        }
-                    )
-                )
-            ),
-            Center(
-              child: ChecklistPage(title: "Réseaux Sociaux utilisés:", categories: widget.social),
-            ),
-            Center(
-              child: ChecklistPage(title: "Format de contenues préférés:", categories: widget.content),
-            ),
-            Center(
-                child: SizedBox(
-                    height: 100,
-                    child: Slider(
-                        min: 0.0,
-                        max: 24.0,
-                        value: widget.usage_date,
-                        onChanged: (value) {
-                          setState(() {
-                            widget.usage_date = value;
-                          });
-                        }
-                    )
-                )
-            ),
-            Center(
-              child: ChecklistPage(title: "Centre d'interet:", categories: widget.interest),
-            ),
-            Center(
-              child: ChecklistPage(title: "Genres litéraires:", categories: widget.book),
-            ),
-            Center(
-              child: ChecklistPage(title: "title", categories: widget.movie),
-            ),
-          ],
-        ))
+                              });
+                            }))),
+                Center(
+                  child: ChecklistPage(title: "Réseaux Sociaux utilisés:", categories: widget.social),
+                ),
+                Center(
+                  child: ChecklistPage(title: "Format de contenues préférés:", categories: widget.content),
+                ),
+                Center(
+                    child: SizedBox(
+                        height: 100,
+                        child: Slider(
+                            min: 0.0,
+                            max: 24.0,
+                            value: widget.usage_date,
+                            onChanged: (value) {
+                              setState(() {
+                                widget.usage_date = value;
+                              });
+                            }))),
+                Center(
+                  child: ChecklistPage(title: "Centre d'interet:", categories: widget.interest),
+                ),
+                Center(
+                  child: ChecklistPage(title: "Genres litéraires:", categories: widget.book),
+                ),
+                Center(
+                  child: ChecklistPage(title: "Genre cinématographique", categories: widget.movie),
+                ),
+              ],
+            )),
+            Row(children: [
+                const SizedBox(width: 40),
+              SizedBox(
+                  width: 150,
+                  height: 60,
+                  child: FloatingActionButton(
+                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
+                      backgroundColor: const Color(0xFF584CF4),
+                      onPressed: () => controller.previousPage(duration: Duration(milliseconds: 300), curve: Curves.linear),
+                      child: const Text('<- Prev',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          )))),
+              const SizedBox(width: 40),
+              SizedBox(
+                width: 150,
+                height: 60,
+                child: FloatingActionButton(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
+                    backgroundColor: Color(0xFF584CF4),
+                    onPressed: () => controller.nextPage(duration: Duration(milliseconds: 300), curve: Curves.linear),
+                    child: Text('Next ->',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ))),
+              )
+            ]),
+            const SizedBox(height: 20),
       ]),
     );
     //throw UnimplementedError();

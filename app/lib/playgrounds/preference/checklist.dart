@@ -34,9 +34,7 @@ class _ChecklistPageState extends State<ChecklistPage> {
                   itemBuilder: (BuildContext context, int index) {
                     return categoryCard(context, widget.categories[index]);
                   })),
-        ]),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: nextButton(context));
+        ]));
   }
 
   Widget preferenceTitle(BuildContext context, String name) {
@@ -49,22 +47,6 @@ class _ChecklistPageState extends State<ChecklistPage> {
         //decoration: TextDecoration.underline,
       ),
     );
-  }
-
-  Widget nextButton(BuildContext context) {
-    return SizedBox(
-        width: 320,
-        height: 70,
-        child: FloatingActionButton(
-            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
-            backgroundColor: const Color(0xFF584CF4),
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage())),
-            child: const Text('Suivant',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  //fontWeight: FontWeight.bold,
-                ))));
   }
 
   Widget categoryCard(BuildContext context, Category one) {
