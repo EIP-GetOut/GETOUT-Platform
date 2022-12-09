@@ -8,9 +8,11 @@
 import { Application } from 'express'
 
 import basicEndpoints from '@routes/basicEndpoints'
+import generateMovies from '@routes/movies'
 
 const useRoutes = (app: Application) => (
   app
+    .use(generateMovies)
     .use(basicEndpoints)
 )
 
