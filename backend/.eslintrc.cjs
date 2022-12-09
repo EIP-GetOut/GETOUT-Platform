@@ -2,7 +2,7 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Writed by Julien Letoux <julien.letoux@epitech.eu>
+** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
 const header = [
@@ -11,8 +11,8 @@ const header = [
   '** Unauthorized copying of this file, via any medium is strictly prohibited',
   '** Proprietary and confidential',
   {
-    pattern: 'Writed by [\\A-zÀ-ú ]+ <[\\w.-]+@\\w+\\.\\w+>$',
-    template: '** Writed by Firstname Lastname <firstname.lastname@domain.com>'
+    pattern: 'Wrote by [\\A-zÀ-ú ]+ <[\\w.-]+@\\w+\\.\\w+>$',
+    template: '** Wrote by Firstname Lastname <firstname.lastname@domain.com>'
   },
   ''
 ]
