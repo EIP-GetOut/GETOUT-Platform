@@ -6,19 +6,19 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/models/category.dart';
-import 'package:getout/layouts/home.dart';
 
-class PotentiometrePage extends StatefulWidget {
-  const PotentiometrePage({Key? key, required this.title, required this.categories}) : super(key: key);
+class SliderPage extends StatefulWidget {
+  const SliderPage({Key? key}) : super(key: key);
 
-  final String title;
-  final List<Category> categories;
+  final double minTime = 0.0;
+  final double maxTime = 12.0;
   @override
-  State<PotentiometrePage> createState() => _PotentiometrePageState();
+  State<SliderPage> createState() => _SliderPageState();
 }
 
-class _PotentiometrePageState extends State<PotentiometrePage> {
+class _SliderPageState extends State<SliderPage> {
+  double timeLost = 0;
+  //int intTimeLost = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,79 +26,70 @@ class _PotentiometrePageState extends State<PotentiometrePage> {
         body: Column(children: [
           const SizedBox(
               height: 110, child: Center(child: Text("-  -  -  -", style: TextStyle(color: Color(0xFF584CF4), fontSize: 50, fontWeight: FontWeight.bold)))),
-          preferenceTitle(context, widget.title),
-          const SizedBox(height: 60),
-          Expanded(
-              child: ListView.builder(
-                  itemCount: widget.categories.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return categoryCard(context, widget.categories[index]);
-                  })),
-        ]),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: nextButton(context));
+          preferenceTitle(context, "Temps passé sur les réseaux sociaux par jour:"),
+          SizedBox(
+            height: 100,
+            width: 350,
+            child: preferenceTitle(context, '${timeLost.toInt()} H')
+          ),
+          SizedBox(
+                  height: 60,
+                  child: SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                        activeTickMarkColor: Colors.transparent,
+                        inactiveTickMarkColor: Colors.transparent
+                    ),
+                    child: Slider(
+                      min: widget.minTime,
+                      max: widget.maxTime,
+                      divisions: 10,
+                      value: timeLost,
+                      label: '${timeLost.toInt()}H',
+                      onChanged: (value) {
+                        setState(() {
+                          timeLost = value;
+                        });
+                      })),
+          ),
+          SizedBox(
+            width: 85 * MediaQuery.of(context).size.width / 100,
+            child: Row(children: [
+              slideLimitText(context, widget.minTime),
+              SizedBox(width: 67 * MediaQuery.of(context).size.width / 100),
+              slideLimitText(context, widget.maxTime)
+            ])
+          )
+        ]));
   }
 
   Widget preferenceTitle(BuildContext context, String name) {
-    return Text(
+    return SizedBox(
+        height: 100,
+        width: 350,
+        child: Text(
       name,
+      textAlign: TextAlign.center,
       style: const TextStyle(
         color: Colors.black,
         fontSize: 24,
         fontWeight: FontWeight.bold,
+
         //decoration: TextDecoration.underline,
       ),
-    );
+    ));
   }
 
-  Widget nextButton(BuildContext context) {
-    return SizedBox(
-        width: 320,
-        height: 70,
-        child: FloatingActionButton(
-            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
-            backgroundColor: const Color(0xFF584CF4),
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage())),
-            child: const Text('Suivant',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  //fontWeight: FontWeight.bold,
-                ))));
+  Widget slideLimitText(BuildContext context, double limit) {
+    return Text(
+        '${limit.toInt()}H',
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+        color: Colors.black,
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+
+        //decoration: TextDecoration.underline,
+    ));
   }
 
-  Widget categoryCard(BuildContext context, Category one) {
-    bool selected = one.isSwitched ?? false;
-    return Column(children: [
-      const SizedBox(height: 10),
-      SizedBox(
-          width: 300,
-          height: 50,
-          child: OutlinedButton(
-              onPressed: () => setState(() => one.isSwitched = selected ? false : true),
-              style: OutlinedButton.styleFrom(side: selected ?
-              const BorderSide(color: Color(0xFF584CF4), width: 3)
-                  : const BorderSide(color: Colors.black, width: 0.4)),
-              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                SizedBox(
-                    height: 24.0,
-                    width: 24.0,
-                    child: Checkbox(
-                        value: one.isSwitched,
-                        onChanged: (value) {
-                          setState(() => one.isSwitched = value);
-                        },
-                        checkColor: Colors.transparent)),
-                const SizedBox(width: 80),
-                Text(
-                    textAlign: TextAlign.center,
-                    one.title,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    )),
-              ])))
-    ]);
-  }
 }

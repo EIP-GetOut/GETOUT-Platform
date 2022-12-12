@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:getout/playgrounds/preference/checklist.dart';
 import 'package:getout/models/category.dart';
+import 'package:getout/playgrounds/preference/potentiometre.dart';
 
 class PreferencesPage extends StatefulWidget {
   PreferencesPage({
@@ -91,36 +92,8 @@ class _PreferencesPageState extends State<PreferencesPage> {
               controller: controller,
               padEnds: false,
               children: <Widget>[
-                Center(
-                    child: SizedBox(
-                        height: 100,
-                        child: Slider(
-                            min: 0.0,
-                            max: 10.0,
-                            value: widget.time_lost,
-                            onChanged: (value) {
-                              setState(() {
-                                widget.time_lost = value;
-                              });
-                            }))),
-                Center(
-                  child: ChecklistPage(title: "Réseaux Sociaux utilisés:", categories: widget.social),
-                ),
-                Center(
-                  child: ChecklistPage(title: "Format de contenues préférés:", categories: widget.content),
-                ),
-                Center(
-                    child: SizedBox(
-                        height: 100,
-                        child: Slider(
-                            min: 0.0,
-                            max: 24.0,
-                            value: widget.usage_date,
-                            onChanged: (value) {
-                              setState(() {
-                                widget.usage_date = value;
-                              });
-                            }))),
+                const Center(
+                    child: SliderPage()),
                 Center(
                   child: ChecklistPage(title: "Centre d'interet:", categories: widget.interest),
                 ),
