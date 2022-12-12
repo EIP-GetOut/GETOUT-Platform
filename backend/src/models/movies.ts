@@ -13,7 +13,7 @@ function getMovies(params: any): Promise<MovieResult[] | undefined> {
     const discorverMovieRequest: DiscoverMovieRequest = {
         include_adult: params.include_adult === 'true' ? true : false,
         include_video: params.includevideo === 'true' ? true : false,
-        page: parseInt(params.page),
+        page: params.page ? parseInt(params.page) : 1,
     };
 
     return moviedb.discoverMovie(discorverMovieRequest).then((value: DiscoverMovieResponse) => {
