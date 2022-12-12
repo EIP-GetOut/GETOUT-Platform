@@ -7,7 +7,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:getout/models/category.dart';
-import 'package:getout/layouts/home.dart';
 
 class ChecklistPage extends StatefulWidget {
   const ChecklistPage({Key? key, required this.title, required this.categories}) : super(key: key);
@@ -24,10 +23,8 @@ class _ChecklistPageState extends State<ChecklistPage> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Column(children: [
-          const SizedBox(
-              height: 110, child: Center(child: Text("-  -  -  -", style: TextStyle(color: Color(0xFF584CF4), fontSize: 50, fontWeight: FontWeight.bold)))),
           preferenceTitle(context, widget.title),
-          const SizedBox(height: 60),
+          const SizedBox(height: 40),
           Expanded(
               child: ListView.builder(
                   itemCount: widget.categories.length,
@@ -44,7 +41,6 @@ class _ChecklistPageState extends State<ChecklistPage> {
         color: Colors.black,
         fontSize: 24,
         fontWeight: FontWeight.bold,
-        //decoration: TextDecoration.underline,
       ),
     );
   }

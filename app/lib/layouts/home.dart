@@ -56,19 +56,23 @@ class _HomePageState extends State<HomePage> {
             )))
         ]),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: SizedBox(
-              width: 85 * phoneWidth / 100,
-              height: 65,
-              child: FloatingActionButton(
-                  shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
-                  backgroundColor: const Color(0xFF584CF4),
-                  onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const MainPlaygroundPage())),
-                  child: const Text('Commencer l\'aventure',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 19,
-                    ))
-            )
+        floatingActionButton: startButton(context, phoneWidth)
+    );
+  }
+
+  Widget startButton(BuildContext context, double phoneWidth) {
+    return SizedBox(
+        width: 85 * phoneWidth / 100,
+        height: 65,
+        child: FloatingActionButton(
+            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
+            backgroundColor: const Color(0xFF584CF4),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const MainPlaygroundPage())),
+            child: const Text('Commencer l\'aventure',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 19,
+                ))
         )
     );
   }

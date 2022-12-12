@@ -8,33 +8,29 @@
 import 'package:flutter/material.dart';
 
 class SliderPage extends StatefulWidget {
-  const SliderPage({Key? key}) : super(key: key);
+  const SliderPage({Key? key, required this.title, required this.minTime, required this.maxTime}) : super(key: key);
 
-  final double minTime = 0.0;
-  final double maxTime = 12.0;
+  final String title;
+  final double minTime;
+  final double maxTime;
   @override
   State<SliderPage> createState() => _SliderPageState();
 }
 
 class _SliderPageState extends State<SliderPage> {
+
   double timeLost = 0;
-  //int intTimeLost = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Column(children: [
-          const SizedBox(
-              height: 110, child: Center(child: Text("-  -  -  -", style: TextStyle(color: Color(0xFF584CF4), fontSize: 50, fontWeight: FontWeight.bold)))),
-          preferenceTitle(context, "Temps passé sur les réseaux sociaux par jour:"),
+          preferenceTitle(context, widget.title),
           SizedBox(
-            height: 100,
-            width: 350,
-            child: preferenceTitle(context, '${timeLost.toInt()} H')
+            height: 50,
+            child: preferenceTitle(context, '${timeLost.toInt()}H')
           ),
-          SizedBox(
-                  height: 60,
-                  child: SliderTheme(
+          SliderTheme(
                     data: SliderTheme.of(context).copyWith(
                         activeTickMarkColor: Colors.transparent,
                         inactiveTickMarkColor: Colors.transparent
@@ -50,15 +46,7 @@ class _SliderPageState extends State<SliderPage> {
                           timeLost = value;
                         });
                       })),
-          ),
-          SizedBox(
-            width: 85 * MediaQuery.of(context).size.width / 100,
-            child: Row(children: [
-              slideLimitText(context, widget.minTime),
-              SizedBox(width: 67 * MediaQuery.of(context).size.width / 100),
-              slideLimitText(context, widget.maxTime)
-            ])
-          )
+
         ]));
   }
 
@@ -73,8 +61,6 @@ class _SliderPageState extends State<SliderPage> {
         color: Colors.black,
         fontSize: 24,
         fontWeight: FontWeight.bold,
-
-        //decoration: TextDecoration.underline,
       ),
     ));
   }
@@ -87,9 +73,23 @@ class _SliderPageState extends State<SliderPage> {
         color: Colors.black,
         fontSize: 20,
         fontWeight: FontWeight.bold,
-
-        //decoration: TextDecoration.underline,
     ));
+  }
+
+  Widget printLimit(BuildContext context) {
+    final double phoneHeight = MediaQuery.of(context).size.height;
+    final double phoneWidth = MediaQuery.of(context).size.width;
+    bool isLandscape = (phoneWidth > phoneHeight);
+
+    return SizedBox(
+        width: (isLandscape ? (95 * phoneWidth / 100) : (95 * phoneWidth / 100)),
+        height: (isLandscape ? (10 * phoneHeight / 100) : (5 * phoneHeight / 100)),
+        child: Row(children: [
+          slideLimitText(context, widget.minTime),
+          SizedBox(width: (isLandscape ? 82 : 75) * phoneWidth / 100),
+          slideLimitText(context, widget.maxTime)
+        ])
+    );
   }
 
 }

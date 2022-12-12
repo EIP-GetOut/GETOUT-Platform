@@ -8,7 +8,8 @@
 import 'package:flutter/material.dart';
 import 'package:getout/playgrounds/preference/checklist.dart';
 import 'package:getout/models/category.dart';
-import 'package:getout/playgrounds/preference/potentiometre.dart';
+import 'package:getout/playgrounds/preference/slider.dart';
+import 'package:getout/layouts/home.dart';
 
 class PreferencesPage extends StatefulWidget {
   PreferencesPage({
@@ -16,21 +17,6 @@ class PreferencesPage extends StatefulWidget {
   }) : super(key: key);
 
   double time_lost = 0;
-
-  final List<Category> social = [
-    Category(title: 'Facebook'),
-    Category(title: 'Snapchat'),
-    Category(title: 'Instagram'),
-    Category(title: 'Twitter'),
-  ];
-
-  final List<Category> content = [
-    Category(title: 'Text'),
-    Category(title: 'Image'),
-    Category(title: 'Short (<30sec) '),
-    Category(title: 'Vidéo (>3min)'),
-  ];
-
   double usage_date = 0;
 
   final List<Category> interest = [
@@ -56,60 +42,56 @@ class PreferencesPage extends StatefulWidget {
     Category(title: 'Horreur'),
     Category(title: 'Comédie'),
   ];
-//  final String title;
-//  final List<Category> categories;
   @override
   State<PreferencesPage> createState() => _PreferencesPageState();
 }
 
 class _PreferencesPageState extends State<PreferencesPage> {
+  int currentPage = 0;
   @override
   Widget build(BuildContext context) {
     PageController controller = PageController(viewportFraction: 1);
-//    controller.position = ScrollPosition(physics: ScrollPhysics());
-    //controller.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.linear);
-    //controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.linear);
-//    controller.jumpToPage(controller.initialPage);
+    List<Widget> pages = [
+      const SliderPage(title: "Temps passé sur les réseaux sociaux par jour:", minTime: 0.0, maxTime: 12.0),
+      ChecklistPage(title: "Centre d'interêt:", categories: widget.interest),
+      ChecklistPage(title: "Genres littéraires:", categories: widget.book),
+      ChecklistPage(title: "Genre cinématographique", categories: widget.movie)
+    ];
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
-        //automaticallyImplyLeading: false,
-        title: const Text('Vos Préférences',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 35,
-            fontWeight: FontWeight.bold,
+        appBar: AppBar(
+          iconTheme: const IconThemeData(color: Colors.black),
+          title: const Text(
+            'Vos préférences',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 35,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          backgroundColor: Colors.white,
+          centerTitle: true,
         ),
-        backgroundColor: Colors.white,
-        centerTitle: true,
-      ),
-      body: Column(children: [
-        Expanded(
-            child: PageView(
-              scrollDirection: Axis.horizontal,
-              physics: const NeverScrollableScrollPhysics(),
-              controller: controller,
-              padEnds: false,
-              children: <Widget>[
-                const Center(
-                    child: SliderPage()),
-                Center(
-                  child: ChecklistPage(title: "Centre d'interet:", categories: widget.interest),
-                ),
-                Center(
-                  child: ChecklistPage(title: "Genres litéraires:", categories: widget.book),
-                ),
-                Center(
-                  child: ChecklistPage(title: "Genre cinématographique", categories: widget.movie),
-                ),
-              ],
-            )),
+        body: Column(children: [
+          Expanded(child:
+            PageView.builder(
+                scrollDirection: Axis.horizontal,
+                physics: const NeverScrollableScrollPhysics(),
+                controller: controller,
+                padEnds: false,
+              itemCount: pages.length,
+              itemBuilder: (context, index) {
+                  return pages[index];
+              },
+              onPageChanged: (page){
+                  setState(() {
+                    currentPage = page;
+                  });
+                }
+                )),
         ]),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: nextButton(context, controller)
+        floatingActionButton: (currentPage == (pages.length - 1)) ? finishButton(context, controller) : nextButton(context, controller)
     );
-    //throw UnimplementedError();
   }
 
   Widget nextButton(BuildContext context, PageController controller) {
@@ -124,7 +106,26 @@ class _PreferencesPageState extends State<PreferencesPage> {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
-                  //fontWeight: FontWeight.bold,
-                ))));
+                ))
+        )
+    );
+  }
+
+  Widget finishButton(BuildContext context, PageController controller) {
+    return SizedBox(
+        width: 85 * MediaQuery.of(context).size.width / 100,
+        height: 65,
+        child: FloatingActionButton(
+            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
+            backgroundColor: const Color(0xFF584CF4),
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const HomePage())),
+            child: const Text('Terminer',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                ))
+        )
+    );
   }
 }
