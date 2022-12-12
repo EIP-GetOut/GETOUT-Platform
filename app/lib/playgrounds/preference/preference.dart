@@ -71,8 +71,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
 //    controller.jumpToPage(controller.initialPage);
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text('Preferences',
+        iconTheme: const IconThemeData(color: Colors.black),
+        //automaticallyImplyLeading: false,
+        title: const Text('Vos Préférences',
           style: TextStyle(
             color: Colors.black,
             fontSize: 35,
@@ -131,40 +132,26 @@ class _PreferencesPageState extends State<PreferencesPage> {
                 ),
               ],
             )),
-            Row(children: [
-                const SizedBox(width: 40),
-              SizedBox(
-                  width: 150,
-                  height: 60,
-                  child: FloatingActionButton(
-                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
-                      backgroundColor: const Color(0xFF584CF4),
-                      onPressed: () => controller.previousPage(duration: Duration(milliseconds: 300), curve: Curves.linear),
-                      child: const Text('<- Prev',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          )))),
-              const SizedBox(width: 40),
-              SizedBox(
-                width: 150,
-                height: 60,
-                child: FloatingActionButton(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
-                    backgroundColor: Color(0xFF584CF4),
-                    onPressed: () => controller.nextPage(duration: Duration(milliseconds: 300), curve: Curves.linear),
-                    child: Text('Next ->',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ))),
-              )
-            ]),
-            const SizedBox(height: 20),
-      ]),
+        ]),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: nextButton(context, controller)
     );
     //throw UnimplementedError();
+  }
+
+  Widget nextButton(BuildContext context, PageController controller) {
+    return SizedBox(
+        width: 85 * MediaQuery.of(context).size.width / 100,
+        height: 65,
+        child: FloatingActionButton(
+            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
+            backgroundColor: const Color(0xFF584CF4),
+            onPressed: () => controller.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.linear),
+            child: const Text('Suivant',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  //fontWeight: FontWeight.bold,
+                ))));
   }
 }
