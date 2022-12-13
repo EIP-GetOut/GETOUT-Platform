@@ -76,11 +76,18 @@ router.get('/generate-movies', rulesGet, validate, logApiRequest, (req: Request,
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
         }
         moviesObtained.length = 5;
+        const movies: Array<any> = []
+        moviesObtained.forEach(movie => {
+            movies.push({
+                title: movie.title,
+                poster: movie.poster_path,
+                id: movie.id
+            })
+        });
         return res.status(StatusCodes.OK).json({
-            films: moviesObtained
+            movies
         })
     })
 })
-
 
 export default router
