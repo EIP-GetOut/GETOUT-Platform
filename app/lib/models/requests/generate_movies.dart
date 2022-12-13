@@ -6,11 +6,11 @@
 */
 
 class GenerateMoviesRequest {
-  String withGenres;
+  List<int> genres;
   bool includeAdult = true;
 
   GenerateMoviesRequest({
-    required this.withGenres,
+    required this.genres,
     this.includeAdult = false,
   });
 }

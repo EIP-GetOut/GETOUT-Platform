@@ -5,13 +5,22 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
-// import 'dart:convert';
+import 'dart:convert';
 
 import 'package:getout/models/requests/generate_movies.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_status_code/http_status_code.dart';
 
-import 'package:getout/constants/api_path.dart' as constants;
+import 'package:getout/constants/api_path.dart' as api_constants;
+
+String formatWithGenresParameter(List<int> genres) {
+  String withGenres = '';
+
+  for (int genre in genres) {
+    withGenres += '$genre,';
+  }
+  return withGenres;
+}
 
 class RequestsService {
   RequestsService._();
@@ -19,8 +28,10 @@ class RequestsService {
   static final instance = RequestsService._();
 
   Future<GenerateMoviesResponse> generateMovies(GenerateMoviesRequest request) {
-    var url = Uri.http(constants.rootApiPath, constants.generateMoviesApiPath, {
-      'with_genres': request.withGenres,
+    String withGenres = formatWithGenresParameter(request.genres);
+    Uri url = Uri.http(
+        api_constants.rootApiPath, api_constants.generateMoviesApiPath, {
+      'with_genres': withGenres,
       'include_adult': request.includeAdult.toString()
     });
 
@@ -31,22 +42,15 @@ class RequestsService {
         ));
       }
 
-      // var data = jsonDecode(response.body);
-      // print(data);
-      return [
-        MoviePreview(
-            id: 436270,
-            title: 'Black Adam',
-            posterPath: '/pFlaoHTZeyNkG83vxsAJiGzfSsa.jpg'),
-        MoviePreview(
-            id: 736526,
-            title: 'Troll',
-            posterPath: '/9z4jRr43JdtU66P0iy8h18OyLql.jpg'),
-        MoviePreview(
-            id: 72449,
-            title: 'The Woman King',
-            posterPath: '/lQMJHnHxUyj8kJlC2YOKNuzuwMP.jpg'),
-      ];
+      var data = jsonDecode(response.body);
+      GenerateMoviesResponse result = [];
+
+      data['movies'].forEach((elem) {
+        result.add(MoviePreview(
+            id: elem['id'], title: elem['title'], posterPath: elem['poster']));
+      });
+
+      return result;
     }, onError: (eror) {
       // TODO
     });
