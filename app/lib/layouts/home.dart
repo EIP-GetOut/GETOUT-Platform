@@ -5,8 +5,9 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-import "package:flutter/material.dart";
-import "package:getout/playgrounds/main_playground.dart";
+import 'package:flutter/material.dart';
+import 'package:getout/playgrounds/main_playground.dart';
+import 'package:getout/models/flex_size.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -18,35 +19,35 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    final double phoneHeight = MediaQuery.of(context).size.height;
-    final double phoneWidth = MediaQuery.of(context).size.width;
-    bool isLandscape = (phoneWidth > phoneHeight);
+    bool isLandscape = (MediaQuery.of(context).size.width > MediaQuery.of(context).size.height);
     return Scaffold(
       body: Column(children: [
-        Row(children: [
-                SizedBox(width: (isLandscape ? 20 : 10) * phoneWidth / 100),
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+            child: Row(children: [
+                SizedBox(width: perWidth(context, (isLandscape ? 28 : 16))),
                 SizedBox(
-                  height: (isLandscape ? 20 : 27) * phoneHeight / 100,
-                  width: (isLandscape ? 20 : 27) * phoneWidth / 100,
+                  height: uniHeight(context, 13, isLandscape),
+                  width: uniWidth(context, 27, isLandscape),
                   child: Image.asset("assets/GetOut_logo.png")),
-                SizedBox(width: (isLandscape ? 4 : 8) * phoneWidth / 100),
+                SizedBox(width: perWidth(context, 4)),
                 const Text("GETOUT",
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 30,
+                  fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ))
-        ]),
+        ])),
         SizedBox(
-          height: (isLandscape ? 49 : 30) * phoneHeight / 100,
-          width: (isLandscape ? 47 : 80) * phoneWidth / 100,
+          height: perHeight(context, (isLandscape ? 40 : 50)),
+          width: perWidth(context, (isLandscape ? 40 : 100)),
           child: Align(
-          alignment: Alignment.topCenter,
+          alignment: Alignment.center,
             child: Image.asset("assets/jesaispas.png")),
         ),
         SizedBox(
-            height: 13 * phoneHeight / 100,
-            width: 95 * phoneWidth / 100,
+            height: perHeight(context, 15),
+            width: perWidth(context, 95),
             child: const Text("Devenez plus productif en réduisant le temps passé sur les réseaux sociaux",
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -56,11 +57,12 @@ class _HomePageState extends State<HomePage> {
             )))
         ]),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: startButton(context, phoneWidth)
+        floatingActionButton: startButton(context, MediaQuery.of(context).size.width)
     );
   }
 
   Widget startButton(BuildContext context, double phoneWidth) {
+    print('phoneWidth = $phoneWidth');
     return SizedBox(
         width: 85 * phoneWidth / 100,
         height: 65,

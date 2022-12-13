@@ -6,6 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:getout/models/flex_size.dart';
 
 class SliderPage extends StatefulWidget {
   const SliderPage({Key? key, required this.title, required this.minTime, required this.maxTime}) : super(key: key);
@@ -46,14 +47,16 @@ class _SliderPageState extends State<SliderPage> {
                           timeLost = value;
                         });
                       })),
-
+          printLimit(context)
         ]));
   }
 
   Widget preferenceTitle(BuildContext context, String name) {
+    bool isLandscape = MediaQuery.of(context).size.height < MediaQuery.of(context).size.width;
+
     return SizedBox(
-        height: 100,
-        width: 350,
+        height: perHeight(context, 13),
+        width: perWidth(context, 95),
         child: Text(
       name,
       textAlign: TextAlign.center,
@@ -82,11 +85,11 @@ class _SliderPageState extends State<SliderPage> {
     bool isLandscape = (phoneWidth > phoneHeight);
 
     return SizedBox(
-        width: (isLandscape ? (95 * phoneWidth / 100) : (95 * phoneWidth / 100)),
-        height: (isLandscape ? (10 * phoneHeight / 100) : (5 * phoneHeight / 100)),
+        width: perWidth(context, 95),
+        height: perHeight(context, (isLandscape ? 10 : 5)),
         child: Row(children: [
           slideLimitText(context, widget.minTime),
-          SizedBox(width: (isLandscape ? 82 : 75) * phoneWidth / 100),
+          SizedBox(width: perWidth(context, isLandscape ? 82 : 75)),
           slideLimitText(context, widget.maxTime)
         ])
     );

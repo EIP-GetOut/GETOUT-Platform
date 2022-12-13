@@ -6,10 +6,12 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:getout/models/flex_size.dart';
 import 'package:getout/playgrounds/preference/checklist.dart';
 import 'package:getout/models/category.dart';
 import 'package:getout/playgrounds/preference/slider.dart';
 import 'package:getout/layouts/home.dart';
+
 
 class PreferencesPage extends StatefulWidget {
   PreferencesPage({
@@ -72,6 +74,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
           centerTitle: true,
         ),
         body: Column(children: [
+          dotIndicator(context, currentPage, pages.length),
           Expanded(child:
             PageView.builder(
                 scrollDirection: Axis.horizontal,
@@ -94,9 +97,30 @@ class _PreferencesPageState extends State<PreferencesPage> {
     );
   }
 
+  Widget dotIndicator(BuildContext context, int currentPage, int totalPages) {
+    final double phoneWidth = MediaQuery.of(context).size.width;
+    bool isLandScape = MediaQuery.of(context).size.height < MediaQuery.of(context).size.width;
+    return Container(
+      color: Colors.white,
+      width: phoneWidth,
+        height: uniHeight(context, 10, isLandScape),
+      child: Row(children: [
+        SizedBox(width: (phoneWidth - (perWidth(context, 90) / totalPages) * totalPages) / 2),
+        for(int i = 0; i < (currentPage + 1); i++)
+          SizedBox(
+            width: perWidth(context, 90) / totalPages,
+              child: Image.asset('assets/full_preference.png')),
+        for(int i = currentPage; i < (totalPages - 1); i++)
+          SizedBox(
+              width: perWidth(context, 90) / totalPages,
+              child:Image.asset('assets/empty_preference.png')),
+      ]),
+    );
+  }
+
   Widget nextButton(BuildContext context, PageController controller) {
     return SizedBox(
-        width: 85 * MediaQuery.of(context).size.width / 100,
+        width: perWidth(context, 85),
         height: 65,
         child: FloatingActionButton(
             shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
@@ -113,7 +137,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
 
   Widget finishButton(BuildContext context, PageController controller) {
     return SizedBox(
-        width: 85 * MediaQuery.of(context).size.width / 100,
+        width: perWidth(context, 85),
         height: 65,
         child: FloatingActionButton(
             shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
