@@ -8,6 +8,7 @@
 import { Application } from 'express'
 
 import basicEndpoints from '@routes/basicEndpoints'
+import getBook from '@routes/book'
 import generateBooks from '@routes/books'
 import getMovie from '@routes/movie'
 import generateMovies from '@routes/movies'
@@ -17,6 +18,7 @@ const useRoutes = (app: Application) => (
     .use(generateMovies)
     .use(generateBooks)
     .use(getMovie)
+    .use(getBook)
     .use(basicEndpoints)
 )
 
