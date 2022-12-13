@@ -61,7 +61,10 @@ class _PreferencesPageState extends State<PreferencesPage> {
     ];
     return Scaffold(
         appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.black),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () => controller.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.linear),
+          ),
           title: const Text(
             'Vos préférences',
             style: TextStyle(
