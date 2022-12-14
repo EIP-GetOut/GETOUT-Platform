@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:getout/models/category.dart';
-import 'package:getout/layouts/home.dart';
+import 'package:getout/layouts/welcome.dart';
 
 Map<int, Color> colorMap = {
   50: const Color.fromRGBO(88, 76, 244, .1),
@@ -37,8 +37,9 @@ class MyApp extends StatelessWidget {
       title: 'Get Out',
       theme: ThemeData(
         primarySwatch: MaterialColor(0xff584CF4, colorMap),
+        fontFamily: 'Poppins'
       ),
-      home: const HomePage(),
+      home: const WelcomePage(),
     );
   }
 }
