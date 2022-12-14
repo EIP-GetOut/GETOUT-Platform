@@ -12,7 +12,8 @@ const moviedb = new MovieDb('1eec31e851e9ad1b8f3de3ccf39953b7')
 function getMovies(params: any): Promise<MovieResult[] | undefined> {
     const discorverMovieRequest: DiscoverMovieRequest = {
         include_adult: params.include_adult === 'true' ? true : false,
-        include_video: params.includevideo === 'true' ? true : false,
+        include_video: params.include_video === 'true' ? true : false,
+        with_genres: params.with_genres,
         page: params.page ? parseInt(params.page) : 1,
     };
 
