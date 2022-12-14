@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
       title: 'Get Out',
       theme: ThemeData(
         primarySwatch: MaterialColor(0xff584CF4, colorMap),
+        fontFamily: 'Poppins'
       ),
       home: const HomePage(),
     );
