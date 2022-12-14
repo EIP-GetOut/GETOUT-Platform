@@ -16,7 +16,7 @@ import 'package:getout/services/requests/requests_service.dart';
 
 void main() async {
   GenerateMoviesRequest request =
-      GenerateMoviesRequest(genres: [MovieGenre.COMEDY, MovieGenre.FANTASY]);
+      GenerateMoviesRequest(genres: [MovieGenre.ACTION, MovieGenre.FANTASY]);
 
   await RequestsService.instance
       .generateMovies(request)

@@ -19,6 +19,7 @@ String formatWithGenresParameter(List<int> genres) {
   for (int genre in genres) {
     withGenres += '$genre,';
   }
+  withGenres = withGenres.substring(0, withGenres.length-1);
   return withGenres;
 }
 
@@ -29,6 +30,7 @@ class RequestsService {
 
   Future<GenerateMoviesResponse> generateMovies(GenerateMoviesRequest request) {
     String withGenres = formatWithGenresParameter(request.genres);
+    print('WITHGENNNNNNNNNNRES:$withGenres');
     Uri url = Uri.http(
         api_constants.rootApiPath, api_constants.generateMoviesApiPath, {
       'with_genres': withGenres,
