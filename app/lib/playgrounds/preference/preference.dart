@@ -7,10 +7,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:getout/models/flex_size.dart';
+import 'package:getout/playgrounds/home/loading.dart';
 import 'package:getout/playgrounds/preference/checklist.dart';
 import 'package:getout/models/category.dart';
 import 'package:getout/playgrounds/preference/slider.dart';
-import 'package:getout/layouts/home.dart';
 
 
 class PreferencesPage extends StatefulWidget {
@@ -57,7 +57,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
       const SliderPage(title: "Temps passé sur les réseaux sociaux par jour:", minTime: 0.0, maxTime: 12.0),
       ChecklistPage(title: "Centre d'interêt:", categories: widget.interest),
       ChecklistPage(title: "Genres littéraires:", categories: widget.book),
-      ChecklistPage(title: "Genre cinématographique", categories: widget.movie)
+      ChecklistPage(title: "Genre cinématographique", categories: widget.movie),
     ];
     return Scaffold(
         appBar: AppBar(
@@ -146,7 +146,7 @@ class _PreferencesPageState extends State<PreferencesPage> {
             shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
             backgroundColor: const Color(0xFF584CF4),
             onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const HomePage())),
+                MaterialPageRoute(builder: (context) => LoadingPage())),
             child: const Text('Terminer',
                 style: TextStyle(
                   color: Colors.white,
