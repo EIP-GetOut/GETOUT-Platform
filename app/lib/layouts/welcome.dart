@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:getout/playgrounds/main_playground.dart';
 import 'package:getout/models/flex_size.dart';
+import 'package:getout/layouts/preference/preference.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -29,26 +30,38 @@ class _WelcomePageState extends State<WelcomePage> {
                 SizedBox(
                   height: uniHeight(context, 13, isLandscape),
                   width: uniWidth(context, 27, isLandscape),
-                  child: Image.asset("assets/GetOut_logo.png")),
+                  child: Image.asset('assets/GetOut_logo.png')),
                 SizedBox(width: perWidth(context, 4)),
-                const Text("GETOUT",
+                const Text('GETOUT',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                ))
+                )),
+              SizedBox(width: perWidth(context, (isLandscape ? 20 : 2))),
+              SizedBox(
+                height: uniHeight(context, 8, isLandscape),
+                width: uniWidth(context, 19, isLandscape),
+              child: OutlinedButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const MainPlaygroundPage())),
+                  child: const Text('Debug',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ))))
         ])),
         SizedBox(
           height: perHeight(context, (isLandscape ? 40 : 50)),
           width: perWidth(context, (isLandscape ? 40 : 100)),
           child: Align(
           alignment: Alignment.center,
-            child: Image.asset("assets/jesaispas.png")),
+            child: Image.asset('assets/welcome_img.png')),
         ),
         SizedBox(
             height: perHeight(context, 15),
             width: perWidth(context, 95),
-            child: const Text("Devenez plus productif en réduisant le temps passé sur les réseaux sociaux",
+            child: const Text('Devenez plus productif en réduisant le temps passé sur les réseaux sociaux',
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.black,
@@ -62,14 +75,13 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   Widget startButton(BuildContext context, double phoneWidth) {
-    print('phoneWidth = $phoneWidth');
     return SizedBox(
         width: 85 * phoneWidth / 100,
         height: 65,
         child: FloatingActionButton(
             shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
             backgroundColor: const Color(0xFF584CF4),
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const MainPlaygroundPage())),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => PreferencesPage())),
             child: const Text('Commencer l\'aventure',
                 style: TextStyle(
                   color: Colors.white,

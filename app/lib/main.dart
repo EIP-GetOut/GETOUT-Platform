@@ -31,6 +31,8 @@ class MyApp extends StatelessWidget {
     Category(title: 'Policier'),
     Category(title: 'Science-Fiction'),
   ];
+
+  MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

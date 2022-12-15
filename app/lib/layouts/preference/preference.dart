@@ -7,19 +7,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:getout/models/flex_size.dart';
-import 'package:getout/playgrounds/home/loading.dart';
-import 'package:getout/playgrounds/preference/checklist.dart';
 import 'package:getout/models/category.dart';
-import 'package:getout/playgrounds/preference/slider.dart';
+import 'package:getout/layouts/home/loading.dart';
+import 'package:getout/layouts/preference/checklist.dart';
+import 'package:getout/layouts/preference/slider.dart';
 
 
 class PreferencesPage extends StatefulWidget {
   PreferencesPage({
     Key? key,
   }) : super(key: key);
-
-  double time_lost = 0;
-  double usage_date = 0;
 
   final List<Category> interest = [
     Category(title: 'Technologie'),
@@ -54,22 +51,22 @@ class _PreferencesPageState extends State<PreferencesPage> {
   Widget build(BuildContext context) {
     PageController controller = PageController(viewportFraction: 1);
     List<Widget> pages = [
-      const SliderPage(title: "Temps passé sur les réseaux sociaux par jour:", minTime: 0.0, maxTime: 12.0),
-      ChecklistPage(title: "Centre d'interêt:", categories: widget.interest),
-      ChecklistPage(title: "Genres littéraires:", categories: widget.book),
-      ChecklistPage(title: "Genre cinématographique", categories: widget.movie),
+      const SliderPage(title: 'Temps passé sur les réseaux sociaux par jour:', minTime: 0.0, maxTime: 12.0),
+      ChecklistPage(title: 'Centre d\'interêt:', categories: widget.interest),
+      ChecklistPage(title: 'Genres littéraires:', categories: widget.book),
+      ChecklistPage(title: 'Genre cinématographique', categories: widget.movie),
     ];
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => controller.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.linear),
           ),
           title: const Text(
             'Vos préférences',
             style: TextStyle(
               color: Colors.black,
-              fontSize: 35,
+              fontSize: 32,
               fontWeight: FontWeight.bold,
             ),
           ),

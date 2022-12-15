@@ -5,7 +5,7 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 
 class CoverPage extends StatefulWidget {
   const CoverPage({Key? key}) : super(key: key);
@@ -17,12 +17,12 @@ class CoverPage extends StatefulWidget {
 class _CoverPageState extends State<CoverPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: SizedBox(
               height: 300,
               width: 300,
-              child: const DecoratedBox(
-                decoration: const BoxDecoration(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
                     color: Colors.greenAccent
                 ),
               )

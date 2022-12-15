@@ -12,18 +12,15 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-import "package:flutter/material.dart";
-import 'package:getout/playgrounds/home/dashboard.dart';
+import 'package:flutter/material.dart';
 
+import 'package:getout/layouts/home/dashboard.dart';
 import 'package:getout/models/requests/generate_movies.dart';
-import 'package:getout/services/requests/requests_service.dart';
 import 'package:getout/models/flex_size.dart';
+import 'package:getout/services/requests/requests_service.dart';
 
 import 'dart:math';
 
-void toto() {
-
-}
 class LoadingPage extends StatefulWidget {
   LoadingPage({Key? key}) : super(key: key);
   List<int> genre = [28, 12, 16, 35, 80, 99, 18, 10751, 14, 36, 27, 10402, 9648, 10749, 878, 10770, 53, 10752, 37];

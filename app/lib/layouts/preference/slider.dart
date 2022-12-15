@@ -52,8 +52,6 @@ class _SliderPageState extends State<SliderPage> {
   }
 
   Widget preferenceTitle(BuildContext context, String name) {
-    bool isLandscape = MediaQuery.of(context).size.height < MediaQuery.of(context).size.width;
-
     return SizedBox(
         height: perHeight(context, 13),
         width: perWidth(context, 95),
@@ -80,9 +78,7 @@ class _SliderPageState extends State<SliderPage> {
   }
 
   Widget printLimit(BuildContext context) {
-    final double phoneHeight = MediaQuery.of(context).size.height;
-    final double phoneWidth = MediaQuery.of(context).size.width;
-    bool isLandscape = (phoneWidth > phoneHeight);
+    bool isLandscape = (MediaQuery.of(context).size.width > MediaQuery.of(context).size.height);
 
     return SizedBox(
         width: perWidth(context, 95),

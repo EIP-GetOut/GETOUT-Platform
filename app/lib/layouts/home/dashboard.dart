@@ -6,7 +6,7 @@
 */
 
 import 'package:flutter/gestures.dart';
-import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 import 'package:getout/models/requests/generate_movies.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -53,7 +53,7 @@ class _DashboardPageState extends State<DashboardPage> {
                     Column(
                             children: [
                               Image.network('https://image.tmdb.org/t/p/w600_and_h900_bestv2${moviePreview.posterPath}', height: 400),
-                              Text('${moviePreview.title}'),
+                              Text(moviePreview.title),
 //                              Text('${moviePreview.id}')
                     ])
 //                                Image.network("aa" + widget.movies.),

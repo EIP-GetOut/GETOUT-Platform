@@ -6,9 +6,9 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-import "package:flutter/material.dart";
-import "package:getout/playgrounds/preference/preference.dart";
-import 'package:getout/playgrounds/preference/checklist.dart';
+import 'package:flutter/material.dart';
+import 'package:getout/layouts/preference/preference.dart';
+import 'package:getout/layouts/preference/checklist.dart';
 
 class MainPlaygroundPage extends StatefulWidget {
   const MainPlaygroundPage({Key? key}) : super(key: key);
@@ -26,7 +26,7 @@ class _MainPlaygroundPageState extends State<MainPlaygroundPage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
+              const SizedBox(
                 width: 100,
                 height: 100,
               ),
@@ -34,11 +34,11 @@ class _MainPlaygroundPageState extends State<MainPlaygroundPage> {
                   width: 300,
                   height: 100,
                   child: FloatingActionButton(
-                      heroTag: "erwan-préferences",
+                      heroTag: 'Checklist',
                       shape: const RoundedRectangleBorder(),
                       onPressed: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => ChecklistPage(title: "noobies", categories: []))),
-                      child: const Text('Go to preferences',
+                          MaterialPageRoute(builder: (context) => const ChecklistPage(title: 'Test with empty categories', categories: []))),
+                      child: const Text('testing checklist',
                                         style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 25,
@@ -51,11 +51,11 @@ class _MainPlaygroundPageState extends State<MainPlaygroundPage> {
                   width: 300,
                   height: 100,
                   child: FloatingActionButton(
-                      heroTag: "perry-timelost",
+                      heroTag: 'Preference-page',
                       shape: const RoundedRectangleBorder(),
                       onPressed: () => Navigator.push(context,
                           MaterialPageRoute(builder: (context) => PreferencesPage())),
-                      child: const Text('Go to TimeLost',
+                      child: const Text('Preference page',
                           style: TextStyle(
                           color: Colors.white,
                           fontSize: 25,
