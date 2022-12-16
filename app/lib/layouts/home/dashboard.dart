@@ -5,8 +5,10 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:getout/models/flex_size.dart';
 import 'package:getout/models/requests/generate_movies.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -33,6 +35,8 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     PageController pageController = PageController(viewportFraction: 0.2, initialPage: 0);
+    bool isLandscape = (MediaQuery.of(context).size.width > MediaQuery.of(context).size.height);
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: NestedScrollView(
@@ -42,25 +46,27 @@ class _DashboardPageState extends State<DashboardPage> {
         },
         body: Column(
           children: [
+            const Text("Vos recomandations,",
+                textScaleFactor: 3),
+            const Text("Films",
+                textScaleFactor: 1.5),
             Expanded(child: PageView(
               scrollBehavior: AppScrollBehavior(),
               controller: pageController,
-//              padEnds: false,
               allowImplicitScrolling: true,
               scrollDirection: Axis.horizontal,
               children: [
                  for (var moviePreview in widget.movies)
-                    Column(
-                            children: [
-                              Image.network('https://image.tmdb.org/t/p/w600_and_h900_bestv2${moviePreview.posterPath}', height: 400),
-                              Text(moviePreview.title),
-//                              Text('${moviePreview.id}')
-                    ])
-//                                Image.network("aa" + widget.movies.),
-//                                Column(
+                    Container(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(
+                          children: [
+                              Image.network('https://image.tmdb.org/t/p/w600_and_h900_bestv2${moviePreview.posterPath}', height: 300),
+                              Text(moviePreview.title,textScaleFactor: 0.9),
+                      ])
+                    )
               ],
-            )
-            ),
+            )),
           ],
         ),
       ),

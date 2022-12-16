@@ -5,21 +5,42 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:getout/models/category.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChecklistPage extends StatefulWidget {
   const ChecklistPage({Key? key, required this.title, required this.categories}) : super(key: key);
 
   final String title;
   final List<Category> categories;
+
   @override
   State<ChecklistPage> createState() => _ChecklistPageState();
 }
 
 class _ChecklistPageState extends State<ChecklistPage> {
+  // Obtain shared preferences.
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  late Future<bool> _boolean;
+  final prefs = SharedPreferences.getInstance();
+
+
+  @override
+  void initState() {
+    super.initState();
+    _boolean = _prefs.then((SharedPreferences prefs) {
+      return prefs.getBool('counter') ?? false;
+    });
+  }
+
+  // Obtain shared preferences.
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         backgroundColor: Colors.white,
         body: Column(children: [
@@ -64,7 +85,10 @@ class _ChecklistPageState extends State<ChecklistPage> {
                     child: Checkbox(
                         value: one.isSwitched,
                         onChanged: (value) {
-                          setState(() => one.isSwitched = value);
+                          setState(() {
+                            one.isSwitched = value;
+                            //_storeCheckBox('checklist.${widget.title}.$one', value!);
+                          });
                         },
                         checkColor: Colors.transparent)),
                 const SizedBox(width: 80),
@@ -79,4 +103,5 @@ class _ChecklistPageState extends State<ChecklistPage> {
               ])))
     ]);
   }
+
 }
