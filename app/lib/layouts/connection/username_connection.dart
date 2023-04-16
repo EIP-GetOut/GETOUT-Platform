@@ -24,15 +24,14 @@ class _ConnectionPageState extends State<ConnectionPage> {
       //   // title: Text(widget.title),
       // ),
       body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-        Flexible(
-          child: Align(
+          Align(
           alignment: Alignment.bottomCenter,
           child: Image.asset('assets/entire_logo.png', fit: BoxFit.contain,
           ),
-        )),
+        ),
       // SizedBox(
       //     height: perHeight(context, (isLandscape ? 40 : 50)),
       //     width: perWidth(context, (isLandscape ? 40 : 100)),
@@ -103,6 +102,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                   ),
                 ),
               ),
+              const SizedBox(height: 140,),
             ],
           ),
         ),
