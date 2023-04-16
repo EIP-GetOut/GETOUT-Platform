@@ -20,9 +20,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
   Widget build(BuildContext context) {
     bool isLandscape = (MediaQuery.of(context).size.width > MediaQuery.of(context).size.height);
     return Scaffold(
-      // appBar: AppBar(
-      //   // title: Text(widget.title),
-      // ),
+
       body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -32,14 +30,6 @@ class _ConnectionPageState extends State<ConnectionPage> {
           child: Image.asset('assets/entire_logo.png', fit: BoxFit.contain,
           ),
         ),
-      // SizedBox(
-      //     height: perHeight(context, (isLandscape ? 40 : 50)),
-      //     width: perWidth(context, (isLandscape ? 40 : 100)),
-      //     child: Align(
-      //       alignment: Alignment.center,
-      //       child: Image.asset('assets/entire_logo.png', fit: BoxFit.contain,
-      //     )),
-      // ),
       Form(
         key: _formKey,
         child: Padding(
@@ -53,10 +43,10 @@ class _ConnectionPageState extends State<ConnectionPage> {
                 child: TextFormField(
                   controller: emailController,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: "Email"),
+                      border: OutlineInputBorder(), labelText: "Adresse mail ou nom d'utilisateur"),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
+                      return 'Entrez votre adresse mail ou nom d\'utilisateur';
                     }
                     return null;
                   },
@@ -69,45 +59,89 @@ class _ConnectionPageState extends State<ConnectionPage> {
                   controller: passwordController,
                   obscureText: true,
                   decoration: const InputDecoration(
-                      border: OutlineInputBorder(), labelText: "Password"),
+                      border: OutlineInputBorder(), labelText: "Mot de passe"),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
+                      return 'Entrez votre mot de passe';
                     }
                     return null;
                   },
                 ),
               ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16.0),
-                child: Center(
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFDD55641),
+              const SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly, // <-- SEE HERE
+                children: [
+                  SizedBox(
+                          // height: perHeight(context, (isLandscape ? 40 : 50)),
+                          // width: perWidth(context, (isLandscape ? 40 : 100)),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Image.asset('assets/Twitter.png', fit: BoxFit.contain,
+                          )),
+                          
                     ),
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => WelcomePage()));
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Please fill input')),
-                        );
-                      }
-                    },
-                    child: const Text('Se connecter'),
-                  ),
+                    SizedBox(
+                                // height: perHeight(context, (isLandscape ? 40 : 50)),
+                                // width: perWidth(context, (isLandscape ? 40 : 100)),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Image.asset('assets/Google.png', fit: BoxFit.contain,
+                                )),
+                                
+                          ),
+                    SizedBox(
+                                // height: perHeight(context, (isLandscape ? 40 : 50)),
+                                // width: perWidth(context, (isLandscape ? 40 : 100)),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Image.asset('assets/Facebook.png', fit: BoxFit.contain,
+                                )),
+                                
+                          ),
+                      ],
+                    ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly, // <-- SEE HERE
+                  children: [
+                      RichText(
+                            text: TextSpan(
+                              text: 'Première connexion ?',
+                              style: TextStyle(fontSize: 20),
+                              children: <TextSpan>[
+                              TextSpan(
+                                    text: ' Créer un compte',
+                                    style: TextStyle(fontWeight: FontWeight.bold, color: const Color(0xFFDD55641))),
+                              ],
+                            ),
+                      )
+                    ],
                 ),
-              ),
-              const SizedBox(height: 140,),
-            ],
-          ),
+        ]),
         ),
       ),
       ]),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: startButton(context, MediaQuery.of(context).size.width)
+    );
+  }
+    Widget startButton(BuildContext context, double phoneWidth) {
+    return SizedBox(
+        width: 85 * phoneWidth / 100,
+        height: 65,
+        
+        child: FloatingActionButton(
+            shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(50.0))),
+            backgroundColor: const Color(0xFFDD55641),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => WelcomePage())),
+            child: const Text('Se connecter',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 19,
+                ))
+        )
     );
   }
 }
+
+
