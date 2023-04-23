@@ -3,6 +3,8 @@ import 'package:getout/playgrounds/main_playground.dart';
 import 'package:getout/models/flex_size.dart';
 import 'package:getout/layouts/preference/preference.dart';
 import 'package:getout/layouts/welcome.dart';
+import 'package:flutter/foundation.dart';
+import 'dart:developer';
 
 class ConnectionPage extends StatefulWidget {
   const ConnectionPage({Key? key}) : super(key: key);
@@ -12,7 +14,7 @@ class ConnectionPage extends StatefulWidget {
 }
 
 class _ConnectionPageState extends State<ConnectionPage> {
-    final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -45,6 +47,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), labelText: "Adresse mail ou nom d'utilisateur"),
                   validator: (value) {
+                    log('value: $value');
                     if (value == null || value.isEmpty) {
                       return 'Entrez votre adresse mail ou nom d\'utilisateur';
                     }
@@ -61,6 +64,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
                   decoration: const InputDecoration(
                       border: OutlineInputBorder(), labelText: "Mot de passe"),
                   validator: (value) {
+                    if (value != 'test') {
+                      return 'Mot de passe incorrecte';
+                    }
                     if (value == null || value.isEmpty) {
                       return 'Entrez votre mot de passe';
                     }
@@ -68,7 +74,15 @@ class _ConnectionPageState extends State<ConnectionPage> {
                   },
                 ),
               ),
-              const SizedBox(height: 30),
+              SizedBox(
+                // height: perHeight(context, (isLandscape ? 40 : 50)),
+                // width: perWidth(context, (isLandscape ? 40 : 100)),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Image.asset('assets/separation.png', fit: BoxFit.contain,
+                )),
+              ),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly, // <-- SEE HERE
                 children: [
@@ -101,22 +115,20 @@ class _ConnectionPageState extends State<ConnectionPage> {
                           ),
                       ],
                     ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly, // <-- SEE HERE
-                  children: [
-                      RichText(
-                            text: TextSpan(
-                              text: 'Première connexion ?',
-                              style: TextStyle(fontSize: 20),
-                              children: <TextSpan>[
-                              TextSpan(
-                                    text: ' Créer un compte',
-                                    style: TextStyle(fontWeight: FontWeight.bold, color: const Color(0xFFDD55641))),
-                              ],
-                            ),
-                      )
-                    ],
-                ),
+                // Row(
+                  SizedBox(height: 30,),
+                  Text.rich(
+                    TextSpan(
+                      text: 'Première connection ?',
+                      style: const TextStyle(color: Colors.black, fontSize: 16),
+                      children: <InlineSpan>[
+                        const TextSpan(
+                          text: ' Créer un compte',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: const Color(0xFFDD55641)),
+                        ),
+                      ],
+                    ),
+                  )
         ]),
         ),
       ),
@@ -125,6 +137,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
       floatingActionButton: startButton(context, MediaQuery.of(context).size.width)
     );
   }
+
+
     Widget startButton(BuildContext context, double phoneWidth) {
     return SizedBox(
         width: 85 * phoneWidth / 100,
