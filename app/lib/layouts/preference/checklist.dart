@@ -5,7 +5,7 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-import 'dart:async';
+// import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:getout/models/category.dart';
@@ -24,16 +24,16 @@ class ChecklistPage extends StatefulWidget {
 
 class _ChecklistPageState extends State<ChecklistPage> {
   // Obtain shared preferences.
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  late Future<bool> _boolean;
+  // final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  // late Future<bool> _boolean;
   final prefs = SharedPreferences.getInstance();
 
   @override
   void initState() {
     super.initState();
-    _boolean = _prefs.then((SharedPreferences prefs) {
-      return prefs.getBool('counter') ?? false;
-    });
+    // _boolean = _prefs.then((SharedPreferences prefs) {
+    //   return prefs.getBool('counter') ?? false;
+    // });
   }
 
   // Obtain shared preferences.

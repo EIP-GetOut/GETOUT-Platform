@@ -30,7 +30,6 @@ class RequestsService {
 
   Future<GenerateMoviesResponse> generateMovies(GenerateMoviesRequest request) {
     String withGenres = formatWithGenresParameter(request.genres);
-    print('WITHGENNNNNNNNNNRES:$withGenres');
     Uri url = Uri.http(
         api_constants.rootApiPath, api_constants.generateMoviesApiPath, {
       'with_genres': withGenres,

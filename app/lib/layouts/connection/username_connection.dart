@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:getout/playgrounds/main_playground.dart';
-import 'package:getout/models/flex_size.dart';
-import 'package:getout/layouts/preference/preference.dart';
+// import 'package:getout/playgrounds/main_playground.dart';
+// import 'package:getout/models/flex_size.dart';
+// import 'package:getout/layouts/preference/preference.dart';
 import 'package:getout/layouts/welcome.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'dart:developer';
 
 class ConnectionPage extends StatefulWidget {
@@ -20,8 +20,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isLandscape = (MediaQuery.of(context).size.width >
-        MediaQuery.of(context).size.height);
+    // bool isLandscape = (MediaQuery.of(context).size.width >
+    //     MediaQuery.of(context).size.height);
     return Scaffold(
         body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -49,7 +49,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
                             controller: emailController,
                             decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
-                                labelText: "Adresse mail ou nom d'utilisateur"),
+                                labelText:
+                                    'Adresse mail ou nom d\'utilisateur'),
                             validator: (value) {
                               log('value: $value');
                               if (value == null || value.isEmpty) {
@@ -67,7 +68,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                             obscureText: true,
                             decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
-                                labelText: "Mot de passe"),
+                                labelText: 'Mot de passe'),
                             validator: (value) {
                               if (value != 'test') {
                                 return 'Mot de passe incorrecte';
@@ -140,7 +141,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                                 style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    color: Color(0xffdd55641)),
+                                    color: Color.fromRGBO(213, 86, 65, 0.992)),
                               ),
                             ],
                           ),
@@ -161,9 +162,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
         child: FloatingActionButton(
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(50.0))),
-            backgroundColor: const Color(0xffdd55641),
+            backgroundColor: const Color.fromRGBO(213, 86, 65, 0.992),
             onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => WelcomePage())),
+                MaterialPageRoute(builder: (context) => const WelcomePage())),
             child: const Text('Se connecter',
                 style: TextStyle(
                   color: Colors.white,

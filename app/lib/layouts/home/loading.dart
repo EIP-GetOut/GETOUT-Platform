@@ -5,13 +5,6 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-/*
-** Copyright GETOUT SAS - All Rights Reserved
-** Unauthorized copying of this file, via any medium is strictly prohibited
-** Proprietary and confidential
-** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
-*/
-
 import 'package:flutter/material.dart';
 
 import 'package:getout/layouts/home/dashboard.dart';
@@ -23,7 +16,7 @@ import 'dart:math';
 
 class LoadingPage extends StatefulWidget {
   LoadingPage({Key? key}) : super(key: key);
-  List<int> genre = [
+  final List<int> genre = [
     28,
     12,
     16,

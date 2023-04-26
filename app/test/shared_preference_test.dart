@@ -5,14 +5,18 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  final SharedPreferences prefs = await _prefs;
+  final Future<SharedPreferences> prefsPromise =
+      SharedPreferences.getInstance();
+  final SharedPreferences prefs = await prefsPromise;
 
   prefs.setInt('here', 32);
-  print(prefs.getInt('here'));
+  if (kDebugMode) {
+    print(prefs.getInt('here'));
+  }
 }
 
 /*void SendTo(String path, int value) async {

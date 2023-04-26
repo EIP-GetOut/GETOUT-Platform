@@ -7,8 +7,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-import 'package:getout/models/flex_size.dart';
 import 'package:getout/models/requests/generate_movies.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -34,8 +32,8 @@ class _DashboardPageState extends State<DashboardPage> {
   Widget build(BuildContext context) {
     PageController pageController =
         PageController(viewportFraction: 0.2, initialPage: 0);
-    bool isLandscape = (MediaQuery.of(context).size.width >
-        MediaQuery.of(context).size.height);
+    // bool isLandscape = (MediaQuery.of(context).size.width >
+    //     MediaQuery.of(context).size.height);
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -46,8 +44,8 @@ class _DashboardPageState extends State<DashboardPage> {
         },
         body: Column(
           children: [
-            const Text("Vos recomandations,", textScaleFactor: 3),
-            const Text("Films", textScaleFactor: 1.5),
+            const Text('Vos recomandations,', textScaleFactor: 3),
+            const Text('Films', textScaleFactor: 1.5),
             Expanded(
                 child: PageView(
               scrollBehavior: AppScrollBehavior(),
