@@ -37,13 +37,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Get Out',
-      theme: ThemeData(
-        primarySwatch: MaterialColor(0xff584CF4, colorMap),
-        fontFamily: 'Poppins'
-      ),
-      // home: const WelcomePage(),
-      home: const ConnectionPage()
-    );
+        title: 'Get Out',
+        theme: ThemeData(
+            primarySwatch: MaterialColor(0xff584CF4, colorMap),
+            fontFamily: 'Poppins'),
+        // home: const WelcomePage(),
+        home: const ConnectionPage());
   }
 }

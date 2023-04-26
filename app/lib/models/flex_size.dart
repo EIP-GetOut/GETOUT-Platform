@@ -7,18 +7,15 @@
 
 import 'package:flutter/material.dart';
 
-double perHeight(BuildContext context, int percentage)
-{
+double perHeight(BuildContext context, int percentage) {
   return percentage * MediaQuery.of(context).size.height / 100;
 }
 
-double perWidth(BuildContext context, int percentage)
-{
+double perWidth(BuildContext context, int percentage) {
   return percentage * MediaQuery.of(context).size.width / 100;
 }
 
-double uniHeight(BuildContext context, int percentage, bool isLandscape)
-{
+double uniHeight(BuildContext context, int percentage, bool isLandscape) {
   if (isLandscape) {
     return percentage * MediaQuery.of(context).size.width / 100;
   } else {
@@ -26,8 +23,7 @@ double uniHeight(BuildContext context, int percentage, bool isLandscape)
   }
 }
 
-double uniWidth(BuildContext context, int percentage, bool isLandscape)
-{
+double uniWidth(BuildContext context, int percentage, bool isLandscape) {
   if (isLandscape) {
     return percentage * MediaQuery.of(context).size.height / 100;
   } else {

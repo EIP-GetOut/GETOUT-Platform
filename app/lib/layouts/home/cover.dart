@@ -19,14 +19,11 @@ class _CoverPageState extends State<CoverPage> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: SizedBox(
-              height: 300,
-              width: 300,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                    color: Colors.greenAccent
-                ),
-              )
-            ),
+          height: 300,
+          width: 300,
+          child: DecoratedBox(
+            decoration: BoxDecoration(color: Colors.greenAccent),
+          )),
     );
   }
 }

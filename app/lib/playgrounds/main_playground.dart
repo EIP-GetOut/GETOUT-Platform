@@ -21,51 +21,48 @@ class _MainPlaygroundPageState extends State<MainPlaygroundPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(
-                width: 100,
-                height: 100,
-              ),
-              SizedBox(
-                  width: 300,
-                  height: 100,
-                  child: FloatingActionButton(
-                      heroTag: 'Checklist',
-                      shape: const RoundedRectangleBorder(),
-                      onPressed: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const ChecklistPage(title: 'Test with empty categories', categories: []))),
-                      child: const Text('testing checklist',
-                                        style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold,
-                                        )
-                      )
-                  )
-              ),
-              SizedBox(
-                  width: 300,
-                  height: 100,
-                  child: FloatingActionButton(
-                      heroTag: 'Preference-page',
-                      shape: const RoundedRectangleBorder(),
-                      onPressed: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => PreferencesPage())),
-                      child: const Text('Preference page',
-                          style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          )
-                      )
-                  ),
-              ),
-        ]
-    )
-    ));
+        body: Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+          const SizedBox(
+            width: 100,
+            height: 100,
+          ),
+          SizedBox(
+              width: 300,
+              height: 100,
+              child: FloatingActionButton(
+                  heroTag: 'Checklist',
+                  shape: const RoundedRectangleBorder(),
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ChecklistPage(
+                              title: 'Test with empty categories',
+                              categories: []))),
+                  child: const Text('testing checklist',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                      )))),
+          SizedBox(
+            width: 300,
+            height: 100,
+            child: FloatingActionButton(
+                heroTag: 'Preference-page',
+                shape: const RoundedRectangleBorder(),
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PreferencesPage())),
+                child: const Text('Preference page',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                    ))),
+          ),
+        ])));
   }
 }

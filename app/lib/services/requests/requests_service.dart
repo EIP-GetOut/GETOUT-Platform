@@ -19,7 +19,7 @@ String formatWithGenresParameter(List<int> genres) {
   for (int genre in genres) {
     withGenres += '$genre,';
   }
-  withGenres = withGenres.substring(0, withGenres.length-1);
+  withGenres = withGenres.substring(0, withGenres.length - 1);
   return withGenres;
 }
 

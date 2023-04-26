@@ -9,7 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:getout/models/flex_size.dart';
 
 class SliderPage extends StatefulWidget {
-  const SliderPage({Key? key, required this.title, required this.minTime, required this.maxTime}) : super(key: key);
+  const SliderPage(
+      {Key? key,
+      required this.title,
+      required this.minTime,
+      required this.maxTime})
+      : super(key: key);
 
   final String title;
   final double minTime;
@@ -19,7 +24,6 @@ class SliderPage extends StatefulWidget {
 }
 
 class _SliderPageState extends State<SliderPage> {
-
   double timeLost = 0;
   @override
   Widget build(BuildContext context) {
@@ -28,25 +32,23 @@ class _SliderPageState extends State<SliderPage> {
         body: Column(children: [
           preferenceTitle(context, widget.title),
           SizedBox(
-            height: 50,
-            child: preferenceTitle(context, '${timeLost.toInt()}H')
-          ),
+              height: 50,
+              child: preferenceTitle(context, '${timeLost.toInt()}H')),
           SliderTheme(
-                    data: SliderTheme.of(context).copyWith(
-                        activeTickMarkColor: Colors.transparent,
-                        inactiveTickMarkColor: Colors.transparent
-                    ),
-                    child: Slider(
-                      min: widget.minTime,
-                      max: widget.maxTime,
-                      divisions: 10,
-                      value: timeLost,
-                      label: '${timeLost.toInt()}H',
-                      onChanged: (value) {
-                        setState(() {
-                          timeLost = value;
-                        });
-                      })),
+              data: SliderTheme.of(context).copyWith(
+                  activeTickMarkColor: Colors.transparent,
+                  inactiveTickMarkColor: Colors.transparent),
+              child: Slider(
+                  min: widget.minTime,
+                  max: widget.maxTime,
+                  divisions: 10,
+                  value: timeLost,
+                  label: '${timeLost.toInt()}H',
+                  onChanged: (value) {
+                    setState(() {
+                      timeLost = value;
+                    });
+                  })),
           printLimit(context)
         ]));
   }
@@ -56,29 +58,29 @@ class _SliderPageState extends State<SliderPage> {
         height: perHeight(context, 13),
         width: perWidth(context, 95),
         child: Text(
-      name,
-      textAlign: TextAlign.center,
-      style: const TextStyle(
-        color: Colors.black,
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
-      ),
-    ));
+          name,
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ));
   }
 
   Widget slideLimitText(BuildContext context, double limit) {
-    return Text(
-        '${limit.toInt()}H',
+    return Text('${limit.toInt()}H',
         textAlign: TextAlign.center,
         style: const TextStyle(
-        color: Colors.black,
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-    ));
+          color: Colors.black,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ));
   }
 
   Widget printLimit(BuildContext context) {
-    bool isLandscape = (MediaQuery.of(context).size.width > MediaQuery.of(context).size.height);
+    bool isLandscape = (MediaQuery.of(context).size.width >
+        MediaQuery.of(context).size.height);
 
     return SizedBox(
         width: perWidth(context, 95),
@@ -87,8 +89,6 @@ class _SliderPageState extends State<SliderPage> {
           slideLimitText(context, widget.minTime),
           SizedBox(width: perWidth(context, isLandscape ? 82 : 75)),
           slideLimitText(context, widget.maxTime)
-        ])
-    );
+        ]));
   }
-
 }

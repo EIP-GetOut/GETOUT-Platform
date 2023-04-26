@@ -5,14 +5,11 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-enum Type {
-  movie,
-  book
-}
+enum Type { movie, book }
 
 class Content {
-   String? url;
-   int? star;
-   Type? type;
-   String? description;
+  String? url;
+  int? star;
+  Type? type;
+  String? description;
 }

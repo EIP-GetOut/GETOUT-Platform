@@ -12,7 +12,8 @@ import 'package:getout/models/category.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChecklistPage extends StatefulWidget {
-  const ChecklistPage({Key? key, required this.title, required this.categories}) : super(key: key);
+  const ChecklistPage({Key? key, required this.title, required this.categories})
+      : super(key: key);
 
   final String title;
   final List<Category> categories;
@@ -27,7 +28,6 @@ class _ChecklistPageState extends State<ChecklistPage> {
   late Future<bool> _boolean;
   final prefs = SharedPreferences.getInstance();
 
-
   @override
   void initState() {
     super.initState();
@@ -40,7 +40,6 @@ class _ChecklistPageState extends State<ChecklistPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         backgroundColor: Colors.white,
         body: Column(children: [
@@ -74,10 +73,12 @@ class _ChecklistPageState extends State<ChecklistPage> {
           width: 300,
           height: 50,
           child: OutlinedButton(
-              onPressed: () => setState(() => one.isSwitched = selected ? false : true),
-              style: OutlinedButton.styleFrom(side: selected ?
-                          const BorderSide(color: Color(0xFF584CF4), width: 3)
-                          : const BorderSide(color: Colors.black, width: 0.4)),
+              onPressed: () =>
+                  setState(() => one.isSwitched = selected ? false : true),
+              style: OutlinedButton.styleFrom(
+                  side: selected
+                      ? const BorderSide(color: Color(0xFF584CF4), width: 3)
+                      : const BorderSide(color: Colors.black, width: 0.4)),
               child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 SizedBox(
                     height: 24.0,
@@ -103,5 +104,4 @@ class _ChecklistPageState extends State<ChecklistPage> {
               ])))
     ]);
   }
-
 }
