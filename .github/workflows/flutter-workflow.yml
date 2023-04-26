@@ -26,8 +26,10 @@ jobs:
           cache: true
       - name: Start Web Release Build
         run: flutter build web --release
+      - name: HELLO FAOJZAGIOAJGI
+        run: ls -la ./build/web
       - name: Upload Web Build Files
         uses: actions/upload-artifact@v2
         with:
           name: web-release
-          path: ./build
+          path: ./build/web
