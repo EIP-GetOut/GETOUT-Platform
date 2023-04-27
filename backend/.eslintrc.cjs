@@ -5,6 +5,8 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
+/* eslint-disable no-undef */
+
 const header = [
   '',
   '** Copyright GETOUT SAS - All Rights Reserved',
@@ -18,6 +20,7 @@ const header = [
 ]
 
 module.exports = {
+  root: true,
   env: {
     browser: false,
     es2021: true
@@ -30,8 +33,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    tsconfigRootDir: __dirname,
-    project: ['./tsconfig.json']
+    tsconfigRootDir: __dirname
   },
   plugins: [
     '@typescript-eslint',
