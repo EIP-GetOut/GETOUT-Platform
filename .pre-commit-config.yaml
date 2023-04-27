@@ -1,0 +1,19 @@
+repos:
+
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v2.2.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: []
+
+  - repo: local
+    hooks:
+      - id: flutter-linter
+        name: flutter-linter
+        entry: bash -c 'flutter analyze'
+        language: system
+      - id: back-linter
+        name: back-linter
+        entry: bash -c 'npx run eslint --ext .ts ./src'
+        language: system
