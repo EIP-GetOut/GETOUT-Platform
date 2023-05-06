@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:intl/intl.dart';
 
 class PasswordField extends StatelessWidget {
   final TextEditingController controller;
@@ -17,9 +18,9 @@ class PasswordField extends StatelessWidget {
 
   String ?validatePassword(String value) {
     if (value.isEmpty) {
-      return "A password is required";
+      return "Un mot de passe est requis";
     } else if (value.length < 8) {
-      return "Password should be at least 8 characters";
+      return "Un mot de passe doit contenir au moins 8 caractères";
     } else {
       return null;
     }
@@ -47,7 +48,7 @@ class PasswordField extends StatelessWidget {
           ),
           validator: (value) {
             if (value == null) {
-              return 'A password is required';
+              return 'Un mot de passe est requis';
             }
             return validatePassword(value);
           }
@@ -55,6 +56,99 @@ class PasswordField extends StatelessWidget {
         ],
       ));
     }
+}
+
+class FirstNameField extends StatelessWidget {
+  final TextEditingController controller;
+  final formKey;
+
+  const FirstNameField({super.key, required this.formKey, required this.controller});
+
+  String ?validateName(String value) {
+    if (value.isEmpty) {
+      return 'Un prénom est requis';
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+        key: formKey,
+        child : Column(children: [
+          TextFormField(
+              controller: controller,
+              obscureText: false,
+              decoration: InputDecoration(
+                  hintText: 'Entrez votre prénom',
+                  labelText: 'Prénom',
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.black)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.blue)
+                  )
+              ),
+              validator: (value) {
+                print(value);
+                if (value == null) {
+                  return 'Un prénom est requis';
+                }
+                return validateName(value);
+              }
+          ),
+        ],
+        ));
+  }
+}
+
+class NameField extends StatelessWidget {
+  final TextEditingController controller;
+  final formKey;
+
+  const NameField({super.key, required this.formKey, required this.controller});
+
+  String ?validateName(String value) {
+    if (value.isEmpty) {
+      return 'Un nom est requis';
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+        key: formKey,
+        child : Column(children: [
+          TextFormField(
+              controller: controller,
+              obscureText: false,
+              decoration: InputDecoration(
+                  hintText: 'Entrez votre nom',
+                  labelText: 'Nom',
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.black)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.blue)
+                  )
+              ),
+              validator: (value) {
+                if (value == null) {
+                  return 'Un nom est requis';
+                }
+                return validateName(value);
+              }
+          ),
+        ],
+        ));
+  }
 }
 
 class SecondPasswordField extends StatelessWidget {
@@ -66,11 +160,11 @@ class SecondPasswordField extends StatelessWidget {
 
   String ?validatePassword(String value) {
     if (value.isEmpty) {
-      return 'un mot de passe est requis';
+      return 'Un mot de passe est requis';
     } else if (value.length < 8) {
       return 'Le mot de passe doit contenir au moins 8 caractères';
     } else if (value != fstPassword) {
-      return 'les mots de passe ne correspondent pas';
+      return 'Les mots de passe ne correspondent pas';
     } else {
       return null;
     }
@@ -85,8 +179,8 @@ class SecondPasswordField extends StatelessWidget {
               controller: controller,
               obscureText: true,
               decoration: InputDecoration(
-                  hintText: 'Retapez votre Mot de passe',
-                  labelText: 'Retapez votre Mot de passe',
+                  hintText: 'Confirmez votre mot de passe',
+                  labelText: 'Confirmez votre mot de passe',
                   enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: const BorderSide(color: Colors.black)
@@ -98,7 +192,7 @@ class SecondPasswordField extends StatelessWidget {
               ),
               validator: (value) {
                 if (value == null) {
-                  return 'un mot de passe est requis';
+                  return 'Un mot de passe est requis';
                 }
                 return validatePassword(value);
               }
@@ -135,9 +229,80 @@ class MailField extends StatelessWidget {
                 )
             ),
             validator: MultiValidator([
-              RequiredValidator(errorText: 'un email est requis'),
+              RequiredValidator(errorText: 'Un email est requis'),
               EmailValidator(errorText: 'Entrez une addresse email valide')
             ])
+          ),
+        ],
+        ));
+  }
+}
+
+class BirthDateField extends StatelessWidget {
+  final TextEditingController controller;
+  final formKey;
+
+  const BirthDateField({super.key, required this.formKey, required this.controller});
+
+  String ?validateBirth(String value) {
+    if (value.isEmpty) {
+      return 'Une date est requise';
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+        key: formKey,
+        child : Column(children: [
+          TextFormField(
+              controller: controller,
+              decoration: InputDecoration(
+                  hintText: 'Date de naissance',
+                  labelText: 'Entrez votre date de naissance',
+                  
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.black)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.blue)
+                  )
+              ),
+              readOnly: true,
+              //set it true, so that user will not able to edit text
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(1950),
+                    //DateTime.now() - not to allow to choose before today.
+                    lastDate: DateTime(2100));
+
+                if (pickedDate != null) {
+                  print(
+                      pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                  String formattedDate =
+                      DateFormat('yyyy-MM-dd').format(pickedDate);
+                  print(
+                      formattedDate); //formatted date output using intl package =>  2021-03-16
+                  controller.text = formattedDate;
+                  // setState(() {
+                  //   pickedDate =
+                  //       formattedDate; //set output date to TextField value.
+                  // });
+                }
+                
+                validator: (value) {
+                if (value == null) {
+                  return 'Une date est requise';
+                }
+                return validateBirth(value);
+              };
+            }
           ),
         ],
         ));

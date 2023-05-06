@@ -12,16 +12,22 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController firstnameController = TextEditingController();
+  TextEditingController birthDateController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController password2Controller = TextEditingController();
+  final _nameKey = GlobalKey<FormState>();
+  final _firstnameKey = GlobalKey<FormState>();
   final _emailKey = GlobalKey<FormState>();
+  final _birthDateKey = GlobalKey<FormState>();
   final _passwordKey = GlobalKey<FormState>();
   final _password2Key = GlobalKey<FormState>();
   bool isLoading = false;
 
   Future<VoidCallback?> registerPressed() async {
-    if (_emailKey.currentState!.validate() && _passwordKey.currentState!.validate() && _password2Key.currentState!.validate()) {
+    if (_emailKey.currentState!.validate() && _nameKey.currentState!.validate() && _firstnameKey.currentState!.validate() && _birthDateKey.currentState!.validate() && _passwordKey.currentState!.validate() && _password2Key.currentState!.validate()) {
       setState(() {
         isLoading = true;
       });
@@ -39,19 +45,23 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   @override
+  
   Widget build(BuildContext context) {
     return Scaffold(
+        // appBar: AppBar(
+        //   leading: BackButton(),
+        // ),
         body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Image.asset(
-                  'assets/entire_logo.png',
-                  fit: BoxFit.contain,
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.bottomCenter,
+              //   child: Image.asset(
+              //     'assets/entire_logo.png',
+              //     fit: BoxFit.contain,
+              //   ),
+              // ),
               Form(
                 key: _formKey,
                 child: Padding(
@@ -60,6 +70,21 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 16),
+                          child: NameField(formKey: _nameKey, controller: nameController)
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 16),
+                          child: FirstNameField(formKey: _firstnameKey, controller: firstnameController)
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 16),
+                          child: BirthDateField(formKey: _birthDateKey, controller: birthDateController)
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 16),
@@ -75,54 +100,54 @@ class _RegisterPageState extends State<RegisterPage> {
                               horizontal: 8, vertical: 16),
                           child: SecondPasswordField(formKey: _password2Key, controller: password2Controller, fstPassword: passwordController.text)
                         ),
-                        SizedBox(
-                          // height: perHeight(context, (isLandscape ? 40 : 50)),
-                          // width: perWidth(context, (isLandscape ? 40 : 100)),
-                          child: Align(
-                              alignment: Alignment.center,
-                              child: Image.asset(
-                                'assets/separation.png',
-                                fit: BoxFit.contain,
-                              )),
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.spaceEvenly, // <-- SEE HERE
-                          children: [
-                            SizedBox(
-                              // height: perHeight(context, (isLandscape ? 40 : 50)),
-                              // width: perWidth(context, (isLandscape ? 40 : 100)),
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Image.asset(
-                                    'assets/Twitter.png',
-                                    fit: BoxFit.contain,
-                                  )),
-                            ),
-                            SizedBox(
-                              // height: perHeight(context, (isLandscape ? 40 : 50)),
-                              // width: perWidth(context, (isLandscape ? 40 : 100)),
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Image.asset(
-                                    'assets/Google.png',
-                                    fit: BoxFit.contain,
-                                  )),
-                            ),
-                            SizedBox(
-                              // height: perHeight(context, (isLandscape ? 40 : 50)),
-                              // width: perWidth(context, (isLandscape ? 40 : 100)),
-                              child: Align(
-                                  alignment: Alignment.center,
-                                  child: Image.asset(
-                                    'assets/Facebook.png',
-                                    fit: BoxFit.contain,
-                                  )),
-                            ),
-                          ],
-                        ),
+                        // SizedBox(
+                        //   // height: perHeight(context, (isLandscape ? 40 : 50)),
+                        //   // width: perWidth(context, (isLandscape ? 40 : 100)),
+                        //   child: Align(
+                        //       alignment: Alignment.center,
+                        //       child: Image.asset(
+                        //         'assets/separation.png',
+                        //         fit: BoxFit.contain,
+                        //       )),
+                        // ),
+                        // const SizedBox(height: 20),
                         // Row(
+                        //   mainAxisAlignment:
+                        //   MainAxisAlignment.spaceEvenly, // <-- SEE HERE
+                        //   children: [
+                        //     SizedBox(
+                        //       // height: perHeight(context, (isLandscape ? 40 : 50)),
+                        //       // width: perWidth(context, (isLandscape ? 40 : 100)),
+                        //       child: Align(
+                        //           alignment: Alignment.center,
+                        //           child: Image.asset(
+                        //             'assets/Twitter.png',
+                        //             fit: BoxFit.contain,
+                        //           )),
+                        //     ),
+                        //     SizedBox(
+                        //       // height: perHeight(context, (isLandscape ? 40 : 50)),
+                        //       // width: perWidth(context, (isLandscape ? 40 : 100)),
+                        //       child: Align(
+                        //           alignment: Alignment.center,
+                        //           child: Image.asset(
+                        //             'assets/Google.png',
+                        //             fit: BoxFit.contain,
+                        //           )),
+                        //     ),
+                        //     SizedBox(
+                        //       // height: perHeight(context, (isLandscape ? 40 : 50)),
+                        //       // width: perWidth(context, (isLandscape ? 40 : 100)),
+                        //       child: Align(
+                        //           alignment: Alignment.center,
+                        //           child: Image.asset(
+                        //             'assets/Facebook.png',
+                        //             fit: BoxFit.contain,
+                        //           )),
+                        //     ),
+                        //   ],
+                        // ),
+                        // // Row(
                         const SizedBox(
                           height: 30,
                         ),

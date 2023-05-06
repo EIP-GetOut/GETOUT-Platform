@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:getout/layouts/welcome.dart';
+import 'package:getout/layouts/connection/register.dart';
 import 'package:getout/models/sign/fields.dart';
 import 'package:getout/services/requests/sign.dart';
 
@@ -25,7 +26,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
       });
       var res = await login(email: emailController.text, password: passwordController.text);
       if (res != '0K') {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
       } else {
         setState(() {
           isLoading = false;
@@ -111,11 +112,16 @@ class _ConnectionPageState extends State<ConnectionPage> {
                         const SizedBox(
                           height: 30,
                         ),
-                        const Text.rich(
+                        new GestureDetector(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
+                          },
+                          child: Text.rich(
                           TextSpan(
                             text: 'Première connection ?',
                             style: TextStyle(color: Colors.black, fontSize: 16),
                             children: <InlineSpan>[
+                              
                               TextSpan(
                                 text: ' Créer un compte',
                                 style: TextStyle(
@@ -125,7 +131,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
                               ),
                             ],
                           ),
-                        )
+                        ),
+                        ),
                       ]),
                 ),
               ),
