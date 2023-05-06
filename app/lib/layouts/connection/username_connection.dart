@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:getout/playgrounds/main_playground.dart';
-// import 'package:getout/models/flex_size.dart';
-// import 'package:getout/layouts/preference/preference.dart';
 import 'package:getout/layouts/welcome.dart';
-// import 'package:flutter/foundation.dart';
-import 'dart:developer';
+import 'package:getout/models/sign/fields.dart';
+import 'package:getout/services/requests/sign.dart';
 
 class ConnectionPage extends StatefulWidget {
   const ConnectionPage({Key? key}) : super(key: key);
@@ -17,11 +14,30 @@ class _ConnectionPageState extends State<ConnectionPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final _emailKey = GlobalKey<FormState>();
+  final _passwordKey = GlobalKey<FormState>();
+  bool isLoading = false;
+
+  Future<VoidCallback?> loginPressed() async {
+    if (_emailKey.currentState!.validate() && _passwordKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      var res = await login(email: emailController.text, password: passwordController.text);
+      if (res != '0K') {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage()));
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
+      }
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
-    // bool isLandscape = (MediaQuery.of(context).size.width >
-    //     MediaQuery.of(context).size.height);
     return Scaffold(
         body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -45,44 +61,14 @@ class _ConnectionPageState extends State<ConnectionPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 16),
-                          child: TextFormField(
-                            controller: emailController,
-                            decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText:
-                                    'Adresse mail ou nom d\'utilisateur'),
-                            validator: (value) {
-                              log('value: $value');
-                              if (value == null || value.isEmpty) {
-                                return 'Entrez votre adresse mail ou nom d\'utilisateur';
-                              }
-                              return null;
-                            },
-                          ),
+                          child: MailField(formKey: _emailKey, controller: emailController),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 16),
-                          child: TextFormField(
-                            controller: passwordController,
-                            obscureText: true,
-                            decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Mot de passe'),
-                            validator: (value) {
-                              if (value != 'test') {
-                                return 'Mot de passe incorrecte';
-                              }
-                              if (value == null || value.isEmpty) {
-                                return 'Entrez votre mot de passe';
-                              }
-                              return null;
-                            },
-                          ),
+                          child: PasswordField(formKey: _passwordKey, controller: passwordController),
                         ),
                         SizedBox(
-                          // height: perHeight(context, (isLandscape ? 40 : 50)),
-                          // width: perWidth(context, (isLandscape ? 40 : 100)),
                           child: Align(
                               alignment: Alignment.center,
                               child: Image.asset(
@@ -96,8 +82,6 @@ class _ConnectionPageState extends State<ConnectionPage> {
                               MainAxisAlignment.spaceEvenly, // <-- SEE HERE
                           children: [
                             SizedBox(
-                              // height: perHeight(context, (isLandscape ? 40 : 50)),
-                              // width: perWidth(context, (isLandscape ? 40 : 100)),
                               child: Align(
                                   alignment: Alignment.center,
                                   child: Image.asset(
@@ -106,8 +90,6 @@ class _ConnectionPageState extends State<ConnectionPage> {
                                   )),
                             ),
                             SizedBox(
-                              // height: perHeight(context, (isLandscape ? 40 : 50)),
-                              // width: perWidth(context, (isLandscape ? 40 : 100)),
                               child: Align(
                                   alignment: Alignment.center,
                                   child: Image.asset(
@@ -116,8 +98,6 @@ class _ConnectionPageState extends State<ConnectionPage> {
                                   )),
                             ),
                             SizedBox(
-                              // height: perHeight(context, (isLandscape ? 40 : 50)),
-                              // width: perWidth(context, (isLandscape ? 40 : 100)),
                               child: Align(
                                   alignment: Alignment.center,
                                   child: Image.asset(
@@ -163,8 +143,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(50.0))),
             backgroundColor: const Color.fromRGBO(213, 86, 65, 0.992),
-            onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const WelcomePage())),
+            onPressed: loginPressed,
             child: const Text('Se connecter',
                 style: TextStyle(
                   color: Colors.white,
