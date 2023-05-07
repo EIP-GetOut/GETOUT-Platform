@@ -8,7 +8,42 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+
+class MailField extends StatelessWidget {
+  final TextEditingController controller;
+  final formKey;
+
+  const MailField({super.key, required this.formKey, required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+        key: formKey,
+        child : Column(children: [
+          TextFormField(
+              controller: controller,
+              obscureText: false,
+              decoration: InputDecoration(
+                  hintText: 'Entrez votre email',
+                  labelText: 'Email',
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(0.5),
+                      borderSide: const BorderSide(color: Colors.black)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(0.5),
+
+                  )
+              ),
+              validator: MultiValidator([
+                RequiredValidator(errorText: 'Un email est requis'),
+                EmailValidator(errorText: 'Entrez une addresse email valide')
+              ])
+          ),
+        ],
+        ));
+  }
+}
 
 class PasswordField extends StatelessWidget {
   final TextEditingController controller;
@@ -19,9 +54,9 @@ class PasswordField extends StatelessWidget {
 
   String ?validatePassword(String value) {
     if (value.isEmpty) {
-      return "Un mot de passe est requis";
-    } else if (value.length < 8) {
-      return "Un mot de passe doit contenir au moins 8 caractères";
+      return 'Un mot de passe est requis';
+    } else if (value.length < 12) {
+      return 'Un mot de passe doit contenir au moins 12 caractères';
     } else {
       return null;
     }
@@ -39,24 +74,74 @@ class PasswordField extends StatelessWidget {
               hintText: 'Entrez votre mot de passe',
               labelText: 'Mot de passe',
             enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(0.5),
                 borderSide: const BorderSide(color: Colors.black)
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: Colors.blue)
+              borderRadius: BorderRadius.circular(0.5),
             )
           ),
-          validator: (value) {
-            if (value == null) {
-              return 'Un mot de passe est requis';
-            }
-            return validatePassword(value);
-          }
+          validator: MultiValidator([
+            RequiredValidator(errorText: 'Un mot de passe est requis'),
+            MinLengthValidator(12, errorText: 'Votre mot de passe doit contenir au moins 12 caractères'),
+            PatternValidator(r'(?=.*?[#?!@$%^&*-])', errorText: 'Votre mot de passe doit contenir au moins un caractère spécial'),
+            PatternValidator(r'([A-Z])', errorText: 'Votre mot de passe doit contenir au moins une majuscule'),
+            PatternValidator(r'([a-z])', errorText: 'Votre mot de passe doit contenir au moins une miniscule'),
+            PatternValidator(r'([0-9])', errorText: 'Votre mot de passe doit contenir au moins un chiffre'),
+          ])
           ),
         ],
       ));
     }
+}
+
+class SecondPasswordField extends StatelessWidget {
+  final TextEditingController controller;
+  final formKey;
+  final String fstPassword;
+
+  const SecondPasswordField({super.key, required this.formKey, required this.controller, required this.fstPassword});
+
+  String ?validatePassword(String value) {
+    if (value.isEmpty) {
+      return 'Vous devez confirmer votre mot de passe';
+    } else if (value != fstPassword) {
+      return 'Les mots de passe ne correspondent pas';
+    } else {
+      return null;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+        key: formKey,
+        child : Column(children: [
+          TextFormField(
+              controller: controller,
+              obscureText: true,
+              decoration: InputDecoration(
+                  hintText: 'Confirmez votre mot de passe',
+                  labelText: 'Confirmez votre mot de passe',
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(0.5),
+                      borderSide: const BorderSide(color: Colors.black)
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(0.5),
+
+                  )
+              ),
+              validator: (value) {
+                if (value == null) {
+                  return 'Un mot de passe est requis';
+                }
+                  return validatePassword(value);
+                }
+          ),
+        ],
+        ));
+  }
 }
 
 class FirstNameField extends StatelessWidget {
@@ -85,16 +170,15 @@ class FirstNameField extends StatelessWidget {
                   hintText: 'Entrez votre prénom',
                   labelText: 'Prénom',
                   enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(0.5),
                       borderSide: const BorderSide(color: Colors.black)
                   ),
                   focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(color: Colors.blue)
+                      borderRadius: BorderRadius.circular(0.5),
+
                   )
               ),
               validator: (value) {
-                print(value);
                 if (value == null) {
                   return 'Un prénom est requis';
                 }
@@ -132,12 +216,12 @@ class NameField extends StatelessWidget {
                   hintText: 'Entrez votre nom',
                   labelText: 'Nom',
                   enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(0.5),
                       borderSide: const BorderSide(color: Colors.black)
                   ),
                   focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(color: Colors.blue)
+                      borderRadius: BorderRadius.circular(0.5),
+
                   )
               ),
               validator: (value) {
@@ -146,93 +230,6 @@ class NameField extends StatelessWidget {
                 }
                 return validateName(value);
               }
-          ),
-        ],
-        ));
-  }
-}
-
-class SecondPasswordField extends StatelessWidget {
-  final TextEditingController controller;
-  final formKey;
-  final String fstPassword;
-
-  const SecondPasswordField({super.key, required this.formKey, required this.controller, required this.fstPassword});
-
-  String ?validatePassword(String value) {
-    if (value.isEmpty) {
-      return 'Un mot de passe est requis';
-    } else if (value.length < 8) {
-      return 'Le mot de passe doit contenir au moins 8 caractères';
-    } else if (value != fstPassword) {
-      return 'Les mots de passe ne correspondent pas';
-    } else {
-      return null;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-        key: formKey,
-        child : Column(children: [
-          TextFormField(
-              controller: controller,
-              obscureText: true,
-              decoration: InputDecoration(
-                  hintText: 'Confirmez votre mot de passe',
-                  labelText: 'Confirmez votre mot de passe',
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(color: Colors.black)
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(color: Colors.blue)
-                  )
-              ),
-              validator: (value) {
-                if (value == null) {
-                  return 'Un mot de passe est requis';
-                }
-                return validatePassword(value);
-              }
-          ),
-        ],
-        ));
-  }
-}
-
-class MailField extends StatelessWidget {
-  final TextEditingController controller;
-  final formKey;
-
-  const MailField({super.key, required this.formKey, required this.controller});
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-        key: formKey,
-        child : Column(children: [
-          TextFormField(
-            controller: controller,
-            obscureText: false,
-            decoration: InputDecoration(
-                hintText: 'Entrez votre email',
-                labelText: 'Email',
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(color: Colors.black)
-                ),
-                focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: const BorderSide(color: Colors.blue)
-                )
-            ),
-            validator: MultiValidator([
-              RequiredValidator(errorText: 'Un email est requis'),
-              EmailValidator(errorText: 'Entrez une addresse email valide')
-            ])
           ),
         ],
         ));
@@ -265,12 +262,12 @@ class BirthDateField extends StatelessWidget {
                   labelText: 'Entrez votre date de naissance',
                   
                   enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(0.5),
                       borderSide: const BorderSide(color: Colors.black)
                   ),
                   focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(color: Colors.blue)
+                      borderRadius: BorderRadius.circular(0.5),
+                      borderSide: const BorderSide(color: Color.fromRGBO(213, 86, 65, 1))
                   )
               ),
               readOnly: true,
@@ -278,19 +275,16 @@ class BirthDateField extends StatelessWidget {
               onTap: () async {
                 DateTime? pickedDate = await showDatePicker(
                     context: context,
-                    locale: const Locale("fr", "FR"),
+                    locale: const Locale('fr', 'FR'),
                     initialDate: DateTime.now(),
                     firstDate: DateTime(1950),
                     //DateTime.now() - not to allow to choose before today.
                     lastDate: DateTime(2100));
 
                 if (pickedDate != null) {
-                  print(
-                      pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                  String formattedDate =
-                      DateFormat('yyyy-MM-dd').format(pickedDate);
-                  print(
-                      formattedDate); //formatted date output using intl package =>  2021-03-16
+                  // print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
+                  String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                  // print(formattedDate); //formatted date output using intl package =>  2021-03-16
                   controller.text = formattedDate;
                   // setState(() {
                   //   pickedDate =
@@ -331,12 +325,12 @@ class MyField extends StatelessWidget {
                   hintText: name,
                   labelText: name,
                   enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(0.5),
                       borderSide: const BorderSide(color: Colors.black)
                   ),
                   focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: const BorderSide(color: Colors.blue)
+                      borderRadius: BorderRadius.circular(0.5),
+
                   )
               ),
               validator: (value) {
