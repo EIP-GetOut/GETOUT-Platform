@@ -6,7 +6,7 @@ extension BackgroundColor on ThemeData {
 }
 
 extension SecondaryColor on ThemeData {
-  Color get secondaryColor => const Color.fromARGB(255, 7, 139, 139);
+  Color get secondaryColor => Color(0xFF078B8B);
 }
 
 extension ErorColor on ThemeData {

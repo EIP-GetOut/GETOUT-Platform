@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:getout/models/category.dart';
 // import 'package:getout/layouts/welcome.dart';
 import 'package:getout/layouts/connection/username_connection.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 Map<int, Color> colorMap = {
   50: const Color.fromRGBO(88, 76, 244, .1),
@@ -38,6 +39,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Get Out',
+        localizationsDelegates: [
+         GlobalMaterialLocalizations.delegate
+       ],
+       supportedLocales: [
+         const Locale('en'),
+         const Locale('fr')
+       ],
         theme: ThemeData(
             primarySwatch: MaterialColor(0xff584CF4, colorMap),
             fontFamily: 'Poppins'),

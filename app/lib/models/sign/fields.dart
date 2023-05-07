@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class PasswordField extends StatelessWidget {
   final TextEditingController controller;
@@ -277,6 +278,7 @@ class BirthDateField extends StatelessWidget {
               onTap: () async {
                 DateTime? pickedDate = await showDatePicker(
                     context: context,
+                    locale: const Locale("fr", "FR"),
                     initialDate: DateTime.now(),
                     firstDate: DateTime(1950),
                     //DateTime.now() - not to allow to choose before today.

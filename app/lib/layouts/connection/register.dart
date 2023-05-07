@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:getout/layouts/welcome.dart';
 import 'package:getout/models/sign/fields.dart';
 import 'package:getout/services/requests/sign.dart';
+import 'package:getout/theme.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -48,9 +49,28 @@ class _RegisterPageState extends State<RegisterPage> {
   
   Widget build(BuildContext context) {
     return Scaffold(
-        // appBar: AppBar(
-        //   leading: BackButton(),
-        // ),
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+            iconTheme: IconThemeData(
+              color: Colors.black, //change your color here
+            ),
+          centerTitle: true,
+                  titleSpacing: 0,
+          title: const Text(
+              'VOTRE PROFILE',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 30,
+                decorationThickness: 4,
+                decorationColor: const Color.fromRGBO(213, 86, 65, 0.992),
+                decoration: 
+                TextDecoration.underline,
+                ),
+          ),
+          leading: BackButton(),
+          backgroundColor: Colors.white10,
+          elevation: 0,
+        ),
         body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,38 +86,38 @@ class _RegisterPageState extends State<RegisterPage> {
                 key: _formKey,
                 child: Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 16),
+                              horizontal: 8, vertical: 8),
                           child: NameField(formKey: _nameKey, controller: nameController)
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 16),
+                              horizontal: 8, vertical: 8),
                           child: FirstNameField(formKey: _firstnameKey, controller: firstnameController)
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 16),
+                              horizontal: 8, vertical: 8),
                           child: BirthDateField(formKey: _birthDateKey, controller: birthDateController)
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 16),
+                              horizontal: 8, vertical: 8),
                           child: MailField(formKey: _emailKey, controller: emailController),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 16),
+                              horizontal: 8, vertical: 8),
                           child: PasswordField(formKey: _passwordKey, controller: passwordController),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 16),
+                              horizontal: 8, vertical: 8),
                           child: SecondPasswordField(formKey: _password2Key, controller: password2Controller, fstPassword: passwordController.text)
                         ),
                         // SizedBox(
@@ -149,7 +169,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         // ),
                         // // Row(
                         const SizedBox(
-                          height: 30,
+                          height: 10,
                         ),
                       ]),
                 ),
