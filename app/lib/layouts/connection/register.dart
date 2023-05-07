@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:getout/layouts/welcome.dart';
 import 'package:getout/models/sign/fields.dart';
 import 'package:getout/services/requests/sign.dart';
-import 'package:getout/theme.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -51,7 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-            iconTheme: IconThemeData(
+            iconTheme: const IconThemeData(
               color: Colors.black, //change your color here
             ),
           centerTitle: true,
@@ -62,12 +61,12 @@ class _RegisterPageState extends State<RegisterPage> {
                 color: Colors.black,
                 fontSize: 30,
                 decorationThickness: 4,
-                decorationColor: const Color.fromRGBO(213, 86, 65, 0.992),
+                decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
                 decoration: 
                 TextDecoration.underline,
                 ),
           ),
-          leading: BackButton(),
+          leading: const BackButton(),
           backgroundColor: Colors.white10,
           elevation: 0,
         ),

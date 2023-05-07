@@ -12,16 +12,16 @@ import 'package:getout/layouts/connection/username_connection.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 Map<int, Color> colorMap = {
-  50: const Color.fromRGBO(88, 76, 244, .1),
-  100: const Color.fromRGBO(88, 76, 244, .2),
-  200: const Color.fromRGBO(88, 76, 244, .3),
-  300: const Color.fromRGBO(88, 76, 244, .4),
-  400: const Color.fromRGBO(88, 76, 244, .5),
-  500: const Color.fromRGBO(88, 76, 244, .6),
-  600: const Color.fromRGBO(88, 76, 244, .7),
-  700: const Color.fromRGBO(88, 76, 244, .8),
-  800: const Color.fromRGBO(88, 76, 244, .9),
-  900: const Color.fromRGBO(88, 76, 244, 1),
+  50: const Color.fromRGBO(213, 86, 65, .1),
+  100: const Color.fromRGBO(213, 86, 65, .2),
+  200: const Color.fromRGBO(213, 86, 65, .3),
+  300: const Color.fromRGBO(213, 86, 65, .4),
+  400: const Color.fromRGBO(213, 86, 65, .5),
+  500: const Color.fromRGBO(213, 86, 65, .6),
+  600: const Color.fromRGBO(213, 86, 65, .7),
+  700: const Color.fromRGBO(213, 86, 65, .8),
+  800: const Color.fromRGBO(213, 86, 65, .9),
+  900: const Color.fromRGBO(213, 86, 65, 1),
 };
 
 void main() => runApp(MyApp());
@@ -39,16 +39,19 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Get Out',
-        localizationsDelegates: [
+        localizationsDelegates: const [
          GlobalMaterialLocalizations.delegate
        ],
-       supportedLocales: [
-         const Locale('en'),
-         const Locale('fr')
+       supportedLocales: const [
+         Locale('en'),
+         Locale('fr')
        ],
         theme: ThemeData(
-            primarySwatch: MaterialColor(0xff584CF4, colorMap),
-            fontFamily: 'Poppins'),
+            primarySwatch: MaterialColor(0xffD55641, colorMap),
+            fontFamily: 'Poppins',
+          colorScheme: const ColorScheme.light(primary: Color(0xFFD55641)),
+          buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+        ),
         // home: const WelcomePage(),
         home: const ConnectionPage());
   }
