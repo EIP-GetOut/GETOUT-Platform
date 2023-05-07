@@ -8,7 +8,7 @@
 // import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:getout/models/category.dart';
+import 'package:GetOut/models/category.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChecklistPage extends StatefulWidget {

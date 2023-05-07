@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:getout/layouts/welcome.dart';
-import 'package:getout/layouts/connection/register.dart';
-import 'package:getout/models/sign/fields.dart';
-import 'package:getout/services/requests/sign.dart';
+import 'package:GetOut/layouts/welcome.dart';
+import 'package:GetOut/layouts/connection/register.dart';
+import 'package:GetOut/models/sign/fields.dart';
+import 'package:GetOut/services/requests/sign.dart';
 
 class ConnectionPage extends StatefulWidget {
   const ConnectionPage({Key? key}) : super(key: key);

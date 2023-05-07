@@ -7,10 +7,10 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:getout/layouts/home/dashboard.dart';
-import 'package:getout/models/requests/generate_movies.dart';
-import 'package:getout/models/flex_size.dart';
-import 'package:getout/services/requests/requests_service.dart';
+import 'package:GetOut/layouts/home/dashboard.dart';
+import 'package:GetOut/models/requests/generate_movies.dart';
+import 'package:GetOut/models/flex_size.dart';
+import 'package:GetOut/services/requests/requests_service.dart';
 
 import 'dart:math';
 

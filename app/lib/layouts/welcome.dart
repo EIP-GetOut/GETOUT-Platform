@@ -6,9 +6,9 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/playgrounds/main_playground.dart';
-import 'package:getout/models/flex_size.dart';
-import 'package:getout/layouts/preference/preference.dart';
+import 'package:GetOut/playgrounds/main_playground.dart';
+import 'package:GetOut/models/flex_size.dart';
+import 'package:GetOut/layouts/preference/preference.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);

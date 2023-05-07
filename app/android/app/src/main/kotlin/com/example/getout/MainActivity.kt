@@ -1,4 +1,4 @@
-package com.example.getout
+package com.example.GetOut
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -13,7 +13,7 @@ extension ErorColor on ThemeData {
   Color get erorColor => const Color.fromARGB(255, 173, 52, 62);
 }
 
-final getoutTheme = ThemeData(
+final GetOutTheme = ThemeData(
   primaryColor: const Color.fromARGB(255, 145, 77, 125),
   textTheme: GoogleFonts.robotoTextTheme(),
   elevatedButtonTheme: ElevatedButtonThemeData(

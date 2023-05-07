@@ -6,7 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/models/flex_size.dart';
+import 'package:GetOut/models/flex_size.dart';
 
 class SliderPage extends StatefulWidget {
   const SliderPage(

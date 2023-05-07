@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'package:getout/models/requests/generate_movies.dart';
+import 'package:GetOut/models/requests/generate_movies.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key, required this.movies}) : super(key: key);

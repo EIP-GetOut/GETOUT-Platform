@@ -6,9 +6,9 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/models/category.dart';
-// import 'package:getout/layouts/welcome.dart';
-import 'package:getout/layouts/connection/username_connection.dart';
+import 'package:GetOut/models/category.dart';
+// import 'package:GetOut/layouts/welcome.dart';
+import 'package:GetOut/layouts/connection/username_connection.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 Map<int, Color> colorMap = {

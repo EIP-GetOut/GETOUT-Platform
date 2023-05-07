@@ -1,6 +1,6 @@
 {
-    "name": "getout",
-    "short_name": "getout",
+    "name": "GetOut",
+    "short_name": "GetOut",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#584CF4",
