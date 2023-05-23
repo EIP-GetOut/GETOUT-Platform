@@ -7,6 +7,8 @@
 
 import { Application } from 'express'
 
+import login from '@routes/account/login/login'
+import signup from '@routes/account/signup/signup'
 import basicEndpoints from '@routes/basicEndpoints'
 import getBook from '@routes/book'
 import generateBooks from '@routes/books'
@@ -15,6 +17,8 @@ import generateMovies from '@routes/movies'
 
 const useRoutes = (app: Application) => (
   app
+    .use(login)
+    .use(signup)
     .use(generateMovies)
     .use(generateBooks)
     .use(getMovie)
