@@ -11,13 +11,13 @@ import logger from '@middlewares/logging'
 
 import { useRoutes, useMiddlewares } from '@services/utils/appUtils/appUtils'
 
-import { AppDataSource } from '@config/dataSource'
+import { appDataSource } from '@config/dataSource'
 
 (() => {
   const app: Application = express()
   const port: string | undefined = process.env.PORT
 
-  AppDataSource.initialize().then(() => {
+  appDataSource.initialize().then(() => {
     logger.info("Data Source has been initialized!")
     useMiddlewares(app)
     useRoutes(app)
