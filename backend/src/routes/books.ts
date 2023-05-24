@@ -33,10 +33,17 @@ router.get('/generate-books', rulesGet, validate, logApiRequest, (req: Request, 
         if (!booksObtained) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
         }
-        booksObtained.items.length = 5
-        ;
+        booksObtained.items.length = 5;
+        const books: Array<any> = []
+        booksObtained.items.forEach((book: any) => {
+            books.push({
+                title: book.volumeInfo.title,
+                poster: book.volumeInfo?.imageLinks?.thumbnail ? book.volumeInfo.imageLinks.thumbnail : null,
+                id: book.id
+            })
+        });
         return res.status(StatusCodes.OK).json({
-            books: booksObtained.items
+            books: books
         })
     })
 })

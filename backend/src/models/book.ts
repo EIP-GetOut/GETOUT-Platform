@@ -14,7 +14,7 @@ const key = 'AIzaSyDDxf1nRkG6eMcufxYp2LHIWgA-2MEMlK8'
 function encodeQueryData(data: any): any {
     const ret = [];
     for (const d in data)
-      ret.push(encodeURIComponent(d) + encodeURIComponent(data[d]));
+      ret.push(encodeURIComponent(data[d]));
     return ret.join('&');
  }
 
@@ -25,7 +25,7 @@ function getBook(params: any): any {
             throw Error(res.statusText)
         }
         return res.json()
-    }).catch((err) => logger.error(err.toString))
+    }).catch((err) => logger.error(err))
 }
 
 export { getBook }
