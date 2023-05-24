@@ -20,6 +20,8 @@ function loginAccount(accountToLogin: accountRepositoryRequest) {
         }
         if (foundAccount.password === accountToLogin.password) {
             return StatusCodes.OK
+        } else {
+            return StatusCodes.FORBIDDEN
         }
     })
 }

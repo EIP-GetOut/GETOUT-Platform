@@ -6,7 +6,6 @@
 */
 
 import { StatusCodes } from "http-status-codes"
-import { EntityMetadataNotFoundError } from "typeorm"
 
 import logger from "@middlewares/logging"
 
