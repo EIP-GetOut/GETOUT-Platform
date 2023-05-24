@@ -22,8 +22,8 @@ function createNewAccountObject (account: accountRepositoryRequest) {
     let bornDate = account.bornDate || null
 
     if (bornDate) {
-      const date = bornDate.toString().split('/')
-      bornDate = new Date(parseInt(date[2]), parseInt(date[1]) - 1, parseInt(date[0]))
+        const date = bornDate.toString().split('/')
+        bornDate = new Date(parseInt(date[2]), parseInt(date[1]) - 1, parseInt(date[0]))
     }
     return ({
         salt: account.salt,
@@ -33,7 +33,7 @@ function createNewAccountObject (account: accountRepositoryRequest) {
         lastName: account.lastName,
         bornDate,
     })
-  }
+}
 
 function registerAccount (account: accountRepositoryRequest) {
     const accountRepository = appDataSource.getRepository(Account)

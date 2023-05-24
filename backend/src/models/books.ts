@@ -12,19 +12,19 @@ const fetch = (args: any) => import('node-fetch').then(({ default: fetch }) => f
 const key = 'AIzaSyDDxf1nRkG6eMcufxYp2LHIWgA-2MEMlK8'
 
 function encodeQueryData(data: any): any {
-    const ret = [];
-    for (const d in data)
-      ret.push(encodeURIComponent(d) + ':' + encodeURIComponent(data[d]));
-    return ret.join('&');
- }
+  const ret: Array<any> = [];
+  for (const d in data)
+    ret.push(encodeURIComponent(d) + ':' + encodeURIComponent(data[d]));
+  return ret.join('&');
+}
 
 function getBooks(params: any): any {
     const query = encodeQueryData(params)
     return (fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${key}`)).then((res) => {
-        if (!res.ok) {
-            throw Error(res.statusText)
-        }
-        return res.json()
+      if (!res.ok) {
+        throw Error(res.statusText)
+      }
+      return res.json()
     }).catch((err) => logger.error(err.toString))
 }
 

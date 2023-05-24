@@ -18,3 +18,16 @@ Content-Type: application/json
     "email": "yo@yo.com",
     "password": "123456"
 }
+
+###
+GET http://localhost:8080/session HTTP/1.1
+Content-Type: application/json
+
+###
+POST http://localhost:8080/account/logout HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "yo@yo.com",
+    "password": "123456"
+}

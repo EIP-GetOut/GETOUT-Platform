@@ -10,5 +10,6 @@
 
 import useMiddlewares from './useMiddlewares'
 import useRoutes from './useRoutes'
+import useSession from './useSession'
 
-export { useRoutes, useMiddlewares }
+export { useRoutes, useMiddlewares, useSession }

@@ -9,7 +9,7 @@ import express, { Application } from 'express'
 
 import logger from '@middlewares/logging'
 
-import { useRoutes, useMiddlewares } from '@services/utils/appUtils/appUtils'
+import { useRoutes, useMiddlewares, useSession } from '@services/utils/appUtils/appUtils'
 
 import { appDataSource } from '@config/dataSource'
 
@@ -19,6 +19,8 @@ import { appDataSource } from '@config/dataSource'
 
   appDataSource.initialize().then(() => {
     logger.info("Data Source has been initialized!")
+
+    useSession(app)
     useMiddlewares(app)
     useRoutes(app)
 

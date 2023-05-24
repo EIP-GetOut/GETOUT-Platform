@@ -22,18 +22,18 @@ const rulesPost = [
 ]
 
 router.post('/account/login', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
-    return loginAccount(req.body).then((code: StatusCodes) => {
-        if (code === StatusCodes.OK) {
-          logger.info(`Account successfully logged in${req.body.email ? `: ${req.body.email}` : ' !'}`)
-        } else {
-          logger.info(`Account's email or password is incorrect: ${req.body.email || req.body.githubCode}`)
-        }
-        return res.status(code).send(getReasonPhrase(code))
-      }).catch((err: any) => {
-        logger.error(err)
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR)
-          .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
-      })
+  return loginAccount(req.body, req.session).then((code: StatusCodes) => {
+    if (code === StatusCodes.OK) {
+      logger.info(`Account successfully logged in${req.body.email ? `: ${req.body.email}` : ' !'}`)
+    } else {
+      logger.info(`Account's email or password is incorrect: ${req.body.email || req.body.githubCode}`)
+    }
+    return res.status(code).send(getReasonPhrase(code))
+  }).catch((err: any) => {
+    logger.error(err)
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+  })
 })
 
 export default router

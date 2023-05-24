@@ -15,7 +15,6 @@ function findEntity<Entity extends ObjectLiteral>(
   relations: FindOptionsRelations<Entity> | null = null
 ): Promise<Entity | null> {
   const entityRepository: Repository<Entity> = appDataSource.getRepository<Entity>(repository)
-  console.log(entityRepository)
   return entityRepository.findOneBy(criterias)
 }
 

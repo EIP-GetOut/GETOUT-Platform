@@ -12,11 +12,11 @@ const fetch = (args: any) => import('node-fetch').then(({ default: fetch }) => f
 const key = 'AIzaSyDDxf1nRkG6eMcufxYp2LHIWgA-2MEMlK8'
 
 function encodeQueryData(data: any): any {
-    const ret = [];
+    const ret: Array<any> = [];
     for (const d in data)
       ret.push(encodeURIComponent(data[d]));
     return ret.join('&');
- }
+}
 
 function getBook(params: any): any {
     const query = encodeQueryData(params)
