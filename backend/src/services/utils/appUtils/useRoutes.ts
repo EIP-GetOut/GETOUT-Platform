@@ -15,6 +15,7 @@ import getBook from '@routes/book'
 import generateBooks from '@routes/books'
 import getMovie from '@routes/movie'
 import generateMovies from '@routes/movies'
+import resetPassword from '@routes/resetPassword/resetPassword'
 import session from '@routes/session/session'
 
 const useRoutes = (app: Application) => (
@@ -23,6 +24,7 @@ const useRoutes = (app: Application) => (
     .use(logout)
     .use(session)
     .use(signup)
+    .use(resetPassword)
     .use(generateMovies)
     .use(generateBooks)
     .use(getMovie)
