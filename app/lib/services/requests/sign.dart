@@ -8,12 +8,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:crypto/crypto.dart';
 
 
 Future<String> login({required String email, required String password}) async
 {
-  final List<int> key = utf8.encode('keys');
+  return 'OK';
+  /*final List<int> key = utf8.encode('keys');
   final List<int> bytes = utf8.encode(password);
 
   var hmacSha256 = Hmac(sha256, key);
@@ -21,8 +21,7 @@ Future<String> login({required String email, required String password}) async
 
   String cryptPassword = base64.encode(digest.bytes);
 
-  return 'OK';
-  /*var url = Uri.https(apiPath, signInPath);
+  var url = Uri.https(apiPath, signInPath);
   var body = jsonEncode({
     "username": email,
     "password": cryptPassword
@@ -50,7 +49,8 @@ Future<String> login({required String email, required String password}) async
 
 Future<String> register(BuildContext context, {required String email, required String password}) async
 {
-  final List<int> key = utf8.encode('keys');
+  return 'OK';
+  /*final List<int> key = utf8.encode('keys');
   final List<int> bytes = utf8.encode(password);
 
   var hmacSha256 = Hmac(sha256, key);
@@ -58,8 +58,7 @@ Future<String> register(BuildContext context, {required String email, required S
 
   String cryptPassword = base64.encode(digest.bytes);
 
-  return 'OK';
-  /*var url = Uri.https(apiPath, signUpPath);
+  var url = Uri.https(apiPath, signUpPath);
   var body = jsonEncode({
     "username": email,
     "password": cryptPassword
