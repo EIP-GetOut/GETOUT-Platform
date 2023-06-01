@@ -7,3 +7,9 @@
 
 const String rootApiPath = 'localhost:8080';
 const String generateMoviesApiPath = '/generate-movies';
+
+// ACCOUNT API PATH
+const String loginApiPath = '/account/login';
+const String logoutApiPath = '/account/logout';
+const String signupApiPath = '/account/signup';
+const String resetPasswordApiPath = '/account/reset-password';

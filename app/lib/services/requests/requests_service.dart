@@ -8,6 +8,7 @@
 import 'dart:convert';
 
 import 'package:GetOut/models/requests/generate_movies.dart';
+import 'package:GetOut/models/requests/create_account.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_status_code/http_status_code.dart';
 
@@ -55,5 +56,43 @@ class RequestsService {
     }, onError: (eror) {
       // TODO
     });
+  }
+
+  Future<AccountCreated?> register(CreateAccountRequest request) async
+  {
+    var url = Uri.http(api_constants.rootApiPath, api_constants.signupApiPath);
+    var body = jsonEncode({
+      'username': request.email,
+      'password': request.password
+    });
+
+    try {
+      return http.post(url, body: body,  headers: {
+        'Content-Type': 'application/json'
+      }).then((response) {
+        if (response.statusCode != StatusCode.OK) {
+          return Future.error(Exception(
+            'Error ${response.statusCode} while creating account: ${response.reasonPhrase}',
+          ));
+        }
+
+        var data = jsonDecode(response.body);
+        GenerateMoviesResponse result = [];
+
+        data['movies'].forEach((elem) {
+          result.add(MoviePreview(
+              id: elem['id'], title: elem['title'], posterPath: elem['poster']));
+        });
+
+        return null;
+      }, onError: (eror) {
+        // TODO
+      });
+    } catch (error) {
+      if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
+        return null; // 'No internet connection';
+      }
+      return null; // error.toString();
+    }
   }
 }

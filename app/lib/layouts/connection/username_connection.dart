@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:GetOut/layouts/welcome.dart';
 import 'package:GetOut/layouts/connection/register.dart';
 import 'package:GetOut/models/sign/fields.dart';
 import 'package:GetOut/services/requests/sign.dart';
@@ -112,11 +111,11 @@ class _ConnectionPageState extends State<ConnectionPage> {
                         const SizedBox(
                           height: 30,
                         ),
-                        new GestureDetector(
+                        GestureDetector(
                           onTap: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
                           },
-                          child: Text.rich(
+                          child: const Text.rich(
                           TextSpan(
                             text: 'Première connection ?',
                             style: TextStyle(color: Colors.black, fontSize: 16),
