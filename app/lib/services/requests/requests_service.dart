@@ -62,8 +62,12 @@ class RequestsService {
   {
     var url = Uri.http(api_constants.rootApiPath, api_constants.signupApiPath);
     var body = jsonEncode({
-      'username': request.email,
-      'password': request.password
+    'email': request.email,
+    'firstName': request.firstName,
+    'lastName': request.lastName,
+    'bornDate': request.bornDate,
+    'salt': 'sdjqshjodijaoz',
+    'password': request.password
     });
 
     try {
@@ -77,16 +81,18 @@ class RequestsService {
         }
 
         var data = jsonDecode(response.body);
-        GenerateMoviesResponse result = [];
+        AccountCreated result = AccountCreated(id: data['id'],
+        email: data['email'],
+        password: data['password'],
+        firstName: data['firstName'],
+        lastName: data['lastName'],
+        bornDate: data['bornDate'],
+        salt: data['salt']);
 
-        data['movies'].forEach((elem) {
-          result.add(MoviePreview(
-              id: elem['id'], title: elem['title'], posterPath: elem['poster']));
-        });
-
-        return null;
-      }, onError: (eror) {
-        // TODO
+        return result;
+      }, onError: (error) {
+        print(error);
+        // console.log('error : requests service line 89');
       });
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
