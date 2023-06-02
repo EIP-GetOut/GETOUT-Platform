@@ -58,47 +58,42 @@ class RequestsService {
     });
   }
 
-  Future<AccountCreated?> register(CreateAccountRequest request) async
+  Future<AccountResponseInfo> register(CreateAccountRequest request) async
   {
-    var url = Uri.http(api_constants.rootApiPath, api_constants.signupApiPath);
-    var body = jsonEncode({
-    'email': request.email,
-    'firstName': request.firstName,
-    'lastName': request.lastName,
-    'bornDate': request.bornDate,
-    'salt': 'sdjqshjodijaoz',
-    'password': request.password
+    final Uri url = Uri.http(api_constants.rootApiPath, api_constants.signupApiPath);
+    final Map<String, String> header = {
+      'Content-Type': 'application/json'
+    };
+    final String body = jsonEncode({
+      'email': request.email,
+      'firstName': request.firstName,
+      'lastName': request.lastName,
+      'bornDate': request.bornDate,
+      'salt': 'sdjqshjodijaoz',
+      'password': request.password
     });
 
     try {
-      return http.post(url, body: body,  headers: {
-        'Content-Type': 'application/json'
-      }).then((response) {
-        if (response.statusCode != StatusCode.OK) {
-          return Future.error(Exception(
-            'Error ${response.statusCode} while creating account: ${response.reasonPhrase}',
-          ));
-        }
-
-        var data = jsonDecode(response.body);
-        AccountCreated result = AccountCreated(id: data['id'],
-        email: data['email'],
-        password: data['password'],
-        firstName: data['firstName'],
-        lastName: data['lastName'],
-        bornDate: data['bornDate'],
-        salt: data['salt']);
-
-        return result;
-      }, onError: (error) {
-        print(error);
-        // console.log('error : requests service line 89');
-      });
+    final http.Response response = await http.post(url, body: body,  headers: header);
+      if (response.statusCode != StatusCode.CREATED) {
+        return AccountResponseInfo(statusCode: response.statusCode);
+      }
+      final dynamic data = jsonDecode(response.body);
+      final AccountResponseInfo result = AccountResponseInfo(
+          id: data['id'],
+          email: data['email'],
+          password: data['password'],
+          firstName: data['firstName'],
+          lastName: data['lastName'],
+          bornDate: data['bornDate'],
+          statusCode: response.statusCode);
+    return result;
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
-        return null; // 'No internet connection';
+        return AccountResponseInfo(statusCode: -42); // 'No internet connection';
       }
-      return null; // error.toString();
+      // print('ERROR ON REGISTER REQUEST : $error');
+      return AccountResponseInfo(statusCode: 1);
     }
   }
 }

@@ -1,7 +1,8 @@
+import 'package:GetOut/models/requests/create_account.dart';
 import 'package:flutter/material.dart';
 import 'package:GetOut/layouts/welcome.dart';
 import 'package:GetOut/models/sign/fields.dart';
-import 'package:GetOut/services/requests/sign.dart';
+import 'package:GetOut/services/requests/requests_service.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -11,9 +12,9 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController firstnameController = TextEditingController();
-  TextEditingController birthDateController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController bornDateController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController password2Controller = TextEditingController();
@@ -26,20 +27,30 @@ class _RegisterPageState extends State<RegisterPage> {
   bool isLoading = false;
 
   Future<VoidCallback?> registerPressed() async {
-    if (_emailKey.currentState!.validate() && _nameKey.currentState!.validate() && _firstnameKey.currentState!.validate() && _birthDateKey.currentState!.validate() && _passwordKey.currentState!.validate() && _password2Key.currentState!.validate()) {
-      setState(() {
-        isLoading = true;
-      });
-      var res = await register(context, email: emailController.text, password: passwordController.text);
-      if (res == 'OK') {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage()));
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
-      }
+    
+    if (!_emailKey.currentState!.validate() && !_nameKey.currentState!.validate() &&
+        !_firstnameKey.currentState!.validate() && !_birthDateKey.currentState!.validate() &&
+        !_passwordKey.currentState!.validate() && !_password2Key.currentState!.validate()) {
+        return null;
     }
+    setState(() {
+      isLoading = true;
+    });
+    AccountResponseInfo res = await RequestsService.instance.register(
+        CreateAccountRequest(email: emailController.text,
+            password: passwordController.text,
+            firstName: firstNameController.text,
+            lastName: lastNameController.text,
+            bornDate: bornDateController.text));
+    if (res.statusCode == AccountResponseInfo.success) {
+      return Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage()));
+    }
+    setState(() {
+      isLoading = false;
+    });
+    /// TODO : show error
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text((res.statusCode == -42) ? ('No internet connection') : ('ERROR'))));
     return null;
   }
 
@@ -69,24 +80,24 @@ class _RegisterPageState extends State<RegisterPage> {
           backgroundColor: Colors.white10,
           elevation: 0,
         ),
-        body: Column(
+        body: SingleChildScrollView(child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 8, vertical: 8),
-                child: NameField(formKey: _nameKey, controller: nameController)
+                child: NameField(formKey: _nameKey, controller: lastNameController)
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 8, vertical: 8),
-                child: FirstNameField(formKey: _firstnameKey, controller: firstnameController)
+                child: FirstNameField(formKey: _firstnameKey, controller: firstNameController)
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 8, vertical: 8),
-                child: BirthDateField(formKey: _birthDateKey, controller: birthDateController)
+                child: BirthDateField(formKey: _birthDateKey, controller: bornDateController)
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -103,59 +114,11 @@ class _RegisterPageState extends State<RegisterPage> {
                     horizontal: 8, vertical: 8),
                 child: SecondPasswordField(formKey: _password2Key, controller: password2Controller, fstPassword: passwordController.text)
               ),
-              // SizedBox(
-              //   // height: perHeight(context, (isLandscape ? 40 : 50)),
-              //   // width: perWidth(context, (isLandscape ? 40 : 100)),
-              //   child: Align(
-              //       alignment: Alignment.center,
-              //       child: Image.asset(
-              //         'assets/separation.png',
-              //         fit: BoxFit.contain,
-              //       )),
-              // ),
-              // const SizedBox(height: 20),
-              // Row(
-              //   mainAxisAlignment:
-              //   MainAxisAlignment.spaceEvenly, // <-- SEE HERE
-              //   children: [
-              //     SizedBox(
-              //       // height: perHeight(context, (isLandscape ? 40 : 50)),
-              //       // width: perWidth(context, (isLandscape ? 40 : 100)),
-              //       child: Align(
-              //           alignment: Alignment.center,
-              //           child: Image.asset(
-              //             'assets/Twitter.png',
-              //             fit: BoxFit.contain,
-              //           )),
-              //     ),
-              //     SizedBox(
-              //       // height: perHeight(context, (isLandscape ? 40 : 50)),
-              //       // width: perWidth(context, (isLandscape ? 40 : 100)),
-              //       child: Align(
-              //           alignment: Alignment.center,
-              //           child: Image.asset(
-              //             'assets/Google.png',
-              //             fit: BoxFit.contain,
-              //           )),
-              //     ),
-              //     SizedBox(
-              //       // height: perHeight(context, (isLandscape ? 40 : 50)),
-              //       // width: perWidth(context, (isLandscape ? 40 : 100)),
-              //       child: Align(
-              //           alignment: Alignment.center,
-              //           child: Image.asset(
-              //             'assets/Facebook.png',
-              //             fit: BoxFit.contain,
-              //           )),
-              //     ),
-              //   ],
-              // ),
-              // // Row(
               const SizedBox(
                 height: 70,
               ),
               startButton(context, MediaQuery.of(context).size.width),
-            ]),
+            ])),
     );
   }
 

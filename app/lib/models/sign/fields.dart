@@ -283,7 +283,7 @@ class BirthDateField extends StatelessWidget {
 
                 if (pickedDate != null) {
                   // print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                  String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                  String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
                   // print(formattedDate); //formatted date output using intl package =>  2021-03-16
                   controller.text = formattedDate;
                   // setState(() {

@@ -5,37 +5,42 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
+import 'package:http_status_code/http_status_code.dart';
+
 class CreateAccountRequest {
-    int id;
-    String email;
-    String password;
-    String firstName;
-    String lastName;
-    String bornDate;
-    String salt;
+    final String email;
+    final String password;
+    final String firstName;
+    final String lastName;
+    final String bornDate;
 
   CreateAccountRequest({
-    required this.id,
     required this.email,
     required this.password,
     required this.firstName,
     required this.lastName,
     required this.bornDate,
-    required this.salt
   });
 }
 
-class AccountCreated {
-  int id;
-  String email;
-  String password;
-  String firstName;
-  String lastName;
-  String bornDate;
-  String salt;
+class AccountResponseInfo
+{
+  static const int success = StatusCode.CREATED;
+  String? id;
+  String? email;
+  String? password;
+  String? firstName;
+  String? lastName;
+  String? bornDate;
+  int statusCode;
 
-  AccountCreated(
-      {required this.id, required this.email, required this.password, required this.firstName, required this.lastName, required this.bornDate, required this.salt});
+  AccountResponseInfo({
+    this.id,
+    this.email,
+    this.password,
+    this.firstName,
+    this.lastName,
+    this.bornDate,
+    required this.statusCode
+  });
 }
-
-typedef CreateAccountResponse = AccountCreated;
