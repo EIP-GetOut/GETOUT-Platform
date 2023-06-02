@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:GetOut/layouts/connection/register.dart';
 import 'package:GetOut/models/sign/fields.dart';
-import 'package:GetOut/services/requests/sign.dart';
 
 class ConnectionPage extends StatefulWidget {
   const ConnectionPage({Key? key}) : super(key: key);
@@ -23,7 +22,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
       setState(() {
         isLoading = true;
       });
-      var res = await login(email: emailController.text, password: passwordController.text);
+      //var res = await login(email: emailController.text, password: passwordController.text);
+      var res = '0K';
       if (res != '0K') {
             Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
       } else {
