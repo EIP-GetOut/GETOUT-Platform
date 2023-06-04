@@ -1,6 +1,9 @@
+import 'package:GetOut/models/requests/login.dart';
 import 'package:flutter/material.dart';
 import 'package:GetOut/layouts/connection/register.dart';
 import 'package:GetOut/models/sign/fields.dart';
+import 'package:GetOut/services/requests/requests_service.dart';
+import 'package:GetOut/layouts/welcome.dart';
 
 class ConnectionPage extends StatefulWidget {
   const ConnectionPage({Key? key}) : super(key: key);
@@ -19,21 +22,23 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   Future<VoidCallback?> loginPressed() async {
     if (_emailKey.currentState!.validate() && _passwordKey.currentState!.validate()) {
-      setState(() {
-        isLoading = true;
-      });
-      //var res = await login(email: emailController.text, password: passwordController.text);
-      var res = '0K';
-      if (res != '0K') {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage()));
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(res)));
-      }
+          setState(() {
+      isLoading = true;
+    });
+    LoginResponseInfo res = await RequestsService.instance.login(
+        LoginRequest(email: emailController.text,
+            password: passwordController.text));
+    if (res.statusCode == LoginResponseInfo.success) {
+      return Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage()));
     }
+    setState(() {
+      isLoading = false;
+    });
+    /// TODO : show error
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text((res.statusCode == -42) ? ('No internet connection') : ('ERROR'))));
     return null;
+    }
   }
 
   @override
