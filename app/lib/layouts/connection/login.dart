@@ -1,3 +1,4 @@
+import 'package:GetOut/layouts/home/loading.dart';
 import 'package:GetOut/models/requests/login.dart';
 import 'package:flutter/material.dart';
 import 'package:GetOut/layouts/connection/register.dart';
@@ -32,7 +33,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
     print("res = ");
     print(res.email);
     if (res.statusCode == LoginResponseInfo.success) {
-      return Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage()));
+      return Navigator.push(context,
+                MaterialPageRoute(builder: (context) => LoadingPage()));
     }
     setState(() {
       isLoading = false;

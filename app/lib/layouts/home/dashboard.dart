@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:GetOut/models/requests/generate_movies.dart';
+import 'package:GetOut/layouts/movie/movie.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key, required this.movies}) : super(key: key);
@@ -54,7 +55,11 @@ class _DashboardPageState extends State<DashboardPage> {
               scrollDirection: Axis.horizontal,
               children: [
                 for (var moviePreview in widget.movies)
-                  Container(
+                InkWell(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => MovieDetailsPage(moviePreview)));
+                    },
+                  child: Container(
                       padding: const EdgeInsets.all(5.0),
                       child: Column(children: [
                         Image.network(
@@ -62,6 +67,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             height: 300),
                         Text(moviePreview.title, textScaleFactor: 0.9),
                       ]))
+                      )
               ],
             )),
           ],
