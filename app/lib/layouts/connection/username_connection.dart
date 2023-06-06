@@ -25,9 +25,12 @@ class _ConnectionPageState extends State<ConnectionPage> {
           setState(() {
       isLoading = true;
     });
+    print("avant");
     LoginResponseInfo res = await RequestsService.instance.login(
         LoginRequest(email: emailController.text,
             password: passwordController.text));
+    print("res = ");
+    print(res.email);
     if (res.statusCode == LoginResponseInfo.success) {
       return Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage()));
     }
@@ -36,7 +39,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
     });
     /// TODO : show error
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text((res.statusCode == -42) ? ('No internet connection') : ('ERROR'))));
+        content: Text((res.statusCode == 502) ? ('No internet connection') : ('ERROR'))));
     return null;
     }
   }

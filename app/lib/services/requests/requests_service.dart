@@ -100,7 +100,8 @@ class RequestsService {
 
   Future<LoginResponseInfo> login(LoginRequest request) async
   {
-    final Uri url = Uri.http(api_constants.rootApiPath, api_constants.signupApiPath);
+    final Uri url = Uri.http(api_constants.rootApiPath, api_constants.loginApiPath);
+    print(url);
     final Map<String, String> header = {
       'Content-Type': 'application/json'
     };
@@ -109,8 +110,11 @@ class RequestsService {
       'password': request.password
     });
 
+
     try {
     final http.Response response = await http.post(url, body: body,  headers: header);
+    print("response = ");
+    print(response.body);
       if (response.statusCode != StatusCode.CREATED) {
         return LoginResponseInfo(statusCode: response.statusCode);
       }

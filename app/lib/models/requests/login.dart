@@ -19,7 +19,7 @@ class LoginRequest {
 
 class LoginResponseInfo
 {
-  static const int success = StatusCode.CREATED;
+  static const int success = StatusCode.OK;
   String? id;
   String? email;
   String? password;
