@@ -114,7 +114,7 @@ class RequestsService {
     try {
     final http.Response response = await http.post(url, body: body,  headers: header);
     print("response = ");
-    print(response.body);
+    print(response.statusCode);
       if (response.statusCode != StatusCode.CREATED) {
         return LoginResponseInfo(statusCode: response.statusCode);
       }

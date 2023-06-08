@@ -20,18 +20,16 @@ class _ConnectionPageState extends State<ConnectionPage> {
   final _emailKey = GlobalKey<FormState>();
   final _passwordKey = GlobalKey<FormState>();
   bool isLoading = false;
+  String textState = "";
 
   Future<VoidCallback?> loginPressed() async {
     if (_emailKey.currentState!.validate() && _passwordKey.currentState!.validate()) {
           setState(() {
       isLoading = true;
     });
-    print("avant");
     LoginResponseInfo res = await RequestsService.instance.login(
         LoginRequest(email: emailController.text,
             password: passwordController.text));
-    print("res = ");
-    print(res.email);
     if (res.statusCode == LoginResponseInfo.success) {
       return Navigator.push(context,
                 MaterialPageRoute(builder: (context) => LoadingPage()));
@@ -39,9 +37,19 @@ class _ConnectionPageState extends State<ConnectionPage> {
     setState(() {
       isLoading = false;
     });
-    /// TODO : show error
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text((res.statusCode == 502) ? ('No internet connection') : ('ERROR'))));
+    if (res.statusCode == 200)
+      textState = "Connecté";
+    if (res.statusCode == 403)
+      textState = "Le mot de passe ou l'adresse mail est incorrect";
+    if (res.statusCode == 502)
+      textState = "Pas de connexion internet";
+    if (res.statusCode == 500)
+      textState = "Une erreur s'est produite, veuillez reesayer plus tard";
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              content: Text(textState),
+                backgroundColor: (res.statusCode != 200 ? Color.fromARGB(255, 239, 46, 46) : Color.fromARGB(255, 109, 154, 3)) )
+            );
     return null;
     }
   }

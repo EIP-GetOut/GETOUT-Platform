@@ -23,6 +23,27 @@ class _WelcomePageState extends State<WelcomePage> {
     bool isLandscape = (MediaQuery.of(context).size.width >
         MediaQuery.of(context).size.height);
     return Scaffold(
+          appBar: AppBar(
+            iconTheme: const IconThemeData(
+              color: Colors.black, //change your color here
+            ),
+          // centerTitle: true,
+          //         titleSpacing: 0,
+          // title: const Text(
+          //     'VOTRE PROFILE',
+          //     style: TextStyle(
+          //       color: Colors.black,
+          //       fontSize: 30,
+          //       decorationThickness: 4,
+          //       decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
+          //       decoration: 
+          //       TextDecoration.underline,
+          //       ),
+          // ),
+          leading: const BackButton(),
+          backgroundColor: Colors.white10,
+          elevation: 0,
+        ),
         body: Column(children: [
           SizedBox(
               width: MediaQuery.of(context).size.width,
