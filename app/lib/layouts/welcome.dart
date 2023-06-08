@@ -27,19 +27,6 @@ class _WelcomePageState extends State<WelcomePage> {
             iconTheme: const IconThemeData(
               color: Colors.black, //change your color here
             ),
-          // centerTitle: true,
-          //         titleSpacing: 0,
-          // title: const Text(
-          //     'VOTRE PROFILE',
-          //     style: TextStyle(
-          //       color: Colors.black,
-          //       fontSize: 30,
-          //       decorationThickness: 4,
-          //       decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
-          //       decoration: 
-          //       TextDecoration.underline,
-          //       ),
-          // ),
           leading: const BackButton(),
           backgroundColor: Colors.white10,
           elevation: 0,

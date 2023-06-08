@@ -5,6 +5,7 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
+
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:GetOut/models/requests/generate_movies.dart';
@@ -25,44 +26,54 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
     String imageUrl = 'https://image.tmdb.org/t/p/w600_and_h900_bestv2${widget.movie.posterPath}';
     // bool isLandscape = (MediaQuery.of(context).size.width >
     //     MediaQuery.of(context).size.height);
+  Widget buildCoverImage() => Container(
+          child:
+          Image.network(
+          imageUrl,
+          color: Color.fromARGB(255, 255, 255, 255).withOpacity(0.6),
+          colorBlendMode: BlendMode.modulate,
+          width: double.infinity,
+          fit: BoxFit.cover,
+          height: 200,
+        ));
 
+  Widget buildLittleImage() => Container(
+      child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Image.network(
+                imageUrl,
+                height: 300))
+  );
     return Scaffold(
-      appBar: PreferredSize(
-          preferredSize: Size.fromHeight(300.0), // here the desired height
-          child: AppBar(
-            iconTheme: const IconThemeData(
-              color: Colors.black, //change your color here
+      body: Column(children: [
+        Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.center,
+         children: [
+        buildCoverImage(),
+        Positioned(
+          top: 100,
+          child: buildLittleImage(),)
+          // Text(widget.movie.title, textScaleFactor: 0.9),
+         ],
+         ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(children: [
+                          
+                    ]),
             ),
-          title: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                        imageUrl,
-                        fit: BoxFit.cover,
-                        scale: 0.2
-                      )),
-          leading: const BackButton(),
-          backgroundColor: Colors.white10,
-          elevation: 0,
-        )
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Column(children: [
-                        Image.network(
-                            imageUrl,
-                            height: 300),
-                        Text(widget.movie.title, textScaleFactor: 0.9),
-                  ]),
-          ),
-          )
-        ],
-      ),
+            )
+          ],
+        ),
+      ]
+    )
     );
   }
 }
