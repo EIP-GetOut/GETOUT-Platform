@@ -11,8 +11,8 @@ import 'package:GetOut/models/requests/generate_movies.dart';
 import 'package:GetOut/models/requests/create_account.dart';
 import 'package:GetOut/models/requests/login.dart';
 import 'package:http/http.dart' as http;
-import 'package:http_status_code/http_status_code.dart';
 
+import 'package:GetOut/constants/http_status.dart';
 import 'package:GetOut/constants/api_path.dart' as api_constants;
 
 String formatWithGenresParameter(List<int> genres) {
@@ -39,7 +39,7 @@ class RequestsService {
     });
 
     return http.get(url).then((response) {
-      if (response.statusCode != StatusCode.OK) {
+      if (response.statusCode != HttpStatus.OK) {
         return Future.error(Exception(
           'Error ${response.statusCode} while fetching movies: ${response.reasonPhrase}',
         ));
@@ -64,6 +64,7 @@ class RequestsService {
 
   Future<AccountResponseInfo> register(CreateAccountRequest request) async
   {
+    AccountResponseInfo result = AccountResponseInfo(statusCode: HttpStatus.APP_ERROR);
     final Uri url = Uri.http(api_constants.rootApiPath, api_constants.signupApiPath);
     final Map<String, String> header = {
       'Content-Type': 'application/json'
@@ -78,33 +79,31 @@ class RequestsService {
     });
 
     try {
-    final http.Response response = await http.post(url, body: body,  headers: header);
-      if (response.statusCode != StatusCode.CREATED) {
-        return AccountResponseInfo(statusCode: response.statusCode);
-      }
-      final dynamic data = jsonDecode(response.body);
-      final AccountResponseInfo result = AccountResponseInfo(
-          id: data['id'],
-          email: data['email'],
-          password: data['password'],
-          firstName: data['firstName'],
-          lastName: data['lastName'],
-          bornDate: data['bornDate'],
-          statusCode: response.statusCode);
-    return result;
+      final http.Response response = await http.post(url, body: body,  headers: header);
+        if (response.statusCode != HttpStatus.CREATED) {
+          return AccountResponseInfo(statusCode: response.statusCode);
+        }
+        final dynamic data = jsonDecode(response.body);
+        result = AccountResponseInfo(
+            id: data['id'],
+            email: data['email'],
+            password: data['password'],
+            firstName: data['firstName'],
+            lastName: data['lastName'],
+            bornDate: data['bornDate'],
+            statusCode: response.statusCode);
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
-        return AccountResponseInfo(statusCode: -42); // 'No internet connection';
+        return AccountResponseInfo(statusCode: HttpStatus.NO_INTERNET);
       }
-      // print('ERROR ON REGISTER REQUEST : $error');
-      return AccountResponseInfo(statusCode: 1);
+      return result;
     }
+    return result;
   }
 
   Future<LoginResponseInfo> login(LoginRequest request) async
   {
     final Uri url = Uri.http(api_constants.rootApiPath, api_constants.loginApiPath);
-    print(url);
     final Map<String, String> header = {
       'Content-Type': 'application/json'
     };
@@ -116,9 +115,7 @@ class RequestsService {
 
     try {
     final http.Response response = await http.post(url, body: body,  headers: header);
-    print("response = ");
-    print(response.statusCode);
-      if (response.statusCode != StatusCode.CREATED) {
+      if (response.statusCode != HttpStatus.CREATED) {
         return LoginResponseInfo(statusCode: response.statusCode);
       }
       final dynamic data = jsonDecode(response.body);
@@ -130,7 +127,7 @@ class RequestsService {
           lastName: data['lastName'],
           bornDate: data['bornDate'],
           statusCode: response.statusCode);
-    return result;
+      return result;
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
         return LoginResponseInfo(statusCode: 502); // 'No internet connection';

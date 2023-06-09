@@ -1,8 +1,17 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
+*/
+
 import 'package:GetOut/models/requests/create_account.dart';
 import 'package:flutter/material.dart';
 import 'package:GetOut/layouts/welcome.dart';
 import 'package:GetOut/models/sign/fields.dart';
 import 'package:GetOut/services/requests/requests_service.dart';
+import 'package:GetOut/constants/http_status.dart';
+import 'package:GetOut/layouts/home/load.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -11,7 +20,9 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterPageState extends State<RegisterPage>
+{
+  /// TODO transform controllers and keys into a list
   TextEditingController lastNameController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController bornDateController = TextEditingController();
@@ -25,39 +36,47 @@ class _RegisterPageState extends State<RegisterPage> {
   final _passwordKey = GlobalKey<FormState>();
   final _password2Key = GlobalKey<FormState>();
   bool isLoading = false;
+  final HttpStatus httpStatus = HttpStatus({
+    HttpStatus.INTERNAL_SERVER_ERROR: 'Une erreur s\'est produite, veuillez réesayer plus tard',
+    HttpStatus.CONFLICT: 'Un compte avec cet email existe déjà',
+    HttpStatus.NO_INTERNET: 'Pas de connexion internet',
+    HttpStatus.ACCEPTED: 'Une erreur s\'est produite, veuillez réesayer plus tard'
+  });
 
-  Future<VoidCallback?> registerPressed() async {
-    
+  Future<void> registerPressed() async
+  {
     if (!_emailKey.currentState!.validate() && !_nameKey.currentState!.validate() &&
         !_firstnameKey.currentState!.validate() && !_birthDateKey.currentState!.validate() &&
         !_passwordKey.currentState!.validate() && !_password2Key.currentState!.validate()) {
-        return null;
+        return;
     }
     setState(() {
       isLoading = true;
     });
-    AccountResponseInfo res = await RequestsService.instance.register(
-        CreateAccountRequest(email: emailController.text,
-            password: passwordController.text,
-            firstName: firstNameController.text,
-            lastName: lastNameController.text,
-            bornDate: bornDateController.text));
+    AccountResponseInfo res = await RequestsService.instance.register(CreateAccountRequest(
+        email: emailController.text,
+        password: passwordController.text,
+        firstName: firstNameController.text,
+        lastName: lastNameController.text,
+        bornDate: bornDateController.text));
     if (res.statusCode == AccountResponseInfo.success) {
-      return Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage()));
+      isLoading = false;
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage()));
+      return;
     }
     setState(() {
       isLoading = false;
     });
-    /// TODO : show error
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text((res.statusCode == -42) ? ('No internet connection') : ('ERROR'))));
-    return null;
+        content: Text(httpStatus.getMessage(res.statusCode))));
   }
 
   @override
   
   Widget build(BuildContext context) {
-    return Scaffold(
+    return isLoading
+        ? const LoadPage()
+        : Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
             iconTheme: const IconThemeData(
@@ -66,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
           centerTitle: true,
                   titleSpacing: 0,
           title: const Text(
-              'VOTRE PROFILE',
+              'VOTRE PROFIL',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 30,
@@ -84,6 +103,7 @@ class _RegisterPageState extends State<RegisterPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              /// TODO a loop for all fields (padding with each field)
               Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: 8, vertical: 8),
