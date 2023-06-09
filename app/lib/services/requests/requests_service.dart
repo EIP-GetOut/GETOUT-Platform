@@ -49,8 +49,11 @@ class RequestsService {
       GenerateMoviesResponse result = [];
 
       data['movies'].forEach((elem) {
+        print(elem['overview']);
         result.add(MoviePreview(
             id: elem['id'], title: elem['title'], posterPath: elem['poster']));
+        //  , overview: elem['overview']
+            // duration: elem['duration']
       });
 
       return result;
