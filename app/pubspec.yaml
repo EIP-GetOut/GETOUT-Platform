@@ -58,6 +58,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
   flutter_launcher_icons: ^0.13.1
+  boxicons: 2.1.3
 
 flutter_icons:
   image_path: "assets/GetOut_launch_logo.png"

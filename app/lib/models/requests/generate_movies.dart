@@ -19,7 +19,10 @@ class MoviePreview {
   int id;
   String title;
   String posterPath;
+  // String overview;
 
+      //  required this.duration
+      //  required this.overview
   MoviePreview(
       {required this.id, required this.title, required this.posterPath});
 }

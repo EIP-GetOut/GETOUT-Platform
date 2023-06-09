@@ -23,6 +23,14 @@ class _WelcomePageState extends State<WelcomePage> {
     bool isLandscape = (MediaQuery.of(context).size.width >
         MediaQuery.of(context).size.height);
     return Scaffold(
+          appBar: AppBar(
+            iconTheme: const IconThemeData(
+              color: Colors.black, //change your color here
+            ),
+          leading: const BackButton(),
+          backgroundColor: Colors.white10,
+          elevation: 0,
+        ),
         body: Column(children: [
           SizedBox(
               width: MediaQuery.of(context).size.width,

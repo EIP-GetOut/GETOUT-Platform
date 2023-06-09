@@ -49,8 +49,11 @@ class RequestsService {
       GenerateMoviesResponse result = [];
 
       data['movies'].forEach((elem) {
+        print(elem['overview']);
         result.add(MoviePreview(
             id: elem['id'], title: elem['title'], posterPath: elem['poster']));
+        //  , overview: elem['overview']
+            // duration: elem['duration']
       });
 
       return result;
@@ -114,7 +117,7 @@ class RequestsService {
     try {
     final http.Response response = await http.post(url, body: body,  headers: header);
     print("response = ");
-    print(response.body);
+    print(response.statusCode);
       if (response.statusCode != StatusCode.CREATED) {
         return LoginResponseInfo(statusCode: response.statusCode);
       }
