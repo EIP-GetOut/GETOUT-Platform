@@ -6,7 +6,6 @@
 */
 
 import { Request, Response, Router } from "express";
-import { query } from "express-validator";
 import { getReasonPhrase, StatusCodes } from "http-status-codes";
 import { MovieResponse }  from 'moviedb-promise'
 
@@ -17,13 +16,9 @@ import { getDetail } from "@models/movie";
 
 const router = Router();
 
-const rulesGet = [
-    query('id').isNumeric()
-]
-
-router.get('/movie/:id', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
-    logger.info(req.query)
-    return getDetail(req.query).then((movieObtained: MovieResponse | undefined) => {
+router.get('/movie/:id',  validate, logApiRequest, (req: Request, res: Response) => {
+    logger.info(req.params)
+    return getDetail(req.params).then((movieObtained: MovieResponse | undefined) => {
         if (!movieObtained) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
         }
