@@ -20,9 +20,9 @@ services:
         networks:
             - network
         environment:
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=docker
-            - POSTGRES_DB=getout-db
+            - POSTGRES_USER=${TYPEORM_USERNAME}
+            - POSTGRES_PASSWORD=${TYPEORM_PASSWORD}
+            - POSTGRES_DB=${TYPEORM_DATABASE}
     server:
         build:
             context: .
@@ -38,7 +38,10 @@ services:
         networks:
             - network
         restart: always
+        env_file:
+            - .env
         environment:
+            - NODE_ENV=${NODE_ENV:-development}
             - localhost
 
 volumes:

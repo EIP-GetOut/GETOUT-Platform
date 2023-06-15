@@ -25,7 +25,7 @@ import { appDataSource } from '@config/dataSource'
     useRoutes(app)
 
     app.listen(port, () => {
-      logger.info(`App listening at http://localhost:${port}`)
+      logger.info(`App listening in ${process.env.NODE_ENV!} environment at http://localhost:${port}`)
     })
   }).catch((err) => {
     logger.error("Error during Data Source initialization:", err)
