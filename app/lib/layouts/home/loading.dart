@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 
 import 'package:GetOut/layouts/home/dashboard.dart';
 import 'package:GetOut/models/requests/generate_movies.dart';
-import 'package:GetOut/models/flex_size.dart';
 import 'package:GetOut/services/requests/requests_service.dart';
 
 import 'dart:math';
@@ -45,8 +44,6 @@ class LoadingPage extends StatefulWidget {
 class _LoadingPageState extends State<LoadingPage> {
   @override
   Widget build(BuildContext context) {
-    bool isLandscape = (MediaQuery.of(context).size.width >
-        MediaQuery.of(context).size.height);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       GenerateMoviesRequest request = GenerateMoviesRequest(genres: [
@@ -60,40 +57,10 @@ class _LoadingPageState extends State<LoadingPage> {
             context,
             MaterialPageRoute(
                 builder: (context) => DashboardPage(
-                      movies: moviesResponse,
                     )));
       });
     });
-    return Scaffold(
-        backgroundColor: Colors.white,
-        body: NestedScrollView(
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[];
-          },
-          body: Column(children: [
-            SizedBox(height: perHeight(context, (isLandscape ? 25 : 30))),
-            Row(children: [
-              SizedBox(width: perWidth(context, (isLandscape ? 25 : 10))),
-              SizedBox(
-                  height: uniHeight(context, 13, isLandscape),
-                  width: uniWidth(context, 27, isLandscape),
-                  child: Image.asset('assets/GetOut_logo.png')),
-              SizedBox(width: perWidth(context, 4)),
-              SizedBox(
-                  height: uniHeight(context, 10, isLandscape),
-                  width: uniWidth(context, 45, isLandscape),
-                  child: Image.asset('assets/GetOut_text.png'))
-            ]),
-            SizedBox(height: perHeight(context, (isLandscape ? 8 : 8))),
-            const SizedBox(
-              height: 85,
-              width: 85,
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.transparent,
-              ),
-            )
-          ]),
-        ));
+    return const Scaffold(
+        backgroundColor: Colors.white);
   }
 }

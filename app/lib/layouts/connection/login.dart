@@ -1,11 +1,11 @@
-import 'package:GetOut/layouts/home/loading.dart';
 import 'package:GetOut/models/requests/login.dart';
 import 'package:flutter/material.dart';
 import 'package:GetOut/layouts/connection/register.dart';
 import 'package:GetOut/models/sign/fields.dart';
 import 'package:GetOut/services/requests/requests_service.dart';
-import 'package:GetOut/layouts/welcome.dart';
 import 'package:GetOut/services/google/google_signin_api.dart';
+import 'package:GetOut/layouts/home/load.dart';
+import 'package:GetOut/layouts/home/dashboard.dart';
 
 class ConnectionPage extends StatefulWidget {
   const ConnectionPage({Key? key}) : super(key: key);
@@ -19,44 +19,47 @@ class _ConnectionPageState extends State<ConnectionPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
-  String textState = "";
+  String textState = '';
 
-  Future<VoidCallback?> loginPressed() async {
-    if (_formKey.currentState!.validate()) {
-          setState(() {
+  Future<void> loginPressed() async {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+    setState(() {
       isLoading = true;
     });
     LoginResponseInfo res = await RequestsService.instance.login(
         LoginRequest(email: emailController.text,
             password: passwordController.text));
     if (res.statusCode == LoginResponseInfo.success) {
-      return Navigator.push(context,
-                MaterialPageRoute(builder: (context) => LoadingPage()));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => DashboardPage()));
+      return;
     }
     setState(() {
       isLoading = false;
     });
-    if (res.statusCode == 200)
-      textState = "Connecté";
-    if (res.statusCode == 403)
-      textState = "Le mot de passe ou l'adresse mail est incorrect";
-    if (res.statusCode == 502)
-      textState = "Pas de connexion internet";
-    if (res.statusCode == 500)
-      textState = "Une erreur s'est produite, veuillez reesayer plus tard";
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text(textState),
-                backgroundColor: (res.statusCode != 200 ? Color.fromARGB(255, 239, 46, 46) : Color.fromARGB(255, 109, 154, 3)) )
-            );
-    return null;
+    if (res.statusCode == 200) {
+      textState = 'Connecté';
+    } else if (res.statusCode == 403) {
+      textState = 'Le mot de passe ou l\'adresse mail est incorrect';
+    } else if (res.statusCode == 502) {
+      textState = 'Pas de connexion internet';
+    } else if (res.statusCode == 500) {
+      textState = 'Une erreur s\'est produite, veuillez reesayer plus tard';
     }
-    return null;
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(textState),
+            backgroundColor: (res.statusCode != 200 ? Color.fromARGB(255, 239, 46, 46) : Color.fromARGB(255, 109, 154, 3)) )
+            );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  isLoading
+        ? const LoadPage()
+        : Scaffold(
         body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

@@ -123,9 +123,7 @@ class FirstNameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        child : Column(children: [
-          TextFormField(
+    return TextFormField(
               controller: controller,
               obscureText: false,
               decoration: InputDecoration(
@@ -146,9 +144,7 @@ class FirstNameField extends StatelessWidget {
                 }
                 return null;
               }
-          ),
-        ],
-        ));
+          );
   }
 }
 

@@ -9,11 +9,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:GetOut/models/requests/generate_movies.dart';
 import 'package:GetOut/layouts/movie/movie.dart';
+import 'package:GetOut/layouts/home/load.dart';
+import 'package:GetOut/services/requests/requests_service.dart';
+
+import 'dart:math';
+
 
 class DashboardPage extends StatefulWidget {
-  const DashboardPage({Key? key, required this.movies}) : super(key: key);
+  DashboardPage({Key? key}) : super(key: key);
 
-  final GenerateMoviesResponse movies;
+  GenerateMoviesResponse movies = [];
+  final List<int> genre = [
+    28,
+    12,
+    16,
+    35,
+    80,
+    99,
+    18,
+    10751,
+    14,
+    36,
+    27,
+    10402,
+    9648,
+    10749,
+    878,
+    10770,
+    53,
+    10752,
+    37
+  ];
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
@@ -29,14 +55,40 @@ class AppScrollBehavior extends MaterialScrollBehavior {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
+
+  bool isLoading = true;
+
+  Future<void> getMovies() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      GenerateMoviesRequest request = GenerateMoviesRequest(genres: [
+        widget.genre[Random().nextInt(19)],
+        widget.genre[Random().nextInt(19)]
+      ]);
+      RequestsService.instance
+          .generateMovies(request)
+          .then((GenerateMoviesResponse moviesResponse) {
+              setState(() {
+                isLoading = false;
+              });
+            widget.movies = moviesResponse;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     PageController pageController =
         PageController(viewportFraction: 0.2, initialPage: 0);
-    // bool isLandscape = (MediaQuery.of(context).size.width >
-    //     MediaQuery.of(context).size.height);
 
-    return Scaffold(
+    if (isLoading && widget.movies.isEmpty) {
+      getMovies();
+    }
+    if (!isLoading && widget.movies.isEmpty) {
+      // return ErrorPage(); // TODO: change to error page
+    }
+    return  isLoading
+        ? const LoadPage()
+        : Scaffold(
       backgroundColor: Colors.transparent,
       body: NestedScrollView(
         floatHeaderSlivers: true,
