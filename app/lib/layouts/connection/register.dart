@@ -29,12 +29,7 @@ class _RegisterPageState extends State<RegisterPage>
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController password2Controller = TextEditingController();
-  final _nameKey = GlobalKey<FormState>();
-  final _firstnameKey = GlobalKey<FormState>();
-  final _emailKey = GlobalKey<FormState>();
-  final _birthDateKey = GlobalKey<FormState>();
-  final _passwordKey = GlobalKey<FormState>();
-  final _password2Key = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   final HttpStatus httpStatus = HttpStatus({
     HttpStatus.INTERNAL_SERVER_ERROR: 'Une erreur s\'est produite, veuillez réesayer plus tard',
@@ -45,30 +40,31 @@ class _RegisterPageState extends State<RegisterPage>
 
   Future<void> registerPressed() async
   {
-    if (!_emailKey.currentState!.validate() && !_nameKey.currentState!.validate() &&
-        !_firstnameKey.currentState!.validate() && !_birthDateKey.currentState!.validate() &&
-        !_passwordKey.currentState!.validate() && !_password2Key.currentState!.validate()) {
-        return;
+    if (!_formKey.currentState!.validate()) {
+      return;
     }
     setState(() {
       isLoading = true;
     });
-    AccountResponseInfo res = await RequestsService.instance.register(CreateAccountRequest(
-        email: emailController.text,
-        password: passwordController.text,
-        firstName: firstNameController.text,
-        lastName: lastNameController.text,
-        bornDate: bornDateController.text));
+    AccountResponseInfo res = await RequestsService.instance.register(
+        CreateAccountRequest(
+            email: emailController.text,
+            password: passwordController.text,
+            firstName: firstNameController.text,
+            lastName: lastNameController.text,
+            bornDate: bornDateController.text));
     if (res.statusCode == AccountResponseInfo.success) {
       isLoading = false;
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const WelcomePage()));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const WelcomePage()));
       return;
     }
     setState(() {
       isLoading = false;
     });
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(httpStatus.getMessage(res.statusCode))));
+        content: Text(httpStatus.getMessage(res.statusCode)),
+        backgroundColor: const Color.fromARGB(255, 109, 154, 3)));
   }
 
   @override
@@ -99,46 +95,49 @@ class _RegisterPageState extends State<RegisterPage>
           backgroundColor: Colors.white10,
           elevation: 0,
         ),
-        body: SingleChildScrollView(child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              /// TODO a loop for all fields (padding with each field)
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 8, vertical: 8),
-                child: NameField(formKey: _nameKey, controller: lastNameController)
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 8, vertical: 8),
-                child: FirstNameField(formKey: _firstnameKey, controller: firstNameController)
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 8, vertical: 8),
-                child: BirthDateField(formKey: _birthDateKey, controller: bornDateController)
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 8, vertical: 8),
-                child: MailField(formKey: _emailKey, controller: emailController),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 8, vertical: 8),
-                child: PasswordField(formKey: _passwordKey, controller: passwordController),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 8, vertical: 8),
-                child: SecondPasswordField(formKey: _password2Key, controller: password2Controller, fstPassword: passwordController.text)
-              ),
-              const SizedBox(
-                height: 70,
-              ),
-              startButton(context, MediaQuery.of(context).size.width),
-            ])),
+        body: SingleChildScrollView(child: Form(
+          key: _formKey,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                /// TODO a loop for all fields (padding with each field)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8, vertical: 8),
+                  child: NameField(controller: lastNameController)
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8, vertical: 8),
+                  child: FirstNameField(controller: firstNameController)
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8, vertical: 8),
+                  child: BirthDateField(controller: bornDateController)
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8, vertical: 8),
+                  child: MailField(controller: emailController),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8, vertical: 8),
+                  child: PasswordField(controller: passwordController),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8, vertical: 8),
+                  child: SecondPasswordField(controller: password2Controller, fstPassword: passwordController.text)
+                ),
+                const SizedBox(
+                  height: 70,
+                ),
+                startButton(context, MediaQuery.of(context).size.width),
+              ]),
+        )),
     );
   }
 

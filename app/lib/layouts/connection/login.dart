@@ -18,13 +18,11 @@ class _ConnectionPageState extends State<ConnectionPage> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final _emailKey = GlobalKey<FormState>();
-  final _passwordKey = GlobalKey<FormState>();
   bool isLoading = false;
   String textState = "";
 
   Future<VoidCallback?> loginPressed() async {
-    if (_emailKey.currentState!.validate() && _passwordKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate()) {
           setState(() {
       isLoading = true;
     });
@@ -53,6 +51,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
             );
     return null;
     }
+    return null;
   }
 
   @override
@@ -80,15 +79,12 @@ class _ConnectionPageState extends State<ConnectionPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 16),
-                          child: MailField(
-                              formKey: _emailKey, controller: emailController),
+                          child: MailField(controller: emailController),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 16),
-                          child: PasswordField(
-                              formKey: _passwordKey,
-                              controller: passwordController),
+                          child: PasswordField(controller: passwordController),
                         ),
                         SizedBox(
                           child: Align(

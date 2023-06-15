@@ -11,16 +11,12 @@ import 'package:intl/intl.dart';
 
 class MailField extends StatelessWidget {
   final TextEditingController controller;
-  final formKey;
 
-  const MailField({super.key, required this.formKey, required this.controller});
+  const MailField({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: formKey,
-        child : Column(children: [
-          TextFormField(
+    return TextFormField(
               controller: controller,
               obscureText: false,
               decoration: InputDecoration(
@@ -39,35 +35,19 @@ class MailField extends StatelessWidget {
                 RequiredValidator(errorText: 'Un email est requis'),
                 EmailValidator(errorText: 'Entrez une addresse email valide')
               ])
-          ),
-        ],
-        ));
+          );
   }
 }
 
 class PasswordField extends StatelessWidget {
   final TextEditingController controller;
-  final formKey;
   final Key key = UniqueKey();
 
-  PasswordField({super.key, required this.formKey, required this.controller});
-
-  String ?validatePassword(String value) {
-    if (value.isEmpty) {
-      return 'Un mot de passe est requis';
-    } else if (value.length < 12) {
-      return 'Un mot de passe doit contenir au moins 12 caractères';
-    } else {
-      return null;
-    }
-  }
+  PasswordField({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-    key: formKey,
-        child : Column(children: [
-          TextFormField(
+    return TextFormField(
           controller: controller,
           obscureText: true,
           decoration: InputDecoration(
@@ -89,18 +69,15 @@ class PasswordField extends StatelessWidget {
             PatternValidator(r'([a-z])', errorText: 'Votre mot de passe doit contenir au moins une miniscule'),
             PatternValidator(r'([0-9])', errorText: 'Votre mot de passe doit contenir au moins un chiffre'),
           ])
-          ),
-        ],
-      ));
+          );
     }
 }
 
 class SecondPasswordField extends StatelessWidget {
   final TextEditingController controller;
-  final formKey;
   final String fstPassword;
 
-  const SecondPasswordField({super.key, required this.formKey, required this.controller, required this.fstPassword});
+  const SecondPasswordField({super.key, required this.controller, required this.fstPassword});
 
   String ?validatePassword(String value) {
     if (value.isEmpty) {
@@ -114,10 +91,7 @@ class SecondPasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: formKey,
-        child : Column(children: [
-          TextFormField(
+    return TextFormField(
               controller: controller,
               obscureText: true,
               decoration: InputDecoration(
@@ -138,30 +112,18 @@ class SecondPasswordField extends StatelessWidget {
                 }
                   return validatePassword(value);
                 }
-          ),
-        ],
-        ));
+          );
   }
 }
 
 class FirstNameField extends StatelessWidget {
   final TextEditingController controller;
-  final formKey;
 
-  const FirstNameField({super.key, required this.formKey, required this.controller});
-
-  String ?validateName(String value) {
-    if (value.isEmpty) {
-      return 'Un prénom est requis';
-    } else {
-      return null;
-    }
-  }
+  const FirstNameField({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Form(
-        key: formKey,
         child : Column(children: [
           TextFormField(
               controller: controller,
@@ -179,10 +141,10 @@ class FirstNameField extends StatelessWidget {
                   )
               ),
               validator: (value) {
-                if (value == null) {
+                if (value == null || value.isEmpty) {
                   return 'Un prénom est requis';
                 }
-                return validateName(value);
+                return null;
               }
           ),
         ],
@@ -192,24 +154,12 @@ class FirstNameField extends StatelessWidget {
 
 class NameField extends StatelessWidget {
   final TextEditingController controller;
-  final formKey;
 
-  const NameField({super.key, required this.formKey, required this.controller});
-
-  String ?validateName(String value) {
-    if (value.isEmpty) {
-      return 'Un nom est requis';
-    } else {
-      return null;
-    }
-  }
+  const NameField({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: formKey,
-        child : Column(children: [
-          TextFormField(
+    return TextFormField(
               controller: controller,
               obscureText: false,
               decoration: InputDecoration(
@@ -225,37 +175,23 @@ class NameField extends StatelessWidget {
                   )
               ),
               validator: (value) {
-                if (value == null) {
+                if (value == null || value.isEmpty) {
                   return 'Un nom est requis';
                 }
-                return validateName(value);
+                return null;
               }
-          ),
-        ],
-        ));
+          );
   }
 }
 
 class BirthDateField extends StatelessWidget {
   final TextEditingController controller;
-  final formKey;
 
-  const BirthDateField({super.key, required this.formKey, required this.controller});
-
-  String ?validateBirth(String value) {
-    if (value.isEmpty) {
-      return 'Une date est requise';
-    } else {
-      return null;
-    }
-  }
+  const BirthDateField({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: formKey,
-        child : Column(children: [
-          TextFormField(
+    return TextFormField(
               controller: controller,
               decoration: InputDecoration(
                   hintText: 'Date de naissance',
@@ -271,6 +207,12 @@ class BirthDateField extends StatelessWidget {
                   )
               ),
               readOnly: true,
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Une date est requise';
+                }
+                return null;
+              },
               //set it true, so that user will not able to edit text
               onTap: () async {
                 DateTime? pickedDate = await showDatePicker(
@@ -283,7 +225,8 @@ class BirthDateField extends StatelessWidget {
 
                 if (pickedDate != null) {
                   // print(pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                  String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
+                  String formattedDate = DateFormat('dd/MM/yyyy').format(
+                      pickedDate);
                   // print(formattedDate); //formatted date output using intl package =>  2021-03-16
                   controller.text = formattedDate;
                   // setState(() {
@@ -291,56 +234,7 @@ class BirthDateField extends StatelessWidget {
                   //       formattedDate; //set output date to TextField value.
                   // });
                 }
-                
-                validator: (value) {
-                if (value == null) {
-                  return 'Une date est requise';
-                }
-                return validateBirth(value);
-              };
-            }
-          ),
-        ],
-        ));
-  }
-}
-
-class MyField extends StatelessWidget {
-  final TextEditingController? controller;
-  final formKey = GlobalKey();
-  final Key key = UniqueKey();
-  final String ?name;
-
-  MyField({super.key, required this.controller, required this.name});
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-        key: formKey,
-        child : Column(children: [
-          TextFormField(
-              controller: controller,
-              obscureText: false,
-              decoration: InputDecoration(
-                  hintText: name,
-                  labelText: name,
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(0.5),
-                      borderSide: const BorderSide(color: Colors.black)
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(0.5),
-
-                  )
-              ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'une info est requise';
-                }
-                return null;
               }
-          ),
-        ],
-        ));
+          );
   }
 }
