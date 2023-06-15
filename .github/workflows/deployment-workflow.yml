@@ -17,8 +17,8 @@ jobs:
           uses: appleboy/ssh-action@master
           with:
             host: ${{ secrets.HOST }}
-            username: ${{ secrets.USERNAME }}
+            username: admin-getout
             key: ${{ secrets.KEY }}
-            script: ""
+            script: "/root/pull_and_redeploy_backend.sh"
 
     
