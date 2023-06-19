@@ -1,4 +1,4 @@
-# getout
+# GetOut
 
 A new Flutter project.
 

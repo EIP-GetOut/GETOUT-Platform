@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+    redis:
+        image: redis
+        ports:
+            - '6379:6379'
+        restart: always
+        networks:
+            - network
+    postgres:
+        image: postgres
+        ports:
+            - '5432:5432'
+        env_file:
+            - .env
+        volumes:
+            - data:/var/lib/postgresql/data
+        restart: always
+        networks:
+            - network
+        environment:
+            - POSTGRES_USER=${TYPEORM_USERNAME}
+            - POSTGRES_PASSWORD=${TYPEORM_PASSWORD}
+            - POSTGRES_DB=${TYPEORM_DATABASE}
+    server:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - '8080:8080'
+        volumes:
+            - './src:/app/src'
+            - './logs:/app/logs'
+        depends_on:
+            - postgres
+            - redis
+        networks:
+            - network
+        restart: always
+        env_file:
+            - .env
+        environment:
+            - NODE_ENV=${NODE_ENV:-development}
+            - localhost
+
+volumes:
+    data:
+
+networks:
+    network:
