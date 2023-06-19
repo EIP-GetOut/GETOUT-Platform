@@ -7,14 +7,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
-import 'package:GetOut/models/requests/generate_movies.dart';
-import 'package:GetOut/layouts/movie/movie.dart';
-import 'package:GetOut/layouts/home/load.dart';
-import 'package:GetOut/services/requests/requests_service.dart';
+import 'package:getout/models/requests/generate_movies.dart';
+import 'package:getout/layouts/movie/movie.dart';
+import 'package:getout/layouts/home/load.dart';
+import 'package:getout/services/requests/requests_service.dart';
 
 import 'dart:math';
 
-
+// ignore: must_be_immutable
 class DashboardPage extends StatefulWidget {
   DashboardPage({Key? key}) : super(key: key);
 
@@ -55,7 +55,6 @@ class AppScrollBehavior extends MaterialScrollBehavior {
 }
 
 class _DashboardPageState extends State<DashboardPage> {
-
   bool isLoading = true;
 
   Future<void> getMovies() async {
@@ -67,10 +66,10 @@ class _DashboardPageState extends State<DashboardPage> {
       RequestsService.instance
           .generateMovies(request)
           .then((GenerateMoviesResponse moviesResponse) {
-              setState(() {
-                isLoading = false;
-              });
-            widget.movies = moviesResponse;
+        setState(() {
+          isLoading = false;
+        });
+        widget.movies = moviesResponse;
       });
     });
   }
@@ -86,45 +85,50 @@ class _DashboardPageState extends State<DashboardPage> {
     if (!isLoading && widget.movies.isEmpty) {
       // return ErrorPage(); // TODO: change to error page
     }
-    return  isLoading
+    return isLoading
         ? const LoadPage()
         : Scaffold(
-      backgroundColor: Colors.transparent,
-      body: NestedScrollView(
-        floatHeaderSlivers: true,
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[];
-        },
-        body: Column(
-          children: [
-            const Text('Vos recomandations,', textScaleFactor: 3),
-            const Text('Films', textScaleFactor: 1.5),
-            Expanded(
-                child: PageView(
-              scrollBehavior: AppScrollBehavior(),
-              controller: pageController,
-              allowImplicitScrolling: true,
-              scrollDirection: Axis.horizontal,
-              children: [
-                for (var moviePreview in widget.movies)
-                InkWell(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => MovieDetailsPage(moviePreview)));
-                    },
-                  child: Container(
-                      padding: const EdgeInsets.all(5.0),
-                      child: Column(children: [
-                        Image.network(
-                            'https://image.tmdb.org/t/p/w600_and_h900_bestv2${moviePreview.posterPath}',
-                            height: 300),
-                        Text(moviePreview.title, textScaleFactor: 0.9),
-                      ]))
-                      )
-              ],
-            )),
-          ],
-        ),
-      ),
-    );
+            backgroundColor: Colors.transparent,
+            body: NestedScrollView(
+              floatHeaderSlivers: true,
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                return <Widget>[];
+              },
+              body: Column(
+                children: [
+                  const Text('Vos recomandations,', textScaleFactor: 3),
+                  const Text('Films', textScaleFactor: 1.5),
+                  Expanded(
+                      child: PageView(
+                    scrollBehavior: AppScrollBehavior(),
+                    controller: pageController,
+                    allowImplicitScrolling: true,
+                    scrollDirection: Axis.horizontal,
+                    children: [
+                      for (var moviePreview in widget.movies)
+                        InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          MovieDetailsPage(moviePreview)));
+                            },
+                            child: Container(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Column(children: [
+                                  Image.network(
+                                      'https://image.tmdb.org/t/p/w600_and_h900_bestv2${moviePreview.posterPath}',
+                                      height: 300),
+                                  Text(moviePreview.title,
+                                      textScaleFactor: 0.9),
+                                ])))
+                    ],
+                  )),
+                ],
+              ),
+            ),
+          );
   }
 }

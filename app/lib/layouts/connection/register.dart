@@ -5,13 +5,13 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-import 'package:GetOut/models/requests/create_account.dart';
+import 'package:getout/models/requests/create_account.dart';
 import 'package:flutter/material.dart';
-import 'package:GetOut/layouts/welcome.dart';
-import 'package:GetOut/models/sign/fields.dart';
-import 'package:GetOut/services/requests/requests_service.dart';
-import 'package:GetOut/constants/http_status.dart';
-import 'package:GetOut/layouts/home/load.dart';
+import 'package:getout/layouts/welcome.dart';
+import 'package:getout/models/sign/fields.dart';
+import 'package:getout/services/requests/requests_service.dart';
+import 'package:getout/constants/http_status.dart';
+import 'package:getout/layouts/home/load.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -20,8 +20,7 @@ class RegisterPage extends StatefulWidget {
   State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage>
-{
+class _RegisterPageState extends State<RegisterPage> {
   /// TODO transform controllers and keys into a list
   TextEditingController lastNameController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
@@ -32,113 +31,113 @@ class _RegisterPageState extends State<RegisterPage>
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   final HttpStatus httpStatus = HttpStatus({
-    HttpStatus.INTERNAL_SERVER_ERROR: 'Une erreur s\'est produite, veuillez réesayer plus tard',
+    HttpStatus.INTERNAL_SERVER_ERROR:
+        'Une erreur s\'est produite, veuillez réesayer plus tard',
     HttpStatus.CONFLICT: 'Un compte avec cet email existe déjà',
     HttpStatus.NO_INTERNET: 'Pas de connexion internet',
-    HttpStatus.ACCEPTED: 'Une erreur s\'est produite, veuillez réesayer plus tard'
+    HttpStatus.ACCEPTED:
+        'Une erreur s\'est produite, veuillez réesayer plus tard'
   });
 
-  Future<void> registerPressed() async
-  {
+  Future<void> registerPressed() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
     setState(() {
       isLoading = true;
     });
-    AccountResponseInfo res = await RequestsService.instance.register(
-        CreateAccountRequest(
+    RequestsService.instance
+        .register(CreateAccountRequest(
             email: emailController.text,
             password: passwordController.text,
             firstName: firstNameController.text,
             lastName: lastNameController.text,
-            bornDate: bornDateController.text));
-    if (res.statusCode == AccountResponseInfo.success) {
-      isLoading = false;
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const WelcomePage()));
-      return;
-    }
-    setState(() {
-      isLoading = false;
+            bornDate: bornDateController.text))
+        .then((AccountResponseInfo res) {
+      if (res.statusCode == AccountResponseInfo.success) {
+        isLoading = false;
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const WelcomePage()));
+        return;
+      }
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(httpStatus.getMessage(res.statusCode)),
+          backgroundColor: const Color.fromARGB(255, 109, 154, 3)));
     });
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(httpStatus.getMessage(res.statusCode)),
-        backgroundColor: const Color.fromARGB(255, 109, 154, 3)));
   }
 
   @override
-  
   Widget build(BuildContext context) {
     return isLoading
         ? const LoadPage()
         : Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: AppBar(
-            iconTheme: const IconThemeData(
-              color: Colors.black, //change your color here
+            resizeToAvoidBottomInset: true,
+            appBar: AppBar(
+              iconTheme: const IconThemeData(
+                color: Colors.black, //change your color here
+              ),
+              centerTitle: true,
+              titleSpacing: 0,
+              title: const Text(
+                'VOTRE PROFIL',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
+                  decorationThickness: 4,
+                  decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+              leading: const BackButton(),
+              backgroundColor: Colors.white10,
+              elevation: 0,
             ),
-          centerTitle: true,
-                  titleSpacing: 0,
-          title: const Text(
-              'VOTRE PROFIL',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 30,
-                decorationThickness: 4,
-                decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
-                decoration: 
-                TextDecoration.underline,
-                ),
-          ),
-          leading: const BackButton(),
-          backgroundColor: Colors.white10,
-          elevation: 0,
-        ),
-        body: SingleChildScrollView(child: Form(
-          key: _formKey,
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                /// TODO a loop for all fields (padding with each field)
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 8, vertical: 8),
-                  child: NameField(controller: lastNameController)
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 8, vertical: 8),
-                  child: FirstNameField(controller: firstNameController)
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 8, vertical: 8),
-                  child: BirthDateField(controller: bornDateController)
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 8, vertical: 8),
-                  child: MailField(controller: emailController),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 8, vertical: 8),
-                  child: PasswordField(controller: passwordController),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 8, vertical: 8),
-                  child: SecondPasswordField(controller: password2Controller, fstPassword: passwordController.text)
-                ),
-                const SizedBox(
-                  height: 70,
-                ),
-                startButton(context, MediaQuery.of(context).size.width),
-              ]),
-        )),
-    );
+            body: SingleChildScrollView(
+                child: Form(
+              key: _formKey,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    /// TODO a loop for all fields (padding with each field)
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 8),
+                        child: NameField(controller: lastNameController)),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 8),
+                        child: FirstNameField(controller: firstNameController)),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 8),
+                        child: BirthDateField(controller: bornDateController)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 8),
+                      child: MailField(controller: emailController),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 8),
+                      child: PasswordField(controller: passwordController),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 8),
+                        child: SecondPasswordField(
+                            controller: password2Controller,
+                            fstPassword: passwordController.text)),
+                    const SizedBox(
+                      height: 70,
+                    ),
+                    startButton(context, MediaQuery.of(context).size.width),
+                  ]),
+            )),
+          );
   }
 
   Widget startButton(BuildContext context, double phoneWidth) {

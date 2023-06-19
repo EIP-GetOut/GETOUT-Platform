@@ -6,9 +6,9 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:GetOut/models/category.dart';
-// import 'package:GetOut/layouts/welcome.dart';
-import 'package:GetOut/layouts/connection/login.dart';
+import 'package:getout/models/category.dart';
+// import 'package:getout/layouts/welcome.dart';
+import 'package:getout/layouts/connection/login.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 Map<int, Color> colorMap = {
@@ -39,18 +39,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Get Out',
-        localizationsDelegates: const [
-         GlobalMaterialLocalizations.delegate
-       ],
-       supportedLocales: const [
-         Locale('en'),
-         Locale('fr')
-       ],
+        localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
+        supportedLocales: const [Locale('en'), Locale('fr')],
         theme: ThemeData(
-            primarySwatch: MaterialColor(0xffD55641, colorMap),
-            fontFamily: 'Poppins',
+          primarySwatch: MaterialColor(0xffD55641, colorMap),
+          fontFamily: 'Poppins',
           colorScheme: const ColorScheme.light(primary: Color(0xFFD55641)),
-          buttonTheme: const ButtonThemeData(textTheme: ButtonTextTheme.primary),
+          buttonTheme:
+              const ButtonThemeData(textTheme: ButtonTextTheme.primary),
         ),
         // home: const WelcomePage(),
         home: const ConnectionPage());

@@ -7,13 +7,13 @@
 
 import 'dart:convert';
 
-import 'package:GetOut/models/requests/generate_movies.dart';
-import 'package:GetOut/models/requests/create_account.dart';
-import 'package:GetOut/models/requests/login.dart';
+import 'package:getout/models/requests/generate_movies.dart';
+import 'package:getout/models/requests/create_account.dart';
+import 'package:getout/models/requests/login.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:GetOut/constants/http_status.dart';
-import 'package:GetOut/constants/api_path.dart' as api_constants;
+import 'package:getout/constants/http_status.dart';
+import 'package:getout/constants/api_path.dart' as api_constants;
 
 String formatWithGenresParameter(List<int> genres) {
   String withGenres = '';
@@ -49,26 +49,25 @@ class RequestsService {
       GenerateMoviesResponse result = [];
 
       data['movies'].forEach((elem) {
-        print(elem['overview']);
+        // print(elem['overview']);
         result.add(MoviePreview(
             id: elem['id'], title: elem['title'], posterPath: elem['poster']));
         //  , overview: elem['overview']
-            // duration: elem['duration']
+        // duration: elem['duration']
       });
 
       return result;
-    }, onError: (eror) {
-      // TODO
+    }, onError: (error) {
+      // TODO Handle Error
     });
   }
 
-  Future<AccountResponseInfo> register(CreateAccountRequest request) async
-  {
-    AccountResponseInfo result = AccountResponseInfo(statusCode: HttpStatus.APP_ERROR);
-    final Uri url = Uri.http(api_constants.rootApiPath, api_constants.signupApiPath);
-    final Map<String, String> header = {
-      'Content-Type': 'application/json'
-    };
+  Future<AccountResponseInfo> register(CreateAccountRequest request) async {
+    AccountResponseInfo result =
+        AccountResponseInfo(statusCode: HttpStatus.APP_ERROR);
+    final Uri url =
+        Uri.http(api_constants.rootApiPath, api_constants.signupApiPath);
+    final Map<String, String> header = {'Content-Type': 'application/json'};
     final String body = jsonEncode({
       'email': request.email,
       'firstName': request.firstName,
@@ -79,21 +78,24 @@ class RequestsService {
     });
 
     try {
-      final http.Response response = await http.post(url, body: body,  headers: header);
-        if (response.statusCode != HttpStatus.CREATED) {
-          return AccountResponseInfo(statusCode: response.statusCode);
-        }
-        final dynamic data = jsonDecode(response.body);
-        result = AccountResponseInfo(
-            id: data['id'],
-            email: data['email'],
-            password: data['password'],
-            firstName: data['firstName'],
-            lastName: data['lastName'],
-            bornDate: data['bornDate'],
-            statusCode: response.statusCode);
+      final http.Response response =
+          await http.post(url, body: body, headers: header);
+      if (response.statusCode != HttpStatus.CREATED) {
+        return AccountResponseInfo(statusCode: response.statusCode);
+      }
+      final dynamic data = jsonDecode(response.body);
+      result = AccountResponseInfo(
+          id: data['id'],
+          email: data['email'],
+          password: data['password'],
+          firstName: data['firstName'],
+          lastName: data['lastName'],
+          bornDate: data['bornDate'],
+          statusCode: response.statusCode);
     } catch (error) {
-      if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
+      if (error.toString() == 'Connection reset by peer' ||
+          error.toString() ==
+              'Connection closed before full header was received') {
         return AccountResponseInfo(statusCode: HttpStatus.NO_INTERNET);
       }
       return result;
@@ -101,20 +103,16 @@ class RequestsService {
     return result;
   }
 
-  Future<LoginResponseInfo> login(LoginRequest request) async
-  {
-    final Uri url = Uri.http(api_constants.rootApiPath, api_constants.loginApiPath);
-    final Map<String, String> header = {
-      'Content-Type': 'application/json'
-    };
-    final String body = jsonEncode({
-      'email': request.email,
-      'password': request.password
-    });
-
+  Future<LoginResponseInfo> login(LoginRequest request) async {
+    final Uri url =
+        Uri.http(api_constants.rootApiPath, api_constants.loginApiPath);
+    final Map<String, String> header = {'Content-Type': 'application/json'};
+    final String body =
+        jsonEncode({'email': request.email, 'password': request.password});
 
     try {
-    final http.Response response = await http.post(url, body: body,  headers: header);
+      final http.Response response =
+          await http.post(url, body: body, headers: header);
       if (response.statusCode != HttpStatus.CREATED) {
         return LoginResponseInfo(statusCode: response.statusCode);
       }
@@ -129,7 +127,9 @@ class RequestsService {
           statusCode: response.statusCode);
       return result;
     } catch (error) {
-      if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
+      if (error.toString() == 'Connection reset by peer' ||
+          error.toString() ==
+              'Connection closed before full header was received') {
         return LoginResponseInfo(statusCode: 502); // 'No internet connection';
       }
       // print('ERROR ON REGISTER REQUEST : $error');

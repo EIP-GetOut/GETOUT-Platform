@@ -34,7 +34,7 @@ packages:
     source: hosted
     version: "2.1.1"
   boxicons:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: boxicons
       sha256: e5dd84ba99df87a9269e69597ded39839439b851ea7319b463f3f293ca24514d

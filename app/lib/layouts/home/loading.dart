@@ -7,9 +7,9 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:GetOut/layouts/home/dashboard.dart';
-import 'package:GetOut/models/requests/generate_movies.dart';
-import 'package:GetOut/services/requests/requests_service.dart';
+import 'package:getout/layouts/home/dashboard.dart';
+import 'package:getout/models/requests/generate_movies.dart';
+import 'package:getout/services/requests/requests_service.dart';
 
 import 'dart:math';
 
@@ -44,7 +44,6 @@ class LoadingPage extends StatefulWidget {
 class _LoadingPageState extends State<LoadingPage> {
   @override
   Widget build(BuildContext context) {
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
       GenerateMoviesRequest request = GenerateMoviesRequest(genres: [
         widget.genre[Random().nextInt(19)],
@@ -54,13 +53,9 @@ class _LoadingPageState extends State<LoadingPage> {
           .generateMovies(request)
           .then((GenerateMoviesResponse moviesResponse) {
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => DashboardPage(
-                    )));
+            context, MaterialPageRoute(builder: (context) => DashboardPage()));
       });
     });
-    return const Scaffold(
-        backgroundColor: Colors.white);
+    return const Scaffold(backgroundColor: Colors.white);
   }
 }

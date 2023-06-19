@@ -7,8 +7,8 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:GetOut/layouts/preference/preference.dart';
-import 'package:GetOut/layouts/preference/checklist.dart';
+import 'package:getout/layouts/preference/preference.dart';
+import 'package:getout/layouts/preference/checklist.dart';
 
 class MainPlaygroundPage extends StatefulWidget {
   const MainPlaygroundPage({Key? key}) : super(key: key);

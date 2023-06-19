@@ -6,11 +6,11 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:GetOut/models/flex_size.dart';
-import 'package:GetOut/models/category.dart';
-import 'package:GetOut/layouts/home/loading.dart';
-import 'package:GetOut/layouts/preference/checklist.dart';
-import 'package:GetOut/layouts/preference/slider.dart';
+import 'package:getout/models/flex_size.dart';
+import 'package:getout/models/category.dart';
+import 'package:getout/layouts/home/loading.dart';
+import 'package:getout/layouts/preference/checklist.dart';
+import 'package:getout/layouts/preference/slider.dart';
 
 class PreferencesPage extends StatefulWidget {
   PreferencesPage({

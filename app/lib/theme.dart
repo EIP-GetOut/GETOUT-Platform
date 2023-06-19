@@ -6,14 +6,14 @@ extension BackgroundColor on ThemeData {
 }
 
 extension SecondaryColor on ThemeData {
-  Color get secondaryColor => Color(0xFF078B8B);
+  Color get secondaryColor => const Color(0xFF078B8B);
 }
 
 extension ErorColor on ThemeData {
   Color get erorColor => const Color.fromARGB(255, 173, 52, 62);
 }
 
-final GetOutTheme = ThemeData(
+final getOutTheme = ThemeData(
   primaryColor: const Color.fromARGB(255, 145, 77, 125),
   textTheme: GoogleFonts.robotoTextTheme(),
   elevatedButtonTheme: ElevatedButtonThemeData(

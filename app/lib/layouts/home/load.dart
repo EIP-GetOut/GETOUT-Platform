@@ -6,7 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:GetOut/models/flex_size.dart';
+import 'package:getout/models/flex_size.dart';
 
 class LoadPage extends StatefulWidget {
   const LoadPage({Key? key}) : super(key: key);
@@ -15,8 +15,7 @@ class LoadPage extends StatefulWidget {
   State<LoadPage> createState() => _LoadPageState();
 }
 
-class _LoadPageState extends State<LoadPage>
-{
+class _LoadPageState extends State<LoadPage> {
   @override
   Widget build(BuildContext context) {
     bool isLandscape = (MediaQuery.of(context).size.width >
