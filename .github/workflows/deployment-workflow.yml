@@ -1,0 +1,24 @@
+name: Deployment CI
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v2
+
+        - name: SSH and deploy
+          uses: appleboy/ssh-action@master
+          with:
+            host: ${{ secrets.HOST }}
+            username: admin-getout
+            key: ${{ secrets.KEY }}
+            script: "/root/pull_and_redeploy_backend.sh"
+
+    
