@@ -88,6 +88,14 @@ flutter:
 
   assets:
     - assets/
+    - assets/images/Logo_GETOUT.png
+    - assets/images/Dessin_fille.png
+    - assets/images/Telephone_Check.png
+    - assets/images/Logo.png
+    - assets/images/Dessin.png
+    - assets/images/Telephone.png
+    - assets/images/Logo_Cinema.png
+    - assets/images/Logo_DVD.png
 
   fonts:
     - family: Poppins
