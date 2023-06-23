@@ -7,6 +7,7 @@
 
 import 'dart:convert';
 
+import 'package:getout/models/requests/info_movie.dart';
 import 'package:getout/models/requests/generate_movies.dart';
 import 'package:getout/models/requests/create_account.dart';
 import 'package:getout/models/requests/login.dart';
@@ -62,6 +63,71 @@ class RequestsService {
     });
   }
 
+  Future<InfoMovieResponse> getInfoMovie(CreateInfoMovieRequest request) async {
+    InfoMovieResponse result = InfoMovieResponse(statusCode: HttpStatus.APP_ERROR);
+    final Uri url = Uri.http(api_constants.rootApiPath, '${api_constants.getInfoMovieApiPath}/${request.id}');
+    final Map<String, String> header = {'Content-Type': 'application/json'};
+
+    try {
+      final http.Response response =
+      await http.get(url, headers: header);
+      if (response.statusCode != InfoMovieResponse.success) {
+        return InfoMovieResponse(statusCode: response.statusCode);
+      }
+      final dynamic data = jsonDecode(response.body);
+      result = InfoMovieResponse(
+          title: data['movie']['title'],
+          overview: data['movie']['overview'],
+          posterPath: data['movie']['poster_path'],
+          backdropPath: data['movie']['backdrop_path'],
+          releaseDate: data['movie']['release_date'],
+          voteAverage: data['movie']['vote_average'],
+          duration: data['movie']['duration'],
+          statusCode: response.statusCode);
+    } catch (error) {
+      if (error.toString() == 'Connection reset by peer' ||
+          error.toString() == 'Connection closed before full header was received') {
+        return InfoMovieResponse(statusCode: HttpStatus.NO_INTERNET);
+      }
+      return result;
+    }
+    return result;
+  }
+
+  Future<LoginResponseInfo> login(LoginRequest request) async {
+    final Uri url =
+        Uri.http(api_constants.rootApiPath, api_constants.loginApiPath);
+    final Map<String, String> header = {'Content-Type': 'application/json'};
+    final String body =
+        jsonEncode({'email': request.email, 'password': request.password});
+
+    try {
+      final http.Response response =
+          await http.post(url, body: body, headers: header);
+      if (response.statusCode != HttpStatus.CREATED) {
+        return LoginResponseInfo(statusCode: response.statusCode);
+      }
+      final dynamic data = jsonDecode(response.body);
+      final LoginResponseInfo result = LoginResponseInfo(
+          id: data['id'],
+          email: data['email'],
+          password: data['password'],
+          firstName: data['firstName'],
+          lastName: data['lastName'],
+          bornDate: data['bornDate'],
+          statusCode: response.statusCode);
+      return result;
+    } catch (error) {
+      if (error.toString() == 'Connection reset by peer' ||
+          error.toString() ==
+              'Connection closed before full header was received') {
+        return LoginResponseInfo(statusCode: 502); // 'No internet connection';
+      }
+      // print('ERROR ON REGISTER REQUEST : $error');
+      return LoginResponseInfo(statusCode: 500);
+    }
+  }
+
   Future<AccountResponseInfo> register(CreateAccountRequest request) async {
     AccountResponseInfo result =
         AccountResponseInfo(statusCode: HttpStatus.APP_ERROR);
@@ -101,39 +167,5 @@ class RequestsService {
       return result;
     }
     return result;
-  }
-
-  Future<LoginResponseInfo> login(LoginRequest request) async {
-    final Uri url =
-        Uri.http(api_constants.rootApiPath, api_constants.loginApiPath);
-    final Map<String, String> header = {'Content-Type': 'application/json'};
-    final String body =
-        jsonEncode({'email': request.email, 'password': request.password});
-
-    try {
-      final http.Response response =
-          await http.post(url, body: body, headers: header);
-      if (response.statusCode != HttpStatus.CREATED) {
-        return LoginResponseInfo(statusCode: response.statusCode);
-      }
-      final dynamic data = jsonDecode(response.body);
-      final LoginResponseInfo result = LoginResponseInfo(
-          id: data['id'],
-          email: data['email'],
-          password: data['password'],
-          firstName: data['firstName'],
-          lastName: data['lastName'],
-          bornDate: data['bornDate'],
-          statusCode: response.statusCode);
-      return result;
-    } catch (error) {
-      if (error.toString() == 'Connection reset by peer' ||
-          error.toString() ==
-              'Connection closed before full header was received') {
-        return LoginResponseInfo(statusCode: 502); // 'No internet connection';
-      }
-      // print('ERROR ON REGISTER REQUEST : $error');
-      return LoginResponseInfo(statusCode: 500);
-    }
   }
 }

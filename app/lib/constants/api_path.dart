@@ -16,3 +16,4 @@ const String resetPasswordApiPath = '/account/reset-password';
 
 // GENERATE THINGS API PATH
 const String generateMoviesApiPath = '/generate-movies';
+const String getInfoMovieApiPath = '/movie';

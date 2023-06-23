@@ -9,6 +9,10 @@ import 'package:getout/layouts/movie/movie_description.dart';
 import 'package:flutter/material.dart';
 import 'package:boxicons/boxicons.dart';
 import 'package:getout/models/requests/generate_movies.dart';
+import 'package:getout/models/requests/info_movie.dart';
+import 'package:getout/layouts/home/load.dart';
+import 'package:getout/services/requests/requests_service.dart';
+import 'package:getout/constants/http_status.dart';
 
 class MovieDetailsPage extends StatefulWidget {
   const MovieDetailsPage(this.movie, {super.key});
@@ -21,10 +25,44 @@ class MovieDetailsPage extends StatefulWidget {
 }
 
 class _MovieDetailsPageState extends State<MovieDetailsPage> {
+  bool isLoading = true;
+  InfoMovieResponse? infoMovie;
+  final HttpStatus httpStatus = HttpStatus({
+    HttpStatus.INTERNAL_SERVER_ERROR:
+    'Une erreur s\'est produite, veuillez réesayer plus tard',
+    HttpStatus.NO_INTERNET: 'Pas de connexion internet',
+  });
+
+  getMovieInfo() async {
+    InfoMovieResponse res = await RequestsService.instance
+        .getInfoMovie(CreateInfoMovieRequest(id: widget.movie.id));
+    if (res.statusCode == InfoMovieResponse.success) {
+      infoMovie = res;
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  paBoError() async {
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Une erreur s\'est produite, veuillez réesayer plus tard'),
+        backgroundColor: Color.fromARGB(255, 239, 46, 46)));
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (isLoading && infoMovie == null) {
+      getMovieInfo();
+      return const LoadPage();
+    }
+    if (isLoading == false && infoMovie == null) {
+      paBoError();
+      Navigator.pop(context, true);
+      return const LoadPage();
+    }
     String imageUrl =
-        'https://image.tmdb.org/t/p/w600_and_h900_bestv2${widget.movie.posterPath}';
+        'https://image.tmdb.org/t/p/w600_and_h900_bestv2${infoMovie?.posterPath}';
     // bool isLandscape = (MediaQuery.of(context).size.width >
     //     MediaQuery.of(context).size.height);
     Widget buildCoverImage() => Container(
@@ -67,7 +105,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
         ],
       ),
       Text(
-        widget.movie.title,
+        infoMovie?.title ?? '',
         textScaleFactor: 0.9,
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
@@ -93,40 +131,41 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
           Icon(Boxicons.bx_time, size: 40),
         ],
       ),
-      const Row(
+          Row(
         mainAxisAlignment:
             MainAxisAlignment.center, //Center Row contents horizontally,
         crossAxisAlignment: CrossAxisAlignment
             .center, //Center Row contents vertically,            children: [
         children: [
-          Text('Film',
+          const Text('Film',
               textScaleFactor: 0.9,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-          SizedBox(
+          const SizedBox(
               height: 20,
               child: VerticalDivider(
                 width: 10,
                 // color: Colors.black,
                 thickness: 0,
-                // heigth : double.infinity,
+                // height : double.infinity,
               )),
-          Text('A METTRE',
+          Text(infoMovie?.duration ?? '',
               // widget.movie.duration,
               textScaleFactor: 0.9,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
         ],
       ),
-      const Text(
-        'A METTRE',
-        // widget.movie.overview,
-        // textScaleFactor: 0.9,
-        // textAlign: TextAlign.center,
-        // style: TextStyle(
-        // fontSize: 22,
-        // fontWeight: FontWeight.bold
-      ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(
+        infoMovie?.overview ?? '',
+            textScaleFactor: 0.9,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+            fontSize: 18,
+      )),
+          ),
       GestureDetector(
         onTap: () {
           Navigator.push(

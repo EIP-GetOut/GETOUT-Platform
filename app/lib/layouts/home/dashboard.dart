@@ -77,18 +77,18 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     PageController pageController =
-        PageController(viewportFraction: 0.2, initialPage: 0);
+        PageController(viewportFraction: 0.4, initialPage: 0);
 
     if (isLoading && widget.movies.isEmpty) {
       getMovies();
+      return const LoadPage();
     }
     if (!isLoading && widget.movies.isEmpty) {
       // return ErrorPage(); // TODO: change to error page
+      return const LoadPage();
     }
-    return isLoading
-        ? const LoadPage()
-        : Scaffold(
-            backgroundColor: Colors.transparent,
+    return Scaffold(
+            backgroundColor: Colors.white,
             body: NestedScrollView(
               floatHeaderSlivers: true,
               headerSliverBuilder:
@@ -97,10 +97,50 @@ class _DashboardPageState extends State<DashboardPage> {
               },
               body: Column(
                 children: [
-                  const Text('Vos recomandations,', textScaleFactor: 3),
-                  const Text('Films', textScaleFactor: 1.5),
+                  const SizedBox(height: 60),
+                  Row(
+                    children: [
+                      const SizedBox(width: 20),
+                      Image.asset(
+                          'assets/Profile_picture.png',
+                          width: 60,
+                        ),
+                      const SizedBox(width: 20),
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Bienvenue !',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 40,
+                                fontFamily: 'Urbanist',
+                                fontWeight: FontWeight.bold,
+                          )),
+                          Text('La productivité à portée de main', style: TextStyle(
+                              color: Colors.black, fontSize: 18)),
+                        ],
+                      ),
+                    ],),
+                  const SizedBox(height: 50),
+                  Row(
+                    children: [
+                      const SizedBox(width: 10),
+                      Image.asset(
+                        'assets/popcorn_emoji.png',
+                      ),
+                      const SizedBox(width: 10),
+                      const Text('Les films que vous allez aimer', style: TextStyle(
+                          color: Color(0xFFD55641),
+                          fontSize: 23,
+                          fontFamily: 'Urbanist',
+                          fontWeight: FontWeight.bold,
+                      )),
+                    ],
+                  ),
+                  const SizedBox(height: 15),
                   Expanded(
                       child: PageView(
+
                     scrollBehavior: AppScrollBehavior(),
                     controller: pageController,
                     allowImplicitScrolling: true,
@@ -116,14 +156,41 @@ class _DashboardPageState extends State<DashboardPage> {
                                           MovieDetailsPage(moviePreview)));
                             },
                             child: Container(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Column(children: [
-                                  Image.network(
-                                      'https://image.tmdb.org/t/p/w600_and_h900_bestv2${moviePreview.posterPath}',
-                                      height: 300),
-                                  Text(moviePreview.title,
-                                      textScaleFactor: 0.9),
-                                ])))
+                                margin: const EdgeInsets.all(10.0),
+                              child: Column(
+                                  // crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                      child: Image.network(
+                                          'https://image.tmdb.org/t/p/w600_and_h900_bestv2${moviePreview.posterPath}',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                      Container(
+                                        alignment: Alignment.topLeft,
+                                        child: Text(moviePreview.title, style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 18,
+                                            fontFamily: 'Urbanist',
+                                            fontWeight: FontWeight.bold,
+                                        )),
+                                      ),
+                                    const SizedBox(height: 10),
+                                    Flexible(
+                                      child: Container(
+                                        alignment: Alignment.topLeft,
+                                        padding: const EdgeInsets.only(right: 13.0),
+                                        child: const Text('Overview', style: TextStyle(
+                                          color: Color(0xFFD3D3D3),
+                                          fontSize: 18,
+                                          fontFamily: 'Urbanist',
+                                          fontWeight: FontWeight.bold,
+                                        )),
+                                      ),
+                                    ),
+                                  ]),
+                            ))
                     ],
                   )),
                 ],
