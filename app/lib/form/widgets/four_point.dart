@@ -1,6 +1,15 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Theo Boysson <theo.boysson@epitech.eu>
+*/
+
 import 'package:flutter/material.dart';
 
 class FourPointsWidget extends StatelessWidget {
+  const FourPointsWidget({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +60,7 @@ class PageIndicator extends StatelessWidget {
   final int currentPage;
   final int pageCount;
 
-  PageIndicator({required this.currentPage, required this.pageCount});
+  const PageIndicator({super.key, required this.currentPage, required this.pageCount});
 
   @override
   Widget build(BuildContext context) {

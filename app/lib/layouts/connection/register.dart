@@ -35,8 +35,6 @@ class _RegisterPageState extends State<RegisterPage> {
         'Une erreur s\'est produite, veuillez réesayer plus tard',
     HttpStatus.CONFLICT: 'Un compte avec cet email existe déjà',
     HttpStatus.NO_INTERNET: 'Pas de connexion internet',
-    HttpStatus.ACCEPTED:
-        'Une erreur s\'est produite, veuillez réesayer plus tard'
   });
 
   Future<void> registerPressed() async {

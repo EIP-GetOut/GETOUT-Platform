@@ -1,12 +1,21 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Theo Boysson <theo.boysson@epitech.eu>
+*/
+
 import 'package:flutter/material.dart';
 
-class CheckboxListWidgetGenreLitteraire extends StatefulWidget {
+class CheckboxListWidgetFilmGenre extends StatefulWidget {
+  const CheckboxListWidgetFilmGenre({super.key});
+
   @override
-  _CheckboxListWidgetState createState() => _CheckboxListWidgetState();
+  State<CheckboxListWidgetFilmGenre> createState() => _CheckboxListWidgetState();
 }
 
-class _CheckboxListWidgetState extends State<CheckboxListWidgetGenreLitteraire> {
-  List<bool> _checkboxValues = [false, false, false, false, false];
+class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
+  final List<bool> _checkboxValues = [false, false, false, false, false];
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +24,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetGenreLitteraire> 
       child : Column(
       children: [
         CheckboxListTile(
-          title: const Text('Polar', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold),),
+          title: const Text('Action', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold),),
           value: _checkboxValues[0],
           onChanged: (value) {
             setState(() {
@@ -35,7 +44,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetGenreLitteraire> 
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
-          title: const Text('Poesie', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+          title: const Text('Policier', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
           value: _checkboxValues[1],
           onChanged: (value) {
             setState(() {
@@ -55,7 +64,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetGenreLitteraire> 
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
-          title: const Text('Thriller', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+          title: const Text('Western', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
           value: _checkboxValues[2],
           onChanged: (value) {
             setState(() {
@@ -75,7 +84,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetGenreLitteraire> 
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
-          title: const Text('Politique', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+          title: const Text('Horreur', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
           value: _checkboxValues[3],
           onChanged: (value) {
             setState(() {

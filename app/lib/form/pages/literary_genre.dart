@@ -1,9 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:getout/questionnaire/Pages/genre_litteraire.dart';
-import 'package:getout/questionnaire/Widgets/check_box_list_widget_centre_interet.dart';
-import 'package:getout/questionnaire/Widgets/four_point.dart';
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Theo Boysson <theo.boysson@epitech.eu>
+*/
 
-class CenterInteret extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:getout/form/Pages/film_genre.dart';
+import 'package:getout/form/Widgets/check_box_literary_genre.dart';
+import 'package:getout/form/Widgets/four_point.dart';
+
+class LiteraryGenre extends StatelessWidget {
+  const LiteraryGenre({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,13 +27,13 @@ class CenterInteret extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            PageIndicator(currentPage: 1, pageCount: 5),
+            const PageIndicator(currentPage: 2, pageCount: 5),
             const SizedBox(height: 20),
             const Center(child: 
-             Text('CENTRE D INTERET :', textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+             Text('GENRE LITTERAIRE :', textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
             ),
             const SizedBox(height: 20),
-            CheckboxListWidgetCentreInteret(),
+            const CheckboxListWidgetLiteraryGenre(),
             const SizedBox(height: 20),
             FractionallySizedBox(
               widthFactor: 0.9,
@@ -37,7 +46,7 @@ class CenterInteret extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => GenreLitteraire()),
+                  MaterialPageRoute(builder: (context) => const FilmGenre()),
                 );
               },
             ),

@@ -1,14 +1,23 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Theo Boysson <theo.boysson@epitech.eu>
+*/
+
 import 'package:flutter/material.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 
 
-class CheckboxListWidgetPlateformeStreaming extends StatefulWidget {
+class CheckboxListWidgetStreamingPlatform extends StatefulWidget {
+  const CheckboxListWidgetStreamingPlatform({super.key});
+
   @override
-  _CheckboxListWidgetState createState() => _CheckboxListWidgetState();
+  State<CheckboxListWidgetStreamingPlatform> createState() => _CheckboxListWidgetState();
 }
 
-class _CheckboxListWidgetState extends State<CheckboxListWidgetPlateformeStreaming> {
-  List<bool> _checkboxValues = [false, false, false, false, false];
+class _CheckboxListWidgetState extends State<CheckboxListWidgetStreamingPlatform> {
+  final List<bool> _checkboxValues = [false, false, false, false, false];
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +113,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetPlateformeStreami
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          Image.asset("assets/images/Logo_Cinema.png", width: 48, height: 48),
+          Image.asset('assets/images/Logo_Cinema.png', width: 48, height: 48),
           const SizedBox(width: 8.0),
           const Text('Cinema', style: TextStyle(fontWeight: FontWeight.bold)),
           ],
@@ -132,7 +141,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetPlateformeStreami
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          Image.asset("assets/images/Logo_DVD.png", width: 48, height: 48),
+          Image.asset('assets/images/Logo_DVD.png', width: 48, height: 48),
           const SizedBox(width: 8.0),
           const Text('DVD', style: TextStyle(fontWeight: FontWeight.bold)),
           ],

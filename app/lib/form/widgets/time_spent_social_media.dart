@@ -1,3 +1,10 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Theo Boysson <theo.boysson@epitech.eu>
+*/
+
 import 'package:flutter/material.dart';
 
 class SliderWidget extends StatefulWidget {
@@ -7,7 +14,7 @@ class SliderWidget extends StatefulWidget {
   final double initialValue;
   final ValueChanged<double> onChanged;
 
-  SliderWidget({
+  const SliderWidget({super.key,
     this.minValue = 0.0,
     this.maxValue = 1.0,
     this.divisions = 10,
@@ -16,7 +23,7 @@ class SliderWidget extends StatefulWidget {
   });
 
   @override
-  _SliderWidgetState createState() => _SliderWidgetState();
+  State<SliderWidget> createState() => _SliderWidgetState();
 }
 
 class _SliderWidgetState extends State<SliderWidget> {
@@ -35,7 +42,7 @@ class _SliderWidgetState extends State<SliderWidget> {
       children: <Widget>[
         Text(
           '${_sliderValue.toInt()} H',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         Slider(
           thumbColor: const Color.fromRGBO(213, 86, 65, 1),

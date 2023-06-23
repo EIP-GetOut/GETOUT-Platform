@@ -1,9 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:getout/questionnaire/Pages/plateforme_streaming.dart';
-import 'package:getout/questionnaire/Widgets/check_box_genre_cinematographique.dart';
-import 'package:getout/questionnaire/Widgets/four_point.dart';
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Theo Boysson <theo.boysson@epitech.eu>
+*/
 
-class GenreCinematographique extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:getout/form/Pages/end_form.dart';
+import 'package:getout/form/Widgets/streaming_platform.dart';
+import 'package:getout/form/Widgets/four_point.dart';
+
+class StreamingPlatform extends StatelessWidget {
+  const StreamingPlatform({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,13 +27,13 @@ class GenreCinematographique extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            PageIndicator(currentPage: 3, pageCount: 5),
+            const PageIndicator(currentPage: 4, pageCount: 5),
             const SizedBox(height: 20),
             const Center(child: 
-             Text('GENRE CINEMATOGRAPHIQUE :', textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+             Text('SUPPORT DE VISIONNAGE :', textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
             ),
             const SizedBox(height: 20),
-            CheckboxListWidgetGenreCinematographique(),
+            const CheckboxListWidgetStreamingPlatform(),
             const SizedBox(height: 20),
             FractionallySizedBox(
               widthFactor: 0.9,
@@ -37,7 +46,7 @@ class GenreCinematographique extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PlateformStreaming()),
+                  MaterialPageRoute(builder: (context) => const EndForm()),
                 );
               },
             ),

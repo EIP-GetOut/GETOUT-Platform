@@ -1,12 +1,18 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Theo Boysson <theo.boysson@epitech.eu>
+*/
+
 import 'package:flutter/material.dart';
-import 'package:getout/questionnaire/Pages/centre_interet.dart';
-import 'package:getout/questionnaire/Widgets/temps_reseaux_sociaux.dart';
-import 'package:getout/questionnaire/Widgets/four_point.dart';
+import 'package:getout/form/Pages/streaming_platform.dart';
+import 'package:getout/form/Widgets/check_box_film_genre.dart';
+import 'package:getout/form/Widgets/four_point.dart';
 
-
-class tempsRs extends StatelessWidget {
+class FilmGenre extends StatelessWidget {
+  const FilmGenre({super.key});
   @override
-  // double _sliderValue = 0;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -20,22 +26,15 @@ class tempsRs extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const SizedBox(height: 20,),
-            PageIndicator(currentPage: 0, pageCount: 5),
+            const PageIndicator(currentPage: 3, pageCount: 5),
             const SizedBox(height: 20),
             const Center(child: 
-             Text('TEMPS PASSE SUR LES RESEAUX SOCIAUX PAR JOURS :', textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-            ),
-            SliderWidget(
-              minValue: 1.0,
-              maxValue: 12.0,
-              divisions: 11,
-              initialValue: 1.0,
-              onChanged: (value) {
-              }
+             Text('GENRE CINEMATOGRAPHIQUE :', textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
             ),
             const SizedBox(height: 20),
-             FractionallySizedBox(
+            const CheckboxListWidgetFilmGenre(),
+            const SizedBox(height: 20),
+            FractionallySizedBox(
               widthFactor: 0.9,
               child : ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -46,7 +45,7 @@ class tempsRs extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CenterInteret()),
+                  MaterialPageRoute(builder: (context) => const StreamingPlatform()),
                 );
               },
             ),

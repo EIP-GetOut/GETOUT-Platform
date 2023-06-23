@@ -1,12 +1,21 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Theo Boysson <theo.boysson@epitech.eu>
+*/
+
 import 'package:flutter/material.dart';
 
-class CheckboxListWidgetCentreInteret extends StatefulWidget {
+class CheckboxListWidgetInterestAreas extends StatefulWidget {
+  const CheckboxListWidgetInterestAreas({super.key});
+
   @override
-  _CheckboxListWidgetState createState() => _CheckboxListWidgetState();
+  State<CheckboxListWidgetInterestAreas> createState() => _CheckboxListWidgetState();
 }
 
-class _CheckboxListWidgetState extends State<CheckboxListWidgetCentreInteret> {
-  List<bool> _checkboxValues = [false, false, false, false, false];
+class _CheckboxListWidgetState extends State<CheckboxListWidgetInterestAreas> {
+  final List<bool> _checkboxValues = [false, false, false, false, false];
 
   @override
   Widget build(BuildContext context) {

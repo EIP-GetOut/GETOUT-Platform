@@ -1,10 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:getout/questionnaire/Pages/genre_cinematographique.dart';
-import 'package:getout/questionnaire/Widgets/check_box_genre_litteraire.dart';
-import 'package:getout/questionnaire/Widgets/four_point.dart';
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Theo Boysson <theo.boysson@epitech.eu>
+*/
 
-class GenreLitteraire extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:getout/form/Pages/areas_of_interest.dart';
+import 'package:getout/form/Widgets/time_spent_social_media.dart';
+import 'package:getout/form/Widgets/four_point.dart';
+
+//Time Spent on Social Media
+class SocialMediaSpentTime extends StatelessWidget {
+  const SocialMediaSpentTime({super.key});
+
   @override
+  // double _sliderValue = 0;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -18,15 +29,22 @@ class GenreLitteraire extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            PageIndicator(currentPage: 2, pageCount: 5),
+            const SizedBox(height: 20,),
+            const PageIndicator(currentPage: 0, pageCount: 5),
             const SizedBox(height: 20),
             const Center(child: 
-             Text('GENRE LITTERAIRE :', textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+             Text('TEMPS PASSE SUR LES RESEAUX SOCIAUX PAR JOURS :', textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+            ),
+            SliderWidget(
+              minValue: 1.0,
+              maxValue: 12.0,
+              divisions: 11,
+              initialValue: 1.0,
+              onChanged: (value) {
+              }
             ),
             const SizedBox(height: 20),
-            CheckboxListWidgetGenreLitteraire(),
-            const SizedBox(height: 20),
-            FractionallySizedBox(
+             FractionallySizedBox(
               widthFactor: 0.9,
               child : ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -37,7 +55,7 @@ class GenreLitteraire extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => GenreCinematographique()),
+                  MaterialPageRoute(builder: (context) => const AreasOfInterest()),
                 );
               },
             ),

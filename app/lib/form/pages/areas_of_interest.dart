@@ -1,9 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:getout/questionnaire/Pages/page_fin.dart';
-import 'package:getout/questionnaire/Widgets/plateforme_streaming.dart';
-import 'package:getout/questionnaire/Widgets/four_point.dart';
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Theo Boysson <theo.boysson@epitech.eu>
+*/
 
-class PlateformStreaming extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:getout/form/Pages/literary_genre.dart';
+import 'package:getout/form/Widgets/check_box_list_widget_interest_areas.dart';
+import 'package:getout/form/Widgets/four_point.dart';
+
+class AreasOfInterest extends StatelessWidget {
+  const AreasOfInterest({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,13 +27,13 @@ class PlateformStreaming extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            PageIndicator(currentPage: 4, pageCount: 5),
+            const PageIndicator(currentPage: 1, pageCount: 5),
             const SizedBox(height: 20),
             const Center(child: 
-             Text('SUPPORT DE VISIONNAGE :', textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+             Text('CENTRE D INTERET :', textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
             ),
             const SizedBox(height: 20),
-            CheckboxListWidgetPlateformeStreaming(),
+            const CheckboxListWidgetInterestAreas(),
             const SizedBox(height: 20),
             FractionallySizedBox(
               widthFactor: 0.9,
@@ -37,7 +46,7 @@ class PlateformStreaming extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => (PageFin())),
+                  MaterialPageRoute(builder: (context) => const LiteraryGenre()),
                 );
               },
             ),
