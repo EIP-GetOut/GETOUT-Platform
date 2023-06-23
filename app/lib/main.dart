@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:getout/models/category.dart';
 // import 'package:getout/layouts/welcome.dart';
 import 'package:getout/layouts/connection/login.dart';
+import 'package:getout/layouts/home/loading_session.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 Map<int, Color> colorMap = {
@@ -49,6 +50,6 @@ class MyApp extends StatelessWidget {
               const ButtonThemeData(textTheme: ButtonTextTheme.primary),
         ),
         // home: const WelcomePage(),
-        home: const ConnectionPage());
+        home: const LoadingPageSession());
   }
 }

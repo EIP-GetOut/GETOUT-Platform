@@ -13,6 +13,7 @@ const String loginApiPath = '/account/login';
 const String logoutApiPath = '/account/logout';
 const String signupApiPath = '/account/signup';
 const String resetPasswordApiPath = '/account/reset-password';
+const String getSessionApiPath = '/session';
 
 // GENERATE THINGS API PATH
 const String generateMoviesApiPath = '/generate-movies';

@@ -10,6 +10,7 @@ import 'dart:convert';
 import 'package:getout/models/requests/info_movie.dart';
 import 'package:getout/models/requests/generate_movies.dart';
 import 'package:getout/models/requests/create_account.dart';
+import 'package:getout/models/requests/get_session.dart';
 import 'package:getout/models/requests/login.dart';
 import 'package:http/http.dart' as http;
 
@@ -167,5 +168,33 @@ class RequestsService {
       return result;
     }
     return result;
+  }
+
+  Future<SessionResponseInfo> session() async
+  {
+    final Uri url = Uri.http(api_constants.rootApiPath, api_constants.getSessionApiPath);
+    print(url);
+    final Map<String, String> header = {
+      'Content-Type': 'application/json'
+    };
+
+
+    try {
+    final http.Response response = await http.get(url, headers: header);
+      if (response.statusCode != HttpStatus.OK) {
+        return SessionResponseInfo(statusCode: response.statusCode);
+      }
+      final dynamic data = jsonDecode(response.body);
+      final SessionResponseInfo result = SessionResponseInfo(
+          cookie: data,
+          statusCode: response.statusCode);
+    return result;
+    } catch (error) {
+      if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
+        return SessionResponseInfo(statusCode: 502); // 'No internet connection';
+      }
+      // print('ERROR ON REGISTER REQUEST : $error');
+      return SessionResponseInfo(statusCode: 500);
+    }
   }
 }
