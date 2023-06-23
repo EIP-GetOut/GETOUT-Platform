@@ -6,9 +6,9 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/form/Pages/literary_genre.dart';
-import 'package:getout/form/Widgets/check_box_list_widget_interest_areas.dart';
-import 'package:getout/form/Widgets/four_point.dart';
+import 'package:getout/form/pages/literary_genre.dart';
+import 'package:getout/form/widgets/check_box_list_widget_interest_areas.dart';
+import 'package:getout/form/widgets/four_point.dart';
 
 class AreasOfInterest extends StatelessWidget {
   const AreasOfInterest({super.key});

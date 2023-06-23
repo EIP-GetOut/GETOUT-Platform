@@ -6,9 +6,9 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/form/Pages/areas_of_interest.dart';
-import 'package:getout/form/Widgets/time_spent_social_media.dart';
-import 'package:getout/form/Widgets/four_point.dart';
+import 'package:getout/form/pages/areas_of_interest.dart';
+import 'package:getout/form/widgets/time_spent_social_media.dart';
+import 'package:getout/form/widgets/four_point.dart';
 
 //Time Spent on Social Media
 class SocialMediaSpentTime extends StatelessWidget {

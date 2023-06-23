@@ -6,9 +6,9 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/form/Pages/end_form.dart';
-import 'package:getout/form/Widgets/streaming_platform.dart';
-import 'package:getout/form/Widgets/four_point.dart';
+import 'package:getout/form/pages/end_form.dart';
+import 'package:getout/form/widgets/streaming_platform.dart';
+import 'package:getout/form/widgets/four_point.dart';
 
 class StreamingPlatform extends StatelessWidget {
   const StreamingPlatform({super.key});

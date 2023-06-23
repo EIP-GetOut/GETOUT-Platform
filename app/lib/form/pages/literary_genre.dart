@@ -6,9 +6,9 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/form/Pages/film_genre.dart';
-import 'package:getout/form/Widgets/check_box_literary_genre.dart';
-import 'package:getout/form/Widgets/four_point.dart';
+import 'package:getout/form/pages/film_genre.dart';
+import 'package:getout/form/widgets/check_box_literary_genre.dart';
+import 'package:getout/form/widgets/four_point.dart';
 
 class LiteraryGenre extends StatelessWidget {
   const LiteraryGenre({super.key});
