@@ -122,10 +122,9 @@ class RequestsService {
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() ==
               'Connection closed before full header was received') {
-        return LoginResponseInfo(statusCode: 502); // 'No internet connection';
+        return LoginResponseInfo(statusCode: HttpStatus.NO_INTERNET); // 'No internet connection';
       }
-      // print('ERROR ON REGISTER REQUEST : $error');
-      return LoginResponseInfo(statusCode: 500);
+      return LoginResponseInfo(statusCode: HttpStatus.APP_ERROR);
     }
   }
 
@@ -173,28 +172,25 @@ class RequestsService {
   Future<SessionResponseInfo> session() async
   {
     final Uri url = Uri.http(api_constants.rootApiPath, api_constants.getSessionApiPath);
-    print(url);
     final Map<String, String> header = {
       'Content-Type': 'application/json'
     };
 
-
     try {
-    final http.Response response = await http.get(url, headers: header);
-      if (response.statusCode != HttpStatus.OK) {
-        return SessionResponseInfo(statusCode: response.statusCode);
-      }
-      final dynamic data = jsonDecode(response.body);
-      final SessionResponseInfo result = SessionResponseInfo(
-          cookie: data,
-          statusCode: response.statusCode);
-    return result;
+      final http.Response response = await http.get(url, headers: header);
+        if (response.statusCode != HttpStatus.OK) {
+          return SessionResponseInfo(statusCode: response.statusCode);
+        }
+        final dynamic data = jsonDecode(response.body);
+        final SessionResponseInfo result = SessionResponseInfo(
+            cookie: data,
+            statusCode: response.statusCode);
+      return result;
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
-        return SessionResponseInfo(statusCode: 502); // 'No internet connection';
+        return SessionResponseInfo(statusCode: HttpStatus.NO_INTERNET); // 'No internet connection';
       }
-      // print('ERROR ON REGISTER REQUEST : $error');
-      return SessionResponseInfo(statusCode: 500);
+      return SessionResponseInfo(statusCode: HttpStatus.APP_ERROR);
     }
   }
 }
