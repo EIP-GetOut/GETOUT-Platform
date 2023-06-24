@@ -6,6 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:getout/global.dart';
 
 class CheckboxListWidgetFilmGenre extends StatefulWidget {
   const CheckboxListWidgetFilmGenre({super.key});
@@ -29,6 +30,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
           onChanged: (value) {
             setState(() {
               _checkboxValues[0] = value!;
+              boxFilmValue = _checkboxValues;
             });
           },
           contentPadding: EdgeInsets.zero,
@@ -44,11 +46,12 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
-          title: const Text('Policier', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+          title: const Text('Thriller', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
           value: _checkboxValues[1],
           onChanged: (value) {
             setState(() {
               _checkboxValues[1] = value!;
+              boxFilmValue = _checkboxValues;
             });
           },
           contentPadding: EdgeInsets.zero,
@@ -69,6 +72,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
           onChanged: (value) {
             setState(() {
               _checkboxValues[2] = value!;
+              boxFilmValue = _checkboxValues;
             });
           },
           contentPadding: EdgeInsets.zero,
@@ -89,6 +93,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
           onChanged: (value) {
             setState(() {
               _checkboxValues[3] = value!;
+              boxFilmValue = _checkboxValues;
             });
           },
           contentPadding: EdgeInsets.zero,
@@ -109,6 +114,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
           onChanged: (value) {
             setState(() {
               _checkboxValues[4] = value!;
+              boxFilmValue = _checkboxValues;
             });
           },
           contentPadding: EdgeInsets.zero,

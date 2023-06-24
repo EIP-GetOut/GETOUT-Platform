@@ -11,8 +11,7 @@ import 'package:getout/models/requests/generate_movies.dart';
 import 'package:getout/layouts/movie/movie.dart';
 import 'package:getout/layouts/home/load.dart';
 import 'package:getout/services/requests/requests_service.dart';
-
-import 'dart:math';
+import 'package:getout/global.dart';
 
 // ignore: must_be_immutable
 class DashboardPage extends StatefulWidget {
@@ -56,13 +55,11 @@ class AppScrollBehavior extends MaterialScrollBehavior {
 
 class _DashboardPageState extends State<DashboardPage> {
   bool isLoading = true;
+  List<int> ids = mapBoxFilmValuesToIds(boxFilmValue);
 
   Future<void> getMovies() async {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      GenerateMoviesRequest request = GenerateMoviesRequest(genres: [
-        widget.genre[Random().nextInt(19)],
-        widget.genre[Random().nextInt(19)]
-      ]);
+      GenerateMoviesRequest request = GenerateMoviesRequest(genres: ids);
       RequestsService.instance
           .generateMovies(request)
           .then((GenerateMoviesResponse moviesResponse) {
@@ -198,4 +195,26 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
           );
   }
+}
+
+List<int> mapBoxFilmValuesToIds(List<bool> boxFilmValue) {
+  List<int> ids = [];
+
+  if (boxFilmValue.isNotEmpty && boxFilmValue[0]) {
+    ids.add(28);
+  }
+  if (boxFilmValue.length >= 2 && boxFilmValue[1]) {
+    ids.add(53);
+  }
+  if (boxFilmValue.length >= 3 && boxFilmValue[2]) {
+    ids.add(37);
+  }
+  if (boxFilmValue.length >= 4 && boxFilmValue[3]) {
+    ids.add(27);
+  }
+  if (boxFilmValue.length >= 5 && boxFilmValue[4]) {
+    ids.add(35);
+  }
+
+  return ids;
 }

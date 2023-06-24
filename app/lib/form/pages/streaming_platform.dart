@@ -12,7 +12,7 @@ import 'package:getout/form/widgets/four_point.dart';
 
 class StreamingPlatform extends StatelessWidget {
   const StreamingPlatform({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
