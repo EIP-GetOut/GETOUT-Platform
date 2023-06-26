@@ -16,7 +16,6 @@ import { accountRepositoryRequest } from "./account"
 
 function createSession (sess: Session & Partial<SessionData>, account: Account) {
     const week = 3600000 * 24 * 7
-    // const thirtySeconds = 1000 * 30
 
     sess.cookie.expires = new Date(Date.now() + week)
     sess.cookie.maxAge = week
