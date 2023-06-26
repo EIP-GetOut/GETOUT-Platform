@@ -85,6 +85,12 @@ class RequestsService {
           voteAverage: data['movie']['vote_average'],
           duration: data['movie']['duration'],
           statusCode: response.statusCode);
+      if (result.overview == '') {
+        result.overview = 'Pas de description disponible';
+      }
+      if (result.duration == '0h0min') {
+        result.duration = 'N/A';
+      }
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() == 'Connection closed before full header was received') {
