@@ -7,6 +7,7 @@
 
 import 'dart:convert';
 
+import 'package:getout/models/requests/generate_books.dart';
 import 'package:getout/models/requests/info_movie.dart';
 import 'package:getout/models/requests/generate_movies.dart';
 import 'package:getout/models/requests/create_account.dart';
@@ -51,8 +52,43 @@ class RequestsService {
       GenerateMoviesResponse result = [];
 
       data['movies'].forEach((elem) {
-        // print(elem['overview']);
         result.add(MoviePreview(
+            id: elem['id'], title: elem['title'], posterPath: elem['poster']));
+        //  , overview: elem['overview']
+        // duration: elem['duration']
+      });
+
+      return result;
+    }, onError: (error) {
+      // TODO Handle Error
+    });
+  }
+
+  Future<GenerateBooksResponse> generateBooks(GenerateBooksRequest request) {
+    String withGenres = formatWithGenresParameter(request.genres);
+    final Map<String, String> queryParameters = <String, String>{
+      'subject': withGenres,
+    };
+    Uri url = Uri.http(
+        api_constants.rootApiPath, api_constants.generateBooksApiPath, queryParameters
+      /*, {
+      'with_genres': withGenres,
+      'include_adult': request.includeAdult.toString()
+      }*/
+    );
+
+    return http.get(url).then((response) {
+      if (response.statusCode != BookPreview.success) {
+        return Future.error(Exception(
+          'Error ${response.statusCode} while fetching books: ${response.reasonPhrase}',
+        ));
+      }
+
+      var data = jsonDecode(response.body);
+      GenerateBooksResponse result = [];
+
+      data['books'].forEach((elem) {
+        result.add(BookPreview(
             id: elem['id'], title: elem['title'], posterPath: elem['poster']));
         //  , overview: elem['overview']
         // duration: elem['duration']

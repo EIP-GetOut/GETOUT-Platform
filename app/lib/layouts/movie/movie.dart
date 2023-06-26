@@ -89,6 +89,13 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
         child: Image.network(imageUrl, height: 250));
 
     return Scaffold(
+        extendBodyBehindAppBar: true,
+      appBar: AppBar(
+          backgroundColor: const Color.fromARGB(0, 213, 86, 65),
+        iconTheme: const IconThemeData(
+          color: Colors.black, //change your color here
+        ),
+        ),
         body: Column(children: [
       Stack(
         clipBehavior: Clip.none,

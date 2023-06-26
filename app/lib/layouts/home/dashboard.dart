@@ -13,12 +13,15 @@ import 'package:getout/layouts/home/load.dart';
 import 'package:getout/services/requests/requests_service.dart';
 import 'package:getout/global.dart';
 
+import '../../models/requests/generate_books.dart';
+
 // ignore: must_be_immutable
 class DashboardPage extends StatefulWidget {
   DashboardPage({Key? key}) : super(key: key);
 
   GenerateMoviesResponse movies = [];
-  final List<int> genre = [
+  GenerateBooksResponse books = [];
+  /*final List<int> genre = [
     28,
     12,
     16,
@@ -38,7 +41,7 @@ class DashboardPage extends StatefulWidget {
     53,
     10752,
     37
-  ];
+  ];*/
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
@@ -55,44 +58,29 @@ class AppScrollBehavior extends MaterialScrollBehavior {
 
 class _DashboardPageState extends State<DashboardPage> {
   bool isLoading = true;
+  int booksLength = 0;
   List<int> ids = mapBoxFilmValuesToIds(boxFilmValue);
-
-  Future<void> getMovies() async {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      GenerateMoviesRequest request = GenerateMoviesRequest(genres: ids);
-      RequestsService.instance
-          .generateMovies(request)
-          .then((GenerateMoviesResponse moviesResponse) {
-        setState(() {
-          isLoading = false;
-        });
-        widget.movies = moviesResponse;
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    PageController pageController =
-        PageController(viewportFraction: 0.4, initialPage: 0);
+    PageController movieController =
+        PageController(viewportFraction: 0.1, initialPage: 0);
+    PageController bookController =
+    PageController(viewportFraction: 0.1, initialPage: 0);
 
     if (isLoading && widget.movies.isEmpty) {
       getMovies();
+      getBooks();
       return const LoadPage();
     }
     if (!isLoading && widget.movies.isEmpty) {
       // return ErrorPage(); // TODO: change to error page
       return const LoadPage();
     }
+    booksLength = widget.books.length;
     return Scaffold(
             backgroundColor: Colors.white,
-            body: NestedScrollView(
-              floatHeaderSlivers: true,
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[];
-              },
-              body: Column(
+            body: Column(
                 children: [
                   const SizedBox(height: 60),
                   Row(
@@ -141,39 +129,35 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                   const SizedBox(height: 15),
                   Expanded(
-                      child: PageView(
-
-                    scrollBehavior: AppScrollBehavior(),
-                    controller: pageController,
-                    allowImplicitScrolling: true,
+                      child: ListView(
+                    controller: movieController,
                     scrollDirection: Axis.horizontal,
-                    children: [
-                      for (var moviePreview in widget.movies)
-                        InkWell(
+                    children: List.generate(5, (index) {
+                        return InkWell(
                             onTap: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          MovieDetailsPage(moviePreview)));
+                                          MovieDetailsPage(widget.movies[index])));
                             },
                             child: Container(
                                 margin: const EdgeInsets.all(10.0),
+                              width: 100,
                               child: Column(
-                                  // crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
-                                    ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.network(
-                                          'https://image.tmdb.org/t/p/w600_and_h900_bestv2${moviePreview.posterPath}',
-                                        fit: BoxFit.cover,
+                                      ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                        child: Image.network(
+                                            'https://image.tmdb.org/t/p/w600_and_h900_bestv2${widget.movies[index].posterPath}',
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                    ),
                                       Container(
                                         alignment: Alignment.topLeft,
-                                        child: Text(moviePreview.title, style: const TextStyle(
+                                        child: Text(widget.movies[index].title, style: const TextStyle(
                                             color: Colors.black,
-                                            fontSize: 18,
+                                            fontSize: 15,
                                             fontFamily: 'Urbanist',
                                             fontWeight: FontWeight.bold,
                                         )),
@@ -194,13 +178,106 @@ class _DashboardPageState extends State<DashboardPage> {
                                       ),
                                     ),
                                   ]),
-                            ))
-                    ],
-                  )),
-            ],
-              ),
+                            ),
+                        );
+                    }))),
+            Row(
+              children: [
+                const SizedBox(width: 10),
+                Image.asset(
+                  'assets/books_emoji.png',
+                ),
+                const SizedBox(width: 10),
+                const Text('Les livres qui vous passionneront', style: TextStyle(
+                  color: Color(0xFFD55641),
+                  fontSize: 23,
+                  fontFamily: 'Urbanist',
+                  fontWeight: FontWeight.bold,
+                )),
+              ],
             ),
-          );
+        Expanded(
+            child: ListView(
+                controller: bookController,
+                scrollDirection: Axis.horizontal,
+                children: List.generate(booksLength, (index) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  MovieDetailsPage(widget.movies[index])));
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.all(10.0),
+                      width: 100,
+                      child: Column(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.network(
+                                widget.books[index].posterPath ?? 'https://media.istockphoto.com/id/1392182937/vector/no-image-available-photo-coming-soon.jpg?s=612x612&w=0&k=20&c=3vGh4yj0O2b4tPtjpK-q-Qg0wGHsjseL2HT-pIyJiuc=',
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Container(
+                              alignment: Alignment.topLeft,
+                              child: Text(widget.books[index].title, style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontFamily: 'Urbanist',
+                                fontWeight: FontWeight.bold,
+                              )),
+                            ),
+                            const SizedBox(height: 10),
+                            Flexible(
+                              child: Container(
+                                alignment: Alignment.topLeft,
+                                padding: const EdgeInsets.only(right: 13.0),
+                                child: const Text('Overview',
+                                    textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                      color: Color(0xFFD3D3D3),
+                                      fontSize: 18,
+                                      fontFamily: 'Urbanist',
+                                      fontWeight: FontWeight.bold,
+                                    )),
+                              ),
+                            ),
+                          ]),
+                    ),
+                  );
+                })))
+                ]));
+  }
+
+  Future<void> getMovies() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      GenerateMoviesRequest request = GenerateMoviesRequest(genres: ids);
+      RequestsService.instance
+          .generateMovies(request)
+          .then((GenerateMoviesResponse moviesResponse) {
+        setState(() {
+          isLoading = false;
+        });
+        widget.movies = moviesResponse;
+      });
+    });
+  }
+
+  Future<void> getBooks() async {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      GenerateBooksRequest request = GenerateBooksRequest(genres: [4]);
+      RequestsService.instance
+          .generateBooks(request)
+          .then((GenerateBooksResponse booksResponse) {
+        setState(() {
+          isLoading = false;
+        });
+        widget.books = booksResponse;
+      });
+    });
   }
 }
 

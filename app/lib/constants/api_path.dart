@@ -18,3 +18,5 @@ const String getSessionApiPath = '/session';
 // GENERATE THINGS API PATH
 const String generateMoviesApiPath = '/generate-movies';
 const String getInfoMovieApiPath = '/movie';
+const String generateBooksApiPath = '/generate-books';
+// const String getInfoBookApiPath = '/book'; // don't know yet
