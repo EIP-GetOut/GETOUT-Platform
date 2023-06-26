@@ -1,3 +1,4 @@
+import 'package:getout/form/pages/social_media_spent_time.dart';
 import 'package:getout/models/requests/login.dart';
 import 'package:flutter/material.dart';
 import 'package:getout/layouts/connection/register.dart';
@@ -5,7 +6,6 @@ import 'package:getout/models/sign/fields.dart';
 import 'package:getout/services/requests/requests_service.dart';
 import 'package:getout/services/google/google_signin_api.dart';
 import 'package:getout/layouts/home/load.dart';
-import 'package:getout/layouts/home/dashboard.dart';
 
 class ConnectionPage extends StatefulWidget {
   const ConnectionPage({Key? key}) : super(key: key);
@@ -34,7 +34,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
         .then((LoginResponseInfo res) {
       if (res.statusCode == LoginResponseInfo.success) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => DashboardPage()));
+            context, MaterialPageRoute(builder: (context) => const SocialMediaSpentTime()));
       }
       setState(() {
         isLoading = false;

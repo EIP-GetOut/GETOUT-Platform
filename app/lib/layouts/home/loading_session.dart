@@ -6,8 +6,8 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:getout/form/pages/social_media_spent_time.dart';
 import 'package:getout/models/requests/get_session.dart';
-import 'package:getout/layouts/home/dashboard.dart';
 import 'package:getout/services/requests/requests_service.dart';
 import 'package:getout/layouts/home/load.dart';
 import 'package:getout/layouts/connection/login.dart';
@@ -43,6 +43,6 @@ class _LoadingPageSessionState extends State<LoadingPageSession> {
     if (!isLoading && !session) {
       return const ConnectionPage();
     }
-    return DashboardPage();
+    return const SocialMediaSpentTime();
   }
 }
