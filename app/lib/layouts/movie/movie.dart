@@ -156,16 +156,19 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
               style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
         ],
       ),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(
-        infoMovie?.overview ?? '',
-            textScaleFactor: 0.9,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-            fontSize: 18,
-      )),
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Text(infoMovie?.overview ?? 'No description available',
+                textAlign: TextAlign.justify,
+                textScaleFactor: 0.9,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 22,
+                  fontFamily: 'Urbanist',
+                )),
           ),
+        ),
       GestureDetector(
         onTap: () {
           Navigator.push(

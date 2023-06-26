@@ -37,6 +37,7 @@ class _LoadingPageSessionState extends State<LoadingPageSession> {
   Widget build(BuildContext context) {
 
     if (isLoading && !session) {
+      getSession();
       return const LoadPage();
     }
     if (!isLoading && !session) {

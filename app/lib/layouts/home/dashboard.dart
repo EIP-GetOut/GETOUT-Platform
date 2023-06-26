@@ -109,14 +109,19 @@ class _DashboardPageState extends State<DashboardPage> {
                           Text('Bienvenue !',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 40,
+                                fontSize: 30,
                                 fontFamily: 'Urbanist',
                                 fontWeight: FontWeight.bold,
                           )),
                           Text('La productivité à portée de main', style: TextStyle(
-                              color: Colors.black, fontSize: 18)),
+                              fontFamily: 'Urbanist', color: Colors.black, fontSize: 15)),
                         ],
                       ),
+                      const SizedBox(width: 25),
+                          Image.asset(
+                            'assets/GetOut_logo.png',
+                            width: 40,
+                          ),
                     ],),
                   const SizedBox(height: 50),
                   Row(
@@ -178,11 +183,13 @@ class _DashboardPageState extends State<DashboardPage> {
                                       child: Container(
                                         alignment: Alignment.topLeft,
                                         padding: const EdgeInsets.only(right: 13.0),
-                                        child: const Text('Overview', style: TextStyle(
-                                          color: Color(0xFFD3D3D3),
-                                          fontSize: 18,
-                                          fontFamily: 'Urbanist',
-                                          fontWeight: FontWeight.bold,
+                                        child: const Text('Overview',
+                                            textAlign: TextAlign.justify,
+                                            style: TextStyle(
+                                              color: Color(0xFFD3D3D3),
+                                              fontSize: 18,
+                                              fontFamily: 'Urbanist',
+                                              fontWeight: FontWeight.bold,
                                         )),
                                       ),
                                     ),
@@ -190,7 +197,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             ))
                     ],
                   )),
-                ],
+            ],
               ),
             ),
           );
