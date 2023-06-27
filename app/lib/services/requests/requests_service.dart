@@ -15,6 +15,7 @@ import 'package:getout/models/requests/get_session.dart';
 import 'package:getout/models/requests/login.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:flutter/foundation.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/constants/api_path.dart' as api_constants;
 
@@ -35,7 +36,11 @@ class RequestsService {
 
   Future<GenerateMoviesResponse> generateMovies(GenerateMoviesRequest request) {
     String withGenres = formatWithGenresParameter(request.genres);
-    Uri url = Uri.http(
+    final Uri url = (kDebugMode) ? Uri.http(
+        api_constants.rootApiPath, api_constants.generateMoviesApiPath, {
+      'with_genres': withGenres,
+      'include_adult': request.includeAdult.toString()
+    }) : Uri.https(
         api_constants.rootApiPath, api_constants.generateMoviesApiPath, {
       'with_genres': withGenres,
       'include_adult': request.includeAdult.toString()
@@ -69,13 +74,8 @@ class RequestsService {
     final Map<String, String> queryParameters = <String, String>{
       'subject': withGenres,
     };
-    Uri url = Uri.http(
-        api_constants.rootApiPath, api_constants.generateBooksApiPath, queryParameters
-      /*, {
-      'with_genres': withGenres,
-      'include_adult': request.includeAdult.toString()
-      }*/
-    );
+    final Uri url = (kDebugMode) ? Uri.http(api_constants.rootApiPath, api_constants.generateBooksApiPath, queryParameters)
+                                 : Uri.https(api_constants.rootApiPath, api_constants.generateBooksApiPath, queryParameters);
 
     return http.get(url).then((response) {
       if (response.statusCode != BookPreview.success) {
@@ -102,7 +102,8 @@ class RequestsService {
 
   Future<InfoMovieResponse> getInfoMovie(CreateInfoMovieRequest request) async {
     InfoMovieResponse result = InfoMovieResponse(statusCode: HttpStatus.APP_ERROR);
-    final Uri url = Uri.http(api_constants.rootApiPath, '${api_constants.getInfoMovieApiPath}/${request.id}');
+    final Uri url = (kDebugMode) ? Uri.http(api_constants.rootApiPath, '${api_constants.getInfoMovieApiPath}/${request.id}')
+                                 : Uri.https(api_constants.rootApiPath, '${api_constants.getInfoMovieApiPath}/${request.id}');
     final Map<String, String> header = {'Content-Type': 'application/json'};
 
     try {
@@ -138,8 +139,8 @@ class RequestsService {
   }
 
   Future<LoginResponseInfo> login(LoginRequest request) async {
-    final Uri url =
-        Uri.http(api_constants.rootApiPath, api_constants.loginApiPath);
+    final Uri url = (kDebugMode) ? Uri.http(api_constants.rootApiPath, api_constants.loginApiPath)
+                                 : Uri.https(api_constants.rootApiPath, api_constants.loginApiPath);
     final Map<String, String> header = {'Content-Type': 'application/json'};
     final String body =
         jsonEncode({'email': request.email, 'password': request.password});
@@ -173,8 +174,8 @@ class RequestsService {
   Future<AccountResponseInfo> register(CreateAccountRequest request) async {
     AccountResponseInfo result =
         AccountResponseInfo(statusCode: HttpStatus.APP_ERROR);
-    final Uri url =
-        Uri.http(api_constants.rootApiPath, api_constants.signupApiPath);
+    final Uri url = (kDebugMode) ? Uri.http(api_constants.rootApiPath, api_constants.signupApiPath)
+                                 : Uri.https(api_constants.rootApiPath, api_constants.signupApiPath);
     final Map<String, String> header = {'Content-Type': 'application/json'};
     final String body = jsonEncode({
       'email': request.email,
@@ -213,7 +214,8 @@ class RequestsService {
 
   Future<SessionResponseInfo> session() async
   {
-    final Uri url = Uri.http(api_constants.rootApiPath, api_constants.getSessionApiPath);
+    final Uri url = (kDebugMode) ? Uri.http(api_constants.rootApiPath, api_constants.getSessionApiPath)
+                                 : Uri.https(api_constants.rootApiPath, api_constants.getSessionApiPath);
     final Map<String, String> header = {
       'Content-Type': 'application/json'
     };
