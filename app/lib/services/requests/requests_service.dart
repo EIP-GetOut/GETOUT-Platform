@@ -58,7 +58,7 @@ class RequestsService {
 
       data['movies'].forEach((elem) {
         result.add(MoviePreview(
-            id: elem['id'], title: elem['title'], posterPath: elem['poster']));
+            id: elem['id'], title: elem['title'], posterPath: elem['poster'], overview: elem['overview']));
         //  , overview: elem['overview']
         // duration: elem['duration']
       });
@@ -70,9 +70,8 @@ class RequestsService {
   }
 
   Future<GenerateBooksResponse> generateBooks(GenerateBooksRequest request) {
-    String withGenres = formatWithGenresParameter(request.genres);
     final Map<String, String> queryParameters = <String, String>{
-      'subject': withGenres,
+      'subject': request.genres[0].toString(),
     };
     final Uri url = (kDebugMode) ? Uri.http(api_constants.rootApiPath, api_constants.generateBooksApiPath, queryParameters)
                                  : Uri.https(api_constants.rootApiPath, api_constants.generateBooksApiPath, queryParameters);
@@ -89,7 +88,7 @@ class RequestsService {
 
       data['books'].forEach((elem) {
         result.add(BookPreview(
-            id: elem['id'], title: elem['title'], posterPath: elem['poster']));
+            id: elem['id'], title: elem['title'], posterPath: elem['poster'], overview: elem['overview']));
         //  , overview: elem['overview']
         // duration: elem['duration']
       });

@@ -166,8 +166,10 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
         Flexible(
           child: Padding(
             padding: const EdgeInsets.all(25.0),
-            child: Text(infoMovie?.overview ?? 'No description available',
+            child: Text(infoMovie?.overview ?? 'Aucune description disponible',
                 textAlign: TextAlign.justify,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 12,
                 textScaleFactor: 0.9,
                 style: const TextStyle(
                   color: Colors.black,
@@ -181,7 +183,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => const MovieDescriptionPage()));
+                  builder: (context) => MovieDescriptionPage(movie: infoMovie)));
         },
         child: const Text(
           'voir plus >',

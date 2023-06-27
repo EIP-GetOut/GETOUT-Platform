@@ -8,7 +8,7 @@
 import 'package:getout/constants/http_status.dart';
 
 class GenerateBooksRequest {
-  List<int> genres;
+  List<String> genres;
   bool includeAdult = true;
 
   GenerateBooksRequest({
@@ -22,10 +22,10 @@ class BookPreview {
   String id;
   String title;
   String? posterPath;
-  // String overview;
-  //  required this.overview
+  String? overview;
+
   BookPreview(
-      {required this.id, required this.title, required this.posterPath}); // required this.overview});
+      {required this.id, required this.title, required this.posterPath, required this.overview});
 }
 
 typedef GenerateBooksResponse = List<BookPreview>;

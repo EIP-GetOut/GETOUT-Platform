@@ -111,7 +111,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             width: 40,
                           ),
                     ],),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 35),
                   Row(
                     children: [
                       const SizedBox(width: 10),
@@ -127,7 +127,7 @@ class _DashboardPageState extends State<DashboardPage> {
                       )),
                     ],
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 10),
                   Expanded(
                       child: ListView(
                     controller: movieController,
@@ -167,11 +167,13 @@ class _DashboardPageState extends State<DashboardPage> {
                                       child: Container(
                                         alignment: Alignment.topLeft,
                                         padding: const EdgeInsets.only(right: 13.0),
-                                        child: const Text('Overview',
+                                        child: Text(widget.movies[index].overview,
                                             textAlign: TextAlign.justify,
-                                            style: TextStyle(
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 4,
+                                            style: const TextStyle(
                                               color: Color(0xFFD3D3D3),
-                                              fontSize: 18,
+                                              fontSize: 13,
                                               fontFamily: 'Urbanist',
                                               fontWeight: FontWeight.bold,
                                         )),
@@ -235,11 +237,13 @@ class _DashboardPageState extends State<DashboardPage> {
                               child: Container(
                                 alignment: Alignment.topLeft,
                                 padding: const EdgeInsets.only(right: 13.0),
-                                child: const Text('Overview',
+                                child: Text(widget.books[index].overview ?? 'Aucune description disponible',
                                     textAlign: TextAlign.justify,
-                                    style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 3,
+                                    style: const TextStyle(
                                       color: Color(0xFFD3D3D3),
-                                      fontSize: 18,
+                                      fontSize: 13,
                                       fontFamily: 'Urbanist',
                                       fontWeight: FontWeight.bold,
                                     )),
@@ -268,7 +272,7 @@ class _DashboardPageState extends State<DashboardPage> {
 
   Future<void> getBooks() async {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      GenerateBooksRequest request = GenerateBooksRequest(genres: [4]);
+      GenerateBooksRequest request = GenerateBooksRequest(genres: ['drama']);
       RequestsService.instance
           .generateBooks(request)
           .then((GenerateBooksResponse booksResponse) {

@@ -6,13 +6,13 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:getout/models/requests/info_movie.dart';
 
 class MovieDescriptionPage extends StatefulWidget {
-  const MovieDescriptionPage({super.key});
 
-  // const MovieDescriptionPage(this.movie);
+  final InfoMovieResponse? movie;
 
-  // final MoviePreview movie;
+  const MovieDescriptionPage({super.key, required this.movie});
 
   @override
   State<MovieDescriptionPage> createState() => _MovieDescriptionPageState();
@@ -66,12 +66,12 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                         ))),
-                const Padding(
-                    padding: EdgeInsets.only(
+                  Padding(
+                    padding: const EdgeInsets.only(
                         left: 10), //apply padding to all four sides
                     child: Text(
                         // textAlign: TextAlign.start,
-                        'A METTRE')),
+                        widget.movie?.overview ?? 'Aucune description disponible')),
                 separateLine(),
                 const Padding(
                     padding: EdgeInsets.only(
