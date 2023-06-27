@@ -81,7 +81,8 @@ router.get('/generate-movies', rulesGet, validate, logApiRequest, (req: Request,
             movies.push({
                 title: movie.title,
                 poster: movie.poster_path,
-                id: movie.id
+                id: movie.id,
+                overview: movie.overview
             })
         });
         return res.status(StatusCodes.OK).json({

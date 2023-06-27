@@ -39,7 +39,8 @@ router.get('/generate-books', rulesGet, validate, logApiRequest, (req: Request, 
             books.push({
                 title: book.volumeInfo.title,
                 poster: book.volumeInfo?.imageLinks?.thumbnail ? book.volumeInfo.imageLinks.thumbnail : null,
-                id: book.id
+                id: book.id,
+                overview: book.volumeInfo?.description ? book.volumeInfo.description : 'No informations.'
             })
         });
         return res.status(StatusCodes.OK).json({
