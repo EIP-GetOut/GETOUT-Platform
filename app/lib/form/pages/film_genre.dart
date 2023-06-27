@@ -38,6 +38,7 @@ class FilmGenre extends StatelessWidget {
               widthFactor: 0.9,
               child : ElevatedButton(
               style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 60),
                 backgroundColor: const Color.fromRGBO(213, 86, 65, 1), shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),),
