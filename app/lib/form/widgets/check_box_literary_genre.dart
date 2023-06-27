@@ -6,6 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:getout/global.dart';
 
 class CheckboxListWidgetLiteraryGenre extends StatefulWidget {
   const CheckboxListWidgetLiteraryGenre({super.key});
@@ -29,6 +30,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetLiteraryGenre> {
           onChanged: (value) {
             setState(() {
               _checkboxValues[0] = value!;
+              boxBookValue = _checkboxValues;
             });
           },
           contentPadding: EdgeInsets.zero,
@@ -49,6 +51,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetLiteraryGenre> {
           onChanged: (value) {
             setState(() {
               _checkboxValues[1] = value!;
+              boxBookValue = _checkboxValues;
             });
           },
           contentPadding: EdgeInsets.zero,
@@ -69,6 +72,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetLiteraryGenre> {
           onChanged: (value) {
             setState(() {
               _checkboxValues[2] = value!;
+              boxBookValue = _checkboxValues;
             });
           },
           contentPadding: EdgeInsets.zero,
@@ -89,6 +93,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetLiteraryGenre> {
           onChanged: (value) {
             setState(() {
               _checkboxValues[3] = value!;
+              boxBookValue = _checkboxValues;
             });
           },
           contentPadding: EdgeInsets.zero,
@@ -109,6 +114,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetLiteraryGenre> {
           onChanged: (value) {
             setState(() {
               _checkboxValues[4] = value!;
+              boxBookValue = _checkboxValues;
             });
           },
           contentPadding: EdgeInsets.zero,

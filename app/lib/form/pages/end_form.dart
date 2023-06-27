@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:getout/layouts/home/dashboard.dart';
+import 'package:getout/theme.dart';
 
 class EndForm extends StatelessWidget {
   const EndForm({super.key});
@@ -49,12 +50,9 @@ class EndForm extends StatelessWidget {
             FractionallySizedBox(
               widthFactor: 0.9,
               child : ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 60),
-                backgroundColor: const Color.fromRGBO(213, 86, 65, 1), shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),),
-              child: const Text('Découvrir l\'application', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),),
+              style: Theme.of(context).elevatedButtonTheme.style,
+              child: Text('Découvrir l\'application',
+                style: Theme.of(context).textTheme.bodyLarge),
               onPressed: () {
                 Navigator.push(
                   context,

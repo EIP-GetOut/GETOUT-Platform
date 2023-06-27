@@ -79,16 +79,9 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               centerTitle: true,
               titleSpacing: 0,
-              title: const Text(
+              title: Text(
                 'VOTRE PROFIL',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 30,
-                  decorationThickness: 4,
-                  decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
-                  decoration: TextDecoration.underline,
-                ),
-              ),
+                style: Theme.of(context).textTheme.titleSmall),
               leading: const BackButton(),
               backgroundColor: Colors.white10,
               elevation: 0,
