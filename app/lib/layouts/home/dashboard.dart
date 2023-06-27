@@ -167,7 +167,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                       child: Container(
                                         alignment: Alignment.topLeft,
                                         padding: const EdgeInsets.only(right: 13.0),
-                                        child: Text(widget.movies[index].overview,
+                                        child: Text(widget.movies[index].overview ?? 'Aucune description disponible',
                                             textAlign: TextAlign.justify,
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 4,

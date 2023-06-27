@@ -18,8 +18,8 @@ class GenerateMoviesRequest {
 class MoviePreview {
   int id;
   String title;
-  String posterPath;
-  String overview;
+  String? posterPath;
+  String? overview;
 
   MoviePreview(
       {required this.id, required this.title, required this.posterPath, required this.overview});
