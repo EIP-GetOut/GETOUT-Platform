@@ -25,10 +25,11 @@ router.get('/book/:id', validate, logApiRequest, (req: Request, res: Response) =
         console.log(booksObtained)
         const book = {
             title: booksObtained.volumeInfo.title,
-            authors: booksObtained.volumeInfo.authors,
+            overview: booksObtained.volumeInfo.description,
+            poster_path: booksObtained.volumeInfo?.imageLinks?.thumbnail ? booksObtained.volumeInfo.imageLinks.thumbnail : null,
             duration: Number(booksObtained.volumeInfo.pageCount) / 60 - (Number(booksObtained.volumeInfo.pageCount) / 60 % 1) + 'h' + Number(booksObtained.volumeInfo.pageCount) % 60 + 'min',
-            synopsis: booksObtained.volumeInfo.description,
-            category: booksObtained.volumeInfo?.categories ? booksObtained.volumeInfo.categories : null
+            authors: booksObtained.volumeInfo.authors,
+            category: booksObtained.volumeInfo?.categories ? booksObtained.volumeInfo.categories : null,
         }
         return res.status(StatusCodes.OK).json({
             book
