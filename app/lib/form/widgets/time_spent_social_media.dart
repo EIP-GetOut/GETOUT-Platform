@@ -46,7 +46,7 @@ class _SliderWidgetState extends State<SliderWidget> {
         ),
         Slider(
           thumbColor: const Color.fromRGBO(213, 86, 65, 1),
-          activeColor: Color.fromARGB(120, 142, 1, 1),
+          activeColor: const Color.fromARGB(120, 142, 1, 1),
           secondaryActiveColor: const Color.fromRGBO(213, 86, 65, 1),
           inactiveColor: const Color.fromARGB(120, 213, 86, 65),
           value: _sliderValue,

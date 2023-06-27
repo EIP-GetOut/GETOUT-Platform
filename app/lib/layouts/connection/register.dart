@@ -63,7 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(httpStatus.getMessage(res.statusCode)),
-          backgroundColor: const Color.fromARGB(255, 109, 154, 3)));
+          backgroundColor: const Color.fromARGB(255, 239, 46, 46)));
     });
   }
 

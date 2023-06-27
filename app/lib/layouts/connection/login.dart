@@ -89,7 +89,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 16),
                               child:
-                                  PasswordField(controller: passwordController),
+                                  PasswordConnectionField(controller: passwordController),
                             ),
                             SizedBox(
                               child: Align(

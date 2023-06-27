@@ -81,12 +81,20 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                         'RÉALISATEUR',
                         style: TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold))),
+              Padding(
+                    padding: const EdgeInsets.only(
+                        left: 10), //apply padding to all four sides
+                              child: Image.network(
+                    'https://upload.wikimedia.org/wikipedia/commons/5/5f/Grey.PNG?20071229171831',
+                    height: 50,
+                    width: 50,
+                  )),
                 const Padding(
                     padding: EdgeInsets.only(
                         left: 10), //apply padding to all four sides
                     child: Text(
                         // textAlign: TextAlign.start,
-                        'A METTRE')),
+                        'Réalisateur 1')),
                 separateLine(),
                 const Padding(
                     padding: EdgeInsets.only(
@@ -96,12 +104,20 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                         'CASTING',
                         style: TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold))),
+                Padding(
+                    padding: const EdgeInsets.only(
+                        left: 10), //apply padding to all four sides
+                    child: Image.network(
+          'https://upload.wikimedia.org/wikipedia/commons/5/5f/Grey.PNG?20071229171831',
+          height: 50,
+          width: 50,
+        )),
                 const Padding(
                     padding: EdgeInsets.only(
                         left: 10), //apply padding to all four sides
                     child: Text(
                         // textAlign: TextAlign.start,
-                        'A METTRE')),
+                        'Casting 1')),
               ],
             ),
           ],

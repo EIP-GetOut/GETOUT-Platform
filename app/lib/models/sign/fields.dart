@@ -9,6 +9,35 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:intl/intl.dart';
 
+class PasswordConnectionField extends StatelessWidget {
+  final TextEditingController controller;
+
+  const PasswordConnectionField({super.key, required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+        controller: controller,
+        obscureText: true,
+        decoration: InputDecoration(
+            // hintText: 'Entrez votre mot de passe',
+            labelText: 'Mot de passe',
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(0.5),
+                borderSide: const BorderSide(color: Colors.black)),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(0.5),
+            )),
+        // validator: (value) {
+        //   if (value == null || value.isEmpty) {
+        //     return 'Un prénom est requis';
+        //   }
+        //   return null;
+        // }
+        );
+  }
+}
+
 class MailField extends StatelessWidget {
   final TextEditingController controller;
 
