@@ -26,6 +26,6 @@
       "@middlewares/*": ["services/middlewares/*"],
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "./src/models/books.d.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"],
 }
