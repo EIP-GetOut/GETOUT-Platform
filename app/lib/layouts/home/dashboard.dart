@@ -299,6 +299,8 @@ List<int> mapBoxFilmValuesToIds(List<bool> boxFilmValue) {
   if (boxFilmValue.length >= 5 && boxFilmValue[4]) {
     ids.add(35);
   }
-
+    if (boxFilmValue.every((value) => value == false)) {
+    ids.add(35);
+  }
   return ids;
 }
