@@ -17,10 +17,20 @@ class StreamingPlatform extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black,),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: const Text('VOS PREFERENCES',
-        style: TextStyle(color: Colors.black, fontSize: 30,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 30,
+          decorationThickness: 4,
+          decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
           decoration: TextDecoration.underline,
-          decorationColor:  Color.fromRGBO(213, 86, 65, 1),),),
+          ),),
         backgroundColor: Colors.white,
       ),
       body: Center(
