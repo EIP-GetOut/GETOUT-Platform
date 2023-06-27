@@ -25,7 +25,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
       child : Column(
       children: [
         CheckboxListTile(
-          title: const Text('Action', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold),),
+          title: Text('Action', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
           value: _checkboxValues[0],
           onChanged: (value) {
             setState(() {
@@ -46,7 +46,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
-          title: const Text('Thriller', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+          title: Text('Thriller', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
           value: _checkboxValues[1],
           onChanged: (value) {
             setState(() {
@@ -67,7 +67,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
-          title: const Text('Western', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+          title: Text('Western', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
           value: _checkboxValues[2],
           onChanged: (value) {
             setState(() {
@@ -88,7 +88,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
-          title: const Text('Horreur', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+          title: Text('Horreur', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
           value: _checkboxValues[3],
           onChanged: (value) {
             setState(() {
@@ -109,7 +109,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
-          title: const Text('Comedie', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold)),
+          title: Text('Comedie', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
           value: _checkboxValues[4],
           onChanged: (value) {
             setState(() {

@@ -55,7 +55,7 @@ final getOutTheme = ThemeData(
     ),
     elevation: 4.0,
   ),
-  textTheme: const TextTheme(
+  textTheme:  const TextTheme(
     bodyLarge: TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.w500,
@@ -68,6 +68,29 @@ final getOutTheme = ThemeData(
       decorationThickness: 4,
       decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
       decoration: TextDecoration.underline,
+    ),
+    titleMedium: TextStyle(
+      color: Colors.black,
+      fontSize: 30,
+      fontFamily: 'Urbanist',
+      fontWeight: FontWeight.bold,
+    ),
+    displayMedium: TextStyle(
+      fontFamily: 'Urbanist',
+      color: Colors.black,
+      fontSize: 15,
+    ),
+    bodySmall: TextStyle(
+      color: Color(0xFFD3D3D3),
+      fontSize: 13,
+      fontFamily: 'Urbanist',
+      fontWeight: FontWeight.bold,
+    ),
+    displayLarge: TextStyle(
+     fontFamily: 'Urbanist',
+      color: Colors.black,
+      fontWeight: FontWeight.w800,
+      fontSize: 22, 
     ),
   ),
   appBarTheme: const AppBarTheme(

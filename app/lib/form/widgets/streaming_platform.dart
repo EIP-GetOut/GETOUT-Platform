@@ -27,11 +27,12 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetStreamingPlatform
       children: [
         CheckboxListTile(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(width: 70.0),
             Image.network('https://upload.wikimedia.org/wikipedia/commons/f/ff/Netflix-new-icon.png',  width: 32.0, height: 32.0,),
             const SizedBox(width: 8.0),
-            const Text('Netflix', style: TextStyle(fontWeight: FontWeight.bold)),
+            Text('Netflix', style: Theme.of(context).textTheme.displayLarge),
           ],
         ),
         value: _checkboxValues[0],
@@ -55,11 +56,12 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetStreamingPlatform
         const SizedBox(height: 5),
         CheckboxListTile(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(width: 70.0),
             Image.network('https://upload.wikimedia.org/wikipedia/commons/f/f1/Prime_Video.png',  width: 56.0, height: 56.0,),
             const SizedBox(width: 8.0),
-            const Text('Prime Video', style: TextStyle(fontWeight: FontWeight.bold)),
+            Text('Prime Video', style: Theme.of(context).textTheme.displayLarge),
           ],
         ),
         value: _checkboxValues[1],
@@ -83,11 +85,12 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetStreamingPlatform
         const SizedBox(height: 5),
         CheckboxListTile(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(width: 70.0),
             Image.network('https://logos-marques.com/wp-content/uploads/2022/03/Disney-Plus-logo.png',  width: 56.0, height: 56.0,),
             const SizedBox(width: 8.0),
-            const Text('Disney +', style: TextStyle(fontWeight: FontWeight.bold)),
+            Text('Disney +', style: Theme.of(context).textTheme.displayLarge),
           ],
         ),
         value: _checkboxValues[2],
@@ -111,11 +114,12 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetStreamingPlatform
         const SizedBox(height: 5),
         CheckboxListTile(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
+          const SizedBox(width: 70.0),
           Image.asset('assets/images/Logo_Cinema.png', width: 48, height: 48),
           const SizedBox(width: 8.0),
-          const Text('Cinema', style: TextStyle(fontWeight: FontWeight.bold)),
+          Text('Cinema', style: Theme.of(context).textTheme.displayLarge),
           ],
         ),
         value: _checkboxValues[3],
@@ -139,11 +143,12 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetStreamingPlatform
         const SizedBox(height: 5),
         CheckboxListTile(
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: [
+          const SizedBox(width: 80.0),
           Image.asset('assets/images/Logo_DVD.png', width: 48, height: 48),
-          const SizedBox(width: 8.0),
-          const Text('DVD', style: TextStyle(fontWeight: FontWeight.bold)),
+          const SizedBox(width: 8),
+          Text('DVD', style: Theme.of(context).textTheme.displayLarge),
           ],
         ),
         value: _checkboxValues[4],
