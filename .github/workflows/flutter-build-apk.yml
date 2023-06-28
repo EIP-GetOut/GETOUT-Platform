@@ -38,3 +38,4 @@ jobs:
           artifacts: "./README.md"
           token: ${{ secrets.GITHUB_TOKEN }}
           name: "v0.0.2"
+          tag: "v0.0.2"
