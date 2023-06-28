@@ -38,7 +38,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
       if (res.statusCode == LoginResponseInfo.success) {
         globalEmail = emailController.text;
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const SocialMediaSpentTime()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => const SocialMediaSpentTime()));
       }
       setState(() {
         isLoading = false;
@@ -92,8 +94,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
                             Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 16),
-                              child:
-                                  PasswordConnectionField(controller: passwordController),
+                              child: PasswordConnectionField(
+                                  controller: passwordController),
                             ),
                             SizedBox(
                               child: Align(
@@ -156,7 +158,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                        const ForgetPasswordCodePage()));
+                                            const ForgetPasswordCodePage()));
                               },
                               child: const Text.rich(
                                 TextSpan(
@@ -191,29 +193,32 @@ class _ConnectionPageState extends State<ConnectionPage> {
         width: 85 * phoneWidth / 100,
         height: 65,
         child: FloatingActionButton(
-            shape: Theme.of(context).floatingActionButtonTheme.shape,
-            backgroundColor: Theme.of(context).floatingActionButtonTheme.backgroundColor,
-            onPressed: loginPressed,
-            child: Text('Se connecter',
-                style: Theme.of(context).textTheme.bodyLarge),));
+          shape: Theme.of(context).floatingActionButtonTheme.shape,
+          backgroundColor:
+              Theme.of(context).floatingActionButtonTheme.backgroundColor,
+          onPressed: loginPressed,
+          child: Text('Se connecter',
+              style: Theme.of(context).textTheme.bodyLarge),
+        ));
   }
 
   void signIn() {
     GoogleSignInApi.login().then((final user) {
-      print(user?.email);
-      print(user?.id);
-      if (user != null && user.email != null /*&& user.id != null*/) {
+      // print(user?.email);
+      // print(user?.id);
+      if (user != null /*&& user.id != null*/) {
         //request
         setState(() {
           isLoading = true;
         });
         return RequestsService.instance
-            .oauth(OauthRequest(
-            email: user.email, id: user.id))
+            .oauth(OauthRequest(email: user.email, id: user.id))
             .then((OauthResponseInfo res) {
           if (res.statusCode == OauthResponseInfo.success) {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => const SocialMediaSpentTime()));
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SocialMediaSpentTime()));
           }
           setState(() {
             isLoading = false;
@@ -225,7 +230,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
           } else if (res.statusCode == 502) {
             textState = 'Pas de connexion internet';
           } else if (res.statusCode == 500) {
-            textState = 'Une erreur s\'est produite, veuillez reesayer plus tard';
+            textState =
+                'Une erreur s\'est produite, veuillez reesayer plus tard';
           }
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(textState),

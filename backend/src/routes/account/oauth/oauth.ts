@@ -2,7 +2,7 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Wrote by Julien Letoux <julien.letoux@epitech.eu>
+** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
 import { Request, Response, Router } from "express";
@@ -12,17 +12,18 @@ import { StatusCodes, getReasonPhrase } from "http-status-codes";
 import logger, { logApiRequest } from "@services/middlewares/logging";
 import validate from "@services/middlewares/validator";
 
-import { loginAccount } from "@models/account/loginAccount";
+import { loginWithGoogle } from "@models/account/loginAccount"
+
 
 const router = Router()
 
 const rulesPost = [
     body('email').isEmail(),
-    body('password').isString()
+    body('idToken').isString()
 ]
 
-router.post('/account/login', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
-  return loginAccount(req.body, req.session).then((code: StatusCodes) => {
+router.post('/account/oauth', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
+  return loginWithGoogle(req.body, req.session).then((code: StatusCodes) => {
     if (code === StatusCodes.OK) {
       logger.info(`Account successfully logged in${req.body.email ? `: ${req.body.email}` : ' !'}`)
     } else {

@@ -9,6 +9,7 @@ import { Application } from 'express'
 
 import login from '@routes/account/login/login'
 import logout from '@routes/account/logout/logout'
+import oauth from '@routes/account/oauth/oauth'
 import signup from '@routes/account/signup/signup'
 import basicEndpoints from '@routes/basicEndpoints'
 import getBook from '@routes/book'
@@ -22,6 +23,7 @@ const useRoutes = (app: Application) => (
   app
     .use(login)
     .use(logout)
+    .use(oauth)
     .use(session)
     .use(signup)
     .use(resetPassword)

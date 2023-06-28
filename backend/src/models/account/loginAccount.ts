@@ -9,6 +9,8 @@ import bcrypt from 'bcrypt'
 import { Session, SessionData } from "express-session"
 import { StatusCodes } from "http-status-codes"
 
+import { authentifyWithGoogle } from '@services/authentification'
+
 import { findEntity } from "@models/getObjects"
 
 import { Account } from "@entities/Account"
@@ -30,6 +32,18 @@ function createSession (sess: Session & Partial<SessionData>, account: Account) 
     }
 }
 
+function loginWithGoogle (account, sess) {
+    return authentifyWithGoogle(account).then(([isOk]) => {
+    if (isOk) {
+        createSession(sess, account)
+        return StatusCodes.OK
+    }
+        return StatusCodes.FORBIDDEN
+    }).catch((err) => {
+        throw new Error(err)
+    })
+}
+
 function loginAccount(accountToLogin: accountRepositoryRequest, sess: Session) {
     return findEntity<Account>(Account, { email: accountToLogin.email }).then((foundAccount: Account | null): any => {
         if (!foundAccount) {
@@ -46,4 +60,4 @@ function loginAccount(accountToLogin: accountRepositoryRequest, sess: Session) {
     })
 }
 
-export default loginAccount
+export { loginAccount, loginWithGoogle }
