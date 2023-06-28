@@ -31,6 +31,12 @@ jobs:
       #- name: Build APK
       #  run: flutter build apk
 
+      - name: check if commit is tagged
+        run: |
+          if [[ -z "${GITHUB_REF##*tags*}" ]]; then
+            echo "This is a tag push, skipping build."
+            exit 78
+          fi
 
       - name: Upload APK to Releases
         uses: ncipollo/release-action@v1
