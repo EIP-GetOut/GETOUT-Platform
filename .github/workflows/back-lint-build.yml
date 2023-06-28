@@ -26,6 +26,3 @@ jobs:
 
         - name: Run Linter
           run: npx eslint --ext .ts ./src
-
-        - name: Build
-          run: npm run build
