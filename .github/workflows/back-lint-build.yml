@@ -2,8 +2,6 @@ name: Back Lint and Build
 
 on:
   push:
-    branches:
-      - dev
 
 defaults:
   run:
