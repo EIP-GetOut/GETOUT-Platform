@@ -32,11 +32,14 @@ jobs:
       - name: Build APK
         run: flutter build apk
 
+      - name: ls
+        run: ls -la build/app/outputs/flutter-apk/
+
       - name: Artifact Upload
         uses: actions/upload-artifact@v2
         with:
           name: app-release.apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/
 
       - name: Upload APK to Releases
         uses: ncipollo/release-action@v1
