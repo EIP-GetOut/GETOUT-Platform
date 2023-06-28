@@ -18,12 +18,14 @@ const router = Router()
 
 const rulesPost = [
   body('password').isString(),
-  body('newPassword').isString(),
-  body('newSalt').isString()
+  body('newPassword').isString()
 ]
 
 router.post('/account/reset-password/', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
-  return changeAccountPassword(req.session?.account?.id, req.body.password, req.body.newPassword, req.body.newSalt).then((code: StatusCodes) => {
+  if (!req.session?.account?.id) {
+    return res.status(StatusCodes.FORBIDDEN).send(getReasonPhrase(StatusCodes.FORBIDDEN))
+  }
+  return changeAccountPassword(req.session?.account?.id, req.body.password, req.body.newPassword).then((code: StatusCodes) => {
     return res.status(code).send(getReasonPhrase(code))
   }).catch((err) => {
     logger.error(err.toString())
