@@ -35,17 +35,9 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
         ),
         centerTitle: true,
         titleSpacing: 0,
-        title: const Text(
+        title: Text(
           'DESCRIPTION',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-            fontSize: 30,
-            decorationThickness: 4,
-            decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
-            decoration: TextDecoration.underline,
-          ),
-        ),
+          style: Theme.of(context).textTheme.titleSmall),
         leading: const BackButton(),
         backgroundColor: Colors.white10,
         elevation: 0,

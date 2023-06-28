@@ -19,6 +19,7 @@ class PasswordConnectionField extends StatelessWidget {
     return TextFormField(
         controller: controller,
         obscureText: true,
+        style: const TextStyle(fontSize: 16, color: Colors.black),
         decoration: InputDecoration(
             // hintText: 'Entrez votre mot de passe',
             labelText: 'Mot de passe',
@@ -48,6 +49,7 @@ class MailField extends StatelessWidget {
     return TextFormField(
         controller: controller,
         obscureText: false,
+        style: const TextStyle(fontSize: 16, color: Colors.black),
         decoration: InputDecoration(
             hintText: 'Entrez votre email',
             labelText: 'Email',
@@ -105,6 +107,7 @@ class PasswordField extends StatelessWidget {
     return TextFormField(
         controller: controller,
         obscureText: true,
+        style: const TextStyle(fontSize: 16, color: Colors.black),
         decoration: InputDecoration(
             hintText: 'Entrez votre mot de passe',
             labelText: 'Mot de passe',
@@ -157,6 +160,7 @@ class SecondPasswordField extends StatelessWidget {
     return TextFormField(
         controller: controller,
         obscureText: true,
+        style: const TextStyle(fontSize: 16, color: Colors.black),
         decoration: InputDecoration(
             hintText: 'Confirmez votre mot de passe',
             labelText: 'Confirmez votre mot de passe',
@@ -185,6 +189,7 @@ class FirstNameField extends StatelessWidget {
     return TextFormField(
         controller: controller,
         obscureText: false,
+        style: const TextStyle(fontSize: 16, color: Colors.black),
         decoration: InputDecoration(
             hintText: 'Entrez votre prénom',
             labelText: 'Prénom',
@@ -213,6 +218,7 @@ class NameField extends StatelessWidget {
     return TextFormField(
         controller: controller,
         obscureText: false,
+        style: const TextStyle(fontSize: 16, color: Colors.black),
         decoration: InputDecoration(
             hintText: 'Entrez votre nom',
             labelText: 'Nom',
@@ -240,6 +246,7 @@ class BirthDateField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
         controller: controller,
+        style: const TextStyle(fontSize: 16, color: Colors.black),
         decoration: InputDecoration(
             hintText: 'Date de naissance',
             labelText: 'Entrez votre date de naissance',

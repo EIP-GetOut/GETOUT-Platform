@@ -188,15 +188,11 @@ class _ConnectionPageState extends State<ConnectionPage> {
         width: 85 * phoneWidth / 100,
         height: 65,
         child: FloatingActionButton(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(50.0))),
-            backgroundColor: const Color.fromRGBO(213, 86, 65, 0.992),
+            shape: Theme.of(context).floatingActionButtonTheme.shape,
+            backgroundColor: Theme.of(context).floatingActionButtonTheme.backgroundColor,
             onPressed: loginPressed,
-            child: const Text('Se connecter',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 19,
-                ))));
+            child: Text('Se connecter',
+                style: Theme.of(context).textTheme.bodyLarge),));
   }
 
   void signIn() {

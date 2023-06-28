@@ -91,18 +91,11 @@ class _DashboardPageState extends State<DashboardPage> {
                           width: 60,
                         ),
                       const SizedBox(width: 20),
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Bienvenue !',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 30,
-                                fontFamily: 'Urbanist',
-                                fontWeight: FontWeight.bold,
-                          )),
-                          Text('La productivité à portée de main', style: TextStyle(
-                              fontFamily: 'Urbanist', color: Colors.black, fontSize: 15)),
+                          Text('Bienvenue !', style: Theme.of(context).textTheme.titleMedium),
+                          Text('La productivité à portée de main', style: Theme.of(context).textTheme.displayMedium)
                         ],
                       ),
                       const SizedBox(width: 25),
@@ -155,12 +148,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                       ),
                                       Container(
                                         alignment: Alignment.topLeft,
-                                        child: Text(widget.movies[index].title, style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15,
-                                            fontFamily: 'Urbanist',
-                                            fontWeight: FontWeight.bold,
-                                        )),
+                                        child: Text(widget.movies[index].title, style: Theme.of(context).textTheme.displayMedium!.copyWith(fontWeight: FontWeight.bold)),
                                       ),
                                     const SizedBox(height: 10),
                                     Flexible(
@@ -171,12 +159,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                             textAlign: TextAlign.justify,
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 4,
-                                            style: const TextStyle(
-                                              color: Color(0xFFD3D3D3),
-                                              fontSize: 13,
-                                              fontFamily: 'Urbanist',
-                                              fontWeight: FontWeight.bold,
-                                        )),
+                                            style: Theme.of(context).textTheme.bodySmall),
                                       ),
                                     ),
                                   ]),
@@ -225,12 +208,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             ),
                             Container(
                               alignment: Alignment.topLeft,
-                              child: Text(widget.books[index].title, style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
-                                fontFamily: 'Urbanist',
-                                fontWeight: FontWeight.bold,
-                              )),
+                              child: Text(widget.books[index].title, style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontWeight: FontWeight.bold)),
                             ),
                             const SizedBox(height: 10),
                             Flexible(
@@ -241,12 +219,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                     textAlign: TextAlign.justify,
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 3,
-                                    style: const TextStyle(
-                                      color: Color(0xFFD3D3D3),
-                                      fontSize: 13,
-                                      fontFamily: 'Urbanist',
-                                      fontWeight: FontWeight.bold,
-                                    )),
+                                    style: Theme.of(context).textTheme.bodySmall),
                               ),
                             ),
                           ]),

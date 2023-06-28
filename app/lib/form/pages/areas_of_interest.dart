@@ -23,14 +23,8 @@ class AreasOfInterest extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: const Text('VOS PREFERENCES',
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 30,
-          decorationThickness: 4,
-          decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
-          decoration: TextDecoration.underline,
-          ),),
+        title: Text('VOS PREFERENCES',
+        style: Theme.of(context).textTheme.titleSmall),
         backgroundColor: Colors.white,
       ),
       body: Center(
@@ -48,12 +42,8 @@ class AreasOfInterest extends StatelessWidget {
             FractionallySizedBox(
               widthFactor: 0.9,
               child : ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 60),
-                backgroundColor: const Color.fromRGBO(213, 86, 65, 1), shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),),
-              child: const Text('Suivant', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),),
+              style: Theme.of(context).elevatedButtonTheme.style,
+              child: Text('Suivant', style: Theme.of(context).textTheme.bodyLarge),
               onPressed: () {
                 Navigator.push(
                   context,
