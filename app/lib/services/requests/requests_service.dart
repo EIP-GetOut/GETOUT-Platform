@@ -46,7 +46,7 @@ class RequestsService {
             'with_genres': withGenres,
             'include_adult': request.includeAdult.toString()
           })
-        : Uri.https(
+        : Uri.http(
             api_constants.rootApiPath, api_constants.generateMoviesApiPath, {
             'with_genres': withGenres,
             'include_adult': request.includeAdult.toString()
@@ -85,7 +85,7 @@ class RequestsService {
     final Uri url = (kDebugMode)
         ? Uri.http(api_constants.rootApiPath,
             api_constants.generateBooksApiPath, queryParameters)
-        : Uri.https(api_constants.rootApiPath,
+        : Uri.http(api_constants.rootApiPath,
             api_constants.generateBooksApiPath, queryParameters);
 
     return http.get(url).then((response) {
@@ -120,7 +120,7 @@ class RequestsService {
     final Uri url = (kDebugMode)
         ? Uri.http(api_constants.rootApiPath,
             '${api_constants.getInfoMovieApiPath}/${request.id}')
-        : Uri.https(api_constants.rootApiPath,
+        : Uri.http(api_constants.rootApiPath,
             '${api_constants.getInfoMovieApiPath}/${request.id}');
     final Map<String, String> header = {'Content-Type': 'application/json'};
 
@@ -159,7 +159,7 @@ class RequestsService {
   Future<LoginResponseInfo> login(LoginRequest request) async {
     final Uri url = (kDebugMode)
         ? Uri.http(api_constants.rootApiPath, api_constants.loginApiPath)
-        : Uri.https(api_constants.rootApiPath, api_constants.loginApiPath);
+        : Uri.http(api_constants.rootApiPath, api_constants.loginApiPath);
     final Map<String, String> header = {'Content-Type': 'application/json'};
     final String body =
         jsonEncode({'email': request.email, 'password': request.password});
@@ -356,7 +356,7 @@ class RequestsService {
         AccountResponseInfo(statusCode: HttpStatus.APP_ERROR);
     final Uri url = (kDebugMode)
         ? Uri.http(api_constants.rootApiPath, api_constants.signupApiPath)
-        : Uri.https(api_constants.rootApiPath, api_constants.signupApiPath);
+        : Uri.http(api_constants.rootApiPath, api_constants.signupApiPath);
     final Map<String, String> header = {'Content-Type': 'application/json'};
     final String body = jsonEncode({
       'email': request.email,
@@ -396,7 +396,7 @@ class RequestsService {
   Future<SessionResponseInfo> session() async {
     final Uri url = (kDebugMode)
         ? Uri.http(api_constants.rootApiPath, api_constants.getSessionApiPath)
-        : Uri.https(api_constants.rootApiPath, api_constants.getSessionApiPath);
+        : Uri.http(api_constants.rootApiPath, api_constants.getSessionApiPath);
     final Map<String, String> header = {'Content-Type': 'application/json'};
 
     try {

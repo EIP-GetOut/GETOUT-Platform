@@ -148,6 +148,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
               textScaleFactor: 0.9,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+          const SizedBox(width: 15),
           const SizedBox(
               height: 20,
               child: VerticalDivider(
