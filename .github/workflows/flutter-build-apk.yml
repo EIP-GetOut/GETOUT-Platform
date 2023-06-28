@@ -37,5 +37,5 @@ jobs:
       - name: Upload APK to Releases
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/app/outputs/flutter-apk/*.apk"
+          artifacts: "build/app/outputs/flutter-apk/app-release.apk"
           skipIfReleaseExists: true
