@@ -3,6 +3,8 @@ name: Flutter Lint and Build
 on:
   push:
     branches:
+      - dev
+      - prod
 
 defaults:
   run:
