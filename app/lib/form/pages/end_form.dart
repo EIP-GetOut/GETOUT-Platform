@@ -19,20 +19,7 @@ class EndForm extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const SizedBox(height: 20),
-            Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset('assets/images/Logo.png', width: 70, height: 70),
-                  const SizedBox(width: 8.0), // Espacement entre l'icône et le texte
-                  const Column (children: [Text('GETOUT', textAlign: TextAlign.center, style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold)),
-                    Center(child: Text('Connect to reality', textAlign: TextAlign.center, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                  ),
-                  ],
-                  ),
-                ],
-              ),
-            ),
+            Image.asset('assets/entire_logo.png', width: 800, height: 200),
             const SizedBox(height: 30),
             Center(
               child: Row(
