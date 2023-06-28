@@ -6,6 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:getout/global.dart';
 
 class CheckboxListWidgetInterestAreas extends StatefulWidget {
   const CheckboxListWidgetInterestAreas({super.key});
@@ -49,6 +50,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetInterestAreas> {
           onChanged: (value) {
             setState(() {
               _checkboxValues[1] = value!;
+              boxInterestValue = _checkboxValues;
             });
           },
           contentPadding: EdgeInsets.zero,
@@ -69,6 +71,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetInterestAreas> {
           onChanged: (value) {
             setState(() {
               _checkboxValues[2] = value!;
+              boxInterestValue = _checkboxValues;
             });
           },
           contentPadding: EdgeInsets.zero,
@@ -89,6 +92,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetInterestAreas> {
           onChanged: (value) {
             setState(() {
               _checkboxValues[3] = value!;
+              boxInterestValue = _checkboxValues;
             });
           },
           contentPadding: EdgeInsets.zero,
@@ -109,6 +113,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetInterestAreas> {
           onChanged: (value) {
             setState(() {
               _checkboxValues[4] = value!;
+              boxInterestValue = _checkboxValues;
             });
           },
           contentPadding: EdgeInsets.zero,
