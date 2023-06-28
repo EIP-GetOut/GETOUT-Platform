@@ -1,9 +1,10 @@
-name: Back Lint and Build
+name: Flutter Lint and Build
 
 on:
   push:
     branches:
       - dev
+      - prod
 
 defaults:
   run:
@@ -29,5 +30,8 @@ jobs:
             channel: 'stable'
             cache: true
         
+        - name: Lint Flutter
+          run: flutter analyze
+        
         - name: Build web release
-          run: flutter build --web-release
+          run: flutter build web
