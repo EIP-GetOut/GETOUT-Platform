@@ -64,6 +64,37 @@ class MailField extends StatelessWidget {
   }
 }
 
+class CodeField extends StatelessWidget {
+  final TextEditingController controller;
+
+  const CodeField({super.key, required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+        controller: controller,
+        obscureText: true,
+        decoration: InputDecoration(
+            hintText: 'Entrez votre mot de passe',
+            labelText: 'Code',
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(0.5),
+                borderSide: const BorderSide(color: Colors.black)),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(0.5),
+            )),
+        validator: MultiValidator([
+          RequiredValidator(errorText: 'Un mot de passe est requis'),
+          LengthRangeValidator(min: 6, max:6,
+              errorText:
+              'Le code contient 6 chiffres'),
+          PatternValidator(r'(^[0-9]*$)',
+              errorText:
+              'Le code contient uniquement des chiffres'),
+        ]));
+  }
+}
+
 class PasswordField extends StatelessWidget {
   final TextEditingController controller;
 

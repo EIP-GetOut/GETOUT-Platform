@@ -1,4 +1,5 @@
 import 'package:getout/form/pages/social_media_spent_time.dart';
+import 'package:getout/layouts/connection/forget_password_code.dart';
 import 'package:getout/models/requests/login.dart';
 import 'package:flutter/material.dart';
 import 'package:getout/layouts/connection/register.dart';
@@ -133,6 +134,35 @@ class _ConnectionPageState extends State<ConnectionPage> {
                                   children: <InlineSpan>[
                                     TextSpan(
                                       text: ' Créer un compte',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color.fromRGBO(
+                                              213, 86, 65, 0.992)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        const ForgetPasswordCodePage()));
+                              },
+                              child: const Text.rich(
+                                TextSpan(
+                                  text: 'Mot de passe oublier ?',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 16),
+                                  children: <InlineSpan>[
+                                    TextSpan(
+                                      text: ' Changer le',
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,

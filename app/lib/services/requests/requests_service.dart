@@ -7,6 +7,8 @@
 
 import 'dart:convert';
 
+import 'package:getout/models/requests/forget_password_change.dart';
+import 'package:getout/models/requests/forget_password_code.dart';
 import 'package:getout/models/requests/generate_books.dart';
 import 'package:getout/models/requests/info_movie.dart';
 import 'package:getout/models/requests/generate_movies.dart';
@@ -167,6 +169,67 @@ class RequestsService {
         return LoginResponseInfo(statusCode: HttpStatus.NO_INTERNET); // 'No internet connection';
       }
       return LoginResponseInfo(statusCode: HttpStatus.APP_ERROR);
+    }
+  }
+
+  Future<ForgetPasswordCodeResponseInfo> forgetPasswordCode(ForgetPasswordCodeRequest request) async
+  {
+    final Uri url = Uri.http(api_constants.rootApiPath, api_constants.forgetPasswordCodeApiPath);
+    final Map<String, String> header = {
+      'Content-Type': 'application/json'
+    };
+    final String body = jsonEncode({
+      'email': request.email,
+    });
+
+    try {
+      final http.Response response = await http.post(url, body: body,  headers: header);
+      if (response.statusCode != HttpStatus.OK) {
+        return ForgetPasswordCodeResponseInfo(statusCode: response.statusCode);
+      }
+      final dynamic data = jsonDecode(response.body);
+      ForgetPasswordCodeResponseInfo result = ForgetPasswordCodeResponseInfo(
+          email: data['email'],
+          statusCode: response.statusCode);
+      return result;
+    } catch (error) {
+      if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
+        return ForgetPasswordCodeResponseInfo(statusCode: HttpStatus.NO_INTERNET);
+      }
+      return ForgetPasswordCodeResponseInfo(statusCode: HttpStatus.APP_ERROR);
+    }
+  }
+
+  Future<ForgetPasswordChangeResponseInfo> forgetPasswordChange(ForgetPasswordChangeRequest request) async
+  {
+
+    final Uri url = Uri.http(api_constants.rootApiPath, api_constants.forgetPasswordChangeApiPath);
+    final Map<String, String> header = {
+      'Content-Type': 'application/json'
+    };
+    final String body = jsonEncode({
+      'email': request.email,
+      'code': request.code,
+      'password': request.password,
+    });
+
+    try {
+      final http.Response response = await http.post(url, body: body,  headers: header);
+      if (response.statusCode != HttpStatus.OK) {
+        return ForgetPasswordChangeResponseInfo(statusCode: response.statusCode);
+      }
+      final dynamic data = jsonDecode(response.body);
+      ForgetPasswordChangeResponseInfo result = ForgetPasswordChangeResponseInfo(
+          id: data['id'],
+          email: data['email'],
+          password: data['password'],
+          statusCode: response.statusCode);
+      return result;
+    } catch (error) {
+      if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
+        return ForgetPasswordChangeResponseInfo(statusCode: HttpStatus.NO_INTERNET);
+      }
+      return ForgetPasswordChangeResponseInfo(statusCode: HttpStatus.APP_ERROR);
     }
   }
 
