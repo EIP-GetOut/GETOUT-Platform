@@ -29,7 +29,7 @@ router.get('/movie/:id',  validate, logApiRequest, (req: Request, res: Response)
             backdrop_path: movieObtained.backdrop_path,
             release_date: movieObtained.release_date,
             vote_average: Number(movieObtained.vote_average) / 2,
-            duration: Number(movieObtained.runtime) / 60 - (Number(movieObtained.runtime) / 60 % 1) + 'h' + Number(movieObtained.runtime) % 60 + 'min',
+            duration: Number(movieObtained.runtime) / 60 - (Number(movieObtained.runtime) / 60 % 1) + 'h' + String(Number(movieObtained.runtime) % 60).padStart(2, '0'),
         }
         return res.status(StatusCodes.OK).json({
             movie
