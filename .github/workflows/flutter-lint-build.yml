@@ -28,5 +28,8 @@ jobs:
             channel: 'stable'
             cache: true
         
+        - name: Lint Flutter
+          run: flutter analyze
+        
         - name: Build web release
           run: flutter build web
