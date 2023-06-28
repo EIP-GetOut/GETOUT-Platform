@@ -42,10 +42,13 @@
     "morgan": "^1.10.0",
     "moviedb-promise": "^3.3.1",
     "node-fetch": "^2.6.11",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.3",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.1.0",
     "winston": "^3.8.2",
-    "winston-daily-rotate-file": "^4.7.1"
+    "winston-daily-rotate-file": "^4.7.1",
+    "yaml": "^2.3.1"
   },
   "devDependencies": {
     "@types/compression": "^1.7.2",

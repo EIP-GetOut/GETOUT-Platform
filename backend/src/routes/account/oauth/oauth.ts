@@ -22,6 +22,36 @@ const rulesPost = [
     body('idToken').isString()
 ]
 
+/**
+ * @swagger
+ * /account/oauth:
+ *   post:
+ *     summary: Process Google OAuth
+ *     description: Process Google OAuth with the provided email and idToken.
+ *     parameters:
+ *       - name: body
+ *         in: body
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             email:
+ *               type: string
+ *               format: email
+ *               description: The email associated with the user account.
+ *             idToken:
+ *               type: string
+ *               description: Google ID token
+ *     responses:
+ *       '200':
+ *         description: Successful login or authentication.
+ *       '400':
+ *         description: Invalid request data.
+ *       '401':
+ *         description: Unauthorized access.
+ *       '500':
+ *         description: Internal server error.
+ */
 router.post('/account/oauth', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
   return loginWithGoogle(req.body, req.session).then((code: StatusCodes) => {
     if (code === StatusCodes.OK) {

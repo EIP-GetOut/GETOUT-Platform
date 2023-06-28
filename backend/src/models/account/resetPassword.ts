@@ -21,8 +21,6 @@ function changeAccountPassword (accountId, oldPassword, newPassword): Promise<St
       return StatusCodes.NOT_FOUND
     }
     return bcrypt.compare(oldPassword + account.salt, account.password).then((passwordsDoesMatch) => {
-      console.log('PASSWORD MATCH ?', passwordsDoesMatch)
-
       return bcrypt.hash(newPassword + account.salt, 10).then((hash: string) => {
 
       if (passwordsDoesMatch) {

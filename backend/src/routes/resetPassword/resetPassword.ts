@@ -21,6 +21,34 @@ const rulesPost = [
   body('newPassword').isString()
 ]
 
+/**
+ * @swagger
+ * /account/reset-password/:
+ *   post:
+ *     summary: Reset account password
+ *     description: Reset the password of the logged-in user by verifying the current password and replacing it with a new one.
+ *     parameters:
+ *       - in: body
+ *         name: requestBody
+ *         description: Password reset details
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             password:
+ *               type: string
+ *             newPassword:
+ *               type: string
+ *     responses:
+ *       '200':
+ *         description: Password reset successful.
+ *       '400':
+ *         description: Bad request. Invalid input data.
+ *       '403':
+ *         description: Forbidden. User not authenticated.
+ *       '500':
+ *         description: Internal server error.
+ */
 router.post('/account/reset-password/', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
   if (!req.session?.account?.id) {
     return res.status(StatusCodes.FORBIDDEN).send(getReasonPhrase(StatusCodes.FORBIDDEN))
