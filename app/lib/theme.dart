@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 Map<int, Color> colorMap = {
   50: const Color.fromRGBO(213, 86, 65, .1),

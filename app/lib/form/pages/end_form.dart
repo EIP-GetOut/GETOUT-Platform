@@ -7,7 +7,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:getout/layouts/home/dashboard.dart';
-import 'package:getout/theme.dart';
 
 class EndForm extends StatelessWidget {
   const EndForm({super.key});
