@@ -5,46 +5,54 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'package:getout/models/requests/forget_password_change.dart';
+import 'package:getout/models/requests/settings/edit_password.dart';
 import 'package:flutter/material.dart';
-import 'package:getout/layouts/connection/forget_password_change.dart';
-import 'package:getout/models/requests/forget_password_code.dart';
 import 'package:getout/models/sign/fields.dart';
 import 'package:getout/services/requests/requests_service.dart';
+import 'package:getout/constants/http_status.dart';
 
-class ForgetPasswordCodePage extends StatefulWidget {
-  const ForgetPasswordCodePage({Key? key}) : super(key: key);
+class ParametersEditPasswordPage extends StatefulWidget {
+  const ParametersEditPasswordPage({Key? key}) : super(key: key);
 
   @override
-  State<ForgetPasswordCodePage> createState() => _ForgetPasswordCodePageState();
+  State<ParametersEditPasswordPage> createState() => _ParametersEditPasswordPageState();
 }
 
-class _ForgetPasswordCodePageState extends State<ForgetPasswordCodePage> {
-  TextEditingController emailController = TextEditingController();
+class _ParametersEditPasswordPageState extends State<ParametersEditPasswordPage> {
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController newPassword2Controller = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false;
   String textState = '';
 
-  Future<void> forgetPasswordCodePressed() async {
+  final HttpStatus httpStatus = HttpStatus({
+    HttpStatus.INTERNAL_SERVER_ERROR: 'Une erreur s\'est produite, veuillez réesayer plus tard',
+    HttpStatus.CONFLICT: 'Une erreur c\'est produite',
+    HttpStatus.NO_INTERNET: 'Pas de connexion internet',
+  });
+
+  Future<void> parametersEditPasswordPressed() async
+  {
     if (!_formKey.currentState!.validate()) {
       return;
     }
     setState(() {
       isLoading = true;
     });
-
     return RequestsService.instance
-        .forgetPasswordCode(ForgetPasswordCodeRequest(
-        email: emailController.text))
-        .then((ForgetPasswordCodeResponseInfo res) {
-      if (res.statusCode == ForgetPasswordCodeResponseInfo.success) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const ForgetPasswordChangePage()));
+        .settingsEditPassword(SettingsEditPasswordRequest(
+        email: "email", password: passwordController.text, newPassword: newPassword2Controller.text))
+        .then((SettingsEditPasswordResponseInfo res) {
+      if (res.statusCode == SettingsEditPasswordResponseInfo.success) {
+        Navigator.pop(context);
       }
       setState(() {
         isLoading = false;
       });
       if (res.statusCode == 200) {
-        textState = 'Code Envoyé';
+        textState = 'Mot de passe changé';
       } else if (res.statusCode == 403) {
         textState = 'l\'adresse mail est incorrect';
       } else if (res.statusCode == 502) {
@@ -71,13 +79,14 @@ class _ForgetPasswordCodePageState extends State<ForgetPasswordCodePage> {
         centerTitle: true,
         titleSpacing: 0,
         title: const Text(
-          'Mot de Passe Oublié',
+          'Changer le Mot de Passe',
           style: TextStyle(
             color: Colors.black,
-            fontSize: 30,
+            fontSize: 20,
             decorationThickness: 4,
             decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
-            decoration: TextDecoration.underline,
+            decoration:
+            TextDecoration.underline,
           ),
         ),
         leading: const BackButton(),
@@ -91,16 +100,25 @@ class _ForgetPasswordCodePageState extends State<ForgetPasswordCodePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-              /// TODO a loop for all fields (padding with each field)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                child: MailField(controller: emailController),
-              ),
-              const SizedBox(
-                height: 70,
-              ),
-              startButton(context, MediaQuery.of(context).size.width),
-            ]),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    child: PasswordField(controller: passwordController),
+                  ),
+                  const Text('Votre nouveau mot de passe'),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    child: PasswordField(controller: newPasswordController),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    child: SecondPasswordField(controller: newPassword2Controller,
+                        fstPassword: newPasswordController.text),
+                  ),
+                  const SizedBox(
+                    height: 70,
+                  ),
+                  startButton(context, MediaQuery.of(context).size.width),
+                ]),
           )),
     );
   }
@@ -113,11 +131,12 @@ class _ForgetPasswordCodePageState extends State<ForgetPasswordCodePage> {
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(50.0))),
             backgroundColor: const Color.fromRGBO(213, 86, 65, 0.992),
-            onPressed: forgetPasswordCodePressed,
-            child: const Text('Recevoir un code',
+            onPressed: parametersEditPasswordPressed,
+            child: const Text('Changer de mot de passe',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 19,
                 ))));
   }
+
 }

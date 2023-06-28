@@ -15,6 +15,7 @@ import 'package:getout/models/requests/generate_movies.dart';
 import 'package:getout/models/requests/create_account.dart';
 import 'package:getout/models/requests/get_session.dart';
 import 'package:getout/models/requests/login.dart';
+import 'package:getout/models/requests/settings/edit_password.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/foundation.dart';
@@ -172,6 +173,12 @@ class RequestsService {
     }
   }
 
+  ///
+  /// Tag: Settings - Forget Password Change
+  /// Location: LoginPage -> ForgetPasswordCodePage
+  /// Description: First page allow you to send a verification code to change
+  /// forget password (see also: forgetPasswordChange)
+  ///
   Future<ForgetPasswordCodeResponseInfo> forgetPasswordCode(ForgetPasswordCodeRequest request) async
   {
     final Uri url = Uri.http(api_constants.rootApiPath, api_constants.forgetPasswordCodeApiPath);
@@ -200,6 +207,13 @@ class RequestsService {
     }
   }
 
+  ///
+  /// Tag: Settings - Forget Password Change
+  /// Location: LoginPage -> ForgetPasswordCodePage ->
+  ///   ForgetPasswordChangePage
+  /// Description: Second page to that allow to change forget password
+  ///   (see also: forgetPasswordCode)
+  ///
   Future<ForgetPasswordChangeResponseInfo> forgetPasswordChange(ForgetPasswordChangeRequest request) async
   {
 
@@ -226,10 +240,51 @@ class RequestsService {
           statusCode: response.statusCode);
       return result;
     } catch (error) {
-      if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
+      if (error.toString() == 'Connection reset by peer' ||
+          error.toString() == 'Connection closed before full header was received') {
         return ForgetPasswordChangeResponseInfo(statusCode: HttpStatus.NO_INTERNET);
       }
       return ForgetPasswordChangeResponseInfo(statusCode: HttpStatus.APP_ERROR);
+    }
+  }
+
+  ///
+  ///
+  /// Tag: Settings - Edit Password
+  /// Location: dashboard -> Settings -> Edit Password
+  /// Description: This page allow you to change password from settings page
+  ///
+  ///
+  Future<SettingsEditPasswordResponseInfo> settingsEditPassword(SettingsEditPasswordRequest request) async
+  {
+    final Uri url = Uri.http(api_constants.rootApiPath, api_constants.signupApiPath);
+    final Map<String, String> header = {
+      'Content-Type': 'application/json'
+    };
+    final String body = jsonEncode({
+      'email': request.email,
+      'password': request.password,
+      'new_password': request.newPassword,
+    });
+
+
+    try {
+      final http.Response response = await http.post(url, body: body,  headers: header);
+      if (response.statusCode != HttpStatus.OK) {
+        return SettingsEditPasswordResponseInfo(statusCode: response.statusCode);
+      }
+          final dynamic data = jsonDecode(response.body);
+      SettingsEditPasswordResponseInfo result = SettingsEditPasswordResponseInfo(
+          id: data['id'],
+          email: data['email'],
+          password: data['password'],
+          statusCode: response.statusCode);
+      return result;
+    } catch (error) {
+      if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
+        return SettingsEditPasswordResponseInfo(statusCode: HttpStatus.NO_INTERNET);
+      }
+      return SettingsEditPasswordResponseInfo(statusCode: HttpStatus.APP_ERROR);
     }
   }
 

@@ -7,8 +7,8 @@
 
 import 'package:flutter/foundation.dart';
 
-const String rootApiPath = (kDebugMode) ? '10.0.2.2:8080' : 'our.perry.com'; // 10.0.2.2 is the localhost address for android emulator
-//const String rootApiPath = /*'192.168.1.13:8080'PERRY*/ '192.168.0.143:8080' /*XO7*/;
+//const String rootApiPath = (kDebugMode) ? '10.0.2.2:8080' : 'our.perry.com'; // 10.0.2.2 is the localhost address for android emulator
+const String rootApiPath = /*'192.168.1.13:8080'PERRY*/ '192.168.0.143:8080' /*XO7*/;
 // const String rootApiProtocol = (kDebugMode) ? 'http' : 'https';
 
 // ACCOUNT API PATH

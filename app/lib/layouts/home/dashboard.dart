@@ -7,6 +7,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:getout/layouts/settings/settings.dart';
+import 'package:getout/layouts/settings/edit_password.dart';
 import 'package:getout/models/requests/generate_movies.dart';
 import 'package:getout/layouts/movie/movie.dart';
 import 'package:getout/layouts/home/load.dart';
@@ -86,10 +88,19 @@ class _DashboardPageState extends State<DashboardPage> {
                   Row(
                     children: [
                       const SizedBox(width: 20),
-                      Image.asset(
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const ParametersPage()));
+                        },
+                        child: Image.asset(
                           'assets/Profile_picture.png',
                           width: 60,
                         ),
+                      ),
                       const SizedBox(width: 20),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

@@ -74,7 +74,7 @@ class _ForgetPasswordChangePageState extends State<ForgetPasswordChangePage> {
         centerTitle: true,
         titleSpacing: 0,
         title: const Text(
-          'VOTRE PROFIL',
+          'Mot de Passe Oublié',
           style: TextStyle(
             color: Colors.black,
             fontSize: 30,
