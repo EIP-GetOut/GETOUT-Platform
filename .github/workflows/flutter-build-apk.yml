@@ -2,8 +2,6 @@ name: Flutter Build and Release
 
 on:
   push:
-    branches:
-      - prod
     tags:
       - v*
 
@@ -34,8 +32,13 @@ jobs:
       - name: Build APK
         run: flutter build apk
 
+      - name: Artifact Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-release.apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
       - name: Upload APK to Releases
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/app/outputs/flutter-apk/*.apk"
-          skipIfReleaseExists: true
+          artifacts: "app-release.apk"
