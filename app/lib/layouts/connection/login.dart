@@ -200,7 +200,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
   void signIn() {
     GoogleSignInApi.login().then((final user) {
-      if (user != null && user.displayName != null && user.photoUrl != null) {
+      print(user?.email);
+      print(user?.id);
+      if (user != null && user.email != null /*&& user.id != null*/) {
         //request
         setState(() {
           isLoading = true;
@@ -231,11 +233,11 @@ class _ConnectionPageState extends State<ConnectionPage> {
                   ? const Color.fromARGB(255, 239, 46, 46)
                   : const Color.fromARGB(255, 109, 154, 3))));
         });
-        debugPrint(
-            "${user.email} ${user.displayName ?? ""} ${user.photoUrl ?? ""}");
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-                "Info ${user.email} ${user.displayName ?? ""} ${user.photoUrl ?? ""}")));
+//        debugPrint(
+//            "${user.email} ${user.displayName ?? ""} ${user.photoUrl ?? ""}");
+//        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+//            content: Text(
+//                "Info ${user.email} ${user.displayName ?? ""} ${user.photoUrl ?? ""}")));
       }
     });
   }
