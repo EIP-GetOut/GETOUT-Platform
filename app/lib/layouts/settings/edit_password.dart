@@ -5,7 +5,6 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-import 'package:getout/models/requests/forget_password_change.dart';
 import 'package:getout/models/requests/settings/edit_password.dart';
 import 'package:flutter/material.dart';
 import 'package:getout/models/sign/fields.dart';
@@ -43,7 +42,7 @@ class _ParametersEditPasswordPageState extends State<ParametersEditPasswordPage>
     });
     return RequestsService.instance
         .settingsEditPassword(SettingsEditPasswordRequest(
-        email: "email", password: passwordController.text, newPassword: newPassword2Controller.text))
+        email: 'email', password: passwordController.text, newPassword: newPassword2Controller.text))
         .then((SettingsEditPasswordResponseInfo res) {
       if (res.statusCode == SettingsEditPasswordResponseInfo.success) {
         Navigator.pop(context);

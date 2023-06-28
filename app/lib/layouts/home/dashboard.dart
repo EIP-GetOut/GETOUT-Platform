@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:getout/layouts/settings/settings.dart';
-import 'package:getout/layouts/settings/edit_password.dart';
 import 'package:getout/models/requests/generate_movies.dart';
 import 'package:getout/layouts/movie/movie.dart';
 import 'package:getout/layouts/home/load.dart';
@@ -94,7 +93,7 @@ class _DashboardPageState extends State<DashboardPage> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                  const ParametersPage()));
+                                  const SettingsPage()));
                         },
                         child: Image.asset(
                           'assets/Profile_picture.png',

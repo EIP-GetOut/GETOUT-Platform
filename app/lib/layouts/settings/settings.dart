@@ -8,14 +8,14 @@
 import 'package:getout/layouts/settings/edit_password.dart';
 import 'package:flutter/material.dart';
 
-class ParametersPage extends StatefulWidget {
-  const ParametersPage({Key? key}) : super(key: key);
+class SettingsPage extends StatefulWidget {
+  const SettingsPage({Key? key}) : super(key: key);
 
   @override
-  State<ParametersPage> createState() => _ParametersPageState();
+  State<SettingsPage> createState() => _SettingsPageState();
 }
 
-class _ParametersPageState extends State<ParametersPage> {
+class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +57,7 @@ class _ParametersPageState extends State<ParametersPage> {
               ],
             ),
             const Divider(height: 20, thickness: 1),
-            buildParameters(context, "Changer le Mot de Passe", const ParametersEditPasswordPage()),
+            buildParameters(context, 'Changer le Mot de Passe', const ParametersEditPasswordPage()),
 //            startButton(context, MediaQuery.of(context).size.width),
           ])),
     );
