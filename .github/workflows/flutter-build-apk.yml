@@ -32,9 +32,8 @@ jobs:
         run: flutter build apk
 
       - name: Upload APK to Releases
-        uses: actions/upload-release-asset@v1
+        uses: ncipollo/release-action@v1
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: build/app/outputs/flutter-apk/app-release.apk
-          asset_name: GetOut-release.apk
-          asset_content_type: application/vnd.android.package-archive
+          artifacts: "build/app/outputs/apk/release/*.apk"
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.ref }}
