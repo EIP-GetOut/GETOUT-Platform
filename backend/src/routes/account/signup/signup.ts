@@ -21,17 +21,17 @@ const rulesPost = [
     body('firstName').isString(),
     body('lastName').isString(),
     body('bornDate').isDate({ format: 'DD/MM/YYYY' }),
-    body('password').isString(),
-    body('salt').isString()
+    body('password').isString()
 ]
 
 router.post('/account/signup', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
-    return registerAccount(req.body).then((result) => {
+    return registerAccount(req.body).then((result: any) => {
         if (typeof result === 'object') {
             return res.status(StatusCodes.CREATED).json(result)
         }
         return res.status(result).send(getReasonPhrase(result))
     }).catch((err) => {
+        console.log(err)
         logger.error(err)
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
     })

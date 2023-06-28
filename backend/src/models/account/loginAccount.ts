@@ -5,6 +5,7 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
+import bcrypt from 'bcrypt'
 import { Session, SessionData } from "express-session"
 import { StatusCodes } from "http-status-codes"
 
@@ -34,12 +35,14 @@ function loginAccount(accountToLogin: accountRepositoryRequest, sess: Session) {
         if (!foundAccount) {
             return StatusCodes.FORBIDDEN
         }
-        if (foundAccount.password === accountToLogin.password) {
-            createSession(sess, foundAccount)
-            return StatusCodes.OK
-        } else {
-            return StatusCodes.FORBIDDEN
-        }
+        return bcrypt.compare(accountToLogin.password + foundAccount.salt, foundAccount.password).then((result: boolean) => {
+            if (result) {
+                createSession(sess, foundAccount)
+                return StatusCodes.OK
+            } else {
+                return StatusCodes.FORBIDDEN
+            }
+        })
     })
 }
 
