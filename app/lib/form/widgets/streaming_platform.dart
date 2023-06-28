@@ -52,6 +52,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetStreamingPlatform
             top: BorderSide(color: Colors.black, width: 2.0),
           ),
           checkColor: Colors.black,
+          activeColor: Theme.of(context).primaryColor,
         ),       
         const SizedBox(height: 5),
         CheckboxListTile(
@@ -81,6 +82,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetStreamingPlatform
             top: BorderSide(color: Colors.black, width: 2.0),
           ),
           checkColor: Colors.black,
+          activeColor: Theme.of(context).primaryColor,
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
@@ -110,6 +112,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetStreamingPlatform
             top: BorderSide(color: Colors.black, width: 2.0),
           ),
           checkColor: Colors.black,
+          activeColor: Theme.of(context).primaryColor,
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
@@ -139,6 +142,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetStreamingPlatform
             top: BorderSide(color: Colors.black, width: 2.0),
           ),
           checkColor: Colors.black,
+          activeColor: Theme.of(context).primaryColor,
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
@@ -168,6 +172,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetStreamingPlatform
             top: BorderSide(color: Colors.black, width: 2.0),
           ),
           checkColor: Colors.black,
+          activeColor: Theme.of(context).primaryColor,
         ),
       ],
     ),);
