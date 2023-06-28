@@ -3,6 +3,7 @@ import 'package:getout/layouts/connection/forget_password_code.dart';
 import 'package:getout/models/requests/login.dart';
 import 'package:flutter/material.dart';
 import 'package:getout/layouts/connection/register.dart';
+import 'package:getout/models/requests/oauth.dart';
 import 'package:getout/models/sign/fields.dart';
 import 'package:getout/services/requests/requests_service.dart';
 import 'package:getout/services/google/google_signin_api.dart';
@@ -200,6 +201,36 @@ class _ConnectionPageState extends State<ConnectionPage> {
   void signIn() {
     GoogleSignInApi.login().then((final user) {
       if (user != null && user.displayName != null && user.photoUrl != null) {
+        //request
+        setState(() {
+          isLoading = true;
+        });
+        return RequestsService.instance
+            .oauth(OauthRequest(
+            email: user.email, id: user.id))
+            .then((OauthResponseInfo res) {
+          if (res.statusCode == OauthResponseInfo.success) {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => const SocialMediaSpentTime()));
+          }
+          setState(() {
+            isLoading = false;
+          });
+          if (res.statusCode == 200) {
+            textState = 'Connecté';
+          } else if (res.statusCode == 403) {
+            textState = 'Le mot de passe ou l\'adresse mail est incorrect';
+          } else if (res.statusCode == 502) {
+            textState = 'Pas de connexion internet';
+          } else if (res.statusCode == 500) {
+            textState = 'Une erreur s\'est produite, veuillez reesayer plus tard';
+          }
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(textState),
+              backgroundColor: (res.statusCode != 200
+                  ? const Color.fromARGB(255, 239, 46, 46)
+                  : const Color.fromARGB(255, 109, 154, 3))));
+        });
         debugPrint(
             "${user.email} ${user.displayName ?? ""} ${user.photoUrl ?? ""}");
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(

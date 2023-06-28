@@ -15,6 +15,7 @@ import 'package:getout/models/requests/generate_movies.dart';
 import 'package:getout/models/requests/create_account.dart';
 import 'package:getout/models/requests/get_session.dart';
 import 'package:getout/models/requests/login.dart';
+import 'package:getout/models/requests/oauth.dart';
 import 'package:getout/models/requests/settings/edit_password.dart';
 import 'package:http/http.dart' as http;
 
@@ -267,7 +268,6 @@ class RequestsService {
       'new_password': request.newPassword,
     });
 
-
     try {
       final http.Response response = await http.post(url, body: body,  headers: header);
       if (response.statusCode != HttpStatus.OK) {
@@ -285,6 +285,41 @@ class RequestsService {
         return SettingsEditPasswordResponseInfo(statusCode: HttpStatus.NO_INTERNET);
       }
       return SettingsEditPasswordResponseInfo(statusCode: HttpStatus.APP_ERROR);
+    }
+  }
+
+  ///
+  ///
+  /// Tag: Settings - Edit Password
+  /// Location: dashboard -> Settings -> Edit Password
+  /// Description: This page allow you to change password from settings page
+  ///
+  ///
+  Future<OauthResponseInfo> oauth(OauthRequest request) async
+  {
+    final Uri url = Uri.http(api_constants.rootApiPath, api_constants.oauthApiPath);
+    final Map<String, String> header = {
+      'Content-Type': 'application/json'
+    };
+    final String body = jsonEncode({
+      'email': request.email,
+      'idToken': request.id,
+    });
+
+    try {
+      final http.Response response = await http.post(url, body: body,  headers: header);
+      if (response.statusCode != HttpStatus.OK) {
+        return OauthResponseInfo(statusCode: response.statusCode);
+      }
+      final dynamic data = jsonDecode(response.body);
+      OauthResponseInfo result = OauthResponseInfo(
+          statusCode: response.statusCode);
+      return result;
+    } catch (error) {
+      if (error.toString() == 'Connection reset by peer' || error.toString() == 'Connection closed before full header was received') {
+        return OauthResponseInfo(statusCode: HttpStatus.NO_INTERNET);
+      }
+      return OauthResponseInfo(statusCode: HttpStatus.APP_ERROR);
     }
   }
 
