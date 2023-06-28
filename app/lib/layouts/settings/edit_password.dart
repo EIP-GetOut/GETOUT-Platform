@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:getout/models/sign/fields.dart';
 import 'package:getout/services/requests/requests_service.dart';
 import 'package:getout/constants/http_status.dart';
+import 'package:getout/global.dart';
 
 class ParametersEditPasswordPage extends StatefulWidget {
   const ParametersEditPasswordPage({Key? key}) : super(key: key);
@@ -34,15 +35,16 @@ class _ParametersEditPasswordPageState extends State<ParametersEditPasswordPage>
 
   Future<void> parametersEditPasswordPressed() async
   {
-    if (!_formKey.currentState!.validate()) {
+    if (!_formKey.currentState!.validate() || globalEmail == null) {
       return;
     }
     setState(() {
       isLoading = true;
     });
+
     return RequestsService.instance
         .settingsEditPassword(SettingsEditPasswordRequest(
-        email: 'email', password: passwordController.text, newPassword: newPassword2Controller.text))
+        email: globalEmail ?? '', password: passwordController.text, newPassword: newPassword2Controller.text))
         .then((SettingsEditPasswordResponseInfo res) {
       if (res.statusCode == SettingsEditPasswordResponseInfo.success) {
         Navigator.pop(context);

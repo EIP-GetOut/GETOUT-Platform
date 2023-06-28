@@ -7,6 +7,7 @@ import 'package:getout/models/sign/fields.dart';
 import 'package:getout/services/requests/requests_service.dart';
 import 'package:getout/services/google/google_signin_api.dart';
 import 'package:getout/layouts/home/load.dart';
+import 'package:getout/global.dart';
 
 class ConnectionPage extends StatefulWidget {
   const ConnectionPage({Key? key}) : super(key: key);
@@ -34,6 +35,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
             email: emailController.text, password: passwordController.text))
         .then((LoginResponseInfo res) {
       if (res.statusCode == LoginResponseInfo.success) {
+        globalEmail = emailController.text;
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => const SocialMediaSpentTime()));
       }
