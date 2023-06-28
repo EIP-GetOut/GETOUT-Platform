@@ -65,7 +65,6 @@ router.post('/account/signup', rulesPost, validate, logApiRequest, (req: Request
         }
         return res.status(result).send(getReasonPhrase(result))
     }).catch((err) => {
-        console.log(err)
         logger.error(err)
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
     })

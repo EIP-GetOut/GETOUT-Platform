@@ -251,7 +251,6 @@ const rulesGet = [
  *         description: Internal server error.
  */
 router.get('/generate-movies', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
-    console.log(req.query);
     return getMovies(req.query).then((moviesObtained: MovieResult[] | undefined) => {
         if (!moviesObtained) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))

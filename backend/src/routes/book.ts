@@ -62,8 +62,7 @@ router.get('/book/:id', validate, logApiRequest, (req: Request, res: Response) =
         if (!booksObtained) {
             return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
         }
-        logger.log(JSON.stringify(booksObtained, null, 2))
-        console.log(booksObtained)
+        logger.info(JSON.stringify(booksObtained, null, 2))
         const book = {
             title: booksObtained.volumeInfo.title,
             overview: booksObtained.volumeInfo.description,
