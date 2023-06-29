@@ -2,8 +2,8 @@ name: Flutter Build and Release
 
 on:
   push:
-    tags:
-      - v*
+    branches:
+      - prod
 
 defaults:
   run:

@@ -2,8 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## 0.2.0 (2023-06-28)
+### [0.2.1](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.1.15...v0.2.1) (2023-06-29)
 
+
+### Features
+
+* **backend:** :memo: generate a documentation ([5a18e4c](https://github.com/EIP-GetOut/GETOUT-Platform/commit/5a18e4c3b0a11fb2c399248b0ec1dd7c6e09607c))
+
+
+### Bug Fixes
+
+* **backend:** :adhesive_bandage: removing console.log ([4c530bd](https://github.com/EIP-GetOut/GETOUT-Platform/commit/4c530bd4f7d5dca860dc47f5e3247346420e7925))
+
+## 0.2.0 (2023-06-28)
 
 ### Features
 
