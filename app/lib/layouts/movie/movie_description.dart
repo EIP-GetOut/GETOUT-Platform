@@ -6,13 +6,13 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:getout/models/requests/info_movie.dart';
 
 class MovieDescriptionPage extends StatefulWidget {
-  const MovieDescriptionPage({super.key});
 
-  // const MovieDescriptionPage(this.movie);
+  final InfoMovieResponse? movie;
 
-  // final MoviePreview movie;
+  const MovieDescriptionPage({super.key, required this.movie});
 
   @override
   State<MovieDescriptionPage> createState() => _MovieDescriptionPageState();
@@ -35,17 +35,9 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
         ),
         centerTitle: true,
         titleSpacing: 0,
-        title: const Text(
+        title: Text(
           'DESCRIPTION',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-            fontSize: 30,
-            decorationThickness: 4,
-            decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
-            decoration: TextDecoration.underline,
-          ),
-        ),
+          style: Theme.of(context).textTheme.titleSmall),
         leading: const BackButton(),
         backgroundColor: Colors.white10,
         elevation: 0,
@@ -66,12 +58,12 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                         ))),
-                const Padding(
-                    padding: EdgeInsets.only(
+                  Padding(
+                    padding: const EdgeInsets.only(
                         left: 10), //apply padding to all four sides
                     child: Text(
                         // textAlign: TextAlign.start,
-                        'A METTRE')),
+                        widget.movie?.overview ?? 'Aucune description disponible')),
                 separateLine(),
                 const Padding(
                     padding: EdgeInsets.only(
@@ -81,12 +73,20 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                         'RÉALISATEUR',
                         style: TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold))),
+              Padding(
+                    padding: const EdgeInsets.only(
+                        left: 10), //apply padding to all four sides
+                              child: Image.network(
+                    'https://upload.wikimedia.org/wikipedia/commons/5/5f/Grey.PNG?20071229171831',
+                    height: 50,
+                    width: 50,
+                  )),
                 const Padding(
                     padding: EdgeInsets.only(
                         left: 10), //apply padding to all four sides
                     child: Text(
                         // textAlign: TextAlign.start,
-                        'A METTRE')),
+                        'Réalisateur 1')),
                 separateLine(),
                 const Padding(
                     padding: EdgeInsets.only(
@@ -96,12 +96,20 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                         'CASTING',
                         style: TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold))),
+                Padding(
+                    padding: const EdgeInsets.only(
+                        left: 10), //apply padding to all four sides
+                    child: Image.network(
+          'https://upload.wikimedia.org/wikipedia/commons/5/5f/Grey.PNG?20071229171831',
+          height: 50,
+          width: 50,
+        )),
                 const Padding(
                     padding: EdgeInsets.only(
                         left: 10), //apply padding to all four sides
                     child: Text(
                         // textAlign: TextAlign.start,
-                        'A METTRE')),
+                        'Casting 1')),
               ],
             ),
           ],

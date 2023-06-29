@@ -7,6 +7,8 @@
 
 import { MovieDb, DiscoverMovieRequest, DiscoverMovieResponse, MovieResult } from 'moviedb-promise'
 
+import logger from '@middlewares/logging'
+
 const moviedb = new MovieDb('1eec31e851e9ad1b8f3de3ccf39953b7')
 
 function getMovies(params: any): Promise<MovieResult[] | undefined> {
@@ -18,7 +20,7 @@ function getMovies(params: any): Promise<MovieResult[] | undefined> {
     };
 
     return moviedb.discoverMovie(discorverMovieRequest).then((value: DiscoverMovieResponse) => {
-        console.log('RES OBTAINED/', value)
+        logger.info(JSON.stringify(value, null, 2))
         return value.results
     })
 }

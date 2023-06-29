@@ -21,12 +21,45 @@ const rulesPost = [
     body('firstName').isString(),
     body('lastName').isString(),
     body('bornDate').isDate({ format: 'DD/MM/YYYY' }),
-    body('password').isString(),
-    body('salt').isString()
+    body('password').isString()
 ]
 
+/**
+ * @swagger
+ * /account/signup:
+ *   post:
+ *     summary: Create an account
+ *     description: Create a new user account and store the provided information in the database.
+ *     parameters:
+ *       - in: body
+ *         name: requestBody
+ *         description: Account details
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             email:
+ *               type: string
+ *               format: email
+ *             firstName:
+ *               type: string
+ *             lastName:
+ *               type: string
+ *             bornDate:
+ *               type: string
+ *               format: date
+ *             password:
+ *               type: string
+ *     responses:
+ *       '201':
+ *         description: Account created successfully.
+ *       '400':
+ *         description: Bad request. Invalid input data.
+ *       '500':
+ *         description: Internal server error.
+ */
 router.post('/account/signup', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
-    return registerAccount(req.body).then((result) => {
+    return registerAccount(req.body).then((result: any) => {
         if (typeof result === 'object') {
             return res.status(StatusCodes.CREATED).json(result)
         }

@@ -18,12 +18,42 @@ const router = Router()
 
 const rulesPost = [
   body('password').isString(),
-  body('newPassword').isString(),
-  body('newSalt').isString()
+  body('newPassword').isString()
 ]
 
+/**
+ * @swagger
+ * /account/reset-password/:
+ *   post:
+ *     summary: Reset account password
+ *     description: Reset the password of the logged-in user by verifying the current password and replacing it with a new one.
+ *     parameters:
+ *       - in: body
+ *         name: requestBody
+ *         description: Password reset details
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             password:
+ *               type: string
+ *             newPassword:
+ *               type: string
+ *     responses:
+ *       '200':
+ *         description: Password reset successful.
+ *       '400':
+ *         description: Bad request. Invalid input data.
+ *       '403':
+ *         description: Forbidden. User not authenticated.
+ *       '500':
+ *         description: Internal server error.
+ */
 router.post('/account/reset-password/', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
-  return changeAccountPassword(req.session?.account?.id, req.body.password, req.body.newPassword, req.body.newSalt).then((code: StatusCodes) => {
+  if (!req.session?.account?.id) {
+    return res.status(StatusCodes.FORBIDDEN).send(getReasonPhrase(StatusCodes.FORBIDDEN))
+  }
+  return changeAccountPassword(req.session?.account?.id, req.body.password, req.body.newPassword).then((code: StatusCodes) => {
     return res.status(code).send(getReasonPhrase(code))
   }).catch((err) => {
     logger.error(err.toString())
