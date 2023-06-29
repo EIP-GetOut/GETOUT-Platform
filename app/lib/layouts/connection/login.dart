@@ -1,11 +1,14 @@
+import 'package:getout/form/pages/social_media_spent_time.dart';
+import 'package:getout/layouts/connection/forget_password_code.dart';
 import 'package:getout/models/requests/login.dart';
 import 'package:flutter/material.dart';
 import 'package:getout/layouts/connection/register.dart';
+import 'package:getout/models/requests/oauth.dart';
 import 'package:getout/models/sign/fields.dart';
 import 'package:getout/services/requests/requests_service.dart';
 import 'package:getout/services/google/google_signin_api.dart';
 import 'package:getout/layouts/home/load.dart';
-import 'package:getout/layouts/home/dashboard.dart';
+import 'package:getout/global.dart';
 
 class ConnectionPage extends StatefulWidget {
   const ConnectionPage({Key? key}) : super(key: key);
@@ -33,8 +36,11 @@ class _ConnectionPageState extends State<ConnectionPage> {
             email: emailController.text, password: passwordController.text))
         .then((LoginResponseInfo res) {
       if (res.statusCode == LoginResponseInfo.success) {
+        globalEmail = emailController.text;
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => DashboardPage()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => const SocialMediaSpentTime()));
       }
       setState(() {
         isLoading = false;
@@ -88,8 +94,8 @@ class _ConnectionPageState extends State<ConnectionPage> {
                             Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 16),
-                              child:
-                                  PasswordField(controller: passwordController),
+                              child: PasswordConnectionField(
+                                  controller: passwordController),
                             ),
                             SizedBox(
                               child: Align(
@@ -111,7 +117,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                                 width: 40,
                               ),
                               // Falcon label: Text('Sign Up with Google'),
-                              label: const Text('Se connecter ave Google'),
+                              label: const Text('Se connecter avec Google'),
                               onPressed: signIn,
                             ),
                             const SizedBox(
@@ -143,6 +149,35 @@ class _ConnectionPageState extends State<ConnectionPage> {
                                 ),
                               ),
                             ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ForgetPasswordCodePage()));
+                              },
+                              child: const Text.rich(
+                                TextSpan(
+                                  text: 'Mot de passe oublier ?',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 16),
+                                  children: <InlineSpan>[
+                                    TextSpan(
+                                      text: ' Changer le',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color.fromRGBO(
+                                              213, 86, 65, 0.992)),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ]),
                     ),
                   ),
@@ -158,25 +193,57 @@ class _ConnectionPageState extends State<ConnectionPage> {
         width: 85 * phoneWidth / 100,
         height: 65,
         child: FloatingActionButton(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(50.0))),
-            backgroundColor: const Color.fromRGBO(213, 86, 65, 0.992),
-            onPressed: loginPressed,
-            child: const Text('Se connecter',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 19,
-                ))));
+          shape: Theme.of(context).floatingActionButtonTheme.shape,
+          backgroundColor:
+              Theme.of(context).floatingActionButtonTheme.backgroundColor,
+          onPressed: loginPressed,
+          child: Text('Se connecter',
+              style: Theme.of(context).textTheme.bodyLarge),
+        ));
   }
 
   void signIn() {
     GoogleSignInApi.login().then((final user) {
-      if (user != null && user.displayName != null && user.photoUrl != null) {
-        debugPrint(
-            "${user.email} ${user.displayName ?? ""} ${user.photoUrl ?? ""}");
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-                "Info ${user.email} ${user.displayName ?? ""} ${user.photoUrl ?? ""}")));
+      // print(user?.email);
+      // print(user?.id);
+      if (user != null /*&& user.id != null*/) {
+        //request
+        setState(() {
+          isLoading = true;
+        });
+        return RequestsService.instance
+            .oauth(OauthRequest(email: user.email, id: user.id))
+            .then((OauthResponseInfo res) {
+          if (res.statusCode == OauthResponseInfo.success) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SocialMediaSpentTime()));
+          }
+          setState(() {
+            isLoading = false;
+          });
+          if (res.statusCode == 200) {
+            textState = 'Connecté';
+          } else if (res.statusCode == 403) {
+            textState = 'Le mot de passe ou l\'adresse mail est incorrect';
+          } else if (res.statusCode == 502) {
+            textState = 'Pas de connexion internet';
+          } else if (res.statusCode == 500) {
+            textState =
+                'Une erreur s\'est produite, veuillez reesayer plus tard';
+          }
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(textState),
+              backgroundColor: (res.statusCode != 200
+                  ? const Color.fromARGB(255, 239, 46, 46)
+                  : const Color.fromARGB(255, 109, 154, 3))));
+        });
+//        debugPrint(
+//            "${user.email} ${user.displayName ?? ""} ${user.photoUrl ?? ""}");
+//        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+//            content: Text(
+//                "Info ${user.email} ${user.displayName ?? ""} ${user.photoUrl ?? ""}")));
       }
     });
   }

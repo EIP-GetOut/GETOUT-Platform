@@ -16,6 +16,18 @@ const router = Router()
 const rules = [
 ]
 
+/**
+ * @swagger
+ * /account/logout:
+ *   post:
+ *     summary: Log out
+ *     description: Log out from the user account if a session is present.
+ *     responses:
+ *       '204':
+ *         description: Successfully logged out.
+ *       '500':
+ *         description: Internal server error.
+ */
 router.post('/account/logout', rules, validate, logApiRequest, (req: Request, res: Response) => {
   return req.session.destroy((err) => {
     if (err) {

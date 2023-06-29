@@ -88,6 +88,14 @@ flutter:
 
   assets:
     - assets/
+    - assets/images/Logo_GETOUT.png
+    - assets/images/Dessin_fille.png
+    - assets/images/Telephone_Check.png
+    - assets/images/Logo.png
+    - assets/images/Dessin.png
+    - assets/images/Telephone.png
+    - assets/images/Logo_Cinema.png
+    - assets/images/Logo_DVD.png
 
   fonts:
     - family: Poppins
@@ -110,6 +118,28 @@ flutter:
         - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf
         - asset: assets/fonts/Poppins/Poppins-ThinItalic.ttf
         - asset: assets/fonts/Poppins/Poppins-Thin.ttf
+    - family: Urbanist
+      fonts:
+        - asset: assets/fonts/Urbanist/Urbanist-Italic-VariableFont_wght.ttf
+        - asset: assets/fonts/Urbanist/Urbanist-VariableFont_wght.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-Black.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-BlackItalic.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-Bold.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-BoldItalic.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-ExtraBold.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-ExtraBoldItalic.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-ExtraLight.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-ExtraLightItalic.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-Italic.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-Light.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-LightItalic.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-Medium.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-MediumItalic.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-Regular.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-SemiBold.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-SemiBoldItalic.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-Thin.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-ThinItalic.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

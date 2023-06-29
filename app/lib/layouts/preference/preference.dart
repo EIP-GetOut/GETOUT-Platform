@@ -66,14 +66,9 @@ class _PreferencesPageState extends State<PreferencesPage> {
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.linear),
           ),
-          title: const Text(
+          title: Text(
             'Vos préférences',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 32,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+            style: Theme.of(context).textTheme.titleSmall),
           backgroundColor: Colors.white,
           centerTitle: true,
         ),

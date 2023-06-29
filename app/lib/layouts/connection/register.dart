@@ -35,8 +35,6 @@ class _RegisterPageState extends State<RegisterPage> {
         'Une erreur s\'est produite, veuillez réesayer plus tard',
     HttpStatus.CONFLICT: 'Un compte avec cet email existe déjà',
     HttpStatus.NO_INTERNET: 'Pas de connexion internet',
-    HttpStatus.ACCEPTED:
-        'Une erreur s\'est produite, veuillez réesayer plus tard'
   });
 
   Future<void> registerPressed() async {
@@ -65,7 +63,7 @@ class _RegisterPageState extends State<RegisterPage> {
       });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(httpStatus.getMessage(res.statusCode)),
-          backgroundColor: const Color.fromARGB(255, 109, 154, 3)));
+          backgroundColor: const Color.fromARGB(255, 239, 46, 46)));
     });
   }
 
@@ -81,16 +79,9 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
               centerTitle: true,
               titleSpacing: 0,
-              title: const Text(
+              title: Text(
                 'VOTRE PROFIL',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 30,
-                  decorationThickness: 4,
-                  decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
-                  decoration: TextDecoration.underline,
-                ),
-              ),
+                style: Theme.of(context).textTheme.titleSmall),
               leading: const BackButton(),
               backgroundColor: Colors.white10,
               elevation: 0,

@@ -27,7 +27,6 @@ declare module 'express-session' {
 
 function useSession (app: Application) {
   const week = 3600000 * 24 * 7
-  // const thirtySeconds = 1000 * 30
 
   const redisClient = createClient({ url: 'redis://redis:6379' })
   redisClient.connect().catch(console.error)
@@ -39,10 +38,10 @@ function useSession (app: Application) {
     saveUninitialized: false,
     cookie: {
       maxAge: week,
-      sameSite: app.get('env') === 'production' ? 'none' : 'strict'
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'strict'
     }
   }
-  if (app.get('env') === 'production') {
+  if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1)
     sess.cookie!.secure = true
   }

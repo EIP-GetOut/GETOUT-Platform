@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:getout/playgrounds/main_playground.dart';
 import 'package:getout/models/flex_size.dart';
-import 'package:getout/layouts/preference/preference.dart';
+import 'package:getout/form/pages/social_media_spent_time.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -98,7 +98,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 borderRadius: BorderRadius.all(Radius.circular(50.0))),
             backgroundColor: const Color(0xFF584CF4),
             onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => PreferencesPage())),
+                MaterialPageRoute(builder: (context) => const SocialMediaSpentTime())),
             child: const Text('Commencer l\'aventure',
                 style: TextStyle(
                   color: Colors.white,

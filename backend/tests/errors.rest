@@ -1,0 +1,44 @@
+POST http://localhost:8080/account/signup HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "yo2@yo.com",
+    "password": "123456",
+    "firstName": "Julien",
+    "lastName": "Letoux",
+    "bornDate": "07/06/2001",
+    "salt": "sdjqshjodijaoz"
+}
+
+###
+POST http://localhost:8080/account/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "yo2@yo.com",
+    "password": "123456"
+}
+
+###
+GET http://localhost:8080/session HTTP/1.1
+Cookie: connect.sid=s%3AbhwfBnfGsqlxY2JWej6_wKIn06DaZrPI.Y9aH6YAikmJ8o%2Fs7YmHP816o54ma4GRdIlNoLwWCM%2Fs
+Content-Type: application/json
+
+###
+POST http://localhost:8080/account/logout HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "yo@yo.com",
+    "password": "123456"
+}
+
+###
+POST http://localhost:8080/account/reset-password HTTP/1.1
+Content-Type: application/json
+
+{
+    "password": "123457",
+    "confirmPassword": "123457",
+    "newPassword": "123456"
+}

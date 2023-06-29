@@ -13,7 +13,16 @@ import logger, { logApiRequest } from '@middlewares/logging'
 
 
 const router: Router = Router()
-
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Basic endpoint
+ *     description: Welcome to GetOut API
+ *     responses:
+ *       200:
+ *         description: A welcoming message.
+ */
 router.get('/', caching(24 * 60 * 60), logApiRequest, (req: Request, res: Response): void => {
   logger.info('Welcome to  GetOut API !')
   res.status(StatusCodes.OK).send(getReasonPhrase(StatusCodes.OK))

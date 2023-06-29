@@ -6,6 +6,7 @@
 */
 
 import express, { Application } from 'express'
+import { generateSwaggerDoc } from 'generateSwagger'
 
 import logger from '@middlewares/logging'
 
@@ -17,6 +18,7 @@ import { appDataSource } from '@config/dataSource'
   const app: Application = express()
   const port: string | undefined = process.env.PORT
 
+  generateSwaggerDoc('./src/swagger.yaml')
   appDataSource.initialize().then(() => {
     logger.info("Data Source has been initialized!")
 
