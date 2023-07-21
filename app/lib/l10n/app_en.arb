@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+  "signin_google": "Sign in with Google",
+  "@signin_google": {
+    "description": "Oauth2 Google"
+  }
+}
