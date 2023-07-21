@@ -9,6 +9,7 @@ import 'package:getout/services/requests/requests_service.dart';
 import 'package:getout/services/google/google_signin_api.dart';
 import 'package:getout/layouts/home/load.dart';
 import 'package:getout/global.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ConnectionPage extends StatefulWidget {
   const ConnectionPage({Key? key}) : super(key: key);
@@ -117,7 +118,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                                 width: 40,
                               ),
                               // Falcon label: Text('Sign Up with Google'),
-                              label: const Text('Se connecter avec Google'),
+                              label: Text(AppLocalizations.of(context)?.signin_google ?? ''),
                               onPressed: signIn,
                             ),
                             const SizedBox(
