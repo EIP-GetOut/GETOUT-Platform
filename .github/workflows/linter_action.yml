@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: cd backend ; npm ci          
 
-      - name: Run Linter
+      - name: Lint back end
         run: |
           if git diff --name-only ${{ github.event.before }}..${{ github.sha }} | grep "backend"; then
             echo "backend folder has been modified, back linter starting"
