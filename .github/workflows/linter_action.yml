@@ -2,6 +2,7 @@ name: Linter Action
 
 on:
   push:
+    branches: [ dev ]
 
 defaults:
   run:
