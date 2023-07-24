@@ -9,11 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/bloc/locale_bloc.dart';
 import 'package:getout/bloc/observer.dart';
-import 'package:getout/bloc/locale_bloc.dart';
-import 'package:getout/layouts/connection/login.dart';
-import 'package:getout/models/category.dart';
-import 'package:getout/layouts/home/loading_session.dart';
-import 'package:getout/theme.dart';
+import 'package:getout/screens/connection/pages/login.dart';
+import 'package:getout/constants/theme.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -45,20 +42,14 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => LocaleBloc()),
       ],
-      child: MyAppView(),
+      child: const MyAppView(),
     );
   }
 }
 
 class MyAppView extends StatelessWidget {
-  final List<Category> categories = [
-    Category(title: 'Horreur'),
-    Category(title: 'Comedie'),
-    Category(title: 'Policier'),
-    Category(title: 'Science-Fiction'),
-  ];
 
-  MyAppView({super.key});
+  const MyAppView({super.key});
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
