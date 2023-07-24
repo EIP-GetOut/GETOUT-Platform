@@ -231,7 +231,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
           } else if (res.statusCode == 403) {
             textState = 'Le mot de passe ou l\'adresse mail est incorrect';
           } else if (res.statusCode == 502) {
-            textState = 'Pas de connexion internet.';
+            textState = 'Pas de connexion internet';
           } else if (res.statusCode == 500) {
             textState =
                 'Une erreur s\'est produite, veuillez reesayer plus tard';
