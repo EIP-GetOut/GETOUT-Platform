@@ -5,6 +5,7 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
+import cors from 'cors'
 import express, { Application } from 'express'
 import { generateSwaggerDoc } from 'generateSwagger'
 
@@ -17,11 +18,22 @@ import { appDataSource } from '@config/dataSource'
 (() => {
   const app: Application = express()
   const port: string | undefined = process.env.PORT
+  const allowedOrigins = ['http://localhost:3000'];
+  const corsOptions: cors.CorsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
 
-  generateSwaggerDoc('./src/swagger.yaml')
-  appDataSource.initialize().then(() => {
+
+generateSwaggerDoc('./src/swagger.yaml')
+appDataSource.initialize().then(() => {
+    app.use(cors(corsOptions));
     logger.info("Data Source has been initialized!")
-
     useSession(app)
     useMiddlewares(app)
     useRoutes(app)
