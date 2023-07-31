@@ -9,7 +9,7 @@
 
 // import 'package:getout/models/generate_movies_request.dart';
 import 'package:getout/constants/movie_genre.dart';
-import 'package:getout/models/requests/generate_movies.dart';
+import 'package:getout/models/home/generate_movies.dart';
 import 'package:getout/services/requests/requests_service.dart';
 
 // include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate

@@ -7,16 +7,16 @@
 
 import 'dart:convert';
 
-import 'package:getout/models/requests/forget_password_change.dart';
-import 'package:getout/models/requests/forget_password_code.dart';
-import 'package:getout/models/requests/generate_books.dart';
-import 'package:getout/models/requests/info_movie.dart';
-import 'package:getout/models/requests/generate_movies.dart';
-import 'package:getout/models/requests/create_account.dart';
-import 'package:getout/models/requests/get_session.dart';
-import 'package:getout/models/requests/login.dart';
-import 'package:getout/models/requests/oauth.dart';
-import 'package:getout/models/requests/settings/edit_password.dart';
+import 'package:getout/models/connection/forget_password_change.dart';
+import 'package:getout/models/connection/forget_password_code.dart';
+import 'package:getout/models/home/generate_books.dart';
+import 'package:getout/models/home/info_movie.dart';
+import 'package:getout/models/home/generate_movies.dart';
+import 'package:getout/models/connection/create_account.dart';
+import 'package:getout/models/connection/get_session.dart';
+import 'package:getout/models/connection/login.dart';
+import 'package:getout/models/connection/oauth.dart';
+import 'package:getout/models/settings/edit_password.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/foundation.dart';
