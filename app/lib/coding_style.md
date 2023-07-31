@@ -55,7 +55,7 @@ import 'package:my_app/screen/my_page.dart';
 
 Class names **MUST** be in **UpperCamelCase** (PascalCase), with no underscores and Upper case letters at the beginning of each word.
 
-Class constructor **MUST** be **const**
+Class constructor **SHOULD** be **const**
 
 ### Method
 

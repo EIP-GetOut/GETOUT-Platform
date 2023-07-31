@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:getout/screens/form/pages/social_media_spent_time.dart';
 import 'package:getout/screens/connection/pages/forget_password_code.dart';
 import 'package:getout/models/connection/login.dart';
@@ -36,7 +34,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
     });
     return RequestsService.instance
         .login(LoginRequest(
-            email: emailController.text, password: passwordController.text))
+        email: emailController.text, password: passwordController.text))
         .then((LoginResponseInfo res) {
       if (res.statusCode == LoginResponseInfo.success) {
         globalEmail = emailController.text;
@@ -62,7 +60,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
           backgroundColor: (res.statusCode != 200
               ? const Color.fromARGB(255, 239, 46, 46)
               : const Color.fromARGB(255, 109, 154, 3))));
-    } as FutureOr<void> Function(dynamic value));
+    });
   }
 
   @override
