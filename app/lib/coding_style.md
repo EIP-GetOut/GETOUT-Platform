@@ -9,8 +9,11 @@
 For example, a file containing the class `MyClass` **SHOULD** be named `my_class.dart`.
 
 
-- In case of file containing a class that is a page, the file name **SHOULD** be the **same as the class name, but without the suffix** `page`.<br />
+- In case of file containing a class that as a suffix (like `page`), the file name **SHOULD** be the **same as the class name, but without the suffix**.<br />
 For example, a file containing the class `LoginPage` **SHOULD** be named `login.dart`.
+
+
+- 
 
 
 - All file **MUST** be placed in the right folder.
@@ -35,12 +38,11 @@ For example, a file containing the class `LoginPage` **SHOULD** be named `login.
 
 
 - Import **MUST** be **space separated list of imports** and should be in this order :<br />
-dart -> flutter package -> extern package -> app package <br />
+dart + flutter package -> extern package -> app package <br />
 For example :
 ```dart
 import 'dart:async';
 import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -76,7 +78,7 @@ Methods respect the **same rules as functions**.
 - Variable names **MUST** be in camelCase, with no underscores and Upper case letters at the beginning of each word except for the first one.
 
 
-- Variable **SHOULD** be named in English.
+- Variable **SHOULD** be named in English or abbreviation of an English words.
 
 
 - Variable **MUST** be **typed**.
@@ -128,7 +130,7 @@ Indentation **MUST** be done with **2 spaces**.
 
 ### Line Length
 
-Lines **SHOULD NOT** be longer than **80 characters** but **MUST NOT** be longer than **110 characters**.
+Lines **SHOULD NOT** be longer than **80 characters**.
 
 _There is an exception, when a String purpose is not to be read by a human. (For example, a long URL)_
 
@@ -147,3 +149,7 @@ _There is an exception in some widget if statement can be in one line like this 
 ```dart
 if (isLoading == false) Scafold(...);
 ```
+
+## Other Cases
+
+In other cases, you **SHOULD** follow the [Effective Dart](https://dart.dev/guides/language/effective-dart/style) style guide.
