@@ -11,14 +11,15 @@ import 'package:http/http.dart' as http;
 
 // import 'package:getout/models/home/generate_movies.dart';
 
-import 'package:getout/constants/http_status.dart';
+// import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/home/bloc/movie_bloc.dart';
 import 'package:getout/constants/api_path.dart' as api_constants;
 
 import 'package:flutter/foundation.dart';
 
+import 'package:dio/dio.dart';
+
 class DashboardService {
-  // final Client _httpClient;
   String formatWithGenresParameter(List<int> genres) {
     String withGenres = '';
 
@@ -29,44 +30,70 @@ class DashboardService {
     return withGenres;
   }
 
-  Future<GenerateMoviesResponse> getMovies(GenerateMoviesRequest request) {
+  Future<GenerateMoviesResponse> getMovies(
+      GenerateMoviesRequest request) async {
+    print("test1");
     String withGenres = formatWithGenresParameter(request.genres);
-    final Uri url = (kDebugMode)
-        ? Uri.http(
-            api_constants.rootApiPath, api_constants.generateMoviesApiPath, {
-            'with_genres': withGenres,
-            'include_adult': request.includeAdult.toString()
-          })
-        : Uri.http(
-            api_constants.rootApiPath, api_constants.generateMoviesApiPath, {
-            'with_genres': withGenres,
-            'include_adult': request.includeAdult.toString()
-          });
 
-    return http.get(url).then((response) {
-      if (response.statusCode != HttpStatus.OK) {
-        return Future.error(Exception(
-          'Error ${response.statusCode} while fetching movies: ${response.reasonPhrase}',
+    final dio = Dio();
+
+    print("test2");
+    // final Response response = (kDebugMode)
+    //     ? await dio.request(
+    //         '${api_constants.rootApiPath}${api_constants.generateMoviesApiPath}',
+    //         data: {
+    //           'with_genres': withGenres,
+    //           'include_adult': request.includeAdult.toString()
+    //         },
+    //         options: Options(method: 'GET'))
+    //     : await dio.request(
+    //         '${api_constants.rootApiPath}${api_constants.generateMoviesApiPath}',
+    //         data: {
+    //           'with_genres': withGenres,
+    //           'include_adult': request.includeAdult.toString()
+    //         },
+    //         options: Options(method: 'GET'));
+    // '${api_constants.rootApiPath}${api_constants.generateMoviesApiPath}?with_genres=${withGenres}&include_adult=${request.includeAdult.toString()}',
+
+    print('${api_constants.rootApiPath}${api_constants.generateMoviesApiPath}');
+    final Response response = await dio.request(
+        '${api_constants.rootApiPath}${api_constants.generateMoviesApiPath}?with_genres=${withGenres}&include_adult=${request.includeAdult.toString()}',
+        data: {
+          'with_genres': withGenres,
+          'include_adult': request.includeAdult.toString()
+        },
+        options: Options(
+          method: 'GET',
+          responseType: ResponseType.plain,
         ));
-      }
 
-      var data = jsonDecode(response.body);
-      GenerateMoviesResponse result = [];
+    print('response = ');
+    print(response.statusCode);
+    GenerateMoviesResponse result = [];
+    return result;
+    // if (response.statusCode != HttpStatus.OK) {
+    //     return Future.error(Exception(
+    //       'Error ${response.statusCode} while fetching movies: ${response.reasonPhrase}',
+    //     ));
+    //   }
 
-      data['movies'].forEach((elem) {
-        result.add(MoviePreview(
-            id: elem['id'],
-            title: elem['title'],
-            posterPath: elem['poster'],
-            overview: elem['overview']));
-        //  , overview: elem['overview']
-        // duration: elem['duration']
-      });
+    //   var data = jsonDecode(response.body);
+    //   GenerateMoviesResponse result = [];
 
-      return result;
-    }, onError: (error) {
-      // TODO Handle Error
-    });
+    //   data['movies'].forEach((elem) {
+    //     result.add(MoviePreview(
+    //         id: elem['id'],
+    //         title: elem['title'],
+    //         posterPath: elem['poster'],
+    //         overview: elem['overview']));
+    //     //  , overview: elem['overview']
+    //     // duration: elem['duration']
+    //   });
+
+    //   return result;
+    // }, onError: (error) {
+    //   // TODO Handle Error
+    // });
   }
 
   // Future<List<Genre>> getGenres() async {

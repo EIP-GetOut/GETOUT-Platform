@@ -24,7 +24,6 @@ class MoviesSuccessWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
         child: Column(
-      // mainAxisSize: MainAxisSize.min,
       children: [
         Row(
           children: [
