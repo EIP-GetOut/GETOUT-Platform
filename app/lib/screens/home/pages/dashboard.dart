@@ -19,15 +19,11 @@ class DashboardLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-          padding: EdgeInsets.only(top: 80.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            // DashboardHeader(),
-            children: [MoviesWidget()],
-          )),
-    );
+    return const Padding(
+        padding: EdgeInsets.only(top: 80.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [DashboardHeader(), MoviesWidget()],
+        ));
   }
 }

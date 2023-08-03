@@ -37,7 +37,8 @@ class Dashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     print("dans le dashboard bloc");
     return Scaffold(
-      backgroundColor: Colors.deepOrangeAccent,
+      // backgroundColor: Colors.deepOrangeAccent,
+      backgroundColor: Colors.white,
       body: RepositoryProvider(
         create: (context) => DashboardRepository(service: DashboardService()),
         child: MultiBlocProvider(

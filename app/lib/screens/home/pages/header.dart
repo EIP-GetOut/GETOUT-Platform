@@ -12,45 +12,43 @@ class DashboardHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.white,
-        body: Column(
+    return Column(
+      children: [
+        const SizedBox(height: 60),
+        Row(
           children: [
-            const SizedBox(height: 60),
-            Row(
+            const SizedBox(width: 20),
+            GestureDetector(
+              // onTap: () {
+              //   Navigator.push(
+              //       context,
+              //       MaterialPageRoute(
+              //           builder: (context) => const SettingsPage()
+              //           ));
+              // },
+              child: Image.asset(
+                'assets/Profile_picture.png',
+                width: 60,
+              ),
+            ),
+            const SizedBox(width: 20),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(width: 20),
-                GestureDetector(
-                  // onTap: () {
-                  //   Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //           builder: (context) => const SettingsPage()
-                  //           ));
-                  // },
-                  child: Image.asset(
-                    'assets/Profile_picture.png',
-                    width: 60,
-                  ),
-                ),
-                const SizedBox(width: 20),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Bienvenue !',
-                        style: Theme.of(context).textTheme.titleMedium),
-                    Text('La productivité à portée de main',
-                        style: Theme.of(context).textTheme.displayMedium)
-                  ],
-                ),
-                const SizedBox(width: 25),
-                Image.asset(
-                  'assets/GetOut_logo.png',
-                  width: 40,
-                ),
+                Text('Bienvenue !',
+                    style: Theme.of(context).textTheme.titleMedium),
+                Text('La productivité à portée de main',
+                    style: Theme.of(context).textTheme.displayMedium)
               ],
-            )
+            ),
+            const SizedBox(width: 25),
+            Image.asset(
+              'assets/GetOut_logo.png',
+              width: 40,
+            ),
           ],
-        ));
+        )
+      ],
+    );
   }
 }

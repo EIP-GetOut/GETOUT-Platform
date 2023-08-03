@@ -14,11 +14,9 @@ class LoadingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const Text.rich(
-        TextSpan(
-          text: 'Is loading', // default text style
-        ),
+    return const Text.rich(
+      TextSpan(
+        text: 'Is loading', // default text style
       ),
     );
   }
