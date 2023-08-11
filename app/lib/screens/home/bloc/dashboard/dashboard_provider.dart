@@ -3,12 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/home/pages/dashboard.dart';
 
-import 'package:getout/screens/home/bloc/movie_bloc.dart';
-import 'package:getout/screens/home/bloc/dashboard_service.dart';
-import 'package:getout/screens/home/bloc/dashboard_repository.dart';
+import 'package:getout/screens/home/bloc/movies/movies_bloc.dart';
+import 'package:getout/screens/home/bloc/dashboard/dashboard_service.dart';
+import 'package:getout/screens/home/bloc/dashboard/dashboard_repository.dart';
 
 import 'dart:math';
 
+//TODO : replace by genres given by user
 class Dashboard extends StatelessWidget {
   Dashboard({Key? key}) : super(key: key);
   final List<int> genre = [
@@ -51,13 +52,6 @@ class Dashboard extends StatelessWidget {
                   ]),
                 ),
             ),
-            // BlocProvider<BooksBloc>(
-            //   create: (context) => BooksBloc(
-            //     gameRepository: context.read<DashboardRepository>(),
-            //   )..add(
-            //       GetBooks(),
-            //     ),
-            // ),
           ],
           child: const DashboardLayout(),
         ),

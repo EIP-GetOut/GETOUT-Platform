@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:getout/screens/home/pages/header.dart';
-import 'package:getout/screens/home/pages/movies.dart';
-// import 'package:getout/screens/home/pages/books.dart';
-import 'package:getout/screens/home/bloc/movie_widget.dart';
-
-// import 'package:infogames/ui/home/widgets/all_games_widget/all_games_widget.dart';
-// import 'package:infogames/ui/home/widgets/category_widget/categories_widget.dart';
-// import 'package:infogames/ui/home/widgets/games_by_category_widget/games_by_category_widget.dart';
-// import 'package:infogames/ui/home/widgets/header_title/header_title.dart';
-
-// import 'package:infogames/ui/widgets/container_body.dart';
+import 'package:getout/screens/home/widgets/common/header.dart';
+import 'package:getout/screens/home/widgets/movies/movies_widget.dart';
 
 class DashboardLayout extends StatelessWidget {
   const DashboardLayout({

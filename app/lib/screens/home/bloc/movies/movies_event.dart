@@ -5,16 +5,14 @@
 ** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-part of 'movie_bloc.dart';
+part of 'movies_bloc.dart';
 
-// Equatable check if two objects are equals
-
-class MovieEvent extends Equatable {
+class MoviesEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class GenerateMoviesRequest extends MovieEvent {
+class GenerateMoviesRequest extends MoviesEvent {
   GenerateMoviesRequest({
     required this.genres,
     this.includeAdult = false,
@@ -23,7 +21,7 @@ class GenerateMoviesRequest extends MovieEvent {
   final bool includeAdult;
 }
 
-class MoviePreview extends MovieEvent {
+class MoviePreview extends MoviesEvent {
   MoviePreview(
       {required this.id,
       required this.title,
@@ -37,7 +35,7 @@ class MoviePreview extends MovieEvent {
 
 typedef GenerateMoviesResponse = List<MoviePreview>;
 
-class SelectMovie extends MovieEvent {
+class SelectMovie extends MoviesEvent {
   SelectMovie({
     required this.idSelected,
   });

@@ -5,7 +5,7 @@
 ** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-part of 'movie_bloc.dart';
+part of 'movies_bloc.dart';
 
 enum MovieStatus { initial, success, error, loading, selected }
 
@@ -14,34 +14,33 @@ extension MovieStatusX on MovieStatus {
   bool get isSuccess => this == MovieStatus.success;
   bool get isError => this == MovieStatus.error;
   bool get isLoading => this == MovieStatus.loading;
-  // bool get isSelected => this == MovieStatus.selected;
+  bool get isSelected => this == MovieStatus.selected;
 }
 
-class MovieState extends Equatable {
-  const MovieState({
+class MoviesState extends Equatable {
+  const MoviesState({
     this.status = MovieStatus.initial,
     List<MoviePreview>? movies,
-    // int idSelected = 0,
-  }) : movies = movies ?? const [];
-  // idSelected = idSelected;
+    int idSelected = -1,
+  })  : movies = movies ?? const [],
+        idSelected = idSelected;
 
   final List<MoviePreview> movies;
   final MovieStatus status;
-  // final int idSelected;
+  final int idSelected;
 
   @override
-  List<Object?> get props => [status, movies];
-  // , idSelected
+  List<Object?> get props => [status, movies, idSelected];
 
-  MovieState copyWith({
+  MoviesState copyWith({
     List<MoviePreview>? movies,
     MovieStatus? status,
     int? idSelected,
   }) {
-    return MovieState(
+    return MoviesState(
       movies: movies ?? this.movies,
       status: status ?? this.status,
-      // idSelected: idSelected ?? this.idSelected,
+      idSelected: idSelected ?? this.idSelected,
     );
   }
 }

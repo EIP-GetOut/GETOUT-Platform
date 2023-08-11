@@ -7,6 +7,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:getout/screens/settings/pages/settings.dart';
+
 class DashboardHeader extends StatelessWidget {
   const DashboardHeader({Key? key}) : super(key: key);
 
@@ -19,13 +21,12 @@ class DashboardHeader extends StatelessWidget {
           children: [
             const SizedBox(width: 20),
             GestureDetector(
-              // onTap: () {
-              //   Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //           builder: (context) => const SettingsPage()
-              //           ));
-              // },
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SettingsPage()));
+              },
               child: Image.asset(
                 'assets/Profile_picture.png',
                 width: 60,

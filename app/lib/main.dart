@@ -13,7 +13,7 @@ import 'package:getout/constants/theme.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:getout/screens/home/bloc/dashboard_bloc.dart';
+import 'package:getout/screens/home/bloc/dashboard/dashboard_provider.dart';
 
 Map<int, Color> colorMap = {
   50: const Color.fromRGBO(213, 86, 65, .1),

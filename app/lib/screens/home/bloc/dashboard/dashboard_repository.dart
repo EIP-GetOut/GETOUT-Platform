@@ -5,8 +5,8 @@
 ** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-import 'package:getout/screens/home/bloc/dashboard_service.dart';
-import 'package:getout/screens/home/bloc/movie_bloc.dart';
+import 'package:getout/screens/home/bloc/dashboard/dashboard_service.dart';
+import 'package:getout/screens/home/bloc/movies/movies_bloc.dart';
 
 class DashboardRepository {
   const DashboardRepository({
@@ -17,9 +17,4 @@ class DashboardRepository {
   Future<GenerateMoviesResponse> getMovies(
           GenerateMoviesRequest request) async =>
       service.getMovies(request);
-
-  // Future<List<Genre>> getGenres() async => service.getGenres();
-
-  // Future<List<Result>> getGamesByCategory(int genreId) async =>
-  //     service.getGamesByCategory(genreId);
 }

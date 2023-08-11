@@ -21,36 +21,34 @@ class _LoadPageState extends State<LoadPage> {
     bool isLandscape = (MediaQuery.of(context).size.width >
         MediaQuery.of(context).size.height);
 
-    return Scaffold(
-        backgroundColor: Colors.white,
-        body: NestedScrollView(
-          floatHeaderSlivers: true,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[];
-          },
-          body: Column(children: [
-            SizedBox(height: perHeight(context, (isLandscape ? 25 : 30))),
-            Row(children: [
-              SizedBox(width: perWidth(context, (isLandscape ? 25 : 10))),
-              SizedBox(
-                  height: uniHeight(context, 13, isLandscape),
-                  width: uniWidth(context, 27, isLandscape),
-                  child: Image.asset('assets/GetOut_logo.png')),
-              SizedBox(width: perWidth(context, 4)),
-              SizedBox(
-                  height: uniHeight(context, 10, isLandscape),
-                  width: uniWidth(context, 45, isLandscape),
-                  child: Image.asset('assets/GetOut_text.png'))
-            ]),
-            SizedBox(height: perHeight(context, (isLandscape ? 8 : 8))),
-            const SizedBox(
-              height: 85,
-              width: 85,
-              child: CircularProgressIndicator(
-                backgroundColor: Colors.transparent,
-              ),
-            )
-          ]),
-        ));
+    return NestedScrollView(
+      floatHeaderSlivers: true,
+      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+        return <Widget>[];
+      },
+      body: Column(children: [
+        SizedBox(height: perHeight(context, (isLandscape ? 25 : 30))),
+        Row(children: [
+          SizedBox(width: perWidth(context, (isLandscape ? 25 : 10))),
+          SizedBox(
+              height: uniHeight(context, 13, isLandscape),
+              width: uniWidth(context, 27, isLandscape),
+              child: Image.asset('assets/GetOut_logo.png')),
+          SizedBox(width: perWidth(context, 4)),
+          SizedBox(
+              height: uniHeight(context, 10, isLandscape),
+              width: uniWidth(context, 45, isLandscape),
+              child: Image.asset('assets/GetOut_text.png'))
+        ]),
+        SizedBox(height: perHeight(context, (isLandscape ? 8 : 8))),
+        const SizedBox(
+          height: 85,
+          width: 85,
+          child: CircularProgressIndicator(
+            backgroundColor: Colors.transparent,
+          ),
+        )
+      ]),
+    );
   }
 }
