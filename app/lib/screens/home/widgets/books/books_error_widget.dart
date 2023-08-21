@@ -7,19 +7,25 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:boxicons/boxicons.dart';
+
 class BooksErrorWidget extends StatelessWidget {
   const BooksErrorWidget({Key? key}) : super(key: key);
-
+// <i class='bx bxs-error-circle'></i>
+  //   child:
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text(
-        'Something was wrong',
-        style: TextStyle(
-          color: Colors.red,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+          Icon(Boxicons.bx_error, size: 40, color: Colors.red),
+          Text('Impossible de charger les livres',
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+              )),
+        ]));
   }
 }
