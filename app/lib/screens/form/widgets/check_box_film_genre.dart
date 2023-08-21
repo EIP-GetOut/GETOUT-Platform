@@ -12,7 +12,8 @@ class CheckboxListWidgetFilmGenre extends StatefulWidget {
   const CheckboxListWidgetFilmGenre({super.key});
 
   @override
-  State<CheckboxListWidgetFilmGenre> createState() => _CheckboxListWidgetState();
+  State<CheckboxListWidgetFilmGenre> createState() =>
+      _CheckboxListWidgetState();
 }
 
 class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
@@ -20,120 +21,131 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding (
+    return Padding(
       padding: const EdgeInsets.all(16.0),
-      child : Column(
-      children: [
-        CheckboxListTile(
-          title: Text('Action', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
-          value: _checkboxValues[0],
-          onChanged: (value) {
-            setState(() {
-              _checkboxValues[0] = value!;
-              boxFilmValue = _checkboxValues;
-            });
-          },
-          contentPadding: EdgeInsets.zero,
-          controlAffinity: ListTileControlAffinity.leading,
-          tileColor: Colors.transparent,
-          shape: const Border(
-            bottom: BorderSide(color: Colors.black, width: 2.0),
-            left: BorderSide(color: Colors.black, width: 2.0),
-            right: BorderSide(color: Colors.black, width: 2.0),
-            top: BorderSide(color: Colors.black, width: 2.0),
+      child: Column(
+        children: [
+          CheckboxListTile(
+            title: Text('Action',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.displayLarge),
+            value: _checkboxValues[0],
+            onChanged: (value) {
+              setState(() {
+                _checkboxValues[0] = value!;
+                boxMovieValue = _checkboxValues;
+              });
+            },
+            contentPadding: EdgeInsets.zero,
+            controlAffinity: ListTileControlAffinity.leading,
+            tileColor: Colors.transparent,
+            shape: const Border(
+              bottom: BorderSide(color: Colors.black, width: 2.0),
+              left: BorderSide(color: Colors.black, width: 2.0),
+              right: BorderSide(color: Colors.black, width: 2.0),
+              top: BorderSide(color: Colors.black, width: 2.0),
+            ),
+            checkColor: Colors.black,
+            activeColor: Theme.of(context).primaryColor,
           ),
-          checkColor: Colors.black,
-          activeColor: Theme.of(context).primaryColor,
-        ),
-        const SizedBox(height: 5),
-        CheckboxListTile(
-          title: Text('Thriller', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
-          value: _checkboxValues[1],
-          onChanged: (value) {
-            setState(() {
-              _checkboxValues[1] = value!;
-              boxFilmValue = _checkboxValues;
-            });
-          },
-          contentPadding: EdgeInsets.zero,
-          controlAffinity: ListTileControlAffinity.leading,
-          tileColor: Colors.transparent,
-          shape: const Border(
-            bottom: BorderSide(color: Colors.black, width: 2.0),
-            left: BorderSide(color: Colors.black, width: 2.0),
-            right: BorderSide(color: Colors.black, width: 2.0),
-            top: BorderSide(color: Colors.black, width: 2.0),
+          const SizedBox(height: 5),
+          CheckboxListTile(
+            title: Text('Thriller',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.displayLarge),
+            value: _checkboxValues[1],
+            onChanged: (value) {
+              setState(() {
+                _checkboxValues[1] = value!;
+                boxMovieValue = _checkboxValues;
+              });
+            },
+            contentPadding: EdgeInsets.zero,
+            controlAffinity: ListTileControlAffinity.leading,
+            tileColor: Colors.transparent,
+            shape: const Border(
+              bottom: BorderSide(color: Colors.black, width: 2.0),
+              left: BorderSide(color: Colors.black, width: 2.0),
+              right: BorderSide(color: Colors.black, width: 2.0),
+              top: BorderSide(color: Colors.black, width: 2.0),
+            ),
+            checkColor: Colors.black,
+            activeColor: Theme.of(context).primaryColor,
           ),
-          checkColor: Colors.black,
-          activeColor: Theme.of(context).primaryColor,
-        ),
-        const SizedBox(height: 5),
-        CheckboxListTile(
-          title: Text('Western', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
-          value: _checkboxValues[2],
-          onChanged: (value) {
-            setState(() {
-              _checkboxValues[2] = value!;
-              boxFilmValue = _checkboxValues;
-            });
-          },
-          contentPadding: EdgeInsets.zero,
-          controlAffinity: ListTileControlAffinity.leading,
-          tileColor: Colors.transparent,
-          shape: const Border(
-            bottom: BorderSide(color: Colors.black, width: 2.0),
-            left: BorderSide(color: Colors.black, width: 2.0),
-            right: BorderSide(color: Colors.black, width: 2.0),
-            top: BorderSide(color: Colors.black, width: 2.0),
+          const SizedBox(height: 5),
+          CheckboxListTile(
+            title: Text('Western',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.displayLarge),
+            value: _checkboxValues[2],
+            onChanged: (value) {
+              setState(() {
+                _checkboxValues[2] = value!;
+                boxMovieValue = _checkboxValues;
+              });
+            },
+            contentPadding: EdgeInsets.zero,
+            controlAffinity: ListTileControlAffinity.leading,
+            tileColor: Colors.transparent,
+            shape: const Border(
+              bottom: BorderSide(color: Colors.black, width: 2.0),
+              left: BorderSide(color: Colors.black, width: 2.0),
+              right: BorderSide(color: Colors.black, width: 2.0),
+              top: BorderSide(color: Colors.black, width: 2.0),
+            ),
+            checkColor: Colors.black,
+            activeColor: Theme.of(context).primaryColor,
           ),
-          checkColor: Colors.black,
-          activeColor: Theme.of(context).primaryColor,
-        ),
-        const SizedBox(height: 5),
-        CheckboxListTile(
-          title: Text('Horreur', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
-          value: _checkboxValues[3],
-          onChanged: (value) {
-            setState(() {
-              _checkboxValues[3] = value!;
-              boxFilmValue = _checkboxValues;
-            });
-          },
-          contentPadding: EdgeInsets.zero,
-          controlAffinity: ListTileControlAffinity.leading,
-          tileColor: Colors.transparent,
-          shape: const Border(
-            bottom: BorderSide(color: Colors.black, width: 2.0),
-            left: BorderSide(color: Colors.black, width: 2.0),
-            right: BorderSide(color: Colors.black, width: 2.0),
-            top: BorderSide(color: Colors.black, width: 2.0),
+          const SizedBox(height: 5),
+          CheckboxListTile(
+            title: Text('Horreur',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.displayLarge),
+            value: _checkboxValues[3],
+            onChanged: (value) {
+              setState(() {
+                _checkboxValues[3] = value!;
+                boxMovieValue = _checkboxValues;
+              });
+            },
+            contentPadding: EdgeInsets.zero,
+            controlAffinity: ListTileControlAffinity.leading,
+            tileColor: Colors.transparent,
+            shape: const Border(
+              bottom: BorderSide(color: Colors.black, width: 2.0),
+              left: BorderSide(color: Colors.black, width: 2.0),
+              right: BorderSide(color: Colors.black, width: 2.0),
+              top: BorderSide(color: Colors.black, width: 2.0),
+            ),
+            checkColor: Colors.black,
+            activeColor: Theme.of(context).primaryColor,
           ),
-          checkColor: Colors.black,
-          activeColor: Theme.of(context).primaryColor,
-        ),
-        const SizedBox(height: 5),
-        CheckboxListTile(
-          title: Text('Comedie', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
-          value: _checkboxValues[4],
-          onChanged: (value) {
-            setState(() {
-              _checkboxValues[4] = value!;
-              boxFilmValue = _checkboxValues;
-            });
-          },
-          contentPadding: EdgeInsets.zero,
-          controlAffinity: ListTileControlAffinity.leading,
-          tileColor: Colors.transparent,
-          shape: const Border(
-            bottom: BorderSide(color: Colors.black, width: 2.0),
-            left: BorderSide(color: Colors.black, width: 2.0),
-            right: BorderSide(color: Colors.black, width: 2.0),
-            top: BorderSide(color: Colors.black, width: 2.0),
+          const SizedBox(height: 5),
+          CheckboxListTile(
+            title: Text('Comedie',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.displayLarge),
+            value: _checkboxValues[4],
+            onChanged: (value) {
+              setState(() {
+                _checkboxValues[4] = value!;
+                boxMovieValue = _checkboxValues;
+              });
+            },
+            contentPadding: EdgeInsets.zero,
+            controlAffinity: ListTileControlAffinity.leading,
+            tileColor: Colors.transparent,
+            shape: const Border(
+              bottom: BorderSide(color: Colors.black, width: 2.0),
+              left: BorderSide(color: Colors.black, width: 2.0),
+              right: BorderSide(color: Colors.black, width: 2.0),
+              top: BorderSide(color: Colors.black, width: 2.0),
+            ),
+            checkColor: Colors.black,
+            activeColor: Theme.of(context).primaryColor,
           ),
-          checkColor: Colors.black,
-          activeColor: Theme.of(context).primaryColor,
-        ),
-      ],
-    ),);
+        ],
+      ),
+    );
   }
 }

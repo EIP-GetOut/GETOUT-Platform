@@ -7,18 +7,18 @@
 import 'package:flutter/material.dart';
 import 'package:getout/screens/home/widgets/common/title.dart';
 import 'package:getout/screens/home/widgets/common/poster_and_desription.dart';
-import 'package:getout/screens/home/bloc/movies/movies_bloc.dart';
-import 'package:getout/screens/movie/bloc/movie_provider.dart';
+import 'package:getout/screens/home/bloc/books/books_bloc.dart';
+import 'package:getout/screens/book/bloc/book_provider.dart';
 
-class MoviesSuccessWidget extends StatelessWidget {
-  MoviesSuccessWidget({
+class BooksSuccessWidget extends StatelessWidget {
+  BooksSuccessWidget({
     Key? key,
-    required this.movies,
+    required this.books,
   }) : super(key: key);
 
-  final List<MoviePreview> movies;
+  final List<BookPreview> books;
 
-  final PageController movieController =
+  final PageController bookController =
       PageController(viewportFraction: 0.1, initialPage: 0);
 
   @override
@@ -27,10 +27,10 @@ class MoviesSuccessWidget extends StatelessWidget {
         child: Column(
       children: [
         const TitleWidget(
-            asset: 'popcorn_emoji', title: 'Les films que vous allez aimer'),
+            asset: 'books_emoji', title: 'Les livres qui vous passionneront'),
         Expanded(
             child: ListView(
-                controller: movieController,
+                controller: bookController,
                 scrollDirection: Axis.horizontal,
                 children: List.generate(5, (index) {
                   return InkWell(
@@ -38,12 +38,12 @@ class MoviesSuccessWidget extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Movie(movies[index].id)));
+                                builder: (context) => Book(books[index].id)));
                       },
                       child: PosterAndDescriptionWidget(
-                          posterpath: movies[index].posterPath,
-                          title: movies[index].title,
-                          overview: movies[index].overview));
+                          posterpath: books[index].posterPath,
+                          title: books[index].title,
+                          overview: books[index].overview));
                 }))),
       ],
     ));

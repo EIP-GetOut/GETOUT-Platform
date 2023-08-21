@@ -47,6 +47,7 @@ class DashboardHeader extends StatelessWidget {
               'assets/GetOut_logo.png',
               width: 40,
             ),
+            const SizedBox(height: 100),
           ],
         )
       ],

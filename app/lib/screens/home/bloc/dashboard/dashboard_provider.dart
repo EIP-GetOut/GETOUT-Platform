@@ -2,37 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/home/pages/dashboard.dart';
-
 import 'package:getout/screens/home/bloc/movies/movies_bloc.dart';
+import 'package:getout/screens/home/bloc/books/books_bloc.dart';
 import 'package:getout/screens/home/bloc/dashboard/dashboard_service.dart';
 import 'package:getout/screens/home/bloc/dashboard/dashboard_repository.dart';
+import 'package:getout/global.dart';
+import 'package:getout/tools/map_box_movie_values_to_ids.dart';
 
-import 'dart:math';
-
-//TODO : replace by genres given by user
+//ignore: must_be_immutable
 class Dashboard extends StatelessWidget {
   Dashboard({Key? key}) : super(key: key);
-  final List<int> genre = [
-    28,
-    12,
-    16,
-    35,
-    80,
-    99,
-    18,
-    10751,
-    14,
-    36,
-    27,
-    10402,
-    9648,
-    10749,
-    878,
-    10770,
-    53,
-    10752,
-    37
-  ];
+
+  List<int> genreMoviesIds = mapBoxMovieValuesToIds(boxMovieValue);
+  List<int> genreBooksIds = mapBoxMovieValuesToIds(boxBookValue);
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +28,14 @@ class Dashboard extends StatelessWidget {
               create: (context) => MoviesBloc(
                 dashboardRepository: context.read<DashboardRepository>(),
               )..add(
-                  GenerateMoviesRequest(genres: [
-                    genre[Random().nextInt(19)],
-                    genre[Random().nextInt(19)]
-                  ]),
+                  GenerateMoviesRequest(genres: genreMoviesIds),
+                ),
+            ),
+            BlocProvider<BooksBloc>(
+              create: (context) => BooksBloc(
+                dashboardRepository: context.read<DashboardRepository>(),
+              )..add(
+                  GenerateBooksRequest(genres: genreBooksIds),
                 ),
             ),
           ],

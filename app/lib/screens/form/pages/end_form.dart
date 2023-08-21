@@ -41,7 +41,7 @@ class EndForm extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            FractionallySizedBox(
+            const FractionallySizedBox(
               widthFactor: 0.9,
               // child: ElevatedButton(
               //   style: Theme.of(context).elevatedButtonTheme.style,

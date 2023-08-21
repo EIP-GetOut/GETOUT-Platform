@@ -11,32 +11,32 @@ import 'package:equatable/equatable.dart';
 
 import 'package:getout/screens/home/bloc/dashboard/dashboard_repository.dart';
 
-part 'movies_event.dart';
-part 'movies_state.dart';
+part 'books_event.dart';
+part 'books_state.dart';
 
-class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
-  MoviesBloc({
+class BooksBloc extends Bloc<BooksEvent, BooksState> {
+  BooksBloc({
     required this.dashboardRepository,
-  }) : super(const MoviesState()) {
-    on<GenerateMoviesRequest>(_mapGetMoviesEventToState);
+  }) : super(const BooksState()) {
+    on<GenerateBooksRequest>(_mapGetBooksEventToState);
   }
 
   final DashboardRepository dashboardRepository;
 
-  void _mapGetMoviesEventToState(
-      GenerateMoviesRequest event, Emitter<MoviesState> emit) async {
-    emit(state.copyWith(status: MovieStatus.loading));
+  void _mapGetBooksEventToState(
+      GenerateBooksRequest event, Emitter<BooksState> emit) async {
+    emit(state.copyWith(status: BookStatus.loading));
     try {
-      final movies = await dashboardRepository.getMovies(event);
+      final books = await dashboardRepository.getBooks(event);
       emit(
         state.copyWith(
-          status: MovieStatus.success,
-          movies: movies,
+          status: BookStatus.success,
+          books: books,
         ),
       );
     } catch (error, stacktrace) {
       print(stacktrace);
-      emit(state.copyWith(status: MovieStatus.error));
+      emit(state.copyWith(status: BookStatus.error));
     }
   }
 }

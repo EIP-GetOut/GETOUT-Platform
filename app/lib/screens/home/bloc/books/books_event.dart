@@ -5,15 +5,15 @@
 ** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-part of 'movies_bloc.dart';
+part of 'books_bloc.dart';
 
-class MoviesEvent extends Equatable {
+class BooksEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class GenerateMoviesRequest extends MoviesEvent {
-  GenerateMoviesRequest({
+class GenerateBooksRequest extends BooksEvent {
+  GenerateBooksRequest({
     required this.genres,
     this.includeAdult = false,
   });
@@ -21,8 +21,8 @@ class GenerateMoviesRequest extends MoviesEvent {
   final bool includeAdult;
 }
 
-class MoviePreview extends MoviesEvent {
-  MoviePreview(
+class BookPreview extends BooksEvent {
+  BookPreview(
       {required this.id,
       required this.title,
       required this.posterPath,
@@ -33,4 +33,4 @@ class MoviePreview extends MoviesEvent {
   final String? overview;
 }
 
-typedef GenerateMoviesResponse = List<MoviePreview>;
+typedef GenerateBooksResponse = List<BookPreview>;

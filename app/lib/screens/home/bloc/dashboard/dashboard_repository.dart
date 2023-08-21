@@ -7,6 +7,7 @@
 
 import 'package:getout/screens/home/bloc/dashboard/dashboard_service.dart';
 import 'package:getout/screens/home/bloc/movies/movies_bloc.dart';
+import 'package:getout/screens/home/bloc/books/books_bloc.dart';
 
 class DashboardRepository {
   const DashboardRepository({
@@ -17,4 +18,7 @@ class DashboardRepository {
   Future<GenerateMoviesResponse> getMovies(
           GenerateMoviesRequest request) async =>
       service.getMovies(request);
+
+  Future<GenerateBooksResponse> getBooks(GenerateBooksRequest request) async =>
+      service.getBooks(request);
 }

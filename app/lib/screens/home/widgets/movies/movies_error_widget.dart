@@ -12,14 +12,22 @@ class MoviesErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    //     content:
+    //         Text('Une erreur s\'est produite, veuillez réesayer plus tard'),
+    //     backgroundColor: Color.fromARGB(255, 239, 46, 46)));
     return const Center(
-      child: Text(
-        'Something was wrong',
-        style: TextStyle(
-          color: Colors.red,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
+        child: Padding(
+            padding:
+                EdgeInsets.only(bottom: 100), //apply padding to all four sides
+            child: Center(
+              child: Text(
+                'Something was wrong during load movies',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )));
   }
 }

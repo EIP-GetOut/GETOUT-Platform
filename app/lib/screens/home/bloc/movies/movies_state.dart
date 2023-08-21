@@ -21,26 +21,21 @@ class MoviesState extends Equatable {
   const MoviesState({
     this.status = MovieStatus.initial,
     List<MoviePreview>? movies,
-    int idSelected = -1,
-  })  : movies = movies ?? const [],
-        idSelected = idSelected;
+  }) : movies = movies ?? const [];
 
   final List<MoviePreview> movies;
   final MovieStatus status;
-  final int idSelected;
 
   @override
-  List<Object?> get props => [status, movies, idSelected];
+  List<Object?> get props => [status, movies];
 
   MoviesState copyWith({
     List<MoviePreview>? movies,
     MovieStatus? status,
-    int? idSelected,
   }) {
     return MoviesState(
       movies: movies ?? this.movies,
       status: status ?? this.status,
-      idSelected: idSelected ?? this.idSelected,
     );
   }
 }
