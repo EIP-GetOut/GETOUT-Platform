@@ -65,10 +65,8 @@ class MyAppView extends StatelessWidget {
           ],
           supportedLocales: AppLocalizations.supportedLocales,
           theme: getOutTheme,
-          // home: const WelcomePage(),
-//          home: const LoadingPageSession());
+          // TODO : change by welcome page
           home: Dashboard());
-      // return a Widget which depends on the state of BlocA, BlocB, and BlocC
     });
   }
 }

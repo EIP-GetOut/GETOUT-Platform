@@ -6,6 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
+
 import 'package:getout/tools/flex_size.dart';
 
 class LoadingPage extends StatelessWidget {

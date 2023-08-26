@@ -6,7 +6,6 @@
 */
 
 import 'package:flutter/material.dart';
-
 import 'package:boxicons/boxicons.dart';
 
 import 'package:getout/screens/book/pages/book_description.dart';
@@ -77,7 +76,7 @@ class BookSuccessWidget extends StatelessWidget {
         ],
       ),
       Text(
-        book.title ?? '',
+        book.title ?? 'N/A',
         textScaleFactor: 0.9,
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
@@ -122,7 +121,7 @@ class BookSuccessWidget extends StatelessWidget {
                 thickness: 0,
                 // height : double.infinity,
               )),
-          Text(book.duration ?? '',
+          Text(book.duration ?? 'N/A',
               // widget.book.duration,
               textScaleFactor: 0.9,
               textAlign: TextAlign.center,

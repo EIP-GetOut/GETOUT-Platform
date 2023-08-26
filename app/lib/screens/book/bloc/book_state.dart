@@ -1,3 +1,10 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
+*/
+
 part of 'book_bloc.dart';
 
 enum BookStatus { initial, success, error, loading }

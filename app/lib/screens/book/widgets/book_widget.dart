@@ -1,3 +1,10 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
+*/
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,17 +23,17 @@ class BookWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BookBloc, BookState>(
       builder: (context, state) {
-        return state.status.isSuccess
-            ? BookSuccessWidget(
-                book: state.book,
-              )
-            : state.status.isLoading
-                ? const Center(
-                    child: LoadingPage(),
-                  )
-                : state.status.isError
-                    ? const BooksErrorWidget()
-                    : const SizedBox();
+        if (state.status.isSuccess) {
+          return BookSuccessWidget(book: state.book);
+        } else {
+          if (state.status.isLoading) {
+            return const Center(child: LoadingPage());
+          } else if (state.status.isError) {
+            return const BooksErrorWidget();
+          } else {
+            return const SizedBox();
+          }
+        }
       },
     );
   }
