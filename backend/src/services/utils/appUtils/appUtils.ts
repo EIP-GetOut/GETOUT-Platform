@@ -5,9 +5,6 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
-
-
-
 import useMiddlewares from './useMiddlewares'
 import useRoutes from './useRoutes'
 import useSession from './useSession'

@@ -5,28 +5,28 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
-import { validate, ValidationError } from 'class-validator';
-import { Request, Response, NextFunction } from 'express';
+import { validate, type ValidationError } from 'class-validator'
+import { type Request, type Response, type NextFunction } from 'express'
 
-export const createDtoValidationMiddleware = (dtoClass: any) => {
+export const createDtoValidationMiddleware = (DtoClass: any) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const dto = Object.assign(new dtoClass(), req.body);
-      const errors: ValidationError[] = await validate(dto);
+      const dto = Object.assign(new DtoClass(), req.body)
+      const errors: ValidationError[] = await validate(dto)
 
       if (errors.length > 0) {
-        return res.status(400).json({ errors: formatValidationErrors(errors) });
+        return res.status(400).json({ errors: formatValidationErrors(errors) })
       }
     } catch (error) {
-      console.error('DTO validation error:', error);
-      res.status(500).send('Something went wrong!');
+      console.error('DTO validation error:', error)
+      res.status(500).send('Something went wrong!')
     }
-  };
-};
+  }
+}
 
-const formatValidationErrors = (errors: ValidationError[]) => {
+const formatValidationErrors = (errors: ValidationError[]): any => {
   return errors.map((error) => {
-    const constraints = Object.values(error.constraints || {});
-    return { property: error.property, constraints };
-  });
-};
+    const constraints = Object.values((error.constraints != null) || {})
+    return { property: error.property, constraints }
+  })
+}

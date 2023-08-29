@@ -6,10 +6,10 @@
 */
 
 export interface accountRepositoryRequest {
-    email: string;
-    password: string;
-    lastName: string;
-    firstName: string;
-    bornDate: Date;
-    salt: string;
+  salt: string
+  email: string
+  password: string
+  lastName: string
+  firstName: string
+  bornDate: Date
 }

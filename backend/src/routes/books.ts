@@ -5,27 +5,27 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
-import { Request, Response, Router } from "express";
-import { query } from "express-validator";
-import { getReasonPhrase, StatusCodes } from "http-status-codes";
+import { type Request, type Response, Router } from 'express'
+import { query } from 'express-validator'
+import { getReasonPhrase, StatusCodes } from 'http-status-codes'
 
-import logger from "@middlewares/logging"
+import logger from '@middlewares/logging'
 
-import { logApiRequest } from "@services/middlewares/logging";
-import validate from "@services/middlewares/validator";
+import { logApiRequest } from '@services/middlewares/logging'
+import validate from '@services/middlewares/validator'
 
-import { getBooks } from "@models/books";
+import { getBooks } from '@models/books'
 
 const router = Router()
 
 const rulesGet = [
-    query('intitle').isString().optional(),
-    query('inauthor').isString().optional(),
-    query('inpublisher').isString().optional(),
-    query('subject').isString().optional(),
-    query('printType').isString().optional(),
-    query('orderBy').isString().optional(),
-    query('pagination').isString().optional()
+  query('intitle').isString().optional(),
+  query('inauthor').isString().optional(),
+  query('inpublisher').isString().optional(),
+  query('subject').isString().optional(),
+  query('printType').isString().optional(),
+  query('orderBy').isString().optional(),
+  query('pagination').isString().optional()
 ]
 
 /**
@@ -93,26 +93,26 @@ const rulesGet = [
  *         description: Internal server error.
  */
 router.get('/generate-books', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
-    //TODO create BooksResult interface
-    return getBooks(req.query).then((booksObtained: any | undefined) => {
-        logger.info(JSON.stringify(booksObtained, null, 2))
-        if (!booksObtained) {
-            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
-        }
-        booksObtained.items.length = 5;
-        const books: Array<any> = []
-        booksObtained.items.forEach((book: any) => {
-            books.push({
-                title: book.volumeInfo.title,
-                poster: book.volumeInfo?.imageLinks?.thumbnail ? book.volumeInfo.imageLinks.thumbnail : null,
-                id: book.id,
-                overview: book.volumeInfo?.description ? book.volumeInfo.description : 'No informations.'
-            })
-        });
-        return res.status(StatusCodes.OK).json({
-            books: books
-        })
+  // TODO create BooksResult interface
+  return getBooks(req.query).then((booksObtained: any | undefined) => {
+    logger.info(JSON.stringify(booksObtained, null, 2))
+    if (booksObtained != null) {
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+    }
+    booksObtained.items.length = 5
+    const books: any[] = []
+    booksObtained.items.forEach((book: any) => {
+      books.push({
+        title: book.volumeInfo.title,
+        poster: book.volumeInfo?.imageLinks?.thumbnail != null ? book.volumeInfo.imageLinks.thumbnail : null,
+        id: book.id,
+        overview: book.volumeInfo?.description != null ? book.volumeInfo.description : 'No informations.'
+      })
     })
+    return res.status(StatusCodes.OK).json({
+      books
+    })
+  })
 })
 
 export default router

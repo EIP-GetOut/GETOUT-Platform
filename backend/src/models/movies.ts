@@ -5,24 +5,24 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
-import { MovieDb, DiscoverMovieRequest, DiscoverMovieResponse, MovieResult } from 'moviedb-promise'
+import { MovieDb, type DiscoverMovieRequest, type DiscoverMovieResponse, type MovieResult } from 'moviedb-promise'
 
 import logger from '@middlewares/logging'
 
 const moviedb = new MovieDb('1eec31e851e9ad1b8f3de3ccf39953b7')
 
-function getMovies(params: any): Promise<MovieResult[] | undefined> {
-    const discorverMovieRequest: DiscoverMovieRequest = {
-        include_adult: params.include_adult === 'true' ? true : false,
-        include_video: params.include_video === 'true' ? true : false,
-        with_genres: params.with_genres,
-        page: params.page ? parseInt(params.page) : 1,
-    };
+async function getMovies (params: any): Promise<MovieResult[] | undefined> {
+  const discorverMovieRequest: DiscoverMovieRequest = {
+    include_adult: params.include_adult === 'true',
+    include_video: params.include_video === 'true',
+    with_genres: params.with_genres,
+    page: (params.page !== undefined) ? parseInt(params.page) : 1
+  }
 
-    return moviedb.discoverMovie(discorverMovieRequest).then((value: DiscoverMovieResponse) => {
-        logger.info(JSON.stringify(value, null, 2))
-        return value.results
-    })
+  return await moviedb.discoverMovie(discorverMovieRequest).then((value: DiscoverMovieResponse) => {
+    logger.info(JSON.stringify(value, null, 2))
+    return value.results
+  })
 }
 
 export { getMovies }

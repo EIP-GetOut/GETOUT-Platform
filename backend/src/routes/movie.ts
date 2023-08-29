@@ -5,16 +5,16 @@
 ** Wrote by Firstname Lastname <firstname.lastname@domain.com>
 */
 
-import { Request, Response, Router } from "express";
-import { getReasonPhrase, StatusCodes } from "http-status-codes";
-import { MovieResponse }  from 'moviedb-promise'
+import { type Request, type Response, Router } from 'express'
+import { getReasonPhrase, StatusCodes } from 'http-status-codes'
+import { type MovieResponse } from 'moviedb-promise'
 
-import logger, { logApiRequest } from "@services/middlewares/logging";
-import validate from "@services/middlewares/validator";
+import logger, { logApiRequest } from '@services/middlewares/logging'
+import validate from '@services/middlewares/validator'
 
-import { getDetail } from "@models/movie";
+import { getDetail } from '@models/movie'
 
-const router = Router();
+const router = Router()
 
 /**
  * @swagger
@@ -55,25 +55,27 @@ const router = Router();
  *       '500':
  *         description: Internal server error.
  */
-router.get('/movie/:id',  validate, logApiRequest, (req: Request, res: Response) => {
-    logger.info(req.params)
-    return getDetail(req.params).then((movieObtained: MovieResponse | undefined) => {
-        if (!movieObtained) {
-            return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
-        }
-        const movie = {
-            title: movieObtained.title,
-            overview: movieObtained.overview,
-            poster_path: movieObtained.poster_path,
-            backdrop_path: movieObtained.backdrop_path,
-            release_date: movieObtained.release_date,
-            vote_average: Number(movieObtained.vote_average) / 2,
-            duration: Number(movieObtained.runtime) / 60 - (Number(movieObtained.runtime) / 60 % 1) + 'h' + String(Number(movieObtained.runtime) % 60).padStart(2, '0'),
-        }
-        return res.status(StatusCodes.OK).json({
-            movie
-        })
-    })
+router.get('/movie/:id', validate, logApiRequest, (req: Request, res: Response) => {
+  logger.info(req.params)
+  getDetail(req.params).then((movieObtained: MovieResponse | undefined) => {
+    if (movieObtained == null) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+      return
+    }
+    const movie = {
+      title: movieObtained.title,
+      overview: movieObtained.overview,
+      poster_path: movieObtained.poster_path,
+      backdrop_path: movieObtained.backdrop_path,
+      release_date: movieObtained.release_date,
+      vote_average: Number(movieObtained.vote_average) / 2,
+      duration: Number(movieObtained.runtime) / 60 - (Number(movieObtained.runtime) / 60 % 1) + 'h' + String(Number(movieObtained.runtime) % 60).padStart(2, '0')
+    }
+    res.status(StatusCodes.OK).json({ movie })
+  }).catch((err) => {
+    logger.error(`Error while getting movie ${req.params.id}: ${JSON.stringify(err, null, 2)}`)
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+  })
 })
 
 export default router

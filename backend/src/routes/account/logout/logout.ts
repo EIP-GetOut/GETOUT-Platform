@@ -5,7 +5,7 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
-import { Request, Response, Router } from 'express'
+import { type Request, type Response, Router } from 'express'
 import { StatusCodes, getReasonPhrase } from 'http-status-codes'
 
 import logger, { logApiRequest } from '@middlewares/logging'
@@ -30,7 +30,7 @@ const rules = [
  */
 router.post('/account/logout', rules, validate, logApiRequest, (req: Request, res: Response) => {
   return req.session.destroy((err) => {
-    if (err) {
+    if (err != null) {
       logger.error(err.toString())
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR)
         .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))

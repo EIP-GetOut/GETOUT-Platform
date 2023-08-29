@@ -6,12 +6,12 @@
 */
 
 export interface BookResult {
-    kind?: string;
-    id?: string;
-    etag?: string;
-    selfLink?: string;
-    volumeInfo?: any;
-    saleInfo?: any;
-    accessInfo?: any;
-    searchInfo?: any;
+  kind?: string
+  id?: string
+  etag?: string
+  selfLink?: string
+  volumeInfo?: any
+  saleInfo?: any
+  accessInfo?: any
+  searchInfo?: any
 }

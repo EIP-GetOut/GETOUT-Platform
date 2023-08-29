@@ -26,6 +26,7 @@ module.exports = {
     es2021: true
   },
   extends: [
+    'standard-with-typescript',
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended'
   ],
@@ -33,7 +34,8 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    tsconfigRootDir: __dirname
+    tsconfigRootDir: __dirname,
+    project: './tsconfig.json'
   },
   plugins: [
     '@typescript-eslint',
@@ -44,7 +46,7 @@ module.exports = {
     'no-unused-vars': ['warn', { vars: 'all', args: 'none', ignoreRestSiblings: false }],
     '@typescript-eslint/no-unused-vars': ['warn', { vars: 'all', args: 'none', ignoreRestSiblings: false }],
     '@typescript-eslint/no-explicit-any': 'off',
-    'object-curly-spacing': ["error", "always"],
+    'object-curly-spacing': ['error', 'always'],
     'header/header': ['error', 'block', header, 2],
     '@typescript-eslint/no-non-null-assertion': 'off',
     'import-helpers/order-imports': [
@@ -65,5 +67,11 @@ module.exports = {
         alphabetize: { order: 'asc', ignoreCase: true }
       }
     ]
-  }
+  },
+  overrides: [
+    {
+      extends: ['plugin:@typescript-eslint/disable-type-checked'],
+      files: ['./**/*.js']
+    }
+  ]
 }

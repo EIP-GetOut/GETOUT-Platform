@@ -6,12 +6,12 @@
 */
 
 import {
-    Entity,
-    PrimaryGeneratedColumn,
-    CreateDateColumn,
-    UpdateDateColumn,
-    Column
-  } from 'typeorm'
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Column
+} from 'typeorm'
 
 @Entity()
 export class Account {

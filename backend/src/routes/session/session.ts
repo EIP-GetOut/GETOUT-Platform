@@ -5,7 +5,7 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
-import { Request, Response, Router } from 'express'
+import { type Request, type Response, Router } from 'express'
 import { StatusCodes } from 'http-status-codes'
 
 import { logApiRequest } from '@middlewares/logging'
