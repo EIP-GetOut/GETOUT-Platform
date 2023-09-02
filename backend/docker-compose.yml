@@ -37,7 +37,7 @@ services:
             - redis
         networks:
             - network
-        restart: always
+        restart: on-failure
         env_file:
             - .env
         environment:

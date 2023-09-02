@@ -17,7 +17,7 @@ import generateBooks from '@routes/books'
 import getMovie from '@routes/movie'
 import generateMovies from '@routes/movies'
 import resetPassword from '@routes/resetPassword/resetPassword'
-import session from '@routes/session/session'
+import session from '@routes/session'
 
 const useRoutes = (app: Application): Application => (
   app

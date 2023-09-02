@@ -25,10 +25,10 @@ declare module 'express-session' {
   }
 }
 
-function useSession (app: Application): void {
+function useSession (app: Application): any {
   const week = 3600000 * 24 * 7
 
-  const redisClient = createClient({ url: 'redis://redis:6379' })
+  const redisClient = createClient({ url: `redis://${process.env.NODE_ENV === 'test' ? 'localhost' : 'redis'}:6379` })
   redisClient.connect().catch(console.error)
   const redisStore = new RedisStore({ client: redisClient })
   const sess: SessionOptions = {
@@ -47,6 +47,7 @@ function useSession (app: Application): void {
   }
 
   app.use(session(sess))
+  return redisClient
 }
 
 export default useSession

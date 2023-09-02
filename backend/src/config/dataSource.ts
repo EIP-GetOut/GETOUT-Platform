@@ -9,7 +9,7 @@ import { DataSource } from 'typeorm'
 
 const appDataSource = new DataSource({
   type: 'postgres',
-  host: process.env.TYPEORM_HOST,
+  host: process.env.NODE_ENV === 'test' ? 'localhost' : process.env.TYPEORM_HOST,
   port: parseInt(process.env.TYPEORM_PORT!),
   username: process.env.TYPEORM_USERNAME,
   password: process.env.TYPEORM_PASSWORD,

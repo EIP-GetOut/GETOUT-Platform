@@ -38,7 +38,7 @@ function useCors (app: Application): void {
 }
 
 function useRateLimit (app: Application): void {
-  if (process.env.NODE_ENV !== 'development') {
+  if (process.env.NODE_ENV === 'production') {
     app.use(rateLimit({
       windowMs: 1 * 60 * 1000, // 1 minute
       max: 100 // limit each IP to 100 requests per windowMs

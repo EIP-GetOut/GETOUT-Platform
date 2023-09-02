@@ -64,10 +64,10 @@ const config = {
   // forceCoverageMatch: [],
 
   // A path to a module which exports an async function that is triggered once before all test suites
-  // globalSetup: undefined,
+  // globalSetup: '<rootDir>/src/config/jestSetup.ts',
 
   // A path to a module which exports an async function that is triggered once after all test suites
-  // globalTeardown: undefined,
+  // globalTeardown: '<rootDir>/src/config/jestTeardown.ts',
 
   // A set of global variables that need to be available in all test environments
   // globals: {},
@@ -76,24 +76,29 @@ const config = {
   // maxWorkers: "50%",
 
   // An array of directory names to be searched recursively up from the requiring module's location
-  // moduleDirectories: [
-  //   "node_modules"
-  // ],
+  moduleDirectories: ['node_modules', 'src'],
 
   // An array of file extensions your modules use
-  // moduleFileExtensions: [
-  //   "js",
-  //   "mjs",
-  //   "cjs",
-  //   "jsx",
-  //   "ts",
-  //   "tsx",
-  //   "json",
-  //   "node"
-  // ],
+  moduleFileExtensions: [
+    'ts',
+    'js',
+    'cjs',
+    'mjs',
+    'jsx',
+    'tsx',
+    'json',
+    'node'
+  ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
+  moduleNameMapper: {
+    '^@config/(.*)$': '<rootDir>/src/config/$1',
+    '^@entities/(.*)$': '<rootDir>/src/entities/$1',
+    '^@models/(.*)$': '<rootDir>/src/models/$1',
+    '^@routes/(.*)$': '<rootDir>/src/routes/$1',
+    '^@services/(.*)$': '<rootDir>/src/services/$1',
+    '^@middlewares/(.*)$': '<rootDir>/src/services/middlewares/$1'
+  },
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -105,7 +110,7 @@ const config = {
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
-  preset: 'ts-jest'
+  preset: 'ts-jest',
 
   // Run tests from one or more projects
   // projects: undefined,
@@ -137,10 +142,10 @@ const config = {
   // runner: "jest-runner",
 
   // The paths to modules that run some code to configure or set up the testing environment before each test
-  // setupFiles: [],
+  setupFiles: ['dotenv/config']
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: [],
+  // setupFilesAfterEnv: ['<rootDir>/src/config/jestSetup.ts']
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,

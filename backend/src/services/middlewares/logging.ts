@@ -25,12 +25,12 @@ const logger: winston.Logger = winston.createLogger({
     new winston.transports.DailyRotateFile({
       filename: process.env.LOG_FILENAME,
       datePattern: 'YYYY-MM-DD-HH',
-      zippedArchive: process.env.NODE_ENV !== 'development',
+      zippedArchive: process.env.NODE_ENV === 'production',
       maxSize: '100m',
       maxFiles: '30d'
     }),
     new winston.transports.Console({
-      level: 'debug',
+      level: process.env.NODE_ENV === 'test' ? 'error' : 'debug',
       handleExceptions: true,
       format: winston.format.combine(
         winston.format.timestamp({
