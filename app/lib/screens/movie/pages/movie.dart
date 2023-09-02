@@ -76,7 +76,7 @@ class MovieSuccessWidget extends StatelessWidget {
         ],
       ),
       Text(
-        movie.title ?? '',
+        movie.title ?? 'N/A',
         textScaleFactor: 0.9,
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
@@ -121,7 +121,7 @@ class MovieSuccessWidget extends StatelessWidget {
                 thickness: 0,
                 // height : double.infinity,
               )),
-          Text(movie.duration ?? '',
+          Text(movie.duration ?? 'N/A',
               // widget.movie.duration,
               textScaleFactor: 0.9,
               textAlign: TextAlign.center,

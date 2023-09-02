@@ -6,7 +6,6 @@
 */
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:equatable/equatable.dart';
 
 import 'package:getout/screens/home/bloc/dashboard/dashboard_repository.dart';
@@ -34,8 +33,7 @@ class BooksBloc extends Bloc<BooksEvent, BooksState> {
           books: books,
         ),
       );
-    } catch (error, stacktrace) {
-      print(stacktrace);
+    } catch (error) {
       emit(state.copyWith(status: BookStatus.error));
     }
   }

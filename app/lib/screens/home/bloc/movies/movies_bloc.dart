@@ -6,7 +6,6 @@
 */
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:equatable/equatable.dart';
 
 import 'package:getout/screens/home/bloc/dashboard/dashboard_repository.dart';
@@ -34,8 +33,8 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
           movies: movies,
         ),
       );
-    } catch (error, stacktrace) {
-      print(stacktrace);
+    } catch (error) {
+      // print(stacktrace);
       emit(state.copyWith(status: MovieStatus.error));
     }
   }

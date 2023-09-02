@@ -6,12 +6,12 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getout/widgets/load_circle.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:getout/widgets/load_circle.dart';
 import 'package:getout/screens/home/widgets/books/books.dart';
 import 'package:getout/screens/home/widgets/books/books_error_widget.dart';
-
 import 'package:getout/screens/home/bloc/books/books_bloc.dart';
 
 class BooksWidget extends StatelessWidget {
@@ -23,18 +23,17 @@ class BooksWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BooksBloc, BooksState>(
       builder: (context, state) {
-        return state.status.isSuccess
-            ? BooksSuccessWidget(
-                books: state.books,
-              )
-            : state.status.isLoading
-                ? const Padding(
-                    padding: EdgeInsets.only(
-                        bottom: 100), //apply padding to all four sides
-                    child: Center(child: LoadCirclePage()))
-                : state.status.isError
-                    ? const BooksErrorWidget()
-                    : const SizedBox();
+        if (state.status.isSuccess) {
+          return BooksSuccessWidget(books: state.books);
+        } else {
+          if (state.status.isLoading) {
+            return const Center(child: LoadCirclePage());
+          } else if (state.status.isError) {
+            return const BooksErrorWidget();
+          } else {
+            return const SizedBox();
+          }
+        }
       },
     );
   }

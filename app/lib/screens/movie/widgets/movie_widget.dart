@@ -16,17 +16,17 @@ class MovieWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MovieBloc, MovieState>(
       builder: (context, state) {
-        return state.status.isSuccess
-            ? MovieSuccessWidget(
-                movie: state.movie,
-              )
-            : state.status.isLoading
-                ? const Center(
-                    child: LoadingPage(),
-                  )
-                : state.status.isError
-                    ? const MoviesErrorWidget()
-                    : const SizedBox();
+        if (state.status.isSuccess) {
+          return MovieSuccessWidget(movie: state.movie);
+        } else {
+          if (state.status.isLoading) {
+            return const Center(child: LoadingPage());
+          } else if (state.status.isError) {
+            return const MoviesErrorWidget();
+          } else {
+            return const SizedBox();
+          }
+        }
       },
     );
   }

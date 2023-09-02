@@ -6,7 +6,6 @@
 */
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:equatable/equatable.dart';
 
 import 'package:getout/screens/movie/bloc/movie_repository.dart';
@@ -14,8 +13,6 @@ import 'package:getout/constants/http_status.dart';
 
 part 'movie_event.dart';
 part 'movie_state.dart';
-
-//TODO : supprimer les fichiers useless
 
 class MovieBloc extends Bloc<MovieEvent, MovieState> {
   MovieBloc({
@@ -37,8 +34,7 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
           movie: movie,
         ),
       );
-    } catch (error, stacktrace) {
-      print(stacktrace);
+    } catch (error) {
       emit(state.copyWith(status: MovieStatus.error));
     }
   }

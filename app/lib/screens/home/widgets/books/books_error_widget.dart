@@ -11,8 +11,7 @@ import 'package:boxicons/boxicons.dart';
 
 class BooksErrorWidget extends StatelessWidget {
   const BooksErrorWidget({Key? key}) : super(key: key);
-// <i class='bx bxs-error-circle'></i>
-  //   child:
+
   @override
   Widget build(BuildContext context) {
     return const Center(

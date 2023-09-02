@@ -1,4 +1,12 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
+*/
+
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/book/bloc/book_bloc.dart';
