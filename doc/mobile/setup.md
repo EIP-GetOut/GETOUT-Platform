@@ -6,13 +6,13 @@
 - Run `jetbrains-toolbox.`
 - SignIn / SignUp to your account using Mail / Github(Free/Pro) account. (handle licences  mandatories)
 
-    <img src="__assets/setup/jetbrains-toolbox/connect.png" alt="drawing" width="300"/>
-    <img src="__assets/setup/jetbrains-toolbox/connected.png" alt="drawing" width="300"/>
+    <img src="images/jetbrains-toolbox/connect.png" alt="drawing" width="300"/>
+    <img src="images/jetbrains-toolbox/connected.png" alt="drawing" width="300"/>
 
 - Search Android Studio and Install it.
 
-    <img src="__assets/setup/jetbrains-toolbox/install.png" alt="drawing" width="200"/>
-    <img src="__assets/setup/jetbrains-toolbox/installed.png" alt="drawing" width="200"/>
+    <img src="images/jetbrains-toolbox/install.png" alt="drawing" width="200"/>
+    <img src="images/jetbrains-toolbox/installed.png" alt="drawing" width="200"/>
 
 # [Android Studio](https://developer.android.com/studio/docs/) (with jetbrains-toolbox):
 
@@ -22,16 +22,16 @@ Setup:
 - Open/Create Actual/New Project
 - Go to File -> Settings -> Appearance & Behavior -> System Settings -> Android SDK
 
-    <img src="__assets/setup/jetbrains-android-studio/settings.png" alt="drawing" width="400"/>
+    <img src="images/jetbrains-android-studio/settings.png" alt="drawing" width="400"/>
 
 - Click on SDK Tools tab
 - Select Android SDK Command-line Tools
 
-    <img src="__assets/setup/jetbrains-android-studio/sdk-settings.png" alt="drawing" width="400"/>
+    <img src="images/jetbrains-android-studio/sdk-settings.png" alt="drawing" width="400"/>
 
 - Click on Apply -> OK -> OK (optional confirm change) -> Finish buttons
 
-    <img src="__assets/setup/jetbrains-android-studio/sdk-settings2.png" alt="drawing" width="400"/>
+    <img src="images/jetbrains-android-studio/sdk-settings2.png" alt="drawing" width="400"/>
 
 # [Snapd](https://snapcraft.io/docs) (with snapd):
 
