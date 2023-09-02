@@ -6,7 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/screens/home/pages/dashboard.dart';
+// import 'package:getout/screens/home/pages/dashboard.dart';
 
 class EndForm extends StatelessWidget {
   const EndForm({super.key});
@@ -25,28 +25,36 @@ class EndForm extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   Image.asset('assets/images/Telephone.png', width: 150, height: 180),
-                   Image.asset('assets/images/Dessin.png', width: 200, height: 200),
+                  Image.asset('assets/images/Telephone.png',
+                      width: 150, height: 180),
+                  Image.asset('assets/images/Dessin.png',
+                      width: 200, height: 200),
                 ],
               ),
             ),
             const SizedBox(height: 20),
-            const Center(child: Text('VOS RÉPONSES ONT BIEN ÉTÉ ENREGISTRÉES', textAlign: TextAlign.center, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),),
-            const SizedBox(height: 20),
-            FractionallySizedBox(
-              widthFactor: 0.9,
-              child : ElevatedButton(
-              style: Theme.of(context).elevatedButtonTheme.style,
-              child: Text('Découvrir l\'application',
-                style: Theme.of(context).textTheme.bodyLarge),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DashboardPage()),
-                );
-              },
+            const Center(
+              child: Text(
+                'VOS RÉPONSES ONT BIEN ÉTÉ ENREGISTRÉES',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              ),
             ),
-             ),
+            const SizedBox(height: 20),
+            const FractionallySizedBox(
+              widthFactor: 0.9,
+              // child: ElevatedButton(
+              //   style: Theme.of(context).elevatedButtonTheme.style,
+              //   child: Text('Découvrir l\'application',
+              //       style: Theme.of(context).textTheme.bodyLarge),
+              //   // onPressed: () {
+              //   //   Navigator.push(
+              //   //     context,
+              //   //     MaterialPageRoute(builder: (context) => DashboardPage()),
+              //   //   );
+              //   // },
+              // ),
+            ),
           ],
         ),
       ),

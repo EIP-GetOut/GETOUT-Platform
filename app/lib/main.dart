@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/bloc/locale_bloc.dart';
 import 'package:getout/bloc/observer.dart';
-import 'package:getout/screens/connection/pages/login.dart';
 import 'package:getout/constants/theme.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:getout/screens/home/bloc/dashboard/dashboard_provider.dart';
 
 Map<int, Color> colorMap = {
   50: const Color.fromRGBO(213, 86, 65, .1),
@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppView extends StatelessWidget {
-
   const MyAppView({super.key});
   @override
   Widget build(BuildContext context) {
@@ -68,7 +67,7 @@ class MyAppView extends StatelessWidget {
           theme: getOutTheme,
           // home: const WelcomePage(),
 //          home: const LoadingPageSession());
-          home: const ConnectionPage());
+          home: Dashboard());
       // return a Widget which depends on the state of BlocA, BlocB, and BlocC
     });
   }

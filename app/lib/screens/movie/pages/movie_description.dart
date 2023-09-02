@@ -6,11 +6,11 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/models/home/info_movie.dart';
+
+import 'package:getout/screens/movie/bloc/movie_bloc.dart';
 
 class MovieDescriptionPage extends StatefulWidget {
-
-  final InfoMovieResponse? movie;
+  final InfoMovieResponse movie;
 
   const MovieDescriptionPage({super.key, required this.movie});
 
@@ -23,7 +23,6 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
         height: 15,
         color: Color.fromARGB(255, 192, 192, 192),
         thickness: 10,
-        // )
       );
 
   @override
@@ -35,9 +34,8 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
         ),
         centerTitle: true,
         titleSpacing: 0,
-        title: Text(
-          'DESCRIPTION',
-          style: Theme.of(context).textTheme.titleSmall),
+        title:
+            Text('DESCRIPTION', style: Theme.of(context).textTheme.titleSmall),
         leading: const BackButton(),
         backgroundColor: Colors.white10,
         elevation: 0,
@@ -58,12 +56,13 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                         ))),
-                  Padding(
+                Padding(
                     padding: const EdgeInsets.only(
                         left: 10), //apply padding to all four sides
                     child: Text(
                         // textAlign: TextAlign.start,
-                        widget.movie?.overview ?? 'Aucune description disponible')),
+                        widget.movie.overview ??
+                            'Aucune description disponible')),
                 separateLine(),
                 const Padding(
                     padding: EdgeInsets.only(
@@ -73,14 +72,14 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                         'RÉALISATEUR',
                         style: TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold))),
-              Padding(
+                Padding(
                     padding: const EdgeInsets.only(
                         left: 10), //apply padding to all four sides
-                              child: Image.network(
-                    'https://upload.wikimedia.org/wikipedia/commons/5/5f/Grey.PNG?20071229171831',
-                    height: 50,
-                    width: 50,
-                  )),
+                    child: Image.network(
+                      'https://upload.wikimedia.org/wikipedia/commons/5/5f/Grey.PNG?20071229171831',
+                      height: 50,
+                      width: 50,
+                    )),
                 const Padding(
                     padding: EdgeInsets.only(
                         left: 10), //apply padding to all four sides
@@ -100,10 +99,10 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                     padding: const EdgeInsets.only(
                         left: 10), //apply padding to all four sides
                     child: Image.network(
-          'https://upload.wikimedia.org/wikipedia/commons/5/5f/Grey.PNG?20071229171831',
-          height: 50,
-          width: 50,
-        )),
+                      'https://upload.wikimedia.org/wikipedia/commons/5/5f/Grey.PNG?20071229171831',
+                      height: 50,
+                      width: 50,
+                    )),
                 const Padding(
                     padding: EdgeInsets.only(
                         left: 10), //apply padding to all four sides

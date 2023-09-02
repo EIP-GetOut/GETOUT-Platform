@@ -5,24 +5,24 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
-class GenerateMoviesRequest {
-  List<int> genres;
-  bool includeAdult = true;
+// class GenerateMoviesRequest {
+//   List<int> genres;
+//   bool includeAdult = true;
 
-  GenerateMoviesRequest({
-    required this.genres,
-    this.includeAdult = false,
-  });
-}
+//   GenerateMoviesRequest({
+//     required this.genres,
+//     this.includeAdult = false,
+//   });
+// }
 
-class MoviePreview {
-  int id;
-  String title;
-  String? posterPath;
-  String? overview;
+// class MoviePreview {
+//   int id;
+//   String title;
+//   String? posterPath;
+//   String? overview;
 
-  MoviePreview(
-      {required this.id, required this.title, required this.posterPath, required this.overview});
-}
+//   MoviePreview(
+//       {required this.id, required this.title, required this.posterPath, required this.overview});
+// }
 
-typedef GenerateMoviesResponse = List<MoviePreview>;
+// typedef GenerateMoviesResponse = List<MoviePreview>;
