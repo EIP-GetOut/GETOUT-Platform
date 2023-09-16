@@ -118,9 +118,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                                 width: 40,
                               ),
                               // Falcon label: Text('Sign Up with Google'),
-                              label: Text(
-                                  AppLocalizations.of(context)?.signin_google ??
-                                      ''),
+                              label: Text(AppLocalizations.of(context)?.signin_google ?? ''),
                               onPressed: signIn,
                             ),
                             const SizedBox(
