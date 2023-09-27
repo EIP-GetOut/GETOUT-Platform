@@ -7,12 +7,16 @@
 
 import { type Request, type Response, Router } from 'express'
 import { body } from 'express-validator'
-import { StatusCodes, getReasonPhrase } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 
-import logger, { logApiRequest } from '@services/middlewares/logging'
+import { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
+import { AlreadyLoggedInError } from '@services/utils/customErrors'
+import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import registerAccount from '@models/account/registerAccount'
+
+import { type Account } from '@entities/Account'
 
 const router = Router()
 
@@ -59,15 +63,13 @@ const rulesPost = [
  *         description: Internal server error.
  */
 router.post('/account/signup', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
-  registerAccount(req.body).then((result: any) => {
-    if (typeof result === 'object') {
-      return res.status(StatusCodes.CREATED).json(result)
-    }
-    return res.status(result).send(getReasonPhrase(result))
-  }).catch((err) => {
-    logger.error(err)
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
-  })
+  if (req.session?.account?.id != null) {
+    handleErrorOnRoute(res)(new AlreadyLoggedInError())
+    return
+  }
+  registerAccount(req.body).then((account: Account) => {
+    return res.status(StatusCodes.CREATED).json(account)
+  }).catch(handleErrorOnRoute(res))
 })
 
 export default router

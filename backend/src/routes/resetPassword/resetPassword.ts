@@ -7,10 +7,13 @@
 
 import { type Request, type Response, Router } from 'express'
 import { body } from 'express-validator'
-import { StatusCodes, getReasonPhrase } from 'http-status-codes'
+import { type StatusCodes, getReasonPhrase } from 'http-status-codes'
 
-import logger, { logApiRequest } from '@middlewares/logging'
+import { logApiRequest } from '@middlewares/logging'
 import validate from '@middlewares/validator'
+
+import { NotLoggedInError } from '@services/utils/customErrors'
+import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { changeAccountPassword } from '@models/account/resetPassword'
 
@@ -51,15 +54,12 @@ const rulesPost = [
  */
 router.post('/account/reset-password/', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session?.account?.id == null) {
-    res.status(StatusCodes.FORBIDDEN).send(getReasonPhrase(StatusCodes.FORBIDDEN))
+    handleErrorOnRoute(res)(new NotLoggedInError())
     return
   }
   changeAccountPassword(req.session?.account?.id, req.body.password, req.body.newPassword).then((code: StatusCodes) => {
     res.status(code).send(getReasonPhrase(code))
-  }).catch((err) => {
-    logger.error(err.toString())
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
-  })
+  }).catch(handleErrorOnRoute(res))
 })
 
 export default router

@@ -7,11 +7,13 @@
 
 import { type Request, type Response, Router } from 'express'
 import { query } from 'express-validator'
-import { StatusCodes, getReasonPhrase } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 import { type MovieResult } from 'moviedb-promise'
 
 import { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
+import { AppError } from '@services/utils/customErrors'
+import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { getMovies } from '@models/movies'
 
@@ -253,7 +255,7 @@ const rulesGet = [
 router.get('/generate-movies', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
   getMovies(req.query).then((moviesObtained: MovieResult[] | undefined) => {
     if (moviesObtained === undefined) {
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+      throw new AppError()
     }
     moviesObtained.length = 5
     const movies: any[] = []
@@ -266,7 +268,7 @@ router.get('/generate-movies', rulesGet, validate, logApiRequest, (req: Request,
       })
     })
     return res.status(StatusCodes.OK).json({ movies })
-  }).catch(console.error)
+  }).catch(handleErrorOnRoute(res))
 })
 
 export default router

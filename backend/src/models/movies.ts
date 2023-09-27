@@ -9,6 +9,8 @@ import { MovieDb, type DiscoverMovieRequest, type DiscoverMovieResponse, type Mo
 
 import logger from '@middlewares/logging'
 
+import { MovieDbError } from '@services/utils/customErrors'
+
 const moviedb = new MovieDb('1eec31e851e9ad1b8f3de3ccf39953b7')
 
 async function getMovies (params: any): Promise<MovieResult[] | undefined> {
@@ -22,6 +24,8 @@ async function getMovies (params: any): Promise<MovieResult[] | undefined> {
   return await moviedb.discoverMovie(discorverMovieRequest).then((value: DiscoverMovieResponse) => {
     logger.info(JSON.stringify(value, null, 2))
     return value.results
+  }).catch((err: Error) => {
+    throw new MovieDbError(err.message)
   })
 }
 

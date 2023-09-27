@@ -11,6 +11,8 @@ import { StatusCodes, getReasonPhrase } from 'http-status-codes'
 
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
+import { AlreadyLoggedInError } from '@services/utils/customErrors'
+import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { loginAccount } from '@models/account/loginAccount'
 
@@ -54,6 +56,10 @@ const rulesPost = [
  *         description: Internal server error.
  */
 router.post('/account/login', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
+  if (req.session?.account?.id != null) {
+    handleErrorOnRoute(res)(new AlreadyLoggedInError())
+    return
+  }
   loginAccount(req.body, req.session).then((code: StatusCodes) => {
     if (code === StatusCodes.OK) {
       logger.info(`Account successfully logged in${req.body.email != null ? `: ${req.body.email}` : ' !'}`)
@@ -61,11 +67,7 @@ router.post('/account/login', rulesPost, validate, logApiRequest, (req: Request,
       logger.info(`Account's email or password is incorrect: ${req.body.email != null || req.body.githubCode}`)
     }
     return res.status(code).send(getReasonPhrase(code))
-  }).catch((err: any) => {
-    logger.error(err)
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
-  })
+  }).catch(handleErrorOnRoute(res))
 })
 
 export default router

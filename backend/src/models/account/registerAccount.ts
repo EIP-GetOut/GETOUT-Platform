@@ -6,9 +6,10 @@
 */
 
 import bcrypt from 'bcrypt'
-import { StatusCodes } from 'http-status-codes'
 
 import logger from '@middlewares/logging'
+
+import { AccountAlreadyExistError, BcryptError, DbError } from '@services/utils/customErrors'
 
 import { findEntity } from '@models/getObjects'
 
@@ -38,8 +39,8 @@ async function createNewAccountObject (account: accountRepositoryRequest): Promi
       lastName: account.lastName,
       bornDate
     })
-  }).catch((err) => {
-    throw new Error(err)
+  }).catch((err: Error) => {
+    throw new BcryptError(err.message)
   })
 }
 
@@ -48,13 +49,14 @@ async function registerAccount (account: accountRepositoryRequest): Promise<Acco
 
   return await findEntity<Account>(Account, { email: account.email }).then((foundAccount: Account | null): any => {
     if (foundAccount !== null) {
-      return StatusCodes.CONFLICT
+      throw new AccountAlreadyExistError()
     }
     return createNewAccountObject(account).then(async (newAccount: accountRepositoryRequest) => {
-      return await accountRepository.save(newAccount).then((savedAccount) => {
-        if (savedAccount != null) { return StatusCodes.BAD_REQUEST }
+      return await accountRepository.save(newAccount).then((savedAccount: accountRepositoryRequest & Account) => {
         logger.info(`Account has been created: ${JSON.stringify(savedAccount, null, 2)}`)
         return savedAccount
+      }).catch((err: Error) => {
+        throw new DbError(err.message)
       })
     })
   })

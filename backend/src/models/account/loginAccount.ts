@@ -10,6 +10,7 @@ import { type Session, type SessionData } from 'express-session'
 import { StatusCodes } from 'http-status-codes'
 
 import { authentifyWithGoogle } from '@services/authentification'
+import { AccountDoesNotExistError, BcryptError } from '@services/utils/customErrors'
 
 import { findEntity } from '@models/getObjects'
 
@@ -47,7 +48,7 @@ async function loginWithGoogle (account, sess): Promise<StatusCodes> {
 async function loginAccount (accountToLogin: accountRepositoryRequest, sess: Session): Promise<StatusCodes> {
   return await findEntity<Account>(Account, { email: accountToLogin.email }).then((foundAccount: Account | null): any => {
     if (foundAccount == null) {
-      return StatusCodes.FORBIDDEN
+      throw new AccountDoesNotExistError()
     }
     return bcrypt.compare(accountToLogin.password + foundAccount.salt, foundAccount.password).then((result: boolean) => {
       if (result) {
@@ -56,6 +57,8 @@ async function loginAccount (accountToLogin: accountRepositoryRequest, sess: Ses
       } else {
         return StatusCodes.FORBIDDEN
       }
+    }).catch((err: Error) => {
+      throw new BcryptError(err.message)
     })
   })
 }

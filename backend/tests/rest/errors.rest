@@ -42,3 +42,30 @@ Content-Type: application/json
     "confirmPassword": "123457",
     "newPassword": "123456"
 }
+
+###
+GET http://localhost:8080/book/fake HTTP/1.1
+Content-Type: application/json
+
+###
+GET http://localhost:8080/generate-books?book=toto HTTP/1.1
+Content-Type: application/json
+
+###
+GET http://localhost:8080/movie/fake HTTP/1.1
+Content-Type: application/json
+
+###
+GET http://localhost:8080/generate-movies?include_adult=true HTTP/1.1
+Content-Type: application/json
+
+###
+POST http://localhost:8080/account/reset-password/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "password": "toto",
+    "newPassword": "tata"
+}
+
+

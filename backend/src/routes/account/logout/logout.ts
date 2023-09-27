@@ -8,8 +8,11 @@
 import { type Request, type Response, Router } from 'express'
 import { StatusCodes, getReasonPhrase } from 'http-status-codes'
 
-import logger, { logApiRequest } from '@middlewares/logging'
+import { logApiRequest } from '@middlewares/logging'
 import validate from '@middlewares/validator'
+
+import { AppError, NotLoggedInError } from '@services/utils/customErrors'
+import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 const router = Router()
 
@@ -29,11 +32,13 @@ const rules = [
  *         description: Internal server error.
  */
 router.post('/account/logout', rules, validate, logApiRequest, (req: Request, res: Response) => {
+  if (req.session?.account?.id == null) {
+    handleErrorOnRoute(res)(new NotLoggedInError())
+    return
+  }
   return req.session.destroy((err) => {
     if (err != null) {
-      logger.error(err.toString())
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+      handleErrorOnRoute(res)(new AppError(err.message ?? undefined))
     }
     return res.status(StatusCodes.NO_CONTENT).send(getReasonPhrase(StatusCodes.NO_CONTENT))
   })

@@ -40,7 +40,8 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
     'header',
-    'eslint-plugin-import-helpers'
+    'eslint-plugin-import-helpers',
+    'sort-exports'
   ],
   rules: {
     'no-unused-vars': ['warn', { vars: 'all', args: 'none', ignoreRestSiblings: false }],
@@ -66,7 +67,8 @@ module.exports = {
         ],
         alphabetize: { order: 'asc', ignoreCase: true }
       }
-    ]
+    ],
+    'sort-exports/sort-exports': ['error', { sortDir: 'asc' }]
   },
   overrides: [
     {

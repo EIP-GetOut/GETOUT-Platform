@@ -13,8 +13,7 @@ import validate from '@middlewares/validator'
 
 const router = Router()
 
-const rules = [
-]
+const rules = []
 
 /**
  * @swagger

@@ -6,11 +6,13 @@
 */
 
 import { type Request, type Response, Router } from 'express'
-import { getReasonPhrase, StatusCodes } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 import { type MovieResponse } from 'moviedb-promise'
 
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
+import { AppError } from '@services/utils/customErrors'
+import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { getDetail } from '@models/movie'
 
@@ -59,8 +61,7 @@ router.get('/movie/:id', validate, logApiRequest, (req: Request, res: Response) 
   logger.info(req.params)
   getDetail(req.params).then((movieObtained: MovieResponse | undefined) => {
     if (movieObtained == null) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
-      return
+      throw new AppError()
     }
     const movie = {
       title: movieObtained.title,
@@ -72,10 +73,7 @@ router.get('/movie/:id', validate, logApiRequest, (req: Request, res: Response) 
       duration: Number(movieObtained.runtime) / 60 - (Number(movieObtained.runtime) / 60 % 1) + 'h' + String(Number(movieObtained.runtime) % 60).padStart(2, '0')
     }
     res.status(StatusCodes.OK).json({ movie })
-  }).catch((err) => {
-    logger.error(`Error while getting movie ${req.params.id}: ${JSON.stringify(err, null, 2)}`)
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
-  })
+  }).catch(handleErrorOnRoute(res))
 })
 
 export default router

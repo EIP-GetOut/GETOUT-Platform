@@ -7,7 +7,7 @@
 
 import { type Response } from 'node-fetch'
 
-import logger from '@middlewares/logging'
+import { ApiError, AppError } from '@services/utils/customErrors'
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 const fetch = async (...args: Parameters<typeof import('node-fetch')['default']>): Promise<Response> => await import('node-fetch').then(async ({ default: fetch }) => await fetch(...args))
@@ -24,10 +24,16 @@ function getBook (params: any): any {
   const query = encodeQueryData(params)
   return (fetch(`https://www.googleapis.com/books/v1/volumes/${query}?key=${key}`)).then(async (res) => {
     if (!res.ok) {
-      throw Error(res.statusText)
+      throw new ApiError(res.statusText)
     }
     return await res.json()
-  }).catch((err) => logger.error(err))
+  }).catch((err: AppError | Error) => {
+    if (err instanceof AppError) {
+      throw err
+    } else {
+      throw new AppError()
+    }
+  })
 }
 
 export { getBook }

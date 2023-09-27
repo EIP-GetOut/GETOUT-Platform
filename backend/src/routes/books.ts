@@ -7,12 +7,14 @@
 
 import { type Request, type Response, Router } from 'express'
 import { query } from 'express-validator'
-import { getReasonPhrase, StatusCodes } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 
 import logger from '@middlewares/logging'
 
 import { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
+import { AppError } from '@services/utils/customErrors'
+import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { getBooks } from '@models/books'
 
@@ -97,7 +99,7 @@ router.get('/generate-books', rulesGet, validate, logApiRequest, (req: Request, 
   return getBooks(req.query).then((booksObtained: any | undefined) => {
     logger.info(JSON.stringify(booksObtained, null, 2))
     if (booksObtained == null) {
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
+      throw new AppError()
     }
     booksObtained.items.length = 5
     const books: any[] = []
@@ -109,10 +111,8 @@ router.get('/generate-books', rulesGet, validate, logApiRequest, (req: Request, 
         overview: book.volumeInfo?.description != null ? book.volumeInfo.description : 'No informations.'
       })
     })
-    return res.status(StatusCodes.OK).json({
-      books
-    })
-  })
+    return res.status(StatusCodes.OK).json({ books })
+  }).catch(handleErrorOnRoute(res))
 })
 
 export default router
