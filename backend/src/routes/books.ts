@@ -96,7 +96,7 @@ router.get('/generate-books', rulesGet, validate, logApiRequest, (req: Request, 
   // TODO create BooksResult interface
   return getBooks(req.query).then((booksObtained: any | undefined) => {
     logger.info(JSON.stringify(booksObtained, null, 2))
-    if (booksObtained != null) {
+    if (booksObtained == null) {
       return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
     }
     booksObtained.items.length = 5
