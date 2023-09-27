@@ -26,6 +26,9 @@
       "@middlewares/*": ["services/middlewares/*"],
     },
   },
-  "include": ["src/**/*", "tests/**/*.ts"],
+  "ts-node": {
+    "files": true
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "tests/**/*.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
