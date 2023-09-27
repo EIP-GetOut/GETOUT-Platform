@@ -5,7 +5,7 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
-import { NextFunction, Request, Response } from "express"
+import { type NextFunction, type Request, type Response } from 'express'
 
 function caching (duration: number) {
   return (req: Request, res: Response, next: NextFunction) => {

@@ -15,5 +15,5 @@ repos:
         language: system
       - id: back-linter
         name: back-linter
-        entry: bash -c 'npx eslint --ext .ts ./backend/src'
+        entry: bash -c 'cd ./backend/ && npx eslint . --ext .ts'
         language: system

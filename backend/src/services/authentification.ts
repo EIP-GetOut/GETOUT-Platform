@@ -5,57 +5,59 @@
 ** Wrote by Firstname Lastname <firstname.lastname@domain.com>
 */
 
+import { OAuth2Client } from 'google-auth-library'
+import { type Response } from 'node-fetch'
 
-import { OAuth2Client } from "google-auth-library";
+// eslint-disable-next-line @typescript-eslint/consistent-type-imports
+const fetch = async (...args: Parameters<typeof import('node-fetch')['default']>): Promise<Response> => await import('node-fetch').then(async ({ default: fetch }) => await fetch(...args))
 
-const fetch = (...args: Parameters<typeof import('node-fetch')['default']>) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+async function authentifyWithGoogle (account): Promise<[boolean, any]> {
+  const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
-function authentifyWithGoogle(account): Promise<[boolean, any]> {
-  const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-
-  return new Promise((resolve, reject) => {
+  return await new Promise((resolve, reject) => {
     client.verifyIdToken({
-        idToken: account.idToken,
-        audience: process.env.GOOGLE_CLIENT_ID
+      idToken: account.idToken,
+      audience: process.env.GOOGLE_CLIENT_ID
     }, (err) => {
-      if (err) { resolve([false, null]) }
-      return resolve([true, {
+      if (err != null) { resolve([false, null]) }
+      resolve([true, {
         ...account
       }])
-  })})
+    })
+  })
 }
 
-function getAccountInfoWithGithubCode(code) {
-  if (!code) { return Promise.resolve(null) }
+async function getAccountInfoWithGithubCode (code): Promise< any | null> {
+  if (code == null) { return await Promise.resolve(null) }
 
   const authorizeUrlGithub = new URL('https://github.com/login/oauth/access_token')
   authorizeUrlGithub.search = new URLSearchParams({
     client_id: process.env.GITHUB_CLIENT_ID ?? '',
     client_secret: process.env.GITHUB_CLIENT_SECRET ?? '',
-    code: code
+    code
   }).toString()
 
-  return fetch(authorizeUrlGithub.toString(), {
+  return await fetch(authorizeUrlGithub.toString(), {
     method: 'POST',
     headers: {
-      'Accept': 'application/json'
+      Accept: 'application/json'
     }
-  }).then((res) => {
+  }).then(async (res) => {
     if (!res.ok) {
       throw Error(res.statusText)
     }
-    return res.json()
-  }).then((data) => {
-    return fetch('https://api.github.com/user', {
-      headers: { 'Authorization': `${data.token_type} ${data.access_token}` }
+    return await res.json()
+  }).then(async (data) => {
+    return await fetch('https://api.github.com/user', {
+      headers: { Authorization: `${data.token_type} ${data.access_token}` }
     })
-  }).then((res) => {
+  }).then(async (res) => {
     if (!res.ok) {
       throw Error(res.statusText)
     }
-    return res.json()
+    return await res.json()
   }).then((data) => {
-    const [firstName, lastName] = data.name.split(' ');
+    const [firstName, lastName] = data.name.split(' ')
     return { firstName, lastName, email: data.login, authentifiedWithGithub: true }
   }).catch((err) => {
     throw err

@@ -5,19 +5,19 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
-import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerJsdoc from 'swagger-jsdoc'
 
 const options = {
   swaggerDefinition: {
     info: {
       title: 'GETOUT\'s API',
       version: '1.0.0',
-      description: 'Documentation of the API routes for the "GETOUT" application.',
-    },
+      description: 'Documentation of the API routes for the "GETOUT" application.'
+    }
   },
-  apis: ['src/routes/**/*.ts'],
-};
+  apis: ['src/routes/**/*.ts']
+}
 
-const swaggerSpec = swaggerJsdoc(options);
+const swaggerSpec = swaggerJsdoc(options)
 
-export default swaggerSpec;
+export default swaggerSpec

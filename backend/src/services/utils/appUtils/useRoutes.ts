@@ -5,7 +5,7 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
-import { Application } from 'express'
+import { type Application } from 'express'
 
 import login from '@routes/account/login/login'
 import logout from '@routes/account/logout/logout'
@@ -17,9 +17,9 @@ import generateBooks from '@routes/books'
 import getMovie from '@routes/movie'
 import generateMovies from '@routes/movies'
 import resetPassword from '@routes/resetPassword/resetPassword'
-import session from '@routes/session/session'
+import session from '@routes/session'
 
-const useRoutes = (app: Application) => (
+const useRoutes = (app: Application): Application => (
   app
     .use(login)
     .use(logout)

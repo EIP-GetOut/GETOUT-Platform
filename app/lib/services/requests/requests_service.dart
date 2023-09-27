@@ -7,16 +7,17 @@
 
 import 'dart:convert';
 
-import 'package:getout/models/requests/forget_password_change.dart';
-import 'package:getout/models/requests/forget_password_code.dart';
-import 'package:getout/models/requests/generate_books.dart';
-import 'package:getout/models/requests/info_movie.dart';
-import 'package:getout/models/requests/generate_movies.dart';
-import 'package:getout/models/requests/create_account.dart';
-import 'package:getout/models/requests/get_session.dart';
-import 'package:getout/models/requests/login.dart';
-import 'package:getout/models/requests/oauth.dart';
-import 'package:getout/models/requests/settings/edit_password.dart';
+import 'package:getout/models/connection/forget_password_change.dart';
+import 'package:getout/models/connection/forget_password_code.dart';
+import 'package:getout/models/home/generate_books.dart';
+import 'package:getout/models/home/info_movie.dart';
+// import 'package:getout/models/home/generate_movies.dart';
+// import 'package:getout/screens/home/bloc/movie_bloc.dart';
+import 'package:getout/models/connection/create_account.dart';
+import 'package:getout/models/connection/get_session.dart';
+import 'package:getout/models/connection/login.dart';
+import 'package:getout/models/connection/oauth.dart';
+import 'package:getout/models/settings/edit_password.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/foundation.dart';
@@ -38,45 +39,45 @@ class RequestsService {
 
   static final instance = RequestsService._();
 
-  Future<GenerateMoviesResponse> generateMovies(GenerateMoviesRequest request) {
-    String withGenres = formatWithGenresParameter(request.genres);
-    final Uri url = (kDebugMode)
-        ? Uri.http(
-            api_constants.rootApiPath, api_constants.generateMoviesApiPath, {
-            'with_genres': withGenres,
-            'include_adult': request.includeAdult.toString()
-          })
-        : Uri.http(
-            api_constants.rootApiPath, api_constants.generateMoviesApiPath, {
-            'with_genres': withGenres,
-            'include_adult': request.includeAdult.toString()
-          });
+  // Future<GenerateMoviesResponse> generateMovies(GenerateMoviesRequest request) {
+  //   String withGenres = formatWithGenresParameter(request.genres);
+  //   final Uri url = (kDebugMode)
+  //       ? Uri.http(
+  //           api_constants.rootApiPath, api_constants.generateMoviesApiPath, {
+  //           'with_genres': withGenres,
+  //           'include_adult': request.includeAdult.toString()
+  //         })
+  //       : Uri.http(
+  //           api_constants.rootApiPath, api_constants.generateMoviesApiPath, {
+  //           'with_genres': withGenres,
+  //           'include_adult': request.includeAdult.toString()
+  //         });
 
-    return http.get(url).then((response) {
-      if (response.statusCode != HttpStatus.OK) {
-        return Future.error(Exception(
-          'Error ${response.statusCode} while fetching movies: ${response.reasonPhrase}',
-        ));
-      }
+  //   return http.get(url).then((response) {
+  //     if (response.statusCode != HttpStatus.OK) {
+  //       return Future.error(Exception(
+  //         'Error ${response.statusCode} while fetching movies: ${response.reasonPhrase}',
+  //       ));
+  //     }
 
-      var data = jsonDecode(response.body);
-      GenerateMoviesResponse result = [];
+  //     var data = jsonDecode(response.body);
+  //     GenerateMoviesResponse result = [];
 
-      data['movies'].forEach((elem) {
-        result.add(MoviePreview(
-            id: elem['id'],
-            title: elem['title'],
-            posterPath: elem['poster'],
-            overview: elem['overview']));
-        //  , overview: elem['overview']
-        // duration: elem['duration']
-      });
+  //     data['movies'].forEach((elem) {
+  //       result.add(MoviePreview(
+  //           id: elem['id'],
+  //           title: elem['title'],
+  //           posterPath: elem['poster'],
+  //           overview: elem['overview']));
+  //       //  , overview: elem['overview']
+  //       // duration: elem['duration']
+  //     });
 
-      return result;
-    }, onError: (error) {
-      // TODO Handle Error
-    });
-  }
+  //     return result;
+  //   }, onError: (error) {
+  //     // TODO Handle Error
+  //   });
+  // }
 
   Future<GenerateBooksResponse> generateBooks(GenerateBooksRequest request) {
     final Map<String, String> queryParameters = <String, String>{

@@ -5,9 +5,9 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
-import RedisStore from "connect-redis"
-import { Application } from "express"
-import session, { SessionOptions } from 'express-session'
+import RedisStore from 'connect-redis'
+import { type Application } from 'express'
+import session, { type SessionOptions } from 'express-session'
 import { createClient } from 'redis'
 
 interface SessionAccount {
@@ -21,14 +21,14 @@ interface SessionAccount {
 
 declare module 'express-session' {
   export interface SessionData {
-    account: SessionAccount;
+    account: SessionAccount
   }
 }
 
-function useSession (app: Application) {
+function useSession (app: Application): any {
   const week = 3600000 * 24 * 7
 
-  const redisClient = createClient({ url: 'redis://redis:6379' })
+  const redisClient = createClient({ url: `redis://${process.env.NODE_ENV === 'test' ? 'localhost' : 'redis'}:6379` })
   redisClient.connect().catch(console.error)
   const redisStore = new RedisStore({ client: redisClient })
   const sess: SessionOptions = {
@@ -47,6 +47,7 @@ function useSession (app: Application) {
   }
 
   app.use(session(sess))
+  return redisClient
 }
 
 export default useSession

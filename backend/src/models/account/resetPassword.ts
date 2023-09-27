@@ -14,26 +14,23 @@ import { Account } from '@entities/Account'
 
 import { appDataSource } from '@config/dataSource'
 
-
-function changeAccountPassword (accountId, oldPassword, newPassword): Promise<StatusCodes> {
-  return findEntity<Account>(Account, { id: accountId }).then((account: Account | null): any => {
-    if (!account) {
+async function changeAccountPassword (accountId, oldPassword, newPassword): Promise<StatusCodes> {
+  return await findEntity<Account>(Account, { id: accountId }).then((account: Account | null): any => {
+    if (account == null) {
       return StatusCodes.NOT_FOUND
     }
-    return bcrypt.compare(oldPassword + account.salt, account.password).then((passwordsDoesMatch) => {
-      return bcrypt.hash(newPassword + account.salt, 10).then((hash: string) => {
+    return bcrypt.compare(oldPassword + account.salt, account.password).then(async (passwordsDoesMatch) => {
+      return await bcrypt.hash(newPassword + account.salt, 10).then(async (hash: string) => {
+        if (passwordsDoesMatch) {
+          account.password = hash
+          return await appDataSource.getRepository<Account>('Account').save(account).then(() => {
+            return StatusCodes.OK
+          })
+        }
 
-      if (passwordsDoesMatch) {
-        account.password = hash
-        return appDataSource.getRepository<Account>('Account').save(account).then(() => {
-          return StatusCodes.OK
-        })
-      }
-
-      return StatusCodes.FORBIDDEN
+        return StatusCodes.FORBIDDEN
+      })
     })
-
-  })
   })
 }
 

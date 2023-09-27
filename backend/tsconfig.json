@@ -24,8 +24,8 @@
       "@routes/*": ["routes/*"],
       "@services/*": ["services/*"],
       "@middlewares/*": ["services/middlewares/*"],
-    }
+    },
   },
-  "include": ["src/**/*", "./src/models/books.d.ts"],
-  "exclude": ["node_modules", "**/*.spec.ts"],
+  "include": ["src/**/*", "tests/**/*.ts"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }

@@ -19,6 +19,7 @@
   "main": "./app.ts",
   "scripts": {
     "start": "nodemon -r tsconfig-paths/register ./src/app.ts",
+    "test": "NODE_ENV=test jest",
     "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
     "migrate:generate": "npm run typeorm migration:generate -c main -- -n",
     "migrate:up": "npm run typeorm migration:run -c main",
@@ -31,9 +32,12 @@
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
     "bcrypt": "^5.1.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
-    "express": "^4.18.1",
+    "eslint-plugin-sort-exports": "^0.8.0",
+    "express": "^4.18.2",
     "express-rate-limit": "^6.6.0",
     "express-validator": "^6.14.2",
     "google-auth-library": "^8.8.0",
@@ -51,21 +55,20 @@
     "yaml": "^2.3.1"
   },
   "devDependencies": {
+    "@jest/globals": "^29.6.4",
     "@types/compression": "^1.7.2",
-    "@types/cors": "^2.8.12",
-    "@types/express": "^4.17.14",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
     "@types/express-rate-limit": "^6.0.0",
     "@types/express-session": "^1.17.7",
     "@types/http-status-codes": "^1.2.0",
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.7.18",
     "@types/node-fetch": "^2.6.2",
-    "@typescript-eslint/eslint-plugin": "^5.38.0",
-    "@typescript-eslint/parser": "^5.38.0",
     "connect-redis": "^7.1.0",
     "eslint": "^8.23.1",
     "eslint-config-standard": "^17.0.0",
-    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-config-standard-with-typescript": "^39.0.0",
     "eslint-plugin-header": "^3.1.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-import-helpers": "^1.2.1",
@@ -73,10 +76,14 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.1",
     "express-session": "^1.17.3",
+    "jest": "^29.6.4",
     "nodemon": "^2.0.20",
     "pg": "^8.10.0",
     "redis": "^4.6.6",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.1.1",
     "typeorm": "^0.3.15",
     "typescript": "^4.8.3"
-  }
+  },
+  "version": "0.2.7"
 }

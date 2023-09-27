@@ -6,59 +6,60 @@
 */
 
 import bcrypt from 'bcrypt'
-import { StatusCodes } from "http-status-codes"
 
-import logger from "@middlewares/logging"
+import logger from '@middlewares/logging'
 
-import { findEntity } from "@models/getObjects"
+import { AccountAlreadyExistError, BcryptError, DbError } from '@services/utils/customErrors'
 
-import { Account } from "@entities/Account"
+import { findEntity } from '@models/getObjects'
 
-import { appDataSource } from "@config/dataSource"
+import { Account } from '@entities/Account'
 
-import { accountRepositoryRequest } from "./account"
+import { appDataSource } from '@config/dataSource'
 
-function createNewAccountObject (account: accountRepositoryRequest): Promise<accountRepositoryRequest> {
-    let bornDate = account.bornDate || null
-    let saltPassword
+import { type accountRepositoryRequest } from './account'
 
-    return bcrypt.genSalt().then((salt: string) => {
-        saltPassword = salt
-        return bcrypt.hash(account.password + salt, 10)
-    }).then((hash: string) => {
-        if (bornDate) {
-            const date = bornDate.toString().split('/')
-            bornDate = new Date(parseInt(date[2]), parseInt(date[1]) - 1, parseInt(date[0]))
-        }
-        return ({
-            salt: saltPassword,
-            email: account.email,
-            password: hash,
-            firstName: account.firstName,
-            lastName: account.lastName,
-            bornDate,
-        })
-    }).catch((err) => {
-        throw new Error(err)
+async function createNewAccountObject (account: accountRepositoryRequest): Promise<accountRepositoryRequest> {
+  let bornDate: Date = account.bornDate
+  let saltPassword
+
+  return await bcrypt.genSalt().then(async (salt: string) => {
+    saltPassword = salt
+    return await bcrypt.hash(account.password + salt, 10)
+  }).then((hash: string) => {
+    if (bornDate != null) {
+      const date = bornDate.toString().split('/')
+      bornDate = new Date(parseInt(date[2]), parseInt(date[1]) - 1, parseInt(date[0]))
+    }
+    return ({
+      salt: saltPassword,
+      email: account.email,
+      password: hash,
+      firstName: account.firstName,
+      lastName: account.lastName,
+      bornDate
     })
+  }).catch((err: Error) => {
+    throw new BcryptError(err.message)
+  })
 }
 
-function registerAccount (account: accountRepositoryRequest) {
-    const accountRepository = appDataSource.getRepository(Account)
+async function registerAccount (account: accountRepositoryRequest): Promise<Account> {
+  const accountRepository = appDataSource.getRepository(Account)
 
-    return findEntity<Account>(Account, { email: account.email }).then((foundAccount: Account | null): any => {
-        if (foundAccount) {
-            return StatusCodes.CONFLICT
-        }
-        return createNewAccountObject(account).then((newAccount: accountRepositoryRequest) => {
-            if (!newAccount) { return undefined }
-            return accountRepository.save(newAccount).then((savedAccount) => {
-                if (!savedAccount) { return StatusCodes.BAD_REQUEST }
-                logger.info(`Account has been created: ${JSON.stringify(savedAccount, null, 2)}`)
-                return savedAccount
-            })
-        })
+  return await findEntity<Account>(Account, { email: account.email }).then((foundAccount: Account | null): any => {
+    if (foundAccount !== null) {
+      throw new AccountAlreadyExistError()
+    }
+    return createNewAccountObject(account).then(async (newAccount: accountRepositoryRequest) => {
+      return await accountRepository.save(newAccount).then((savedAccount: accountRepositoryRequest & Account) => {
+        logger.info(`Account has been created: ${JSON.stringify(savedAccount, null, 2)}`)
+        return savedAccount
+      }).catch((err: Error) => {
+        throw new DbError(err.message)
+      })
     })
+  })
 }
 
 export default registerAccount

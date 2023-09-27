@@ -1,0 +1,65 @@
+name: Backend and frontend linter
+
+on:
+  push:
+    branches: [ dev ]
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  back-lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name : Checkout
+        uses: actions/checkout@v3.5.3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: cd backend ; npm ci
+
+
+      - uses: dorny/paths-filter@v2
+        id: changesback
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+
+      - if: steps.changesback.outputs.backend == 'true'
+        name: Lint Backend
+        run: |
+          echo "Backend folder has been modified, eslint starting"
+          cd backend
+          npx eslint --ext .ts ./src
+
+      - uses: actions/setup-java@v3.11.0
+        with:
+          distribution: 'microsoft'
+          java-version: "17"
+
+      - uses: subosito/flutter-action@v2.10.0
+        with:
+          flutter-version: '3.10.4'
+          channel: 'stable'
+          cache: true
+
+      - uses: dorny/paths-filter@v2
+        id: changesapp
+        with:
+          filters: |
+            app:
+              - 'app/**'
+
+      - if: steps.changesapp.outputs.app == 'true'
+        name: Lint App
+        run: |
+          echo "App folder has been modified, flutter analyze starting"
+          cd app
+          flutter analyze

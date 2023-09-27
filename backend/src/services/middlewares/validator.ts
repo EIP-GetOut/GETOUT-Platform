@@ -5,14 +5,15 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
-import { NextFunction, Request, Response } from 'express'
-import { Result, ValidationError, validationResult } from 'express-validator'
+import { type NextFunction, type Request, type Response } from 'express'
+import { type Result, type ValidationError, validationResult } from 'express-validator'
 import { StatusCodes } from 'http-status-codes'
 
-const validate = (req: Request, res: Response, next: NextFunction) => {
+const validate = (req: Request, res: Response, next: NextFunction): Response<any, Record<string, any>> | undefined => {
   const errors: Result<ValidationError> = validationResult(req)
   if (errors.isEmpty()) {
-    return next()
+    next()
+    return
   }
   const extractedErrors: any[] = []
   errors.array().map(err => extractedErrors.push({ [err.param]: err.msg }))

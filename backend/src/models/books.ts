@@ -5,27 +5,34 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
-import logger from '@middlewares/logging'
+import { type Response } from 'node-fetch'
 
-const fetch = (args: any) => import('node-fetch').then(({ default: fetch }) => fetch(args));
+import { ApiError, AppError } from '@services/utils/customErrors'
+
+const fetch = async (args: any): Promise<Response> => await import('node-fetch').then(async ({ default: fetch }) => await fetch(args))
 
 const key = 'AIzaSyDDxf1nRkG6eMcufxYp2LHIWgA-2MEMlK8'
 
-function encodeQueryData(data: any): any {
-  const ret: Array<any> = [];
-  for (const d in data)
-    ret.push(encodeURIComponent(d) + ':' + encodeURIComponent(data[d]));
-  return ret.join('&');
+function encodeQueryData (data: any): any {
+  const ret: any[] = []
+  for (const d in data) { ret.push(encodeURIComponent(d) + ':' + encodeURIComponent(data[d])) }
+  return ret.join('&')
 }
 
-function getBooks(params: any): any {
-    const query = encodeQueryData(params)
-    return (fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${key}`)).then((res) => {
-      if (!res.ok) {
-        throw Error(res.statusText)
-      }
-      return res.json()
-    }).catch((err) => logger.error(err.toString))
+function getBooks (params: any): any {
+  const query = encodeQueryData(params)
+  return (fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${key}`)).then(async (res) => {
+    if (!res.ok) {
+      throw new ApiError(res.statusText)
+    }
+    return await res.json()
+  }).catch((err: AppError | Error) => {
+    if (err instanceof AppError) {
+      throw err
+    } else {
+      throw new AppError()
+    }
+  })
 }
 
 export { getBooks }

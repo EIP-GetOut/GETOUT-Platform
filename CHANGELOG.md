@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.7](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.2.6-test...v0.2.7) (2023-09-27)
+
+
+### Features
+
+* **backend:** :sparkles: cors enabled and dto middleware ([07e1dcf](https://github.com/EIP-GetOut/GETOUT-Platform/commit/07e1dcf21e3a5161a1762f32e988093a1acc8b9d))
+* **backend:** :sparkles: improved linter and unit tests poc ([2924992](https://github.com/EIP-GetOut/GETOUT-Platform/commit/2924992f6f50e1822af2d6b07891804f92ccd44d))
+* **backend:** :sparkles: whole new error handling systems for routes using custom error classes ([a56cc3d](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a56cc3d82e754c968164bdb24f34ea1e6a035220))
+* **devs/setup_intl_bloc:** :sparkles: setup intl(l10n) and bloc. handle material_app.locale using bloc and l10n ([a657af7](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a657af716309264f6ba97f1f43ba15a52bfc6ea0))
+
+
+### Bug Fixes
+
+* :memo: move files from 'docs/', to 'doc/' folder ([93f8dfe](https://github.com/EIP-GetOut/GETOUT-Platform/commit/93f8dfe2a24073ff2fe914db1872288ee0add798))
+* **backend:** :bug: booksObtained null result check inverted condition ([f4c7f4e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/f4c7f4eca03a8e431845a71480be21c403deea46))
+
+
+### Refactors
+
+* :recycle: Start to refactor dashbord with implementing bloc, not works yet ([e33bcdf](https://github.com/EIP-GetOut/GETOUT-Platform/commit/e33bcdf7d0ed88633ecb2a3a0fafe29937764bfc))
+* **app:** :bricks: :memo: set up the new architecture and adding the new coding style documentation ([a68ca59](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a68ca59bb1c51928ba6178ae57e10dcfb4f6bbef))
+* **app:** :recycle: change http request by dio, add blocs for pages movies details ([4a75e5e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/4a75e5e6b7ee0da13bfdbc566b09dab77a9f25d5))
+* **app:** :recycle: change loading errors ([8c2910b](https://github.com/EIP-GetOut/GETOUT-Platform/commit/8c2910b7a61bf87cc5fa516f1ceedaf8dbc0d536))
+* **app:** :recycle: change movie request with http instead of http package ([5540ed7](https://github.com/EIP-GetOut/GETOUT-Platform/commit/5540ed7eead4a06a2d0d4f329981a277aecd5f8f))
+* **app:** :recycle: fix errors due to scaffold and expanded size ([474883b](https://github.com/EIP-GetOut/GETOUT-Platform/commit/474883b1007e69caac5124c8bf5c7e446bdc629b))
+* **app:** :recycle: Start to refactor dashboard with implementing bloc, not works yet ([7b703a8](https://github.com/EIP-GetOut/GETOUT-Platform/commit/7b703a83f277f3fab9f223288b59dd922f65c4c5))
+* **app:** :recycle: ternary to simple conditional branching, add headers for all files, and sort imports ([88e981f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/88e981f092f7a2f72e6cd9a9afa3dad211247e0f))
+* **app:** :recycle: transform book part with bloc package and change genres generate with random by those selected in forms ([a69878f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a69878ff29af56aed79c23900b202c77c671669b))
+* **CICD:** :truck: properly renamed github actions ([7a7ba38](https://github.com/EIP-GetOut/GETOUT-Platform/commit/7a7ba38829690878d59210c474904b65f4d4ddb4))
+
 ### [0.2.6-test](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.2.5-test...v0.2.6-test) (2023-06-29)
 
 ### [0.2.4](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.2.3...v0.2.4) (2023-06-29)
