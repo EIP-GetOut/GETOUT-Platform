@@ -1,9 +1,11 @@
-name: Flutter Build and Release
+name: Frontend unit tests
 
 on:
   push:
     branches:
-      - prod
+      - '*'
+    paths-ignore:
+      - 'prod/**'
 
 defaults:
   run:
@@ -29,16 +31,5 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Build APK
-        run: flutter build apk
-
-      - name: Artifact Upload
-        uses: actions/upload-artifact@v2
-        with:
-          name: app-release.apk
-          path: app/build/app/outputs/flutter-apk/app-release.apk
-
-      # - name: Upload APK to Releases
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     files: app/build/app/outputs/flutter-apk/app-release.apk
+      - name: run tests
+        run: flutter test
