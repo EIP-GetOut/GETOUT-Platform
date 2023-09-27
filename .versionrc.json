@@ -1,0 +1,17 @@
+{
+  "types": [
+    {"type": "feat", "section": "Features"},
+    {"type": "fix", "section": "Bug Fixes"},
+    {"type": "chore", "hidden": true},
+    {"type": "docs", "hidden": true},
+    {"type": "style", "section": "UI Updates"},
+    {"type": "refactor", "section": "Refactors"},
+    {"type": "perf", "hidden": true},
+    {"type": "test", "hidden": true}
+  ],
+  "preMajor": true,
+  "skip": {
+    "commit": true,
+    "tag": true
+  }
+}
