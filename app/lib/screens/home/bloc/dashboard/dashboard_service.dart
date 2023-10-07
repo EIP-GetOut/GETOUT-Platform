@@ -31,7 +31,7 @@ class DashboardService {
 
     final dio = Dio();
     final response = await dio.get(
-        'http://${api_constants.rootApiPath}${api_constants.generateMoviesApiPath}?with_genres=$withGenres&include_adult=${request.includeAdult.toString()}',
+        '${api_constants.rootApiPath}${api_constants.generateMoviesApiPath}?with_genres=$withGenres&include_adult=${request.includeAdult.toString()}',
         options: Options(headers: {'Content-Type': 'application/json'}));
 
     if (response.statusCode != HttpStatus.OK) {
@@ -58,7 +58,7 @@ class DashboardService {
 
     final dio = Dio();
     final response = await dio.get(
-        'http://${api_constants.rootApiPath}${api_constants.generateMoviesApiPath}?with_genres=$withGenres&include_adult=${request.includeAdult.toString()}',
+        '${api_constants.rootApiPath}${api_constants.generateMoviesApiPath}?with_genres=$withGenres&include_adult=${request.includeAdult.toString()}',
         options: Options(headers: {'Content-Type': 'application/json'}));
 
     if (response.statusCode != HttpStatus.OK) {
