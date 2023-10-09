@@ -53,4 +53,4 @@ jobs:
           files: |
             ./app/build/app/outputs/flutter-apk/app-release.apk
           tag_name: ${{ steps.get_version.outputs.version }}
-          token: ${{ secrets.REPO_TOKEN }}
+          token: ${{ secrets.RELEASE_GA_TOKEN }}
