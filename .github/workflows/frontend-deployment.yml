@@ -1,9 +1,7 @@
 name: Frontend deployment
 
 on:
-  push:
-    branches:
-      - prod
+  workflow_dispatch: # This event allows you to manually trigger the workflow
 
 defaults:
   run:
@@ -38,7 +36,21 @@ jobs:
           name: app-release.apk
           path: app/build/app/outputs/flutter-apk/app-release.apk
 
-      # - name: Upload APK to Releases
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     files: app/build/app/outputs/flutter-apk/app-release.apk
+      - name: Read Release Version
+        id: get_version
+        run: |
+          # Read the release version from a text file
+          release_version=$(cat release_version.txt)
+          echo "::set-output name=version::$release_version"
+          shell: bash
+      
+      - name: display version
+        run: echo ${{ steps.get_version.outputs.version }}
+        
+      - name: create release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ./app/build/app/outputs/flutter-apk/app-release.apk
+          tag_name: ${{ steps.get_version.outputs.version }}
+          token: ${{ secrets.REPO_TOKEN }}
