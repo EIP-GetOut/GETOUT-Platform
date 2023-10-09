@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.8](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.2.7...v0.2.8) (2023-10-09)
+
+
+### Features
+
+* **backend:** :sparkles: environment type safety and check of presence of variables ([3f752b9](https://github.com/EIP-GetOut/GETOUT-Platform/commit/3f752b902fadbf54ac080a31d104513c84eb4aad))
+
+
+### Bug Fixes
+
+* **app:** :wheelchair: when build in release, connection is made with the new back end prod link ([26f314e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/26f314ed81b4cca416a7e4c1a9baab4c40fee21e))
+* **CICD:** :sparkles: adapt secret name to be more explicit ([bc14cc0](https://github.com/EIP-GetOut/GETOUT-Platform/commit/bc14cc02743305fc7eea5416eb7d30edee220997))
+* **CICD:** :sparkles: can now create release of the apk via github actions ([0a56a45](https://github.com/EIP-GetOut/GETOUT-Platform/commit/0a56a455a5757e9c6248aced802939c2b27a3141))
+
 ### [0.2.7](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.2.6-test...v0.2.7) (2023-09-27)
 
 
