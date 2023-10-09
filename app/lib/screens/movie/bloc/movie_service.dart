@@ -18,7 +18,7 @@ class MovieService {
     final dio = Dio();
 
     final response = await dio.get(
-        'http://${api_constants.rootApiPath}${api_constants.getInfoMovieApiPath}/${request.id}',
+        '${api_constants.rootApiPath}${api_constants.getInfoMovieApiPath}/${request.id}',
         options: Options(headers: {'Content-Type': 'application/json'}));
     try {
       if (response.statusCode != InfoMovieResponse.success) {

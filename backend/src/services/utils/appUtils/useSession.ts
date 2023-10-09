@@ -33,7 +33,7 @@ function useSession (app: Application): any {
   const redisStore = new RedisStore({ client: redisClient })
   const sess: SessionOptions = {
     store: redisStore,
-    secret: process.env.SESSION_SECRET!,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {

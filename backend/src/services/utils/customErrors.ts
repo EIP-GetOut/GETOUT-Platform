@@ -10,11 +10,11 @@ import { StatusCodes } from 'http-status-codes'
 class AppError extends Error {
   constructor (message?: string, status?: StatusCodes) {
     super(message ?? 'Internal Server error.')
+    this.status = status ?? StatusCodes.INTERNAL_SERVER_ERROR
     this.name = this.constructor.name
-    this.status = status ?? this.status
   }
 
-  status: StatusCodes = StatusCodes.INTERNAL_SERVER_ERROR
+  status: StatusCodes
 }
 
 class AccountAlreadyExistError extends AppError {
