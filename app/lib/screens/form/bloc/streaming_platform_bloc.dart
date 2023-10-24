@@ -4,7 +4,6 @@ class StreamingPlatformBloc
     extends Bloc<StreamingPlatformEvent, StreamingPlatformState> {
   StreamingPlatformBloc() : super(StreamingPlatformInitialState());
 
-  @override
   Stream<StreamingPlatformState> mapEventToState(
       StreamingPlatformEvent event) async* {
     if (event is StreamingPlatformNextButtonPressed) {

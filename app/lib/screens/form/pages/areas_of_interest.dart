@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getout/screens/form/bloc/literary_genre_bloc.dart';
 import 'package:getout/screens/form/pages/literary_genre.dart';
 import 'package:getout/screens/form/widgets/check_box_list_widget_interest_areas.dart';
 import 'package:getout/screens/form/widgets/four_point.dart';
 
-// Importez le bloc que vous avez créé
 import 'package:getout/screens/form/bloc/areas_of_interest_bloc.dart';
 
 class AreasOfInterest extends StatelessWidget {

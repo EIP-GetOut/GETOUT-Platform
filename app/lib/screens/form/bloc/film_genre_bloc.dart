@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class FilmGenreBloc extends Bloc<FilmGenreEvent, FilmGenreState> {
   FilmGenreBloc() : super(FilmGenreInitialState());
 
-  @override
   Stream<FilmGenreState> mapEventToState(FilmGenreEvent event) async* {
     if (event is FilmGenreNextButtonPressed) {
       yield FilmGenreLoadedState();

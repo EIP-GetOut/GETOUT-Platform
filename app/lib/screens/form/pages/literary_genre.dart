@@ -4,7 +4,6 @@ import 'package:getout/screens/form/bloc/literary_genre_bloc.dart';
 import 'package:getout/screens/form/pages/film_genre.dart';
 import 'package:getout/screens/form/widgets/check_box_literary_genre.dart';
 import 'package:getout/screens/form/widgets/four_point.dart';
-import 'package:getout/screens/form/bloc/literary_genre_bloc.dart';
 
 class LiteraryGenre extends StatelessWidget {
   const LiteraryGenre({super.key});

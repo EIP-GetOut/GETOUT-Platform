@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:getout/screens/connection/pages/login.dart';
 import 'package:getout/screens/settings/pages/edit_password.dart';
-import 'package:getout/screens/connection/widgets/cookieJar.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -18,8 +17,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  final CookieManager authService = CookieManager();
-
   @override
   bool isActivated = false;
   @override
@@ -249,15 +246,10 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Text('Déconection',
                     style: Theme.of(context).textTheme.bodyLarge),
                 onPressed: () {
-                  authService.deleteAllCookies().then(
-                    (_) {
-                      authService.createCookie();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ConnectionPage()),
-                      );
-                    },
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ConnectionPage()),
                   );
                 },
               ),

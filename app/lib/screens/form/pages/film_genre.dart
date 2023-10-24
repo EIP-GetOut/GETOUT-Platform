@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/screens/form/bloc/film_genre_bloc.dart';
-import 'package:getout/screens/form/bloc/streaming_platform_bloc.dart';
 import 'package:getout/screens/form/pages/streaming_platform.dart';
 import 'package:getout/screens/form/widgets/check_box_film_genre.dart';
 import 'package:getout/screens/form/widgets/four_point.dart';

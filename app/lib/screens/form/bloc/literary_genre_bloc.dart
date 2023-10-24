@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class LiteraryGenreBloc extends Bloc<LiteraryGenreEvent, LiteraryGenreState> {
   LiteraryGenreBloc() : super(LiteraryGenreInitialState());
 
-  @override
   Stream<LiteraryGenreState> mapEventToState(LiteraryGenreEvent event) async* {
     if (event is LiteraryGenreNextButtonPressed) {
       yield LiteraryGenreLoadedState();

@@ -4,7 +4,6 @@ class AreasOfInterestBloc
     extends Bloc<AreasOfInterestEvent, AreasOfInterestState> {
   AreasOfInterestBloc() : super(AreasOfInterestInitialState());
 
-  @override
   Stream<AreasOfInterestState> mapEventToState(
       AreasOfInterestEvent event) async* {
     if (event is AreasOfInterestNextButtonPressed) {
