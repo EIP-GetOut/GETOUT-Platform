@@ -2,7 +2,7 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Wrote by Firstname Lastname <firstname.lastname@domain.com>
+** Wrote by Théo de Boysson <theo.de-boysson@epitech.eu>
 */
 
 import { MovieDb, type MovieResponse } from 'moviedb-promise'

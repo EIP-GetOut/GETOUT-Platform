@@ -6,12 +6,13 @@
 */
 
 import RedisStore from 'connect-redis'
+import { type UUID } from 'crypto'
 import { type Application } from 'express'
 import session, { type SessionOptions } from 'express-session'
 import { createClient } from 'redis'
 
 interface SessionAccount {
-  id: string
+  id: UUID
   email: string
   firstName?: string
   lastName?: string
@@ -43,7 +44,9 @@ function useSession (app: Application): any {
   }
   if (process.env.NODE_ENV === 'production') {
     app.set('trust proxy', 1)
-    sess.cookie!.secure = true
+    if (sess.cookie != null) {
+      sess.cookie.secure = true
+    }
   }
 
   app.use(session(sess))

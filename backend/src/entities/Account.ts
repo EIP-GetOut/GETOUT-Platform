@@ -5,6 +5,7 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
+import { UUID } from 'crypto'
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -16,7 +17,7 @@ import {
 @Entity()
 export class Account {
   @PrimaryGeneratedColumn('uuid')
-    id!: string
+    id!: UUID
 
   @Column({ length: 32 })
     email!: string
@@ -28,13 +29,13 @@ export class Account {
     password!: string
 
   @Column('uuid', { nullable: true, default: null })
-    passwordResetToken?: string
+    passwordResetToken: string | null = null
 
-  @Column({ nullable: true, default: null })
-    passwordResetExpiration?: Date
+  @Column('timestamp', { nullable: true, default: null })
+    passwordResetExpiration: Date | null = null
 
-  @Column('bigint', { nullable: true, default: null })
-    passwordResetPassword?: bigint
+  @Column('integer', { nullable: true, default: null })
+    passwordResetPassword: number | null = null
 
   @Column({ length: 32, nullable: true })
     firstName?: string
