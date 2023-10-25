@@ -13,7 +13,13 @@ import 'package:getout/constants/theme.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:getout/screens/home/bloc/dashboard/dashboard_provider.dart';
+import 'package:getout/screens/connection/login/pages/login.dart';
+import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
+import 'package:getout/screens/connection/login/bloc/login_service.dart';
+import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
+import 'package:getout/screens/connection/register/bloc/register_service.dart';
+import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_bloc.dart';
+import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_service.dart';
 
 Map<int, Color> colorMap = {
   50: const Color.fromRGBO(213, 86, 65, .1),
@@ -41,6 +47,9 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => LocaleBloc()),
+        BlocProvider(create: (_) => LoginBloc(authRepo: LoginService())),
+        BlocProvider(create: (_) => RegisterBloc(authRepo: RegisterService())),
+        BlocProvider(create: (_) => ForgotPasswordBloc(authRepo: ForgotPasswordService())),
       ],
       child: const MyAppView(),
     );
@@ -66,7 +75,11 @@ class MyAppView extends StatelessWidget {
           supportedLocales: AppLocalizations.supportedLocales,
           theme: getOutTheme,
           // TODO : change by welcome page
-          home: Dashboard());
+          home: RepositoryProvider(
+            create: (context) => LoginService(),
+            child: LoginScreen(),
+          ),
+      );
     });
   }
 }

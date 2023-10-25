@@ -9,20 +9,16 @@ import { type Response } from 'node-fetch'
 
 import { ApiError, AppError } from '@services/utils/customErrors'
 
+import { type BookDTO } from '@routes/book.dto'
+
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 const fetch = async (...args: Parameters<typeof import('node-fetch')['default']>): Promise<Response> => await import('node-fetch').then(async ({ default: fetch }) => await fetch(...args))
 
 const key = 'AIzaSyDDxf1nRkG6eMcufxYp2LHIWgA-2MEMlK8'
 
-function encodeQueryData (data: any): any {
-  const ret: any[] = []
-  for (const d in data) { ret.push(encodeURIComponent(data[d])) }
-  return ret.join('&')
-}
-
-function getBook (params: any): any {
-  const query = encodeQueryData(params)
-  return (fetch(`https://www.googleapis.com/books/v1/volumes/${query}?key=${key}`)).then(async (res) => {
+async function getBook (params: BookDTO): Promise<Response> {
+  const query = params.id + '&'
+  return await (fetch(`https://www.googleapis.com/books/v1/volumes/${query}?key=${key}`)).then(async (res) => {
     if (!res.ok) {
       throw new ApiError(res.statusText)
     }

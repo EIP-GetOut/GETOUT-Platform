@@ -14,7 +14,8 @@ class SliderWidget extends StatefulWidget {
   final double initialValue;
   final ValueChanged<double> onChanged;
 
-  const SliderWidget({super.key,
+  const SliderWidget({
+    super.key,
     this.minValue = 0.0,
     this.maxValue = 1.0,
     this.divisions = 10,

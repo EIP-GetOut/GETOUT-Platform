@@ -12,7 +12,7 @@ import logger from '@middlewares/logging'
 
 import swaggerSpec from '@config/swaggerConfig'
 
-export function generateSwaggerDoc (outputFilePath): void {
+export function generateSwaggerDoc (outputFilePath: string): void {
   const yamlString = yaml.stringify(swaggerSpec)
 
   fs.writeFile(outputFilePath, yamlString, (err) => {

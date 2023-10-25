@@ -8,7 +8,7 @@
 import 'package:getout/models/connection/forget_password_change.dart';
 import 'package:flutter/material.dart';
 import 'package:getout/screens/connection/widgets/fields.dart';
-import 'package:getout/screens/connection/pages/login.dart';
+import 'package:getout/screens/connection/login/pages/login.dart';
 import 'package:getout/services/requests/requests_service.dart';
 
 class ForgetPasswordChangePage extends StatefulWidget {
@@ -41,7 +41,7 @@ class _ForgetPasswordChangePageState extends State<ForgetPasswordChangePage> {
         .then((ForgetPasswordChangeResponseInfo res) {
       if (res.statusCode == ForgetPasswordChangeResponseInfo.success) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const ConnectionPage()));
+            context, MaterialPageRoute(builder: (context) => LoginScreen()));
       }
       setState(() {
         isLoading = false;

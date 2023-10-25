@@ -11,14 +11,13 @@ const String rootApiPath = (kDebugMode)
     : 'https://api.eip-getout.me';
 
 // ACCOUNT API PATH
-const String loginApiPath = '/account/login';
-const String logoutApiPath = '/account/logout';
-const String signupApiPath = '/account/signup';
-const String oauthApiPath = '/account/oauth';
-const String resetPasswordApiPath = '/account/reset-password'; // <
-const String forgetPasswordCodeApiPath = '/account/forget-password-code'; // <
-const String forgetPasswordChangeApiPath =
-    '/account/forget-password-change'; // <
+const String loginPath = '/account/login';
+const String logoutPath = '/account/logout';
+const String registerPath = '/account/signup';
+const String oauthPath = '/account/oauth';
+const String resetPasswordPath = '/account/reset-password';
+const String forgetPasswordCodePath = '/account/forget-password-code';
+const String forgetPasswordChangePath = '/account/reset-password/send-email';
 const String getSessionApiPath = '/session';
 // GENERATE THINGS API PATH
 const String generateMoviesApiPath = '/generate-movies';

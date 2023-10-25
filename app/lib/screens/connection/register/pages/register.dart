@@ -5,23 +5,142 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-import 'package:getout/models/connection/create_account.dart';
 import 'package:flutter/material.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:dio/dio.dart';
+
+import 'package:getout/screens/connection/register/widgets/fields.dart';
+import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
+import 'package:getout/screens/form/pages/social_media_spent_time.dart';
+
+/*
+import 'package:getout/models/connection/create_account.dart';
 import 'package:getout/screens/form/pages/welcome.dart';
-import 'package:getout/screens/connection/widgets/fields.dart';
 import 'package:getout/services/requests/requests_service.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/widgets/load.dart';
+*/
+class RegisterScreen extends StatelessWidget {
+  RegisterScreen({Key? key}) : super(key: key);
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  void _showSnackBar(final BuildContext context, final String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: BlocListener<RegisterBloc, RegisterState>(
+            listenWhen: (previous, current) =>
+            previous.formStatus != current.formStatus,
+            listener: (context, state) {
+              final formStatus = state.formStatus;
+
+              if (formStatus is SubmissionFailed) {
+                /// TODO: Handle more errors (like no internet connection)
+                if (formStatus.exception is DioException) {
+                  _showSnackBar(context, 'Une erreur serveur s\'est produite veuillez reesayer plus tard');
+                } else {
+                  _showSnackBar(context, 'Une erreur s\'est produite, veuillez reesayer plus tard');
+                }
+              }
+              if (formStatus is SubmissionSuccess) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                        const SocialMediaSpentTime()));
+              }
+            },
+            child: Scaffold(
+              resizeToAvoidBottomInset: true,
+              appBar: AppBar(
+                iconTheme: const IconThemeData(
+                  color: Colors.black, //change your color here
+                ),
+                centerTitle: true,
+                titleSpacing: 0,
+                title: Text(
+                    'VOTRE PROFIL',
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .titleSmall),
+                leading: const BackButton(),
+                backgroundColor: Colors.white10,
+                elevation: 0,
+              ),
+              body: SingleChildScrollView(
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 8),
+                              child: LastNameField()),
+                          const Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 8),
+                              child: FirstNameField()),
+                          Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 8),
+                              child: BornDateField()),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 8),
+                            child: EmailField(),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 8),
+                            child: PasswordField(),
+                          ),
+                          const SizedBox(
+                            height: 70,
+                          ),
+                          RegisterButton(formKey: _formKey),
+                        ]),
+                  )),
+            )
+        )
+    );
+  }
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-  /// TODO transform controllers and keys into a list
+class RegisterButton extends StatelessWidget {
+  const RegisterButton({Key? key, required this.formKey}) : super(key: key);
+
+  final GlobalKey<FormState> formKey;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<RegisterBloc, RegisterState>(
+      builder: (context, state) {
+        return state.formStatus is FormSubmitting
+            ? const CircularProgressIndicator()
+            : ElevatedButton(
+            onPressed: () {
+              if (formKey.currentState!.validate()) {
+                context.read<RegisterBloc>().add(RegisterSubmitted());
+              }
+            },
+            child: const Text('S\'inscrire')//SocialMediaSpentTime(),
+        );
+      },
+    );
+  }
+}
+
+
+/*class _RegisterPageState extends State<RegisterPage> {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController firstNameController = TextEditingController();
   TextEditingController bornDateController = TextEditingController();
@@ -146,4 +265,4 @@ class _RegisterPageState extends State<RegisterPage> {
                   fontSize: 19,
                 ))));
   }
-}
+}*/

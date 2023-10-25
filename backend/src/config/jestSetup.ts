@@ -2,11 +2,12 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Wrote by Firstname Lastname <firstname.lastname@domain.com>
+** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
 import { afterAll, beforeAll } from '@jest/globals'
 import express, { type Application } from 'express'
+import { type RedisClientType } from 'redis'
 
 import { useRoutes, useMiddlewares, useSession } from '@services/utils/appUtils/appUtils'
 
@@ -14,7 +15,7 @@ import { appDataSource } from '@config/dataSource'
 
 let app: Application
 
-let redisClient: any
+let redisClient: RedisClientType
 
 beforeAll(async () => {
   app = express()

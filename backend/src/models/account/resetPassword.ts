@@ -14,8 +14,8 @@ import { Account } from '@entities/Account'
 
 import { appDataSource } from '@config/dataSource'
 
-async function changeAccountPassword (accountId, oldPassword, newPassword): Promise<StatusCodes> {
-  return await findEntity<Account>(Account, { id: accountId }).then((account: Account | null): any => {
+async function changeAccountPassword (accountId: string, oldPassword: string, newPassword: string): Promise<StatusCodes> {
+  return await findEntity<Account>(Account, { id: accountId }).then((account: Account | null): StatusCodes | Promise <StatusCodes> => {
     if (account == null) {
       return StatusCodes.NOT_FOUND
     }

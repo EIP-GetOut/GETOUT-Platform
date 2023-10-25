@@ -2,7 +2,7 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Wrote by Firstname Lastname <firstname.lastname@domain.com>
+** Wrote by Théo de Boysson <theo.de-boysson@epitech.eu>
 */
 
 import { type Request, type Response, Router } from 'express'
@@ -58,8 +58,10 @@ const router = Router()
  *         description: Internal server error.
  */
 router.get('/movie/:id', validate, logApiRequest, (req: Request, res: Response) => {
-  logger.info(req.params)
-  getDetail(req.params).then((movieObtained: MovieResponse | undefined) => {
+  const params = {
+    id: req.params.id
+  }
+  getDetail(params).then((movieObtained: MovieResponse | undefined) => {
     if (movieObtained == null) {
       throw new AppError()
     }

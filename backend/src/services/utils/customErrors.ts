@@ -40,11 +40,25 @@ class BcryptError extends AppError {}
 
 class DbError extends AppError {}
 
+class AuthenticationError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message, status ?? StatusCodes.UNAUTHORIZED)
+  }
+}
+
 class MovieDbError extends AppError {}
+
+class NodeMailerError extends AppError {}
 
 class NotLoggedInError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
     super(message ?? 'User is not logged in.', status ?? StatusCodes.BAD_REQUEST)
+  }
+}
+
+class SamePasswordError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Can\'t reset password with an old password.', status ?? StatusCodes.BAD_REQUEST)
   }
 }
 
@@ -54,8 +68,11 @@ export {
   AlreadyLoggedInError,
   ApiError,
   AppError,
+  AuthenticationError,
   BcryptError,
   DbError,
   MovieDbError,
-  NotLoggedInError
+  NodeMailerError,
+  NotLoggedInError,
+  SamePasswordError
 }

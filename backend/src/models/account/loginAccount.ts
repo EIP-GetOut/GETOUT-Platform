@@ -16,6 +16,8 @@ import { findEntity } from '@models/getObjects'
 
 import { Account } from '@entities/Account'
 
+import { type oauthAccount } from '@routes/account/oauth/oauthAccount'
+
 import { type accountRepositoryRequest } from './account'
 
 function createSession (sess: Session & Partial<SessionData>, account: Account): void {
@@ -33,10 +35,10 @@ function createSession (sess: Session & Partial<SessionData>, account: Account):
   }
 }
 
-async function loginWithGoogle (account, sess): Promise<StatusCodes> {
+async function loginWithGoogle (account: oauthAccount, sess: Session): Promise<StatusCodes> {
   return await authentifyWithGoogle(account).then(([isOk]) => {
     if (isOk) {
-      createSession(sess, account)
+    //   createSession(sess, account)
       return StatusCodes.OK
     }
     return StatusCodes.FORBIDDEN
@@ -46,7 +48,7 @@ async function loginWithGoogle (account, sess): Promise<StatusCodes> {
 }
 
 async function loginAccount (accountToLogin: accountRepositoryRequest, sess: Session): Promise<StatusCodes> {
-  return await findEntity<Account>(Account, { email: accountToLogin.email }).then((foundAccount: Account | null): any => {
+  return await findEntity<Account>(Account, { email: accountToLogin.email }).then((foundAccount: Account | null): StatusCodes | Promise<StatusCodes.FORBIDDEN | StatusCodes.OK> => {
     if (foundAccount == null) {
       throw new AccountDoesNotExistError()
     }

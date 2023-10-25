@@ -21,7 +21,7 @@ import { type accountRepositoryRequest } from './account'
 
 async function createNewAccountObject (account: accountRepositoryRequest): Promise<accountRepositoryRequest> {
   let bornDate: Date = account.bornDate
-  let saltPassword
+  let saltPassword: string
 
   return await bcrypt.genSalt().then(async (salt: string) => {
     saltPassword = salt
@@ -47,7 +47,7 @@ async function createNewAccountObject (account: accountRepositoryRequest): Promi
 async function registerAccount (account: accountRepositoryRequest): Promise<Account> {
   const accountRepository = appDataSource.getRepository(Account)
 
-  return await findEntity<Account>(Account, { email: account.email }).then((foundAccount: Account | null): any => {
+  return await findEntity<Account>(Account, { email: account.email }).then((foundAccount: Account | null): Account | Promise<accountRepositoryRequest & Account> => {
     if (foundAccount !== null) {
       throw new AccountAlreadyExistError()
     }

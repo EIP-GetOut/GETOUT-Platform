@@ -16,9 +16,6 @@ import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 const router = Router()
 
-const rules = [
-]
-
 /**
  * @swagger
  * /account/logout:
@@ -31,7 +28,7 @@ const rules = [
  *       '500':
  *         description: Internal server error.
  */
-router.post('/account/logout', rules, validate, logApiRequest, (req: Request, res: Response) => {
+router.post('/account/logout', validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session?.account?.id == null) {
     handleErrorOnRoute(res)(new NotLoggedInError())
     return

@@ -16,7 +16,9 @@ import validate from '@services/middlewares/validator'
 import { AppError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
+import { type BooksResults, type BookResult } from '@models/book-types'
 import { getBooks } from '@models/books'
+import { type books } from '@models/books.interface'
 
 const router = Router()
 
@@ -94,24 +96,24 @@ const rulesGet = [
  *       '500':
  *         description: Internal server error.
  */
+
 router.get('/generate-books', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
-  // TODO create BooksResult interface
-  return getBooks(req.query).then((booksObtained: any | undefined) => {
+  getBooks(req.query).then((booksObtained: BooksResults | undefined): void => {
     logger.info(JSON.stringify(booksObtained, null, 2))
     if (booksObtained == null) {
       throw new AppError()
     }
     booksObtained.items.length = 5
-    const books: any[] = []
-    booksObtained.items.forEach((book: any) => {
+    const books: books[] = []
+    booksObtained.items.forEach((book: BookResult) => {
       books.push({
-        title: book.volumeInfo.title,
+        title: book?.volumeInfo?.title,
         poster: book.volumeInfo?.imageLinks?.thumbnail != null ? book.volumeInfo.imageLinks.thumbnail : null,
         id: book.id,
         overview: book.volumeInfo?.description != null ? book.volumeInfo.description : 'No informations.'
       })
     })
-    return res.status(StatusCodes.OK).json({ books })
+    res.status(StatusCodes.OK).json({ books })
   }).catch(handleErrorOnRoute(res))
 })
 
