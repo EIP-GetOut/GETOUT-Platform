@@ -20,8 +20,7 @@ Content-Type: application/json
     "password": "123456",
     "firstName": "Chaytruite",
     "lastName": "GGWP",
-    "bornDate": "07/06/2001",
-    "salt": "sdjqshjodijaoz"
+    "bornDate": "07/06/2001"
 }
 
 ###

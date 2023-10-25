@@ -11,6 +11,8 @@ import { ApiError, AppError } from '@services/utils/customErrors'
 
 import { type BooksDTO } from '@routes/books.dto'
 
+import { type BooksResults } from './book-types'
+
 const fetch = async (args: any): Promise<Response> => await import('node-fetch').then(async ({ default: fetch }) => await fetch(args))
 
 const key = 'AIzaSyDDxf1nRkG6eMcufxYp2LHIWgA-2MEMlK8'
@@ -21,7 +23,7 @@ function encodeQueryData (data: any): string {
   return ret.join('&')
 }
 
-async function getBooks (params: BooksDTO): Promise<Response> {
+async function getBooks (params: BooksDTO): Promise<BooksResults> {
   const query = encodeQueryData(params)
   return await (fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${key}`)).then(async (res) => {
     if (!res.ok) {

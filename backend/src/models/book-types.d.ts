@@ -55,3 +55,9 @@ export interface BookResult {
   saleInfo?: saleInfo
   accessInfo?: accessInfo
 }
+
+export interface BooksResults {
+  kind: string
+  totalItems: number
+  items: BookResult []
+}
