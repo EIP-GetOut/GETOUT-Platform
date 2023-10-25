@@ -17,7 +17,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  @override
   bool isActivated = false;
   @override
   Widget build(BuildContext context) {
