@@ -6,7 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/screens/connection/pages/login.dart';
+import 'package:getout/screens/connection/login/pages/login.dart';
 import 'package:getout/screens/settings/pages/edit_password.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -248,7 +248,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const ConnectionPage()),
+                        builder: (context) => LoginScreen()),
                   );
                 },
               ),

@@ -22,7 +22,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter/foundation.dart';
 import 'package:getout/constants/http_status.dart';
-import 'package:getout/constants/api_path.dart' as api_constants;
+import 'package:getout/constants/api_path.dart' as api;
 
 String formatWithGenresParameter(List<int> genres) {
   String withGenres = '';
@@ -43,12 +43,12 @@ class RequestsService {
   //   String withGenres = formatWithGenresParameter(request.genres);
   //   final Uri url = (kDebugMode)
   //       ? Uri.http(
-  //           api_constants.rootApiPath, api_constants.generateMoviesApiPath, {
+  //           api.rootApiPath, api.generateMoviesApiPath, {
   //           'with_genres': withGenres,
   //           'include_adult': request.includeAdult.toString()
   //         })
   //       : Uri.http(
-  //           api_constants.rootApiPath, api_constants.generateMoviesApiPath, {
+  //           api.rootApiPath, api.generateMoviesApiPath, {
   //           'with_genres': withGenres,
   //           'include_adult': request.includeAdult.toString()
   //         });
@@ -84,10 +84,10 @@ class RequestsService {
       'subject': request.genres[0].toString(),
     };
     final Uri url = (kDebugMode)
-        ? Uri.http(api_constants.rootApiPath,
-            api_constants.generateBooksApiPath, queryParameters)
-        : Uri.http(api_constants.rootApiPath,
-            api_constants.generateBooksApiPath, queryParameters);
+        ? Uri.http(api.rootApiPath,
+            api.generateBooksApiPath, queryParameters)
+        : Uri.http(api.rootApiPath,
+            api.generateBooksApiPath, queryParameters);
 
     return http.get(url).then((response) {
       if (response.statusCode != BookPreview.success) {
@@ -119,10 +119,10 @@ class RequestsService {
     InfoMovieResponse result =
         InfoMovieResponse(statusCode: HttpStatus.APP_ERROR);
     final Uri url = (kDebugMode)
-        ? Uri.http(api_constants.rootApiPath,
-            '${api_constants.getInfoMovieApiPath}/${request.id}')
-        : Uri.http(api_constants.rootApiPath,
-            '${api_constants.getInfoMovieApiPath}/${request.id}');
+        ? Uri.http(api.rootApiPath,
+            '${api.getInfoMovieApiPath}/${request.id}')
+        : Uri.http(api.rootApiPath,
+            '${api.getInfoMovieApiPath}/${request.id}');
     final Map<String, String> header = {'Content-Type': 'application/json'};
 
     try {
@@ -159,8 +159,8 @@ class RequestsService {
 
   Future<LoginResponseInfo> login(LoginRequest request) async {
     final Uri url = (kDebugMode)
-        ? Uri.http(api_constants.rootApiPath, api_constants.loginApiPath)
-        : Uri.http(api_constants.rootApiPath, api_constants.loginApiPath);
+        ? Uri.http(api.rootApiPath, api.loginPath)
+        : Uri.http(api.rootApiPath, api.loginPath);
     final Map<String, String> header = {'Content-Type': 'application/json'};
     final String body =
         jsonEncode({'email': request.email, 'password': request.password});
@@ -201,7 +201,7 @@ class RequestsService {
   Future<ForgetPasswordCodeResponseInfo> forgetPasswordCode(
       ForgetPasswordCodeRequest request) async {
     final Uri url = Uri.http(
-        api_constants.rootApiPath, api_constants.forgetPasswordCodeApiPath);
+        api.rootApiPath, api.forgetPasswordCodePath);
     final Map<String, String> header = {'Content-Type': 'application/json'};
     final String body = jsonEncode({
       'email': request.email,
@@ -238,7 +238,7 @@ class RequestsService {
   Future<ForgetPasswordChangeResponseInfo> forgetPasswordChange(
       ForgetPasswordChangeRequest request) async {
     final Uri url = Uri.http(
-        api_constants.rootApiPath, api_constants.forgetPasswordChangeApiPath);
+        api.rootApiPath, api.forgetPasswordChangePath);
     final Map<String, String> header = {'Content-Type': 'application/json'};
     final String body = jsonEncode({
       'email': request.email,
@@ -282,7 +282,7 @@ class RequestsService {
   Future<SettingsEditPasswordResponseInfo> settingsEditPassword(
       SettingsEditPasswordRequest request) async {
     final Uri url =
-        Uri.http(api_constants.rootApiPath, api_constants.signupApiPath);
+        Uri.http(api.rootApiPath, api.registerPath);
     final Map<String, String> header = {'Content-Type': 'application/json'};
     final String body = jsonEncode({
       'email': request.email,
@@ -325,7 +325,7 @@ class RequestsService {
   ///
   Future<OauthResponseInfo> oauth(OauthRequest request) async {
     final Uri url =
-        Uri.http(api_constants.rootApiPath, api_constants.oauthApiPath);
+        Uri.http(api.rootApiPath, api.oauthPath);
     final Map<String, String> header = {'Content-Type': 'application/json'};
     final String body = jsonEncode({
       'email': request.email,
@@ -356,8 +356,8 @@ class RequestsService {
     AccountResponseInfo result =
         AccountResponseInfo(statusCode: HttpStatus.APP_ERROR);
     final Uri url = (kDebugMode)
-        ? Uri.http(api_constants.rootApiPath, api_constants.signupApiPath)
-        : Uri.http(api_constants.rootApiPath, api_constants.signupApiPath);
+        ? Uri.http(api.rootApiPath, api.registerPath)
+        : Uri.http(api.rootApiPath, api.registerPath);
     final Map<String, String> header = {'Content-Type': 'application/json'};
     final String body = jsonEncode({
       'email': request.email,
@@ -396,8 +396,8 @@ class RequestsService {
 
   Future<SessionResponseInfo> session() async {
     final Uri url = (kDebugMode)
-        ? Uri.http(api_constants.rootApiPath, api_constants.getSessionApiPath)
-        : Uri.http(api_constants.rootApiPath, api_constants.getSessionApiPath);
+        ? Uri.http(api.rootApiPath, api.getSessionApiPath)
+        : Uri.http(api.rootApiPath, api.getSessionApiPath);
     final Map<String, String> header = {'Content-Type': 'application/json'};
 
     try {
