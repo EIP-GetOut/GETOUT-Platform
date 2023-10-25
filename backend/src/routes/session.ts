@@ -13,8 +13,6 @@ import validate from '@middlewares/validator'
 
 const router = Router()
 
-const rules = []
-
 /**
  * @swagger
  * /session:
@@ -27,7 +25,7 @@ const rules = []
  *         schema:
  *           type: object
  */
-router.get('/session', rules, validate, logApiRequest, (req: Request, res: Response) => {
+router.get('/session', validate, logApiRequest, (req: Request, res: Response) => {
   res.status(StatusCodes.OK).json(req.session)
 })
 

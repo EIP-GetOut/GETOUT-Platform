@@ -8,10 +8,12 @@
 import { OAuth2Client } from 'google-auth-library'
 import { type Response } from 'node-fetch'
 
+import { type oauthAccount } from '@routes/account/oauth/oauthAccount'
+
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 const fetch = async (...args: Parameters<typeof import('node-fetch')['default']>): Promise<Response> => await import('node-fetch').then(async ({ default: fetch }) => await fetch(...args))
 
-async function authentifyWithGoogle (account): Promise<[boolean, any]> {
+async function authentifyWithGoogle (account: oauthAccount): Promise<[boolean, any]> {
   const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
   return await new Promise((resolve, reject) => {
@@ -27,7 +29,7 @@ async function authentifyWithGoogle (account): Promise<[boolean, any]> {
   })
 }
 
-async function getAccountInfoWithGithubCode (code): Promise< any | null> {
+async function getAccountInfoWithGithubCode (code: string): Promise< any | null> {
   if (code == null) { return await Promise.resolve(null) }
 
   const authorizeUrlGithub = new URL('https://github.com/login/oauth/access_token')

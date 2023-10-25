@@ -58,8 +58,10 @@ const router = Router()
  *         description: Internal server error.
  */
 router.get('/movie/:id', validate, logApiRequest, (req: Request, res: Response) => {
-  logger.info(req.params)
-  getDetail(req.params).then((movieObtained: MovieResponse | undefined) => {
+  const params = {
+    id: req.params.id
+  }
+  getDetail(params).then((movieObtained: MovieResponse | undefined) => {
     if (movieObtained == null) {
       throw new AppError()
     }

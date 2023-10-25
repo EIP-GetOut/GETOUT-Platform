@@ -58,8 +58,7 @@ const router = Router()
  *         description: Internal server error.
  */
 router.get('/book/:id', validate, logApiRequest, (req: Request, res: Response) => {
-  // TODO create BooksResult interface
-  return getBook(req.params).then((bookObtained: any | undefined) => {
+  getBook(req.body).then((bookObtained: any | undefined) => {
     if (bookObtained == null) {
       throw new AppError()
     }

@@ -11,9 +11,11 @@ import logger from '@middlewares/logging'
 
 import { MovieDbError } from '@services/utils/customErrors'
 
+import { type MovieDTO } from '@routes/movie.dto'
+
 const moviedb = new MovieDb('1eec31e851e9ad1b8f3de3ccf39953b7')
 
-async function getDetail (params: any): Promise<MovieResponse | undefined> {
+async function getDetail (params: MovieDTO): Promise<MovieResponse | undefined> {
   return await moviedb.movieInfo(params.id).then((value: MovieResponse) => {
     logger.info(JSON.stringify(value, null, 2))
     return value

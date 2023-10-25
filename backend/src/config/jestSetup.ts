@@ -7,6 +7,7 @@
 
 import { afterAll, beforeAll } from '@jest/globals'
 import express, { type Application } from 'express'
+import { type RedisClientType } from 'redis'
 
 import { useRoutes, useMiddlewares, useSession } from '@services/utils/appUtils/appUtils'
 
@@ -14,7 +15,7 @@ import { appDataSource } from '@config/dataSource'
 
 let app: Application
 
-let redisClient: any
+let redisClient: RedisClientType
 
 beforeAll(async () => {
   app = express()

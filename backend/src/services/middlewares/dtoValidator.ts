@@ -5,28 +5,34 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
+import { plainToClass } from 'class-transformer'
 import { validate, type ValidationError } from 'class-validator'
 import { type Request, type Response, type NextFunction } from 'express'
 
-export const createDtoValidationMiddleware = (DtoClass: any) => {
+function validateDto<T> (type: new () => T): any {
   return async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const dto = Object.assign(new DtoClass(), req.body)
-      const errors: ValidationError[] = await validate(dto)
+    const dtoInstance: T = plainToClass(type, req.body)
+    const dtoObject: object = plainToClass(Object, dtoInstance) // Convert back to plain object
+    const errors: ValidationError[] = await validate(dtoObject)
 
-      if (errors.length > 0) {
-        return res.status(400).json({ errors: formatValidationErrors(errors) })
-      }
-    } catch (error) {
-      console.error('DTO validation error:', error)
-      res.status(500).send('Something went wrong!')
+    if (errors.length > 0) {
+      const validationErrors: any = {} // Initialize as an empty object
+      errors.forEach((error: ValidationError) => {
+        const { property, constraints } = error
+        if (property.length > 0) {
+          validationErrors[property] = Object.values((constraints != null) || {}) // Assign properties to validationErrors
+        }
+      })
+
+      res.status(400).json({
+        message: 'Validation failed',
+        errors: validationErrors
+      })
+    } else {
+      req.body = dtoInstance
+      next()
     }
   }
 }
 
-const formatValidationErrors = (errors: ValidationError[]): any => {
-  return errors.map((error) => {
-    const constraints = Object.values((error.constraints != null) || {})
-    return { property: error.property, constraints }
-  })
-}
+export default validateDto

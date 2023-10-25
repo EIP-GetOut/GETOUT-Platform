@@ -46,6 +46,9 @@ export class Account {
   @Column('date', { nullable: true })
     bornDate?: Date
 
+  @Column('jsonb', { nullable: true, default: () => "'[]'" })
+    preferences?: string[]
+
   @CreateDateColumn()
     createdDate!: Date
 

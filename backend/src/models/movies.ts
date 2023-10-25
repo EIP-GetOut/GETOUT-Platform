@@ -11,9 +11,11 @@ import logger from '@middlewares/logging'
 
 import { MovieDbError } from '@services/utils/customErrors'
 
+import { type MoviesDTO } from '@routes/movies.dto'
+
 const moviedb = new MovieDb('1eec31e851e9ad1b8f3de3ccf39953b7')
 
-async function getMovies (params: any): Promise<MovieResult[] | undefined> {
+async function getMovies (params: MoviesDTO): Promise<MovieResult[] | undefined> {
   const discorverMovieRequest: DiscoverMovieRequest = {
     include_adult: params.include_adult === 'true',
     include_video: params.include_video === 'true',

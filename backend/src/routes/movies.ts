@@ -16,6 +16,7 @@ import { AppError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { getMovies } from '@models/movies'
+import { type movies } from '@models/movies.interface'
 
 const router = Router()
 
@@ -258,7 +259,7 @@ router.get('/generate-movies', rulesGet, validate, logApiRequest, (req: Request,
       throw new AppError()
     }
     moviesObtained.length = 5
-    const movies: any[] = []
+    const movies: movies[] = []
     moviesObtained.forEach(movie => {
       movies.push({
         title: movie.title,
