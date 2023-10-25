@@ -6,7 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
-// import 'package:getout/screens/home/pages/dashboard.dart';
+import 'package:getout/screens/home/bloc/dashboard/dashboard_provider.dart';
 
 class EndForm extends StatelessWidget {
   const EndForm({super.key});
@@ -41,19 +41,19 @@ class EndForm extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            const FractionallySizedBox(
+            FractionallySizedBox(
               widthFactor: 0.9,
-              // child: ElevatedButton(
-              //   style: Theme.of(context).elevatedButtonTheme.style,
-              //   child: Text('Découvrir l\'application',
-              //       style: Theme.of(context).textTheme.bodyLarge),
-              //   // onPressed: () {
-              //   //   Navigator.push(
-              //   //     context,
-              //   //     MaterialPageRoute(builder: (context) => DashboardPage()),
-              //   //   );
-              //   // },
-              // ),
+              child: ElevatedButton(
+                style: Theme.of(context).elevatedButtonTheme.style,
+                child: Text('Découvrir l\'application',
+                    style: Theme.of(context).textTheme.bodyLarge),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Dashboard()),
+                  );
+                },
+              ),
             ),
           ],
         ),
