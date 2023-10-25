@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.2.8...v0.3.0) (2023-10-25)
+
+
+### Features
+
+* **app:** :sparkles: Disconnection buton on the setting menu ([0acbb3e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/0acbb3ecdcef806529828050a7624a66ccaa2fb3))
+* **backend:** :sparkles: new reset password route, and differentiation with the change password route ([e7412ee](https://github.com/EIP-GetOut/GETOUT-Platform/commit/e7412eef3dc9d23781a5904cc95cf18f8c06a0de))
+* **backend:** :sparkles: unit tests and code refacto ([c0b6e77](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c0b6e77a4938451f2863975d2a6530d872760b5f))
+
+
+### Bug Fixes
+
+* **app:** :rotating_light: ([69f157d](https://github.com/EIP-GetOut/GETOUT-Platform/commit/69f157d069eb19101e0cff63a2a297ea1688fbf0))
+* **app:** :rotating_light: Fixing pre-commits errors ([7c37b1e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/7c37b1e8e65f1d0c8642338b9f06f9e659fe778c))
+* **backend:** :bug: typing of booksresults ([e3ff137](https://github.com/EIP-GetOut/GETOUT-Platform/commit/e3ff137cdde672ccb956753f72643a6e2f99d54b))
+* **backend:** :bug: wrong package-lock.json dependencies ([a1c46a9](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a1c46a991f6b5e38ed97ad8e512dd07d9c59dd6e))
+
+
+### Refactors
+
+* **app:** :recycle: code of connection part (login, register and forgot password) is refactored ([55e0389](https://github.com/EIP-GetOut/GETOUT-Platform/commit/55e0389d500a5a02a32f03bb9d9fc88688060da2))
+* **app:** :recycle: Refactor Forms with block plugins ([cbcd420](https://github.com/EIP-GetOut/GETOUT-Platform/commit/cbcd420fe9b8ea82de2c0ff8e495bb5af0107956))
+
 ### [0.2.8](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.2.7...v0.2.8) (2023-10-09)
 
 
