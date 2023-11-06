@@ -57,7 +57,7 @@ class LoginScreen extends StatelessWidget {
             },
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              //crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Align(
                   alignment: Alignment.bottomCenter,
@@ -66,24 +66,65 @@ class LoginScreen extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                 ),
+                const SizedBox(height: 30),
                 Form(
                   key: _formKey,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 8, vertical: 16),
                     child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          const Row(
+                            children: [
+                              SizedBox(
+                                width: 10),
+                              Text('ADRESSE EMAIL',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black)),
+                              Text('*',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red)),
+                            ],
+                          ),
                           const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 16),
                             child: EmailField(),
+                          ),
+                          const SizedBox(height: 20),
+                          const Row(
+                            children: [
+                              SizedBox(
+                                  width: 10),
+                              Text('MOT DE PASSE',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black)),
+                              Text('*',
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red)),
+                            ],
                           ),
                           const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 16),
                             child: PasswordField(),
                           ),
+                          const SizedBox(height: 30),
+                          LoginButton(formKey: _formKey),
+                          const SizedBox(height: 30),
                           SizedBox(
                             child: Align(
                                 alignment: Alignment.center,
@@ -92,73 +133,74 @@ class LoginScreen extends StatelessWidget {
                                   fit: BoxFit.contain,
                                 )),
                           ),
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => RepositoryProvider(
-                                        create: (context) => RegisterService(),
-                                        child: RegisterScreen())));
-                            },
-                            child: const Text.rich(
-                              TextSpan(
-                                text: 'Première connection ?',
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 16),
-                                children: <InlineSpan>[
-                                  TextSpan(
-                                    text: ' Créer un compte',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color.fromRGBO(
-                                            213, 86, 65, 0.992)),
-                                  ),
-                                ],
+                          const SizedBox(height: 30),
+                          Align(
+                            alignment: Alignment.center,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => RepositoryProvider(
+                                          create: (context) => RegisterService(),
+                                          child: RegisterScreen())));
+                              },
+                              child: const Text.rich(
+                                TextSpan(
+                                  text: 'Première connection ?',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 16),
+                                  children: <InlineSpan>[
+                                    TextSpan(
+                                      text: ' Créer un compte',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color.fromRGBO(
+                                              213, 86, 65, 0.992)),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                           const SizedBox(
                             height: 30,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => RepositoryProvider(
-                                          create: (context) => ForgotPasswordService(),
-                                          child: ForgotPasswordScreen())));
-                            },
-                            child: const Text.rich(
-                              TextSpan(
-                                text: 'Mot de passe oublié ?',
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 16),
-                                children: <InlineSpan>[
-                                  TextSpan(
-                                    text: ' Changez le',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color.fromRGBO(
-                                            213, 86, 65, 0.992)),
-                                  ),
-                                ],
+                          Align(
+                            alignment: Alignment.center,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => RepositoryProvider(
+                                            create: (context) => ForgotPasswordService(),
+                                            child: ForgotPasswordScreen())));
+                              },
+                              child: const Text.rich(
+                                TextSpan(
+                                  text: 'Mot de passe oublié ?',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 16),
+                                  children: <InlineSpan>[
+                                    TextSpan(
+                                      text: ' Changez le',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color.fromRGBO(
+                                              213, 86, 65, 0.992)),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ]),
                   ),
                 ),
-              ]),),
-          floatingActionButtonLocation:
-            FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: LoginButton(formKey: _formKey),);
+              ]),));
   }
 }
 

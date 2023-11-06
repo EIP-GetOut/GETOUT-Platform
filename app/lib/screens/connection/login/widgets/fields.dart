@@ -17,9 +17,10 @@ class EmailField extends StatelessWidget {
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
         return TextFormField(
+          style: const TextStyle(fontSize: 17, color: Colors.black),
           decoration: InputDecoration(
-            hintText: 'Entrez votre email',
-            labelText: 'Email',
+            labelText: 'Entrez votre adresse email',
+            floatingLabelBehavior: FloatingLabelBehavior.never,
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(0.5),
                 borderSide: const BorderSide(color: Colors.black)),
@@ -47,9 +48,11 @@ class PasswordField extends StatelessWidget {
     return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
       return TextFormField(
         obscureText: true,
+        style: const TextStyle(fontSize: 17, color: Colors.black),
         decoration: InputDecoration(
-            hintText: 'Entrez votre mot de passe',
-            labelText: 'Mot de passe',
+            //hintText: 'Entrez votre mot de passe',
+            labelText: 'Entrez votre mot de passe',
+            floatingLabelBehavior: FloatingLabelBehavior.never,
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(0.5),
                 borderSide: const BorderSide(color: Colors.black)),
