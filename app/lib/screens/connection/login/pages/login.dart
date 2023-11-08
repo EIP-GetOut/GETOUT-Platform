@@ -77,8 +77,7 @@ class LoginScreen extends StatelessWidget {
                         children: [
                           const Row(
                             children: [
-                              SizedBox(
-                                width: 10),
+                              SizedBox(width: 10),
                               Text('ADRESSE EMAIL',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
@@ -101,8 +100,7 @@ class LoginScreen extends StatelessWidget {
                           const SizedBox(height: 20),
                           const Row(
                             children: [
-                              SizedBox(
-                                  width: 10),
+                              SizedBox(width: 10),
                               Text('MOT DE PASSE',
                                   textAlign: TextAlign.left,
                                   style: TextStyle(
@@ -123,7 +121,10 @@ class LoginScreen extends StatelessWidget {
                             child: PasswordField(),
                           ),
                           const SizedBox(height: 30),
-                          LoginButton(formKey: _formKey),
+                          Align(
+                              alignment: Alignment.center,
+                              child: LoginButton(formKey: _formKey)
+                          ),
                           const SizedBox(height: 30),
                           SizedBox(
                             child: Align(
@@ -156,17 +157,14 @@ class LoginScreen extends StatelessWidget {
                                       style: TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
-                                          color: Color.fromRGBO(
-                                              213, 86, 65, 0.992)),
+                                          color: Color.fromRGBO(213, 86, 65, 0.992)),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 30,
-                          ),
+                          const SizedBox(height: 30),
                           Align(
                             alignment: Alignment.center,
                             child: GestureDetector(
@@ -210,19 +208,32 @@ class LoginButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
+    final double phoneWidth = MediaQuery.of(context).size.width;
+
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
         return state.formStatus is FormSubmitting
             ? const CircularProgressIndicator()
-            : ElevatedButton(
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    context.read<LoginBloc>().add(LoginSubmitted());
-                  }
-                },
-                child: const Text('Se connecter')//SocialMediaSpentTime(),
-        );
+            : SizedBox(
+            width: 90 * phoneWidth / 100,
+            height: 65,
+            child: FloatingActionButton(
+              shape: Theme.of(context).floatingActionButtonTheme.shape,
+              backgroundColor:
+              Theme.of(context).floatingActionButtonTheme.backgroundColor,
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+                  context.read<LoginBloc>().add(LoginSubmitted());
+                }
+              },
+              child: const Text('Se connecter',
+                  style: TextStyle(
+                      fontSize: 17.5,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white)),
+            ));
       },
     );
   }

@@ -14,13 +14,7 @@ import 'package:getout/screens/connection/register/widgets/fields.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/form/pages/social_media_spent_time.dart';
 
-/*
-import 'package:getout/models/connection/create_account.dart';
-import 'package:getout/screens/form/pages/welcome.dart';
-import 'package:getout/services/requests/requests_service.dart';
-import 'package:getout/constants/http_status.dart';
-import 'package:getout/widgets/load.dart';
-*/
+
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
 
@@ -78,39 +72,80 @@ class RegisterScreen extends StatelessWidget {
                   child: Form(
                     key: _formKey,
                     child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          const SizedBox(height: 25),
+                          fieldTitle('NOM'),
                           const Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 8),
                               child: LastNameField()),
+                          const SizedBox(height: 15),
+                          fieldTitle('PRÉNOM'),
                           const Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 8),
                               child: FirstNameField()),
+                          const SizedBox(height: 15),
+                          fieldTitle('DATE DE NAISSANCE'),
                           Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 8),
                               child: BornDateField()),
+                          const SizedBox(height: 15),
+                          fieldTitle('ADRESSE EMAIL'),
                           const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 8),
                             child: EmailField(),
                           ),
+                          const SizedBox(height: 15),
+                          fieldTitle('MOT DE PASSE'),
                           const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 8),
                             child: PasswordField(),
                           ),
-                          const SizedBox(
-                            height: 70,
+                          const SizedBox(height: 15),
+                          fieldTitle('CONFIRMEZ VOTRE MOT DE PASSE'),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 8),
+                            child: ConfirmPasswordField(),
                           ),
-                          RegisterButton(formKey: _formKey),
+                          const SizedBox(height: 50),
+                          Align(
+                              alignment: Alignment.center,
+                              child: RegisterButton(formKey: _formKey)
+                          ),
                         ]),
                   )),
+                /*floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+                floatingActionButton: RegisterButton(formKey: _formKey)*/
             )
         )
+    );
+  }
+
+  Widget fieldTitle(final String title) {
+    return Row(
+      children: [
+        const SizedBox(width: 10),
+        Text(title,
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.black)),
+        const Text('*',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.red)),
+      ],
     );
   }
 }
@@ -121,19 +156,32 @@ class RegisterButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
+    final double phoneWidth = MediaQuery.of(context).size.width;
+
     return BlocBuilder<RegisterBloc, RegisterState>(
       builder: (context, state) {
         return state.formStatus is FormSubmitting
             ? const CircularProgressIndicator()
-            : ElevatedButton(
-            onPressed: () {
-              if (formKey.currentState!.validate()) {
-                context.read<RegisterBloc>().add(RegisterSubmitted());
-              }
-            },
-            child: const Text('S\'inscrire')//SocialMediaSpentTime(),
-        );
+            : SizedBox(
+            width: 90 * phoneWidth / 100,
+            height: 65,
+            child: FloatingActionButton(
+              shape: Theme.of(context).floatingActionButtonTheme.shape,
+              backgroundColor:
+              Theme.of(context).floatingActionButtonTheme.backgroundColor,
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+                  context.read<RegisterBloc>().add(RegisterSubmitted());
+                }
+              },
+              child: const Text('Suivant',
+                  style: TextStyle(
+                      fontSize: 17.5,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white)),
+            ));
       },
     );
   }

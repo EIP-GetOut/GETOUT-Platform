@@ -10,6 +10,7 @@ part of 'register_bloc.dart';
 class RegisterState extends Equatable {
   final String email;
   final String password;
+  final String confirmPassword;
   final String firstName;
   final String lastName;
   final String bornDate;
@@ -25,11 +26,13 @@ class RegisterState extends Equatable {
   // ignore: prefer_single_quotes
   bool get isPasswordGood => RegExp(r"(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$").hasMatch(password);
   bool get isPasswordValid => isPasswordEmpty && isPasswordLength && isPasswordGood;
+  bool get isConfirmPasswordValid => password.isNotEmpty && (password == confirmPassword);
 
 
   const RegisterState({
     this.email = '',
     this.password = '',
+    this.confirmPassword = '',
     this.firstName = '',
     this.lastName = '',
     this.bornDate = '',
@@ -39,6 +42,7 @@ class RegisterState extends Equatable {
   RegisterState copyWith({
     String? email,
     String? password,
+    String? confirmPassword,
     String? firstName,
     String? lastName,
     String? bornDate,
@@ -47,6 +51,7 @@ class RegisterState extends Equatable {
     return RegisterState(
       email: email ?? this.email,
       password: password ?? this.password,
+      confirmPassword: confirmPassword ?? this.confirmPassword,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       bornDate: bornDate ?? this.bornDate,
@@ -55,5 +60,5 @@ class RegisterState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [email, password, firstName, lastName, bornDate, formStatus];
+  List<Object?> get props => [email, password, confirmPassword, firstName, lastName, bornDate, formStatus];
 }

@@ -29,6 +29,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(state.copyWith(email: event.email));
     } else if (event is RegisterPasswordChanged) {
       emit(state.copyWith(password: event.password));
+    } else if (event is RegisterConfirmPasswordChanged) {
+      emit(state.copyWith(confirmPassword: event.confirmPassword));
     } else if (event is RegisterFirstNameChanged) {
       emit(state.copyWith(firstName: event.firstName));
     } else if (event is RegisterLastNameChanged) {
