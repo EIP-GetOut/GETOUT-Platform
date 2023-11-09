@@ -29,8 +29,10 @@ class StreamingPlatform extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
-          title: Text('VOS PREFERENCES',
-              style: Theme.of(context).textTheme.titleSmall),
+          title: Text('VOS PRÉFÉRENCES'.padRight(
+              '             '.length,
+              String.fromCharCodes([0x00A0 /*No-Break Space*/ ])), // don't know but print white space,
+              style: Theme.of(context).textTheme.titleLarge),
           backgroundColor: Colors.white,
         ),
         body: Center(

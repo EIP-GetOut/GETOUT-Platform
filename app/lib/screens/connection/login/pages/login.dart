@@ -17,6 +17,7 @@ import 'package:getout/screens/connection/register/pages/register.dart';
 import 'package:getout/screens/connection/register/bloc/register_service.dart';
 import 'package:getout/screens/connection/login/widgets/fields.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
+import 'package:getout/constants/http_status.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -25,7 +26,11 @@ class LoginScreen extends StatelessWidget {
 
   void _showSnackBar(final BuildContext context, final String message)
   {
-    final snackBar = SnackBar(content: Text(message));
+    final snackBar = SnackBar(
+        backgroundColor: Theme.of(context).colorScheme.error,
+        content: Text(message,
+        style: Theme.of(context).textTheme.displaySmall
+        ));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -40,8 +45,8 @@ class LoginScreen extends StatelessWidget {
               final formStatus = state.formStatus;
 
               if (formStatus is SubmissionFailed) {
-                /// TODO: Handle more errors (like no internet connection)
-                if (formStatus.exception is DioException) {
+                if (formStatus.exception is DioException && (formStatus.exception as DioException).response != null &&
+                    (formStatus.exception as DioException).response!.statusCode == HttpStatus.FORBIDDEN) {
                   _showSnackBar(context, 'Le mot de passe ou l\'email est incorrect');
                 } else {
                   _showSnackBar(context, 'Une erreur s\'est produite, veuillez reesayer plus tard');

@@ -13,6 +13,7 @@ import 'package:dio/dio.dart';
 import 'package:getout/screens/connection/register/widgets/fields.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/form/pages/social_media_spent_time.dart';
+import 'package:getout/constants/http_status.dart';
 
 
 class RegisterScreen extends StatelessWidget {
@@ -21,7 +22,11 @@ class RegisterScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _showSnackBar(final BuildContext context, final String message) {
-    final snackBar = SnackBar(content: Text(message));
+    final snackBar = SnackBar(
+        backgroundColor: Theme.of(context).colorScheme.error,
+        content: Text(message,
+            style: Theme.of(context).textTheme.displaySmall
+        ));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -36,8 +41,9 @@ class RegisterScreen extends StatelessWidget {
 
               if (formStatus is SubmissionFailed) {
                 /// TODO: Handle more errors (like no internet connection)
-                if (formStatus.exception is DioException) {
-                  _showSnackBar(context, 'Une erreur serveur s\'est produite veuillez reesayer plus tard');
+                if (formStatus.exception is DioException && (formStatus.exception as DioException).response != null &&
+                    (formStatus.exception as DioException).response!.statusCode == HttpStatus.CONFLICT) {
+                  _showSnackBar(context, 'Un compte avec cette adresse email existe déjà');
                 } else {
                   _showSnackBar(context, 'Une erreur s\'est produite, veuillez reesayer plus tard');
                 }
@@ -59,11 +65,13 @@ class RegisterScreen extends StatelessWidget {
                 centerTitle: true,
                 titleSpacing: 0,
                 title: Text(
-                    'VOTRE PROFIL',
+                    'VOTRE PROFIL'.padRight(
+                        '             '.length,
+                        String.fromCharCodes([0x00A0 /*No-Break Space*/ ])), // don't know but print white space
                     style: Theme
                         .of(context)
                         .textTheme
-                        .titleSmall),
+                        .titleLarge),
                 leading: const BackButton(),
                 backgroundColor: Colors.white10,
                 elevation: 0,
@@ -121,9 +129,6 @@ class RegisterScreen extends StatelessWidget {
                           ),
                         ]),
                   )),
-                /*floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-                floatingActionButton: RegisterButton(formKey: _formKey)*/
             )
         )
     );

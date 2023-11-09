@@ -53,15 +53,11 @@ class ForgotPasswordScreen extends StatelessWidget {
                 ),
                 centerTitle: true,
                 titleSpacing: 0,
-                title: const Text(
-                  'Mot de passe oublié',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 30,
-                    decorationThickness: 4,
-                    decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
-                    decoration: TextDecoration.underline,
-                  ),
+                title: Text(
+                  'MOT DE PASSE OUBLIÉ'.padRight(
+                      '             '.length,
+                      String.fromCharCodes([0x00A0 /*No-Break Space*/ ])), // don't know but print white space,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 leading: const BackButton(),
                 backgroundColor: Colors.white10,
