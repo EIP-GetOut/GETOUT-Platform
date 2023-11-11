@@ -17,8 +17,9 @@ import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/observer.dart';
 import 'package:getout/bloc/theme/bloc.dart';
 import 'package:getout/bloc/user/bloc.dart';
-import 'package:getout/screens/connection/bloc/connection_provider.dart';
+import 'package:getout/services/notifications/page_test.dart';
 import 'package:getout/screens/connection/services/service.dart';
+import 'package:getout/screens/connection/bloc/connection_provider.dart';
 import 'package:getout/screens/home/bloc/home_provider.dart';
 
 Map<int, Color> colorMap = {
