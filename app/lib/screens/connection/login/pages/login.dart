@@ -11,8 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 
 import 'package:getout/screens/form/pages/social_media_spent_time.dart';
-import 'package:getout/screens/connection/forgot_password/pages/forgot_password_code.dart';
-import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_service.dart';
+import 'package:getout/screens/connection/forgot_password/pages/email_page.dart';
+import 'package:getout/screens/connection/forgot_password/bloc/email/forgot_password_email_service.dart';
 import 'package:getout/screens/connection/register/pages/register.dart';
 import 'package:getout/screens/connection/register/bloc/register_service.dart';
 import 'package:getout/screens/connection/login/widgets/fields.dart';
@@ -178,8 +178,8 @@ class LoginScreen extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => RepositoryProvider(
-                                            create: (context) => ForgotPasswordService(),
-                                            child: ForgotPasswordScreen())));
+                                            create: (context) => ForgotPasswordEmailService(),
+                                            child: ForgotPasswordEmailScreen())));
                               },
                               child: const Text.rich(
                                 TextSpan(

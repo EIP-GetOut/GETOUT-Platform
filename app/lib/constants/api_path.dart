@@ -4,6 +4,7 @@
 ** Proprietary and confidential
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
+
 import 'package:flutter/foundation.dart';
 
 const String rootApiPath = (kDebugMode)
@@ -15,9 +16,8 @@ const String loginPath = '/account/login';
 const String logoutPath = '/account/logout';
 const String registerPath = '/account/signup';
 const String oauthPath = '/account/oauth';
-const String resetPasswordPath = '/account/reset-password';
-const String forgetPasswordCodePath = '/account/forget-password-code';
-const String forgetPasswordChangePath = '/account/reset-password/send-email';
+const String resetPasswordNewPasswordPath = '/account/reset-password';
+const String resetPasswordEmailPath = '/account/reset-password/send-email';
 const String getSessionApiPath = '/session';
 // GENERATE THINGS API PATH
 const String generateMoviesApiPath = '/generate-movies';

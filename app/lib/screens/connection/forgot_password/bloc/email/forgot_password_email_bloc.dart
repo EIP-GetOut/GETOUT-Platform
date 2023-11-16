@@ -9,29 +9,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:getout/constants/http_status.dart';
-import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_service.dart';
+import 'package:getout/screens/connection/forgot_password/bloc/email/forgot_password_email_service.dart';
 
-part 'form_submit_status.dart';
-part 'forgot_password_event.dart';
-part 'forgot_password_state.dart';
+import '../form_submit_status.dart';
+part 'forgot_password_email_event.dart';
+part 'forgot_password_email_state.dart';
 
-class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
-  final ForgotPasswordService? authRepo;
+class ForgotPasswordEmailBloc extends Bloc<ForgotPasswordEmailEvent, ForgotPasswordEmailState> {
+  final ForgotPasswordEmailService? authRepo;
 
-  ForgotPasswordBloc({this.authRepo}) : super(const ForgotPasswordState()) {
-    on<ForgotPasswordEvent>((event, emit) async {
+  ForgotPasswordEmailBloc({this.authRepo}) : super(const ForgotPasswordEmailState()) {
+    on<ForgotPasswordEmailEvent>((event, emit) async {
       await mapEventToState(event, emit);
     });
   }
 
-  Future mapEventToState(ForgotPasswordEvent event, Emitter<ForgotPasswordState> emit) async {
+  Future mapEventToState(ForgotPasswordEmailEvent event, Emitter<ForgotPasswordEmailState> emit) async {
     if (event is ForgotPasswordEmailChanged) {
       emit(state.copyWith(email: event.email));
-    } else if (event is ForgotPasswordSubmitted) {
+    } else if (event is ForgotPasswordEmailSubmitted) {
       emit(state.copyWith(formStatus: FormSubmitting()));
 
       try {
-        await authRepo?.sendEmail(ForgotPasswordRequestModel(
+        await authRepo?.sendEmail(CheckEmailRequestModel(
           email: state.email,
         ));
         emit(state.copyWith(formStatus: SubmissionSuccess()));
