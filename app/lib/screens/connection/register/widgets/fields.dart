@@ -230,4 +230,3 @@ class ConfirmPasswordField extends StatelessWidget {
     });
   }
 }
-

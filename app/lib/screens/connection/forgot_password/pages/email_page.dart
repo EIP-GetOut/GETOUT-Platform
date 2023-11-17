@@ -14,6 +14,7 @@ import 'package:getout/screens/connection/forgot_password/widgets/fields.dart';
 import 'package:getout/screens/connection/forgot_password/bloc/email/forgot_password_email_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/bloc/form_submit_status.dart';
 import 'package:getout/screens/connection/forgot_password/pages/new_password_page.dart';
+import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/constants/http_status.dart';
 
 class ForgotPasswordEmailScreen extends StatelessWidget {
@@ -55,7 +56,6 @@ class ForgotPasswordEmailScreen extends StatelessWidget {
         final formStatus = state.formStatus;
 
         if (formStatus is SubmissionFailed) {
-          /// TODO: Handle more errors (like no internet connection)
           if (formStatus.exception is DioException && (formStatus.exception as DioException).response != null &&
               (formStatus.exception as DioException).response!.statusCode == HttpStatus.INTERNAL_SERVER_ERROR) {
             _showSnackBar(context, 'L\'email est incorrect');
@@ -72,13 +72,7 @@ class ForgotPasswordEmailScreen extends StatelessWidget {
       },
       child: Column(children: [
             const SizedBox(height: 40),
-            const Row(
-              children: [
-                SizedBox(width: 10),
-                Text('EMAIL', textAlign: TextAlign.left, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-                Text('*', textAlign: TextAlign.left, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red)),
-              ],
-            ),
+            fieldTitle('EMAIL'),
             Form(
               key: _formKey,
               child: const Padding(

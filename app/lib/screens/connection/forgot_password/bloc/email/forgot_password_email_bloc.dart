@@ -10,8 +10,8 @@ import 'package:equatable/equatable.dart';
 
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/connection/forgot_password/bloc/email/forgot_password_email_service.dart';
+import 'package:getout/screens/connection/forgot_password/bloc/form_submit_status.dart';
 
-import '../form_submit_status.dart';
 part 'forgot_password_email_event.dart';
 part 'forgot_password_email_state.dart';
 
@@ -24,7 +24,8 @@ class ForgotPasswordEmailBloc extends Bloc<ForgotPasswordEmailEvent, ForgotPassw
     });
   }
 
-  Future mapEventToState(ForgotPasswordEmailEvent event, Emitter<ForgotPasswordEmailState> emit) async {
+  Future mapEventToState(ForgotPasswordEmailEvent event, Emitter<ForgotPasswordEmailState> emit) async
+  {
     if (event is ForgotPasswordEmailChanged) {
       emit(state.copyWith(email: event.email));
     } else if (event is ForgotPasswordEmailSubmitted) {

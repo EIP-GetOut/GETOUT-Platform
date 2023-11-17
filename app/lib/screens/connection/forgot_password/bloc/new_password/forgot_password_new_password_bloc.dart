@@ -10,8 +10,8 @@ import 'package:equatable/equatable.dart';
 
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/connection/forgot_password/bloc/new_password/forgot_password_new_password_service.dart';
+import 'package:getout/screens/connection/forgot_password/bloc/form_submit_status.dart';
 
-import '../form_submit_status.dart';
 part 'forgot_password_new_password_event.dart';
 part 'forgot_password_new_password_state.dart';
 
@@ -24,7 +24,8 @@ class ForgotPasswordBloc extends Bloc<ForgotPasswordEvent, ForgotPasswordState> 
     });
   }
 
-  Future mapEventToState(ForgotPasswordEvent event, Emitter<ForgotPasswordState> emit) async {
+  Future mapEventToState(ForgotPasswordEvent event, Emitter<ForgotPasswordState> emit) async
+  {
     if (event is ForgotPasswordCodeChanged) {
       emit(state.copyWith(code: event.code));
     } else if (event is ForgotPasswordPasswordChanged) {

@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 
+import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/screens/connection/forgot_password/bloc/new_password/forgot_password_new_password_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/widgets/fields.dart';
 import 'package:getout/screens/connection/forgot_password/bloc/form_submit_status.dart';
@@ -56,7 +57,6 @@ class ForgetPasswordChangeScreen extends StatelessWidget {
           final formStatus = state.formStatus;
 
           if (formStatus is SubmissionFailed) {
-            /// TODO: Handle more errors (like no internet connection)
             if (formStatus.exception is DioException && (formStatus.exception as DioException).response != null &&
                 (formStatus.exception as DioException).response!.statusCode == HttpStatus.INTERNAL_SERVER_ERROR) {
               _showSnackBar(context, 'Le code est incorrect');
@@ -99,26 +99,6 @@ class ForgetPasswordChangeScreen extends StatelessWidget {
         floatingActionButton: ForgotPasswordButton(formKey: _formKey)
     );
   }
-
-  Widget fieldTitle(final String title) {
-    return Row(
-      children: [
-        const SizedBox(width: 10),
-        Text(title,
-            textAlign: TextAlign.left,
-            style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black)),
-        const Text('*',
-            textAlign: TextAlign.left,
-            style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.red)),
-      ],
-    );
-  }
 }
 
 class ForgotPasswordButton extends StatelessWidget {
@@ -156,4 +136,3 @@ class ForgotPasswordButton extends StatelessWidget {
     );
   }
 }
-

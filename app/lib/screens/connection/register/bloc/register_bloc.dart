@@ -24,7 +24,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     });
   }
 
-  Future mapEventToState(RegisterEvent event, Emitter<RegisterState> emit) async {
+  Future mapEventToState(RegisterEvent event, Emitter<RegisterState> emit) async
+  {
     if (event is RegisterEmailChanged) {
       emit(state.copyWith(email: event.email));
     } else if (event is RegisterPasswordChanged) {
