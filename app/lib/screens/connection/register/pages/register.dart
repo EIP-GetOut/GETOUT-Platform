@@ -10,24 +10,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 
+import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/screens/connection/register/widgets/fields.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/form/pages/social_media_spent_time.dart';
-
-/*
-import 'package:getout/models/connection/create_account.dart';
-import 'package:getout/screens/form/pages/welcome.dart';
-import 'package:getout/services/requests/requests_service.dart';
 import 'package:getout/constants/http_status.dart';
-import 'package:getout/widgets/load.dart';
-*/
+
+
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   void _showSnackBar(final BuildContext context, final String message) {
-    final snackBar = SnackBar(content: Text(message));
+    final snackBar = SnackBar(
+        backgroundColor: Theme.of(context).colorScheme.error,
+        content: Text(message,
+            style: Theme.of(context).textTheme.displaySmall
+        ));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
@@ -41,9 +41,9 @@ class RegisterScreen extends StatelessWidget {
               final formStatus = state.formStatus;
 
               if (formStatus is SubmissionFailed) {
-                /// TODO: Handle more errors (like no internet connection)
-                if (formStatus.exception is DioException) {
-                  _showSnackBar(context, 'Une erreur serveur s\'est produite veuillez reesayer plus tard');
+                if (formStatus.exception is DioException && (formStatus.exception as DioException).response != null &&
+                    (formStatus.exception as DioException).response!.statusCode == HttpStatus.CONFLICT) {
+                  _showSnackBar(context, 'Un compte avec cette adresse email existe déjà');
                 } else {
                   _showSnackBar(context, 'Une erreur s\'est produite, veuillez reesayer plus tard');
                 }
@@ -65,11 +65,13 @@ class RegisterScreen extends StatelessWidget {
                 centerTitle: true,
                 titleSpacing: 0,
                 title: Text(
-                    'VOTRE PROFIL',
+                    'VOTRE PROFIL'.padRight(
+                        '             '.length,
+                        String.fromCharCodes([0x00A0 /*No-Break Space*/ ])), // don't know but print white space
                     style: Theme
                         .of(context)
                         .textTheme
-                        .titleSmall),
+                        .titleLarge),
                 leading: const BackButton(),
                 backgroundColor: Colors.white10,
                 elevation: 0,
@@ -78,35 +80,53 @@ class RegisterScreen extends StatelessWidget {
                   child: Form(
                     key: _formKey,
                     child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          const SizedBox(height: 25),
+                          fieldTitle('NOM'),
                           const Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 8),
                               child: LastNameField()),
+                          const SizedBox(height: 15),
+                          fieldTitle('PRÉNOM'),
                           const Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 8),
                               child: FirstNameField()),
+                          const SizedBox(height: 15),
+                          fieldTitle('DATE DE NAISSANCE'),
                           Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 8),
                               child: BornDateField()),
+                          const SizedBox(height: 15),
+                          fieldTitle('ADRESSE EMAIL'),
                           const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 8),
                             child: EmailField(),
                           ),
+                          const SizedBox(height: 15),
+                          fieldTitle('MOT DE PASSE'),
                           const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 8),
                             child: PasswordField(),
                           ),
-                          const SizedBox(
-                            height: 70,
+                          const SizedBox(height: 15),
+                          fieldTitle('CONFIRMEZ VOTRE MOT DE PASSE'),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 8),
+                            child: ConfirmPasswordField(),
                           ),
-                          RegisterButton(formKey: _formKey),
+                          const SizedBox(height: 50),
+                          Align(
+                              alignment: Alignment.center,
+                              child: RegisterButton(formKey: _formKey)
+                          ),
                         ]),
                   )),
             )
@@ -121,148 +141,33 @@ class RegisterButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
+    final double phoneWidth = MediaQuery.of(context).size.width;
+
     return BlocBuilder<RegisterBloc, RegisterState>(
       builder: (context, state) {
         return state.formStatus is FormSubmitting
             ? const CircularProgressIndicator()
-            : ElevatedButton(
-            onPressed: () {
-              if (formKey.currentState!.validate()) {
-                context.read<RegisterBloc>().add(RegisterSubmitted());
-              }
-            },
-            child: const Text('S\'inscrire')//SocialMediaSpentTime(),
-        );
+            : SizedBox(
+            width: 90 * phoneWidth / 100,
+            height: 65,
+            child: FloatingActionButton(
+              shape: Theme.of(context).floatingActionButtonTheme.shape,
+              backgroundColor:
+              Theme.of(context).floatingActionButtonTheme.backgroundColor,
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+                  context.read<RegisterBloc>().add(RegisterSubmitted());
+                }
+              },
+              child: const Text('Suivant',
+                  style: TextStyle(
+                      fontSize: 17.5,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white)),
+            ));
       },
     );
   }
 }
-
-
-/*class _RegisterPageState extends State<RegisterPage> {
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController bornDateController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController password2Controller = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool isLoading = false;
-  final HttpStatus httpStatus = HttpStatus({
-    HttpStatus.INTERNAL_SERVER_ERROR:
-        'Une erreur s\'est produite, veuillez réesayer plus tard',
-    HttpStatus.CONFLICT: 'Un compte avec cet email existe déjà',
-    HttpStatus.NO_INTERNET: 'Pas de connexion internet',
-  });
-
-  Future<void> registerPressed() async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
-    setState(() {
-      isLoading = true;
-    });
-    RequestsService.instance
-        .register(CreateAccountRequest(
-            email: emailController.text,
-            password: passwordController.text,
-            firstName: firstNameController.text,
-            lastName: lastNameController.text,
-            bornDate: bornDateController.text))
-        .then((AccountResponseInfo res) {
-      if (res.statusCode == AccountResponseInfo.success) {
-        isLoading = false;
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const WelcomePage()));
-        return;
-      }
-      setState(() {
-        isLoading = false;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(httpStatus.getMessage(res.statusCode)),
-          backgroundColor: const Color.fromARGB(255, 239, 46, 46)));
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return isLoading
-        ? const LoadPage()
-        : Scaffold(
-            resizeToAvoidBottomInset: true,
-            appBar: AppBar(
-              iconTheme: const IconThemeData(
-                color: Colors.black, //change your color here
-              ),
-              centerTitle: true,
-              titleSpacing: 0,
-              title: Text(
-                'VOTRE PROFIL',
-                style: Theme.of(context).textTheme.titleSmall),
-              leading: const BackButton(),
-              backgroundColor: Colors.white10,
-              elevation: 0,
-            ),
-            body: SingleChildScrollView(
-                child: Form(
-              key: _formKey,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    /// TODO a loop for all fields (padding with each field)
-                    Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 8),
-                        child: NameField(controller: lastNameController)),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 8),
-                        child: FirstNameField(controller: firstNameController)),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 8),
-                        child: BirthDateField(controller: bornDateController)),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 8),
-                      child: MailField(controller: emailController),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 8),
-                      child: PasswordField(controller: passwordController),
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 8),
-                        child: SecondPasswordField(
-                            controller: password2Controller,
-                            fstPassword: passwordController.text)),
-                    const SizedBox(
-                      height: 70,
-                    ),
-                    startButton(context, MediaQuery.of(context).size.width),
-                  ]),
-            )),
-          );
-  }
-
-  Widget startButton(BuildContext context, double phoneWidth) {
-    return SizedBox(
-        width: 85 * phoneWidth / 100,
-        height: 65,
-        child: FloatingActionButton(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(50.0))),
-            backgroundColor: const Color.fromRGBO(213, 86, 65, 0.992),
-            onPressed: registerPressed,
-            child: const Text('S\'inscrire',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 19,
-                ))));
-  }
-}*/

@@ -1,3 +1,10 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
+*/
+
 import 'package:flutter/material.dart';
 
 Map<int, Color> colorMap = {
@@ -21,15 +28,19 @@ extension SecondaryColor on ThemeData {
   Color get secondaryColor => const Color(0xFF078B8B);
 }
 
-extension ErorColor on ThemeData {
-  Color get erorColor => const Color.fromARGB(255, 173, 52, 62);
+extension ErrorColor on ThemeData {
+  Color get errorColor => const Color.fromARGB(255, 173, 52, 62);
 }
+
+
 
 final getOutTheme = ThemeData(
   primaryColor: const Color.fromRGBO(213, 86, 65, 1),
   fontFamily: 'Poppins',
   primarySwatch: MaterialColor(0xffD55641, colorMap),
-  colorScheme: const ColorScheme.light(primary: Color(0xFFD55641)),
+  colorScheme: const ColorScheme.light(
+      primary: Color(0xFFD55641),
+      error: Color(0xFFAD343E)),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       minimumSize: MaterialStateProperty.all<Size>(const Size(double.infinity, 60)),
@@ -74,6 +85,15 @@ final getOutTheme = ThemeData(
       fontFamily: 'Urbanist',
       fontWeight: FontWeight.bold,
     ),
+    titleLarge: TextStyle(
+      color: Colors.black,
+      fontSize: 30,
+      fontFamily: 'Poppins',
+      decorationThickness: 8,
+      decorationColor: Color.fromRGBO(213, 86, 65, 0.5),
+      decoration: TextDecoration.underline,
+      fontWeight: FontWeight.bold,
+    ),
     displayMedium: TextStyle(
       fontFamily: 'Urbanist',
       color: Colors.black,
@@ -91,6 +111,13 @@ final getOutTheme = ThemeData(
       fontWeight: FontWeight.w800,
       fontSize: 22, 
     ),
+    displaySmall: TextStyle(
+      fontFamily: 'Urbanist',
+      color: Colors.white,
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 1.1,
+    )
   ),
   appBarTheme: const AppBarTheme(
     backgroundColor: Color.fromARGB(255, 49, 54, 65),

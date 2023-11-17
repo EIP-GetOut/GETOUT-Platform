@@ -5,25 +5,24 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-part of 'forgot_password_bloc.dart';
+part of 'forgot_password_email_bloc.dart';
 
-class ForgotPasswordRequestModel {
-  const ForgotPasswordRequestModel({required this.email});
+class CheckEmailRequestModel {
+  const CheckEmailRequestModel({required this.email});
 
   final String email;
 }
 
-class ForgotPasswordResponseModel {
-  const ForgotPasswordResponseModel({required this.statusCode});
+class CheckEmailResponseModel {
+  const CheckEmailResponseModel({required this.statusCode});
 
   static const int success = HttpStatus.OK;
   final int statusCode;
 }
 
+abstract class ForgotPasswordEmailEvent extends Equatable {}
 
-abstract class ForgotPasswordEvent extends Equatable {}
-
-class ForgotPasswordEmailChanged extends ForgotPasswordEvent {
+class ForgotPasswordEmailChanged extends ForgotPasswordEmailEvent {
   final String? email;
 
   ForgotPasswordEmailChanged({this.email});
@@ -32,7 +31,7 @@ class ForgotPasswordEmailChanged extends ForgotPasswordEvent {
   List<Object?> get props => [email];
 }
 
-class ForgotPasswordSubmitted extends ForgotPasswordEvent {
+class ForgotPasswordEmailSubmitted extends ForgotPasswordEmailEvent {
   @override
   List<Object?> get props => [];
 }

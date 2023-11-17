@@ -6,20 +6,24 @@
 */
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 
 class EmailField extends StatelessWidget {
   const EmailField({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
         return TextFormField(
+          style: const TextStyle(fontSize: 17, color: Colors.black),
           decoration: InputDecoration(
-            hintText: 'Entrez votre email',
-            labelText: 'Email',
+            labelText: 'Entrez votre adresse email',
+            floatingLabelBehavior: FloatingLabelBehavior.never,
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(0.5),
                 borderSide: const BorderSide(color: Colors.black)),
@@ -43,13 +47,15 @@ class PasswordField extends StatelessWidget {
   const PasswordField({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
       return TextFormField(
         obscureText: true,
+        style: const TextStyle(fontSize: 17, color: Colors.black),
         decoration: InputDecoration(
-            hintText: 'Entrez votre mot de passe',
-            labelText: 'Mot de passe',
+            labelText: 'Entrez votre mot de passe',
+            floatingLabelBehavior: FloatingLabelBehavior.never,
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(0.5),
                 borderSide: const BorderSide(color: Colors.black)),

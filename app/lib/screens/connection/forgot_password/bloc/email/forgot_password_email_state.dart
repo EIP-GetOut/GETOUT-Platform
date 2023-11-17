@@ -5,23 +5,23 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-part of 'forgot_password_bloc.dart';
+part of 'forgot_password_email_bloc.dart';
 
-class ForgotPasswordState extends Equatable {
+class ForgotPasswordEmailState extends Equatable {
   final String email;
   final FormSubmissionStatus formStatus;
   bool get isEmailEmpty => email.isNotEmpty;
 
-  const ForgotPasswordState({
+  const ForgotPasswordEmailState({
     this.email = '',
     this.formStatus = const InitialFormStatus(),
   });
 
-  ForgotPasswordState copyWith({
+  ForgotPasswordEmailState copyWith({
     String? email,
     FormSubmissionStatus? formStatus,
   }) {
-    return ForgotPasswordState(
+    return ForgotPasswordEmailState(
       email: email ?? this.email,
       formStatus: formStatus ?? this.formStatus,
     );

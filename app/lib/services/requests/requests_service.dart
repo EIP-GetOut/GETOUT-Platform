@@ -201,7 +201,7 @@ class RequestsService {
   Future<ForgetPasswordCodeResponseInfo> forgetPasswordCode(
       ForgetPasswordCodeRequest request) async {
     final Uri url = Uri.http(
-        api.rootApiPath, api.forgetPasswordCodePath);
+        api.rootApiPath, api.resetPasswordEmailPath);
     final Map<String, String> header = {'Content-Type': 'application/json'};
     final String body = jsonEncode({
       'email': request.email,
@@ -238,7 +238,7 @@ class RequestsService {
   Future<ForgetPasswordChangeResponseInfo> forgetPasswordChange(
       ForgetPasswordChangeRequest request) async {
     final Uri url = Uri.http(
-        api.rootApiPath, api.forgetPasswordChangePath);
+        api.rootApiPath, api.resetPasswordNewPasswordPath);
     final Map<String, String> header = {'Content-Type': 'application/json'};
     final String body = jsonEncode({
       'email': request.email,

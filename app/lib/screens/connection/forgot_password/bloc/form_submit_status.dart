@@ -5,8 +5,6 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-part of 'forgot_password_bloc.dart';
-
 abstract class FormSubmissionStatus {
   const FormSubmissionStatus();
 }

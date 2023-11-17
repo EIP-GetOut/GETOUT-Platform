@@ -7,20 +7,20 @@
 
 import 'package:dio/dio.dart';
 
-import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_bloc.dart';
+import 'package:getout/screens/connection/forgot_password/bloc/email/forgot_password_email_bloc.dart';
 import 'package:getout/constants/api_path.dart' as api;
 
-class ForgotPasswordService {
-  Future<void> sendEmail(final ForgotPasswordRequestModel request) async
+class ForgotPasswordEmailService {
+  Future<void> sendEmail(final CheckEmailRequestModel request) async
   {
     try {
       final dio = Dio();
       await dio.post(
-          '${api.rootApiPath}${api.forgetPasswordChangePath}',
+          '${api.rootApiPath}${api.resetPasswordEmailPath}',
           data: {
             'email': request.email,
-            'firstName' : 'null',
-            'lastName' : 'null',
+            'firstName': 'Louis',
+            'lastName': 'Primas'
           },
           options: Options(headers: {'Content-Type': 'application/json'}));
     } on DioException { // add "catch (dioError)" for debugging
