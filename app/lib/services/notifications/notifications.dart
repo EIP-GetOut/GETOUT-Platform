@@ -27,20 +27,19 @@ class NotificationsServices {
       importance: Importance.max,
       priority: Priority.max,
       playSound: true,
-      icon: '@mipmap/ic_launcher',
       color:  Color.fromRGBO(213, 86, 65, 1),
       colorized: true,
+      icon: '@mipmap/ic_launcher',
     );
 
     NotificationDetails notificationDetails = NotificationDetails(
       android: androidNotificationDetails
     );
-
-    await flutterLocalNotificationsPlugin.periodicallyShow(
+    await flutterLocalNotificationsPlugin.show(
       0,
-      'GetOut',
+      "GetOut",
       "Hey, tu t'ennuies ? Viens découvrir de nouvelles activités !",
-      RepeatInterval.everyMinute, // pour les test sinon c'est everyDaily
+      // RepeatInterval.everyDaily
       notificationDetails
     );
   }

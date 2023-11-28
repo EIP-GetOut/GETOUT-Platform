@@ -12,6 +12,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/observer.dart';
@@ -36,9 +37,19 @@ Map<int, Color> colorMap = {
 };
 
 void main() {
+  //wait until flutter is initialized
   WidgetsFlutterBinding.ensureInitialized();
+  //Bloc Middleware
   Bloc.observer = const AppBlocObserver(); // BLoC MidleWare.
+  //LocalStorage
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  //Notification
+  Permission.notification.isDenied.then((value) {
+    if (value) {
+      Permission.notification.request();
+    }
+  });
+
   runApp(const MainProvider());
 }
 
