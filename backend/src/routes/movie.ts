@@ -9,7 +9,7 @@ import { type Request, type Response, Router } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { type MovieResponse } from 'moviedb-promise'
 
-import logger, { logApiRequest } from '@services/middlewares/logging'
+import { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
 import { AppError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'

@@ -23,7 +23,6 @@ function getDateIn1Hour (): Date {
   const current = new Date()
   const followingDay = new Date(current.getTime() + 3000000) // + 1 hour in ms
 
-  console.log(followingDay)
   return followingDay
 }
 

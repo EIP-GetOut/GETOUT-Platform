@@ -5,7 +5,7 @@
 ** Wrote by Firstname Lastname <firstname.lastname@domain.com>
 */
 
-import { Router } from 'express'
+import { type Request, type Response, Router } from 'express'
 import { query } from 'express-validator'
 import { StatusCodes, getReasonPhrase } from 'http-status-codes'
 
@@ -23,8 +23,8 @@ const rulesGet = [
   query('password').isNumeric()
 ]
 
-router.get('/account/reset-password/is-allowed', rulesGet, validate, logApiRequest, (req, res) => {
-  accountIsAllowedToResetPassword(req.query.token, req.query.password).then((isAllowed: boolean) => {
+router.get('/account/reset-password/is-allowed', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
+  accountIsAllowedToResetPassword(req.query.token as string, parseInt(req.query.password as string)).then((isAllowed: boolean) => {
     if (!isAllowed) {
       logger.error('Account is not allowed to reset password.')
       res.status(StatusCodes.FORBIDDEN).send(getReasonPhrase(StatusCodes.FORBIDDEN))

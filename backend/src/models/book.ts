@@ -5,11 +5,19 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
+import { type UUID } from 'crypto'
+import { StatusCodes } from 'http-status-codes'
 import { type Response } from 'node-fetch'
 
-import { ApiError, AppError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError, ApiError, AppError, DbError } from '@services/utils/customErrors'
+
+import { Account } from '@entities/Account'
 
 import { type BookDTO } from '@routes/book.dto'
+
+import { appDataSource } from '@config/dataSource'
+
+import { findEntity } from './getObjects'
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 const fetch = async (...args: Parameters<typeof import('node-fetch')['default']>): Promise<Response> => await import('node-fetch').then(async ({ default: fetch }) => await fetch(...args))
@@ -32,4 +40,21 @@ async function getBook (params: BookDTO): Promise<Response> {
   })
 }
 
-export { getBook }
+async function addBookToReadingList (accountId: UUID, bookId: string): Promise<string[]> {
+  return await findEntity<Account>(Account, { id: accountId }).then(async (account) => {
+    if (account == null) {
+      throw new AccountDoesNotExistError(undefined, StatusCodes.NOT_FOUND)
+    }
+    if (!account.readingList.includes(bookId)) {
+      account.readingList.push(bookId)
+    }
+    return await appDataSource.getRepository<Account>('Account').save(account)
+  }).then((savedAccount) => {
+    if (savedAccount == null) {
+      throw new DbError('Failed adding movie to the reading list.')
+    }
+    return savedAccount.readingList
+  })
+}
+
+export { addBookToReadingList, getBook }
