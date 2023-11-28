@@ -11,11 +11,16 @@ import request from 'supertest'
 
 import { app } from '@config/jestSetup'
 
-// describe('Logout Route', () => {
-//   it('should respond with 200 OK for POST /account/logout', async () => {
-//     await request(app).post('/account/logout').then((response) => {
-//       expect(response.status).toBe(200)
-//       expect(response.text).toBe('OK')
-//     })
-//   })
-// })
+const loginBody = {
+  email: 'supertester@tester.test',
+  password: 'toto'
+}
+
+describe('Login Routes', () => {
+  it('should respond with 200 OK for POST /account/login', async () => {
+    await request(app).post('/account/login').send(loginBody).then((response) => {
+      expect(response.status).toBe(200)
+      expect(response.text).toBe('OK')
+    })
+  })
+})

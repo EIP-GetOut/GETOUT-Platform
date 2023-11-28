@@ -6,39 +6,35 @@
 */
 
 import { expect, it } from '@jest/globals'
+import { StatusCodes } from 'http-status-codes'
+import { type UUID } from 'node:crypto'
 import { describe } from 'node:test'
 import request from 'supertest'
 
 import { app } from '@config/jestSetup'
 
-import { extractConnectSidCookie } from '../utils_funcs'
+import { extractConnectSidCookie } from '../../utils_funcs'
 
 const loginBody = {
   email: 'supertester@tester.test',
   password: 'toto'
 }
 
-describe('Session route', () => {
-  it('should respond with 200 OK for GET /session with authentified account', async () => {
+describe('Reading List Route', async () => {
+  it.only('should respond with 201 CREATED and the watchlist for POST /account/:accountId/watchlist', async () => {
+    let accountId: UUID
     let cookie: string
     await request(app).post('/account/login').send(loginBody).then(async (res) => {
       const optionalCookie = extractConnectSidCookie(res.headers['set-cookie'][0])
       if (optionalCookie === null) { throw Error('Failed extracting cookie') }
       cookie = optionalCookie
       return await request(app).get('/session').set('Cookie', cookie)
-    }).then(async (response) => {
-      expect(response.status).toBe(200)
-      expect(response.body).toHaveProperty('cookie')
-      expect(response.body).toHaveProperty('account')
-      expect(response.body.account.email).toStrictEqual('supertester@tester.test')
-    })
-  })
-
-  it('should respond with 200 OK for GET /session', async () => {
-    await request(app).get('/session').then((response) => {
-      expect(response.status).toBe(200)
-      expect(response.body).toHaveProperty('cookie')
-      expect(response.body.account).toBeFalsy()
+    }).then(async (res) => {
+      accountId = res.body.account.id
+      return await request(app).post(`/account/${accountId}/watchlist`).send({ movieId: 42 }).set('Cookie', cookie)
+    }).then((response) => {
+      expect(response.status).toBe(StatusCodes.CREATED)
+      expect(response.body).toContain(42)
     })
   })
 })
