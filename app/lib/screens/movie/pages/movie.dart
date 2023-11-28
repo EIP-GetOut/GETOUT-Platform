@@ -33,13 +33,41 @@ class MovieSuccessWidget extends StatelessWidget {
               ),
             ),
           ),
-          child: Image.network(
-            imageUrl,
-            color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.6),
-            colorBlendMode: BlendMode.modulate,
-            width: double.infinity,
-            fit: BoxFit.cover,
-            height: 200,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Image.network(
+                imageUrl,
+                color:
+                    const Color.fromARGB(255, 255, 255, 255).withOpacity(0.6),
+                colorBlendMode: BlendMode.modulate,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                height: 200,
+              ),
+              Positioned(
+                top: 30,
+                right: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.thumb_up_alt_sharp),
+                  color: Colors.white,
+                  onPressed: () {
+                    // print('Like');
+                  },
+                ),
+              ),
+              Positioned(
+                top: 80,
+                right: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.thumb_down),
+                  color: Colors.white,
+                  onPressed: () {
+                    // print('Dislike');
+                  },
+                ),
+              ),
+            ],
           ),
         );
 

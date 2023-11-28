@@ -7,6 +7,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:getout/screens/connection/login/pages/login.dart';
+import 'package:getout/screens/form/pages/literary_genre.dart';
+import 'package:getout/screens/settings/pages/edit_mail.dart';
 import 'package:getout/screens/settings/pages/edit_password.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -68,18 +70,41 @@ class _SettingsPageState extends State<SettingsPage> {
             const Divider(height: 20, thickness: 1),
             buildParameters(context, 'Changer le Mot de Passe',
                 const ParametersEditPasswordPage()),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(Icons.email_outlined, color: Colors.grey),
-                  Text("changer d'adresse mail",
-                      style: TextStyle(fontSize: 20, color: Colors.grey[800])),
-                  Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
-                ],
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MyMailPage()),
+                );
+              },
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Icon(Icons.email_outlined, color: Colors.grey),
+                    Text(
+                      "Changer d'adresse mail",
+                      style: TextStyle(fontSize: 20, color: Colors.grey[800]),
+                    ),
+                    Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
+                  ],
+                ),
               ),
             ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       const Icon(Icons.email_outlined, color: Colors.grey),
+            //       Text("changer d'adresse mail",
+            //           style: TextStyle(fontSize: 20, color: Colors.grey[800])),
+            //       Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
               child: Row(
@@ -185,16 +210,40 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(Icons.settings, color: Colors.grey),
-                  Text('changer les preferences',
-                      style: TextStyle(fontSize: 20, color: Colors.grey[800])),
-                  Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
-                ],
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       const Icon(Icons.settings, color: Colors.grey),
+            //       Text('changer les preferences',
+            //           style: TextStyle(fontSize: 20, color: Colors.grey[800])),
+            //       Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
+            //     ],
+            //   ),
+            // ),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const LiteraryGenre()),
+                );
+              },
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Icon(Icons.settings, color: Colors.grey),
+                    Text(
+                      'changer les preferences',
+                      style: TextStyle(fontSize: 20, color: Colors.grey[800]),
+                    ),
+                    Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
+                  ],
+                ),
               ),
             ),
             Padding(
@@ -247,8 +296,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => LoginScreen()),
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
                 },
               ),
