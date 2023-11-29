@@ -24,4 +24,4 @@ const String generateMoviesApiPath = '/generate-movies';
 const String getInfoMovieApiPath = '/movie';
 
 const String generateBooksApiPath = '/generate-books';
-const String getInfoBookApiPath = '/movie';
+const String getInfoBookApiPath = '/book';

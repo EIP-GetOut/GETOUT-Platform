@@ -17,7 +17,7 @@ import 'package:getout/screens/book/widgets/book_widget.dart';
 class Book extends StatelessWidget {
   const Book(this.id, {super.key});
 
-  final int id;
+  final String id;
 
   @override
   Widget build(BuildContext context) {

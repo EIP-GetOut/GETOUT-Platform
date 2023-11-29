@@ -45,30 +45,29 @@ class DashboardService {
       result.add(MoviePreview(
           id: elem['id'],
           title: elem['title'],
-          posterPath: elem['poster'],
+          posterPath: 'https://image.tmdb.org/t/p/w600_and_h900_bestv2${elem['poster']}',
           overview: elem['overview']));
     });
     return result;
   }
 
   Future<GenerateBooksResponse> getBooks(GenerateBooksRequest request) async {
-    String withGenres = formatWithGenresParameter(request.genres);
+//    String withGenres = formatWithGenresParameter(request.genres);
     GenerateBooksResponse result = [];
     dynamic data;
 
     final dio = Dio();
     final response = await dio.get(
-        '${api_constants.rootApiPath}${api_constants.generateMoviesApiPath}?with_genres=$withGenres&include_adult=${request.includeAdult.toString()}',
+        '${api_constants.rootApiPath}${api_constants.generateBooksApiPath}?subject=action', //?with_genres=$withGenres&include_adult=${request.includeAdult.toString()}
         options: Options(headers: {'Content-Type': 'application/json'}));
-
     if (response.statusCode != HttpStatus.OK) {
+
       return Future.error(Exception(
-        'Error ${response.statusCode} while fetching movies: ${response.statusMessage}',
+        'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
       ));
     }
-
     data = response.data;
-    data['movies'].forEach((elem) {
+    data['books'].forEach((elem) {
       result.add(BookPreview(
           id: elem['id'],
           title: elem['title'],

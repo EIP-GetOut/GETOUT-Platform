@@ -14,6 +14,7 @@ part 'books_event.dart';
 part 'books_state.dart';
 
 class BooksBloc extends Bloc<BooksEvent, BooksState> {
+
   BooksBloc({
     required this.dashboardRepository,
   }) : super(const BooksState()) {

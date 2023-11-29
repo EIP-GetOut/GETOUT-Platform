@@ -27,7 +27,7 @@ class BookPreview extends BooksEvent {
       required this.title,
       required this.posterPath,
       required this.overview});
-  final int id;
+  final String id;
   final String title;
   final String? posterPath;
   final String? overview;

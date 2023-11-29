@@ -18,7 +18,7 @@ class BookService {
     final dio = Dio();
 
     final response = await dio.get(
-        '${api_constants.rootApiPath}${api_constants.getInfoMovieApiPath}/${request.id}',
+        '${api_constants.rootApiPath}${api_constants.getInfoBookApiPath}/${request.id}',
         options: Options(headers: {'Content-Type': 'application/json'}));
     try {
       if (response.statusCode != InfoBookResponse.success) {
@@ -26,13 +26,13 @@ class BookService {
       }
       final dynamic data = response.data;
       result = InfoBookResponse(
-          title: data['movie']['title'],
-          overview: data['movie']['overview'],
-          posterPath: data['movie']['poster_path'],
-          backdropPath: data['movie']['backdrop_path'],
-          releaseDate: data['movie']['release_date'],
-          voteAverage: data['movie']['vote_average'],
-          duration: data['movie']['duration'],
+          title: data['book']['title'],
+          overview: data['book']['overview'],
+          posterPath: data['book']['poster_path'],
+          backdropPath: data['book']['backdrop_path'],
+          releaseDate: data['book']['release_date'],
+          voteAverage: data['book']['vote_average'],
+          duration: data['book']['duration'],
           statusCode: response.statusCode ?? 500);
       if (result.overview == '') {
         result.overview = 'Pas de description disponible';

@@ -28,7 +28,7 @@ class PosterAndDescriptionWidget extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
           child: Image.network(
-            'https://image.tmdb.org/t/p/w600_and_h900_bestv2$posterpath',
+            '$posterpath', //            '$posterpath',
             fit: BoxFit.cover,
           ),
         ),

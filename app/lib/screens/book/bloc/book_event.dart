@@ -15,7 +15,7 @@ class BookEvent extends Equatable {
 class CreateInfoBookRequest extends BookEvent {
   CreateInfoBookRequest({required this.id});
 
-  final int id;
+  final String id;
 }
 
 //ignore: must_be_immutable
