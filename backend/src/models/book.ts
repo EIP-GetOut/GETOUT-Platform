@@ -9,6 +9,7 @@ import { type UUID } from 'crypto'
 import { StatusCodes } from 'http-status-codes'
 import { type Response } from 'node-fetch'
 
+import logger from '@services/middlewares/logging'
 import { AccountDoesNotExistError, ApiError, AppError, DbError } from '@services/utils/customErrors'
 
 import { Account } from '@entities/Account'
@@ -24,8 +25,37 @@ const fetch = async (...args: Parameters<typeof import('node-fetch')['default']>
 
 const key = 'AIzaSyDDxf1nRkG6eMcufxYp2LHIWgA-2MEMlK8'
 
+function formatAuthorQuery (author: any): any {
+  return author.replace(/\s+/g, '+')
+}
+
+async function fetchAuthorInfo (author: any): Promise<any> {
+  const formattedAuthor = formatAuthorQuery(author)
+  const apiUrl = `https://kgsearch.googleapis.com/v1/entities:search?query=${formattedAuthor}&key=${key}`
+
+  try {
+    const response = await fetch(apiUrl)
+    const data = await response.json()
+
+    const imageLink = data.itemListElement[0]?.result?.image?.contentUrl
+
+    return { author, imageLink }
+  } catch (error) {
+    console.error(`Error fetching data for ${author}:`, error)
+    return { author, imageLink: null }
+  }
+}
+
+async function getPictures (authors: any): Promise<any> {
+  const authorInfoPromises = authors.map(fetchAuthorInfo)
+  const authorInfoArray = await Promise.all(authorInfoPromises)
+
+  logger.info(JSON.stringify(authorInfoArray))
+  return authorInfoArray
+}
+
 async function getBook (params: BookDTO): Promise<Response> {
-  const query = params.id + '&'
+  const query = params.id
   return await (fetch(`https://www.googleapis.com/books/v1/volumes/${query}?key=${key}`)).then(async (res) => {
     if (!res.ok) {
       throw new ApiError(res.statusText)
@@ -57,4 +87,4 @@ async function addBookToReadingList (accountId: UUID, bookId: string): Promise<s
   })
 }
 
-export { addBookToReadingList, getBook }
+export { addBookToReadingList, getBook, getPictures }

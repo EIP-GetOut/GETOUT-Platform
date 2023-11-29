@@ -9,7 +9,7 @@ import { IsNumber } from 'class-validator'
 
 class BookDTO {
   @IsNumber()
-    id!: number
+    id?: number
 }
 
 export { BookDTO }
