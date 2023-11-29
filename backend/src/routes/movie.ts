@@ -14,7 +14,7 @@ import validate from '@services/middlewares/validator'
 import { AppError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
-import { getDetail } from '@models/movie'
+import { fetchMovieCredits, getDetail } from '@models/movie'
 
 const router = Router()
 
@@ -61,7 +61,7 @@ router.get('/movie/:id', validate, logApiRequest, (req: Request, res: Response) 
   const params = {
     id: req.params.id
   }
-  getDetail(params).then((movieObtained: MovieResponse | undefined) => {
+  getDetail(params).then(async (movieObtained: MovieResponse | undefined) => {
     if (movieObtained == null) {
       throw new AppError()
     }
@@ -72,6 +72,7 @@ router.get('/movie/:id', validate, logApiRequest, (req: Request, res: Response) 
       backdrop_path: movieObtained.backdrop_path,
       release_date: movieObtained.release_date,
       vote_average: Number(movieObtained.vote_average) / 2,
+      cast: await fetchMovieCredits(params.id),
       duration: Number(movieObtained.runtime) / 60 - (Number(movieObtained.runtime) / 60 % 1) + 'h' + String(Number(movieObtained.runtime) % 60).padStart(2, '0')
     }
     res.status(StatusCodes.OK).json({ movie })

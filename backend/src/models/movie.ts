@@ -23,6 +23,26 @@ import { findEntity } from './getObjects'
 
 const moviedb = new MovieDb('1eec31e851e9ad1b8f3de3ccf39953b7')
 
+// Function to fetch movie credits using moviedb-promise
+async function fetchMovieCredits (movieId: any): Promise<any> {
+  try {
+    const credits = await moviedb.movieCredits({ id: movieId })
+
+    // Extract information about the first 5 people in the credits
+    const cast = credits.cast?.slice(0, 5).map(person => ({
+      name: person.name,
+      picture: ((person.profile_path ?? '').length > 0)
+        ? `https://image.tmdb.org/t/p/w200${person.profile_path}`
+        : null
+    }))
+
+    return cast
+  } catch (error) {
+    console.error('Error fetching movie credits:', error)
+    return null
+  }
+}
+
 async function getDetail (params: MovieDTO): Promise<MovieResponse | undefined> {
   return await moviedb.movieInfo(params.id).then((value: MovieResponse) => {
     logger.info(JSON.stringify(value, null, 2))
@@ -49,4 +69,4 @@ async function addMovieToWatchlist (accountId: UUID, movieId: number): Promise<n
   })
 }
 
-export { addMovieToWatchlist, getDetail }
+export { addMovieToWatchlist, fetchMovieCredits, getDetail }
