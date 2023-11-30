@@ -21,7 +21,7 @@ Map<int, Color> colorMap = {
 };
 
 extension BackgroundColor on ThemeData {
-  Color get backgroundColor => const Color.fromARGB(255, 255, 223, 176);
+  Color get backgroundColor => const Color.fromARGB(255, 255, 255, 255);
 }
 
 extension SecondaryColor on ThemeData {
@@ -120,7 +120,22 @@ final getOutTheme = ThemeData(
     )
   ),
   appBarTheme: const AppBarTheme(
-    backgroundColor: Color.fromARGB(255, 49, 54, 65),
-    foregroundColor: Color.fromARGB(255, 145, 77, 125),
+    backgroundColor: Colors.white,
+    foregroundColor: Colors.black,
+    centerTitle: true,
+    titleSpacing: 0,
+    elevation: 0,
+    iconTheme: IconThemeData(
+      color: Colors.black,
+    ),
+    titleTextStyle: TextStyle(
+      color: Colors.black,
+      fontSize: 30,
+      fontFamily: 'Poppins',
+      decorationThickness: 8,
+      decorationColor: Color.fromRGBO(213, 86, 65, 0.5),
+      decoration: TextDecoration.underline,
+      fontWeight: FontWeight.bold,
+    ),
   ),
 );

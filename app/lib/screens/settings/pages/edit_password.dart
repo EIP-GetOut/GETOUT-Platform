@@ -74,25 +74,8 @@ class _ParametersEditPasswordPageState extends State<ParametersEditPasswordPage>
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.black, //change your color here
-        ),
-        centerTitle: true,
-        titleSpacing: 0,
-        title: const Text(
-          'Changer le Mot de Passe',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            decorationThickness: 4,
-            decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
-            decoration:
-            TextDecoration.underline,
-          ),
-        ),
+        title: const Text('MOT DE PASSE'),
         leading: const BackButton(),
-        backgroundColor: Colors.white10,
-        elevation: 0,
       ),
       body: SingleChildScrollView(
           child: Form(

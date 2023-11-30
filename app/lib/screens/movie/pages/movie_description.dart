@@ -29,16 +29,8 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.black, //change your color here
-        ),
-        centerTitle: true,
-        titleSpacing: 0,
-        title:
-            Text('DESCRIPTION', style: Theme.of(context).textTheme.titleSmall),
+        title: const Text('DESCRIPTION'),
         leading: const BackButton(),
-        backgroundColor: Colors.white10,
-        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Stack(

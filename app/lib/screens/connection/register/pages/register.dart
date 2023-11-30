@@ -59,22 +59,8 @@ class RegisterScreen extends StatelessWidget {
             child: Scaffold(
               resizeToAvoidBottomInset: true,
               appBar: AppBar(
-                iconTheme: const IconThemeData(
-                  color: Colors.black, //change your color here
-                ),
-                centerTitle: true,
-                titleSpacing: 0,
-                title: Text(
-                    'VOTRE PROFIL'.padRight(
-                        '             '.length,
-                        String.fromCharCodes([0x00A0 /*No-Break Space*/ ])), // don't know but print white space
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .titleLarge),
+                title: const Text('VOTRE PROFIL'),
                 leading: const BackButton(),
-                backgroundColor: Colors.white10,
-                elevation: 0,
               ),
               body: SingleChildScrollView(
                   child: Form(

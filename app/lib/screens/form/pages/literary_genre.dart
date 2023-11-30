@@ -14,20 +14,8 @@ class LiteraryGenre extends StatelessWidget {
       create: (context) => LiteraryGenreBloc(),
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          title: Text('VOS PRÉFÉRENCES'.padRight(
-              '             '.length,
-              String.fromCharCodes([0x00A0 /*No-Break Space*/ ])), // don't know but print white space,
-              style: Theme.of(context).textTheme.titleLarge),
-          backgroundColor: Colors.white,
+          title: const Text('VOS PRÉFÉRENCES'),
+          leading: const BackButton(),
         ),
         body: Center(
           child: Column(

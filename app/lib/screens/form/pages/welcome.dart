@@ -30,12 +30,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
         return Scaffold(
           appBar: AppBar(
-            iconTheme: const IconThemeData(
-              color: Colors.black,
-            ),
             leading: const BackButton(),
-            backgroundColor: Colors.white10,
-            elevation: 0,
           ),
           body: Column(
             children: [
