@@ -21,20 +21,20 @@ class SocialMediaSpentTime extends StatelessWidget {
         ),
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 140),
               const PageIndicator(currentPage: 0, pageCount: 5),
-              const SizedBox(height: 20),
-              const Center(
+              const SizedBox(height: 90),
+              const Padding(
+                padding: EdgeInsets.only(left: 20, right: 20),
                 child: Text(
-                  'TEMPS PASSE SUR LES RESEAUX SOCIAUX PAR JOURS :',
+                  'TEMPS PASSÉ SUR LES RÉSEAUX SOCIAUX PAR JOURS :',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
+              const SizedBox(height: 30),
               // Utilisez BlocBuilder pour mettre Ã  jour la valeur du curseur
               BlocBuilder<SocialMediaSpentTimeBloc, double>(
                 builder: (context, sliderValue) {
@@ -50,23 +50,21 @@ class SocialMediaSpentTime extends StatelessWidget {
                       });
                 },
               ),
-              const SizedBox(height: 20),
-              FractionallySizedBox(
-                widthFactor: 0.9,
-                child: ElevatedButton(
-                  style: Theme.of(context).elevatedButtonTheme.style,
-                  child: Text('Suivant',
-                      style: Theme.of(context).textTheme.bodyLarge),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AreasOfInterest()),
-                    );
-                  },
-                ),
-              ),
             ],
+          ),
+        ),
+        floatingActionButton: SizedBox(
+          width: 90 * MediaQuery.of(context).size.width / 100,
+          height: 65,
+          child: FloatingActionButton(
+            child: Text('Suivant', style: Theme.of(context).textTheme.labelMedium),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AreasOfInterest()),
+              );
+            },
           ),
         ),
       ),

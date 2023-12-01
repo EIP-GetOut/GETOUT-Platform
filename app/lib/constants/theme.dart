@@ -60,12 +60,18 @@ final getOutTheme = ThemeData(
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     backgroundColor: const Color.fromRGBO(213, 86, 65, 1),
     foregroundColor: Colors.white,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(30.0),
-    ),
     elevation: 4.0,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(100.0),
+    ),
   ),
   textTheme:  const TextTheme(
+    // Button
+    labelMedium: TextStyle(
+        fontSize: 17.5,
+        fontWeight: FontWeight.w600,
+        color: Colors.white),
+
     bodyLarge: TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.w500,
@@ -83,15 +89,6 @@ final getOutTheme = ThemeData(
       color: Colors.black,
       fontSize: 30,
       fontFamily: 'Urbanist',
-      fontWeight: FontWeight.bold,
-    ),
-    titleLarge: TextStyle(
-      color: Colors.black,
-      fontSize: 30,
-      fontFamily: 'Poppins',
-      decorationThickness: 8,
-      decorationColor: Color.fromRGBO(213, 86, 65, 0.5),
-      decoration: TextDecoration.underline,
       fontWeight: FontWeight.bold,
     ),
     displayMedium: TextStyle(

@@ -17,41 +17,39 @@ class LiteraryGenre extends StatelessWidget {
           title: const Text('VOS PRÉFÉRENCES'),
           leading: const BackButton(),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        body: const Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              const PageIndicator(currentPage: 2, pageCount: 5),
-              const SizedBox(height: 20),
-              const Center(
+              SizedBox(height: 140),
+              PageIndicator(currentPage: 2, pageCount: 5),
+              SizedBox(height: 20),
+              Center(
                 child: Text(
-                  'GENRE LITTERAIRE PREFERE :',
+                  'GENRES LITTÉRAIRES :',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
-              const SizedBox(height: 20),
-              const CheckboxListWidgetLiteraryGenre(),
-              const SizedBox(height: 20),
-              FractionallySizedBox(
-                widthFactor: 0.9,
-                child: ElevatedButton(
-                  style: Theme.of(context).elevatedButtonTheme.style,
-                  child: Text('Suivant',
-                      style: Theme.of(context).textTheme.bodyLarge),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const FilmGenre()),
-                    );
-                    context.read<LiteraryGenre>();
-                  },
-                ),
-              ),
+              SizedBox(height: 20),
+              CheckboxListWidgetLiteraryGenre(),
             ],
           ),
-        ),
+          floatingActionButton: SizedBox(
+            width: 90 * MediaQuery.of(context).size.width / 100,
+            height: 65,
+            child: FloatingActionButton(
+              child: Text('Suivant', style: Theme.of(context).textTheme.labelMedium),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const FilmGenre()),
+                );
+                context.read<LiteraryGenre>();
+              },
+            ),
+          )
+
       ),
     );
   }

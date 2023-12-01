@@ -14,50 +14,43 @@ class EndForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const SizedBox(height: 20),
-            Image.asset('assets/entire_logo.png', width: 800, height: 200),
-            const SizedBox(height: 30),
-            Center(
-              child: Row(
+      body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget> [
+            const SizedBox(height: 140),
+            Image.asset('assets/entire_logo.png', scale: 0.85),
+            const SizedBox(height: 50),
+            Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset('assets/images/Telephone.png',
-                      width: 150, height: 180),
-                  Image.asset('assets/images/Dessin.png',
-                      width: 200, height: 200),
+                children: <Widget> [
+                  Image.asset('assets/images/Telephone.png', scale: 1.6),
+                  Image.asset('assets/images/Dessin.png', scale: 2.5),
                 ],
               ),
-            ),
             const SizedBox(height: 20),
             const Center(
               child: Text(
-                'VOS RÉPONSES ONT BIEN ÉTÉ ENREGISTRÉES',
+                'VOS RÉPONSES ONT BIEN ÉTÉ ENREGISTRÉES !',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
             ),
-            const SizedBox(height: 20),
-            FractionallySizedBox(
-              widthFactor: 0.9,
-              child: ElevatedButton(
-                style: Theme.of(context).elevatedButtonTheme.style,
-                child: Text('Découvrir l\'application',
-                    style: Theme.of(context).textTheme.bodyLarge),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Dashboard()),
-                  );
-                },
-              ),
-            ),
           ],
         ),
-      ),
+        floatingActionButton: SizedBox(
+          width: 90 * MediaQuery.of(context).size.width / 100,
+          height: 65,
+          child: FloatingActionButton(
+            child: Text('Découvrir l\'application', style: Theme.of(context).textTheme.labelMedium),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Dashboard()),
+              );
+            },
+          ),
+        )
+
     );
   }
 }

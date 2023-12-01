@@ -139,19 +139,12 @@ class RegisterButton extends StatelessWidget {
             width: 90 * phoneWidth / 100,
             height: 65,
             child: FloatingActionButton(
-              shape: Theme.of(context).floatingActionButtonTheme.shape,
-              backgroundColor:
-              Theme.of(context).floatingActionButtonTheme.backgroundColor,
+              child: Text('Suivant', style: Theme.of(context).textTheme.labelMedium),
               onPressed: () {
                 if (formKey.currentState!.validate()) {
                   context.read<RegisterBloc>().add(RegisterSubmitted());
                 }
               },
-              child: const Text('Suivant',
-                  style: TextStyle(
-                      fontSize: 17.5,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white)),
             ));
       },
     );
