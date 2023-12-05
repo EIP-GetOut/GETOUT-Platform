@@ -23,22 +23,22 @@ class StreamingPlatform extends StatelessWidget {
           title: const Text('VOS PRÉFÉRENCES'),
           leading: const BackButton(),
         ),
-        body: const Column(
+        body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              SizedBox(height: 140),
-              PageIndicator(currentPage: 4, pageCount: 5),
-              SizedBox(height: 20),
+              const SizedBox(height: 140),
+              const PageIndicator(currentPage: 4, pageCount: 5),
+              const SizedBox(height: 20),
               Center(
                 child: Text(
-                  'SUPPORT DE VISIONAGE :',
+                  'SUPPORT DE VISIONNAGE :',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              SizedBox(height: 20),
-              CheckboxListWidgetStreamingPlatform(),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
+              const CheckboxListWidgetStreamingPlatform(),
+              const SizedBox(height: 20),
             ],
           ),
           floatingActionButton: SizedBox(

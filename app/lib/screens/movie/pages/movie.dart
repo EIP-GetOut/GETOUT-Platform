@@ -136,10 +136,10 @@ class MovieSuccessWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment
             .center, //Center Row contents vertically,            children: [
         children: [
-          const Text('Film',
+          Text('Film',
               textScaleFactor: 0.9,
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              style: Theme.of(context).textTheme.labelSmall),
           const SizedBox(width: 15),
           const SizedBox(
               height: 20,
@@ -153,8 +153,7 @@ class MovieSuccessWidget extends StatelessWidget {
               // widget.movie.duration,
               textScaleFactor: 0.9,
               textAlign: TextAlign.center,
-              style:
-                  const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              style: Theme.of(context).textTheme.labelSmall),
         ],
       ),
       Flexible(
@@ -165,11 +164,7 @@ class MovieSuccessWidget extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               maxLines: 12,
               textScaleFactor: 0.9,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 22,
-                fontFamily: 'Urbanist',
-              )),
+              style: Theme.of(context).textTheme.bodySmall),
         ),
       ),
       GestureDetector(

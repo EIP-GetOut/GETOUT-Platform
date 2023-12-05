@@ -26,12 +26,12 @@ class SocialMediaSpentTime extends StatelessWidget {
               const SizedBox(height: 140),
               const PageIndicator(currentPage: 0, pageCount: 5),
               const SizedBox(height: 90),
-              const Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Text(
                   'TEMPS PASSÉ SUR LES RÉSEAUX SOCIAUX PAR JOURS :',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               const SizedBox(height: 30),

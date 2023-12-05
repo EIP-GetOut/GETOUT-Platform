@@ -71,21 +71,62 @@ final getOutTheme = ThemeData(
         fontSize: 17.5,
         fontWeight: FontWeight.w600,
         color: Colors.white),
-
     bodyLarge: TextStyle(
       fontSize: 20,
       fontWeight: FontWeight.w500,
       color: Colors.white,
       fontFamily: 'Poppins',
     ),
+    // Title of each page of the preferences
+    titleMedium: TextStyle(
+      color: Colors.black,
+      fontSize: 24,
+      fontFamily: 'Poppins',
+      fontWeight: FontWeight.bold,
+    ),
+    // text of each checkbox of the preferences
+    bodyMedium: TextStyle(
+      color: Colors.black,
+      fontSize: 20,
+      fontFamily: 'Poppins',
+      fontWeight: FontWeight.bold,
+    ),
+    // title of book/movie in the home page
     titleSmall: TextStyle(
       color: Colors.black,
-      fontSize: 30,
-      decorationThickness: 4,
-      decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
-      decoration: TextDecoration.underline,
+      fontSize: 14,
+      fontFamily: 'Urbanist',
+      decorationColor: Colors.black,
+      fontWeight: FontWeight.bold,
     ),
-    titleMedium: TextStyle(
+    // description of book/movie in the home page
+    headlineSmall: TextStyle(
+      color: Color.fromRGBO(0, 0, 0, 0.5),
+      fontSize: 13,
+      fontFamily: 'Urbanist',
+      fontWeight: FontWeight.bold,
+    ),
+    // description of book/movie in the description page
+    bodySmall: TextStyle(
+      color: Color.fromRGBO(0, 0, 0, 0.8),
+      fontSize: 21,
+      fontFamily: 'Urbanist',
+      fontWeight: FontWeight.bold,
+    ),
+    labelSmall: TextStyle(
+        fontSize: 22,
+        fontFamily: 'Urbanist',
+        color: Colors.black,
+        fontWeight: FontWeight.w600),
+    // SnackBar
+    displaySmall: TextStyle(
+      fontFamily: 'Urbanist',
+      color: Colors.white,
+      fontSize: 16,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 1.1,
+    ),
+    titleLarge: TextStyle(
       color: Colors.black,
       fontSize: 30,
       fontFamily: 'Urbanist',
@@ -96,24 +137,11 @@ final getOutTheme = ThemeData(
       color: Colors.black,
       fontSize: 15,
     ),
-    bodySmall: TextStyle(
-      color: Color(0xFFD3D3D3),
-      fontSize: 13,
-      fontFamily: 'Urbanist',
-      fontWeight: FontWeight.bold,
-    ),
     displayLarge: TextStyle(
      fontFamily: 'Urbanist',
       color: Colors.black,
       fontWeight: FontWeight.w800,
       fontSize: 22, 
-    ),
-    displaySmall: TextStyle(
-      fontFamily: 'Urbanist',
-      color: Colors.white,
-      fontSize: 16,
-      fontWeight: FontWeight.w600,
-      letterSpacing: 1.1,
     )
   ),
   appBarTheme: const AppBarTheme(

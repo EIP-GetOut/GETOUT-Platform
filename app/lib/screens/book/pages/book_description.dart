@@ -44,7 +44,8 @@ class BookDescriptionPage extends StatelessWidget {
                         ))),
                 Padding(padding: const EdgeInsets.only(left: 10), child: Text(
                     // textAlign: TextAlign.start,
-                    book.overview ?? 'Aucune description disponible')),
+                    book.overview ?? 'Aucune description disponible',
+                style: Theme.of(context).textTheme.bodySmall)),
                 separateLine(),
                 const Padding(
                     padding: EdgeInsets.only(left: 10),
