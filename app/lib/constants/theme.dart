@@ -113,6 +113,7 @@ final getOutTheme = ThemeData(
       fontFamily: 'Urbanist',
       fontWeight: FontWeight.bold,
     ),
+    // text for the "type" (book/movie) and duration
     labelSmall: TextStyle(
         fontSize: 22,
         fontFamily: 'Urbanist',
@@ -126,22 +127,18 @@ final getOutTheme = ThemeData(
       fontWeight: FontWeight.w600,
       letterSpacing: 1.1,
     ),
+    // Welcome text of the home page
     titleLarge: TextStyle(
       color: Colors.black,
       fontSize: 30,
       fontFamily: 'Urbanist',
       fontWeight: FontWeight.bold,
     ),
+    // text below the welcome text of the home page
     displayMedium: TextStyle(
       fontFamily: 'Urbanist',
       color: Colors.black,
       fontSize: 15,
-    ),
-    displayLarge: TextStyle(
-     fontFamily: 'Urbanist',
-      color: Colors.black,
-      fontWeight: FontWeight.w800,
-      fontSize: 22, 
     )
   ),
   appBarTheme: const AppBarTheme(
