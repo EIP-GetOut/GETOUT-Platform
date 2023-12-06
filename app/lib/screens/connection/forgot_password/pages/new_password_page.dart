@@ -36,20 +36,8 @@ class ForgetPasswordChangeScreen extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.black, //change your color here
-        ),
-        centerTitle: true,
-        titleSpacing: 0,
-        title: Text(
-          'MOT DE PASSE OUBLIÉ'.padRight(
-              '             '.length,
-              String.fromCharCodes([0x00A0 /*No-Break Space*/ ])), // don't know but print white space,
-          style: Theme.of(context).textTheme.titleLarge
-        ),
+        title: const Text('MOT DE PASSE OUBLIÉ'),
         leading: const BackButton(),
-        backgroundColor: Colors.white10,
-        elevation: 0,
       ),
       body: BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
         listenWhen: (previous, current) => previous.formStatus != current.formStatus,

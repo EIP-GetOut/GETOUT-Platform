@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:getout/screens/home/widgets/common/title.dart';
-import 'package:getout/screens/home/widgets/common/poster_and_desription.dart';
+import 'package:getout/screens/home/widgets/common/poster_and_description.dart';
 import 'package:getout/screens/home/bloc/books/books_bloc.dart';
 import 'package:getout/screens/book/bloc/book_provider.dart';
 

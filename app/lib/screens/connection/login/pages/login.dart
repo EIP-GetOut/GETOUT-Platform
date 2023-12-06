@@ -17,6 +17,7 @@ import 'package:getout/screens/connection/register/pages/register.dart';
 import 'package:getout/screens/connection/register/bloc/register_service.dart';
 import 'package:getout/screens/connection/login/widgets/fields.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
+import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/constants/http_status.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -103,23 +104,7 @@ class LoginScreen extends StatelessWidget {
                             child: EmailField(),
                           ),
                           const SizedBox(height: 20),
-                          const Row(
-                            children: [
-                              SizedBox(width: 10),
-                              Text('MOT DE PASSE',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black)),
-                              Text('*',
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.red)),
-                            ],
-                          ),
+                          fieldTitle('MOT DE PASSE'),
                           const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 16),
@@ -225,19 +210,12 @@ class LoginButton extends StatelessWidget {
             width: 90 * phoneWidth / 100,
             height: 65,
             child: FloatingActionButton(
-              shape: Theme.of(context).floatingActionButtonTheme.shape,
-              backgroundColor:
-              Theme.of(context).floatingActionButtonTheme.backgroundColor,
+              child: Text('Se connecter', style: Theme.of(context).textTheme.labelMedium),
               onPressed: () {
                 if (formKey.currentState!.validate()) {
                   context.read<LoginBloc>().add(LoginSubmitted());
                 }
               },
-              child: const Text('Se connecter',
-                  style: TextStyle(
-                      fontSize: 17.5,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white)),
             ));
       },
     );

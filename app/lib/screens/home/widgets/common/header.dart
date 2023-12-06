@@ -37,7 +37,7 @@ class DashboardHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Bienvenue !',
-                    style: Theme.of(context).textTheme.titleMedium),
+                    style: Theme.of(context).textTheme.titleLarge),
                 Text('La productivité à portée de main',
                     style: Theme.of(context).textTheme.displayMedium)
               ],

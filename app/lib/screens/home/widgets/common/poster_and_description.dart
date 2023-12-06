@@ -28,17 +28,13 @@ class PosterAndDescriptionWidget extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
           child: Image.network(
-            '$posterpath', //            '$posterpath',
+            '$posterpath',
             fit: BoxFit.cover,
           ),
         ),
         Container(
           alignment: Alignment.topLeft,
-          child: Text(title,
-              style: Theme.of(context)
-                  .textTheme
-                  .displayMedium!
-                  .copyWith(fontWeight: FontWeight.bold)),
+          child: Text(title, style: Theme.of(context).textTheme.titleSmall),
         ),
         const SizedBox(height: 10),
         Flexible(
@@ -49,7 +45,7 @@ class PosterAndDescriptionWidget extends StatelessWidget {
                 textAlign: TextAlign.justify,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 4,
-                style: Theme.of(context).textTheme.bodySmall),
+                style: Theme.of(context).textTheme.headlineSmall),
           ),
         ),
       ]),
