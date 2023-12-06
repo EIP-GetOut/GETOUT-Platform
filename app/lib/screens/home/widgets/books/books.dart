@@ -14,9 +14,9 @@ import 'package:getout/screens/book/bloc/book_provider.dart';
 
 class BooksSuccessWidget extends StatelessWidget {
   BooksSuccessWidget({
-    Key? key,
+    super.key,
     required this.books,
-  }) : super(key: key);
+  });
 
   final List<BookPreview> books;
 
@@ -43,7 +43,7 @@ class BooksSuccessWidget extends StatelessWidget {
                                 builder: (context) => Book(books[index].id)));
                       },
                       child: PosterAndDescriptionWidget(
-                          posterpath: books[index].posterPath,
+                          posterPath: books[index].posterPath,
                           title: books[index].title,
                           overview: books[index].overview));
                 }))),

@@ -12,9 +12,7 @@ import 'package:getout/screens/home/widgets/movies/movies_widget.dart';
 import 'package:getout/screens/home/widgets/books/books_widget.dart';
 
 class DashboardLayout extends StatelessWidget {
-  const DashboardLayout({
-    Key? key,
-  }) : super(key: key);
+  const DashboardLayout({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -9,13 +9,13 @@ import 'package:flutter/material.dart';
 
 class PosterAndDescriptionWidget extends StatelessWidget {
   const PosterAndDescriptionWidget({
-    Key? key,
-    required this.posterpath,
+    super.key,
+    required this.posterPath,
     required this.title,
     required this.overview,
-  }) : super(key: key);
+  });
 
-  final String? posterpath;
+  final String? posterPath;
   final String? overview;
   final String title;
 
@@ -26,15 +26,17 @@ class PosterAndDescriptionWidget extends StatelessWidget {
       width: 100,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(7.0),
           child: Image.network(
-            '$posterpath',
+            '$posterPath',
             fit: BoxFit.cover,
           ),
         ),
         Container(
           alignment: Alignment.topLeft,
-          child: Text(title, style: Theme.of(context).textTheme.titleSmall),
+          child: Text(title,
+              maxLines: 3,
+              style: Theme.of(context).textTheme.titleSmall),
         ),
         const SizedBox(height: 10),
         Flexible(
@@ -44,7 +46,7 @@ class PosterAndDescriptionWidget extends StatelessWidget {
             child: Text(overview ?? 'Aucune description disponible',
                 textAlign: TextAlign.justify,
                 overflow: TextOverflow.ellipsis,
-                maxLines: 4,
+                maxLines: 3,
                 style: Theme.of(context).textTheme.headlineSmall),
           ),
         ),

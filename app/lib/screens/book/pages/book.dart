@@ -13,9 +13,9 @@ import 'package:getout/screens/book/bloc/book_bloc.dart';
 
 class BookSuccessWidget extends StatelessWidget {
   const BookSuccessWidget({
-    Key? key,
+    super.key,
     required this.book,
-  }) : super(key: key);
+  });
 
   final InfoBookResponse book;
 
@@ -77,7 +77,6 @@ class BookSuccessWidget extends StatelessWidget {
       ),
       Text(
         book.title ?? 'N/A',
-        textScaleFactor: 0.9,
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
       ),
@@ -109,7 +108,6 @@ class BookSuccessWidget extends StatelessWidget {
             .center, //Center Row contents vertically,            children: [
         children: [
           Text('Livre',
-              textScaleFactor: 0.9,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall),
           const SizedBox(width: 15),
@@ -123,7 +121,6 @@ class BookSuccessWidget extends StatelessWidget {
               )),
           Text(book.duration ?? 'N/A',
               // widget.book.duration,
-              textScaleFactor: 0.9,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall),
         ],
@@ -134,8 +131,7 @@ class BookSuccessWidget extends StatelessWidget {
           child: Text(book.overview ?? 'Aucune description disponible',
               textAlign: TextAlign.justify,
               overflow: TextOverflow.ellipsis,
-              maxLines: 12,
-              textScaleFactor: 0.9,
+              maxLines: 11,
               style: Theme.of(context).textTheme.bodySmall),
         ),
       ),

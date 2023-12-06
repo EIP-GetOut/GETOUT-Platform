@@ -18,7 +18,7 @@ import 'package:getout/tools/map_box_movie_values_to_ids.dart';
 
 //ignore: must_be_immutable
 class Dashboard extends StatelessWidget {
-  Dashboard({Key? key}) : super(key: key);
+  Dashboard({super.key});
 
   List<int> genreMoviesIds = mapBoxMovieValuesToIds(boxMovieValue);
   List<int> genreBooksIds = mapBoxMovieValuesToIds(boxBookValue);

@@ -15,8 +15,8 @@ import 'package:getout/screens/home/bloc/movies/movies_bloc.dart';
 
 class MoviesWidget extends StatelessWidget {
   const MoviesWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

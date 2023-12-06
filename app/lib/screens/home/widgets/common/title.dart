@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 
 class TitleWidget extends StatelessWidget {
   const TitleWidget({
-    Key? key,
+    super.key,
     required this.title,
     required this.asset,
-  }) : super(key: key);
+  });
 
   final String title;
   final String asset;

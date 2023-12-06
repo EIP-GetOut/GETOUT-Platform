@@ -5,7 +5,7 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-import 'package:http_status_code/http_status_code.dart';
+import 'package:getout/constants/http_status.dart';
 
 class CreateAccountRequest {
     final String email;
@@ -25,7 +25,7 @@ class CreateAccountRequest {
 
 class AccountResponseInfo
 {
-  static const int success = StatusCode.CREATED;
+  static const int success = HttpStatus.CREATED;
   String? id;
   String? email;
   String? password;

@@ -14,9 +14,9 @@ import 'package:getout/screens/movie/bloc/movie_provider.dart';
 
 class MoviesSuccessWidget extends StatelessWidget {
   MoviesSuccessWidget({
-    Key? key,
+    super.key,
     required this.movies,
-  }) : super(key: key);
+  });
 
   final List<MoviePreview> movies;
 
@@ -43,7 +43,7 @@ class MoviesSuccessWidget extends StatelessWidget {
                                 builder: (context) => Movie(movies[index].id)));
                       },
                       child: PosterAndDescriptionWidget(
-                          posterpath: movies[index].posterPath,
+                          posterPath: movies[index].posterPath,
                           title: movies[index].title,
                           overview: movies[index].overview));
                 }))),
