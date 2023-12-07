@@ -36,10 +36,10 @@ describe('Liked movies list routes', async () => {
   })
 
   it('should respond with 201 CREATED and the liked movies for POST /account/:accountId/likedMovies', async () => {
-    await request(app).post(`/account/${accountId}/likedMovies`).send({ movieId: 42 }).set('Cookie', cookie)
+    await request(app).post(`/account/${accountId}/likedMovies`).send({ movieId: 41 }).set('Cookie', cookie)
       .then((response) => {
         expect(response.status).toBe(StatusCodes.CREATED)
-        expect(response.body).toContain(42)
+        expect(response.body).toContain(41)
       })
   })
 
@@ -53,13 +53,13 @@ describe('Liked movies list routes', async () => {
       })
   })
 
-  it('should respond with 200 OK and the liked movies for DELETE /account/:accountId/likedMovies/42', async () => {
-    await request(app).delete(`/account/${accountId}/likedMovies`).send({ movieId: 42 }).set('Cookie', cookie)
+  it('should respond with 200 OK and the liked movies for DELETE /account/:accountId/likedMovies/43', async () => {
+    await request(app).post(`/account/${accountId}/likedMovies`).send({ movieId: 43 }).set('Cookie', cookie)
       .then(async () => {
-        return await request(app).delete(`/account/${accountId}/likedMovies/42`).set('Cookie', cookie)
+        return await request(app).delete(`/account/${accountId}/likedMovies/43`).set('Cookie', cookie)
       }).then((response) => {
         expect(response.status).toBe(StatusCodes.OK)
-        expect(response.body).not.toContain(42)
+        expect(response.body).not.toContain(43)
       })
   })
 })

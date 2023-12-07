@@ -59,7 +59,6 @@ function checkRequiredEnvironmentVariables (): void {
   //   }
   // }
 
-  generateSwaggerDoc('./src/swagger.yaml')
   appDataSource.initialize().then(() => {
     app.use(cors())
     logger.info('Data Source has been initialized!')

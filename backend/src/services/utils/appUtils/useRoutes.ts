@@ -8,7 +8,9 @@
 import { type Application } from 'express'
 
 import changePassword from '@routes/account/changePassword'
+import dislikedBooks from '@routes/account/dislikedBooks'
 import dislikedMovies from '@routes/account/dislikedMovies'
+import likedBooks from '@routes/account/likedBooks'
 import likedMovies from '@routes/account/likedMovies'
 import login from '@routes/account/login'
 import logout from '@routes/account/logout'
@@ -31,6 +33,8 @@ const useRoutes = (app: Application): Application => (
     .use(likedMovies)
     .use(dislikedMovies)
     .use(readingList)
+    .use(likedBooks)
+    .use(dislikedBooks)
     .use(sendEmail)
     .use(login)
     .use(logout)

@@ -44,22 +44,22 @@ describe('Reading List Route', async () => {
   })
 
   it('should respond with 200 OK and the liked books list for GET /account/:accountId/likedBooks', async () => {
-    await request(app).post(`/account/${accountId}/likedBooks`).send({ bookId: '_LettPDhwR0C' }).set('Cookie', cookie)
+    await request(app).post(`/account/${accountId}/likedBooks`).send({ bookId: '_LettLAVABO' }).set('Cookie', cookie)
       .then(async () => {
         return await request(app).get(`/account/${accountId}/likedBooks`).set('Cookie', cookie)
       }).then((response) => {
         expect(response.status).toBe(StatusCodes.OK)
-        expect(response.body).toContain('_LettPDhwR0C')
+        expect(response.body).toContain('_LettLAVABO')
       })
   })
 
-  it('should respond with 200 OK and the liked books list for DELETE /account/:accountId/likedBooks/42', async () => {
-    await request(app).post(`/account/${accountId}/likedBooks`).send({ bookId: '_LettPDhwR0C' }).set('Cookie', cookie)
+  it('should respond with 200 OK and the liked books list for DELETE /account/:accountId/likedBooks/_LetDELAWARDE', async () => {
+    await request(app).post(`/account/${accountId}/likedBooks`).send({ bookId: '_LetDELAWARDE' }).set('Cookie', cookie)
       .then(async () => {
-        return await request(app).delete(`/account/${accountId}/likedBooks/_LettPDhwR0C`).set('Cookie', cookie)
+        return await request(app).delete(`/account/${accountId}/likedBooks/_LetDELAWARDE`).set('Cookie', cookie)
       }).then((response) => {
         expect(response.status).toBe(StatusCodes.OK)
-        expect(response.body).not.toContain('_LettPDhwR0C')
+        expect(response.body).not.toContain('_LetDELAWARDE')
       })
   })
 })

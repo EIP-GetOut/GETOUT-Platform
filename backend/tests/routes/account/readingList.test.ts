@@ -54,7 +54,7 @@ describe('Reading List Route', async () => {
   })
 
   it('should respond with 200 OK and the reading list for DELETE /account/:accountId/readingList/_LettPDhwR0C', async () => {
-    await request(app).post(`/account/${accountId}/readingList`).set('Cookie', cookie)
+    await request(app).post(`/account/${accountId}/readingList`).send({ bookId: '_LettPDhwR0C' }).set('Cookie', cookie)
       .then(async () => {
         return await request(app).delete(`/account/${accountId}/readingList/_LettPDhwR0C`).set('Cookie', cookie)
       }).then((response) => {
