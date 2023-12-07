@@ -19,7 +19,7 @@
   "main": "./app.ts",
   "scripts": {
     "start": "nodemon -r tsconfig-paths/register ./src/app.ts",
-    "test": "NODE_ENV=test jest",
+    "test": "NODE_ENV=test jest --silent",
     "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
     "migrate:generate": "npm run typeorm migration:generate -c main -- -n",
     "migrate:up": "npm run typeorm migration:run -c main",
@@ -82,7 +82,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.1",
     "express-session": "^1.17.3",
-    "jest": "^29.6.4",
+    "jest": "^29.7.0",
     "nodemon": "^2.0.20",
     "pg": "^8.10.0",
     "redis": "^4.6.6",

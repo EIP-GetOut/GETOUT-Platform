@@ -6,24 +6,20 @@
 */
 
 import { type Request, type Response, Router } from 'express'
-import { body } from 'express-validator'
+import { body, param } from 'express-validator'
 import { StatusCodes } from 'http-status-codes'
 
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
-import { AuthenticationError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
-import { addBookToReadingList } from '@models/book'
+import { addBookToReadingList, removeBookFromReadingList } from '@models/book'
 import { findEntity } from '@models/getObjects'
 
 import { Account } from '@entities/Account'
 
 const router = Router()
-
-const rulesPost = [
-  body('bookId').isString()
-]
 
 /**
  * @swagger
@@ -34,6 +30,12 @@ const rulesPost = [
  *     consumes:
  *       - application/json
  *     parameters:
+ *       - name: accountId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
  *       - name: body
  *         in: body
  *         required: true
@@ -58,15 +60,51 @@ const rulesPost = [
  *         description: Unauthorized - user is not connected.
  *       '500':
  *         description: Internal server error.
+ *   delete:
+ *     summary: Remove a book from the user's reading list.
+ *     description: Remove the book passed in the url in the connected user's reading list.
+ *     consumes:
+ *       - application/json
+ *     parameters:
+ *      - name: accountId
+ *        in: path
+ *        required: true
+ *        schema:
+ *          type: string
+ *          format: uuid
+ *      - name: bookId
+ *        in: path
+ *        required: true
+ *        schema:
+ *          type: string
+ *        description: "The book id that needs to be removed from the reading list."
+ *     responses:
+ *       '200':
+ *         description: Book successfully removed from the reading list.
+ *         content:
+ *           application/json:
+ *           schema:
+ *             type: array
+ *             items:
+ *               type: string
+ *       '400':
+ *         description: Invalid request body or missing required fields.
+ *       '401':
+ *         description: Unauthorized - user is not connected.
+ *       '404':
+ *         description: Not Found - the requested book was not found in list.
+ *       '500':
+ *         description: Internal server error.
  *   get:
  *     summary: Get the account's reading list.
- *     description: Retrieve a JSON which contains the details of a book.
+ *     description: Retrieve a JSON which contains the user's reading list.
  *     parameters:
- *       - name: id
- *         in: path
- *         type: string
- *         description: ID of the book
- *         required: true
+ *      - name: accountId
+ *        in: path
+ *        required: true
+ *        schema:
+ *          type: string
+ *          format: uuid
  *     responses:
  *       '200':
  *         description: Reading list successfully returned.
@@ -84,6 +122,11 @@ const rulesPost = [
  *         description: Internal server error.
  */
 
+const rulesPost = [
+  param('accountId').isUUID(),
+  body('bookId').isString()
+]
+
 router.post('/account/:accountId/readingList', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
     handleErrorOnRoute(res)(new AuthenticationError())
@@ -95,12 +138,35 @@ router.post('/account/:accountId/readingList', rulesPost, validate, logApiReques
   }).catch(handleErrorOnRoute(res))
 })
 
-router.get('/account/:accountId/readingList', logApiRequest, (req: Request, res: Response) => {
+const rulesDelete = [
+  param('accountId').isUUID(),
+  param('bookId').isString()
+]
+
+router.delete('/account/:accountId/readingList/:bookId', rulesDelete, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  findEntity<Account>(Account, { id: req.params.accountId }).then((account) => {
+  removeBookFromReadingList(req.params.accountId, req.params.bookId).then((updatedReadingList: string[]) => {
+    logger.info(`Successfully removed ${req.body.bookId} of ${req.session.account?.email}'s reading list.`)
+    return res.status(StatusCodes.OK).json(updatedReadingList)
+  }).catch(handleErrorOnRoute(res))
+})
+
+const rulesGet = [
+  param('accountId').isUUID()
+]
+
+router.get('/account/:accountId/readingList', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
+  if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
+    handleErrorOnRoute(res)(new AuthenticationError())
+    return
+  }
+  findEntity<Account>(Account, { id: req.params.accountId }).then((account: Account | null) => {
+    if (account === null) {
+      throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
+    }
     return res.status(StatusCodes.OK).json(account?.readingList)
   }).catch(handleErrorOnRoute(res))
 })

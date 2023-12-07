@@ -15,7 +15,7 @@ import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/c
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { findEntity } from '@models/getObjects'
-import { addMovieToWatchlist, removeMovieFromWatchlist } from '@models/movie'
+import { addMovieToDislikedMovies, removeMovieFromDislikedMovies } from '@models/movie'
 
 import { Account } from '@entities/Account'
 
@@ -23,10 +23,10 @@ const router = Router()
 
 /**
  * @swagger
- * /account/:accountId/watchlist:
+ * /account/:accountId/dislikedMovies:
  *   post:
- *     summary: Add a movie to the user's watchlist.
- *     description: Add the movie passed as body in the connected user's watchlist.
+ *     summary: Add a movie to the user's disliked movies.
+ *     description: Add the movie passed as body in the connected user's disliked movies.
  *     consumes:
  *       - application/json
  *     parameters:
@@ -45,10 +45,10 @@ const router = Router()
  *             movieId:
  *               type: integer
  *               format: int32
- *               description: The movie id that needs to be added to the watchlist.
+ *               description: The movie id that needs to be added to the user's disliked movies.
  *     responses:
  *       '201':
- *         description: Movie successfully added to the watchlist.
+ *         description: Movie successfully added to the user's disliked movies.
  *         content:
  *           application/json:
  *           schema:
@@ -62,8 +62,8 @@ const router = Router()
  *       '500':
  *         description: Internal server error.
  *   delete:
- *     summary: Remove a movie from the user's watchlist.
- *     description: Remove the movie passed in the url in the connected user's watchlist.
+ *     summary: Removie a movie from the user's disliked movies.
+ *     description: Removie the movie passed in the url in the connected user's disliked movies.
  *     consumes:
  *       - application/json
  *     parameters:
@@ -79,10 +79,10 @@ const router = Router()
  *        schema:
  *          type: integer
  *          format: int32
- *        description: "The movie id that needs to be removed from the watchlist."
+ *        description: "The movie id that needs to be removed from the user's disliked movies."
  *     responses:
  *       '200':
- *         description: Movie successfully removed from the watchlist.
+ *         description: Movie successfully removed from the user's disliked movies.
  *         content:
  *           application/json:
  *           schema:
@@ -99,7 +99,7 @@ const router = Router()
  *         description: Internal server error.
  *   get:
  *     summary: Get the account's watchlist.
- *     description: Retrieve a JSON which contains the list of user's watchlist.
+ *     description: Retrieve a JSON which contains the list of disliked movies.
  *     parameters:
  *      - name: accountId
  *        in: path
@@ -129,14 +129,14 @@ const rulesPost = [
   body('movieId').isNumeric()
 ]
 
-router.post('/account/:accountId/watchlist', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
+router.post('/account/:accountId/dislikedMovies', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addMovieToWatchlist(req.params.accountId, req.body.movieId).then((updatedWatchlist: number[]) => {
-    logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s watchlist`)
-    return res.status(StatusCodes.CREATED).json(updatedWatchlist)
+  addMovieToDislikedMovies(req.params.accountId, req.body.movieId).then((updatedDisikedMoviesList: number[]) => {
+    logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s disliked movies.`)
+    return res.status(StatusCodes.CREATED).json(updatedDisikedMoviesList)
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -145,14 +145,14 @@ const rulesDelete = [
   param('movieId').isNumeric()
 ]
 
-router.delete('/account/:accountId/watchlist/:movieId', rulesDelete, validate, logApiRequest, (req: Request, res: Response) => {
+router.delete('/account/:accountId/dislikedMovies/:movieId', rulesDelete, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  removeMovieFromWatchlist(req.params.accountId, parseInt(req.params.movieId)).then((updatedWatchlist: number[]) => {
-    logger.info(`Successfully removed ${req.body.movieId} of ${req.session.account?.email}'s watchlist.`)
-    return res.status(StatusCodes.OK).json(updatedWatchlist)
+  removeMovieFromDislikedMovies(req.params.accountId, parseInt(req.params.movieId)).then((updatedDislikedMoviesList: number[]) => {
+    logger.info(`Successfully removed ${req.body.movieId} of ${req.session.account?.email}'s disliked movies.`)
+    return res.status(StatusCodes.OK).json(updatedDislikedMoviesList)
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -160,7 +160,7 @@ const rulesGet = [
   param('accountId').isUUID()
 ]
 
-router.get('/account/:accountId/watchlist', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
+router.get('/account/:accountId/dislikedMovies', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
     handleErrorOnRoute(res)(new AuthenticationError())
     return
@@ -169,7 +169,7 @@ router.get('/account/:accountId/watchlist', rulesGet, validate, logApiRequest, (
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    return res.status(StatusCodes.OK).json(account?.watchlist)
+    return res.status(StatusCodes.OK).json(account?.likedMovies)
   }).catch(handleErrorOnRoute(res))
 })
 

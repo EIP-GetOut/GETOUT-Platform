@@ -5,7 +5,7 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
-import { expect, it } from '@jest/globals'
+import { beforeAll, expect, it } from '@jest/globals'
 import { StatusCodes } from 'http-status-codes'
 import { type UUID } from 'node:crypto'
 import { describe } from 'node:test'
@@ -21,20 +21,45 @@ const loginBody = {
 }
 
 describe('Reading List Route', async () => {
-  it.only('should respond with 201 CREATED and the watchlist for POST /account/:accountId/watchlist', async () => {
-    let accountId: UUID
-    let cookie: string
+  let accountId: UUID
+  let cookie: string
+
+  beforeAll(async () => {
     await request(app).post('/account/login').send(loginBody).then(async (res) => {
       const optionalCookie = extractConnectSidCookie(res.headers['set-cookie'][0])
       if (optionalCookie === null) { throw Error('Failed extracting cookie') }
       cookie = optionalCookie
       return await request(app).get('/session').set('Cookie', cookie)
-    }).then(async (res) => {
+    }).then((res) => {
       accountId = res.body.account.id
-      return await request(app).post(`/account/${accountId}/watchlist`).send({ movieId: 42 }).set('Cookie', cookie)
-    }).then((response) => {
-      expect(response.status).toBe(StatusCodes.CREATED)
-      expect(response.body).toContain(42)
     })
+  })
+
+  it('should respond with 201 CREATED and the watchlist for POST /account/:accountId/watchlist', async () => {
+    await request(app).post(`/account/${accountId}/watchlist`).send({ movieId: 42 }).set('Cookie', cookie)
+      .then((response) => {
+        expect(response.status).toBe(StatusCodes.CREATED)
+        expect(response.body).toContain(42)
+      })
+  })
+
+  it('should respond with 200 OK and the watchlist for GET /account/:accountId/watchlist', async () => {
+    await request(app).post(`/account/${accountId}/watchlist`).send({ movieId: 42 }).set('Cookie', cookie)
+      .then(async () => {
+        return await request(app).get(`/account/${accountId}/watchlist`).set('Cookie', cookie)
+      }).then((response) => {
+        expect(response.status).toBe(StatusCodes.OK)
+        expect(response.body).toContain(42)
+      })
+  })
+
+  it('should respond with 200 OK and the watchlist for DELETE /account/:accountId/watchlist/42', async () => {
+    await request(app).post(`/account/${accountId}/watchlist`).send({ movieId: 42 }).set('Cookie', cookie)
+      .then(async () => {
+        return await request(app).delete(`/account/${accountId}/watchlist/42`).set('Cookie', cookie)
+      }).then((response) => {
+        expect(response.status).toBe(StatusCodes.OK)
+        expect(response.body).not.toContain(42)
+      })
   })
 })

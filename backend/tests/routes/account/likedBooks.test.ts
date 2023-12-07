@@ -35,28 +35,28 @@ describe('Reading List Route', async () => {
     })
   })
 
-  it('should respond with 201 CREATED and the reading list for POST /account/:accountId/readingList', async () => {
-    await request(app).post(`/account/${accountId}/readingList`).send({ bookId: '_LettPDhwR0C' }).set('Cookie', cookie)
+  it('should respond with 201 CREATED and the liked books list for POST /account/:accountId/likedBooks', async () => {
+    await request(app).post(`/account/${accountId}/likedBooks`).send({ bookId: '_LettPDhwR0C' }).set('Cookie', cookie)
       .then((response) => {
         expect(response.status).toBe(StatusCodes.CREATED)
         expect(response.body).toContain('_LettPDhwR0C')
       })
   })
 
-  it('should respond with 200 OK and the reading list for GET /account/:accountId/readingList', async () => {
-    await request(app).post(`/account/${accountId}/readingList`).send({ bookId: '_LettPDhwR0C' }).set('Cookie', cookie)
+  it('should respond with 200 OK and the liked books list for GET /account/:accountId/likedBooks', async () => {
+    await request(app).post(`/account/${accountId}/likedBooks`).send({ bookId: '_LettPDhwR0C' }).set('Cookie', cookie)
       .then(async () => {
-        return await request(app).get(`/account/${accountId}/readingList`).set('Cookie', cookie)
+        return await request(app).get(`/account/${accountId}/likedBooks`).set('Cookie', cookie)
       }).then((response) => {
         expect(response.status).toBe(StatusCodes.OK)
         expect(response.body).toContain('_LettPDhwR0C')
       })
   })
 
-  it('should respond with 200 OK and the reading list for DELETE /account/:accountId/readingList/_LettPDhwR0C', async () => {
-    await request(app).post(`/account/${accountId}/readingList`).set('Cookie', cookie)
+  it('should respond with 200 OK and the liked books list for DELETE /account/:accountId/likedBooks/42', async () => {
+    await request(app).post(`/account/${accountId}/likedBooks`).send({ bookId: '_LettPDhwR0C' }).set('Cookie', cookie)
       .then(async () => {
-        return await request(app).delete(`/account/${accountId}/readingList/_LettPDhwR0C`).set('Cookie', cookie)
+        return await request(app).delete(`/account/${accountId}/likedBooks/_LettPDhwR0C`).set('Cookie', cookie)
       }).then((response) => {
         expect(response.status).toBe(StatusCodes.OK)
         expect(response.body).not.toContain('_LettPDhwR0C')
