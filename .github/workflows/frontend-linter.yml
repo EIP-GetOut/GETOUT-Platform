@@ -34,4 +34,7 @@ jobs:
           cache: true
 
       - name: Lint App
-        run: flutter analyze
+        run: |
+          cd app/
+          flutter pub get
+          flutter analyze
