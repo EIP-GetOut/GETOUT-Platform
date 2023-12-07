@@ -9,6 +9,7 @@ on:
 
 defaults:
   run:
+    working-directory: ./backend
     shell: bash
 
 jobs:
@@ -25,7 +26,7 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        run: cd backend ; npm ci
+        run: npm ci
 
 
       - uses: dorny/paths-filter@v2
@@ -39,5 +40,4 @@ jobs:
         name: Lint Backend
         run: |
           echo "Backend folder has been modified, eslint starting"
-          cd backend
           npx eslint --ext .ts ./src
