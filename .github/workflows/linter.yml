@@ -2,7 +2,9 @@ name: Backend and frontend linter
 
 on:
   push:
-    branches: [ dev ]
+    branches:
+      - dev
+      - app/upgrade_dependencies
 
 defaults:
   run:
@@ -39,14 +41,16 @@ jobs:
           cd backend
           npx eslint --ext .ts ./src
 
-      - uses: actions/setup-java@v3.11.0
+      - name: Set up Java
+        uses: actions/setup-java@v4.0.0
         with:
           distribution: 'microsoft'
           java-version: "17"
 
-      - uses: subosito/flutter-action@v2.10.0
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2.12.0
         with:
-          flutter-version: '3.10.4'
+          flutter-version: '3.16.0'
           channel: 'stable'
           cache: true
 
