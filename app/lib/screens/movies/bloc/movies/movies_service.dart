@@ -26,13 +26,14 @@ class MoviesService {
 
   Future<GenerateMoviesLikedResponse> getMoviesLiked(
       GenerateMoviesLikedRequest request) async {
-    String withGenres = formatWithGenresParameter(request.genres);
     GenerateMoviesLikedResponse result = [];
     dynamic data;
 
     final dio = Dio();
     final response = await dio.get(
-        '${api_constants.rootApiPath}${api_constants.generateMoviesApiPath}?with_genres=$withGenres&include_adult=${request.includeAdult.toString()}',
+            // A changer avec le account id quand le get session sera fait
+        // '${{backendEndpoint}}/account/${{accountId}}/likedMovies',
+        '${{api_constants.rootApiPath}}/account/60eee6af-2ba2-4ff0-ba79-7c6d6c50634f/likedMovies',
         options: Options(headers: {'Content-Type': 'application/json'}));
 
     if (response.statusCode != HttpStatus.OK) {
@@ -82,13 +83,14 @@ class MoviesService {
 
   Future<GenerateMoviesSavedResponse> getMoviesSaved(
       GenerateMoviesSavedRequest request) async {
-    String withGenres = formatWithGenresParameter(request.genres);
     GenerateMoviesSavedResponse result = [];
     dynamic data;
 
     final dio = Dio();
     final response = await dio.get(
-        '${api_constants.rootApiPath}${api_constants.generateMoviesApiPath}?with_genres=$withGenres&include_adult=${request.includeAdult.toString()}',
+      // A changer avec le account id quand le get session sera fait
+                // '${{api_constants.rootApiPath}}/account/${{accountId}}/watchlist',
+                '${{api_constants.rootApiPath}}/account/60eee6af-2ba2-4ff0-ba79-7c6d6c50634f/watchlist',
         options: Options(headers: {'Content-Type': 'application/json'}));
 
     if (response.statusCode != HttpStatus.OK) {
