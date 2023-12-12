@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:getout/widgets/load_circle.dart';
 import 'package:getout/screens/home/widgets/books/books.dart';
 import 'package:getout/screens/home/widgets/books/books_error_widget.dart';
 import 'package:getout/screens/home/bloc/books/books_bloc.dart';
@@ -25,7 +24,9 @@ class BooksWidget extends StatelessWidget {
           return BooksSuccessWidget(books: state.books);
         } else {
           if (state.status.isLoading) {
-            return const Center(child: LoadCirclePage());
+            return const Center(child: CircularProgressIndicator(
+              backgroundColor: Color.fromARGB(0, 255, 5, 5),
+            ));
           } else if (state.status.isError) {
             return const BooksErrorWidget();
           } else {
