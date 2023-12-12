@@ -23,6 +23,7 @@ import 'package:getout/screens/connection/forgot_password/bloc/email/forgot_pass
 import 'package:getout/screens/connection/forgot_password/bloc/email/forgot_password_email_service.dart';
 import 'package:getout/screens/connection/forgot_password/bloc/new_password/forgot_password_new_password_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/bloc/new_password/forgot_password_new_password_service.dart';
+import 'package:getout/screens/movies/bloc/movies/movies_provider.dart';
 
 Map<int, Color> colorMap = {
   50: const Color.fromRGBO(213, 86, 65, .1),
@@ -81,7 +82,7 @@ class MyAppView extends StatelessWidget {
           // TODO : change by welcome page
           home: RepositoryProvider(
             create: (context) => LoginService(),
-            child: LoginScreen(),
+            child: Movies(),
           ),
       );
     });
