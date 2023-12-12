@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:boxicons/boxicons.dart';
 
 class BooksErrorWidget extends StatelessWidget {
-  const BooksErrorWidget({Key? key}) : super(key: key);
+  const BooksErrorWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

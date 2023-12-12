@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:getout/tools/flex_size.dart';
 
 class LoadPage extends StatefulWidget {
-  const LoadPage({Key? key}) : super(key: key);
+  const LoadPage({super.key});
 
   @override
   State<LoadPage> createState() => _LoadPageState();

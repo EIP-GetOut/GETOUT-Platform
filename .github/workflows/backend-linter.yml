@@ -1,0 +1,43 @@
+name: Backend linter
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - 'backend/**'
+
+defaults:
+  run:
+    working-directory: ./backend
+    shell: bash
+
+jobs:
+  back-lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name : Checkout
+        uses: actions/checkout@v3.5.3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm ci
+
+
+      - uses: dorny/paths-filter@v2
+        id: changesback
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+
+      - if: steps.changesback.outputs.backend == 'true'
+        name: Lint Backend
+        run: |
+          echo "Backend folder has been modified, eslint starting"
+          npx eslint --ext .ts ./src

@@ -15,9 +15,7 @@ import 'package:getout/screens/home/widgets/books/books_error_widget.dart';
 import 'package:getout/screens/home/bloc/books/books_bloc.dart';
 
 class BooksWidget extends StatelessWidget {
-  const BooksWidget({
-    Key? key,
-  }) : super(key: key);
+  const BooksWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

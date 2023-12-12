@@ -5,7 +5,7 @@ import 'package:getout/screens/form/pages/social_media_spent_time.dart';
 import 'package:getout/tools/flex_size.dart';
 
 class WelcomePage extends StatefulWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+  const WelcomePage({super.key});
 
   @override
   State<WelcomePage> createState() => _WelcomePageState();

@@ -5,15 +5,16 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-import 'package:getout/models/settings/edit_password.dart';
 import 'package:flutter/material.dart';
+
+import 'package:getout/models/settings/edit_password.dart';
 import 'package:getout/screens/connection/widgets/fields.dart';
 import 'package:getout/services/requests/requests_service.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/global.dart';
 
 class ParametersEditPasswordPage extends StatefulWidget {
-  const ParametersEditPasswordPage({Key? key}) : super(key: key);
+  const ParametersEditPasswordPage({super.key});
 
   @override
   State<ParametersEditPasswordPage> createState() => _ParametersEditPasswordPageState();

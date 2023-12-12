@@ -12,7 +12,7 @@ import 'package:getout/screens/settings/pages/edit_mail.dart';
 import 'package:getout/screens/settings/pages/edit_password.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();

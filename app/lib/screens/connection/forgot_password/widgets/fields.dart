@@ -13,7 +13,7 @@ import 'package:getout/screens/connection/forgot_password/bloc/email/forgot_pass
 import 'package:getout/screens/connection/forgot_password/bloc/new_password/forgot_password_new_password_bloc.dart';
 
 class EmailField extends StatelessWidget {
-  const EmailField({Key? key}) : super(key: key);
+  const EmailField({super.key});
 
   @override
   Widget build(BuildContext context)
@@ -45,7 +45,7 @@ class EmailField extends StatelessWidget {
 }
 
 class CodeField extends StatelessWidget {
-  const CodeField({Key? key}) : super(key: key);
+  const CodeField({super.key});
 
   @override
   Widget build(BuildContext context)
@@ -78,7 +78,7 @@ class CodeField extends StatelessWidget {
 
 
 class PasswordField extends StatelessWidget {
-  const PasswordField({Key? key}) : super(key: key);
+  const PasswordField({super.key});
 
   @override
   Widget build(BuildContext context)
@@ -110,7 +110,7 @@ class PasswordField extends StatelessWidget {
 }
 
 class ConfirmPasswordField extends StatelessWidget {
-  const ConfirmPasswordField({Key? key}) : super(key: key);
+  const ConfirmPasswordField({super.key});
 
   @override
   Widget build(BuildContext context)

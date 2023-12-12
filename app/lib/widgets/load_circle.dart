@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 
 class LoadCirclePage extends StatelessWidget {
-  const LoadCirclePage({Key? key}) : super(key: key);
+  const LoadCirclePage({super.key});
 
   @override
   Widget build(BuildContext context) {

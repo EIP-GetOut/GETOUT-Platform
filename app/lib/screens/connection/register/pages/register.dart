@@ -18,7 +18,7 @@ import 'package:getout/constants/http_status.dart';
 
 
 class RegisterScreen extends StatelessWidget {
-  RegisterScreen({Key? key}) : super(key: key);
+  RegisterScreen({super.key});
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -122,7 +122,7 @@ class RegisterScreen extends StatelessWidget {
 }
 
 class RegisterButton extends StatelessWidget {
-  const RegisterButton({Key? key, required this.formKey}) : super(key: key);
+  const RegisterButton({super.key, required this.formKey});
 
   final GlobalKey<FormState> formKey;
 

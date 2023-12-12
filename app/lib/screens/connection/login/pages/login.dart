@@ -21,7 +21,7 @@ import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/constants/http_status.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({super.key});
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -193,7 +193,7 @@ class LoginScreen extends StatelessWidget {
 }
 
 class LoginButton extends StatelessWidget {
-  const LoginButton({Key? key, required this.formKey}) : super(key: key);
+  const LoginButton({super.key, required this.formKey});
 
   final GlobalKey<FormState> formKey;
 

@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:boxicons/boxicons.dart';
 
 class MoviesErrorWidget extends StatelessWidget {
-  const MoviesErrorWidget({Key? key}) : super(key: key);
+  const MoviesErrorWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

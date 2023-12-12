@@ -18,7 +18,7 @@ import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/constants/http_status.dart';
 
 class ForgotPasswordEmailScreen extends StatelessWidget {
-  ForgotPasswordEmailScreen({Key? key}) : super(key: key);
+  ForgotPasswordEmailScreen({super.key});
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -79,7 +79,7 @@ class ForgotPasswordEmailScreen extends StatelessWidget {
 }
 
 class ForgotPasswordButton extends StatelessWidget {
-  const ForgotPasswordButton({Key? key, required this.formKey}) : super(key: key);
+  const ForgotPasswordButton({super.key, required this.formKey});
 
   final GlobalKey<FormState> formKey;
 

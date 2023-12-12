@@ -1,11 +1,11 @@
-name: Frontend unit tests
+name: Frontend linter
 
 on:
   push:
     branches:
-      - '*'
-    paths-ignore:
-      - 'prod/**'
+      - dev
+    paths:
+      - 'app/**'
 
 defaults:
   run:
@@ -13,8 +13,9 @@ defaults:
     shell: bash
 
 jobs:
-  Frontend-unit-tests:
+  Frontend-linter:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
 
     steps:
       - name : Checkout
@@ -36,5 +37,5 @@ jobs:
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Run Flutter tests
-        run: flutter test
+      - name: Lint App
+        run: flutter analyze

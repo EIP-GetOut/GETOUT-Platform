@@ -94,7 +94,7 @@ final getOutTheme = ThemeData(
     // title of book/movie in the home page
     titleSmall: TextStyle(
       color: Colors.black,
-      fontSize: 14,
+      fontSize: 16,
       fontFamily: 'Urbanist',
       decorationColor: Colors.black,
       fontWeight: FontWeight.bold,
@@ -102,7 +102,7 @@ final getOutTheme = ThemeData(
     // description of book/movie in the home page
     headlineSmall: TextStyle(
       color: Color.fromRGBO(0, 0, 0, 0.5),
-      fontSize: 13,
+      fontSize: 15,
       fontFamily: 'Urbanist',
       fontWeight: FontWeight.bold,
     ),

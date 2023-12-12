@@ -8,9 +8,7 @@ import 'package:getout/screens/home/widgets/movies/movies_error_widget.dart';
 import 'package:getout/widgets/loading.dart';
 
 class MovieWidget extends StatelessWidget {
-  const MovieWidget({
-    Key? key,
-  }) : super(key: key);
+  const MovieWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
