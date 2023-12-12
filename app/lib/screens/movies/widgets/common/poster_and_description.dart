@@ -2,20 +2,20 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
 import 'package:flutter/material.dart';
 
 class PosterAndDescriptionWidget extends StatelessWidget {
   const PosterAndDescriptionWidget({
-    Key? key,
-    required this.posterpath,
+    super.key,
+    required this.posterPath,
     required this.title,
     required this.overview,
-  }) : super(key: key);
+  });
 
-  final String? posterpath;
+  final String? posterPath;
   final String? overview;
   final String title;
 
@@ -28,7 +28,7 @@ class PosterAndDescriptionWidget extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
           child: Image.network(
-            'https://image.tmdb.org/t/p/w600_and_h900_bestv2$posterpath',
+            'https://image.tmdb.org/t/p/w600_and_h900_bestv2$posterPath',
             fit: BoxFit.cover,
           ),
         ),

@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 
 class CoverPage extends StatefulWidget {
-  const CoverPage({Key? key}) : super(key: key);
+  const CoverPage({super.key});
 
   @override
   State<CoverPage> createState() => _CoverPageState();

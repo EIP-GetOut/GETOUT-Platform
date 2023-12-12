@@ -2,13 +2,13 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
 import 'package:dio/dio.dart';
 
 import 'package:getout/screens/movies/bloc/movies_liked/movies_liked_bloc.dart';
-import 'package:getout/screens/movies/bloc/movies_recommanded/movies_recommanded_bloc.dart';
+import 'package:getout/screens/movies/bloc/movies_recommended/movies_recommended_bloc.dart';
 import 'package:getout/screens/movies/bloc/movies_saved/movies_saved_bloc.dart';
 import 'package:getout/constants/api_path.dart' as api_constants;
 import 'package:getout/constants/http_status.dart';
@@ -53,10 +53,10 @@ class MoviesService {
     return result;
   }
 
-  Future<GenerateMoviesRecommandedResponse> getMoviesRecommanded(
-      GenerateMoviesRecommandedRequest request) async {
+  Future<GenerateMoviesRecommendedResponse> getMoviesRecommended(
+      GenerateMoviesRecommendedRequest request) async {
     String withGenres = formatWithGenresParameter(request.genres);
-    GenerateMoviesRecommandedResponse result = [];
+    GenerateMoviesRecommendedResponse result = [];
     dynamic data;
 
     final dio = Dio();
@@ -72,7 +72,7 @@ class MoviesService {
 
     data = response.data;
     data['movies'].forEach((elem) {
-      result.add(MovieRecommandedPreview(
+      result.add(MovieRecommendedPreview(
           id: elem['id'],
           title: elem['title'],
           posterPath: elem['poster'],

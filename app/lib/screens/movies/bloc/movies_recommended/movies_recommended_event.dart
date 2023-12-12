@@ -2,18 +2,18 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-part of 'movies_recommanded_bloc.dart';
+part of 'movies_recommended_bloc.dart';
 
-class MoviesRecommandedEvent extends Equatable {
+class MoviesRecommendedEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class GenerateMoviesRecommandedRequest extends MoviesRecommandedEvent {
-  GenerateMoviesRecommandedRequest({
+class GenerateMoviesRecommendedRequest extends MoviesRecommendedEvent {
+  GenerateMoviesRecommendedRequest({
     required this.genres,
     this.includeAdult = false,
   });
@@ -21,8 +21,8 @@ class GenerateMoviesRecommandedRequest extends MoviesRecommandedEvent {
   final bool includeAdult;
 }
 
-class MovieRecommandedPreview extends MoviesRecommandedEvent {
-  MovieRecommandedPreview(
+class MovieRecommendedPreview extends MoviesRecommendedEvent {
+  MovieRecommendedPreview(
       {required this.id,
       required this.title,
       required this.posterPath,
@@ -33,4 +33,4 @@ class MovieRecommandedPreview extends MoviesRecommandedEvent {
   final String? overview;
 }
 
-typedef GenerateMoviesRecommandedResponse = List<MovieRecommandedPreview>;
+typedef GenerateMoviesRecommendedResponse = List<MovieRecommendedPreview>;

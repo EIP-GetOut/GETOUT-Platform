@@ -2,7 +2,7 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
 import 'package:flutter/material.dart';
@@ -12,14 +12,14 @@ import 'package:getout/screens/movies/pages/movies.dart';
 import 'package:getout/screens/movies/bloc/movies/movies_service.dart';
 import 'package:getout/screens/movies/bloc/movies/movies_repository.dart';
 import 'package:getout/screens/movies/bloc/movies_liked/movies_liked_bloc.dart';
-import 'package:getout/screens/movies/bloc/movies_recommanded/movies_recommanded_bloc.dart';
+import 'package:getout/screens/movies/bloc/movies_recommended/movies_recommended_bloc.dart';
 import 'package:getout/screens/movies/bloc/movies_saved/movies_saved_bloc.dart';
 import 'package:getout/global.dart';
 import 'package:getout/tools/map_box_movie_values_to_ids.dart';
 
 //ignore: must_be_immutable
 class Movies extends StatelessWidget {
-  Movies({Key? key}) : super(key: key);
+  Movies({super.key});
 
   List<int> genreMoviesIds = mapBoxMovieValuesToIds(boxMovieValue);
   List<int> genreBooksIds = mapBoxMovieValuesToIds(boxBookValue);
@@ -39,11 +39,11 @@ class Movies extends StatelessWidget {
                   GenerateMoviesLikedRequest(genres: genreMoviesIds),
                 ),
             ),
-            BlocProvider<MoviesRecommandedBloc>(
-              create: (context) => MoviesRecommandedBloc(
+            BlocProvider<MoviesRecommendedBloc>(
+              create: (context) => MoviesRecommendedBloc(
                 moviesRepository: context.read<MoviesRepository>(),
               )..add(
-                  GenerateMoviesRecommandedRequest(genres: genreMoviesIds),
+                  GenerateMoviesRecommendedRequest(genres: genreMoviesIds),
                 ),
             ),
             BlocProvider<MoviesSavedBloc>(

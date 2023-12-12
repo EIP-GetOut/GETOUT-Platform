@@ -2,21 +2,21 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
 import 'package:flutter/material.dart';
 
 import 'package:getout/screens/movies/widgets/common/title.dart';
-import 'package:getout/screens/movies/widgets/common/poster_and_desription.dart';
+import 'package:getout/screens/movies/widgets/common/poster_and_description.dart';
 import 'package:getout/screens/movies/bloc/movies_saved/movies_saved_bloc.dart';
 import 'package:getout/screens/movie/bloc/movie_provider.dart';
 
 class MoviesSavedSuccessWidget extends StatelessWidget {
   MoviesSavedSuccessWidget({
-    Key? key,
+    super.key,
     required this.movies,
-  }) : super(key: key);
+  });
 
   final List<MovieSavedPreview> movies;
 
@@ -43,7 +43,7 @@ class MoviesSavedSuccessWidget extends StatelessWidget {
                                 builder: (context) => Movie(movies[index].id)));
                       },
                       child: PosterAndDescriptionWidget(
-                          posterpath: movies[index].posterPath,
+                          posterPath: movies[index].posterPath,
                           title: movies[index].title,
                           overview: movies[index].overview));
                 }))),

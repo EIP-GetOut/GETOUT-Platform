@@ -1,3 +1,9 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
+*/
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,8 +15,8 @@ import 'package:getout/screens/movies/bloc/movies_saved/movies_saved_bloc.dart';
 
 class MoviesSavedWidget extends StatelessWidget {
   const MoviesSavedWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

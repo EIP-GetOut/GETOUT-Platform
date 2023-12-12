@@ -10,20 +10,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/widgets/load_circle.dart';
 import 'package:getout/screens/movies/widgets/common/movies_error_widget.dart';
-import 'package:getout/screens/movies/widgets/movies_liked/movies_liked.dart';
-import 'package:getout/screens/movies/bloc/movies_liked/movies_liked_bloc.dart';
+import 'package:getout/screens/movies/widgets/movies_recommended/movies_recommended.dart';
+import 'package:getout/screens/movies/bloc/movies_recommended/movies_recommended_bloc.dart';
 
-class MoviesLikedWidget extends StatelessWidget {
-  const MoviesLikedWidget({
+class MoviesRecommendedWidget extends StatelessWidget {
+  const MoviesRecommendedWidget({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MoviesLikedBloc, MoviesLikedState>(
+    return BlocBuilder<MoviesRecommendedBloc, MoviesRecommendedState>(
       builder: (context, state) {
         if (state.status.isSuccess) {
-          return MoviesLikedSuccessWidget(movies: state.moviesLiked);
+          return MoviesRecommendedSuccessWidget(movies: state.moviesRecommended);
         } else {
           if (state.status.isLoading) {
             return const Center(child: LoadCirclePage());
