@@ -7,8 +7,8 @@
 
 import 'package:getout/screens/movies/bloc/movies/movies_service.dart';
 import 'package:getout/screens/movies/bloc/movies_liked/movies_liked_bloc.dart';
-import 'package:getout/screens/movies/bloc/movies_recommended/movies_recommended_bloc.dart';
 import 'package:getout/screens/movies/bloc/movies_saved/movies_saved_bloc.dart';
+import 'package:getout/screens/movies/bloc/movies_recommended/movies_recommended_bloc.dart';
 
 class MoviesRepository {
   const MoviesRepository({

@@ -5,6 +5,8 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:getout/screens/movies/widgets/common/title.dart';
@@ -23,8 +25,10 @@ class MoviesSavedSuccessWidget extends StatelessWidget {
   final PageController movieController =
       PageController(viewportFraction: 0.1, initialPage: 0);
 
+
   @override
   Widget build(BuildContext context) {
+    log(movies.length.toString());
     return Expanded(
         child: Column(
       children: [
@@ -34,7 +38,7 @@ class MoviesSavedSuccessWidget extends StatelessWidget {
             child: ListView(
                 controller: movieController,
                 scrollDirection: Axis.horizontal,
-                children: List.generate(5, (index) {
+                children: List.generate(movies.length, (index) {
                   return InkWell(
                       onTap: () {
                         Navigator.push(

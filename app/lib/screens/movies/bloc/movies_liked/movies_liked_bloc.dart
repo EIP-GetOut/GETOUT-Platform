@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:getout/screens/movies/bloc/movies/movies_repository.dart';
+import 'package:getout/constants/http_status.dart';
 
 part 'movies_liked_event.dart';
 part 'movies_liked_state.dart';

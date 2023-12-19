@@ -21,6 +21,22 @@ class GenerateMoviesLikedRequest extends MoviesLikedEvent {
   final bool includeAdult;
 }
 
+//ignore: must_be_immutable
+class MoviesLikeResponse extends MoviesLikedEvent {
+  MoviesLikeResponse(
+      {this.id,
+       this.title,
+       this.posterPath,
+       this.overview,
+      required this.statusCode});
+  final int? id;
+  final String? title;
+  final String? posterPath;
+  String? overview;
+  final int statusCode;
+  static const int success = HttpStatus.OK;
+}
+
 class MovieLikedPreview extends MoviesLikedEvent {
   MovieLikedPreview(
       {required this.id,
