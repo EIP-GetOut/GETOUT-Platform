@@ -91,27 +91,30 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                     style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                   ),
                 ),
-                Row(
-                  children: List.generate(
-                    widget.movie.cast?.length ?? 0,
-                    (index) => Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: Column(
-                        children: [
-                          Image.network(
-                            widget.movie.cast![index][1]!,
-                            height: 20,
-                            width: 20,
-                          ),
-                          Text(
-                            widget.movie.cast![index][0]!,
-                            style: const TextStyle(fontSize: 8),
-                          ),
-                        ],
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(
+                      widget.movie.cast?.length ?? 0,
+                      (index) => Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          children: [
+                            Image.network(
+                              widget.movie.cast![index]['picture']!,
+                              height: 50,
+                              width: 50,
+                            ),
+                            Text(
+                              widget.movie.cast![index]['name']!,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                )
+                ),
                 // Padding(
                 //     padding: const EdgeInsets.only(
                 //         left: 10), //apply padding to all four sides
