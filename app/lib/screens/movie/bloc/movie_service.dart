@@ -33,6 +33,13 @@ class MovieService {
           releaseDate: data['movie']['release_date'],
           voteAverage: data['movie']['vote_average'],
           duration: data['movie']['duration'],
+          cast: const [
+            ['nom1', 'url1'],
+            ['nom2', 'url2'],
+            ['nom3', 'url3'],
+            ['nom4', 'url4'],
+            ['nom5', 'url5'],
+          ],
           statusCode: response.statusCode ?? 500);
       if (result.overview == '') {
         result.overview = 'Pas de description disponible';

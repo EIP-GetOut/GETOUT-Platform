@@ -29,6 +29,7 @@ class InfoMovieResponse extends MovieEvent {
       this.releaseDate,
       this.voteAverage,
       this.duration,
+      this.cast,
       required this.statusCode});
 
   static const int success = HttpStatus.OK;
@@ -38,6 +39,7 @@ class InfoMovieResponse extends MovieEvent {
   final String? backdropPath;
   final String? releaseDate;
   final double? voteAverage;
+  final List<List<String>>? cast;
   String? duration;
   final int statusCode;
 }
