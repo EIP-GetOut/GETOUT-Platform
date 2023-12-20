@@ -60,18 +60,18 @@ class BookDescriptionPage extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: List.generate(
-                      book.authorPicture?.length ?? 0,
+                      book.authorsPicture?.length ?? 0,
                       (index) => Padding(
                         padding: const EdgeInsets.only(left: 10),
                         child: Column(
                           children: [
                             Image.network(
-                              book.authorPicture![index]['imageLink']!,
+                              book.authorsPicture![index]['imageLink']!,
                               height: 120,
                               width: 120,
                             ),
                             Text(
-                              book.authorPicture![index]['author']!,
+                              book.authorsPicture![index]['author']!,
                               style: const TextStyle(fontSize: 14),
                             ),
                           ],

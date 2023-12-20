@@ -52,7 +52,7 @@ class BookService {
           releaseDate: data['book']['release_date'],
           voteAverage: data['book']['vote_average'],
           duration: data['book']['duration'],
-          authorPicture: parseAutor(data['book']['authors_picture']),
+          authorsPicture: parseAutor(data['book']['authors_picture']),
           statusCode: response.statusCode ?? 500);
       if (result.overview == '') {
         result.overview = 'Pas de description disponible';

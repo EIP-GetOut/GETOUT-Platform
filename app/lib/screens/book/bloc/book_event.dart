@@ -28,10 +28,10 @@ class InfoBookResponse extends BookEvent {
       this.releaseDate,
       this.voteAverage,
       this.duration,
-      this.authorPicture,
+      this.authorsPicture,
       required this.statusCode});
 
-  final List<Map<String, String?>>? authorPicture;
+  final List<Map<String, String?>>? authorsPicture;
   static const int success = HttpStatus.OK;
   final String? title;
   String? overview;
