@@ -102,12 +102,12 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                           children: [
                             Image.network(
                               widget.movie.cast![index]['picture']!,
-                              height: 50,
-                              width: 50,
+                              height: 120,
+                              width: 120,
                             ),
                             Text(
                               widget.movie.cast![index]['name']!,
-                              style: const TextStyle(fontSize: 12),
+                              style: const TextStyle(fontSize: 14),
                             ),
                           ],
                         ),
