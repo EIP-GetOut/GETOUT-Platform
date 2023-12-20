@@ -25,6 +25,25 @@ class BookService {
         return InfoBookResponse(statusCode: response.statusCode ?? 500);
       }
       final dynamic data = response.data;
+
+      List<Map<String, String?>> parseAutor(dynamic autorData) {
+        List<Map<String, String?>> autorList = [];
+
+        if (autorData is List) {
+          for (var actor in autorData) {
+            if (actor is Map<String, dynamic>) {
+              String? author = actor['author'];
+              String? imageLink = actor['imageLink'];
+
+              if (author != null && imageLink != null) {
+                autorList.add({'author': author, 'imageLink': imageLink});
+              }
+            }
+          }
+        }
+        return autorList;
+      }
+
       result = InfoBookResponse(
           title: data['book']['title'],
           overview: data['book']['overview'],
@@ -33,6 +52,7 @@ class BookService {
           releaseDate: data['book']['release_date'],
           voteAverage: data['book']['vote_average'],
           duration: data['book']['duration'],
+          authorPicture: parseAutor(data['book']['authors_picture']),
           statusCode: response.statusCode ?? 500);
       if (result.overview == '') {
         result.overview = 'Pas de description disponible';
