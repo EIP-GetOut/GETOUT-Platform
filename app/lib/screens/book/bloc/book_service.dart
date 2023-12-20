@@ -37,6 +37,12 @@ class BookService {
 
               if (author != null && imageLink != null) {
                 autorList.add({'author': author, 'imageLink': imageLink});
+              } else if (author != null && imageLink == null) {
+                autorList.add({
+                  'author': author,
+                  'imageLink':
+                      'https://upload.wikimedia.org/wikipedia/commons/0/0f/Blank_Square.svg'
+                });
               }
             }
           }
