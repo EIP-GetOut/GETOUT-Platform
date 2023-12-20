@@ -83,13 +83,14 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                         'Réalisateur 1')),
                 separateLine(),
                 const Padding(
-                    padding: EdgeInsets.only(
-                        left: 10), //apply padding to all four sides
-                    child: Text(
-                        // textAlign: TextAlign.start,
-                        'CASTING',
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold))),
+                  padding: EdgeInsets.only(
+                      left: 10), //apply padding to all four sides
+                  child: Text(
+                    // textAlign: TextAlign.start,
+                    'CASTING',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  ),
+                ),
                 Row(
                   children: List.generate(
                     widget.movie.cast?.length ?? 0,
@@ -99,10 +100,13 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                         children: [
                           Image.network(
                             widget.movie.cast![index][1]!,
-                            height: 50,
-                            width: 50,
+                            height: 20,
+                            width: 20,
                           ),
-                          Text(widget.movie.cast![index][0]!),
+                          Text(
+                            widget.movie.cast![index][0]!,
+                            style: const TextStyle(fontSize: 8),
+                          ),
                         ],
                       ),
                     ),
