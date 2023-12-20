@@ -25,23 +25,37 @@ class MovieService {
         return InfoMovieResponse(statusCode: response.statusCode ?? 500);
       }
       final dynamic data = response.data;
-      List<Map<String, dynamic>> castData = data['movie']['cast'];
+      List<Map<String, String?>> parseCast(dynamic castData) {
+        List<Map<String, String?>> castList = [];
 
-      List<List<String>> castList = castData.map((actor) {
-        String name = actor['name'] ?? 'Non disponible';
-        String picture = actor['picture'] ?? 'URL de l\'image par défaut';
-        return [name, picture];
-      }).toList();
+        if (castData is List) {
+          for (var actor in castData) {
+            if (actor is Map<String, dynamic>) {
+              String? name = actor['name'];
+              String? picture = actor['picture'];
+
+              if (name != null && picture != null) {
+                castList.add({'name': name, 'picture': picture});
+              }
+            }
+          }
+        }
+
+        return castList;
+      }
+
       result = InfoMovieResponse(
-          title: data['movie']['title'],
-          overview: data['movie']['overview'],
-          posterPath: data['movie']['poster_path'],
-          backdropPath: data['movie']['backdrop_path'],
-          releaseDate: data['movie']['release_date'],
-          voteAverage: data['movie']['vote_average'],
-          duration: data['movie']['duration'],
-          cast: castList,
-          statusCode: response.statusCode ?? 500);
+        title: data['movie']['title'],
+        overview: data['movie']['overview'],
+        posterPath: data['movie']['poster_path'],
+        backdropPath: data['movie']['backdrop_path'],
+        releaseDate: data['movie']['release_date'],
+        voteAverage: data['movie']['vote_average'],
+        duration: data['movie']['duration'],
+        cast: parseCast(data['movie']['cast']),
+        statusCode: response.statusCode ?? 500,
+      );
+
       if (result.overview == '') {
         result.overview = 'Pas de description disponible';
       }

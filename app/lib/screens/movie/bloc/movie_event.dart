@@ -32,6 +32,7 @@ class InfoMovieResponse extends MovieEvent {
       this.cast,
       required this.statusCode});
 
+  final List<Map<String, String?>>? cast;
   static const int success = HttpStatus.OK;
   final String? title;
   String? overview;
@@ -39,7 +40,6 @@ class InfoMovieResponse extends MovieEvent {
   final String? backdropPath;
   final String? releaseDate;
   final double? voteAverage;
-  final List<List<String>>? cast;
   String? duration;
   final int statusCode;
 }

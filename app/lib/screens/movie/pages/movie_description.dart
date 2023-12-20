@@ -98,18 +98,11 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                       child: Column(
                         children: [
                           Image.network(
-                            widget.movie.cast![index].isNotEmpty == true
-                                ? widget.movie.cast![index][1] // URL de l'image
-                                : 'https://upload.wikimedia.org/wikipedia/commons/5/5f/Grey.PNG?20071229171831',
+                            widget.movie.cast![index][1]!,
                             height: 50,
                             width: 50,
                           ),
-                          Text(
-                            widget.movie.cast![index].isNotEmpty == true
-                                ? widget.movie.cast![index]
-                                    [0] // Nom de l'acteur
-                                : 'Non disponible',
-                          ),
+                          Text(widget.movie.cast![index][0]!),
                         ],
                       ),
                     ),
