@@ -45,7 +45,7 @@ Future<dynamic> getMoviesIdLiked(GenerateMoviesLikedRequest request) async {
   final dio = Dio();
   final response = await dio.get(
       // A changer avec le account id quand le get session sera fait
-      'http://10.0.2.2:8080/account/fe1b3ea3-1434-4d09-8543-b00af79889d6/likedMovies',
+      '${api_constants.rootApiPath}/account/fe1b3ea3-1434-4d09-8543-b00af79889d6/likedMovies',
       options: Options(headers: {
         'Content-Type': 'application/json',
         'Cookie':
@@ -183,7 +183,7 @@ Future<dynamic> getMoviesIdSaved(GenerateMoviesSavedRequest request) async {
   final dio = Dio();
   final response = await dio.get(
       // A changer avec le account id quand le get session sera fait
-      'http://10.0.2.2:8080/account/fe1b3ea3-1434-4d09-8543-b00af79889d6/watchlist',
+      '${api_constants.rootApiPath}/account/fe1b3ea3-1434-4d09-8543-b00af79889d6/watchlist',
       options: Options(headers: {
         'Content-Type': 'application/json',
         'Cookie':
