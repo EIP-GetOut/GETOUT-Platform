@@ -1,0 +1,270 @@
+#Perry Chouteau <perry.chouteau@epitech.eu>
+#following the figma
+lib:
+  services:
+    - getout:
+      - request:
+        - getout_service.dart (part)
+        - book_request.dart (part of)
+        - book_request.dart (part of)
+        - dashboard.dart[in, out, up, forget_password] (part of)
+        - account.dart[change_password, change_email] (part of)
+      - api_path.dart
+      - http_status.dart
+      - constants:
+        - book_genre.dart
+        - movie_genre.dart
+    - google:
+        - oauth.dart
+    - ...:
+    - http_status.dart
+  l10n:
+    app_en.arb
+    app_fr.arb
+    app_**.fr
+  bloc:
+    - bloc.dart
+    - user_page_bloc.dart
+    - bloc.dart
+    - observer.dart
+  screens:
+    - sign: #(not signed)(=connection)
+      - pages:
+      - widget:
+        - header.dart
+    - user(signed):
+      - pages:
+        - main_layout.dart
+#        - header,
+        - settings
+        - {dashboard, your_books, your_movies}
+          - navbar
+      - bloc:
+          - bloc_data
+          - bloc_logic
+        - books:
+          - suggestion_books:
+          - like_books:
+            - view_books:
+            - wishlist_books:
+          - movies:
+            - suggestion_movies:
+            - like_movies:
+            - view_movies:
+            - wishlist_movies:
+          - settings:
+            - theme:
+            - email:
+            - password:
+          - interest:
+            - refresh:
+            - .dart
+      - widget:
+        - dashboard:
+        - your_books:
+        - your_movies:
+        - header.dart
+  widget:
+    - loading.dart
+    - selectionRow.dart #(liste horizontale de livre, film..)
+    - poster_description.dart
+    - header.dart
+    - cover.dart
+    - four_point.dart
+  tools:
+    - flex_size.dart
+    - map_box_movie_values_to_ids.dart
+  doc:
+    architecture.md (self)
+    coding_style.md
+  main.dart: #(define theme by providing locale, theme...)
+
+
+trash: (not use)
+  global.dart
+
+├── models
+│   ├── connection
+│   │   └── oauth.dart
+│   └── settings
+│       └── edit_password.dart
+   ├── google
+│   │   └── google_signin_api.dart
+│   └── requests
+│       └── requests_service.dart
+├── tools
+│   ├── flex_size.dart
+│   └── map_box_movie_values_to_ids.dart
+── widgets
+├── screens
+│   ├── book
+│   │   ├── bloc
+│   │   │   ├── book_bloc.dart
+│   │   │   ├── book_event.dart
+│   │   │   ├── book_provider.dart
+│   │   │   ├── book_repository.dart
+│   │   │   ├── book_service.dart
+│   │   │   └── book_state.dart
+│   │   ├── pages
+│   │   │   ├── book.dart
+│   │   │   └── book_description.dart
+│   │   └── widgets
+│   │       └── book_widget.dart
+│   ├── connection
+│   │   ├── forgot_password
+│   │   │   ├── bloc
+│   │   │   │   ├── email
+│   │   │   │   │   ├── forgot_password_email_bloc.dart
+│   │   │   │   │   ├── forgot_password_email_event.dart
+│   │   │   │   │   ├── forgot_password_email_service.dart
+│   │   │   │   │   └── forgot_password_email_state.dart
+│   │   │   │   ├── form_submit_status.dart
+│   │   │   │   └── new_password
+│   │   │   │       ├── forgot_password_new_password_bloc.dart
+│   │   │   │       ├── forgot_password_new_password_event.dart
+│   │   │   │       ├── forgot_password_new_password_service.dart
+│   │   │   │       └── forgot_password_new_password_state.dart
+│   │   │   ├── pages
+│   │   │   │   ├── email_page.dart
+│   │   │   │   └── new_password_page.dart
+│   │   │   └── widgets
+│   │   │       └── fields.dart
+│   │   ├── login
+│   │   │   ├── bloc
+│   │   │   │   ├── form_submit_status.dart
+│   │   │   │   ├── login_bloc.dart
+│   │   │   │   ├── login_event.dart
+│   │   │   │   ├── login_service.dart
+│   │   │   │   └── login_state.dart
+│   │   │   ├── pages
+│   │   │   │   └── login.dart
+│   │   │   └── widgets
+│   │   │       └── fields.dart
+│   │   ├── oauth
+│   │   │   └── pages
+│   │   │       └── google_connection.dart
+│   │   ├── register
+│   │   │   ├── bloc
+│   │   │   │   ├── form_submit_status.dart
+│   │   │   │   ├── register_bloc.dart
+│   │   │   │   ├── register_event.dart
+│   │   │   │   ├── register_service.dart
+│   │   │   │   └── register_state.dart
+│   │   │   ├── pages
+│   │   │   │   └── register.dart
+│   │   │   └── widgets
+│   │   │       └── fields.dart
+│   │   └── widgets
+│   │       ├── fields.dart
+│   │       └── fields_title.dart
+│   ├── dashboard
+│   │   ├── bloc
+│   │   │   ├── books
+│   │   │   │   ├── books_bloc.dart
+│   │   │   │   ├── books_event.dart
+│   │   │   │   └── books_state.dart
+│   │   │   ├── dashboard_provider.dart
+│   │   │   ├── dashboard_repository.dart
+│   │   │   ├── dashboard_service.dart
+│   │   │   └── movies
+│   │   │       ├── movies_bloc.dart
+│   │   │       ├── movies_event.dart
+│   │   │       └── movies_state.dart
+│   │   ├── pages
+│   │   │   └── home_page.dart
+│   │   └── widgets
+│   │       ├── books
+│   │       │   ├── books_error_widget.dart
+│   │       │   ├── books_succes_widget.dart
+│   │       │   └── books_widget.dart
+│   │       ├── common
+│   │       │   ├── cover.dart
+│   │       │   ├── poster_and_description.dart
+│   │       │   └── title.dart
+│   │       ├── header.dart
+│   │       └── movies
+│   │           ├── movies_error_widget.dart
+│   │           ├── movies_succes_widget.dart
+│   │           └── movies_widget.dart
+│   ├── form
+│   │   ├── bloc
+│   │   │   ├── areas_of_interest_bloc.dart
+│   │   │   ├── film_genre_bloc.dart
+│   │   │   ├── literary_genre_bloc.dart
+│   │   │   ├── social_media_spent_time.dart
+│   │   │   ├── streaming_platform_bloc.dart
+│   │   │   └── welcome_bloc.dart
+│   │   ├── pages
+│   │   │   ├── areas_of_interest.dart
+│   │   │   ├── end_form.dart
+│   │   │   ├── film_genre.dart
+│   │   │   ├── literary_genre.dart
+│   │   │   ├── social_media_spent_time.dart
+│   │   │   ├── streaming_platform.dart
+│   │   │   └── welcome.dart
+│   │   └── widgets
+│   │       ├── check_box_film_genre.dart
+│   │       ├── check_box_list_widget_interest_areas.dart
+│   │       ├── check_box_literary_genre.dart
+│   │       ├── four_point.dart
+│   │       ├── streaming_platform.dart
+│   │       └── time_spent_social_media.dart
+│   ├── movie
+│   │   ├── bloc
+│   │   │   ├── movie_bloc.dart
+│   │   │   ├── movie_event.dart
+│   │   │   ├── movie_provider.dart
+│   │   │   ├── movie_repository.dart
+│   │   │   ├── movie_service.dart
+│   │   │   └── movie_state.dart
+│   │   ├── pages
+│   │   │   ├── movie.dart
+│   │   │   └── movie_description.dart
+│   │   └── widgets
+│   │       └── movie_widget.dart
+│   ├── settings
+│   │   ├── bloc
+│   │   │   └── bloc
+│   │   └── pages
+│   │       ├── edit_mail.dart
+│   │       ├── edit_password.dart
+│   │       └── settings.dart
+│   └── your_books
+│       ├── bloc
+│       │   ├── like_books
+│       │   │   ├── like_books_bloc.dart
+│       │   │   ├── like_books_event.dart
+│       │   │   └── like_books_state.dart
+│       │   ├── view_books
+│       │   │   ├── view_books_bloc.dart
+│       │   │   ├── view_books_event.dart
+│       │   │   └── view_books_state.dart
+│       │   ├── wishlist_books
+│       │   │   ├── wishlist_books_bloc.dart
+│       │   │   ├── wishlist_books_event.dart
+│       │   │   └── wishlist_books_state.dart
+│       │   ├── your_books_provider.dart
+│       │   ├── your_books_repository.dart
+│       │   └── your_books_service.dart
+│       ├── pages
+│       │   └── your_books.dart
+│       └── widgets
+│           ├── common
+│           │   ├── cover.dart
+│           │   ├── poster_and_description.dart
+│           │   └── title.dart
+│           ├── header.dart
+│           ├── like_books
+│           │   ├── like_books_error_widget.dart
+│           │   ├── like_books_success_widget.dart
+│           │   └── like_books_widget.dart
+│           ├── view_books
+│           │   ├── view_books_error_widget.dart
+│           │   ├── view_books_success_widget.dart
+│           │   └── view_books_widget.dart
+│           └── wishlist_books
+│               ├── wishlist_books_error_widget.dart
+│               ├── wishlist_books_success_widget.dart
+│               └── wishlist_books_widget.dart
+├── services
+│

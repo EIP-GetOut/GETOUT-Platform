@@ -6,7 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/screens/home/bloc/dashboard/dashboard_provider.dart';
+import 'package:getout/screens/home/bloc/home_provider.dart';
 
 class EndForm extends StatelessWidget {
   const EndForm({super.key});
@@ -45,7 +45,7 @@ class EndForm extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Dashboard()),
+                MaterialPageRoute(builder: (context) => HomeProvider()),
               );
             },
           ),
