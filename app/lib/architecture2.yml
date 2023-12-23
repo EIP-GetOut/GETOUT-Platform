@@ -1,0 +1,87 @@
+#Perry Chouteau <perry.chouteau@epitech.eu>
+lib:
+  - screen:
+    - sign:
+      - sign_in:
+      - sign_out:
+      - sign_up:
+      - forgetPassword:
+        - forgetPasswordEmail:
+        - forgetPasswordNewPassword:
+      - sign_logic
+      - sign_data
+    - home:
+        - home_bloc
+        - home_event
+        - home_state
+        - home_provider
+        - home_repository
+        - home_service
+        - dashboard:
+        - suggestion_book:
+                - suggestionBookWidget
+            - suggestion_movie:
+                - suggestionMovieWidget
+        - yourbook:
+            - suggestion_book:
+                - suggestionBookWidget
+
+    - widget:
+        #Field
+        FieldWidget<Validator>()
+        TwoFieldWidget<Validator, Validator1, Validator2>(FieldWidget1, FieldWidget2)
+        validator:
+           EmailUsed
+           EmailNotUsed
+           SameField
+  - services:
+      - getout:
+        - user_service.dart #part sign, book, movie;        final Dio = Dio() ;
+        - dashboard.dart #part of(in, out, up, pf1, pf2);   Dio from service
+        - book.dart #(like, wish, view, suggestion)
+        - movie.dart #(like, wish, view, suggestion)
+          
+          user_service.dart
+
+          class{
+            method();
+          }
+          
+          
+          dashboard.dart        
+            class.method() {
+            //code
+          }
+
+      - google:
+      - x:
+
+
+  - bloc:
+      - setting:
+        - localeBloc:
+            - bloc
+            - event
+            - state
+        - themeBloc:
+      - sign:
+       - signedBloc
+      - user:
+        - profilBloc:
+        - likeMovieBloc:
+            - bloc
+            - event
+            - state
+        - viewMovieBloc:
+        - wishlistMovieBloc:
+        - suggestionMovieBloc:
+        - likeBookBloc:
+        - viewBookBloc:
+        - wishlistBookBloc:
+        - suggestionBookBloc:
+
+          - settings
+      - widget:
+          - objectWidget
+          - errorWidget
+  - settings:

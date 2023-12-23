@@ -5,6 +5,7 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
+
 import 'package:flutter/foundation.dart';
 
 const String rootApiPath = (kDebugMode)
@@ -21,7 +22,12 @@ const String resetPasswordEmailPath = '/account/reset-password/send-email';
 const String getSessionApiPath = '/session';
 // GENERATE THINGS API PATH
 const String generateMoviesApiPath = '/generate-movies';
-const String getInfoMovieApiPath = '/movie';
-
 const String generateBooksApiPath = '/generate-books';
+//GET OBJECTS
+const String getInfoMovieApiPath = '/movie';
 const String getInfoBookApiPath = '/book';
+
+//GET YOUR BOOKS
+const String getWishlistBooksApiPath = '/get-wishlist-books';
+const String getLikeBooksApiPath = '/get-like-books';
+const String getViewBooksApiPath = '/get-view-books';

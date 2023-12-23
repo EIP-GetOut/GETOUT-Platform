@@ -1,0 +1,83 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Writed by Perry Chouteau <perry.chouteau@epitech.eu>
+*/
+
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+
+import '../bloc/home_page_bloc.dart';
+
+class UserNavBar extends StatelessWidget {
+  const UserNavBar({super.key, required this.pageController, required this.idx});
+
+  final PageController pageController;
+  final int idx;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        decoration: const BoxDecoration(
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.black,
+              blurRadius: 5,
+            ),
+          ],
+        ),
+        child: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/svg/home_icon.svg',
+                    colorFilter: const ColorFilter.mode(
+                        Colors.black26, BlendMode.srcIn)),
+                activeIcon: SvgPicture.asset('assets/svg/home_icon.svg',
+                    colorFilter: const ColorFilter.mode(
+                        Colors.red, BlendMode.srcIn)),
+                label: 'Dashboard'),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/svg/movie_icon.svg',
+                    colorFilter: const ColorFilter.mode(
+                        Colors.black26, BlendMode.srcIn)),
+                activeIcon: SvgPicture.asset('assets/svg/movie_icon.svg',
+                    colorFilter: const ColorFilter.mode(
+                        Colors.red, BlendMode.srcIn)),
+                label: 'Movie'),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/svg/bookmark_icon.svg',
+                    colorFilter: const ColorFilter.mode(
+                        Colors.black26, BlendMode.srcIn)),
+                activeIcon: SvgPicture.asset(
+                    'assets/svg/bookmark_icon.svg',
+                    colorFilter: const ColorFilter.mode(
+                        Colors.red, BlendMode.srcIn)),
+                label: 'Book'),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/svg/location_pin_icon.svg',
+                    colorFilter: const ColorFilter.mode(
+                        Colors.black26, BlendMode.srcIn)),
+                activeIcon: SvgPicture.asset(
+                    'assets/svg/location_pin_icon.svg',
+                    colorFilter: const ColorFilter.mode(
+                        Colors.red, BlendMode.srcIn)),
+                label: 'Activities')
+          ],
+          elevation: 20,
+          onTap: (int value) => {
+            context.read<HomePageBloc>().add(HomePageToIdx(value)),
+            pageController.jumpToPage(value),
+          },
+          showUnselectedLabels: true,
+          selectedLabelStyle:
+          const TextStyle(fontFamily: 'Urbanist', fontSize: 16),
+          unselectedLabelStyle:
+          const TextStyle(fontFamily: 'Urbanist', fontSize: 12),
+          unselectedItemColor: Colors.black26,
+          selectedItemColor: Colors.red,
+          currentIndex: idx,
+        ));
+  }
+}

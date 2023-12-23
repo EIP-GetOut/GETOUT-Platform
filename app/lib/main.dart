@@ -10,13 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getout/bloc/locale_bloc.dart';
+import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/observer.dart';
-import 'package:getout/constants/theme.dart';
-
-import 'package:getout/screens/connection/login/pages/login.dart';
+import 'package:getout/bloc/theme/bloc.dart';
+import 'package:getout/bloc/user/bloc.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/connection/login/bloc/login_service.dart';
+import 'package:getout/screens/connection/login/pages/login.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/register/bloc/register_service.dart';
 import 'package:getout/screens/connection/forgot_password/bloc/email/forgot_password_email_bloc.dart';
@@ -49,7 +49,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => LocaleBloc()),
+        //Data
+        BlocProvider(create: (_) => LocaleBloc(context)),
+        BlocProvider(create: (_) => ThemeBloc()),
+        BlocProvider(create: (_) => UserBloc()),
+        //Screens
         BlocProvider(create: (_) => LoginBloc(authRepo: LoginService())),
         BlocProvider(create: (_) => RegisterBloc(authRepo: RegisterService())),
         BlocProvider(create: (_) => ForgotPasswordEmailBloc(authRepo: ForgotPasswordEmailService())),
@@ -62,14 +66,17 @@ class MyApp extends StatelessWidget {
 
 class MyAppView extends StatelessWidget {
   const MyAppView({super.key});
+
   @override
   Widget build(BuildContext context) {
+
     return Builder(builder: (context) {
-      final locale = context.watch<LocaleBloc>().state;
+      //final locale = context.watch<LocaleBloc>().state;
+      final themeData = context.watch<ThemeBloc>().state;
 
       return MaterialApp(
           title: 'Get Out',
-          locale: locale,
+          //locale: locale,
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
@@ -77,7 +84,7 @@ class MyAppView extends StatelessWidget {
             GlobalMaterialLocalizations.delegate
           ],
           supportedLocales: AppLocalizations.supportedLocales,
-          theme: getOutTheme,
+          theme: themeData,
           // TODO : change by welcome page
           home: RepositoryProvider(
             create: (context) => LoginService(),

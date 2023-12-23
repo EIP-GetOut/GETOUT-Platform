@@ -1,4 +1,48 @@
 {
   "@@locale": "fr",
-  "signin_google": "Se connecter avec Google"
+  "appName": "GetOut",
+  "@_Error": {},
+  "errorFetch": "Erreur {statusCode} lors de la recuperation {object}: {statusMessage}",
+  "@errorFetch": {
+    "placeholders": {
+      "statusCode": {
+        "type": "int",
+        "example": 404
+      },
+      "object": {
+        "type": "string",
+        "example": "books"
+      },
+      "statusMessage": {
+        "type": "string",
+        "example": "Not found"
+      }
+    }
+  },
+  "errorLoad": "Impossible de charger {object}",
+  "@errorLoad": {
+    "placeholders": {
+      "object": {
+        "type": "string",
+        "example": "les livres"
+      }
+    }
+  },
+  "@_LOGIN": {},
+  "signInWith": "Se connecter avec {Service}",
+  "@signInWith": {
+    "placeholders": {
+      "Service": {
+        "type": "string"
+      }
+    }
+  },
+  "@_DASHBOARD": {},
+  "@dashboardTitle" : "Vos livres",
+  "@_YOUR_BOOKS": {},
+  "@yourBooksTitle" : "Vos livres",
+  "yourBooksDescription" : "Toutes vos lectures sont ici.",
+  "likeBooksTitle": "Vos coups de coeur",
+  "@viewBooksTitle": "vos livres fini",
+  "@wishlistBooksTitle": "ce que vous comptez lire"
 }
