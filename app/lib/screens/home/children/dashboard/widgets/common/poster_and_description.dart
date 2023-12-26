@@ -2,7 +2,7 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
 import 'package:flutter/material.dart';
@@ -24,6 +24,7 @@ class PosterAndDescriptionWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(10.0),
       width: 100,
+      height: 100,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(7.0),
@@ -33,21 +34,22 @@ class PosterAndDescriptionWidget extends StatelessWidget {
           ),
         ),
         Container(
-          alignment: Alignment.topLeft,
+         height: 30,
+        alignment: Alignment.topLeft,
           child: Text(title,
-              maxLines: 3,
+              maxLines: 2,
               style: Theme.of(context).textTheme.titleSmall),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 5),
         Flexible(
           child: Container(
             alignment: Alignment.topLeft,
             padding: const EdgeInsets.only(right: 13.0),
             child: Text(overview ?? 'Aucune description disponible',
-                textAlign: TextAlign.justify,
+                textAlign: TextAlign.left,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 3,
-                style: Theme.of(context).textTheme.headlineSmall),
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 10)),
           ),
         ),
       ]),
