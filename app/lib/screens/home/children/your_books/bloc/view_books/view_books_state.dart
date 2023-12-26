@@ -2,7 +2,7 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Writed by Perry Chouteau <perry.chouteau@epitech.eu>
+** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
 part of 'view_books_bloc.dart';

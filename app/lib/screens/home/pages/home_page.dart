@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
             },
             children: <Widget>[
               ListView(children: const [
-                SizedBox(height: 1000, child: DashboardLayout())
+                SizedBox(height: 800, child: DashboardLayout())
               ]),
               ListView(children: [
                 SizedBox(
