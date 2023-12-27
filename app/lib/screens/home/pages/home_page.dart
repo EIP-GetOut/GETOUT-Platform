@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/screens/home/bloc/home_page_bloc.dart';
 import 'package:getout/screens/home/children/dashboard/pages/dashboard.dart';
+import 'package:getout/screens/home/children/your_books/pages/your_books.dart';
 import 'package:getout/screens/home/widgets/header.dart';
 import 'package:getout/screens/home/widgets/navbar.dart';
 
@@ -38,21 +39,11 @@ class HomePage extends StatelessWidget {
             },
             children: <Widget>[
               ListView(children: const [
-                SizedBox(height: 800, child: DashboardLayout())
+                SizedBox(height: 800, child: DashboardPage())
               ]),
-              ListView(children: [
+              ListView(children: const [
                 SizedBox(
-                    width: 1000,
-                    height: 1000,
-                    child: ColoredBox(
-                        color: Colors.green,
-                        child: Text('Movie1/2 ${state.idx}'))),
-                SizedBox(
-                    width: 1000,
-                    height: 1000,
-                    child: ColoredBox(
-                        color: Colors.yellow,
-                        child: Text('Movie2/2 ${state.idx}')))
+                    height: 1000, child: YourBooksPage())
               ]),
               SizedBox(
                   width: 1000,

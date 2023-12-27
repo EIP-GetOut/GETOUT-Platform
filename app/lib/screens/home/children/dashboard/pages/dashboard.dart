@@ -11,8 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:getout/screens/home/children/dashboard/widgets/movies/movies_widget.dart';
 import 'package:getout/screens/home/children/dashboard/widgets/books/books_widget.dart';
 
-class DashboardLayout extends StatelessWidget {
-  const DashboardLayout({super.key});
+class DashboardPage extends StatelessWidget {
+  const DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {

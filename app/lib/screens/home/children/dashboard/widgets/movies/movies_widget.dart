@@ -7,9 +7,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/widgets/object_loading_error_widget.dart';
 
 import 'package:getout/screens/home/children/dashboard/widgets/movies/movies_succes_widget.dart';
-import 'package:getout/screens/home/children/dashboard/widgets/movies/movies_error_widget.dart';
 import 'package:getout/screens/home/children/dashboard/bloc/movies/movies_bloc.dart';
 
 //ListObjectsWidget<ObjectBloc, ObjectState>(SuccessWidget, ErrorWidget);
@@ -31,7 +31,7 @@ class MoviesWidget extends StatelessWidget {
               backgroundColor: Color.fromARGB(0, 255, 5, 5),
             ));
           } else if (state.status.isError) {
-            return const MoviesErrorWidget();
+            return const ObjectLoadingErrorWidget(object: 'les films');
           } else {
             return const SizedBox();
           }

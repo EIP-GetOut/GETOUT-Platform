@@ -11,8 +11,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/book/bloc/book_bloc.dart';
 import 'package:getout/screens/book/pages/book.dart';
-import 'package:getout/screens/home/children/dashboard/widgets/books/books_error_widget.dart';
 import 'package:getout/widgets/loading.dart';
+import 'package:getout/widgets/object_loading_error_widget.dart';
 
 class BookWidget extends StatelessWidget {
   const BookWidget({super.key});
@@ -27,7 +27,7 @@ class BookWidget extends StatelessWidget {
           if (state.status.isLoading) {
             return const Center(child: LoadingPage());
           } else if (state.status.isError) {
-            return const BooksErrorWidget();
+            return const ObjectLoadingErrorWidget(object: 'le livre');
           } else {
             return const SizedBox();
           }
