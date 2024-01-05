@@ -24,7 +24,7 @@ class MoviesLayout extends StatelessWidget {
         padding: EdgeInsets.only(top: 30.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [DashboardHeader(), MoviesRecommendedWidget(), MoviesLikedWidget(), MoviesSavedWidget()],
+          children: [DashboardHeader(), MoviesRecommendedWidget(), SizedBox(height: 10), MoviesLikedWidget(), SizedBox(height: 10), MoviesSavedWidget()],
         ));
   }
 }

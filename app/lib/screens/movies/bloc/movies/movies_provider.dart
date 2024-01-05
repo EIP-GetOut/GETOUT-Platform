@@ -54,7 +54,7 @@ class Movies extends StatelessWidget {
                 ),
             ),
           ],
-          child: const MoviesLayout(),
+          child: ListView(children: [SizedBox(height: 1000, child: const MoviesLayout())]),
         ),
       ),
     );
