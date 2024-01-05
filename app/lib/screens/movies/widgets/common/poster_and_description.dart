@@ -24,32 +24,32 @@ class PosterAndDescriptionWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(10.0),
       width: 100,
+      height: 100,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         ClipRRect(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(7.0),
           child: Image.network(
             'https://image.tmdb.org/t/p/w600_and_h900_bestv2$posterPath',
             fit: BoxFit.cover,
           ),
         ),
         Container(
-          alignment: Alignment.topLeft,
+         height: 30,
+        alignment: Alignment.topLeft,
           child: Text(title,
-              style: Theme.of(context)
-                  .textTheme
-                  .displayMedium!
-                  .copyWith(fontWeight: FontWeight.bold)),
+              maxLines: 2,
+              style: Theme.of(context).textTheme.titleSmall),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 5),
         Flexible(
           child: Container(
             alignment: Alignment.topLeft,
             padding: const EdgeInsets.only(right: 13.0),
             child: Text(overview ?? 'Aucune description disponible',
-                textAlign: TextAlign.justify,
+                textAlign: TextAlign.left,
                 overflow: TextOverflow.ellipsis,
-                maxLines: 4,
-                style: Theme.of(context).textTheme.bodySmall),
+                maxLines: 3,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 10)),
           ),
         ),
       ]),
