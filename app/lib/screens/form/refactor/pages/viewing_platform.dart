@@ -17,19 +17,12 @@ class ViewingPlatform extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
-    List<String> checkboxText = [
-      'Netflix',
-      'Prime Video',
-      'Disney +',
-      'Cinema',
-      'DVD'
-    ];
-    List<String> checkboxImagePath = [
-      'assets/images/Logo_Netflix.png',
-      'assets/images/Logo_Prime_video.png',
-      'assets/images/Logo_Disney+.png',
-      'assets/images/Logo_Cinema.png',
-      'assets/images/Logo_DVD.png'
+    List<List<String>> checkboxText = [
+      ['Netflix', 'assets/images/Logo_Netflix.png'],
+      ['Prime Video', 'assets/images/Logo_Prime_video.png'],
+      ['Disney +', 'assets/images/Logo_Disney+.png'],
+      ['Cinema', 'assets/images/Logo_Cinema.png'],
+      ['DVD', 'assets/images/Logo_DVD.png']
     ];
 
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
@@ -60,12 +53,11 @@ class ViewingPlatform extends StatelessWidget {
                       children: [
                         CheckboxListTile(
                           title: Row(
-                            // mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const SizedBox(width: 50.0),
-                              Image.asset(checkboxImagePath[i], width: 40, height: 40),
+                              Image.asset(checkboxText[i][1], width: 40, height: 40),
                               const SizedBox(width: 8.0),
-                              Text(checkboxText[i], style: Theme.of(context).textTheme.bodyMedium),
+                              Text(checkboxText[i][0], style: Theme.of(context).textTheme.bodyMedium),
                             ],
                           ),
                           value: context.read<FormBloc>().state.viewingPlatform[i],
@@ -75,14 +67,14 @@ class ViewingPlatform extends StatelessWidget {
                           contentPadding: EdgeInsets.zero,
                           controlAffinity: ListTileControlAffinity.leading,
                           tileColor: Colors.transparent,
+                          checkColor: Colors.transparent,
+                          activeColor: Theme.of(context).primaryColor,
                           shape: const Border(
                             bottom: BorderSide(color: Colors.black, width: 2.0),
                             left: BorderSide(color: Colors.black, width: 2.0),
                             right: BorderSide(color: Colors.black, width: 2.0),
                             top: BorderSide(color: Colors.black, width: 2.0),
                           ),
-                          checkColor: Colors.transparent,
-                          activeColor: Theme.of(context).primaryColor,
                         ),
                         const SizedBox(height: 10),
                       ],

@@ -14,6 +14,7 @@ import 'package:getout/screens/form/refactor/pages/literary_genre.dart';
 import 'package:getout/screens/form/refactor/pages/interest_choices.dart';
 import 'package:getout/screens/form/refactor/pages/film_genres.dart';
 import 'package:getout/screens/form/refactor/pages/viewing_platform.dart';
+import 'package:getout/screens/form/refactor/pages/end_form.dart';
 
 class Forms extends StatelessWidget {
   const Forms({super.key});
@@ -47,7 +48,7 @@ class Forms extends StatelessWidget {
                     LiteraryGenres(),
                     FilmGenres(),
                     ViewingPlatform(),
-                    // EndForm(),
+                    EndForm(),
                   ],
                 ),
             floatingActionButton: _nextButton(pageController),
@@ -65,12 +66,17 @@ class Forms extends StatelessWidget {
         child: FloatingActionButton(
           child: Text('Suivant', style: Theme.of(context).textTheme.labelMedium),
           onPressed: () {
-            if ((context.read<FormBloc>().state.status == FormStatus.socialMediaTime && context.read<FormBloc>().state.time == 0.0) ||
-                (context.read<FormBloc>().state.status == FormStatus.interestChoices && !context.read<FormBloc>().state.interest.contains(true)) ||
+            if (context.read<FormBloc>().state.status == FormStatus.socialMediaTime && context.read<FormBloc>().state.time == 0.0) {
+              return _showSnackBar(context, 'Veuillez mettre une valeur supérieure à 0');
+            }
+            if ((context.read<FormBloc>().state.status == FormStatus.interestChoices && !context.read<FormBloc>().state.interest.contains(true)) ||
                 (context.read<FormBloc>().state.status == FormStatus.literaryGenres && !context.read<FormBloc>().state.literaryGenres.contains(true)) ||
                 (context.read<FormBloc>().state.status == FormStatus.filmGenres && !context.read<FormBloc>().state.filmGenres.contains(true)) ||
                 (context.read<FormBloc>().state.status == FormStatus.viewingPlatform && !context.read<FormBloc>().state.viewingPlatform.contains(true))) {
-              return _showSnackBar(context, 'Veuillez remplir tous les champs');
+              return _showSnackBar(context, 'Veuillez sélectionner au moins une case');
+            }
+            if (context.read<FormBloc>().state.status == FormStatus.endForm) {
+              return _showSnackBar(context, 'Merci d\'avoir rempli le formulaire');
             }
             pageController.nextPage(
                 duration: const Duration(milliseconds: 200),
