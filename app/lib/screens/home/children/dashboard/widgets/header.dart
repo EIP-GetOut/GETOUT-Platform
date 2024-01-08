@@ -28,7 +28,7 @@ class DashboardHeader extends StatelessWidget {
                         builder: (context) => const SettingsPage()));
               },
               child: Image.asset(
-                'assets/Profile_picture.png',
+                'assets/images/Profile_picture.png',
                 width: 60,
               ),
             ),
@@ -44,7 +44,7 @@ class DashboardHeader extends StatelessWidget {
             ),
             const SizedBox(width: 25),
             Image.asset(
-              'assets/GetOut_logo.png',
+              'assets/images/Logo_GetOut.png',
               width: 40,
             ),
             const SizedBox(height: 100),

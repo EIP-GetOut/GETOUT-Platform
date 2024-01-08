@@ -18,13 +18,13 @@ class EndForm extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget> [
             const SizedBox(height: 140),
-            Image.asset('assets/entire_logo.png', scale: 0.85),
+            Image.asset('assets/images/Logo_Full_GetOut.png', scale: 0.85),
             const SizedBox(height: 50),
             Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget> [
-                  Image.asset('assets/images/Telephone.png', scale: 1.6),
-                  Image.asset('assets/images/Dessin.png', scale: 2.5),
+                  Image.asset('assets/images/Icon_Phone_Check.png', scale: 1.6),
+                  Image.asset('assets/images/Draw_Woman.png', scale: 2.5),
                 ],
               ),
             const SizedBox(height: 20),

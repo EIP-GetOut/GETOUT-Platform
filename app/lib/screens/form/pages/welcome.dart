@@ -42,7 +42,7 @@ class _WelcomePageState extends State<WelcomePage> {
                     SizedBox(
                       height: uniHeight(context, 13, isLandscape),
                       width: uniWidth(context, 27, isLandscape),
-                      child: Image.asset('assets/GetOut_logo.png'),
+                      child: Image.asset('assets/images/Logo_GetOut.png'),
                     ),
                     SizedBox(width: perWidth(context, 4)),
                     const Text('GETOUT',
@@ -59,7 +59,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 width: perWidth(context, (isLandscape ? 40 : 100)),
                 child: Align(
                     alignment: Alignment.center,
-                    child: Image.asset('assets/welcome_img.png')),
+                    child: Image.asset('assets/images/Draw_Welcome_image.png')),
               ),
               SizedBox(
                 height: perHeight(context, 15),
