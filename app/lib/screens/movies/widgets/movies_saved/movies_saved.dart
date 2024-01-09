@@ -28,7 +28,6 @@ class MoviesSavedSuccessWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(movies.length.toString());
     return Expanded(
         child: Column(
       children: [
