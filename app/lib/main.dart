@@ -49,7 +49,6 @@ void main() {
       Permission.notification.request();
     }
   });
-
   runApp(const MainProvider());
 }
 
