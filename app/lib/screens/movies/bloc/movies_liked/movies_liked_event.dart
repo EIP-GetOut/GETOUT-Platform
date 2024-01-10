@@ -10,10 +10,11 @@ part of 'movies_liked_bloc.dart';
 class MoviesLikedEvent extends Equatable {
   @override
   List<Object?> get props => [];
+  const MoviesLikedEvent();
 }
 
 class GenerateMoviesLikedRequest extends MoviesLikedEvent {
-  GenerateMoviesLikedRequest({
+  const GenerateMoviesLikedRequest({
     required this.genres,
     this.includeAdult = false,
   });
@@ -21,9 +22,8 @@ class GenerateMoviesLikedRequest extends MoviesLikedEvent {
   final bool includeAdult;
 }
 
-//ignore: must_be_immutable
 class MoviesLikeResponse extends MoviesLikedEvent {
-  MoviesLikeResponse(
+  const MoviesLikeResponse(
       {this.id,
        this.title,
        this.posterPath,
@@ -32,13 +32,13 @@ class MoviesLikeResponse extends MoviesLikedEvent {
   final int? id;
   final String? title;
   final String? posterPath;
-  String? overview;
+  final String? overview;
   final int statusCode;
   static const int success = HttpStatus.OK;
 }
 
 class MovieLikedPreview extends MoviesLikedEvent {
-  MovieLikedPreview(
+  const MovieLikedPreview(
       {required this.id,
       required this.title,
       required this.posterPath,

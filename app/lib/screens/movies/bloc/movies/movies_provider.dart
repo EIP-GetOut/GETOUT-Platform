@@ -18,14 +18,13 @@ import 'package:getout/global.dart';
 import 'package:getout/tools/map_box_movie_values_to_ids.dart';
 
 //ignore: must_be_immutable
-class Movies extends StatelessWidget {
-  Movies({super.key});
-
-  List<int> genreMoviesIds = mapBoxMovieValuesToIds(boxMovieValue);
-  List<int> genreBooksIds = mapBoxMovieValuesToIds(boxBookValue);
+class YourMovies extends StatelessWidget {
+  const YourMovies({super.key});
 
   @override
   Widget build(BuildContext context) {
+    List<int> genreMoviesIds = mapBoxMovieValuesToIds(boxMovieValue);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: RepositoryProvider(
@@ -55,7 +54,7 @@ class Movies extends StatelessWidget {
             ),
           ],
           child: ListView(
-            children: [
+            children: const [
               SizedBox(height: 1000, child: MoviesLayout())
             ]),
         ),

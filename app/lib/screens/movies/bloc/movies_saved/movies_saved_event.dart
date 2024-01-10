@@ -10,10 +10,11 @@ part of 'movies_saved_bloc.dart';
 class MoviesSavedEvent extends Equatable {
   @override
   List<Object?> get props => [];
+  const MoviesSavedEvent();
 }
 
 class GenerateMoviesSavedRequest extends MoviesSavedEvent {
-  GenerateMoviesSavedRequest({
+  const GenerateMoviesSavedRequest({
     required this.genres,
     this.includeAdult = false,
   });
@@ -23,7 +24,7 @@ class GenerateMoviesSavedRequest extends MoviesSavedEvent {
 
 //ignore: must_be_immutable
 class MoviesSaveResponse extends MoviesSavedEvent {
-  MoviesSaveResponse(
+  const MoviesSaveResponse(
       {this.id,
        this.title,
        this.posterPath,
@@ -32,13 +33,13 @@ class MoviesSaveResponse extends MoviesSavedEvent {
   final int? id;
   final String? title;
   final String? posterPath;
-  String? overview;
+  final String? overview;
   final int statusCode;
   static const int success = HttpStatus.OK;
 }
 
 class MovieSavedPreview extends MoviesSavedEvent {
-  MovieSavedPreview(
+  const MovieSavedPreview(
       {required this.id,
       required this.title,
       required this.posterPath,

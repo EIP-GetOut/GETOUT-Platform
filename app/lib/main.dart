@@ -81,7 +81,7 @@ class MyAppView extends StatelessWidget {
           // TODO : change by welcome page
           home: RepositoryProvider(
             create: (context) => LoginService(),
-            child: Movies(),
+            child: const YourMovies(),
           ),
       );
     });

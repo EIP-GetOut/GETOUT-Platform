@@ -5,8 +5,6 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import 'package:getout/screens/movies/widgets/common/title.dart';

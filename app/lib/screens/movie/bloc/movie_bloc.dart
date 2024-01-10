@@ -17,7 +17,7 @@ part 'movie_state.dart';
 class MovieBloc extends Bloc<MovieEvent, MovieState> {
   MovieBloc({
     required this.movieRepository,
-  }) : super(MovieState()) {
+  }) : super(const MovieState()) {
     on<CreateInfoMovieRequest>(_mapGetMovieEventToState);
   }
 

@@ -25,3 +25,7 @@ const String getInfoMovieApiPath = '/movie';
 
 const String generateBooksApiPath = '/generate-books';
 const String getInfoBookApiPath = '/book';
+
+// en attendant le getSession, on va mettre ici le token et le cookies en dur qui sera récupérer plus tard avec le getSession
+const String cookies = '';
+const String token = '';

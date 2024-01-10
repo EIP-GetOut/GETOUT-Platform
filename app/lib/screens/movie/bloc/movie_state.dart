@@ -16,10 +16,10 @@ extension MovieStatusX on MovieStatus {
 }
 
 class MovieState extends Equatable {
-  MovieState({
+  const MovieState({
     this.status = MovieStatus.initial,
     InfoMovieResponse? movie,
-  }) : movie = movie ?? InfoMovieResponse(statusCode: 200);
+  }) : movie = movie ?? const InfoMovieResponse(statusCode: 200);
 
   final InfoMovieResponse movie;
   final MovieStatus status;

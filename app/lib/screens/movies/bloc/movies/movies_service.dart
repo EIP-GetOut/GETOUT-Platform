@@ -28,7 +28,6 @@ class MoviesService {
         movies.add(item);
       }
     }
-
     for (int i = 0; i < movies.length; i++) {
       result.add(MovieLikedPreview(
           id: movies[i].id,
@@ -45,13 +44,12 @@ Future<dynamic> getMoviesIdLiked(GenerateMoviesLikedRequest request) async {
   final dio = Dio();
   final response = await dio.get(
       // A changer avec le account id quand le get session sera fait
-      '${api_constants.rootApiPath}/account/fe1b3ea3-1434-4d09-8543-b00af79889d6/likedMovies',
+      '${api_constants.rootApiPath}/account/${api_constants.token}/likedMovies',
       options: Options(headers: {
         'Content-Type': 'application/json',
         'Cookie':
-            'connect.sid=s%3ABvubf9YeIjX9sZNSMFKSlQX93ZXFziDS.DVpF1Xq%2BSPxyKMAbKfZW1Tc3jQ%2F5fcLSl%2FMtk2Glt6o'
+            api_constants.cookies
       }));
-
   if (response.statusCode != HttpStatus.OK) {
     return Future.error(Exception(
       'Error ${response.statusCode} while fetching movies: ${response.statusMessage}',
@@ -64,7 +62,7 @@ Future<dynamic> getMoviesIdLiked(GenerateMoviesLikedRequest request) async {
 }
 
 Future<MoviesLikeResponse> getInfoMovieLiked(var movie) async {
-  MoviesLikeResponse result = MoviesLikeResponse(
+  MoviesLikeResponse result = const MoviesLikeResponse(
       id: null,
       title: null,
       posterPath: null,
@@ -73,11 +71,13 @@ Future<MoviesLikeResponse> getInfoMovieLiked(var movie) async {
   final dio = Dio();
 
   final response = await dio.get(
-      '${api_constants.rootApiPath}${api_constants.getInfoMovieApiPath}/account/60eee6af-2ba2-4ff0-ba79-7c6d6c50634f/likedMovies',
-      options: Options(headers: {'Content-Type': 'application/json'}));
+      '${api_constants.rootApiPath}${api_constants.getInfoMovieApiPath}/$movie',
+       options: Options(headers: {
+        'Content-Type': 'application/json',
+      }));
   try {
     if (response.statusCode != MoviesLikeResponse.success) {
-      MoviesLikeResponse(
+      const MoviesLikeResponse(
           id: null,
           title: null,
           posterPath: null,
@@ -87,18 +87,15 @@ Future<MoviesLikeResponse> getInfoMovieLiked(var movie) async {
     final dynamic data = response.data;
     result = MoviesLikeResponse(
         title: data['movie']['title'],
-        overview: data['movie']['overview'],
+        overview: data['movie']['overview'] ?? 'Pas de description disponible',
         posterPath: data['movie']['poster_path'],
         id: movie,
         statusCode: response.statusCode ?? 500);
-    if (result.overview == '') {
-      result.overview = 'Pas de description disponible';
-    }
   } catch (error) {
     if (error.toString() == 'Connection reset by peer' ||
         error.toString() ==
             'Connection closed before full header was received') {
-      return MoviesLikeResponse(
+      return const MoviesLikeResponse(
           id: null,
           title: null,
           posterPath: null,
@@ -110,7 +107,7 @@ Future<MoviesLikeResponse> getInfoMovieLiked(var movie) async {
   return result;
 }
 
-// RECOMMAND
+// RECOMMEND
 
 String formatWithGenresParameter(List<int> genres) {
   String withGenres = '';
@@ -167,7 +164,6 @@ Future<GenerateMoviesSavedResponse> getMoviesSaved(
   }
 
   for (int i = 0; i < movies.length; i++) {
-    print(movies[i].id);
     result.add(MovieSavedPreview(
         id: movies[i].id,
         title: movies[i].title,
@@ -183,11 +179,11 @@ Future<dynamic> getMoviesIdSaved(GenerateMoviesSavedRequest request) async {
   final dio = Dio();
   final response = await dio.get(
       // A changer avec le account id quand le get session sera fait
-      '${api_constants.rootApiPath}/account/fe1b3ea3-1434-4d09-8543-b00af79889d6/watchlist',
+      '${api_constants.rootApiPath}/account/${api_constants.token}/watchlist',
       options: Options(headers: {
         'Content-Type': 'application/json',
         'Cookie':
-            'connect.sid=s%3ABvubf9YeIjX9sZNSMFKSlQX93ZXFziDS.DVpF1Xq%2BSPxyKMAbKfZW1Tc3jQ%2F5fcLSl%2FMtk2Glt6o'
+            api_constants.cookies
       }));
 
   if (response.statusCode != HttpStatus.OK) {
@@ -202,7 +198,7 @@ Future<dynamic> getMoviesIdSaved(GenerateMoviesSavedRequest request) async {
 }
 
 Future<MoviesSaveResponse> getInfoMovie(var movie) async {
-  MoviesSaveResponse result = MoviesSaveResponse(
+  MoviesSaveResponse result = const MoviesSaveResponse(
       id: null,
       title: null,
       posterPath: null,
@@ -211,11 +207,11 @@ Future<MoviesSaveResponse> getInfoMovie(var movie) async {
   final dio = Dio();
 
   final response = await dio.get(
-      '${api_constants.rootApiPath}${api_constants.getInfoMovieApiPath}/${movie}',
+      '${api_constants.rootApiPath}${api_constants.getInfoMovieApiPath}/$movie',
       options: Options(headers: {'Content-Type': 'application/json'}));
   try {
     if (response.statusCode != MoviesSaveResponse.success) {
-      MoviesSaveResponse(
+      const MoviesSaveResponse(
           id: null,
           title: null,
           posterPath: null,
@@ -225,18 +221,15 @@ Future<MoviesSaveResponse> getInfoMovie(var movie) async {
     final dynamic data = response.data;
     result = MoviesSaveResponse(
         title: data['movie']['title'],
-        overview: data['movie']['overview'],
+        overview: data['movie']['overview'] ?? 'Pas de description disponible',
         posterPath: data['movie']['poster_path'],
         id: movie,
         statusCode: response.statusCode ?? 500);
-    if (result.overview == '') {
-      result.overview = 'Pas de description disponible';
-    }
   } catch (error) {
     if (error.toString() == 'Connection reset by peer' ||
         error.toString() ==
             'Connection closed before full header was received') {
-      return MoviesSaveResponse(
+      return const MoviesSaveResponse(
           id: null,
           title: null,
           posterPath: null,
