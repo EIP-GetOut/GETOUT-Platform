@@ -10,10 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:getout/bloc/locale_bloc.dart';
 import 'package:getout/bloc/observer.dart';
 import 'package:getout/constants/theme.dart';
-
 import 'package:getout/screens/connection/login/pages/login.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/connection/login/bloc/login_service.dart';
@@ -38,7 +38,7 @@ Map<int, Color> colorMap = {
 };
 
 void main() {
-  Bloc.observer = const AppBlocObserver(); // BLoC MidleWare.
+  Bloc.observer = const AppBlocObserver(); // BLoC MiddleWare.
   runApp(const MyApp());
 }
 
@@ -78,7 +78,6 @@ class MyAppView extends StatelessWidget {
           ],
           supportedLocales: AppLocalizations.supportedLocales,
           theme: getOutTheme,
-          // TODO : change by welcome page
           home: RepositoryProvider(
             create: (context) => LoginService(),
             child: LoginScreen(),
