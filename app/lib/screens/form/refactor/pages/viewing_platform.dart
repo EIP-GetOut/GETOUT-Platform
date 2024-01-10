@@ -27,7 +27,7 @@ class ViewingPlatform extends StatelessWidget {
 
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
-      context.read<FormBloc>().add(EmitEvent(status: FormStatus.viewingPlatform));
+      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.viewingPlatform));
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[

@@ -20,7 +20,7 @@ class SocialMediaSpentTime extends StatelessWidget {
     return BlocBuilder<FormBloc, FormStates>(
         builder: (context, state)
         {
-          context.read<FormBloc>().add(EmitEvent(status: FormStatus.socialMediaTime));
+          context.read<FormBloc>().add(const EmitEvent(status: FormStatus.socialMediaTime));
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

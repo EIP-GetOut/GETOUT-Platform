@@ -27,7 +27,7 @@ class LiteraryGenres extends StatelessWidget {
 
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
-      context.read<FormBloc>().add(EmitEvent(status: FormStatus.literaryGenres));
+      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.literaryGenres));
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[

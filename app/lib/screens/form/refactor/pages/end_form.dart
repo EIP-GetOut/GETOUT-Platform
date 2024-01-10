@@ -18,7 +18,7 @@ class EndForm extends StatelessWidget {
   {
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
-      context.read<FormBloc>().add(EmitEvent(status: FormStatus.endForm));
+      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.endForm));
       return Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,

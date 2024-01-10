@@ -27,7 +27,7 @@ class InterestChoices extends StatelessWidget {
 
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
-      context.read<FormBloc>().add(EmitEvent(status: FormStatus.interestChoices));
+      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.interestChoices));
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[

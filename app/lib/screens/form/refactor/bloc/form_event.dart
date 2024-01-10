@@ -8,18 +8,16 @@
 part of 'form_bloc.dart';
 
 class FormEvent extends Equatable {
+  const FormEvent();
+
   @override
   List<Object?> get props => [];
 }
 
-class GetFormEvent extends FormEvent {
-  @override
-  List<Object?> get props => [];
-}
 class EmitEvent extends FormEvent {
   final FormStatus status;
 
-  EmitEvent({required this.status});
+  const EmitEvent({required this.status});
 
   @override
   List<Object?> get props => [status];
@@ -28,7 +26,7 @@ class EmitEvent extends FormEvent {
 class SocialMediaTimeEvent extends FormEvent {
   final double? time;
 
-  SocialMediaTimeEvent({this.time});
+  const SocialMediaTimeEvent({this.time});
 
   @override
   List<Object?> get props => [time];
@@ -37,7 +35,7 @@ class SocialMediaTimeEvent extends FormEvent {
 class InterestChoicesEvent extends FormEvent {
   final int index;
 
-  InterestChoicesEvent({required this.index});
+  const InterestChoicesEvent({required this.index});
 
   @override
   List<Object?> get props => [index];
@@ -46,7 +44,7 @@ class InterestChoicesEvent extends FormEvent {
 class LiteraryGenresEvent extends FormEvent {
   final int index;
 
-  LiteraryGenresEvent({required this.index});
+  const LiteraryGenresEvent({required this.index});
 
   @override
   List<Object?> get props => [index];
@@ -55,7 +53,7 @@ class LiteraryGenresEvent extends FormEvent {
 class FilmGenresEvent extends FormEvent {
   final int index;
 
-  FilmGenresEvent({required this.index});
+  const FilmGenresEvent({required this.index});
 
   @override
   List<Object?> get props => [index];
@@ -64,13 +62,15 @@ class FilmGenresEvent extends FormEvent {
 class ViewingPlatformEvent extends FormEvent {
   final int index;
 
-  ViewingPlatformEvent({required this.index});
+  const ViewingPlatformEvent({required this.index});
 
   @override
   List<Object?> get props => [index];
 }
 
 class EndFormEvent extends FormEvent {
+  const EndFormEvent();
+
   @override
   List<Object?> get props => [];
 }

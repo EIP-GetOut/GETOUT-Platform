@@ -27,7 +27,7 @@ class FilmGenres extends StatelessWidget {
 
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
-      context.read<FormBloc>().add(EmitEvent(status: FormStatus.filmGenres));
+      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.filmGenres));
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
