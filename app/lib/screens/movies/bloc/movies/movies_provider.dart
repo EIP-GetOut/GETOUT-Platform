@@ -17,7 +17,6 @@ import 'package:getout/screens/movies/bloc/movies_saved/movies_saved_bloc.dart';
 import 'package:getout/global.dart';
 import 'package:getout/tools/map_box_movie_values_to_ids.dart';
 
-//ignore: must_be_immutable
 class YourMovies extends StatelessWidget {
   const YourMovies({super.key});
 

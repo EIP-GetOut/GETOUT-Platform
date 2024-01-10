@@ -32,7 +32,8 @@ class MovieService {
           backdropPath: data['movie']['backdrop_path'],
           releaseDate: data['movie']['release_date'],
           voteAverage: data['movie']['vote_average'],
-          duration: data['movie']['duration'] ?? 'N/A',
+          duration: (data['movie']['duration'] == '0h0min')
+              ? 'N/A' : data['movie']['duration'],
           statusCode: response.statusCode ?? 500);
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||

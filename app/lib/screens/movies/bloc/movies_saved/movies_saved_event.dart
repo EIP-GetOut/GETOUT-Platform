@@ -22,7 +22,6 @@ class GenerateMoviesSavedRequest extends MoviesSavedEvent {
   final bool includeAdult;
 }
 
-//ignore: must_be_immutable
 class MoviesSaveResponse extends MoviesSavedEvent {
   const MoviesSaveResponse(
       {this.id,
