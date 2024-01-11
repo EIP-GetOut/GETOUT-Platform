@@ -13,47 +13,34 @@ import 'package:dio/dio.dart';
 import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/screens/connection/register/widgets/fields.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
-import 'package:getout/screens/form/pages/social_media_spent_time.dart';
 import 'package:getout/constants/http_status.dart';
+import 'package:getout/tools/status.dart';
+import 'package:getout/widgets/show_snackbar.dart';
 
 
-class RegisterScreen extends StatelessWidget {
-  RegisterScreen({super.key});
+class RegisterPage extends StatelessWidget {
+  RegisterPage({super.key});
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  void _showSnackBar(final BuildContext context, final String message) {
-    final snackBar = SnackBar(
-        backgroundColor: Theme.of(context).colorScheme.error,
-        content: Text(message,
-            style: Theme.of(context).textTheme.displaySmall
-        ));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: BlocListener<RegisterBloc, RegisterState>(
             listenWhen: (previous, current) =>
-            previous.formStatus != current.formStatus,
+            previous.status != current.status,
             listener: (context, state) {
-              final formStatus = state.formStatus;
 
-              if (formStatus is SubmissionFailed) {
-                if (formStatus.exception is DioException && (formStatus.exception as DioException).response != null &&
-                    (formStatus.exception as DioException).response!.statusCode == HttpStatus.CONFLICT) {
-                  _showSnackBar(context, 'Un compte avec cette adresse email existe déjà');
+              if (state.status.isError) {
+                if (state.exception is DioException && (state.exception as DioException).response != null &&
+                    (state.exception as DioException).response!.statusCode == HttpStatus.CONFLICT) {
+                  showSnackBar(context, 'Un compte avec cette adresse email existe déjà');
                 } else {
-                  _showSnackBar(context, 'Une erreur s\'est produite, veuillez reesayer plus tard');
+                  showSnackBar(context, 'Une erreur s\'est produite, veuillez reesayer plus tard');
                 }
               }
-              if (formStatus is SubmissionSuccess) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                        const SocialMediaSpentTime()));
+              if (state.status.isSuccess) {
+                Navigator.pop(context);
               }
             },
             child: Scaffold(
@@ -133,7 +120,7 @@ class RegisterButton extends StatelessWidget {
 
     return BlocBuilder<RegisterBloc, RegisterState>(
       builder: (context, state) {
-        return state.formStatus is FormSubmitting
+        return state.status.isLoading
             ? const CircularProgressIndicator()
             : SizedBox(
             width: 90 * phoneWidth / 100,

@@ -5,7 +5,7 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-part of 'forgot_password_new_password_bloc.dart';
+part of 'new_password_bloc.dart';
 
 class NewPasswordRequestModel {
   const NewPasswordRequestModel({required this.code, required this.password});
@@ -22,10 +22,10 @@ class NewPasswordResponseModel {
 }
 
 
-abstract class ForgotPasswordEvent extends Equatable {}
+abstract class NewPasswordEvent extends Equatable {}
 
 
-class ForgotPasswordCodeChanged extends ForgotPasswordEvent {
+class ForgotPasswordCodeChanged extends NewPasswordEvent {
   final String? code;
 
   ForgotPasswordCodeChanged({this.code});
@@ -34,7 +34,7 @@ class ForgotPasswordCodeChanged extends ForgotPasswordEvent {
   List<Object?> get props => [code];
 }
 
-class ForgotPasswordPasswordChanged extends ForgotPasswordEvent {
+class ForgotPasswordPasswordChanged extends NewPasswordEvent {
   final String? password;
 
   ForgotPasswordPasswordChanged({this.password});
@@ -43,7 +43,7 @@ class ForgotPasswordPasswordChanged extends ForgotPasswordEvent {
   List<Object?> get props => [password];
 }
 
-class ForgotPasswordConfirmPasswordChanged extends ForgotPasswordEvent {
+class ForgotPasswordConfirmPasswordChanged extends NewPasswordEvent {
   final String? confirmPassword;
 
   ForgotPasswordConfirmPasswordChanged({this.confirmPassword});
@@ -52,7 +52,7 @@ class ForgotPasswordConfirmPasswordChanged extends ForgotPasswordEvent {
   List<Object?> get props => [confirmPassword];
 }
 
-class ForgotPasswordSubmitted extends ForgotPasswordEvent {
+class ForgotPasswordSubmitted extends NewPasswordEvent {
   @override
   List<Object?> get props => [];
 }

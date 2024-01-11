@@ -6,7 +6,6 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/screens/connection/login/pages/login.dart';
 import 'package:getout/screens/form/pages/literary_genre.dart';
 import 'package:getout/screens/settings/pages/edit_mail.dart';
 import 'package:getout/screens/settings/pages/edit_password.dart';
@@ -278,10 +277,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 child: Text('Déconection',
                     style: Theme.of(context).textTheme.bodyLarge),
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  );
+                  Navigator.maybePop(context);
                 },
               ),
             ),

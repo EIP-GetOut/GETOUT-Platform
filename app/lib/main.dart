@@ -5,26 +5,19 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>, Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:getout/bloc/observer.dart';
-
 import 'package:getout/bloc/locale/bloc.dart';
+import 'package:getout/bloc/observer.dart';
 import 'package:getout/bloc/theme/bloc.dart';
 import 'package:getout/bloc/user/bloc.dart';
-
-import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
-import 'package:getout/screens/connection/login/bloc/login_service.dart';
-import 'package:getout/screens/connection/login/pages/login.dart';
-import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
-import 'package:getout/screens/connection/register/bloc/register_service.dart';
-import 'package:getout/screens/connection/forgot_password/bloc/email/forgot_password_email_bloc.dart';
-import 'package:getout/screens/connection/forgot_password/bloc/email/forgot_password_email_service.dart';
-import 'package:getout/screens/connection/forgot_password/bloc/new_password/forgot_password_new_password_bloc.dart';
-import 'package:getout/screens/connection/forgot_password/bloc/new_password/forgot_password_new_password_service.dart';
+import 'package:getout/screens/connection/bloc/connection_provider.dart';
+import 'package:getout/screens/connection/services/service.dart';
+import 'package:getout/screens/home/bloc/home_provider.dart';
 
 Map<int, Color> colorMap = {
   50: const Color.fromRGBO(213, 86, 65, .1),
@@ -40,12 +33,12 @@ Map<int, Color> colorMap = {
 };
 
 void main() {
-  //Bloc.observer = const AppBlocObserver(); // BLoC MiddleWare.
-  runApp(const MyApp());
+  Bloc.observer = const AppBlocObserver(); // BLoC MidleWare.
+  runApp(const MainProvider());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MainProvider extends StatelessWidget {
+  const MainProvider({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,30 +48,26 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => LocaleBloc(context)),
         BlocProvider(create: (_) => ThemeBloc()),
         BlocProvider(create: (_) => UserBloc()),
-        //Screens
-        BlocProvider(create: (_) => LoginBloc(authRepo: LoginService())),
-        BlocProvider(create: (_) => RegisterBloc(authRepo: RegisterService())),
-        BlocProvider(create: (_) => ForgotPasswordEmailBloc(authRepo: ForgotPasswordEmailService())),
-        BlocProvider(create: (_) => ForgotPasswordBloc(authRepo: ForgotPasswordService())),
       ],
-      child: const MyAppView(),
+      child: const MainPage(),
     );
   }
 }
 
-class MyAppView extends StatelessWidget {
-  const MyAppView({super.key});
+class MainPage extends StatelessWidget {
+  const MainPage({super.key});
 
   @override
   Widget build(BuildContext context) {
 
     return Builder(builder: (context) {
-      //final locale = context.watch<LocaleBloc>().state;
+      final locale = context.watch<LocaleBloc>().state;
       final themeData = context.watch<ThemeBloc>().state;
+      final user = context.watch<UserBloc>().state;
 
       return MaterialApp(
           title: 'Get Out',
-          //locale: locale,
+          locale: locale,
           localizationsDelegates: const [
             AppLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
@@ -87,9 +76,12 @@ class MyAppView extends StatelessWidget {
           ],
           supportedLocales: AppLocalizations.supportedLocales,
           theme: themeData,
+          // TODO : change by welcome page
           home: RepositoryProvider(
-            create: (context) => LoginService(),
-            child: LoginScreen(),
+            create: (context) => ConnectionService(dio: Dio()),
+            child: (!user.isSigned)
+                ? const ConnectionProvider()
+                : HomeProvider(),
           ),
       );
     });

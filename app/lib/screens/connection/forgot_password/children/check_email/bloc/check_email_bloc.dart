@@ -9,38 +9,35 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:getout/constants/http_status.dart';
-import 'package:getout/screens/connection/services/service.dart';
 import 'package:getout/tools/status.dart';
+import 'package:getout/screens/connection/services/service.dart';
 
-part 'login_event.dart';
-part 'login_state.dart';
+part 'check_email_event.dart';
+part 'check_email_state.dart';
 
-class LoginBloc extends Bloc<LoginEvent, LoginState> {
+class CheckEmailBloc extends Bloc<CheckEmailEvent, CheckEmailState> {
   final ConnectionService? service;
 
-  LoginBloc({this.service}) : super(const LoginState()) {
-    on<LoginEvent>((event, emit) async {
+  CheckEmailBloc({required this.service}) : super(const CheckEmailState(email: '')) {
+    on<CheckEmailEvent>((event, emit) async {
       await mapEventToState(event, emit);
     });
   }
 
-  Future mapEventToState(LoginEvent event, Emitter<LoginState> emit) async
+  Future mapEventToState(CheckEmailEvent event, Emitter<CheckEmailState> emit) async
   {
-    if (event is LoginEmailChanged) {
+      if (event is ForgotPasswordEmailChanged) {
       emit(state.copyWith(email: event.email));
-    } else if (event is LoginPasswordChanged) {
-      emit(state.copyWith(password: event.password));
-    } else if (event is LoginSubmitted) {
+    } else if (event is CheckEmailSubmitted) {
       emit(state.copyWith(status: Status.loading));
 
       try {
-        await service?.login(LoginRequestModel(
+        await service?.checkEmail(CheckEmailRequestModel(
           email: state.email,
-          password: state.password,
         ));
         emit(state.copyWith(status: Status.success));
       } catch (e) {
-        emit(state.copyWith(status: Status.error));
+        emit(state.copyWith(status: Status.error, exception: e));
       }
     }
   }

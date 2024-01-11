@@ -5,7 +5,7 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-part of 'forgot_password_email_bloc.dart';
+part of 'check_email_bloc.dart';
 
 class CheckEmailRequestModel {
   const CheckEmailRequestModel({required this.email});
@@ -20,9 +20,9 @@ class CheckEmailResponseModel {
   final int statusCode;
 }
 
-abstract class ForgotPasswordEmailEvent extends Equatable {}
+abstract class CheckEmailEvent extends Equatable {}
 
-class ForgotPasswordEmailChanged extends ForgotPasswordEmailEvent {
+class ForgotPasswordEmailChanged extends CheckEmailEvent {
   final String? email;
 
   ForgotPasswordEmailChanged({this.email});
@@ -31,7 +31,7 @@ class ForgotPasswordEmailChanged extends ForgotPasswordEmailEvent {
   List<Object?> get props => [email];
 }
 
-class ForgotPasswordEmailSubmitted extends ForgotPasswordEmailEvent {
+class CheckEmailSubmitted extends CheckEmailEvent {
   @override
   List<Object?> get props => [];
 }
