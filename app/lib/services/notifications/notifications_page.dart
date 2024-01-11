@@ -13,7 +13,7 @@ class NotificationsPage extends StatefulWidget  {
 class _NotificationsPageState extends State<NotificationsPage> {
 
   NotificationsServices notificationsServices = NotificationsServices();
-  bool status = false;
+  bool status = true;
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +22,30 @@ class _NotificationsPageState extends State<NotificationsPage> {
           title: const Text('NOTIFICATIONS'),
           leading: const BackButton(),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-          child: Column(
+        body: Column(
             children: [
             const SizedBox(height: 50),
               Container(
-              color : Colors.grey[500],
-              width: 500,
-              height: 30,
-              child: const Text('Notifications Push', style: TextStyle(fontSize: 20, color: Colors.white, )),
+              width: double.infinity,
+              margin: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Text(
+                'NOTIFICATIONS PUSH',
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
             const SizedBox(height: 30),
-            Row(
+            Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+            child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
             Text('Recommandations', style: TextStyle(fontSize: 20, color: Colors.grey[800])),
@@ -50,9 +61,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   setState(() {
                     status = val;
                   });
+                  if (val == false) {
+                    notificationsServices.stopNotif();
+                  } else {
+                    notificationsServices.sendNotif();
+                  }
                 },
             ),
-        ])])));
+        ]))]));
         // Center(
         //   child: Column(
         //     children: [

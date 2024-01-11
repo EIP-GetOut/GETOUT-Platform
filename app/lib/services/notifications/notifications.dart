@@ -20,6 +20,7 @@ class NotificationsServices {
   }
 
   void sendNotif() async {
+    print("dans send notif !");
     tz.initializeTimeZones();
     AndroidNotificationDetails androidNotificationDetails = const AndroidNotificationDetails(
       'channelId',
@@ -35,11 +36,12 @@ class NotificationsServices {
     NotificationDetails notificationDetails = NotificationDetails(
       android: androidNotificationDetails
     );
-    await flutterLocalNotificationsPlugin.show(
+    await flutterLocalNotificationsPlugin.periodicallyShow(
       0,
       "GetOut",
       "Hey, tu t'ennuies ? Viens découvrir de nouvelles activités !",
-      // RepeatInterval.everyDaily
+      // RepeatInterval.everyDaily,
+      RepeatInterval.everyMinute,
       notificationDetails
     );
   }
