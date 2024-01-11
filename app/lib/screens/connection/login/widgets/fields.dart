@@ -15,8 +15,7 @@ class EmailField extends StatelessWidget {
   const EmailField({super.key});
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
         return TextFormField(
@@ -32,11 +31,9 @@ class EmailField extends StatelessWidget {
             ),
           ),
           validator: (value) =>
-          state.isEmailEmpty ? null : 'Un email est requis',
+              state.isEmailEmpty ? null : 'Un email est requis',
           onChanged: (value) =>
-              context.read<LoginBloc>().add(
-                LoginEmailChanged(email: value),
-              ),
+              context.read<LoginBloc>().add(LoginEmailChanged(email: value)),
         );
       },
     );
@@ -47,8 +44,7 @@ class PasswordField extends StatelessWidget {
   const PasswordField({super.key});
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
       return TextFormField(
         obscureText: true,
@@ -63,10 +59,10 @@ class PasswordField extends StatelessWidget {
               borderRadius: BorderRadius.circular(0.5),
             )),
         validator: (value) =>
-          state.isPasswordEmpty ? null : 'Un mot de passe est requis',
-        onChanged: (value) => context.read<LoginBloc>().add(
-          LoginPasswordChanged(password: value),
-        ),
+            state.isPasswordEmpty ? null : 'Un mot de passe est requis',
+        onChanged: (value) => context
+            .read<LoginBloc>()
+            .add(LoginPasswordChanged(password: value)),
       );
     });
   }

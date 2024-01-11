@@ -5,13 +5,14 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-part of 'forgot_password_new_password_bloc.dart';
+part of 'new_password_bloc.dart';
 
-class ForgotPasswordState extends Equatable {
+class NewPasswordState extends Equatable {
   final String code;
   final String password;
   final String confirmPassword;
-  final FormSubmissionStatus formStatus;
+  final Status status;
+  final Object? exception;
   bool get isPasswordEmpty => password.isNotEmpty;
   bool get isPasswordLength => password.length >= 8;
   // ignore: prefer_single_quotes
@@ -20,27 +21,30 @@ class ForgotPasswordState extends Equatable {
   bool get isConfirmPasswordValid => password.isNotEmpty && (password == confirmPassword);
   bool get isCodeValid => code.isNotEmpty && true;// code.length == 6;
 
-  const ForgotPasswordState({
+  const NewPasswordState({
     this.code = '',
     this.password = '',
     this.confirmPassword = '',
-    this.formStatus = const InitialFormStatus(),
+    this.status = Status.initial,
+    this.exception
   });
 
-  ForgotPasswordState copyWith({
+  NewPasswordState copyWith({
     String? code,
     String? password,
     String? confirmPassword,
-    FormSubmissionStatus? formStatus,
+    Status? status,
+    Object? exception
   }) {
-    return ForgotPasswordState(
+    return NewPasswordState(
       code: code ?? this.code,
       password: password ?? this.password,
       confirmPassword: confirmPassword ?? this.confirmPassword,
-      formStatus: formStatus ?? this.formStatus,
+      status: status ?? this.status,
+      exception: exception ?? this.exception
     );
   }
 
   @override
-  List<Object?> get props => [code, password, confirmPassword, formStatus];
+  List<Object?> get props => [code, password, confirmPassword, status, exception];
 }

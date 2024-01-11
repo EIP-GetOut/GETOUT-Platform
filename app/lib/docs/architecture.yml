@@ -1,0 +1,177 @@
+#Perry Chouteau <perry.chouteau@epitech.eu>
+#following the figma
+lib:
+  services:
+    - getout:
+      - request:
+        - getout_service.dart (part)
+        - book_request.dart (part of)
+        - book_request.dart (part of)
+        - dashboard.dart[in, out, up, forget_password] (part of)
+        - account.dart[change_password, change_email] (part of)
+      - api_path.dart
+      - http_status.dart
+      - constants:
+        - book_genre.dart
+        - movie_genre.dart
+    - google:
+        - oauth.dart
+    - ...:
+    - http_status.dart
+  l10n:
+    app_en.arb
+    app_fr.arb
+    app_**.fr
+  bloc:
+    - bloc.dart
+    - user_page_bloc.dart
+    - bloc.dart
+    - observer.dart
+  screens:
+    - sign: #(not signed)(=connection)
+      - pages:
+      - widget:
+        - header.dart
+    - user(signed):
+      - pages:
+        - main_layout.dart
+#        - header,
+        - settings
+        - {dashboard, your_books, your_movies}
+          - navbar
+      - bloc:
+          - bloc_data
+          - bloc_logic
+        - books:
+          - suggestion_books:
+          - like_books:
+            - view_books:
+            - wishlist_books:
+          - movies:
+            - suggestion_movies:
+            - like_movies:
+            - view_movies:
+            - wishlist_movies:
+          - settings:
+            - theme:
+            - email:
+            - password:
+          - interest:
+            - refresh:
+            - .dart
+      - widget:
+        - dashboard:
+        - your_books:
+        - your_movies:
+        - header.dart
+  widget:
+    - loading.dart
+    - selectionRow.dart #(liste horizontale de livre, film..)
+    - poster_description.dart
+    - header.dart
+    - cover.dart
+    - four_point.dart
+  tools:
+    - flex_size.dart
+    - map_box_movie_values_to_ids.dart
+  doc:
+    architecture.md (self)
+    coding_style.md
+  main.dart: #(define theme by providing locale, theme...)
+
+
+trash: (not use)
+  global.dart
+
+####################################################################################################################################
+####################################################################################################################################
+####################################################################################################################################
+####################################################################################################################################
+
+#Perry Chouteau <perry.chouteau@epitech.eu>
+lib:
+  - screen:
+      - sign:
+          - sign_in:
+          - sign_out:
+          - sign_up:
+          - forgetPassword:
+              - forgetPasswordEmail:
+              - forgetPasswordNewPassword:
+          - sign_logic
+          - sign_data
+      - home:
+          - home_bloc
+          - home_event
+          - home_state
+          - home_provider
+          - home_repository
+          - home_service
+          - dashboard:
+          - suggestion_book:
+              - suggestionBookWidget
+              - suggestion_movie:
+                  - suggestionMovieWidget
+          - yourbook:
+              - suggestion_book:
+                  - suggestionBookWidget
+
+      - widget:
+          #Field
+          FieldWidget<Validator>()
+          TwoFieldWidget<Validator, Validator1, Validator2>(FieldWidget1, FieldWidget2)
+          validator:
+            EmailUsed
+            EmailNotUsed
+            SameField
+  - services:
+      - getout:
+          - user_service.dart #part sign, book, movie;        final Dio = Dio() ;
+          - dashboard.dart #part of(in, out, up, pf1, pf2);   Dio from service
+          - book.dart #(like, wish, view, suggestion)
+          - movie.dart #(like, wish, view, suggestion)
+            
+            user_service.dart
+            
+            class{
+            method();
+            }
+            
+            
+            dashboard.dart
+            class.method() {
+            //code
+            }
+
+      - google:
+      - x:
+
+
+  - bloc:
+      - setting:
+          - localeBloc:
+              - bloc
+              - event
+              - state
+          - themeBloc:
+      - sign:
+      - signedBloc
+      - user:
+          - profilBloc:
+          - likeMovieBloc:
+              - bloc
+              - event
+              - state
+          - viewMovieBloc:
+          - wishlistMovieBloc:
+          - suggestionMovieBloc:
+          - likeBookBloc:
+          - viewBookBloc:
+          - wishlistBookBloc:
+          - suggestionBookBloc:
+
+              - settings
+      - widget:
+          - objectWidget
+          - errorWidget
+  - settings:

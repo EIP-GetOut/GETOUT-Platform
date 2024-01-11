@@ -8,8 +8,9 @@ abstract class LocaleEvent {
 
 /// Notifies bloc to increment state.
 class LocaleToDefault extends LocaleEvent {
-  LocaleToDefault({required this.context});
   final BuildContext context;
+
+  LocaleToDefault({required this.context});
 }
 
 /// Notifies bloc to increment state.
@@ -21,9 +22,9 @@ class LocaleToEn extends LocaleEvent {}
 /// {@template counter_bloc}
 /// A simple [Bloc] that manages an `int` as its state.
 /// {@endtemplate}
-class LocaleBloc extends Bloc<LocaleEvent, Locale> {
+class LocaleBloc extends Bloc<LocaleEvent, Locale?> {
   /// {@macro counter_bloc}
-  LocaleBloc(BuildContext context) : super(Localizations.localeOf(context)) {
+  LocaleBloc(BuildContext context) : super(null) {
     on<LocaleToDefault>((event, emit) => emit(Localizations.localeOf(event.context)));
     on<LocaleToFr>((event, emit) => emit(const Locale('fr')));
     on<LocaleToEn>((event, emit) => emit(const Locale('en')));

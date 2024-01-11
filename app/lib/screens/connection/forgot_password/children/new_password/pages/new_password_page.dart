@@ -9,27 +9,19 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:getout/tools/status.dart';
+import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
 
 import 'package:getout/screens/connection/widgets/fields_title.dart';
-import 'package:getout/screens/connection/forgot_password/bloc/new_password/forgot_password_new_password_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/widgets/fields.dart';
-import 'package:getout/screens/connection/forgot_password/bloc/form_submit_status.dart';
-import 'package:getout/screens/connection/login/pages/login.dart';
 import 'package:getout/constants/http_status.dart';
+import 'package:getout/widgets/show_snackbar.dart';
 
-class ForgetPasswordChangeScreen extends StatelessWidget {
-  ForgetPasswordChangeScreen({super.key});
-
+class NewPasswordPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final PageController pageController;
 
-  void _showSnackBar(final BuildContext context, final String message)
-  {
-    final snackBar = SnackBar(
-        backgroundColor: Theme.of(context).colorScheme.error,
-        content: Text(message,
-            style: Theme.of(context).textTheme.displaySmall));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
+  NewPasswordPage({super.key, required this.pageController});
 
   @override
   Widget build(BuildContext context) {
@@ -37,23 +29,22 @@ class ForgetPasswordChangeScreen extends StatelessWidget {
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
         title: const Text('MOT DE PASSE OUBLIÉ'),
-        leading: const BackButton(),
+        leading: BackButton(onPressed: () => pageController.jumpToPage(0)),
       ),
-      body: BlocListener<ForgotPasswordBloc, ForgotPasswordState>(
-        listenWhen: (previous, current) => previous.formStatus != current.formStatus,
+      body: BlocListener<NewPasswordBloc, NewPasswordState>(
+        listenWhen: (previous, current) => previous.status != current.status,
         listener: (context, state) {
-          final formStatus = state.formStatus;
 
-          if (formStatus is SubmissionFailed) {
-            if (formStatus.exception is DioException && (formStatus.exception as DioException).response != null &&
-                (formStatus.exception as DioException).response!.statusCode == HttpStatus.INTERNAL_SERVER_ERROR) {
-              _showSnackBar(context, 'Le code est incorrect');
+          if (state.status.isError) {
+            if (state.exception is DioException && (state.exception as DioException).response != null &&
+                (state.exception as DioException).response!.statusCode == HttpStatus.INTERNAL_SERVER_ERROR) {
+              showSnackBar(context, 'Le code est incorrect');
             } else {
-              _showSnackBar(context, 'Une erreur s\'est produite, veuillez reesayer plus tard');
+              showSnackBar(context, 'Une erreur s\'est produite, veuillez reesayer plus tard');
             }
           }
-          if (formStatus is SubmissionSuccess) {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+          if (state.status.isSuccess) {
+            Navigator.pop(context);
           }
         },
         child: Form(
@@ -99,9 +90,9 @@ class ForgotPasswordButton extends StatelessWidget {
   {
     final double phoneWidth = MediaQuery.of(context).size.width;
 
-    return BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(
+    return BlocBuilder<NewPasswordBloc, NewPasswordState>(
       builder: (context, state) {
-        return state.formStatus is FormSubmitting
+        return state.status.isLoading
             ? const CircularProgressIndicator()
             : SizedBox(
             width: 90 * phoneWidth / 100,
@@ -111,7 +102,7 @@ class ForgotPasswordButton extends StatelessWidget {
               backgroundColor: Theme.of(context).floatingActionButtonTheme.backgroundColor,
               onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  context.read<ForgotPasswordBloc>().add(ForgotPasswordSubmitted());
+                  context.read<NewPasswordBloc>().add(ForgotPasswordSubmitted());
                 }
               },
               child: const Text('Changer de mot de passe',

@@ -9,55 +9,47 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
+import 'package:getout/tools/status.dart';
 
 import 'package:getout/screens/connection/forgot_password/widgets/fields.dart';
-import 'package:getout/screens/connection/forgot_password/bloc/email/forgot_password_email_bloc.dart';
-import 'package:getout/screens/connection/forgot_password/bloc/form_submit_status.dart';
-import 'package:getout/screens/connection/forgot_password/pages/new_password_page.dart';
 import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/constants/http_status.dart';
+import 'package:getout/widgets/show_snackbar.dart';
 
-class ForgotPasswordEmailScreen extends StatelessWidget {
-  ForgotPasswordEmailScreen({super.key});
-
+class CheckEmailPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final PageController pageController;
 
-  void _showSnackBar(final BuildContext context, final String message)
-  {
-    final snackBar = SnackBar(
-        backgroundColor: Theme.of(context).colorScheme.error,
-        content: Text(message,
-            style: Theme.of(context).textTheme.displaySmall));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
+  CheckEmailPage({super.key, required this.pageController});
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
           title: const Text('MOT DE PASSE OUBLIÉ'),
-          leading: const BackButton(),
+          leading: BackButton(onPressed: () => Navigator.pop(context)),
         ),
-        body: BlocListener<ForgotPasswordEmailBloc, ForgotPasswordEmailState>(
-      listenWhen: (previous, current) => previous.formStatus != current.formStatus,
+        body: BlocListener<CheckEmailBloc, CheckEmailState>(
+      listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
-        final formStatus = state.formStatus;
-
-        if (formStatus is SubmissionFailed) {
-          if (formStatus.exception is DioException && (formStatus.exception as DioException).response != null &&
-              (formStatus.exception as DioException).response!.statusCode == HttpStatus.INTERNAL_SERVER_ERROR) {
-            _showSnackBar(context, 'L\'email est incorrect');
-          } else if (formStatus.exception is DioException && (formStatus.exception as DioException).response != null &&
-              (formStatus.exception as DioException).response!.statusCode == HttpStatus.UNPROCESSABLE_ENTITY) {
-            _showSnackBar(context, 'L\'email n\'est pas valide');
+        if (state.status.isError) {
+          if (state.exception is DioException && (state.exception as DioException).response != null) {
+            switch((state.exception as DioException).response!.statusCode) {
+              case HttpStatus.INTERNAL_SERVER_ERROR:
+                showSnackBar(context, 'L\'email est incorrect');
+                break;
+              case HttpStatus.UNPROCESSABLE_ENTITY:
+                showSnackBar(context, 'L\'email n\'est pas valide');
+                break;
+            }
           } else {
-            _showSnackBar(context, 'Une erreur s\'est produite, veuillez reesayer plus tard');
+            showSnackBar(context, 'Une erreur s\'est produite, veuillez reesayer plus tard');
           }
         }
-        if (formStatus is SubmissionSuccess) {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ForgetPasswordChangeScreen()));
+        if (state.status.isSuccess) {
+          pageController.jumpToPage(1);
         }
       },
       child: Column(children: [
@@ -88,9 +80,9 @@ class ForgotPasswordButton extends StatelessWidget {
   {
     final double phoneWidth = MediaQuery.of(context).size.width;
 
-    return BlocBuilder<ForgotPasswordEmailBloc, ForgotPasswordEmailState>(
+    return BlocBuilder<CheckEmailBloc, CheckEmailState>(
       builder: (context, state) {
-        return state.formStatus is FormSubmitting
+        return state.status.isLoading
             ? const CircularProgressIndicator()
             : SizedBox(
                 width: 90 * phoneWidth / 100,
@@ -100,7 +92,7 @@ class ForgotPasswordButton extends StatelessWidget {
                   backgroundColor: Theme.of(context).floatingActionButtonTheme.backgroundColor,
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      context.read<ForgotPasswordEmailBloc>().add(ForgotPasswordEmailSubmitted());
+                      context.read<CheckEmailBloc>().add(CheckEmailSubmitted());
                     }
                   },
                   child: const Text('Recevoir un code',

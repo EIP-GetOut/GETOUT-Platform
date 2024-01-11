@@ -5,37 +5,28 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-part of 'login_bloc.dart';
+part of 'check_email_bloc.dart';
 
-class LoginState extends Equatable {
+class CheckEmailState extends Equatable {
   final String email;
-  final String password;
   final Status status;
   final Object? exception;
   bool get isEmailEmpty => email.isNotEmpty;
-  bool get isPasswordEmpty => password.isNotEmpty;
 
-  const LoginState({
-    this.email = '',
-    this.password = '',
-    this.status = Status.initial,
-    this.exception,
-  });
+  const CheckEmailState({required this.email, this.status = Status.initial, this.exception});
 
-  LoginState copyWith({
+  CheckEmailState copyWith({
     String? email,
-    String? password,
     Status? status,
     Object? exception
   }) {
-    return LoginState(
+    return CheckEmailState(
       email: email ?? this.email,
-      password: password ?? this.password,
       status: status ?? this.status,
       exception: exception ?? this.exception
     );
   }
 
   @override
-  List<Object?> get props => [email, password, status, exception];
+  List<Object?> get props => [email, status, exception];
 }

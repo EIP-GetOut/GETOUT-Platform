@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:getout/screens/connection/forgot_password/bloc/email/forgot_password_email_bloc.dart';
-import 'package:getout/screens/connection/forgot_password/bloc/new_password/forgot_password_new_password_bloc.dart';
+import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
+import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
 
 class EmailField extends StatelessWidget {
   const EmailField({super.key});
@@ -18,7 +18,7 @@ class EmailField extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
-    return BlocBuilder<ForgotPasswordEmailBloc, ForgotPasswordEmailState>(
+    return BlocBuilder<CheckEmailBloc, CheckEmailState>(
       builder: (context, state) {
         return TextFormField(
           style: const TextStyle(fontSize: 17, color: Colors.black),
@@ -35,7 +35,7 @@ class EmailField extends StatelessWidget {
           validator: (value) =>
           state.isEmailEmpty ? null : 'Un email est requis',
           onChanged: (value) =>
-              context.read<ForgotPasswordEmailBloc>().add(
+              context.read<CheckEmailBloc>().add(
                 ForgotPasswordEmailChanged(email: value),
               ),
         );
@@ -50,7 +50,7 @@ class CodeField extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
-    return BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(builder: (context, state) {
+    return BlocBuilder<NewPasswordBloc, NewPasswordState>(builder: (context, state) {
       return SizedBox(
         height: 50,
         child: TextFormField(
@@ -67,7 +67,7 @@ class CodeField extends StatelessWidget {
               )),
           validator: (value) =>
           state.isCodeValid ? null : 'un code requis',
-          onChanged: (value) => context.read<ForgotPasswordBloc>().add(
+          onChanged: (value) => context.read<NewPasswordBloc>().add(
             ForgotPasswordCodeChanged(code: value),
           ),
         ),
@@ -83,7 +83,7 @@ class PasswordField extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
-    return BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(builder: (context, state) {
+    return BlocBuilder<NewPasswordBloc, NewPasswordState>(builder: (context, state) {
       return SizedBox(
         height: 50,
         child: TextFormField(
@@ -100,7 +100,7 @@ class PasswordField extends StatelessWidget {
               )),
           validator: (value) =>
           state.isPasswordValid ? null : 'Un mot de passe contenant au moins 8 caractères est requis, avec au moins une majuscule, une minuscule et un chiffre est requis',
-          onChanged: (value) => context.read<ForgotPasswordBloc>().add(
+          onChanged: (value) => context.read<NewPasswordBloc>().add(
             ForgotPasswordPasswordChanged(password: value),
           ),
         ),
@@ -115,7 +115,7 @@ class ConfirmPasswordField extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
-    return BlocBuilder<ForgotPasswordBloc, ForgotPasswordState>(builder: (context, state) {
+    return BlocBuilder<NewPasswordBloc, NewPasswordState>(builder: (context, state) {
       return SizedBox(
         height: 50,
         child: TextFormField(
@@ -133,7 +133,7 @@ class ConfirmPasswordField extends StatelessWidget {
           validator: (value) =>
           //(state.password == value) ? null : 'hmmmm',
           state.isConfirmPasswordValid ? null : 'Le mot de passe est différent',
-          onChanged: (value) => context.read<ForgotPasswordBloc>().add(
+          onChanged: (value) => context.read<NewPasswordBloc>().add(
             ForgotPasswordConfirmPasswordChanged(confirmPassword: value),
           ),
         ),
