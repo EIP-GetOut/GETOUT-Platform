@@ -3,7 +3,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:is_first_run/is_first_run.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:getout/global.dart' as globals;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationsServices {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -15,22 +15,31 @@ class NotificationsServices {
   bool isActive = false;
   bool firstRun = false;
 
-  void isFirstRun() async {
+  Future<bool> isFirstRun() async {
     firstRun = await IsFirstRun.isFirstRun();
+    print("firstrun = ");
+    print(firstRun);
+    return firstRun;
   }
 
-  void askForActiveNotifications() {
+  void askForActiveNotifications() async {
     WidgetsFlutterBinding.ensureInitialized();
-    globals.notificationsServices.isFirstRun();
+    print("before");
+    await isFirstRun();
 
-    if (globals.notificationsServices.firstRun == true) {
+    print("after : ");
+    print(firstRun);
+    if (firstRun == true) {
       Permission.notification.isDenied.then((value) {
         if (value) {
           Permission.notification.request();
-          globals.notificationsServices.isActive = true;
-          globals.notificationsServices.sendNotif();
+          isActive = true;
+          sendNotif();
+          saveIsActiveValueInCache();
         }
       });
+    } else {
+      getIsActiveValue();
     }
   }
 
@@ -64,9 +73,31 @@ class NotificationsServices {
         // pour la demo il faut utiliser :
         RepeatInterval.everyMinute,
         notificationDetails);
+    isActive = true;
+    saveIsActiveValueInCache();
   }
 
   void stopNotif() async {
     flutterLocalNotificationsPlugin.cancelAll();
+    isActive = false;
+    saveIsActiveValueInCache();
+  }
+
+   void saveIsActiveValueInCache() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isActive ? prefs.setBool('notificationsIsActive', true) : prefs.setBool('notificationsIsActive', false);
+  }
+
+  void getIsActiveValue() async {
+    bool? isActiveFromCache = false;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    isActiveFromCache = prefs.getBool('notificationsIsActive');
+
+    if (isActiveFromCache == null) {
+      // faire la requete depuis le back
+    } else {
+      isActive = isActiveFromCache;
+    }
   }
 }
