@@ -45,7 +45,7 @@ class EndForm extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HomeProvider()),
+                MaterialPageRoute(builder: (context) => const HomeProvider()),
               );
             },
           ),

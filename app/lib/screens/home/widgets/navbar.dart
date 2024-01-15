@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../bloc/home_page_bloc.dart';
+import '../bloc/home_page/home_page_bloc.dart';
 
-class UserNavBar extends StatelessWidget {
-  const UserNavBar({super.key, required this.pageController, required this.idx});
+class HomeNavBarWidget extends StatelessWidget {
+  const HomeNavBarWidget({super.key, required this.pageController, required this.idx});
 
   final PageController pageController;
   final int idx;
@@ -68,7 +68,9 @@ class UserNavBar extends StatelessWidget {
           elevation: 20,
           onTap: (int value) => {
             context.read<HomePageBloc>().add(HomePageToIdx(value)),
-            pageController.jumpToPage(value),
+            pageController.animateToPage(value,
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeIn),
           },
           showUnselectedLabels: true,
           selectedLabelStyle:

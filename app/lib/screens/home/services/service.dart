@@ -5,45 +5,40 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+
 import 'package:dio/dio.dart';
 
-import 'package:getout/constants/api_path.dart' as api_constants;
+import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
+import 'package:getout/tools/format_with_genres_parameter.dart';
 
-/**
- * dashboard:
- */
-import 'package:getout/screens/home/children/dashboard/bloc/movies/movies_bloc.dart';
-import 'package:getout/screens/home/children/dashboard/bloc/books/books_bloc.dart';
+/// your_books:
+import 'package:getout/screens/home/bloc/books/books_event.dart';
 
-/**
- * your_books:
- */
-import 'package:getout/screens/home/children/your_books/bloc/like_books/like_books_bloc.dart';
-import 'package:getout/screens/home/children/your_books/bloc/view_books/view_books_bloc.dart';
-import 'package:getout/screens/home/children/your_books/bloc/wishlist_books/wishlist_books_bloc.dart';
+/// your_movies:
+import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 
-/**
- * parts:
- */
+/// parts:
 part 'dashboard.dart';
-part 'your_books.dart';
+part 'books.dart';
+part 'movies.dart';
 
-class HomeService extends _HomeService<DashboardService, YourBooksService> {
+class HomeService extends _HomeService<BooksService, MoviesService> {
   HomeService({required this.dio}) {
-    t = DashboardService(dio: dio);
-    g = YourBooksService(dio: dio);
+    t = BooksService(dio: dio);
+    g = MoviesService(dio: dio);
   }
   final Dio dio;
 
-  //Dashboard
-  Future<GenerateMoviesResponse> getMovies(GenerateMoviesRequest request) => t.getMovies(request);
-  Future<GenerateBooksResponse> getBooks(GenerateBooksRequest request) => t.getBooks(request);
-  //Your_books
-  Future<GetWishlistBooksResponse> getWishlistBooks(GetWishlistBooksRequest request) => g.getWishlistBooks(request);
-  Future<GetViewBooksResponse> getViewBooks(GetViewBooksRequest request) => g.getViewBooks(request);
-  Future<GetLikeBooksResponse> getLikeBooks(GetLikeBooksRequest request) => g.getLikeBooks(request);
-  Future<GenerateBooksResponse> getSuggestionBooks(GenerateBooksRequest request) => t.getBooks(request);
+  //Books
+  Future<GenerateBooksResponse> getRecommendedBooks(GenerateBooksRequest request) => t.getRecommendedBooks(request);
+  Future<GenerateBooksResponse> getSavedBooks(GenerateBooksRequest request) => t.getSavedBooks(request);
+  Future<GenerateBooksResponse> getLikedBooks(GenerateBooksRequest request) => t.getLikedBooks(request);
+
+  //Movies
+  Future<GenerateMoviesResponse> getRecommendedMovies(GenerateMoviesRequest request) => g.getRecommendedMovies(request);
+  Future<GenerateMoviesResponse> getSavedMovies(GenerateMoviesRequest request) => g.getSavedMovies(request);
+  Future<GenerateMoviesResponse> getLikedMovies(GenerateMoviesRequest request) => g.getLikedMovies(request);
 }
 
 abstract class ServiceTemplate {}

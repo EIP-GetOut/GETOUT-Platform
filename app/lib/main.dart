@@ -7,6 +7,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -33,7 +34,9 @@ Map<int, Color> colorMap = {
 };
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = const AppBlocObserver(); // BLoC MidleWare.
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MainProvider());
 }
 
@@ -76,12 +79,11 @@ class MainPage extends StatelessWidget {
           ],
           supportedLocales: AppLocalizations.supportedLocales,
           theme: themeData,
-          // TODO : change by welcome page
           home: RepositoryProvider(
             create: (context) => ConnectionService(dio: Dio()),
             child: (!user.isSigned)
                 ? const ConnectionProvider()
-                : HomeProvider(),
+                : const HomeProvider(),
           ),
       );
     });

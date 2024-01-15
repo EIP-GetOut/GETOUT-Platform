@@ -8,7 +8,7 @@
 import 'package:dio/dio.dart';
 
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
-import 'package:getout/constants/api_path.dart' as api_constants;
+import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
 
 class MovieService {
@@ -18,7 +18,7 @@ class MovieService {
     final dio = Dio();
 
     final response = await dio.get(
-        '${api_constants.rootApiPath}${api_constants.getInfoMovieApiPath}/${request.id}',
+        '${ApiConstants.rootApiPath}${ApiConstants.getInfoMoviePath}/${request.id}',
         options: Options(headers: {'Content-Type': 'application/json'}));
     try {
       if (response.statusCode != InfoMovieResponse.success) {

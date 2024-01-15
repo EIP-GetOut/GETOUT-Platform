@@ -10,8 +10,8 @@ import 'package:flutter/services.dart';
 
 import 'package:getout/screens/settings/pages/settings.dart';
 
-class UserAppBar extends AppBar {
-  UserAppBar({super.key, required BuildContext context})
+class HomeAppBarWidget extends AppBar {
+  HomeAppBarWidget({super.key, required BuildContext context})
       : super(
           /**
            * appBarSettings

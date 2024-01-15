@@ -14,7 +14,7 @@ class SignService extends ServiceTemplate {
 
   Future<void> login(final LoginRequestModel request) async {
     try {
-      await dio.post('${api_constants.rootApiPath}${api_constants.loginPath}',
+      await dio.post('${ApiConstants.rootApiPath}${ApiConstants.loginPath}',
           data: {
             'email': request.email,
             'password': request.password,
@@ -32,7 +32,7 @@ class SignService extends ServiceTemplate {
     try {
       final dio = Dio();
       await dio.post(
-          '${api_constants.rootApiPath}${api_constants.registerPath}',
+          '${ApiConstants.rootApiPath}${ApiConstants.registerPath}',
           data: {
             'email': request.email,
             'password': request.password,

@@ -5,11 +5,11 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
+import 'package:getout/constants/http_status.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:getout/screens/book/bloc/book_repository.dart';
-import 'package:getout/constants/http_status.dart';
 
 part 'book_event.dart';
 part 'book_state.dart';

@@ -16,7 +16,7 @@ class ForgotPasswordService extends ServiceTemplate {
   {
     try {
       await dio.post(
-          '${api_constants.rootApiPath}${api_constants.resetPasswordEmailPath}',
+          '${ApiConstants.rootApiPath}${ApiConstants.resetPasswordEmailPath}',
           data: {
             'email': request.email,
             'firstName': 'Louis',
@@ -34,7 +34,7 @@ class ForgotPasswordService extends ServiceTemplate {
   {
     try {
       await dio.post(
-          '${api_constants.rootApiPath}${api_constants.resetPasswordNewPasswordPath}',
+          '${ApiConstants.rootApiPath}${ApiConstants.resetPasswordNewPasswordPath}',
           data: {
             'newPassword' : request.password,
             'token': request.code,

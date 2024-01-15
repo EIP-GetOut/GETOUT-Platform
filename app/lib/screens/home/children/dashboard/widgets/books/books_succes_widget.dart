@@ -7,9 +7,9 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:getout/screens/home/children/dashboard/widgets/common/title.dart';
-import 'package:getout/screens/home/children/dashboard/widgets/common/poster_and_description.dart';
-import 'package:getout/screens/home/children/dashboard/bloc/books/books_bloc.dart';
+import 'package:getout/screens/home/bloc/books/books_event.dart';
+import 'package:getout/screens/home/widgets/common/book_preview_widget.dart';
+import 'package:getout/screens/home/widgets/common/title_widget.dart';
 import 'package:getout/screens/book/bloc/book_provider.dart';
 
 class BooksSuccessWidget extends StatelessWidget {
@@ -42,7 +42,7 @@ class BooksSuccessWidget extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => Book(books[index].id)));
                       },
-                      child: PosterAndDescriptionWidget(
+                      child: BookPreviewWidget(
                           posterPath: books[index].posterPath,
                           title: books[index].title,
                           overview: books[index].overview));

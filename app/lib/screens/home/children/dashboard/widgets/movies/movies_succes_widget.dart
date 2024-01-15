@@ -6,11 +6,12 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:getout/screens/home/widgets/common/movie_preview_widget.dart';
 
-import 'package:getout/screens/home/children/dashboard/widgets/common/title.dart';
-import 'package:getout/screens/home/children/dashboard/widgets/common/poster_and_description.dart';
-import 'package:getout/screens/home/children/dashboard/bloc/movies/movies_bloc.dart';
 import 'package:getout/screens/movie/bloc/movie_provider.dart';
+
+import 'package:getout/screens/home/bloc/movies/movies_event.dart';
+import 'package:getout/screens/home/widgets/common/title_widget.dart';
 
 class MoviesSuccessWidget extends StatelessWidget {
   MoviesSuccessWidget({
@@ -41,7 +42,7 @@ class MoviesSuccessWidget extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => Movie(movies[index].id)));
                       },
-                      child: PosterAndDescriptionWidget(
+                      child: MoviePreviewWidget(
                           posterPath: movies[index].posterPath,
                           title: movies[index].title,
                           overview: movies[index].overview));

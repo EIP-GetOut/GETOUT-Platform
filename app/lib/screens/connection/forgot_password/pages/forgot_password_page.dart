@@ -21,6 +21,7 @@ class ForgotPasswordPage extends StatelessWidget {
     return BlocBuilder<ForgotPasswordPageBloc, ForgotPasswordPageState>(builder: (context, state) {
       return Scaffold(
           body: PageView(
+            physics: const NeverScrollableScrollPhysics(),
             controller: _pageController,
             onPageChanged: (index) {
               context.read<ForgotPasswordPageBloc>().add(ForgotPasswordPageToIdx(index));

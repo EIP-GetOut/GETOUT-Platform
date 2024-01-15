@@ -7,7 +7,7 @@
 
 import 'package:dio/dio.dart';
 
-import 'package:getout/constants/api_path.dart' as api_constants;
+import 'package:getout/constants/api_path.dart';
 
 /**
  * login:

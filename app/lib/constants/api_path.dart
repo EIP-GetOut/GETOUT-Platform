@@ -7,31 +7,34 @@
 
 import 'package:flutter/foundation.dart';
 
-const String rootApiPath = (kDebugMode)
+class ApiConstants {
+  const ApiConstants();
+
+  static const String rootApiPath = (kDebugMode)
     ? 'http://10.0.2.2:8080'
     : 'https://api.eip-getout.me';
 
-// ACCOUNT API PATH
-const String loginPath = '/account/login';
-const String logoutPath = '/account/logout';
-const String registerPath = '/account/signup';
-const String oauthPath = '/account/oauth';
-const String resetPasswordEmailPath = '/account/reset-password/send-email';
-const String resetPasswordNewPasswordPath = '/account/reset-password';
-const String getSessionApiPath = '/session';
-// GENERATE THINGS API PATH
+  // ACCOUNT API PATH
+  static const String accountPath = '/account';
 
-const String generateMoviesApiPath = '/generate-movies';
-const String getInfoMovieApiPath = '/movie';
+  static const String loginPath = '$accountPath/login';
+  static const String logoutPath = '$accountPath/logout';
+  static const String registerPath = '$accountPath/signup';
+  static const String oauthPath = '$accountPath/oauth';
+  static const String resetPasswordEmailPath = '$accountPath/reset-password/send-email';
+  static const String resetPasswordNewPasswordPath = '$accountPath/reset-password';
+  static const String getSessionApiPath = '/session';
 
-const String generateBooksApiPath = '/generate-books';
-const String getInfoBookApiPath = '/book';
+  // GENERATE THINGS API PATH
 
-//GET YOUR BOOKS
-const String getWishlistBooksApiPath = '/get-wishlist-books';
-const String getLikeBooksApiPath = '/get-like-books';
-const String getViewBooksApiPath = '/get-view-books';
+  static const String generateMoviesPath = '/generate-movies';
+  static const String getInfoMoviePath = '/movie';
 
-// en attendant le getSession, on va mettre ici le token et le cookies en dur qui sera récupérer plus tard avec le getSession
-const String cookies = '';
-const String token = '';
+  static const String generateBooksPath = '/generate-books';
+  static const String getInfoBookPath = '/book';
+
+  //todo en attendant le getSession, on va mettre ici le token et le cookies en dur qui sera récupérer plus tard avec le getSession
+  static const String cookies = 'connect.sid=s%3ABvubf9YeIjX9sZNSMFKSlQX93ZXFziDS.DVpF1Xq%2BSPxyKMAbKfZW1Tc3jQ%2F5fcLSl%2FMtk2Glt6o';
+  static const String token = '60eee6af-2ba2-4ff0-ba79-7c6d6c50634f';
+
+}
