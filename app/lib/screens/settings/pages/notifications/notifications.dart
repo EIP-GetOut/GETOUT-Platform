@@ -17,18 +17,13 @@ class NotificationsServices {
 
   Future<bool> isFirstRun() async {
     firstRun = await IsFirstRun.isFirstRun();
-    print("firstrun = ");
-    print(firstRun);
     return firstRun;
   }
 
   void askForActiveNotifications() async {
     WidgetsFlutterBinding.ensureInitialized();
-    print("before");
     await isFirstRun();
 
-    print("after : ");
-    print(firstRun);
     if (firstRun == true) {
       Permission.notification.isDenied.then((value) {
         if (value) {
@@ -38,9 +33,11 @@ class NotificationsServices {
           saveIsActiveValueInCache();
         }
       });
-    } else {
-      getIsActiveValue();
     }
+    // Il faut le getsession
+    //else {
+    //   getIsActiveValue();
+    // }
   }
 
   void initNotif() async {
@@ -88,16 +85,19 @@ class NotificationsServices {
     isActive ? prefs.setBool('notificationsIsActive', true) : prefs.setBool('notificationsIsActive', false);
   }
 
-  void getIsActiveValue() async {
-    bool? isActiveFromCache = false;
+// Il faut le getsession pour cette partie
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    isActiveFromCache = prefs.getBool('notificationsIsActive');
+  // void getIsActiveValue() async {
+  //   bool? isActiveFromCache = false;
 
-    if (isActiveFromCache == null) {
-      // faire la requete depuis le back
-    } else {
-      isActive = isActiveFromCache;
-    }
-  }
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   isActiveFromCache = prefs.getBool('notificationsIsActive');
+
+
+  //   if (isActiveFromCache == null) {
+  //     // faire la requete depuis le back
+  //   } else {
+  //     isActive = isActiveFromCache;
+  //   }
+  // }
 }
