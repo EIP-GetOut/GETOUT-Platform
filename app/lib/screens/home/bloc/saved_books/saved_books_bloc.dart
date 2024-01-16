@@ -35,7 +35,6 @@ class SavedBooksBloc extends Bloc<BooksEvent, SavedBooksState> {
         ),
       );
     } catch (error) {
-      // print(stacktrace);
       emit(state.copyWith(status: Status.error));
     }
   }

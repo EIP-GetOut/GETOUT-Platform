@@ -17,7 +17,6 @@ import 'package:getout/screens/connection/login/pages/login.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/services/service.dart';
 
-//ignore: must_be_immutable
 class ConnectionProvider extends StatelessWidget {
   const ConnectionProvider({super.key});
 

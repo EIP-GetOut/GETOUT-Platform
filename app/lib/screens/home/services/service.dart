@@ -10,15 +10,11 @@ import 'package:dio/dio.dart';
 
 import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
+
 import 'package:getout/tools/format_with_genres_parameter.dart';
-
-/// your_books:
 import 'package:getout/screens/home/bloc/books/books_event.dart';
-
-/// your_movies:
 import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 
-/// parts:
 part 'dashboard.dart';
 part 'books.dart';
 part 'movies.dart';
@@ -30,12 +26,12 @@ class HomeService extends _HomeService<BooksService, MoviesService> {
   }
   final Dio dio;
 
-  //Books
+  ///Books
   Future<GenerateBooksResponse> getRecommendedBooks(GenerateBooksRequest request) => t.getRecommendedBooks(request);
   Future<GenerateBooksResponse> getSavedBooks(GenerateBooksRequest request) => t.getSavedBooks(request);
   Future<GenerateBooksResponse> getLikedBooks(GenerateBooksRequest request) => t.getLikedBooks(request);
 
-  //Movies
+  ///Movies
   Future<GenerateMoviesResponse> getRecommendedMovies(GenerateMoviesRequest request) => g.getRecommendedMovies(request);
   Future<GenerateMoviesResponse> getSavedMovies(GenerateMoviesRequest request) => g.getSavedMovies(request);
   Future<GenerateMoviesResponse> getLikedMovies(GenerateMoviesRequest request) => g.getLikedMovies(request);

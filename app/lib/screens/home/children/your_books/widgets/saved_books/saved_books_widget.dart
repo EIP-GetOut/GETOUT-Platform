@@ -29,7 +29,7 @@ class SavedBooksWidget extends StatelessWidget {
             return const Center(child: Center(child: CircularProgressIndicator(backgroundColor: Color.fromARGB(0, 255, 5, 5))));
 
           } else if (state.status.isError) {
-            return const ObjectLoadingErrorWidget(object: 'votre reading-list');
+            return const ObjectLoadingErrorWidget(object: 'votre selection de livres.');
           } else {
             return const SizedBox();
           }

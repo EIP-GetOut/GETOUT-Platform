@@ -20,7 +20,7 @@ class YourBooksPage extends StatelessWidget {
         padding: EdgeInsets.only(top: 30.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [RecommendedBooksWidget(), LikedBooksWidget(), SavedBooksWidget()],
+          children: [RecommendedBooksWidget(), SavedBooksWidget(), LikedBooksWidget()],
         ));
   }
 }

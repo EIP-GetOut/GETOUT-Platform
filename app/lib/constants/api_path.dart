@@ -34,7 +34,7 @@ class ApiConstants {
   static const String getInfoBookPath = '/book';
 
   //todo en attendant le getSession, on va mettre ici le token et le cookies en dur qui sera récupérer plus tard avec le getSession
-  static const String cookies = 'connect.sid=s%3ABvubf9YeIjX9sZNSMFKSlQX93ZXFziDS.DVpF1Xq%2BSPxyKMAbKfZW1Tc3jQ%2F5fcLSl%2FMtk2Glt6o';
-  static const String token = '60eee6af-2ba2-4ff0-ba79-7c6d6c50634f';
+  static const String cookies = '';
+  static const String token = '';
 
 }

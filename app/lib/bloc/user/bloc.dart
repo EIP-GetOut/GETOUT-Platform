@@ -7,7 +7,6 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:getout/bloc/user/user_data.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
 
 /// Event being processed by [CounterBloc].
 abstract class UserEvent {}

@@ -35,7 +35,6 @@ class RecommendedMoviesBloc extends Bloc<MoviesEvent, RecommendedMoviesState> {
         ),
       );
     } catch (error) {
-      // print(stacktrace);
       emit(state.copyWith(status: Status.error));
     }
   }

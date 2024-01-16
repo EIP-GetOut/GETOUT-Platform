@@ -20,7 +20,7 @@ class YourMoviesPage extends StatelessWidget {
         padding: EdgeInsets.only(top: 30.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [RecommendedMoviesWidget(), LikedMoviesWidget(), SavedMoviesWidget()],
+          children: [RecommendedMoviesWidget(), SavedMoviesWidget(), LikedMoviesWidget()],
         ));
   }
 }

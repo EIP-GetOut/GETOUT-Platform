@@ -28,7 +28,7 @@ class SavedMoviesWidget extends StatelessWidget {
           if (state.status.isLoading) {
             return const Center(child: Center(child: CircularProgressIndicator(backgroundColor: Color.fromARGB(0, 255, 5, 5))));
           } else if (state.status.isError) {
-            return const ObjectLoadingErrorWidget(object: 'votre watch-list');
+            return const ObjectLoadingErrorWidget(object: 'votre selection de films');
           } else {
             return const SizedBox();
           }

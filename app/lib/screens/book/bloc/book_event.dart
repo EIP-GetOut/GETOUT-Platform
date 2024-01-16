@@ -18,7 +18,6 @@ class CreateInfoBookRequest extends BookEvent {
   final String id;
 }
 
-//ignore: must_be_immutable
 class InfoBookResponse extends BookEvent {
   InfoBookResponse(
       {this.title,
@@ -32,11 +31,13 @@ class InfoBookResponse extends BookEvent {
 
   static const int success = HttpStatus.OK;
   final String? title;
-  String? overview;
+  final String? overview;
   final String? posterPath;
   final String? backdropPath;
   final String? releaseDate;
   final double? voteAverage;
-  String? duration;
+  final String? duration;
   final int statusCode;
+
+
 }

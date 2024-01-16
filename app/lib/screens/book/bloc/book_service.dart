@@ -24,22 +24,22 @@ class BookService {
       if (response.statusCode != InfoBookResponse.success) {
         return InfoBookResponse(statusCode: response.statusCode ?? 500);
       }
-      final dynamic data = response.data;
+      final bool isOverviewEmpty = (response.data['book']['overview'] == '');
+      final bool isDurationEmpty = (response.data['book']['duration'] == '0h0min');
+
       result = InfoBookResponse(
-          title: data['book']['title'],
-          overview: data['book']['overview'],
-          posterPath: data['book']['poster_path'],
-          backdropPath: data['book']['backdrop_path'],
-          releaseDate: data['book']['release_date'],
-          voteAverage: data['book']['vote_average'],
-          duration: data['book']['duration'],
+          title: response.data['book']['title'],
+          overview: isOverviewEmpty
+              ? response.data['book']['overview']
+              : 'Pas de description disponible',
+          posterPath: response.data['book']['poster_path'],
+          backdropPath: response.data['book']['backdrop_path'],
+          releaseDate: response.data['book']['release_date'],
+          voteAverage: response.data['book']['vote_average'],
+          duration: isDurationEmpty
+              ? response.data['book']['duration']
+              : 'N/A',
           statusCode: response.statusCode ?? 500);
-      if (result.overview == '') {
-        result.overview = 'Pas de description disponible';
-      }
-      if (result.duration == '0h0min') {
-        result.duration = 'N/A';
-      }
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() ==

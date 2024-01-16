@@ -13,7 +13,6 @@ import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_p
 import 'package:getout/screens/connection/forgot_password/pages/forgot_password_page.dart';
 import 'package:getout/screens/connection/services/service.dart';
 
-//ignore: must_be_immutable
 class ForgotPasswordProvider extends StatelessWidget {
   const ForgotPasswordProvider({super.key});
 

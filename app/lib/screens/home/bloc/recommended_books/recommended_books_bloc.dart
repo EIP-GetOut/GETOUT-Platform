@@ -35,7 +35,6 @@ class RecommendedBooksBloc extends Bloc<BooksEvent, RecommendedBooksState> {
         ),
       );
     } catch (error) {
-      // print(stacktrace);
       emit(state.copyWith(status: Status.error));
     }
   }

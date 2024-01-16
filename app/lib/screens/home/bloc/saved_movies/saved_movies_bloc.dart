@@ -36,7 +36,6 @@ class SavedMoviesBloc extends Bloc<MoviesEvent, SavedMoviesState> {
         ),
       );
     } catch (error) {
-      // print(stacktrace);
       emit(state.copyWith(status: Status.error));
     }
   }

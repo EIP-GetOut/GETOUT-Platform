@@ -135,8 +135,7 @@ class MoviesService extends ServiceTemplate {
         options: Options(headers: {'Content-Type': 'application/json'}));
     try {
       if (response.statusCode != MovieStatusResponse.success) {
-        //todo return ça:
-        const MovieStatusResponse(statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
+        return const MovieStatusResponse(statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
       }
       //todo
       final dynamic data = response.data;
