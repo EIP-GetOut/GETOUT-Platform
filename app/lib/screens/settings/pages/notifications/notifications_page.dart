@@ -1,3 +1,10 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
+*/
+
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:getout/global.dart' as globals;

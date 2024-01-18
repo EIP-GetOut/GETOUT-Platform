@@ -1,3 +1,10 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
+*/
+
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
