@@ -6,8 +6,9 @@
 */
 
 class UserData {
-  UserData({
+  const UserData({
     this.isSigned = false,
   });
+
   final bool isSigned;
 }
