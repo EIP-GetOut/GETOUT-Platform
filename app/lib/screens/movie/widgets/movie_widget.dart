@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getout/widgets/object_loading_error_widget.dart';
 
+import 'package:getout/widgets/object_loading_error_widget.dart';
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
 import 'package:getout/screens/movie/pages/movie.dart';
 import 'package:getout/widgets/loading.dart';

@@ -5,8 +5,9 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+
+import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/tools/map_box_movie_values_to_ids.dart';

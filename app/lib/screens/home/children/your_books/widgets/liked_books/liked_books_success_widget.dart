@@ -6,6 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
+
 import 'package:getout/screens/book/bloc/book_provider.dart';
 import 'package:getout/screens/home/bloc/books/books_event.dart';
 import 'package:getout/screens/home/widgets/common/book_preview_widget.dart';

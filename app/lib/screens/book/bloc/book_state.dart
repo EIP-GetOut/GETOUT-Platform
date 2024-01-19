@@ -17,10 +17,10 @@ extension BookStatusX on BookStatus {
 }
 
 class BookState extends Equatable {
-  BookState({
+  const BookState({
     this.status = BookStatus.initial,
     InfoBookResponse? book,
-  }) : book = book ?? InfoBookResponse(statusCode: 200);
+  }) : book = book ?? const InfoBookResponse(statusCode: 200);
 
   final InfoBookResponse book;
   final BookStatus status;

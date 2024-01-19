@@ -8,18 +8,19 @@
 part of 'book_bloc.dart';
 
 class BookEvent extends Equatable {
+  const BookEvent();
   @override
   List<Object?> get props => [];
 }
 
 class CreateInfoBookRequest extends BookEvent {
-  CreateInfoBookRequest({required this.id});
-
   final String id;
+  const CreateInfoBookRequest({required this.id});
+
 }
 
 class InfoBookResponse extends BookEvent {
-  InfoBookResponse(
+  const InfoBookResponse(
       {this.title,
       this.overview,
       this.posterPath,
@@ -38,6 +39,4 @@ class InfoBookResponse extends BookEvent {
   final double? voteAverage;
   final String? duration;
   final int statusCode;
-
-
 }

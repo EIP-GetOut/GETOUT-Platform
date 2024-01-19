@@ -14,7 +14,7 @@ import 'package:getout/constants/http_status.dart';
 class BookService {
   Future<InfoBookResponse> getInfoBook(CreateInfoBookRequest request) async {
     InfoBookResponse result =
-        InfoBookResponse(statusCode: HttpStatus.APP_ERROR);
+        const InfoBookResponse(statusCode: HttpStatus.APP_ERROR);
     final dio = Dio();
 
     final response = await dio.get(
@@ -44,7 +44,7 @@ class BookService {
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() ==
               'Connection closed before full header was received') {
-        return InfoBookResponse(statusCode: HttpStatus.NO_INTERNET);
+        return const InfoBookResponse(statusCode: HttpStatus.NO_INTERNET);
       }
       return result;
     }

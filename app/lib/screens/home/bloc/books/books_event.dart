@@ -7,6 +7,7 @@
 */
 
 import 'package:equatable/equatable.dart';
+
 import 'package:getout/constants/http_status.dart';
 
 class BooksEvent extends Equatable {

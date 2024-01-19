@@ -7,10 +7,10 @@
 
 import 'dart:convert';
 
-import 'package:getout/models/connection/oauth.dart';
-import 'package:getout/models/settings/edit_password.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:getout/models/connection/oauth.dart';
+import 'package:getout/models/settings/edit_password.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/constants/api_path.dart';
 
