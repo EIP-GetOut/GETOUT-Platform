@@ -17,7 +17,7 @@ part 'book_state.dart';
 class BookBloc extends Bloc<BookEvent, BookState> {
   BookBloc({
     required this.bookRepository,
-  }) : super(BookState()) {
+  }) : super(const BookState()) {
     on<CreateInfoBookRequest>(_mapGetBookEventToState);
   }
 
