@@ -19,7 +19,7 @@ lib/
             pages/
             widgets/
         homepage/
-            .../
+            /*...*/
     widget/
     tools/
     main.dart
@@ -43,6 +43,7 @@ l10n/
     app_XX.arb
 
 # screen
+
 a screen or group-screen are made like this
 
 screens/
@@ -61,7 +62,8 @@ screens/
         pages/
         widgets/
 
-#widget
+# widget
+
 widget/
     .dart
   <or>
@@ -69,5 +71,6 @@ widget/
         .dart
 
 # tools
+
 tools/
     .dart (no class, no ui, only mapping/calculus.. function).
