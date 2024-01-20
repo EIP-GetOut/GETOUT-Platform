@@ -6,7 +6,9 @@
 */
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_switch/flutter_switch.dart';
+
 import 'package:getout/global.dart' as globals;
 
 class NotificationsPage extends StatefulWidget {

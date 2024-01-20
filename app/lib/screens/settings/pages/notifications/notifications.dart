@@ -6,6 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:is_first_run/is_first_run.dart';
@@ -20,18 +21,18 @@ class NotificationsServices {
       const AndroidInitializationSettings('@mipmap/ic_launcher');
 
   bool isActive = false;
-  bool firstRun = false;
+  bool _firstRun = false;
 
   Future<bool> isFirstRun() async {
-    firstRun = await IsFirstRun.isFirstRun();
-    return firstRun;
+    _firstRun = await IsFirstRun.isFirstRun();
+    return _firstRun;
   }
 
   void askForActiveNotifications() async {
     WidgetsFlutterBinding.ensureInitialized();
     await isFirstRun();
 
-    if (firstRun == true) {
+    if (_firstRun == true) {
       Permission.notification.isDenied.then((value) {
         if (value) {
           Permission.notification.request();

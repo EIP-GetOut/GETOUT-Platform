@@ -36,7 +36,7 @@ Map<int, Color> colorMap = {
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  Bloc.observer = const AppBlocObserver(); // BLoC MidleWare.
+  Bloc.observer = const AppBlocObserver(); // BLoC MiddleWare.
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(const MainProvider());
