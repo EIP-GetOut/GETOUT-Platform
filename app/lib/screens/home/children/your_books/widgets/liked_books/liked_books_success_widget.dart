@@ -13,18 +13,18 @@ import 'package:getout/screens/home/widgets/common/book_preview_widget.dart';
 import 'package:getout/screens/home/widgets/common/title_widget.dart';
 
 class LikedBooksSuccessWidget extends StatelessWidget {
-  LikedBooksSuccessWidget({
+  final List<BookPreview> books;
+
+  const LikedBooksSuccessWidget({
     super.key,
     required this.books,
   });
 
-  final List<BookPreview> books;
-
-  final PageController movieController =
-      PageController(viewportFraction: 0.1, initialPage: 0);
-
   @override
   Widget build(BuildContext context) {
+    final PageController movieController =
+    PageController(viewportFraction: 0.1, initialPage: 0);
+
     return Expanded(
         child: Column(
       children: [

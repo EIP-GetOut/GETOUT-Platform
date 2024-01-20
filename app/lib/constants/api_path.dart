@@ -10,23 +10,22 @@ import 'package:flutter/foundation.dart';
 class ApiConstants {
   const ApiConstants();
 
-  static const String rootApiPath = (kDebugMode)
+  static const String rootApiPath = /*(kDebugMode)
     ? 'http://10.0.2.2:8080'
-    : 'https://api.eip-getout.me';
+    :*/ 'https://api.eip-getout.me';
 
   // ACCOUNT API PATH
   static const String accountPath = '/account';
 
-  static const String loginPath = '$accountPath/login';
-  static const String logoutPath = '$accountPath/logout';
-  static const String registerPath = '$accountPath/signup';
-  static const String oauthPath = '$accountPath/oauth';
-  static const String resetPasswordEmailPath = '$accountPath/reset-password/send-email';
-  static const String resetPasswordNewPasswordPath = '$accountPath/reset-password';
+  static const String loginPath = '/account/login';
+  static const String logoutPath = '/account/logout';
+  static const String registerPath = '/account/signup';
+  static const String oauthPath = '/account/oauth';
+  static const String resetPasswordEmailPath = '/account/reset-password/send-email';
+  static const String resetPasswordNewPasswordPath = '/account/reset-password';
   static const String getSessionApiPath = '/session';
 
   // GENERATE THINGS API PATH
-
   static const String generateMoviesPath = '/generate-movies';
   static const String getInfoMoviePath = '/movie';
 

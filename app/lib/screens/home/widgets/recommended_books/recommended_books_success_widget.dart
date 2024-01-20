@@ -14,16 +14,17 @@ import 'package:getout/screens/home/widgets/common/title_widget.dart';
 
 class RecommendedBooksSuccessWidget extends StatelessWidget {
   final List<BookPreview> books;
-  final PageController movieController =
-      PageController(viewportFraction: 0.1, initialPage: 0);
 
-  RecommendedBooksSuccessWidget({
+  const RecommendedBooksSuccessWidget({
     super.key,
     required this.books,
   });
 
   @override
   Widget build(BuildContext context) {
+    final PageController movieController =
+    PageController(viewportFraction: 0.1, initialPage: 0);
+
     return Expanded(
         child: Column(
       children: [

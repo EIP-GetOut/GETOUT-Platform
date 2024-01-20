@@ -15,9 +15,7 @@ import 'package:getout/tools/status.dart';
 import 'package:getout/widgets/object_loading_error_widget.dart';
 
 class RecommendedBooksWidget extends StatelessWidget {
-  const RecommendedBooksWidget({
-    super.key,
-  });
+  const RecommendedBooksWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

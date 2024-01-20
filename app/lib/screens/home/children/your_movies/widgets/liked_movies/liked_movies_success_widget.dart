@@ -13,18 +13,18 @@ import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 import 'package:getout/screens/home/widgets/common/title_widget.dart';
 
 class LikedMoviesSuccessWidget extends StatelessWidget {
-  LikedMoviesSuccessWidget({
+  const LikedMoviesSuccessWidget({
     super.key,
     required this.movies,
   });
 
   final List<MoviePreview> movies;
 
-  final PageController movieController =
-      PageController(viewportFraction: 0.1, initialPage: 0);
-
   @override
   Widget build(BuildContext context) {
+    final PageController movieController =
+    PageController(viewportFraction: 0.1, initialPage: 0);
+
     return Expanded(
         child: Column(
       children: [
