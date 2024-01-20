@@ -12,7 +12,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/observer.dart';
