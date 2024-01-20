@@ -14,7 +14,8 @@ class RegisterState extends Equatable {
   final String firstName;
   final String lastName;
   final String bornDate;
-  final FormSubmissionStatus formStatus;
+  final Status status;
+  final Object? exception;
   bool get isEmailEmpty => email.isNotEmpty;
   // ignore: prefer_single_quotes
   bool get isEmailGood => RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
@@ -36,7 +37,8 @@ class RegisterState extends Equatable {
     this.firstName = '',
     this.lastName = '',
     this.bornDate = '',
-    this.formStatus = const InitialFormStatus(),
+    this.status = Status.initial,
+    this.exception
   });
 
   RegisterState copyWith({
@@ -46,7 +48,8 @@ class RegisterState extends Equatable {
     String? firstName,
     String? lastName,
     String? bornDate,
-    FormSubmissionStatus? formStatus,
+    Status? status,
+    Object? exception
   }) {
     return RegisterState(
       email: email ?? this.email,
@@ -55,10 +58,11 @@ class RegisterState extends Equatable {
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       bornDate: bornDate ?? this.bornDate,
-      formStatus: formStatus ?? this.formStatus,
+      status: status ?? this.status,
+      exception: exception ?? this.exception
     );
   }
 
   @override
-  List<Object?> get props => [email, password, confirmPassword, firstName, lastName, bornDate, formStatus];
+  List<Object?> get props => [email, password, confirmPassword, firstName, lastName, bornDate, status, exception];
 }

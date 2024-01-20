@@ -8,7 +8,7 @@
 import 'package:dio/dio.dart';
 
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
-import 'package:getout/constants/api_path.dart' as api;
+import 'package:getout/constants/api_path.dart';
 
 class LoginService {
   Future<void> login(final LoginRequestModel request) async
@@ -16,7 +16,7 @@ class LoginService {
     try {
       final dio = Dio();
       await dio.post(
-          '${api.rootApiPath}${api.loginPath}',
+          '${ApiConstants.rootApiPath}${ApiConstants.loginPath}',
           data: {
             'email': request.email,
             'password': request.password,

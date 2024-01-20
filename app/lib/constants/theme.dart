@@ -66,7 +66,7 @@ final getOutTheme = ThemeData(
     ),
   ),
   textTheme:  const TextTheme(
-    // Button
+    /// Button
     labelMedium: TextStyle(
         fontSize: 17.5,
         fontWeight: FontWeight.w600,
@@ -77,21 +77,21 @@ final getOutTheme = ThemeData(
       color: Colors.white,
       fontFamily: 'Poppins',
     ),
-    // Title of each page of the preferences
+    /// Title of each page of the preferences
     titleMedium: TextStyle(
       color: Colors.black,
       fontSize: 24,
       fontFamily: 'Poppins',
       fontWeight: FontWeight.bold,
     ),
-    // text of each checkbox of the preferences
+    /// text of each checkbox of the preferences
     bodyMedium: TextStyle(
       color: Colors.black,
       fontSize: 20,
       fontFamily: 'Poppins',
       fontWeight: FontWeight.bold,
     ),
-    // title of book/movie in the home page
+    /// title of book/movie in the home page
     titleSmall: TextStyle(
       color: Colors.black,
       fontSize: 16,
@@ -99,27 +99,27 @@ final getOutTheme = ThemeData(
       decorationColor: Colors.black,
       fontWeight: FontWeight.bold,
     ),
-    // description of book/movie in the home page
+    /// description of book/movie in the home page
     headlineSmall: TextStyle(
       color: Color.fromRGBO(0, 0, 0, 0.5),
       fontSize: 15,
       fontFamily: 'Urbanist',
       fontWeight: FontWeight.bold,
     ),
-    // description of book/movie in the description page
+    /// description of book/movie in the description page
     bodySmall: TextStyle(
       color: Color.fromRGBO(0, 0, 0, 0.8),
       fontSize: 21,
       fontFamily: 'Urbanist',
       fontWeight: FontWeight.bold,
     ),
-    // text for the "type" (book/movie) and duration
+    /// text for the "type" (book/movie) and duration
     labelSmall: TextStyle(
         fontSize: 22,
         fontFamily: 'Urbanist',
         color: Colors.black,
         fontWeight: FontWeight.w600),
-    // SnackBar
+    /// SnackBar
     displaySmall: TextStyle(
       fontFamily: 'Urbanist',
       color: Colors.white,
@@ -127,14 +127,14 @@ final getOutTheme = ThemeData(
       fontWeight: FontWeight.w600,
       letterSpacing: 1.1,
     ),
-    // Welcome text of the home page
+    /// Welcome text of the home page
     titleLarge: TextStyle(
       color: Colors.black,
       fontSize: 30,
       fontFamily: 'Urbanist',
       fontWeight: FontWeight.bold,
     ),
-    // text below the welcome text of the home page
+    /// text below the welcome text of the home page
     displayMedium: TextStyle(
       fontFamily: 'Urbanist',
       color: Colors.black,

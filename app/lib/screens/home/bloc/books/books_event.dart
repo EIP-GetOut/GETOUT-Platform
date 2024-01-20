@@ -2,18 +2,22 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-part of 'books_bloc.dart';
+import 'package:equatable/equatable.dart';
+
+import 'package:getout/constants/http_status.dart';
 
 class BooksEvent extends Equatable {
   @override
   List<Object?> get props => [];
+  const BooksEvent();
 }
 
 class GenerateBooksRequest extends BooksEvent {
-  GenerateBooksRequest({
+  const GenerateBooksRequest({
     required this.genres,
     this.includeAdult = false,
   });
@@ -21,8 +25,26 @@ class GenerateBooksRequest extends BooksEvent {
   final bool includeAdult;
 }
 
+class BookStatusResponse extends BooksEvent {
+  const BookStatusResponse(
+      {this.id,
+        this.title,
+        this.posterPath,
+        this.overview,
+        required this.statusCode});
+
+  bool get isSuccess => statusCode == HttpStatus.OK;
+
+  final String? id;
+  final String? title;
+  final String? posterPath;
+  final String? overview;
+  final int statusCode;
+  static const int success = HttpStatus.OK;
+}
+
 class BookPreview extends BooksEvent {
-  BookPreview(
+  const BookPreview(
       {required this.id,
       required this.title,
       required this.posterPath,
