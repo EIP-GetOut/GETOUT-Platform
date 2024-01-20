@@ -40,11 +40,9 @@ class NotificationsServices {
           saveIsActiveValueInCache();
         }
       });
+    } else { // Il faut le getsession
+       getIsActiveValue();
     }
-    // Il faut le getsession
-    //else {
-    //   getIsActiveValue();
-    // }
   }
 
   void initNotif() async {
@@ -94,17 +92,18 @@ class NotificationsServices {
 
 // Il faut le getsession pour cette partie
 
-  // void getIsActiveValue() async {
-  //   bool? isActiveFromCache = false;
+   void getIsActiveValue() async {
+     bool? isActiveFromCache = false;
 
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   isActiveFromCache = prefs.getBool('notificationsIsActive');
+     SharedPreferences prefs = await SharedPreferences.getInstance();
+     isActiveFromCache = prefs.getBool('notificationsIsActive');
 
 
-  //   if (isActiveFromCache == null) {
-  //     // faire la requete depuis le back
-  //   } else {
-  //     isActive = isActiveFromCache;
-  //   }
-  // }
+     if (isActiveFromCache == null) {
+       //todo faire la requete depuis le back
+       isActive = false;
+     } else {
+       isActive = isActiveFromCache;
+     }
+   }
 }
