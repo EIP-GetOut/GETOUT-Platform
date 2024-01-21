@@ -16,6 +16,7 @@ import 'package:getout/screens/home/children/your_movies/pages/your_movies.dart'
 import 'package:getout/screens/home/widgets/header.dart';
 import 'package:getout/screens/home/widgets/navbar.dart';
 import 'package:getout/widgets/object_loading_error_widget.dart';
+import 'package:getout/global.dart' as globals;
 
 /// UserPage
 ///  - UserAppBar()
@@ -26,17 +27,18 @@ import 'package:getout/widgets/object_loading_error_widget.dart';
 ///  - BottomNavBar
 ///
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
-
-  final PageController _pageController = PageController();
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final PageController pageController = PageController();
+
+    globals.notificationsServices.askForActiveNotifications();
     return BlocBuilder<HomePageBloc, HomePageState>(builder: (context, state) {
       return Scaffold(
           appBar: HomeAppBarWidget(context: context),
           body: PageView(
-            controller: _pageController,
+            controller: pageController,
             onPageChanged: (index) {
               context.read<HomePageBloc>().add(HomePageToIdx(index));
             },
@@ -58,7 +60,7 @@ class HomePage extends StatelessWidget {
             ],
           ),
           bottomNavigationBar: HomeNavBarWidget(
-              pageController: _pageController, idx: state.idx));
+              pageController: pageController, idx: state.idx));
     });
   }
 }

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:getout/screens/form/pages/literary_genre.dart';
 import 'package:getout/screens/settings/pages/edit_mail.dart';
 import 'package:getout/screens/settings/pages/edit_password.dart';
+import 'package:getout/screens/settings/pages/notifications/notifications_page.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -231,15 +232,22 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-              child: Row(
+              child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const NotificationsPage()));
+                    },
+                    child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Icon(Icons.notifications, color: Colors.grey),
                   Text('notifications',
                       style: TextStyle(fontSize: 20, color: Colors.grey[800])),
-                  Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
-                ],
-              ),
+                  Icon(Icons.arrow_forward_ios, color: Colors.grey[800]),
+          ]),
+          ),
             ),
             Container(
               width: double.infinity,

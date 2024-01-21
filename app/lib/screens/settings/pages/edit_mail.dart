@@ -126,7 +126,7 @@ class _MyMailPageState extends State<MyMailPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HomePage()),
+                MaterialPageRoute(builder: (context) => const HomePage()),
               );
             },
             child: const Text('OK'),

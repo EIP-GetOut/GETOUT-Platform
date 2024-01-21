@@ -17,8 +17,8 @@ import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/observer.dart';
 import 'package:getout/bloc/theme/bloc.dart';
 import 'package:getout/bloc/user/bloc.dart';
-import 'package:getout/screens/connection/bloc/connection_provider.dart';
 import 'package:getout/screens/connection/services/service.dart';
+import 'package:getout/screens/connection/bloc/connection_provider.dart';
 import 'package:getout/screens/home/bloc/home_provider.dart';
 
 Map<int, Color> colorMap = {
@@ -36,8 +36,9 @@ Map<int, Color> colorMap = {
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  Bloc.observer = const AppBlocObserver(); // BLoC MidleWare.
+  Bloc.observer = const AppBlocObserver(); // BLoC MiddleWare.
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   runApp(const MainProvider());
 }
 

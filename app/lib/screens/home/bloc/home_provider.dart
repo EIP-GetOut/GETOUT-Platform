@@ -95,7 +95,7 @@ class HomeProvider extends StatelessWidget {
               ),
             ),
           ],
-          child: HomePage(),
+          child: const HomePage(),
         ),
       ),
     );
