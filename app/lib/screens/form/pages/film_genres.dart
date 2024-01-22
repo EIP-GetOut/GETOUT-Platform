@@ -12,32 +12,32 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/screens/form/widgets/four_point.dart';
 import 'package:getout/screens/form/bloc/form_bloc.dart';
 
-class LiteraryGenres extends StatelessWidget {
-  const LiteraryGenres({super.key});
+class FilmGenres extends StatelessWidget {
+  const FilmGenres({super.key});
 
   @override
   Widget build(BuildContext context)
   {
     List<String> checkboxText = [
-      'Polar',
-      'Poésie',
+      'Action',
       'Thriller',
-      'Politique',
+      'Western',
+      'Horreur',
       'Comédie'
     ];
 
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
-      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.literaryGenres));
+      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.filmGenres));
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           const SizedBox(height: 140),
-          const PageIndicator(currentPage: 2, pageCount: 5),
+          const PageIndicator(currentPage: 3, pageCount: 5),
           const SizedBox(height: 20),
           Center(
             child: Text(
-              'GENRES LITTÉRAIRES :',
+              'GENRES CINÉMATOGRAPHIQUES :',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             ),
@@ -57,9 +57,9 @@ class LiteraryGenres extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.bodyMedium
                           ),
-                          value: context.read<FormBloc>().state.literaryGenres[i],
+                          value: context.read<FormBloc>().state.filmGenres[i],
                           onChanged: (value) {
-                            context.read<FormBloc>().add(LiteraryGenresEvent(index: i));
+                            context.read<FormBloc>().add(FilmGenresEvent(index: i));
                           },
                           contentPadding: EdgeInsets.zero,
                           controlAffinity: ListTileControlAffinity.leading,

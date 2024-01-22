@@ -12,32 +12,32 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/screens/form/widgets/four_point.dart';
 import 'package:getout/screens/form/bloc/form_bloc.dart';
 
-class LiteraryGenres extends StatelessWidget {
-  const LiteraryGenres({super.key});
+class ViewingPlatform extends StatelessWidget {
+  const ViewingPlatform({super.key});
 
   @override
   Widget build(BuildContext context)
   {
-    List<String> checkboxText = [
-      'Polar',
-      'Poésie',
-      'Thriller',
-      'Politique',
-      'Comédie'
+    List<List<String>> checkboxText = [
+      ['Netflix', 'assets/images/Logo_Netflix.png'],
+      ['Prime Video', 'assets/images/Logo_Prime_video.png'],
+      ['Disney +', 'assets/images/Logo_Disney+.png'],
+      ['Cinema', 'assets/images/Logo_Cinema.png'],
+      ['DVD', 'assets/images/Logo_DVD.png']
     ];
 
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
-      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.literaryGenres));
+      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.viewingPlatform));
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           const SizedBox(height: 140),
-          const PageIndicator(currentPage: 2, pageCount: 5),
+          const PageIndicator(currentPage: 4, pageCount: 5),
           const SizedBox(height: 20),
           Center(
             child: Text(
-              'GENRES LITTÉRAIRES :',
+              'SUPPORT DE VISIONNAGE :',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             ),
@@ -53,13 +53,17 @@ class LiteraryGenres extends StatelessWidget {
                     Column(
                       children: [
                         CheckboxListTile(
-                          title: Text(checkboxText[i],
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodyMedium
+                          title: Row(
+                            children: [
+                              const SizedBox(width: 50.0),
+                              Image.asset(checkboxText[i][1], width: 40, height: 40),
+                              const SizedBox(width: 8.0),
+                              Text(checkboxText[i][0], style: Theme.of(context).textTheme.bodyMedium),
+                            ],
                           ),
-                          value: context.read<FormBloc>().state.literaryGenres[i],
+                          value: context.read<FormBloc>().state.viewingPlatform[i],
                           onChanged: (value) {
-                            context.read<FormBloc>().add(LiteraryGenresEvent(index: i));
+                            context.read<FormBloc>().add(ViewingPlatformEvent(index: i));
                           },
                           contentPadding: EdgeInsets.zero,
                           controlAffinity: ListTileControlAffinity.leading,

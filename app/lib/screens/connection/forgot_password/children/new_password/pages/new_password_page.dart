@@ -15,7 +15,7 @@ import 'package:getout/screens/connection/forgot_password/children/new_password/
 import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/screens/connection/forgot_password/widgets/fields.dart';
 import 'package:getout/constants/http_status.dart';
-import 'package:getout/widgets/show_snackbar.dart';
+import 'package:getout/widgets/show_snack_bar.dart';
 
 class NewPasswordPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
