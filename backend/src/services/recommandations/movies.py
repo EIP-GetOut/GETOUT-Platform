@@ -25,22 +25,19 @@ def RecommandMovies(user: json) -> json:
     tmdb.api_key = os.getenv("MOVIE_DB_KEY")
     # give me a 100 popular movies
     movie = Movie()
-    popular = movie.popular({"language": "fr-FR", "page": 1000})
+    popular = movie.popular({"language": "fr-FR", "page": 100})
  
-    result = { "recommands": [] }
+    result = { "recommandations": [] }
     copy_list = []
     for p in popular:
         copy_list.append(p)
-    random.shuffle(copy_list)
     for p in range(len(copy_list)):
-        print(p)
-        result["recommands"].append({
+        result["recommandations"].append({
             "id": copy_list[p].id,
             "title": copy_list[p].title,
             "score": calculate_score(copy_list[p], user)
         })
-    print("after")
-    result["recommands"] = sorted(result["recommands"], key=lambda k: k['score'], reverse=True)[:5]
+    result["recommandations"] = sorted(result["recommandations"], key=lambda k: k['score'], reverse=True)[:5]
     return result
 
 def calculate_score(movie, user):
@@ -66,6 +63,7 @@ def calculate_genre_score(movie, user):
     return score
 
 def calculate_plateform_score(movie, user):
+    #Note: TMDB need to call another route to get available platforms (and i am not able to find them yet on user)
     v = random.randint(1, 100) * WEIGHTS["plateform"]
     print("plateform score (random): " + str(v))
     return v

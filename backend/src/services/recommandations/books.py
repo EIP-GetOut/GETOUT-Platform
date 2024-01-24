@@ -27,18 +27,17 @@ def RecommandBooks(user: json) -> json:
     nyt = NYTAPI("EWZh85CC8ZWDpC7eL2fi8zBnIu9Gtwp3", parse_dates=True)
     # get a 100 best sellers
     best_sellers = nyt.best_sellers_list()
-    result = { "recommands": [] }
+    result = { "recommandations": [] }
     copy_list = []
     for p in best_sellers:
         copy_list.append(p)
-    random.shuffle(copy_list)
     for p in range(len(copy_list)):
-        result["recommands"].append({
+        result["recommandations"].append({
             "title": copy_list[p]["title"],
             "isbn13": copy_list[p]["primary_isbn13"],
             "score": calculate_score(copy_list[p], user)
         })
-    result["recommands"] = sorted(result["recommands"], key=lambda k: k['score'], reverse=True)[:5]
+    result["recommandations"] = sorted(result["recommandations"], key=lambda k: k['score'], reverse=True)[:5]
     return result
     # get info from google api about the first book
     #print(best_sellers[0]["primary_isbn13"])
@@ -80,7 +79,7 @@ def calculate_popularity_score(book, user):
     return score
 
     #api = GoogleBooksAPI()
-    #result = { "recommands": [] }
+    #result = { "recommandations": [] }
     #copy_list = []
     #
     #for p in api.get_books_by_author("J.K. Rowling"):
@@ -88,10 +87,10 @@ def calculate_popularity_score(book, user):
     #random.shuffle(copy_list)
     #print(copy_list[0])
     #for p in range(5):
-    #    result["recommands"].append({
+    #    result["recommandations"].append({
     #        "title": copy_list[p].title,
     #        "score": random.randint(1, 100)
     #    })
-    #sorted(result["recommands"], key=lambda k: k['score'], reverse=True)
+    #sorted(result["recommandations"], key=lambda k: k['score'], reverse=True)
     #return result
 

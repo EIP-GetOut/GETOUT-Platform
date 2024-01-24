@@ -29,7 +29,7 @@ if __name__ == "__main__":
         if movie_recomandations == None:
             print("no recommandations")
         else :
-            for r in movie_recomandations["recommands"]:
+            for r in movie_recomandations["recommandations"]:
                 print("----------------------")
                 print(r)
         print("book recommandations")
@@ -37,7 +37,7 @@ if __name__ == "__main__":
         if book_recomandations == None:
             print("no recommandations")
         else :
-            for r in book_recomandations["recommands"]:
+            for r in book_recomandations["recommandations"]:
                 print("----------------------")
                 print(r)
 
