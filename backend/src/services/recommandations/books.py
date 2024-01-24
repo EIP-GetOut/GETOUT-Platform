@@ -38,6 +38,9 @@ def RecommandBooks(user: json) -> json:
             "score": calculate_score(copy_list[p], user)
         })
     result["recommandations"] = sorted(result["recommandations"], key=lambda k: k['score'], reverse=True)[:5]
+    google_books_api = build("books", "v1", developerKey=os.getenv("GOOGLE_BOOKS_KEY"))
+    for r in result["recommandations"]:
+        r["id"] = google_books_api.volumes().list(q="isbn:" + r["isbn13"]).execute()["items"][0]["id"]
     return result
     # get info from google api about the first book
     #print(best_sellers[0]["primary_isbn13"])
@@ -57,9 +60,9 @@ def calculate_score(book, user):
     print(book["title"])
     #book_google = API_GOOGLE.get_book_by_isbn13(book["primary_isbn13"])
     score = 0
-    score += calculate_genre_score(book_google, user)
-    score += calculate_critics_score(book_google, user)
-    score += calculate_popularity_score(book_google, user)
+    score += calculate_genre_score(book, user)
+    score += calculate_critics_score(book, user)
+    score += calculate_popularity_score(book, user)
     print("total score: " + str(score))
     print("---------------------------------")
     score = random.randint(1, 100)
