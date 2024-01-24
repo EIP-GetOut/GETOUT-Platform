@@ -9,16 +9,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:getout/constants/http_status.dart';
-import 'package:getout/screens/connection/register/bloc/register_service.dart';
+import 'package:getout/screens/connection/services/service.dart';
+import 'package:getout/tools/status.dart';
 
-part 'form_submit_status.dart';
 part 'register_event.dart';
 part 'register_state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
-  final RegisterService? authRepo;
+  final ConnectionService? service;
 
-  RegisterBloc({this.authRepo}) : super(const RegisterState()) {
+  RegisterBloc({this.service}) : super(const RegisterState()) {
     on<RegisterEvent>((event, emit) async {
       await mapEventToState(event, emit);
     });
@@ -39,19 +39,19 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     } else if (event is RegisterBornDateChanged) {
       emit(state.copyWith(bornDate: event.bornDate));
     } else if (event is RegisterSubmitted) {
-      emit(state.copyWith(formStatus: FormSubmitting()));
+      emit(state.copyWith(status: Status.loading));
 
       try {
-        await authRepo?.register(RegisterRequestModel(
+        await service?.register(RegisterRequestModel(
           email: state.email,
           password: state.password,
           firstName: state.firstName,
           lastName: state.lastName,
           bornDate: state.bornDate,
         ));
-        emit(state.copyWith(formStatus: SubmissionSuccess()));
+        emit(state.copyWith(status: Status.success));
       } catch (e) {
-        emit(state.copyWith(formStatus: SubmissionFailed(e)));
+        emit(state.copyWith(status: Status.error));
       }
     }
   }

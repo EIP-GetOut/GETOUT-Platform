@@ -28,7 +28,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
           CheckboxListTile(
             title: Text('Action',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.displayLarge),
+                style: Theme.of(context).textTheme.bodyMedium),
             value: _checkboxValues[0],
             onChanged: (value) {
               setState(() {
@@ -52,7 +52,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
           CheckboxListTile(
             title: Text('Thriller',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.displayLarge),
+                style: Theme.of(context).textTheme.bodyMedium),
             value: _checkboxValues[1],
             onChanged: (value) {
               setState(() {
@@ -76,7 +76,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
           CheckboxListTile(
             title: Text('Western',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.displayLarge),
+                style: Theme.of(context).textTheme.bodyMedium),
             value: _checkboxValues[2],
             onChanged: (value) {
               setState(() {
@@ -100,7 +100,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
           CheckboxListTile(
             title: Text('Horreur',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.displayLarge),
+                style: Theme.of(context).textTheme.bodyMedium),
             value: _checkboxValues[3],
             onChanged: (value) {
               setState(() {
@@ -124,7 +124,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetFilmGenre> {
           CheckboxListTile(
             title: Text('Comedie',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.displayLarge),
+                style: Theme.of(context).textTheme.bodyMedium),
             value: _checkboxValues[4],
             onChanged: (value) {
               setState(() {

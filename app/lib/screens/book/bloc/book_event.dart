@@ -2,25 +2,25 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
 part of 'book_bloc.dart';
 
 class BookEvent extends Equatable {
+  const BookEvent();
   @override
   List<Object?> get props => [];
 }
 
 class CreateInfoBookRequest extends BookEvent {
-  CreateInfoBookRequest({required this.id});
+  final String id;
+  const CreateInfoBookRequest({required this.id});
 
-  final int id;
 }
 
-//ignore: must_be_immutable
 class InfoBookResponse extends BookEvent {
-  InfoBookResponse(
+  const InfoBookResponse(
       {this.title,
       this.overview,
       this.posterPath,
@@ -32,11 +32,11 @@ class InfoBookResponse extends BookEvent {
 
   static const int success = HttpStatus.OK;
   final String? title;
-  String? overview;
+  final String? overview;
   final String? posterPath;
   final String? backdropPath;
   final String? releaseDate;
   final double? voteAverage;
-  String? duration;
+  final String? duration;
   final int statusCode;
 }

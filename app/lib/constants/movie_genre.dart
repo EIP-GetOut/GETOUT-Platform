@@ -30,7 +30,7 @@ class MovieGenre {
 
   static const int MUSIC = 10402;
 
-  static const int MISTERY = 9648;
+  static const int MYSTERY = 9648;
 
   static const int ROMANCE = 10749;
 

@@ -25,15 +25,22 @@ const config = {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  // collectCoverageFrom: undefined,
+  collectCoverageFrom: [
+    'src/**/*.ts'
+  ],
 
   // The directory where Jest should output its coverage files
   coverageDirectory: 'coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
-  // coveragePathIgnorePatterns: [
-  //   "/node_modules/"
-  // ],
+  coveragePathIgnorePatterns: [
+    '.interface.ts',
+    '.dto.ts',
+    '.d.ts',
+    '<rootDir>/src/app.ts',
+    '<rootDir>/src/generateSwagger.ts',
+    '<rootDir>/src/config/'
+  ],
 
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: 'v8',
@@ -53,7 +60,7 @@ const config = {
   // dependencyExtractor: undefined,
 
   // Make calling deprecated APIs throw helpful error messages
-  // errorOnDeprecated: false,
+  errorOnDeprecated: false,
 
   // The default configuration for fake timers
   // fakeTimers: {

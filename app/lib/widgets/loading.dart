@@ -9,8 +9,9 @@ import 'package:flutter/material.dart';
 
 import 'package:getout/tools/flex_size.dart';
 
+//todo responsive
 class LoadingPage extends StatelessWidget {
-  const LoadingPage({Key? key}) : super(key: key);
+  const LoadingPage({super.key});
 
   @override
   Widget build(BuildContext context) {

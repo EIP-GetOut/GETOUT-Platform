@@ -5,15 +5,16 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-import 'package:getout/models/settings/edit_password.dart';
 import 'package:flutter/material.dart';
+
+import 'package:getout/models/settings/edit_password.dart';
 import 'package:getout/screens/connection/widgets/fields.dart';
 import 'package:getout/services/requests/requests_service.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/global.dart';
 
 class ParametersEditPasswordPage extends StatefulWidget {
-  const ParametersEditPasswordPage({Key? key}) : super(key: key);
+  const ParametersEditPasswordPage({super.key});
 
   @override
   State<ParametersEditPasswordPage> createState() => _ParametersEditPasswordPageState();
@@ -74,25 +75,8 @@ class _ParametersEditPasswordPageState extends State<ParametersEditPasswordPage>
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.black, //change your color here
-        ),
-        centerTitle: true,
-        titleSpacing: 0,
-        title: const Text(
-          'Changer le Mot de Passe',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            decorationThickness: 4,
-            decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
-            decoration:
-            TextDecoration.underline,
-          ),
-        ),
+        title: const Text('MOT DE PASSE'),
         leading: const BackButton(),
-        backgroundColor: Colors.white10,
-        elevation: 0,
       ),
       body: SingleChildScrollView(
           child: Form(

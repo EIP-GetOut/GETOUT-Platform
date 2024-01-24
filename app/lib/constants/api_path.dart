@@ -7,21 +7,33 @@
 
 import 'package:flutter/foundation.dart';
 
-const String rootApiPath = (kDebugMode)
+class ApiConstants {
+  const ApiConstants();
+
+  static const String rootApiPath = (kDebugMode)
     ? 'http://10.0.2.2:8080'
     : 'https://api.eip-getout.me';
 
-// ACCOUNT API PATH
-const String loginPath = '/account/login';
-const String logoutPath = '/account/logout';
-const String registerPath = '/account/signup';
-const String oauthPath = '/account/oauth';
-const String resetPasswordNewPasswordPath = '/account/reset-password';
-const String resetPasswordEmailPath = '/account/reset-password/send-email';
-const String getSessionApiPath = '/session';
-// GENERATE THINGS API PATH
-const String generateMoviesApiPath = '/generate-movies';
-const String getInfoMovieApiPath = '/movie';
+  // ACCOUNT API PATH
+  static const String accountPath = '/account';
 
-const String generateBooksApiPath = '/generate-books';
-const String getInfoBookApiPath = '/movie';
+  static const String loginPath = '/account/login';
+  static const String logoutPath = '/account/logout';
+  static const String registerPath = '/account/signup';
+  static const String oauthPath = '/account/oauth';
+  static const String resetPasswordEmailPath = '/account/reset-password/send-email';
+  static const String resetPasswordNewPasswordPath = '/account/reset-password';
+  static const String getSessionApiPath = '/session';
+
+  // GENERATE THINGS API PATH
+  static const String generateMoviesPath = '/generate-movies';
+  static const String getInfoMoviePath = '/movie';
+
+  static const String generateBooksPath = '/generate-books';
+  static const String getInfoBookPath = '/book';
+
+  //todo en attendant le getSession, on va mettre ici le token et le cookies en dur qui sera récupérer plus tard avec le getSession
+  static const String cookies = '';
+  static const String token = '';
+
+}

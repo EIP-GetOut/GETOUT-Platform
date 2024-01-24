@@ -11,7 +11,7 @@ import { MovieDb, type MovieResponse } from 'moviedb-promise'
 
 import logger from '@middlewares/logging'
 
-import { AccountDoesNotExistError, DbError, MovieDbError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError, DbError, MovieDbError, MovieNotInListError } from '@services/utils/customErrors'
 
 import { Account } from '@entities/Account'
 
@@ -52,21 +52,67 @@ async function getDetail (params: MovieDTO): Promise<MovieResponse | undefined> 
   })
 }
 
-async function addMovieToWatchlist (accountId: UUID, movieId: number): Promise<number[]> {
+async function addMovieToList (accountId: UUID, movieId: number, movieList: keyof Account): Promise<number[]> {
   return await findEntity<Account>(Account, { id: accountId }).then(async (account) => {
     if (account == null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.NOT_FOUND)
     }
-    if (!account.watchlist.includes(movieId)) {
-      account.watchlist.push(movieId)
+    if (!(account[movieList] as number []).includes(movieId)) {
+      (account[movieList] as number []).push(movieId)
     }
     return await appDataSource.getRepository<Account>('Account').save(account)
-  }).then((savedAccount) => {
+  }).then((savedAccount: Account | null) => {
     if (savedAccount == null) {
       throw new DbError('Failed adding movie to the watchlist.')
     }
-    return savedAccount.watchlist
+    return savedAccount[movieList] as number []
   })
 }
 
-export { addMovieToWatchlist, fetchMovieCredits, getDetail }
+async function removeMovieFromList (accountId: UUID, movieId: number, movieList: keyof Account): Promise<number[]> {
+  return await findEntity<Account>(Account, { id: accountId }).then(async (account) => {
+    if (account == null) {
+      throw new AccountDoesNotExistError(undefined, StatusCodes.NOT_FOUND)
+    }
+    if (!(account[movieList] as number []).includes(movieId)) {
+      throw new MovieNotInListError()
+    }
+    (account[movieList] as number []) = (account[movieList] as number []).filter(id => id !== movieId)
+    return await appDataSource.getRepository<Account>('Account').save(account)
+  }).then((savedAccount: Account | null) => {
+    if (savedAccount == null) {
+      throw new DbError('Failed adding movie to the watchlist.')
+    }
+    return savedAccount[movieList] as number []
+  })
+}
+
+const addMovieToWatchlist = async (accountId: UUID, movieId: number): Promise<number[]> =>
+  await addMovieToList(accountId, movieId, 'watchlist')
+
+const addMovieToLikedMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
+  await addMovieToList(accountId, movieId, 'likedMovies')
+
+const addMovieToDislikedMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
+  await addMovieToList(accountId, movieId, 'dislikedMovies')
+
+const removeMovieFromWatchlist = async (accountId: UUID, movieId: number): Promise<number[]> =>
+  await removeMovieFromList(accountId, movieId, 'watchlist')
+
+const removeMovieFromLikedMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
+  await removeMovieFromList(accountId, movieId, 'likedMovies')
+
+const removeMovieFromDislikedMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
+  await removeMovieFromList(accountId, movieId, 'dislikedMovies')
+
+export {
+  addMovieToDislikedMovies,
+  addMovieToLikedMovies,
+  addMovieToWatchlist,
+  fetchMovieCredits,
+  getDetail,
+  removeMovieFromDislikedMovies,
+  removeMovieFromLikedMovies,
+  removeMovieFromList,
+  removeMovieFromWatchlist
+}

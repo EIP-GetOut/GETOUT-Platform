@@ -5,7 +5,7 @@ import 'package:getout/screens/form/pages/social_media_spent_time.dart';
 import 'package:getout/tools/flex_size.dart';
 
 class WelcomePage extends StatefulWidget {
-  const WelcomePage({Key? key}) : super(key: key);
+  const WelcomePage({super.key});
 
   @override
   State<WelcomePage> createState() => _WelcomePageState();
@@ -30,12 +30,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
         return Scaffold(
           appBar: AppBar(
-            iconTheme: const IconThemeData(
-              color: Colors.black,
-            ),
             leading: const BackButton(),
-            backgroundColor: Colors.white10,
-            elevation: 0,
           ),
           body: Column(
             children: [

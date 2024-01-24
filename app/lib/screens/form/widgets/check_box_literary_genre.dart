@@ -25,7 +25,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetLiteraryGenre> {
       child : Column(
       children: [
         CheckboxListTile(
-          title: Text('Polar', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge,),
+          title: Text('Polar', textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium),
           value: _checkboxValues[0],
           onChanged: (value) {
             setState(() {
@@ -47,7 +47,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetLiteraryGenre> {
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
-          title: Text('Poesie', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
+          title: Text('Poesie', textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium),
           value: _checkboxValues[1],
           onChanged: (value) {
             setState(() {
@@ -69,7 +69,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetLiteraryGenre> {
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
-          title: Text('Thriller', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
+          title: Text('Thriller', textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium),
           value: _checkboxValues[2],
           onChanged: (value) {
             setState(() {
@@ -91,7 +91,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetLiteraryGenre> {
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
-          title: Text('Politique', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
+          title: Text('Politique', textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium),
           value: _checkboxValues[3],
           onChanged: (value) {
             setState(() {
@@ -113,7 +113,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetLiteraryGenre> {
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
-          title: Text('Comedie', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
+          title: Text('Comedie', textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium),
           value: _checkboxValues[4],
           onChanged: (value) {
             setState(() {
