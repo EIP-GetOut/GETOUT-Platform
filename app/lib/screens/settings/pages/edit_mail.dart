@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:getout/screens/home/bloc/dashboard/dashboard_provider.dart';
+import 'package:getout/screens/home/pages/home_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -126,7 +126,7 @@ class _MyMailPageState extends State<MyMailPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Dashboard()),
+                MaterialPageRoute(builder: (context) => const HomePage()),
               );
             },
             child: const Text('OK'),

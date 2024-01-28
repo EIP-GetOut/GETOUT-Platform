@@ -9,16 +9,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:getout/constants/http_status.dart';
-import 'package:getout/screens/connection/login/bloc/login_service.dart';
+import 'package:getout/screens/connection/services/service.dart';
+import 'package:getout/tools/status.dart';
 
-part 'form_submit_status.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final LoginService? authRepo;
+  final ConnectionService? service;
 
-  LoginBloc({this.authRepo}) : super(const LoginState()) {
+  LoginBloc({this.service}) : super(const LoginState()) {
     on<LoginEvent>((event, emit) async {
       await mapEventToState(event, emit);
     });
@@ -31,16 +31,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } else if (event is LoginPasswordChanged) {
       emit(state.copyWith(password: event.password));
     } else if (event is LoginSubmitted) {
-      emit(state.copyWith(formStatus: FormSubmitting()));
+      emit(state.copyWith(status: Status.loading));
 
       try {
-        await authRepo?.login(LoginRequestModel(
+        await service?.login(LoginRequestModel(
           email: state.email,
           password: state.password,
         ));
-        emit(state.copyWith(formStatus: SubmissionSuccess()));
+        emit(state.copyWith(status: Status.success));
       } catch (e) {
-        emit(state.copyWith(formStatus: SubmissionFailed(e)));
+        emit(state.copyWith(status: Status.error));
       }
     }
   }

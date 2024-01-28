@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import 'package:getout/tools/flex_size.dart';
 
+//todo responsive
 class LoadingPage extends StatelessWidget {
   const LoadingPage({super.key});
 

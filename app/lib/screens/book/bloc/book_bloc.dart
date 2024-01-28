@@ -2,14 +2,14 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:getout/screens/book/bloc/book_repository.dart';
 import 'package:getout/constants/http_status.dart';
+import 'package:getout/screens/book/bloc/book_repository.dart';
 
 part 'book_event.dart';
 part 'book_state.dart';
@@ -17,7 +17,7 @@ part 'book_state.dart';
 class BookBloc extends Bloc<BookEvent, BookState> {
   BookBloc({
     required this.bookRepository,
-  }) : super(BookState()) {
+  }) : super(const BookState()) {
     on<CreateInfoBookRequest>(_mapGetBookEventToState);
   }
 

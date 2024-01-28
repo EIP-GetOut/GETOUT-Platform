@@ -2,18 +2,22 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-part of 'movies_bloc.dart';
+import 'package:equatable/equatable.dart';
+
+import 'package:getout/constants/http_status.dart';
 
 class MoviesEvent extends Equatable {
   @override
   List<Object?> get props => [];
+  const MoviesEvent();
 }
 
 class GenerateMoviesRequest extends MoviesEvent {
-  GenerateMoviesRequest({
+  const GenerateMoviesRequest({
     required this.genres,
     this.includeAdult = false,
   });
@@ -21,8 +25,26 @@ class GenerateMoviesRequest extends MoviesEvent {
   final bool includeAdult;
 }
 
+class MovieStatusResponse extends MoviesEvent {
+  const MovieStatusResponse(
+      {this.id,
+        this.title,
+        this.posterPath,
+        this.overview,
+        required this.statusCode});
+
+  bool get isSuccess => statusCode == HttpStatus.OK;
+
+  final int? id;
+  final String? title;
+  final String? posterPath;
+  final String? overview;
+  final int statusCode;
+  static const int success = HttpStatus.OK;
+}
+
 class MoviePreview extends MoviesEvent {
-  MoviePreview(
+  const MoviePreview(
       {required this.id,
       required this.title,
       required this.posterPath,

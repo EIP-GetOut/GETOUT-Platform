@@ -7,12 +7,12 @@
 
 import 'dart:convert';
 
-import 'package:getout/models/connection/oauth.dart';
-import 'package:getout/models/settings/edit_password.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:getout/models/connection/oauth.dart';
+import 'package:getout/models/settings/edit_password.dart';
 import 'package:getout/constants/http_status.dart';
-import 'package:getout/constants/api_path.dart' as api;
+import 'package:getout/constants/api_path.dart';
 
 class RequestsService {
   RequestsService._();
@@ -29,7 +29,7 @@ class RequestsService {
   Future<SettingsEditPasswordResponseInfo> settingsEditPassword(
       SettingsEditPasswordRequest request) async {
     final Uri url =
-        Uri.http(api.rootApiPath, api.registerPath);
+        Uri.http(ApiConstants.rootApiPath, ApiConstants.registerPath);
     final Map<String, String> header = {'Content-Type': 'application/json'};
     final String body = jsonEncode({
       'email': request.email,
@@ -72,7 +72,7 @@ class RequestsService {
   ///
   Future<OauthResponseInfo> oauth(OauthRequest request) async {
     final Uri url =
-        Uri.http(api.rootApiPath, api.oauthPath);
+        Uri.http(ApiConstants.rootApiPath, ApiConstants.oauthPath);
     final Map<String, String> header = {'Content-Type': 'application/json'};
     final String body = jsonEncode({
       'email': request.email,
