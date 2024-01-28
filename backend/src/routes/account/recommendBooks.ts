@@ -13,7 +13,7 @@ import logger from '@middlewares/logging'
 
 import { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
-import { AppError } from '@services/utils/customErrors'
+import { AppError, NotLoggedInError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { type BooksResults, type BookResult } from '@models/book-types'
@@ -97,7 +97,11 @@ const rulesGet = [
  *         description: Internal server error.
  */
 
-router.get('/generate-books', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
+router.get('/account/:accountId/recommend-books', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
+  if (req.session?.account?.id == null) {
+    handleErrorOnRoute(res)(new NotLoggedInError())
+    return
+  }
   getBooks(req.query).then((booksObtained: BooksResults | undefined): void => {
     logger.info(JSON.stringify(booksObtained, null, 2))
     if (booksObtained == null) {

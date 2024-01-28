@@ -8,8 +8,9 @@
 import { type Request, type Response, Router } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { type MovieResponse } from 'moviedb-promise'
+import { json } from 'stream/consumers'
 
-import { logApiRequest } from '@services/middlewares/logging'
+import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
 import { AppError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
@@ -50,6 +51,10 @@ const router = Router()
  *                 release_date:
  *                   type: string
  *                   format: date
+ *                 cast:
+ *                   type: array
+ *                   items:
+ *                     type: string
  *                 vote_average:
  *                   type: number
  *                 duration:
@@ -75,6 +80,7 @@ router.get('/movie/:id', validate, logApiRequest, (req: Request, res: Response) 
       cast: await fetchMovieCredits(params.id),
       duration: Number(movieObtained.runtime) / 60 - (Number(movieObtained.runtime) / 60 % 1) + 'h' + String(Number(movieObtained.runtime) % 60).padStart(2, '0')
     }
+    logger.warn(JSON.stringify(movie), 2, 0)
     res.status(StatusCodes.OK).json({ movie })
   }).catch(handleErrorOnRoute(res))
 })

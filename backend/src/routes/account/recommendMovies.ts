@@ -12,7 +12,7 @@ import { type MovieResult } from 'moviedb-promise'
 
 import { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
-import { AppError } from '@services/utils/customErrors'
+import { AppError, NotLoggedInError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { getMovies } from '@models/movies'
@@ -253,7 +253,11 @@ const rulesGet = [
  *       '500':
  *         description: Internal server error.
  */
-router.get('/generate-movies', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
+router.get('/account/:accountId/recommend-movies', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
+  if (req.session?.account?.id == null) {
+    handleErrorOnRoute(res)(new NotLoggedInError())
+    return
+  }
   getMovies(req.query).then((moviesObtained: MovieResult[] | undefined) => {
     if (moviesObtained === undefined) {
       throw new AppError()

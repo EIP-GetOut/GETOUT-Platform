@@ -68,6 +68,12 @@ class NotLoggedInError extends AppError {
   }
 }
 
+class PreferencesAlreadyExistError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Preferences already exists.', status ?? StatusCodes.CONFLICT)
+  }
+}
+
 class SamePasswordError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
     super(message ?? 'Can\'t reset password with an old password.', status ?? StatusCodes.BAD_REQUEST)
@@ -88,5 +94,6 @@ export {
   MovieNotInListError,
   NodeMailerError,
   NotLoggedInError,
+  PreferencesAlreadyExistError,
   SamePasswordError
 }
