@@ -11,7 +11,7 @@ import logger from '@middlewares/logging'
 
 import { MovieDbError } from '@services/utils/customErrors'
 
-import { type MoviesDTO } from '@routes/movies.dto'
+import { type MoviesDTO } from '@routes/account/recommendMovies.dto'
 
 const moviedb = new MovieDb('1eec31e851e9ad1b8f3de3ccf39953b7')
 

@@ -14,8 +14,6 @@ import { AccountDoesNotExistError, ApiError, AppError, BookNotInListError, DbErr
 
 import { Account } from '@entities/Account'
 
-import { type BookDTO } from '@routes/book.dto'
-
 import { appDataSource } from '@config/dataSource'
 
 import { findEntity } from './getObjects'
@@ -54,9 +52,8 @@ async function getPictures (authors: any): Promise<any> {
   return authorInfoArray
 }
 
-async function getBook (params: BookDTO): Promise<Response> {
-  const query = params.id
-  return await (fetch(`https://www.googleapis.com/books/v1/volumes/${query}?key=${key}`)).then(async (res) => {
+async function getBookDetail (id: string): Promise<Response> {
+  return await (fetch(`https://www.googleapis.com/books/v1/volumes/${id}?key=${key}`)).then(async (res) => {
     if (!res.ok) {
       throw new ApiError(res.statusText)
     }
@@ -67,6 +64,23 @@ async function getBook (params: BookDTO): Promise<Response> {
     } else {
       throw new AppError()
     }
+  })
+}
+
+async function getBook (id: string): Promise<any> {
+  return await getBookDetail(id).then(async (bookObtained: any | undefined) => {
+    if (bookObtained == null) {
+      throw new AppError()
+    }
+    return ({
+      title: bookObtained.volumeInfo.title,
+      overview: bookObtained.volumeInfo.description,
+      poster_path: bookObtained.volumeInfo?.imageLinks?.thumbnail != null ? bookObtained.volumeInfo.imageLinks.thumbnail : null,
+      duration: Number(bookObtained.volumeInfo.pageCount) / 60 - (Number(bookObtained.volumeInfo.pageCount) / 60 % 1) + 'h' + Number(bookObtained.volumeInfo.pageCount) % 60 + 'min',
+      authors: bookObtained.volumeInfo.authors,
+      authors_picture: await getPictures(bookObtained.volumeInfo.authors),
+      category: bookObtained.volumeInfo?.categories != null ? bookObtained.volumeInfo.categories : null
+    })
   })
 }
 

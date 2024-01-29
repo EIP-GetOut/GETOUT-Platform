@@ -31,7 +31,8 @@ function createSession (sess: Session & Partial<SessionData>, account: Account):
     firstName: account.firstName,
     lastName: account.lastName,
     bornDate: account.bornDate,
-    createdDate: account.createdDate
+    createdDate: account.createdDate,
+    preferences: account.preferences
   }
 }
 

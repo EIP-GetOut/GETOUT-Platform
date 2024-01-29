@@ -5,11 +5,10 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
-import { IsNumber } from 'class-validator'
-
-class MovieDTO {
-  @IsNumber()
-    id!: string
+interface Preferences {
+  'moviesGenres': number [] | undefined
+  'booksGenres': string [] | undefined
+  'platforms': string [] | undefined
 }
 
-export { MovieDTO }
+export type { Preferences }

@@ -9,7 +9,7 @@ import { type Response } from 'node-fetch'
 
 import { ApiError, AppError } from '@services/utils/customErrors'
 
-import { type BooksDTO } from '@routes/books.dto'
+import { type BooksDTO } from '@routes/account/recommendBooks.dto'
 
 import { type BooksResults } from './book-types'
 
