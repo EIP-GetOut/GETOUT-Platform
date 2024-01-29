@@ -99,12 +99,40 @@ flutter:
     - assets/images/Logo.png
     - assets/images/Dessin.png
     - assets/images/Telephone.png
-    - assets/images/Logo_Cinema.png
-    - assets/images/Logo_DVD.png
+    - assets/images/logo_cinema.png
+    - assets/images/logo_DVD.png
+    - assets/images/logo_netflix.png
+    - assets/images/logo_disney+.png
+    - assets/images/logo_prime_video.png
     - assets/svg/bookmark_icon.svg
     - assets/svg/home_icon.svg
     - assets/svg/location_pin_icon.svg
     - assets/svg/movie_icon.svg
+    -
+
+#  assets:
+#    - assets/
+#    - assets/images/draw_welcome_image.png
+#    - assets/images/draw_woman.png
+#    - assets/images/icon_books.png
+#    - assets/images/icon_popcorn.png
+#    - assets/images/icon_phone_check.png
+#    - assets/images/logo_cinema.png
+#    - assets/images/logo_DVD.png
+#    - assets/images/logo_full_getout.png
+#    - assets/images/logo_getout.png
+#    - assets/images/logo_getout_Launch.png
+#    - assets/images/logo_google.png
+#    - assets/images/logo_netflix.png
+#    - assets/images/logo_disney+.png
+#    - assets/images/logo_prime_video.png
+#    - assets/images/profile_picture.png
+#    - assets/images/text_getout.png
+#    - assets/images/separation.png
+#    - assets/images/svg/icon_bookmark.svg
+#    - assets/images/svg/icon_home.svg
+#    - assets/images/svg/icon_location_pin.svg
+#    - assets/images/svg/icon_movie.svg
 
   fonts:
     - family: Poppins

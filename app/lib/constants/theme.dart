@@ -69,6 +69,7 @@ final getOutTheme = ThemeData(
     /// Button
     labelMedium: TextStyle(
         fontSize: 17.5,
+        fontFamily: 'Urbanist',
         fontWeight: FontWeight.w600,
         color: Colors.white),
     bodyLarge: TextStyle(

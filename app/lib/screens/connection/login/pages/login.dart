@@ -10,18 +10,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 
-import 'package:getout/bloc/user/bloc.dart';
-import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_provider.dart';
-import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
-import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
+import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
+import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_provider.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/register/pages/register.dart';
+import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/connection/login/widgets/fields.dart';
 import 'package:getout/screens/connection/widgets/fields_title.dart';
+import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/constants/http_status.dart';
+import 'package:getout/bloc/user/bloc.dart';
 import 'package:getout/tools/status.dart';
-import 'package:getout/widgets/show_snackbar.dart';
 
 class LoginPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

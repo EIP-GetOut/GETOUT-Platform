@@ -1,56 +1,85 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getout/screens/form/bloc/literary_genre_bloc.dart';
-import 'package:getout/screens/form/pages/film_genre.dart';
-import 'package:getout/screens/form/widgets/check_box_literary_genre.dart';
-import 'package:getout/screens/form/widgets/four_point.dart';
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
+*/
 
-class LiteraryGenre extends StatelessWidget {
-  const LiteraryGenre({super.key});
+import 'package:flutter/material.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:getout/screens/form/widgets/four_point.dart';
+import 'package:getout/screens/form/bloc/form_bloc.dart';
+
+class LiteraryGenres extends StatelessWidget {
+  const LiteraryGenres({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LiteraryGenreBloc(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('VOS PRÉFÉRENCES'),
-          leading: const BackButton(),
-        ),
-        body: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              const SizedBox(height: 140),
-              const PageIndicator(currentPage: 2, pageCount: 5),
-              const SizedBox(height: 20),
-              Center(
-                child: Text(
-                  'GENRES LITTÉRAIRES :',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-              ),
-              const SizedBox(height: 20),
-              const CheckboxListWidgetLiteraryGenre(),
-            ],
-          ),
-          floatingActionButton: SizedBox(
-            width: 90 * MediaQuery.of(context).size.width / 100,
-            height: 65,
-            child: FloatingActionButton(
-              child: Text('Suivant', style: Theme.of(context).textTheme.labelMedium),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const FilmGenre()),
-                );
-                context.read<LiteraryGenre>();
-              },
-            ),
-          )
+  Widget build(BuildContext context)
+  {
+    List<String> checkboxText = [
+      'Polar',
+      'Poésie',
+      'Thriller',
+      'Politique',
+      'Comédie'
+    ];
 
-      ),
-    );
+    return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
+    {
+      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.literaryGenres));
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          const SizedBox(height: 140),
+          const PageIndicator(currentPage: 2, pageCount: 5),
+          const SizedBox(height: 20),
+          Center(
+            child: Text(
+              'GENRES LITTÉRAIRES :',
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: ListView(
+                padding: const EdgeInsets.all(16.0),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: <Widget>[
+                  for (int i = 0; i < checkboxText.length; i++)
+                    Column(
+                      children: [
+                        CheckboxListTile(
+                          title: Text(checkboxText[i],
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodyMedium
+                          ),
+                          value: context.read<FormBloc>().state.literaryGenres[i],
+                          onChanged: (value) {
+                            context.read<FormBloc>().add(LiteraryGenresEvent(index: i));
+                          },
+                          contentPadding: EdgeInsets.zero,
+                          controlAffinity: ListTileControlAffinity.leading,
+                          tileColor: Colors.transparent,
+                          checkColor: Colors.transparent,
+                          activeColor: Theme.of(context).primaryColor,
+                          shape: const Border(
+                            bottom: BorderSide(color: Colors.black, width: 2.0),
+                            left: BorderSide(color: Colors.black, width: 2.0),
+                            right: BorderSide(color: Colors.black, width: 2.0),
+                            top: BorderSide(color: Colors.black, width: 2.0),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                    ),
+                ]),
+          )
+        ],
+      );
+    });
   }
 }

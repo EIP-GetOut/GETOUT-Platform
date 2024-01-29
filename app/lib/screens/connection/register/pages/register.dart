@@ -13,9 +13,10 @@ import 'package:dio/dio.dart';
 import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/screens/connection/register/widgets/fields.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
+import 'package:getout/screens/form/pages/page_manager.dart';
 import 'package:getout/constants/http_status.dart';
+import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/tools/status.dart';
-import 'package:getout/widgets/show_snackbar.dart';
 
 
 class RegisterPage extends StatelessWidget {
@@ -40,7 +41,11 @@ class RegisterPage extends StatelessWidget {
                 }
               }
               if (state.status.isSuccess) {
-                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                        const Forms()));
               }
             },
             child: Scaffold(
