@@ -5,6 +5,7 @@
 ** Wrote by Firstname Lastname <firstname.lastname@domain.com>
 */
 
+import { type UUID } from 'crypto'
 import { type Request, type Response, Router } from 'express'
 import { body } from 'express-validator'
 import { StatusCodes, getReasonPhrase } from 'http-status-codes'
@@ -29,7 +30,7 @@ const rulesPost = [
   body('lastName').isString()
 ]
 
-async function sendEmail (body, resetPasswordUrl): Promise<SMTPTransport.SentMessageInfo> {
+async function sendEmail (body: any, resetPasswordUrl: string): Promise<SMTPTransport.SentMessageInfo> {
   // const mailOptions: Mail.Options = {
   //   from: emailConfig.auth?.user,
   //   to: body.email,
@@ -57,7 +58,7 @@ async function sendEmail (body, resetPasswordUrl): Promise<SMTPTransport.SentMes
 }
 
 router.post('/account/reset-password/send-email', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
-  generateResetPasswordUrl(req.session?.account?.id, req.body.email).then(async (url) => {
+  generateResetPasswordUrl(req.session?.account?.id as UUID, req.body.email).then(async (url) => {
     return await sendEmail(req.body, url).then((sendEmailRes) => {
       // if (!sendEmailRes.ok) {
       //   throw Error(`Failed sending reset password email: ${sendEmailRes.statusText}`)

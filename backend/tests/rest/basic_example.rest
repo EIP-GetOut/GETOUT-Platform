@@ -16,7 +16,7 @@ POST http://localhost:8080/account/signup HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "chetrittwo@hotmail.com",
+    "email": "chetritthree@hotmail.com",
     "password": "123456",
     "firstName": "Chaytruite",
     "lastName": "GGWP",
@@ -32,8 +32,8 @@ POST http://localhost:8080/account/login HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "chetrittwo@hotmail.com",
-    "password": "Blackpill"
+    "email": "chetritthre@hotmail.com",
+    "password": "123456"
 }
 
 ###
@@ -63,7 +63,7 @@ POST http://localhost:8080/account/reset-password/send-email HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "chetrittwo@hotmail.com",
+    "email": "chetritthree@hotmail.com",
     "firstName": "Alex",
     "lastName": "GG WP"
 }
@@ -74,7 +74,7 @@ POST http://localhost:8080/account/reset-password HTTP/1.1
 Content-Type: application/json
 
 {
-    "newPassword": "Blackpill",
-    "token": "25a8c9cf-72e7-4f33-bc4a-ef9ea892e721",
-    "password": 2134254627
+    "newPassword": "12345678",
+    "token": "df62598f-6e7b-4677-9a25-92cd1b890bd1",
+    "password": 124830474
 }

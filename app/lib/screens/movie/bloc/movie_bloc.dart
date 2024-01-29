@@ -2,7 +2,7 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,7 +17,7 @@ part 'movie_state.dart';
 class MovieBloc extends Bloc<MovieEvent, MovieState> {
   MovieBloc({
     required this.movieRepository,
-  }) : super(MovieState()) {
+  }) : super(const MovieState()) {
     on<CreateInfoMovieRequest>(_mapGetMovieEventToState);
   }
 

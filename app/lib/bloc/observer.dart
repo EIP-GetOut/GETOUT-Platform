@@ -1,3 +1,10 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
+*/
+
 import 'package:bloc/bloc.dart';
 
 /// {@template app_bloc_observer}
@@ -10,13 +17,11 @@ class AppBlocObserver extends BlocObserver {
   @override
   void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
     super.onChange(bloc, change);
-    //if (bloc is Cubit) {
-    //}
   }
 
   @override
-  void onTransition(
-      Bloc<dynamic, dynamic> bloc, Transition<dynamic, dynamic> transition) {
+  void onTransition(Bloc<dynamic, dynamic> bloc, Transition<dynamic, dynamic> transition) {
     super.onTransition(bloc, transition);
   }
+
 }

@@ -13,16 +13,16 @@ import 'package:getout/screens/book/bloc/book_bloc.dart';
 
 class BookSuccessWidget extends StatelessWidget {
   const BookSuccessWidget({
-    Key? key,
+    super.key,
     required this.book,
-  }) : super(key: key);
+  });
 
   final InfoBookResponse book;
 
   @override
   Widget build(BuildContext context) {
-    String imageUrl =
-        'https://image.tmdb.org/t/p/w600_and_h900_bestv2${book.posterPath}';
+
+    String imageUrl = book.posterPath ?? '';
     Widget buildCoverImage() => Container(
           decoration: const BoxDecoration(
             border: Border(
@@ -77,7 +77,6 @@ class BookSuccessWidget extends StatelessWidget {
       ),
       Text(
         book.title ?? 'N/A',
-        textScaleFactor: 0.9,
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
       ),
@@ -108,10 +107,9 @@ class BookSuccessWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment
             .center, //Center Row contents vertically,            children: [
         children: [
-          const Text('Livre',
-              textScaleFactor: 0.9,
+          Text('Livre',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              style: Theme.of(context).textTheme.labelSmall),
           const SizedBox(width: 15),
           const SizedBox(
               height: 20,
@@ -123,10 +121,8 @@ class BookSuccessWidget extends StatelessWidget {
               )),
           Text(book.duration ?? 'N/A',
               // widget.book.duration,
-              textScaleFactor: 0.9,
               textAlign: TextAlign.center,
-              style:
-                  const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              style: Theme.of(context).textTheme.labelSmall),
         ],
       ),
       Flexible(
@@ -135,13 +131,8 @@ class BookSuccessWidget extends StatelessWidget {
           child: Text(book.overview ?? 'Aucune description disponible',
               textAlign: TextAlign.justify,
               overflow: TextOverflow.ellipsis,
-              maxLines: 12,
-              textScaleFactor: 0.9,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 22,
-                fontFamily: 'Urbanist',
-              )),
+              maxLines: 11,
+              style: Theme.of(context).textTheme.bodySmall),
         ),
       ),
       GestureDetector(

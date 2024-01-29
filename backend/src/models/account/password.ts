@@ -23,11 +23,10 @@ function getDateIn1Hour (): Date {
   const current = new Date()
   const followingDay = new Date(current.getTime() + 3000000) // + 1 hour in ms
 
-  console.log(followingDay)
   return followingDay
 }
 
-async function generateResetPasswordUrl (accountId, email?: string): Promise<string> {
+async function generateResetPasswordUrl (accountId: UUID, email?: string): Promise<string> {
   const criteria: FindOptionsWhere<Account> = { id: accountId, email }
 
   return await findEntity<Account>(Account, criteria).then(async (account: Account | null) => {

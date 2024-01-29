@@ -30,7 +30,8 @@ function checkRequiredEnvironmentVariables (): void {
     'TYPEORM_USERNAME',
     'TYPEORM_PASSWORD',
     'TYPEORM_DATABASE',
-    'GOOGLE_CLIENT_ID'
+    'GOOGLE_CLIENT_ID',
+    'MOVIE_DB_KEY'
   ]
 
   envVariablesToCheck.forEach((envVar: keyof NodeJS.ProcessEnv) => {
@@ -48,20 +49,19 @@ function checkRequiredEnvironmentVariables (): void {
   checkRequiredEnvironmentVariables()
   const app: Application = express()
   const port: number = process.env.PORT
-  const allowedOrigins: string[] = ['http://localhost:3000']
-  const corsOptions: cors.CorsOptions = {
-    origin: (origin, callback) => {
-      if (origin == null || allowedOrigins.includes(origin)) {
-        callback(null, true)
-      } else {
-        callback(new Error('Not allowed by CORS'))
-      }
-    }
-  }
+  // const allowedOrigins: string[] = ['*']
+  // const corsOptions: cors.CorsOptions = {
+  //   origin: (origin, callback) => {
+  //     if (origin == null || allowedOrigins.includes(origin)) {
+  //       callback(null, true)
+  //     } else {
+  //       callback(new Error('Not allowed by CORS'))
+  //     }
+  //   }
+  // }
 
-  generateSwaggerDoc('./src/swagger.yaml')
   appDataSource.initialize().then(() => {
-    app.use(cors(corsOptions))
+    app.use(cors())
     logger.info('Data Source has been initialized!')
     generateSwaggerDoc('./src/swagger.yaml')
 

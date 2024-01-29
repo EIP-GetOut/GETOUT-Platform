@@ -22,6 +22,7 @@ declare global {
 
       GOOGLE_CLIENT_ID: string
 
+      MOVIE_DB_KEY: string
     }
   }
 }

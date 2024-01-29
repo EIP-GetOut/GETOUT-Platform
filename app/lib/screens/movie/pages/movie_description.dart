@@ -19,6 +19,8 @@ class MovieDescriptionPage extends StatefulWidget {
 }
 
 class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
+  _MovieDescriptionPageState();
+
   Widget separateLine() => const Divider(
         height: 15,
         color: Color.fromARGB(255, 192, 192, 192),
@@ -29,16 +31,8 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.black, //change your color here
-        ),
-        centerTitle: true,
-        titleSpacing: 0,
-        title:
-            Text('DESCRIPTION', style: Theme.of(context).textTheme.titleSmall),
+        title: const Text('DESCRIPTION'),
         leading: const BackButton(),
-        backgroundColor: Colors.white10,
-        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Stack(
@@ -62,7 +56,8 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                     child: Text(
                         // textAlign: TextAlign.start,
                         widget.movie.overview ??
-                            'Aucune description disponible')),
+                            'Aucune description disponible',
+                        style: Theme.of(context).textTheme.bodySmall)),
                 separateLine(),
                 const Padding(
                     padding: EdgeInsets.only(
@@ -88,27 +83,57 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                         'Réalisateur 1')),
                 separateLine(),
                 const Padding(
-                    padding: EdgeInsets.only(
-                        left: 10), //apply padding to all four sides
-                    child: Text(
-                        // textAlign: TextAlign.start,
-                        'CASTING',
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold))),
-                Padding(
-                    padding: const EdgeInsets.only(
-                        left: 10), //apply padding to all four sides
-                    child: Image.network(
-                      'https://upload.wikimedia.org/wikipedia/commons/5/5f/Grey.PNG?20071229171831',
-                      height: 50,
-                      width: 50,
-                    )),
-                const Padding(
-                    padding: EdgeInsets.only(
-                        left: 10), //apply padding to all four sides
-                    child: Text(
-                        // textAlign: TextAlign.start,
-                        'Casting 1')),
+                  padding: EdgeInsets.only(
+                      left: 10), //apply padding to all four sides
+                  child: Text(
+                    // textAlign: TextAlign.start,
+                    'CASTING',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(
+                      widget.movie.cast?.length ?? 0,
+                      (index) => Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          children: [
+                            Image.network(
+                              widget.movie.cast![index]['picture']!,
+                              height: 120,
+                              width: 120,
+                            ),
+                            Text(
+                              widget.movie.cast![index]['name']!,
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                // Padding(
+                //     padding: const EdgeInsets.only(
+                //         left: 10), //apply padding to all four sides
+                //     child: Image.network(
+                //       (movie.cast?.isNotEmpty == true)
+                //           ? movie.cast![0][0]
+                //           : 'https://upload.wikimedia.org/wikipedia/commons/5/5f/Grey.PNG?20071229171831',
+                //       height: 50,
+                //       width: 50,
+                //     )),
+                // Padding(
+                //   padding: const EdgeInsets.only(
+                //       left: 10), //apply padding to all four sides
+                //   child: Text(
+                //     (movie.cast?.isNotEmpty == true)
+                //         ? movie.cast![0][0]
+                //         : 'Non disponibe',
+                //   ),
+                // ),
               ],
             ),
           ],

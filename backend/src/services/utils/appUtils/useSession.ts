@@ -11,6 +11,8 @@ import { type Application } from 'express'
 import session, { type SessionOptions } from 'express-session'
 import { type RedisClientType, createClient } from 'redis'
 
+import { type Preferences } from '@models/account/preferences.intefaces'
+
 interface SessionAccount {
   id: UUID
   email: string
@@ -18,6 +20,7 @@ interface SessionAccount {
   lastName?: string
   bornDate?: Date
   createdDate: Date
+  preferences?: Preferences
 }
 
 declare module 'express-session' {

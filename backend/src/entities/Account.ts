@@ -14,6 +14,8 @@ import {
   Column
 } from 'typeorm'
 
+import { Preferences } from '@models/account/preferences.intefaces'
+
 @Entity()
 export class Account {
   @PrimaryGeneratedColumn('uuid')
@@ -46,8 +48,26 @@ export class Account {
   @Column('date', { nullable: true })
     bornDate?: Date
 
-  @Column('jsonb', { nullable: true, default: () => "'[]'" })
-    preferences?: string[]
+  @Column('jsonb', { nullable: true, default: null })
+    preferences?: Preferences
+
+  @Column('integer', { array: true, default: [] })
+    watchlist: number [] = []
+
+  @Column('text', { array: true, default: [] })
+    readingList: string [] = []
+
+  @Column('integer', { array: true, default: [] })
+    likedMovies: number [] = []
+
+  @Column('text', { array: true, default: [] })
+    likedBooks: string [] = []
+
+  @Column('integer', { array: true, default: [] })
+    dislikedMovies: number [] = []
+
+  @Column('text', { array: true, default: [] })
+    dislikedBooks: string [] = []
 
   @CreateDateColumn()
     createdDate!: Date

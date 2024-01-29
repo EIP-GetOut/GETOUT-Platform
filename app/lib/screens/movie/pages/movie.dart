@@ -14,9 +14,9 @@ import 'package:getout/screens/movie/bloc/movie_bloc.dart';
 
 class MovieSuccessWidget extends StatelessWidget {
   const MovieSuccessWidget({
-    Key? key,
+    super.key,
     required this.movie,
-  }) : super(key: key);
+  });
 
   final InfoMovieResponse movie;
 
@@ -33,13 +33,41 @@ class MovieSuccessWidget extends StatelessWidget {
               ),
             ),
           ),
-          child: Image.network(
-            imageUrl,
-            color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.6),
-            colorBlendMode: BlendMode.modulate,
-            width: double.infinity,
-            fit: BoxFit.cover,
-            height: 200,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Image.network(
+                imageUrl,
+                color:
+                    const Color.fromARGB(255, 255, 255, 255).withOpacity(0.6),
+                colorBlendMode: BlendMode.modulate,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                height: 200,
+              ),
+              Positioned(
+                top: 30,
+                right: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.thumb_up_alt_sharp),
+                  color: Colors.white,
+                  onPressed: () {
+                    // print('Like');
+                  },
+                ),
+              ),
+              Positioned(
+                top: 80,
+                right: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.thumb_down),
+                  color: Colors.white,
+                  onPressed: () {
+                    // print('Dislike');
+                  },
+                ),
+              ),
+            ],
           ),
         );
 
@@ -77,7 +105,6 @@ class MovieSuccessWidget extends StatelessWidget {
       ),
       Text(
         movie.title ?? 'N/A',
-        textScaleFactor: 0.9,
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
       ),
@@ -108,10 +135,9 @@ class MovieSuccessWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment
             .center, //Center Row contents vertically,            children: [
         children: [
-          const Text('Film',
-              textScaleFactor: 0.9,
+          Text('Film',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              style: Theme.of(context).textTheme.labelSmall),
           const SizedBox(width: 15),
           const SizedBox(
               height: 20,
@@ -123,10 +149,8 @@ class MovieSuccessWidget extends StatelessWidget {
               )),
           Text(movie.duration ?? 'N/A',
               // widget.movie.duration,
-              textScaleFactor: 0.9,
               textAlign: TextAlign.center,
-              style:
-                  const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              style: Theme.of(context).textTheme.labelSmall),
         ],
       ),
       Flexible(
@@ -135,21 +159,20 @@ class MovieSuccessWidget extends StatelessWidget {
           child: Text(movie.overview ?? 'Aucune description disponible',
               textAlign: TextAlign.justify,
               overflow: TextOverflow.ellipsis,
-              maxLines: 12,
-              textScaleFactor: 0.9,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 22,
-                fontFamily: 'Urbanist',
-              )),
+              maxLines: 11,
+              style: Theme.of(context).textTheme.bodySmall),
         ),
       ),
       GestureDetector(
         onTap: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => MovieDescriptionPage(movie: movie)));
+            context,
+            MaterialPageRoute(
+              builder: (context) => MovieDescriptionPage(
+                movie: movie,
+              ),
+            ),
+          );
         },
         child: const Text(
           'voir plus >',

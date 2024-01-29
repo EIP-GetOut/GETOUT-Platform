@@ -19,7 +19,7 @@ export function generateSwaggerDoc (outputFilePath: string): void {
     if (err != null) {
       logger.error('Error writing Swagger YAML file:', err)
     } else {
-      logger.info('Swagger YAML file generated:', outputFilePath)
+      logger.info(`API Documentation generated at ${outputFilePath}`)
     }
   })
 }

@@ -62,7 +62,7 @@ class MailField extends StatelessWidget {
         validator: MultiValidator([
           RequiredValidator(errorText: 'Un email est requis'),
           EmailValidator(errorText: 'Entrez une addresse email valide')
-        ]));
+        ]).call);
   }
 }
 
@@ -93,7 +93,7 @@ class CodeField extends StatelessWidget {
           PatternValidator(r'(^[0-9]*$)',
               errorText:
               'Le code contient uniquement des chiffres'),
-        ]));
+        ]).call);
   }
 }
 
@@ -134,7 +134,7 @@ class PasswordField extends StatelessWidget {
           PatternValidator(r'([0-9])',
               errorText:
                   'Votre mot de passe doit contenir au moins un chiffre'),
-        ]));
+        ]).call);
   }
 }
 
