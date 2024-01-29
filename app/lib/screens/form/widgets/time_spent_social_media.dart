@@ -43,7 +43,7 @@ class _SliderWidgetState extends State<SliderWidget> {
       children: <Widget>[
         Text(
           '${_sliderValue.toInt()} H',
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         Slider(
           thumbColor: const Color.fromRGBO(213, 86, 65, 1),

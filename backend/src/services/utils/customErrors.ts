@@ -38,6 +38,12 @@ class ApiError extends AppError {}
 
 class BcryptError extends AppError {}
 
+class BookNotInListError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Movie was not found in list.', status ?? StatusCodes.NOT_FOUND)
+  }
+}
+
 class DbError extends AppError {}
 
 class AuthenticationError extends AppError {
@@ -47,6 +53,12 @@ class AuthenticationError extends AppError {
 }
 
 class MovieDbError extends AppError {}
+
+class MovieNotInListError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Movie was not found in list.', status ?? StatusCodes.NOT_FOUND)
+  }
+}
 
 class NodeMailerError extends AppError {}
 
@@ -70,8 +82,10 @@ export {
   AppError,
   AuthenticationError,
   BcryptError,
+  BookNotInListError,
   DbError,
   MovieDbError,
+  MovieNotInListError,
   NodeMailerError,
   NotLoggedInError,
   SamePasswordError

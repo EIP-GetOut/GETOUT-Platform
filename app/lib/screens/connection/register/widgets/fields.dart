@@ -13,7 +13,7 @@ import 'package:intl/intl.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 
 class LastNameField extends StatelessWidget {
-  const LastNameField({Key? key}) : super(key: key);
+  const LastNameField({super.key});
 
   @override
   Widget build(BuildContext context)
@@ -45,7 +45,7 @@ class LastNameField extends StatelessWidget {
 
 
 class FirstNameField extends StatelessWidget {
-  const FirstNameField({Key? key}) : super(key: key);
+  const FirstNameField({super.key});
 
   @override
   Widget build(BuildContext context)
@@ -77,7 +77,7 @@ class FirstNameField extends StatelessWidget {
 
 
 class BornDateField extends StatelessWidget {
-  BornDateField({Key? key}) : super(key: key);
+  BornDateField({super.key});
   final TextEditingController controller = TextEditingController();
 
   @override
@@ -131,7 +131,7 @@ class BornDateField extends StatelessWidget {
 
 
 class EmailField extends StatelessWidget {
-  const EmailField({Key? key}) : super(key: key);
+  const EmailField({super.key});
 
   @override
   Widget build(BuildContext context)
@@ -167,7 +167,7 @@ class EmailField extends StatelessWidget {
 
 
 class PasswordField extends StatelessWidget {
-  const PasswordField({Key? key}) : super(key: key);
+  const PasswordField({super.key});
 
   @override
   Widget build(BuildContext context)
@@ -199,7 +199,7 @@ class PasswordField extends StatelessWidget {
 }
 
 class ConfirmPasswordField extends StatelessWidget {
-  const ConfirmPasswordField({Key? key}) : super(key: key);
+  const ConfirmPasswordField({super.key});
 
   @override
   Widget build(BuildContext context)
@@ -220,7 +220,6 @@ class ConfirmPasswordField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(0.5),
               )),
           validator: (value) =>
-          //(state.password == value) ? null : 'hmmmm',
           state.isConfirmPasswordValid ? null : 'Le mot de passe est différent',
           onChanged: (value) => context.read<RegisterBloc>().add(
             RegisterConfirmPasswordChanged(confirmPassword: value),

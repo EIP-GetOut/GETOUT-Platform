@@ -10,7 +10,7 @@ import { StatusCodes } from 'http-status-codes'
 import { type Response } from 'node-fetch'
 
 import logger from '@services/middlewares/logging'
-import { AccountDoesNotExistError, ApiError, AppError, DbError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError, ApiError, AppError, BookNotInListError, DbError } from '@services/utils/customErrors'
 
 import { Account } from '@entities/Account'
 
@@ -70,21 +70,66 @@ async function getBook (params: BookDTO): Promise<Response> {
   })
 }
 
-async function addBookToReadingList (accountId: UUID, bookId: string): Promise<string[]> {
+async function addBookToList (accountId: UUID, bookId: string, bookList: keyof Account): Promise<string[]> {
   return await findEntity<Account>(Account, { id: accountId }).then(async (account) => {
     if (account == null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.NOT_FOUND)
     }
-    if (!account.readingList.includes(bookId)) {
-      account.readingList.push(bookId)
+    if (!(account[bookList] as string []).includes(bookId)) {
+      (account[bookList] as string []).push(bookId)
     }
     return await appDataSource.getRepository<Account>('Account').save(account)
-  }).then((savedAccount) => {
+  }).then((savedAccount: Account | null) => {
     if (savedAccount == null) {
-      throw new DbError('Failed adding movie to the reading list.')
+      throw new DbError('Failed adding book to the reading list.')
     }
-    return savedAccount.readingList
+    return savedAccount[bookList] as string []
   })
 }
 
-export { addBookToReadingList, getBook, getPictures }
+async function removeBookFromList (accountId: UUID, bookId: string, bookList: keyof Account): Promise<string[]> {
+  return await findEntity<Account>(Account, { id: accountId }).then(async (account) => {
+    if (account == null) {
+      throw new AccountDoesNotExistError(undefined, StatusCodes.NOT_FOUND)
+    }
+    if (!(account[bookList] as string []).includes(bookId)) {
+      throw new BookNotInListError()
+    }
+    (account[bookList] as string []) = (account[bookList] as string []).filter(id => id !== bookId)
+    return await appDataSource.getRepository<Account>('Account').save(account)
+  }).then((savedAccount: Account | null) => {
+    if (savedAccount == null) {
+      throw new DbError('Failed adding book to the watchlist.')
+    }
+    return savedAccount[bookList] as string []
+  })
+}
+
+const addBookToReadingList = async (accountId: UUID, movieId: string): Promise<string[]> =>
+  await addBookToList(accountId, movieId, 'readingList')
+
+const addBookToLikedBooks = async (accountId: UUID, movieId: string): Promise<string[]> =>
+  await addBookToList(accountId, movieId, 'likedBooks')
+
+const addBookToDislikedBooks = async (accountId: UUID, movieId: string): Promise<string[]> =>
+  await addBookToList(accountId, movieId, 'dislikedBooks')
+
+const removeBookFromReadingList = async (accountId: UUID, movieId: string): Promise<string[]> =>
+  await removeBookFromList(accountId, movieId, 'readingList')
+
+const removeBookFromLikedBooks = async (accountId: UUID, movieId: string): Promise<string[]> =>
+  await removeBookFromList(accountId, movieId, 'likedBooks')
+
+const removeBookFromDislikedBooks = async (accountId: UUID, movieId: string): Promise<string[]> =>
+  await removeBookFromList(accountId, movieId, 'dislikedBooks')
+
+export {
+  addBookToDislikedBooks,
+  addBookToLikedBooks,
+  addBookToReadingList,
+  getBook,
+  getPictures,
+  removeBookFromDislikedBooks,
+  removeBookFromLikedBooks,
+  removeBookFromReadingList
+}

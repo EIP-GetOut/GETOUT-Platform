@@ -5,7 +5,7 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-import 'package:http_status_code/http_status_code.dart';
+import 'package:getout/constants/http_status.dart';
 
 class OauthRequest {
     final String email;
@@ -19,7 +19,7 @@ class OauthRequest {
 
 class OauthResponseInfo
 {
-  static const int success = StatusCode.OK;
+  static const int success = HttpStatus.OK;
   int statusCode;
 
   OauthResponseInfo({

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:getout/screens/home/bloc/dashboard/dashboard_provider.dart';
+import 'package:getout/screens/home/pages/home_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -32,24 +32,8 @@ class _MyMailPageState extends State<MyMailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.black, //change your color here
-        ),
-        centerTitle: true,
-        titleSpacing: 0,
-        title: const Text(
-          "Changement d'adresse mail",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 30,
-            decorationThickness: 4,
-            decorationColor: Color.fromRGBO(213, 86, 65, 0.992),
-            decoration: TextDecoration.underline,
-          ),
-        ),
+        title: const Text('ADRESSE EMAIL'),
         leading: const BackButton(),
-        backgroundColor: Colors.white10,
-        elevation: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -142,7 +126,7 @@ class _MyMailPageState extends State<MyMailPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Dashboard()),
+                MaterialPageRoute(builder: (context) => const HomePage()),
               );
             },
             child: const Text('OK'),

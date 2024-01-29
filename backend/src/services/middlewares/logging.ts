@@ -30,7 +30,7 @@ const logger: winston.Logger = winston.createLogger({
       maxFiles: '30d'
     }),
     new winston.transports.Console({
-      level: process.env.NODE_ENV === 'test' ? 'error' : 'debug',
+      level: process.env.NODE_ENV === 'test' ? 'none' : 'debug',
       handleExceptions: true,
       format: winston.format.combine(
         winston.format.timestamp({

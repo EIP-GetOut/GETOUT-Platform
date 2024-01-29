@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:getout/widgets/object_loading_error_widget.dart';
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
 import 'package:getout/screens/movie/pages/movie.dart';
-import 'package:getout/screens/home/widgets/movies/movies_error_widget.dart';
 import 'package:getout/widgets/loading.dart';
 
 class MovieWidget extends StatelessWidget {
-  const MovieWidget({
-    Key? key,
-  }) : super(key: key);
+  const MovieWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +20,7 @@ class MovieWidget extends StatelessWidget {
           if (state.status.isLoading) {
             return const Center(child: LoadingPage());
           } else if (state.status.isError) {
-            return const MoviesErrorWidget();
+            return const ObjectLoadingErrorWidget(object: 'le film');
           } else {
             return const SizedBox();
           }

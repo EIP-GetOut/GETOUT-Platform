@@ -20,56 +20,42 @@ class FilmGenre extends StatelessWidget {
       create: (context) => FilmGenreBloc(),
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          title: Text('VOS PRÉFÉRENCES'.padRight(
-              '             '.length,
-              String.fromCharCodes([0x00A0 /*No-Break Space*/ ])), // don't know but print white space,
-              style: Theme.of(context).textTheme.titleLarge),
-          backgroundColor: Colors.white,
+          title: const Text('VOS PRÉFÉRENCES'),
+          leading: const BackButton(),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
+              const SizedBox(height: 140),
               const PageIndicator(currentPage: 3, pageCount: 5),
               const SizedBox(height: 20),
-              const Center(
+              Center(
                 child: Text(
-                  'GENRE CINEMATOGRAPHIQUE PREFERE :',
+                  'GENRES CINÉMATOGRAPHIQUES :',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               const SizedBox(height: 20),
               const CheckboxListWidgetFilmGenre(),
-              const SizedBox(height: 20),
-              FractionallySizedBox(
-                widthFactor: 0.9,
-                child: ElevatedButton(
-                  style: Theme.of(context).elevatedButtonTheme.style,
-                  child: Text('Suivant',
-                      style: Theme.of(context).textTheme.bodyLarge),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const StreamingPlatform()),
-                    );
-                    context.read<FilmGenreBloc>();
-                  },
-                ),
-              ),
             ],
           ),
-        ),
+          floatingActionButton: SizedBox(
+            width: 90 * MediaQuery.of(context).size.width / 100,
+            height: 65,
+            child: FloatingActionButton(
+              child: Text('Suivant', style: Theme.of(context).textTheme.labelMedium),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const StreamingPlatform()),
+                );
+                context.read<FilmGenreBloc>();
+              },
+            ),
+          )
+
       ),
     );
   }

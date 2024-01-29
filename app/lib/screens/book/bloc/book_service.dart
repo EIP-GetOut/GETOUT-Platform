@@ -2,49 +2,49 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Writed by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
 import 'package:dio/dio.dart';
 
 import 'package:getout/screens/book/bloc/book_bloc.dart';
-import 'package:getout/constants/api_path.dart' as api_constants;
+import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
 
 class BookService {
   Future<InfoBookResponse> getInfoBook(CreateInfoBookRequest request) async {
     InfoBookResponse result =
-        InfoBookResponse(statusCode: HttpStatus.APP_ERROR);
+        const InfoBookResponse(statusCode: HttpStatus.APP_ERROR);
     final dio = Dio();
 
     final response = await dio.get(
-        '${api_constants.rootApiPath}${api_constants.getInfoMovieApiPath}/${request.id}',
+        '${ApiConstants.rootApiPath}${ApiConstants.getInfoBookPath}/${request.id}',
         options: Options(headers: {'Content-Type': 'application/json'}));
     try {
       if (response.statusCode != InfoBookResponse.success) {
         return InfoBookResponse(statusCode: response.statusCode ?? 500);
       }
-      final dynamic data = response.data;
+      final bool isOverviewEmpty = (response.data['book']['overview'] == '');
+      final bool isDurationEmpty = (response.data['book']['duration'] == '0h0min');
+
       result = InfoBookResponse(
-          title: data['movie']['title'],
-          overview: data['movie']['overview'],
-          posterPath: data['movie']['poster_path'],
-          backdropPath: data['movie']['backdrop_path'],
-          releaseDate: data['movie']['release_date'],
-          voteAverage: data['movie']['vote_average'],
-          duration: data['movie']['duration'],
+          title: response.data['book']['title'],
+          overview: isOverviewEmpty
+              ? response.data['book']['overview']
+              : 'Pas de description disponible',
+          posterPath: response.data['book']['poster_path'],
+          backdropPath: response.data['book']['backdrop_path'],
+          releaseDate: response.data['book']['release_date'],
+          voteAverage: response.data['book']['vote_average'],
+          duration: isDurationEmpty
+              ? response.data['book']['duration']
+              : 'N/A',
           statusCode: response.statusCode ?? 500);
-      if (result.overview == '') {
-        result.overview = 'Pas de description disponible';
-      }
-      if (result.duration == '0h0min') {
-        result.duration = 'N/A';
-      }
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() ==
               'Connection closed before full header was received') {
-        return InfoBookResponse(statusCode: HttpStatus.NO_INTERNET);
+        return const InfoBookResponse(statusCode: HttpStatus.NO_INTERNET);
       }
       return result;
     }

@@ -13,68 +13,41 @@ import 'package:dio/dio.dart';
 import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/screens/connection/register/widgets/fields.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
-import 'package:getout/screens/form/pages/social_media_spent_time.dart';
 import 'package:getout/constants/http_status.dart';
+import 'package:getout/tools/status.dart';
+import 'package:getout/widgets/show_snackbar.dart';
 
 
-class RegisterScreen extends StatelessWidget {
-  RegisterScreen({Key? key}) : super(key: key);
+class RegisterPage extends StatelessWidget {
+  RegisterPage({super.key});
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  void _showSnackBar(final BuildContext context, final String message) {
-    final snackBar = SnackBar(
-        backgroundColor: Theme.of(context).colorScheme.error,
-        content: Text(message,
-            style: Theme.of(context).textTheme.displaySmall
-        ));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: BlocListener<RegisterBloc, RegisterState>(
             listenWhen: (previous, current) =>
-            previous.formStatus != current.formStatus,
+            previous.status != current.status,
             listener: (context, state) {
-              final formStatus = state.formStatus;
 
-              if (formStatus is SubmissionFailed) {
-                if (formStatus.exception is DioException && (formStatus.exception as DioException).response != null &&
-                    (formStatus.exception as DioException).response!.statusCode == HttpStatus.CONFLICT) {
-                  _showSnackBar(context, 'Un compte avec cette adresse email existe déjà');
+              if (state.status.isError) {
+                if (state.exception is DioException && (state.exception as DioException).response != null &&
+                    (state.exception as DioException).response!.statusCode == HttpStatus.CONFLICT) {
+                  showSnackBar(context, 'Un compte avec cette adresse email existe déjà');
                 } else {
-                  _showSnackBar(context, 'Une erreur s\'est produite, veuillez reesayer plus tard');
+                  showSnackBar(context, 'Une erreur s\'est produite, veuillez reesayer plus tard');
                 }
               }
-              if (formStatus is SubmissionSuccess) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                        const SocialMediaSpentTime()));
+              if (state.status.isSuccess) {
+                Navigator.pop(context);
               }
             },
             child: Scaffold(
               resizeToAvoidBottomInset: true,
               appBar: AppBar(
-                iconTheme: const IconThemeData(
-                  color: Colors.black, //change your color here
-                ),
-                centerTitle: true,
-                titleSpacing: 0,
-                title: Text(
-                    'VOTRE PROFIL'.padRight(
-                        '             '.length,
-                        String.fromCharCodes([0x00A0 /*No-Break Space*/ ])), // don't know but print white space
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .titleLarge),
+                title: const Text('VOTRE PROFIL'),
                 leading: const BackButton(),
-                backgroundColor: Colors.white10,
-                elevation: 0,
               ),
               body: SingleChildScrollView(
                   child: Form(
@@ -136,7 +109,7 @@ class RegisterScreen extends StatelessWidget {
 }
 
 class RegisterButton extends StatelessWidget {
-  const RegisterButton({Key? key, required this.formKey}) : super(key: key);
+  const RegisterButton({super.key, required this.formKey});
 
   final GlobalKey<FormState> formKey;
 
@@ -147,25 +120,18 @@ class RegisterButton extends StatelessWidget {
 
     return BlocBuilder<RegisterBloc, RegisterState>(
       builder: (context, state) {
-        return state.formStatus is FormSubmitting
+        return state.status.isLoading
             ? const CircularProgressIndicator()
             : SizedBox(
             width: 90 * phoneWidth / 100,
             height: 65,
             child: FloatingActionButton(
-              shape: Theme.of(context).floatingActionButtonTheme.shape,
-              backgroundColor:
-              Theme.of(context).floatingActionButtonTheme.backgroundColor,
+              child: Text('Suivant', style: Theme.of(context).textTheme.labelMedium),
               onPressed: () {
                 if (formKey.currentState!.validate()) {
                   context.read<RegisterBloc>().add(RegisterSubmitted());
                 }
               },
-              child: const Text('Suivant',
-                  style: TextStyle(
-                      fontSize: 17.5,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white)),
             ));
       },
     );

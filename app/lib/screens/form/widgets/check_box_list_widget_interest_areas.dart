@@ -25,7 +25,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetInterestAreas> {
       child : Column(
       children: [
         CheckboxListTile(
-          title: Text('Technologie', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
+          title: Text('Technologie', textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium),
           value: _checkboxValues[0],
           onChanged: (value) {
             setState(() {
@@ -46,7 +46,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetInterestAreas> {
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
-          title: Text('Sport', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
+          title: Text('Sport', textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium),
           value: _checkboxValues[1],
           onChanged: (value) {
             setState(() {
@@ -68,7 +68,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetInterestAreas> {
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
-          title: Text('Musique', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
+          title: Text('Musique', textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium),
           value: _checkboxValues[2],
           onChanged: (value) {
             setState(() {
@@ -90,7 +90,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetInterestAreas> {
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
-          title: Text('Voyage', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
+          title: Text('Voyage', textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium),
           value: _checkboxValues[3],
           onChanged: (value) {
             setState(() {
@@ -112,7 +112,7 @@ class _CheckboxListWidgetState extends State<CheckboxListWidgetInterestAreas> {
         ),
         const SizedBox(height: 5),
         CheckboxListTile(
-          title: Text('Activite artistique', textAlign: TextAlign.center, style: Theme.of(context).textTheme.displayLarge),
+          title: Text('Activite artistique', textAlign: TextAlign.center, style: Theme.of(context).textTheme.bodyMedium),
           value: _checkboxValues[4],
           onChanged: (value) {
             setState(() {

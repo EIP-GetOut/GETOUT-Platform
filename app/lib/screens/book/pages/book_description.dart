@@ -24,16 +24,8 @@ class BookDescriptionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.black,
-        ),
-        centerTitle: true,
-        titleSpacing: 0,
-        title:
-            Text('DESCRIPTION', style: Theme.of(context).textTheme.titleSmall),
+        title: const Text('DESCRIPTION'),
         leading: const BackButton(),
-        backgroundColor: Colors.white10,
-        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Stack(
@@ -52,7 +44,8 @@ class BookDescriptionPage extends StatelessWidget {
                         ))),
                 Padding(padding: const EdgeInsets.only(left: 10), child: Text(
                     // textAlign: TextAlign.start,
-                    book.overview ?? 'Aucune description disponible')),
+                    book.overview ?? 'Aucune description disponible',
+                style: Theme.of(context).textTheme.bodySmall)),
                 separateLine(),
                 const Padding(
                     padding: EdgeInsets.only(left: 10),
