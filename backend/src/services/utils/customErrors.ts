@@ -36,6 +36,12 @@ class AlreadyLoggedInError extends AppError {
 }
 class ApiError extends AppError {}
 
+class AuthenticationError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message, status ?? StatusCodes.UNAUTHORIZED)
+  }
+}
+
 class BcryptError extends AppError {}
 
 class BookNotInListError extends AppError {
@@ -45,12 +51,6 @@ class BookNotInListError extends AppError {
 }
 
 class DbError extends AppError {}
-
-class AuthenticationError extends AppError {
-  constructor (message?: string, status?: StatusCodes) {
-    super(message, status ?? StatusCodes.UNAUTHORIZED)
-  }
-}
 
 class MovieDbError extends AppError {}
 

@@ -6,8 +6,8 @@
 */
 
 interface preferences {
-  'moviesPreferences': number [] | undefined
-  'booksPreferences': string [] | undefined
+  'moviesGenres': number [] | undefined
+  'booksGenres': string [] | undefined
   'platforms': string [] | undefined
 }
 

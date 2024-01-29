@@ -20,8 +20,8 @@ import { addPreferences, postPreferences } from '@models/account/preferences'
 const router = Router()
 
 const rulesPut = [
-  body('moviesPreferences').isArray(),
-  body('booksPreferences').isArray(),
+  body('moviesGenres').isArray(),
+  body('booksGenres').isArray(),
   body('platforms').isArray()
 ]
 
@@ -31,7 +31,7 @@ router.put('/account/preferences', rulesPut, validate, logApiRequest, (req: Requ
     return
   }
   addPreferences(req.session.account.id, req.body, 'preferences').then((preferencesAdded: string[]) => {
-    return res.status(StatusCodes.CREATED).json(preferencesAdded)
+    return res.status(StatusCodes.OK).json(preferencesAdded)
   }).catch(handleErrorOnRoute(res))
 })
 

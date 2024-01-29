@@ -48,8 +48,8 @@ export class Account {
 
   @Column('jsonb', { nullable: true, default: null })
     preferences?: {
-    moviesPreferences?: number []
-    booksPreferences?: string []
+    moviesGenres?: number []
+    booksGenres?: string []
     platforms?: string []
   }
 

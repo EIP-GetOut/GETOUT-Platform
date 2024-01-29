@@ -74,10 +74,10 @@ const rulesGet = [
 
 /**
  * @swagger
- * /generate-movies:
+ * /recommend-movies:
  *   get:
- *     summary: Generate 5 films
- *     description: Generate 5 films using the provided query parameters.
+ *     summary: Recommend 5 films
+ *     description: Recommend 5 films using the provided query parameters.
  *     parameters:
  *       - name: region
  *         in: query

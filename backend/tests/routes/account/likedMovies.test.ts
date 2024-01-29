@@ -13,10 +13,18 @@ import request from 'supertest'
 
 import { app } from '@config/jestSetup'
 
-import { extractConnectSidCookie } from '../../utils_funcs'
+import { extractConnectSidCookie } from '../../setupUtils'
+
+const bodySignup = {
+  email: 'likedMovies@test.com',
+  firstName: 'Super',
+  lastName: 'Tester',
+  bornDate: '07/06/2001',
+  password: 'toto'
+}
 
 const loginBody = {
-  email: 'supertester@tester.test',
+  email: 'likedMovies@test.com',
   password: 'toto'
 }
 
@@ -25,13 +33,18 @@ describe('Liked movies list routes', async () => {
   let cookie: string
 
   beforeAll(async () => {
-    await request(app).post('/account/login').send(loginBody).then(async (res) => {
-      const optionalCookie = extractConnectSidCookie(res.headers['set-cookie'][0])
-      if (optionalCookie === null) { throw Error('Failed extracting cookie') }
-      cookie = optionalCookie
-      return await request(app).get('/session').set('Cookie', cookie)
-    }).then((res) => {
-      accountId = res.body.account.id
+    await request(app).post('/account/signup').send(bodySignup).then(async (response) => {
+      if (response.statusCode !== StatusCodes.CREATED) {
+        throw Error('Failed creating account')
+      }
+      await request(app).post('/account/login').send(loginBody).then(async (res) => {
+        const optionalCookie = extractConnectSidCookie(res.headers['set-cookie'][0])
+        if (optionalCookie === null) { throw Error('Failed extracting cookie') }
+        cookie = optionalCookie
+        return await request(app).get('/session').set('Cookie', cookie)
+      }).then((res) => {
+        accountId = res.body.account.id
+      })
     })
   })
 

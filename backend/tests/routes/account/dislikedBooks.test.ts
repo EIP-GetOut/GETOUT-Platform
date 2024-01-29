@@ -13,53 +13,64 @@ import request from 'supertest'
 
 import { app } from '@config/jestSetup'
 
-import { extractConnectSidCookie } from '../../utils_funcs'
+import { extractConnectSidCookie } from '../../setupUtils'
 
-const loginBody = {
-  email: 'supertester@tester.test',
+const bodySignup = {
+  email: 'dislikedBooks@test.com',
+  firstName: 'Super',
+  lastName: 'Tester',
+  bornDate: '07/06/2001',
   password: 'toto'
 }
 
+const loginBody = {
+  email: 'dislikedBooks@test.com',
+  password: 'toto'
+}
 describe('Reading List Route', async () => {
   let accountId: UUID
   let cookie: string
 
   beforeAll(async () => {
-    await request(app).post('/account/login').send(loginBody).then(async (res) => {
-      const optionalCookie = extractConnectSidCookie(res.headers['set-cookie'][0])
-      if (optionalCookie === null) { throw Error('Failed extracting cookie') }
-      cookie = optionalCookie
-      return await request(app).get('/session').set('Cookie', cookie)
-    }).then((res) => {
-      accountId = res.body.account.id
+    await request(app).post('/account/signup').send(bodySignup).then(async (response) => {
+      if (response.statusCode !== StatusCodes.CREATED) {
+        throw Error('Failed creating account')
+      }
+      await request(app).post('/account/login').send(loginBody).then(async (res) => {
+        const optionalCookie = extractConnectSidCookie(res.headers['set-cookie'][0])
+        if (optionalCookie === null) { throw Error('Failed extracting cookie') }
+        cookie = optionalCookie
+        return await request(app).get('/session').set('Cookie', cookie)
+      }).then((res) => {
+        accountId = res.body.account.id
+      })
     })
   })
-
   it('should respond with 201 CREATED and the disliked books list for POST /account/:accountId/dislikedBooks', async () => {
-    await request(app).post(`/account/${accountId}/dislikedBooks`).send({ bookId: '_LettPDhwR0C' }).set('Cookie', cookie)
+    await request(app).post(`/account/${accountId}/dislikedBooks`).send({ bookId: 'EvqJCGeqKhsC' }).set('Cookie', cookie)
       .then((response) => {
         expect(response.status).toBe(StatusCodes.CREATED)
-        expect(response.body).toContain('_LettPDhwR0C')
+        expect(response.body).toContain('EvqJCGeqKhsC')
       })
   })
 
   it('should respond with 200 OK and the disliked books list for GET /account/:accountId/dislikedBooks', async () => {
-    await request(app).post(`/account/${accountId}/dislikedBooks`).send({ bookId: '_LettLAVABO' }).set('Cookie', cookie)
+    await request(app).post(`/account/${accountId}/dislikedBooks`).send({ bookId: 'ugbmAgAAQBAJ' }).set('Cookie', cookie)
       .then(async () => {
         return await request(app).get(`/account/${accountId}/dislikedBooks`).set('Cookie', cookie)
       }).then((response) => {
         expect(response.status).toBe(StatusCodes.OK)
-        expect(response.body).toContain('_LettLAVABO')
+        expect(response.body).toContain('ugbmAgAAQBAJ')
       })
   })
 
-  it('should respond with 200 OK and the disliked books list for DELETE /account/:accountId/dislikedBooks/_LettDELAWARDE', async () => {
-    await request(app).post(`/account/${accountId}/dislikedBooks`).send({ bookId: '_LettDELAWARDE' }).set('Cookie', cookie)
+  it('should respond with 200 OK and the disliked books list for DELETE /account/:accountId/dislikedBooks/t34OAAAAIAAJ', async () => {
+    await request(app).post(`/account/${accountId}/dislikedBooks`).send({ bookId: 't34OAAAAIAAJ' }).set('Cookie', cookie)
       .then(async () => {
-        return await request(app).delete(`/account/${accountId}/dislikedBooks/_LettDELAWARDE`).set('Cookie', cookie)
+        return await request(app).delete(`/account/${accountId}/dislikedBooks/t34OAAAAIAAJ`).set('Cookie', cookie)
       }).then((response) => {
         expect(response.status).toBe(StatusCodes.OK)
-        expect(response.body).not.toContain('_LettDELAWARDE')
+        expect(response.body).not.toContain('t34OAAAAIAAJ')
       })
   })
 })

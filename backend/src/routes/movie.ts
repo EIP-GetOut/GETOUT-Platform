@@ -7,15 +7,12 @@
 
 import { type Request, type Response, Router } from 'express'
 import { StatusCodes } from 'http-status-codes'
-import { type MovieResponse } from 'moviedb-promise'
-import { json } from 'stream/consumers'
 
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
-import { AppError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
-import { fetchMovieCredits, getDetail } from '@models/movie'
+import { getMovie } from '@models/movie'
 
 const router = Router()
 
@@ -62,25 +59,10 @@ const router = Router()
  *       '500':
  *         description: Internal server error.
  */
+
 router.get('/movie/:id', validate, logApiRequest, (req: Request, res: Response) => {
-  const params = {
-    id: req.params.id
-  }
-  getDetail(params).then(async (movieObtained: MovieResponse | undefined) => {
-    if (movieObtained == null) {
-      throw new AppError()
-    }
-    const movie = {
-      title: movieObtained.title,
-      overview: movieObtained.overview,
-      poster_path: movieObtained.poster_path,
-      backdrop_path: movieObtained.backdrop_path,
-      release_date: movieObtained.release_date,
-      vote_average: Number(movieObtained.vote_average) / 2,
-      cast: await fetchMovieCredits(params.id),
-      duration: Number(movieObtained.runtime) / 60 - (Number(movieObtained.runtime) / 60 % 1) + 'h' + String(Number(movieObtained.runtime) % 60).padStart(2, '0')
-    }
-    logger.warn(JSON.stringify(movie), 2, 0)
+  getMovie(parseInt(req.params.id)).then((movie: any) => {
+    logger.info(`Successfully retreived movie ${req.params.id}: ${JSON.stringify(movie, null, 2)}`)
     res.status(StatusCodes.OK).json({ movie })
   }).catch(handleErrorOnRoute(res))
 })

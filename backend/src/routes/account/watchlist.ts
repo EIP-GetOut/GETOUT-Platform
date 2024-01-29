@@ -151,7 +151,7 @@ router.delete('/account/:accountId/watchlist/:movieId', rulesDelete, validate, l
     return
   }
   removeMovieFromWatchlist(req.params.accountId, parseInt(req.params.movieId)).then((updatedWatchlist: number[]) => {
-    logger.info(`Successfully removed ${req.body.movieId} of ${req.session.account?.email}'s watchlist.`)
+    logger.info(`Successfully removed ${req.params.movieId} of ${req.session.account?.email}'s watchlist.`)
     return res.status(StatusCodes.OK).json(updatedWatchlist)
   }).catch(handleErrorOnRoute(res))
 })

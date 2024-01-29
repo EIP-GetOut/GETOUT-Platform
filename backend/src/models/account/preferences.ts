@@ -8,7 +8,6 @@
 import { type UUID } from 'crypto'
 import { StatusCodes } from 'http-status-codes'
 
-import logger from '@services/middlewares/logging'
 import { AccountDoesNotExistError, DbError, PreferencesAlreadyExistError } from '@services/utils/customErrors'
 
 import { findEntity } from '@models/getObjects'

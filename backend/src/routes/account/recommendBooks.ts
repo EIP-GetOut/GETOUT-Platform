@@ -34,10 +34,10 @@ const rulesGet = [
 
 /**
  * @swagger
- * /generate-books:
+ * /recommend-books:
  *   get:
- *     summary: Generate 5 books
- *     description: Generate 5 books using the provided query parameters.
+ *     summary: Recommend 5 books
+ *     description: Recommend 5 books using the provided query parameters.
  *     parameters:
  *       - name: intitle
  *         in: query
