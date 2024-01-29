@@ -9,12 +9,14 @@ import { type Request, type Response, Router } from 'express'
 import { query } from 'express-validator'
 import { StatusCodes } from 'http-status-codes'
 import { type MovieResult } from 'moviedb-promise'
+import { type Options, PythonShell } from 'python-shell'
 
-import { logApiRequest } from '@services/middlewares/logging'
+import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
-import { AppError, NotLoggedInError } from '@services/utils/customErrors'
+import { AppError, NotLoggedInError, PreferencesDoesNotExistError, RecommandationsDetailsError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
+import { getMovie } from '@models/movie'
 import { getMovies } from '@models/movies'
 import { type movies } from '@models/movies.interface'
 
@@ -273,6 +275,42 @@ router.get('/account/:accountId/recommend-movies', rulesGet, validate, logApiReq
       })
     })
     return res.status(StatusCodes.OK).json({ movies })
+  }).catch(handleErrorOnRoute(res))
+})
+
+router.get('/account/:accountId/recommend-movies/V2', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
+  if (req.session?.account?.id == null) {
+    handleErrorOnRoute(res)(new NotLoggedInError())
+  }
+  if (req.session.account?.preferences == null) {
+    handleErrorOnRoute(res)(new PreferencesDoesNotExistError())
+  }
+
+  const options: Options = {
+    mode: 'json',
+    pythonPath: '/usr/bin/python3',
+    pythonOptions: [],
+    scriptPath: 'src/services/recommandations/',
+    args: [JSON.stringify(req.session.account)]
+  }
+
+  PythonShell.run('movies.py', options).then(async ([output]: any) => {
+    const recommandations = output.recommandations
+    const promisesArray: Array<Promise<any>> = []
+
+    recommandations.forEach((recommandation: any) => {
+      promisesArray.push(getMovie(recommandation.id))
+    })
+
+    await Promise.all(promisesArray).then((resolvedPromises) => {
+      resolvedPromises.forEach((resolvedPromise: any, index) => {
+        resolvedPromise.score = recommandations[index].score
+      })
+      logger.info(`Successfully retreived movie recommandations: ${JSON.stringify(recommandations, null, 2)}`)
+      return res.status(StatusCodes.OK).json({ resolvedPromises })
+    }).catch(() => {
+      throw new RecommandationsDetailsError()
+    })
   }).catch(handleErrorOnRoute(res))
 })
 

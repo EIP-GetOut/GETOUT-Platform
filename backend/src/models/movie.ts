@@ -17,7 +17,7 @@ import { appDataSource } from '@config/dataSource'
 
 import { findEntity } from './getObjects'
 
-const moviedb = new MovieDb('1eec31e851e9ad1b8f3de3ccf39953b7')
+const moviedb = new MovieDb(process.env.MOVIE_DB_KEY)
 
 async function fetchMovieCredits (movieId: number): Promise<any> {
   return await moviedb.movieCredits({ id: movieId }).then((credits: any) => {

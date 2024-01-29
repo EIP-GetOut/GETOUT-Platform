@@ -16,6 +16,7 @@ import { NotLoggedInError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { addPreferences, postPreferences } from '@models/account/preferences'
+import { type Preferences } from '@models/account/preferences.intefaces'
 
 const router = Router()
 
@@ -30,7 +31,8 @@ router.put('/account/preferences', rulesPut, validate, logApiRequest, (req: Requ
     handleErrorOnRoute(res)(new NotLoggedInError())
     return
   }
-  addPreferences(req.session.account.id, req.body, 'preferences').then((preferencesAdded: string[]) => {
+  addPreferences(req.session.account.id, req.body, 'preferences').then((preferencesAdded: Preferences) => {
+    req.session.account!.preferences = preferencesAdded
     return res.status(StatusCodes.OK).json(preferencesAdded)
   }).catch(handleErrorOnRoute(res))
 })
@@ -41,7 +43,8 @@ router.post('/account/preferences', rulesPut, validate, logApiRequest, (req: Req
     return
   }
   logger.warn(JSON.stringify(req.body, null, 0))
-  postPreferences(req.session.account.id, req.body, 'preferences').then((preferencesAdded: string[]) => {
+  postPreferences(req.session.account.id, req.body, 'preferences').then((preferencesAdded: Preferences) => {
+    req.session.account!.preferences = preferencesAdded
     return res.status(StatusCodes.CREATED).json(preferencesAdded)
   }).catch(handleErrorOnRoute(res))
 })

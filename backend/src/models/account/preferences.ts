@@ -16,26 +16,26 @@ import { Account } from '@entities/Account'
 
 import { appDataSource } from '@config/dataSource'
 
-import { type preferences } from './preferences.intefaces'
+import { type Preferences } from './preferences.intefaces'
 
-async function addPreferences (accountId: UUID, preferencesToAdd: preferences, preferences: keyof Account): Promise<string[]> {
+async function addPreferences (accountId: UUID, preferencesToAdd: Preferences, preferences: keyof Account): Promise<Preferences> {
   return await findEntity<Account>(Account, { id: accountId }).then(async (account) => {
     if (account == null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.NOT_FOUND)
     }
-    (account[preferences] as preferences) = (preferencesToAdd)
+    account.preferences = preferencesToAdd
     return await appDataSource.getRepository<Account>('Account').save(account)
   }).then((savedAccount: Account | null) => {
-    if (savedAccount == null) {
-      throw new DbError('Failed adding book to the reading list.')
+    if (savedAccount?.preferences == null) {
+      throw new DbError('Failed adding preferences to the db.')
     }
-    return savedAccount[preferences] as string []
+    return savedAccount.preferences
   }).catch((err) => {
     throw new Error(err)
   })
 }
 
-async function postPreferences (accountId: UUID, preferencesToAdd: preferences, preferences: keyof Account): Promise<string[]> {
+async function postPreferences (accountId: UUID, preferencesToAdd: Preferences, preferences: keyof Account): Promise<Preferences> {
   return await findEntity<Account>(Account, { id: accountId }).then(async (account) => {
     if (account == null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.NOT_FOUND)
@@ -43,13 +43,13 @@ async function postPreferences (accountId: UUID, preferencesToAdd: preferences, 
     if (account.preferences !== null) {
       throw new PreferencesAlreadyExistError(undefined, StatusCodes.CONFLICT)
     }
-    (account[preferences] as preferences) = (preferencesToAdd)
+    account.preferences = preferencesToAdd
     return await appDataSource.getRepository<Account>('Account').save(account)
   }).then((savedAccount: Account | null) => {
-    if (savedAccount == null) {
-      throw new DbError('Failed adding book to the reading list.')
+    if (savedAccount?.preferences == null) {
+      throw new DbError('Failed adding preferences to the db.')
     }
-    return savedAccount[preferences] as string []
+    return savedAccount.preferences
   }).catch((err) => {
     throw new Error(err)
   })

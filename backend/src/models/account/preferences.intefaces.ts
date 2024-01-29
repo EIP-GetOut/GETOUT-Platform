@@ -5,10 +5,10 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
-interface preferences {
+interface Preferences {
   'moviesGenres': number [] | undefined
   'booksGenres': string [] | undefined
   'platforms': string [] | undefined
 }
 
-export type { preferences }
+export type { Preferences }

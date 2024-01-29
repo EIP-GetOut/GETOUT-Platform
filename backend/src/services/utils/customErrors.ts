@@ -74,6 +74,17 @@ class PreferencesAlreadyExistError extends AppError {
   }
 }
 
+class PreferencesDoesNotExistError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Preferences does not exists.', status ?? StatusCodes.FORBIDDEN)
+  }
+}
+class RecommandationsDetailsError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Failed fetching recommandations details.')
+  }
+}
+
 class SamePasswordError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
     super(message ?? 'Can\'t reset password with an old password.', status ?? StatusCodes.BAD_REQUEST)
@@ -95,5 +106,7 @@ export {
   NodeMailerError,
   NotLoggedInError,
   PreferencesAlreadyExistError,
+  PreferencesDoesNotExistError,
+  RecommandationsDetailsError,
   SamePasswordError
 }
