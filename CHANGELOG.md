@@ -2,6 +2,69 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.3.0...v0.4.0) (2024-01-29)
+
+
+### Features
+
+* :sparkles: add generateBook & infoBook ([fe21c69](https://github.com/EIP-GetOut/GETOUT-Platform/commit/fe21c69250b93504b24d2e3ddaedc255145278aa))
+* :sparkles: adding authors name and picture for book description ([0964dde](https://github.com/EIP-GetOut/GETOUT-Platform/commit/0964ddeaeecc439af9f11381ff8ed5ddf0587847))
+* **app:** :art: every event is now in const ([4d2160f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/4d2160f56a2bb0ca3446203f51d54baa854f86e5))
+* **app:** :construction: adding basic services for sending the forms ([4b0a31f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/4b0a31fa14657965b363d01f54c9ab5fce2f3ee5))
+* **app:** :lipstick: adding the last page of the form ([a136d8d](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a136d8d9692568ccbf001cb584aa4f2c4e30c9cb))
+* **app:** :sparkles: add casting name / Image ([c23641e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c23641ec45848fff053b8f06a1d52b41ea039d4b))
+* **app:** :sparkles: Add like and dislike button + New page to change mail ([aa8cdd3](https://github.com/EIP-GetOut/GETOUT-Platform/commit/aa8cdd3e564474382ce2ac0e1c97bd6fef5e3829))
+* **app:** :sparkles: add request format for saved and liked movies ([bf2fd37](https://github.com/EIP-GetOut/GETOUT-Platform/commit/bf2fd3731a5b84438d96b14857925bae26b11a46))
+* **app:** :sparkles: add scroll for movies page ([c3e0b98](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c3e0b9819be4d30f0427dcc8425de10f4d325dd3))
+* **app:** :sparkles: add the final requests for liked and saved movies ([1383afa](https://github.com/EIP-GetOut/GETOUT-Platform/commit/1383afa5aa68e42604a80e13608c8f5f034bb77c))
+* **app:** :sparkles: adding simple notification (one every 24h) ([b14c6c8](https://github.com/EIP-GetOut/GETOUT-Platform/commit/b14c6c8980fcb320f0e23c96ace2951daf062a7a))
+* **app:** :sparkles: when the app is launch, the login screen appear instead of yourmovies ([a53231b](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a53231bd7d620f7c0867a7d43c7c1cce4412bc59))
+* **app:** ⬆️ upgrade dependencies and flutter version ([d5bca9d](https://github.com/EIP-GetOut/GETOUT-Platform/commit/d5bca9ddc67dcc4f761e496c41af95b253f19a2a))
+* **backend:** :sparkles: book authors + pictures ([61ab4ad](https://github.com/EIP-GetOut/GETOUT-Platform/commit/61ab4adabff7dc0720a078d04091d11cf121ac87))
+* **backend:** :sparkles: cast with pictures ([b8fb40b](https://github.com/EIP-GetOut/GETOUT-Platform/commit/b8fb40bcb16500264177af46f96f096279fd87f9))
+* **backend:** :sparkles: liked and disliked books routes ([26be20c](https://github.com/EIP-GetOut/GETOUT-Platform/commit/26be20c988c337ec0bbca1bca83004756b1ce262))
+* **backend:** :sparkles: liked movies and disliked movies routes ([cf52ed2](https://github.com/EIP-GetOut/GETOUT-Platform/commit/cf52ed2ed44831c20ffc023d3b5ee6a334047371))
+* **backend:** :sparkles: movies recommandations V2 route using python "recommandations" service ([c11c474](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c11c474211cf0d239c59d44acf4f6f5c30083cfb))
+* **backend:** :sparkles: preferences, casting and generating routes ([28e7928](https://github.com/EIP-GetOut/GETOUT-Platform/commit/28e7928b899185d0f54580ee14fe8ad73dea7a2b))
+* **backend:** :sparkles: watchlist and reading list routes (with GET and POST) ([e8e375f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/e8e375f701aaddc7f9f036881f43a28198bc603f))
+* **recommandations:** :sparkles: books are now given back with id ([#32](https://github.com/EIP-GetOut/GETOUT-Platform/issues/32)) ([a7e6ef5](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a7e6ef52480198e4eddcf7ad6772191242822727))
+
+
+### Bug Fixes
+
+* :bug: Authors name and picturs don t print ([dc41048](https://github.com/EIP-GetOut/GETOUT-Platform/commit/dc410484696423ef6b686154acd09698005ea3ca))
+* :bug: Now when the back is not giving an image for the authors i am printing a hite square ([87d672d](https://github.com/EIP-GetOut/GETOUT-Platform/commit/87d672d8f5a6ce9e132315115b240b8386481dd4))
+* :bug: reordering the unit tests for restored generate movies / books routes ([3d9cb81](https://github.com/EIP-GetOut/GETOUT-Platform/commit/3d9cb8127f2198a1abb490598e26301e654f74e7))
+* **app:** :adhesive_bandage: adapting feature to the merge ([4bc6916](https://github.com/EIP-GetOut/GETOUT-Platform/commit/4bc6916f7590e727e76fcad4c60f135bad862f2b))
+* **app:** :bug: adding sceollable to the actors ([bcbaefd](https://github.com/EIP-GetOut/GETOUT-Platform/commit/bcbaefd85ed7329f6d2d8da4bfddb782f33f8294))
+* **app:** :bug: authorsPicture casing ([7d29626](https://github.com/EIP-GetOut/GETOUT-Platform/commit/7d2962621969e6f13bcbe7225a7a098b375f6f44))
+* **app:** :bug: Null page ([0bf5e40](https://github.com/EIP-GetOut/GETOUT-Platform/commit/0bf5e407257c8171eaa4ef9eeff84549f66b5284))
+* **app:** :bug: probleme with name / image of the actors ([5da1d59](https://github.com/EIP-GetOut/GETOUT-Platform/commit/5da1d59726c5cb3420e6d33907d69f7e9ee9705a))
+* **app:** :bug: The image of the actors wasn t the good size ([0d8adef](https://github.com/EIP-GetOut/GETOUT-Platform/commit/0d8adef18537e49514c31268ded5a750a64a3627))
+* **app:** :bug: the name and the image of the actors wasn t print ([af553ae](https://github.com/EIP-GetOut/GETOUT-Platform/commit/af553aeefa1f6d97dfc90d40682e129c44e4ee0c))
+* **app:** :lipstick: update all connection screens UI (login, register, forgot password) ([ec401b6](https://github.com/EIP-GetOut/GETOUT-Platform/commit/ec401b64658de37829ced644116f86b5bb050e32))
+* **app:** :twisted_rightwards_arrows: change LoadCirlePage by CircularProgressIndicator widget ([66c2af5](https://github.com/EIP-GetOut/GETOUT-Platform/commit/66c2af5dd8fac137860799cec07ecf2ead6a2e9f))
+* **app:** ✏️ fixing typos in header and some class names ([e673ef1](https://github.com/EIP-GetOut/GETOUT-Platform/commit/e673ef13112157f67c5d921c229db08c38c2cf4c))
+* **backend:** :bug: compile errors on uuid typing of reset password and send email ([b1ed041](https://github.com/EIP-GetOut/GETOUT-Platform/commit/b1ed041f22387e43fb554dc090677c4f6cb8274e))
+* **backend:** adding types/uuid ([2a32706](https://github.com/EIP-GetOut/GETOUT-Platform/commit/2a32706fc53c1f64adb4b854ce64cb49031a6226))
+
+
+### UI Updates
+
+* **app:** :art: add some const, add constants for the token and cookies, remove print ([4015485](https://github.com/EIP-GetOut/GETOUT-Platform/commit/4015485f685da9c056ebbf277f11e7cf10aba2fa))
+* **app:** :art: clean code by removing log and add spaces ([42811c2](https://github.com/EIP-GetOut/GETOUT-Platform/commit/42811c2b4a18b3f47383196d81504d2d51f8884d))
+* **app:** :art: remove useless commands and handle duration variable correctly ([f03b547](https://github.com/EIP-GetOut/GETOUT-Platform/commit/f03b547e665603a0611e2e905cf45f14b972dbfe))
+* **app:** :lipstick: change the title of movies by a bigger title, and minimize the description and add grey color to text ([14a0c1a](https://github.com/EIP-GetOut/GETOUT-Platform/commit/14a0c1a50e8c6b61e9a63ca8024b2181facbf45d))
+
+
+### Refactors
+
+* **app:** :art: change http://localhost by rootapipath constant ([02fda29](https://github.com/EIP-GetOut/GETOUT-Platform/commit/02fda2990a8c0940eadce5e9fdfbee75accfb665))
+* **backend:** :fire: removed useless documentation of old routes and fixed warnings resulted by previous commit ([d96deb6](https://github.com/EIP-GetOut/GETOUT-Platform/commit/d96deb62377f8b9a0c7eab8c1e807d80b0d24983))
+* **backend:** :recycle: restored old generate-movies and generate-books routes for production ready backend ([ba15000](https://github.com/EIP-GetOut/GETOUT-Platform/commit/ba150008ce6153a469d24bf9a78aaad6f52391d1))
+* **backend:** :recycle: unit tests, recommend movies / books, get movie / book ([fb0776a](https://github.com/EIP-GetOut/GETOUT-Platform/commit/fb0776a84b0ff92944cf6353343c43ce4e4e3044))
+* **backend:** improved new recommend movies route, and implemented new recommend books route ([65d0a4b](https://github.com/EIP-GetOut/GETOUT-Platform/commit/65d0a4b9422d3b4998e58177c98a558484dd260a))
+
 ## [0.3.0](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.2.8...v0.3.0) (2023-10-25)
 
 
