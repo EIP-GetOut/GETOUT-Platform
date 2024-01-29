@@ -12,7 +12,7 @@ import { type MovieResult } from 'moviedb-promise'
 
 import { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
-import { AppError, NotLoggedInError } from '@services/utils/customErrors'
+import { AppError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { getMovies } from '@models/movies'
