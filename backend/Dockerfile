@@ -4,11 +4,11 @@ ENV TERM=xterm
 
 RUN apt-get update || : && apt-get install python python3-pip -y
 
-# CMD ["tail", "-f", "/dev/null"]
-
-RUN pip3 install tmdbv3api
-
 WORKDIR /app
+
+COPY ./src/services/recommandations/requirements.txt requirements.txt
+
+RUN pip3 install -r requirements.txt
 
 COPY package*.json ./
 

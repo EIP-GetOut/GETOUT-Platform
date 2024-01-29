@@ -307,7 +307,7 @@ router.get('/account/:accountId/recommend-movies/V2', rulesGet, validate, logApi
         resolvedPromise.score = recommandations[index].score
       })
       logger.info(`Successfully retreived movie recommandations: ${JSON.stringify(recommandations, null, 2)}`)
-      return res.status(StatusCodes.OK).json({ resolvedPromises })
+      return res.status(StatusCodes.OK).json(resolvedPromises)
     }).catch(() => {
       throw new RecommandationsDetailsError()
     })

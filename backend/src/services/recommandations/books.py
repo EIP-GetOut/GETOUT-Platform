@@ -19,10 +19,10 @@ API_GOOGLE = GoogleBooksAPI()
 def RecommandBooks(user: json) -> json:
     # if last refresh is less than 24h ago return null
 
-    if user["lastRefresh"] != None:
-        last_refresh = datetime.strptime(user["lastRefresh"], "%Y-%m-%dT%H:%M:%S.%fZ")
-        if last_refresh + timedelta(hours=24) > datetime.now():
-            return None
+    # if user["lastRefresh"] != None:
+    #     last_refresh = datetime.strptime(user["lastRefresh"], "%Y-%m-%dT%H:%M:%S.%fZ")
+    #     if last_refresh + timedelta(hours=24) > datetime.now():
+    #         return None
 
     nyt = NYTAPI("EWZh85CC8ZWDpC7eL2fi8zBnIu9Gtwp3", parse_dates=True)
     # get a 100 best sellers
@@ -55,16 +55,16 @@ def RecommandBooks(user: json) -> json:
     #return None
 
 def calculate_score(book, user):
-    print("---------------------------------")
-    print("calculate score")
-    print(book["title"])
+    # print("---------------------------------")
+    # print("calculate score")
+    # print(book["title"])
     #book_google = API_GOOGLE.get_book_by_isbn13(book["primary_isbn13"])
     score = 0
     score += calculate_genre_score(book, user)
     score += calculate_critics_score(book, user)
     score += calculate_popularity_score(book, user)
-    print("total score: " + str(score))
-    print("---------------------------------")
+    # print("total score: " + str(score))
+    # print("---------------------------------")
     score = random.randint(1, 100)
     return score
 
@@ -97,3 +97,9 @@ def calculate_popularity_score(book, user):
     #sorted(result["recommandations"], key=lambda k: k['score'], reverse=True)
     #return result
 
+def main():
+    externalSessionAccount = json.loads(sys.argv[1])
+    result = RecommandBooks(externalSessionAccount)
+    print(json.dumps(result))
+
+main()
