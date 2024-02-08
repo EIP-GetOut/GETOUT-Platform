@@ -36,4 +36,6 @@ class ApiConstants {
   static const String cookies = '';
   static const String token = '';
 
+  static const String session = '/session';
+
 }

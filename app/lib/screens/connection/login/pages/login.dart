@@ -13,9 +13,11 @@ import 'package:dio/dio.dart';
 import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_provider.dart';
+import 'package:getout/screens/connection/login/bloc/login_service.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/register/pages/register.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
+// import 'package:getout/screens/connection/login/bloc/login_service.dart';
 import 'package:getout/screens/connection/login/widgets/fields.dart';
 import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
@@ -33,7 +35,6 @@ class LoginPage extends StatelessWidget {
     ///
     /// StoreR
     ///
-
     return Scaffold(
         body: BlocListener<LoginBloc, LoginState>(
       listenWhen: (previous, current) => previous.status != current.status,
@@ -55,8 +56,15 @@ class LoginPage extends StatelessWidget {
       },
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          //crossAxisAlignment: CrossAxisAlignment.center,
+          //crossAxisAlignment: CrossAxisAlignment.center
           children: [
+            // TextButton(
+            //   style: ButtonStyle(
+            //     foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+            //   ),
+            //   onPressed: session.session ,
+            //   child: const Text('TextButton'),
+            // ),
             Align(
               alignment: Alignment.bottomCenter,
               child: Image.asset(
@@ -119,12 +127,11 @@ class LoginPage extends StatelessWidget {
                         alignment: Alignment.center,
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
+                            Navigator.push(context,
                                 MaterialPageRoute(builder: (_) {
-                                  return BlocProvider.value(
-                                      value: BlocProvider.of<RegisterBloc>(context),
-                                      child: RegisterPage());
+                              return BlocProvider.value(
+                                  value: BlocProvider.of<RegisterBloc>(context),
+                                  child: RegisterPage());
                             }));
                           },
                           child: const Text.rich(
@@ -151,17 +158,18 @@ class LoginPage extends StatelessWidget {
                         alignment: Alignment.center,
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.push(
-                                context,
+                            Navigator.push(context,
                                 MaterialPageRoute(builder: (_) {
-                                    return MultiBlocProvider(
-                                      providers: [
-                                        BlocProvider.value(value: BlocProvider.of<CheckEmailBloc>(context)),
-                                        BlocProvider.value(value: BlocProvider.of<NewPasswordBloc>(context)),
-                                      ],
-                                      child: const ForgotPasswordProvider());
-                                }));
-                           },
+                              return MultiBlocProvider(providers: [
+                                BlocProvider.value(
+                                    value: BlocProvider.of<CheckEmailBloc>(
+                                        context)),
+                                BlocProvider.value(
+                                    value: BlocProvider.of<NewPasswordBloc>(
+                                        context)),
+                              ], child: const ForgotPasswordProvider());
+                            }));
+                          },
                           child: const Text.rich(
                             TextSpan(
                               text: 'Mot de passe oublié ?',

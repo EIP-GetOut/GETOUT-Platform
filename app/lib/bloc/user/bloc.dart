@@ -21,8 +21,8 @@ class UserSignOut extends UserEvent {}
 /// {@endtemplate}
 class UserBloc extends Bloc<UserEvent, UserData> {
   /// {@macro counter_bloc}
-  UserBloc() : super(const UserData(isSigned: false)) {
-    on<UserSignIn>((event, emit) => emit(const UserData(isSigned: true)));
-    on<UserSignOut>((event, emit) => emit(const UserData(isSigned: false)));
+  UserBloc() : super(UserData(isSigned: false)) {
+    on<UserSignIn>((event, emit) => emit(UserData(isSigned: true)));
+    on<UserSignOut>((event, emit) => emit(UserData(isSigned: false)));
   }
 }

@@ -15,6 +15,7 @@ class LoginService {
   {
     try {
       final dio = Dio();
+
       await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.loginPath}',
           data: {
@@ -29,3 +30,23 @@ class LoginService {
     }
   }
 }
+
+// class SessionService {
+//   // void session() async
+//   // {
+//   //   try {
+//   //     final dio = Dio();
+//   //     final cookieJar = CookieJar();
+//   //     dio.interceptors.add(CookieManager(cookieJar));
+
+//   //     print(await cookieJar.loadForRequest(Uri.parse('http://10.0.2.2:8080/session')));
+//   //     // Another request with the cookie.
+//   //     final response  = await dio.get("http://10.0.2.2:8080/session");
+//   //     print(response); // should contain session with account
+//   //   } on DioException { // add "catch (dioError)" for debugging
+//   //     rethrow;
+//   //   } catch (error) {
+//   //     rethrow;
+//   //   }
+//   // }
+// }

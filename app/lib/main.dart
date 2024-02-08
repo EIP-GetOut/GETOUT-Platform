@@ -17,6 +17,8 @@ import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/observer.dart';
 import 'package:getout/bloc/theme/bloc.dart';
 import 'package:getout/bloc/user/bloc.dart';
+import 'package:getout/screens/connection/get_session/bloc/get_session_bloc.dart';
+import 'package:getout/screens/connection/get_session/bloc/get_session_service.dart';
 import 'package:getout/screens/connection/services/service.dart';
 import 'package:getout/screens/connection/bloc/connection_provider.dart';
 import 'package:getout/screens/home/bloc/home_provider.dart';
@@ -38,7 +40,6 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = const AppBlocObserver(); // BLoC MiddleWare.
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
   runApp(const MainProvider());
 }
 
@@ -47,15 +48,22 @@ class MainProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
+    return RepositoryProvider(
+        create: (context) => GetSessionService(),
+        child: MultiBlocProvider(
+          providers: [
         //Data
         BlocProvider(create: (_) => LocaleBloc(context)),
         BlocProvider(create: (_) => ThemeBloc()),
+        BlocProvider<GetSessionBloc>(
+              create: (context) => GetSessionBloc(
+                service: context.read<GetSessionService>(),
+              )
+            ),
         BlocProvider(create: (_) => UserBloc()),
       ],
       child: const MainPage(),
-    );
+    ));
   }
 }
 
@@ -69,6 +77,11 @@ class MainPage extends StatelessWidget {
       final locale = context.watch<LocaleBloc>().state;
       final themeData = context.watch<ThemeBloc>().state;
       final user = context.watch<UserBloc>().state;
+
+      user.setIsSigned();
+
+      print("is signed : ");
+      print(user.isSigned);
 
       return MaterialApp(
           title: 'Get Out',

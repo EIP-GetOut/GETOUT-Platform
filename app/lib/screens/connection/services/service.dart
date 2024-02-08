@@ -17,6 +17,10 @@ import 'package:getout/screens/connection/forgot_password/children/check_email/b
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:cookie_jar/cookie_jar.dart';
+
+import 'package:getout/global.dart' as globals;
 
 /**
  * parts:
