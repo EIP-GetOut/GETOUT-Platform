@@ -12,6 +12,5 @@ String? globalEmail;
 
 NotificationsServices notificationsServices = NotificationsServices();
 
-// ignore: prefer_single_quotes
-PersistCookieJar cookieJar = PersistCookieJar(ignoreExpires: true, storage: FileStorage("/data/user/0/com.example.GetOut/app_flutter/.cookies/"));
-Dio dio = Dio();
+PersistCookieJar? cookieJar;
+Dio? dio;

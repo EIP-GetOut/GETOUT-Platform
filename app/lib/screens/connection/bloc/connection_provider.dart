@@ -26,7 +26,7 @@ class ConnectionProvider extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: RepositoryProvider(
-        create: (context) => ConnectionService(dio: Dio()),
+        create: (context) => ConnectionService(),
         child: MultiBlocProvider(
           providers: [
             /// Service Bloc

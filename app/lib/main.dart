@@ -80,8 +80,8 @@ class MainPage extends StatelessWidget {
 
       user.setIsSigned();
 
-      print("is signed : ");
-      print(user.isSigned);
+      // print("is signed : ");
+      // print(user.isSigned);
 
       return MaterialApp(
           title: 'Get Out',
@@ -95,7 +95,7 @@ class MainPage extends StatelessWidget {
           supportedLocales: AppLocalizations.supportedLocales,
           theme: themeData,
           home: RepositoryProvider(
-            create: (context) => ConnectionService(dio: Dio()),
+            create: (context) => ConnectionService(),
             child: (!user.isSigned)
                 ? const ConnectionProvider()
                 : const HomeProvider(),

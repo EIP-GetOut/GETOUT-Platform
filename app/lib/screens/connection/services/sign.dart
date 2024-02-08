@@ -5,29 +5,30 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-
 part of 'service.dart';
 
 class SignService extends ServiceTemplate {
-  SignService({required this.dio});
-
-  final Dio dio;
+  SignService();
 
   Future<void> login(final LoginRequestModel request) async {
+    if (globals.cookieJar == null || globals.dio == null) {
+      return;
+    }
     try {
       // print("ICI CA LOGIN DANS CETTE FONCTION");
-      globals.dio.interceptors.add(CookieManager(globals.cookieJar));
-      await globals.dio.post('${ApiConstants.rootApiPath}${ApiConstants.loginPath}',
-          data: {
-            'email': request.email,
-            'password': request.password,
-          },
-          options: Options(headers: {'Content-Type': 'application/json'}));
-      print(await globals.cookieJar.loadForRequest(Uri.parse('http://10.0.2.2:8080/session')));
-      final response  = await globals.dio.get("http://10.0.2.2:8080/session");
-      print("EHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-      print(globals.dio.options.headers);
-      print(response); // should contain session with account
+      // SI 
+      await globals.dio
+          ?.post('${ApiConstants.rootApiPath}${ApiConstants.loginPath}',
+              data: {
+                'email': request.email,
+                'password': request.password,
+              },
+              options: Options(headers: {'Content-Type': 'application/json'}));
+      // print(await globals.cookieJar.loadForRequest(Uri.parse('http://10.0.2.2:8080/session')));
+      // final response  = await globals.dio.get("http://10.0.2.2:8080/session");
+      // print("EHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+      // print(globals.dio.options.headers);
+      // print(response); // should contain session with account
     } on DioException {
 // add "catch (dioError)" for debugging
       rethrow;
@@ -39,8 +40,7 @@ class SignService extends ServiceTemplate {
   Future<void> register(final RegisterRequestModel request) async {
     try {
       final dio = Dio();
-      await dio.post(
-          '${ApiConstants.rootApiPath}${ApiConstants.registerPath}',
+      await dio.post('${ApiConstants.rootApiPath}${ApiConstants.registerPath}',
           data: {
             'email': request.email,
             'password': request.password,

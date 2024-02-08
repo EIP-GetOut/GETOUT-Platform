@@ -1,4 +1,3 @@
-
 /*
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
@@ -22,35 +21,58 @@ import 'package:getout/global.dart' as globals;
 class GetSessionService {
   GetSessionServiceRequest g = GetSessionServiceRequest();
   //Dashboard
-  Future<GetSessionStatusResponse> getSession(final GetSessionRequest request) => g.getSession(request);
+  Future<GetSessionStatusResponse> getSession(
+          final GetSessionRequest request) =>
+      g.getSession(request);
 }
 
 class GetSessionServiceRequest {
-
-  Future<GetSessionStatusResponse> getSession(final GetSessionRequest request) async
-  {
-      GetSessionStatusResponse result =
+  Future<GetSessionStatusResponse> getSession(
+      final GetSessionRequest request) async {
+    GetSessionStatusResponse result =
         const GetSessionStatusResponse(statusCode: HttpStatus.APP_ERROR);
-      final dio = Dio();
 
-      // Directory appDocDir = await getApplicationDocumentsDirectory();
-      //   String appDocPath = appDocDir.path;
+    if (globals.cookieJar == null && globals.dio == null) {
+      print('initializing globals for dio and cookies !');
+      Directory appDocDir = await getApplicationDocumentsDirectory();
+      String appDocPath = appDocDir.path;
 
-      // print(appDocPath + "/.cookies/");
-  
-      // globals.cookieJar = PersistCookieJar(
-      //       ignoreExpires: true, storage: FileStorage(appDocPath + "/.cookies/"));
-      dio.interceptors.add(CookieManager(globals.cookieJar));
-      print("avant le load for request");
-      final cookies = await globals.cookieJar.loadForRequest(Uri.parse('${ApiConstants.rootApiPath}${ApiConstants.session}'));
-      // print("taille");
-      // print(globals.dio.interceptors);
-      // print("taille fin");
-      final response  = await globals.dio.get('${ApiConstants.rootApiPath}${ApiConstants.session}', options: Options(headers: {'Cookie': cookies}));
+      // setup cookie jar
+      print('$appDocPath/.cookies/');
+      globals.cookieJar = PersistCookieJar(
+          ignoreExpires: true, storage: FileStorage('$appDocPath/.cookies/'));
+      // setup dio with cookie jar
+      globals.dio = Dio();
+      globals.dio?.interceptors.add(CookieManager(globals.cookieJar!));
+      return result;
+    }
 
-      print("dans le get session : ");
-      // print(globals.dio.options.headers);
-      print(response); // should contain session with account
+    // INIT CURRENT ACCOUNT :
+    /*
+    read from storage:
+    global = storage
+    */
+    // SessionService.loadSession()
+    // LOAD SESSION FROM PERSISTENT STORAGE
+    // String? session.account  null | {email: ""}
+    // IF SESSION FOUND IN PERSISTENT STORAGE
+    // LOAD FOUND ACCOUNT IN globlals.currentAccount
+    // REDIRECT TO DASHBOARD (knowing that dev can access globals.currentAccount.firstName ...)
+    // IF SESSION NOT FOUND (currentAccount == null) IN PERSISTENT STORAGE
+    // REDIRECT TO LOGIN PAGE => COMPUTE LOGIN
+    // IF LOGIN SUCCESS => GET SESSION => STORE RESULT session.account IN PERSISTENT STORAGE
+    // !!!!!!!!!!!!!!! dans le main
+    // fonction reload() => calll get /session dans le back et sync la response avec global + storage (si session.account existe pas supprimer dans le storage et mettre la globale à null)
+    // puis dans le main après avoir call le reload et attendu la réponse => on à accès à global.currentAccount et on sait si il est connecté ou non (cf rdirect vers dashboard ou login page)
+    // !!!!!!!!!!!!
+    // setCurrentAccount() if change firstName .then() -> computeGetSession.then((session) => setCurrentgAccount(session.account))
+    print('globals are already initialized');
+    final response = await globals.dio
+        ?.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
+    if (response == null) {
+      return result;
+    }
+    print(response); // should contain session with account
 
     try {
       if (response.statusCode != GetSessionStatusResponse.success) {
@@ -71,7 +93,8 @@ class GetSessionServiceRequest {
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() ==
               'Connection closed before full header was received') {
-        return const GetSessionStatusResponse(statusCode: HttpStatus.NO_INTERNET);
+        return const GetSessionStatusResponse(
+            statusCode: HttpStatus.NO_INTERNET);
       }
       return result;
     }

@@ -19,11 +19,11 @@ class UserData {
 
   Future<void> setIsSigned() async {
     final session = await GetSessionService().getSession(const GetSessionRequest());
-    print("set is signed = ");
-    print(session.id);
-    if (session.id != null) {
-      isSigned = true;
-    }
+    // print("set is signed = ");
+    // print(session.id);
+    // if (session.id != null) {
+    //   isSigned = true;
+    // }
   }
 
   bool isSigned;

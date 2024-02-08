@@ -29,12 +29,10 @@ part 'sign.dart';
 part 'forgot_password.dart';
 
 class ConnectionService extends _ConnectionService<SignService, ForgotPasswordService> {
-  ConnectionService({required this.dio}) {
-    t = SignService(dio: dio);
-    g = ForgotPasswordService(dio: dio);
+  ConnectionService() {
+    t = SignService();
+    g = ForgotPasswordService();
   }
-  final Dio dio;
-
   //Dashboard
   Future<void> login(LoginRequestModel request) => t.login(request);
   Future<void> register(RegisterRequestModel request) => t.register(request);

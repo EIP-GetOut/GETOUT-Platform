@@ -8,14 +8,12 @@
 part of 'service.dart';
 
 class ForgotPasswordService extends ServiceTemplate {
-  ForgotPasswordService({required this.dio});
-
-  final Dio dio;
+  ForgotPasswordService();
 
   Future<void> checkEmail(final CheckEmailRequestModel request) async
   {
     try {
-      await dio.post(
+      await globals.dio?.post(
           '${ApiConstants.rootApiPath}${ApiConstants.resetPasswordEmailPath}',
           data: {
             'email': request.email,
@@ -33,7 +31,7 @@ class ForgotPasswordService extends ServiceTemplate {
   Future<void> sendNewPassword(final NewPasswordRequestModel request) async
   {
     try {
-      await dio.post(
+      await globals.dio?.post(
           '${ApiConstants.rootApiPath}${ApiConstants.resetPasswordNewPasswordPath}',
           data: {
             'newPassword' : request.password,
