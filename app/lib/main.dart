@@ -15,6 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/observer.dart';
 import 'package:getout/bloc/theme/bloc.dart';
+import 'package:getout/bloc/user/bloc.dart';
 import 'package:getout/screens/connection/session/session_provider.dart';
 import 'package:getout/screens/connection/services/service.dart';
 
@@ -48,6 +49,7 @@ class MainProvider extends StatelessWidget {
         //Data
         BlocProvider(create: (_) => LocaleBloc(context)),
         BlocProvider(create: (_) => ThemeBloc()),
+        BlocProvider(create: (_) => UserBloc()),
       ],
       child: const MainPage(),
     );
@@ -63,6 +65,7 @@ class MainPage extends StatelessWidget {
     return Builder(builder: (context) {
       final locale = context.watch<LocaleBloc>().state;
       final themeData = context.watch<ThemeBloc>().state;
+      final user = context.watch<UserBloc>().state;
 
       return MaterialApp(
           title: 'Get Out',
