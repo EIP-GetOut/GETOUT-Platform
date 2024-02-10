@@ -55,6 +55,7 @@ dependencies:
   cookie_jar: ^4.0.8
   dio_cookie_manager: ^3.1.1
   path_provider: ^2.1.2
+  flutter_json: ^0.0.2
 
 dev_dependencies:
   flutter_test:

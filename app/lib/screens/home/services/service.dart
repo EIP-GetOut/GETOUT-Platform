@@ -14,16 +14,17 @@ import 'package:getout/tools/format_with_genres_parameter.dart';
 import 'package:getout/screens/home/bloc/books/books_event.dart';
 import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 
+import 'package:getout/global.dart' as globals;
+
 part 'dashboard.dart';
 part 'books.dart';
 part 'movies.dart';
 
 class HomeService extends _HomeService<BooksService, MoviesService> {
-  HomeService({required this.dio}) {
-    t = BooksService(dio: dio);
-    g = MoviesService(dio: dio);
+  HomeService() {
+    t = BooksService();
+    g = MoviesService();
   }
-  final Dio dio;
 
   ///Books
   Future<GenerateBooksResponse> getRecommendedBooks(GenerateBooksRequest request) => t.getRecommendedBooks(request);

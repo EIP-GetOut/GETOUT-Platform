@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,12 +15,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/observer.dart';
 import 'package:getout/bloc/theme/bloc.dart';
-import 'package:getout/bloc/user/bloc.dart';
-import 'package:getout/screens/connection/get_session/bloc/get_session_bloc.dart';
-import 'package:getout/screens/connection/get_session/bloc/get_session_service.dart';
+import 'package:getout/screens/connection/session/session_provider.dart';
 import 'package:getout/screens/connection/services/service.dart';
-import 'package:getout/screens/connection/bloc/connection_provider.dart';
-import 'package:getout/screens/home/bloc/home_provider.dart';
 
 Map<int, Color> colorMap = {
   50: const Color.fromRGBO(213, 86, 65, .1),
@@ -48,22 +43,14 @@ class MainProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider(
-        create: (context) => GetSessionService(),
-        child: MultiBlocProvider(
+    return MultiBlocProvider(
           providers: [
         //Data
         BlocProvider(create: (_) => LocaleBloc(context)),
         BlocProvider(create: (_) => ThemeBloc()),
-        BlocProvider<GetSessionBloc>(
-              create: (context) => GetSessionBloc(
-                service: context.read<GetSessionService>(),
-              )
-            ),
-        BlocProvider(create: (_) => UserBloc()),
       ],
       child: const MainPage(),
-    ));
+    );
   }
 }
 
@@ -76,12 +63,6 @@ class MainPage extends StatelessWidget {
     return Builder(builder: (context) {
       final locale = context.watch<LocaleBloc>().state;
       final themeData = context.watch<ThemeBloc>().state;
-      final user = context.watch<UserBloc>().state;
-
-      user.setIsSigned();
-
-      // print("is signed : ");
-      // print(user.isSigned);
 
       return MaterialApp(
           title: 'Get Out',
@@ -96,9 +77,7 @@ class MainPage extends StatelessWidget {
           theme: themeData,
           home: RepositoryProvider(
             create: (context) => ConnectionService(),
-            child: (!user.isSigned)
-                ? const ConnectionProvider()
-                : const HomeProvider(),
+            child: const SessionProvider(),
           ),
       );
     });

@@ -44,7 +44,7 @@ class HomeProvider extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: RepositoryProvider(
-        create: (context) => HomeRepository(dio: Dio()),
+        create: (context) => HomeRepository(),
         child: MultiBlocProvider(
           providers: [
             BlocProvider<HomePageBloc>(

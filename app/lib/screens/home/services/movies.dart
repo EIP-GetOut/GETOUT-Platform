@@ -8,9 +8,8 @@
 part of 'service.dart';
 
 class MoviesService extends ServiceTemplate {
-  final Dio dio;
 
-  MoviesService({required this.dio});
+  MoviesService();
 
   // RECOMMEND
   Future<GenerateMoviesResponse> getRecommendedMovies(
@@ -18,17 +17,17 @@ class MoviesService extends ServiceTemplate {
     GenerateMoviesResponse result = [];
     String withGenres = formatWithGenresParameter(request.genres);
 
-    final response = await dio.get(
+    final response = await globals.dio?.get(
         '${ApiConstants.rootApiPath}${ApiConstants.generateMoviesPath}?with_genres=$withGenres&include_adult=${request.includeAdult.toString()}',
         options: Options(headers: {'Content-Type': 'application/json'}));
 
-    if (response.statusCode != HttpStatus.OK) {
+    if (response?.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
-        'Error ${response.statusCode} while fetching movies: ${response.statusMessage}',
+        'Error ${response?.statusCode} while fetching movies: ${response?.statusMessage}',
       ));
     }
 
-    response.data['movies'].forEach((elem) {
+    response?.data['movies'].forEach((elem) {
       result.add(MoviePreview(
           id: elem['id'],
           title: elem['title'],
@@ -61,22 +60,21 @@ class MoviesService extends ServiceTemplate {
   }
 
   Future<dynamic> getLikedMoviesId(GenerateMoviesRequest request) async {
-    final Response response;
-    final dio = Dio();
+    final Response? response;
 
-    response = await dio.get(
+    response = await globals.dio?.get(
         //Todo A changer avec le account id quand le get session sera fait
         '${ApiConstants.rootApiPath}/account/${ApiConstants.token}/likedMovies',
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Cookie': ApiConstants.cookies
         }));
-    if (response.statusCode != HttpStatus.OK) {
+    if (response?.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
-        'Error ${response.statusCode} while fetching movies: ${response.statusMessage}',
+        'Error ${response?.statusCode} while fetching movies: ${response?.statusMessage}',
       ));
     }
-    return response.data;
+    return response?.data;
   }
 
 // SAVED
@@ -104,8 +102,7 @@ class MoviesService extends ServiceTemplate {
   Future<dynamic> getSavedMoviesId(GenerateMoviesRequest request) async {
     dynamic data;
 
-    final dio = Dio();
-    final response = await dio.get(
+    final response = await globals.dio?.get(
         //Todo - A changer avec le account id quand le get session sera fait
         '${ApiConstants.rootApiPath}/account/${ApiConstants.token}/watchlist',
         options: Options(headers: {
@@ -113,13 +110,13 @@ class MoviesService extends ServiceTemplate {
           'Cookie': ApiConstants.cookies
         }));
 
-    if (response.statusCode != HttpStatus.OK) {
+    if (response?.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
-        'Error ${response.statusCode} while fetching movies: ${response.statusMessage}',
+        'Error ${response?.statusCode} while fetching movies: ${response?.statusMessage}',
       ));
     }
 
-    data = response.data;
+    data = response?.data;
 
     return data;
   }
@@ -128,24 +125,23 @@ class MoviesService extends ServiceTemplate {
   Future<MovieStatusResponse> getMovieById(int movie) async {
     MovieStatusResponse result =
         const MovieStatusResponse(statusCode: HttpStatus.APP_ERROR);
-    final dio = Dio();
 
-    final Response response = await dio.get(
+    final Response? response = await globals.dio?.get(
         '${ApiConstants.rootApiPath}${ApiConstants.getInfoMoviePath}/$movie',
         options: Options(headers: {'Content-Type': 'application/json'}));
     try {
-      if (response.statusCode != MovieStatusResponse.success) {
+      if (response?.statusCode != MovieStatusResponse.success) {
         return const MovieStatusResponse(statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
       }
       //todo
-      final dynamic data = response.data;
+      final dynamic data = response?.data;
       result = MovieStatusResponse(
           title: data['movie']['title'],
           overview:
               data['movie']['overview'] ?? 'Pas de description disponible',
           posterPath: data['movie']['poster_path'],
           id: movie,
-          statusCode: response.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR);
+          statusCode: response?.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR);
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() ==

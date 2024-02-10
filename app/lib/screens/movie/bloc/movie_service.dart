@@ -11,20 +11,21 @@ import 'package:getout/screens/movie/bloc/movie_bloc.dart';
 import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
 
+import 'package:getout/global.dart' as globals;
+
 class MovieService {
   Future<InfoMovieResponse> getInfoMovie(CreateInfoMovieRequest request) async {
     InfoMovieResponse result =
         const InfoMovieResponse(statusCode: HttpStatus.APP_ERROR);
-    final dio = Dio();
 
-    final response = await dio.get(
+    final response = await globals.dio?.get(
         '${ApiConstants.rootApiPath}${ApiConstants.getInfoMoviePath}/${request.id}',
         options: Options(headers: {'Content-Type': 'application/json'}));
     try {
-      if (response.statusCode != InfoMovieResponse.success) {
-        return InfoMovieResponse(statusCode: response.statusCode ?? 500);
+      if (response?.statusCode != InfoMovieResponse.success) {
+        return InfoMovieResponse(statusCode: response?.statusCode ?? 500);
       }
-      final dynamic data = response.data;
+      final dynamic data = response?.data;
       List<Map<String, String?>> parseCast(dynamic castData) {
         List<Map<String, String?>> castList = [];
 
@@ -55,7 +56,7 @@ class MovieService {
             ? 'N/A'
             : data['movie']['duration'],
         cast: parseCast(data['movie']['cast']),
-        statusCode: response.statusCode ?? 500,
+        statusCode: response?.statusCode ?? 500,
       );
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||

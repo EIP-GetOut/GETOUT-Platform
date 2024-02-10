@@ -22,7 +22,6 @@ import 'package:getout/screens/connection/login/widgets/fields.dart';
 import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/constants/http_status.dart';
-import 'package:getout/bloc/user/bloc.dart';
 import 'package:getout/tools/status.dart';
 
 class LoginPage extends StatelessWidget {
@@ -50,21 +49,10 @@ class LoginPage extends StatelessWidget {
                 'Une erreur s\'est produite, veuillez reesayer plus tard');
           }
         }
-        if (state.status.isSuccess) {
-          context.read<UserBloc>().add(UserSignIn());
-        }
       },
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          //crossAxisAlignment: CrossAxisAlignment.center
           children: [
-            // TextButton(
-            //   style: ButtonStyle(
-            //     foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-            //   ),
-            //   onPressed: session.session ,
-            //   child: const Text('TextButton'),
-            // ),
             Align(
               alignment: Alignment.bottomCenter,
               child: Image.asset(

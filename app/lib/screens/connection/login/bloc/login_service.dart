@@ -10,13 +10,14 @@ import 'package:dio/dio.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/constants/api_path.dart';
 
+import 'package:getout/global.dart' as globals;
+
 class LoginService {
   Future<void> login(final LoginRequestModel request) async
   {
     try {
-      final dio = Dio();
 
-      await dio.post(
+      await globals.dio?.post(
           '${ApiConstants.rootApiPath}${ApiConstants.loginPath}',
           data: {
             'email': request.email,
@@ -30,23 +31,3 @@ class LoginService {
     }
   }
 }
-
-// class SessionService {
-//   // void session() async
-//   // {
-//   //   try {
-//   //     final dio = Dio();
-//   //     final cookieJar = CookieJar();
-//   //     dio.interceptors.add(CookieManager(cookieJar));
-
-//   //     print(await cookieJar.loadForRequest(Uri.parse('http://10.0.2.2:8080/session')));
-//   //     // Another request with the cookie.
-//   //     final response  = await dio.get("http://10.0.2.2:8080/session");
-//   //     print(response); // should contain session with account
-//   //   } on DioException { // add "catch (dioError)" for debugging
-//   //     rethrow;
-//   //   } catch (error) {
-//   //     rethrow;
-//   //   }
-//   // }
-// }
