@@ -6,14 +6,12 @@
 */
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:getout/screens/connection/session/session_event.dart';
-import 'package:getout/screens/connection/session/session_repository.dart';
-import 'package:getout/tools/status.dart';
-
-import 'package:getout/global.dart' as globals;
-
 import 'package:equatable/equatable.dart';
+
+import 'package:getout/bloc/session/session_event.dart';
+import 'package:getout/bloc/session/session_service.dart';
+import 'package:getout/tools/status.dart';
+import 'package:getout/global.dart' as globals;
 
 part 'session_state.dart';
 
@@ -30,17 +28,15 @@ extension SessionStatusX on SessionStatus {
 }
 
 class SessionBloc extends Bloc<SessionEvent, SessionState> {
+  final SessionService sessionService;
 
   SessionBloc({
-    required this.sessionRepository
+    required this.sessionService
   }): super(const SessionState()) {
     on<SessionEvent>((event, emit) async {
       await mapEventToState(event, emit);
     });
   }
-
-  final SessionRepository sessionRepository;
-
 
   Future mapEventToState(SessionEvent event, Emitter<SessionState> emit) async
   {

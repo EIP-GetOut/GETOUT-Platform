@@ -14,7 +14,7 @@ class SessionState extends Equatable {
   }) : sessionResponse = sessionResponse ?? const SessionStatusResponse(statusCode : 200);
 
   final Status status;
-  final SessionStatusResponse? sessionResponse;
+  final SessionStatusResponse sessionResponse;
 
   @override
   List<Object?> get props => [status];

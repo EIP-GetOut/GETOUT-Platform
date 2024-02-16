@@ -26,8 +26,11 @@ class SignService extends ServiceTemplate {
       // add "catch (dioError)" for debugging
       rethrow;
     } catch (dioError) {
-      print("error : ");
-      print(dioError);
+      //todo
+      if (kDebugMode) {
+        print('error : ');
+        print(dioError);
+      }
       rethrow;
     }
   }

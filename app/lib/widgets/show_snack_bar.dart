@@ -7,10 +7,10 @@
 
 import 'package:flutter/material.dart';
 
-ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar(final BuildContext context, final String message)
+ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar(final BuildContext context, final String message, {Color? color})
 {
   final snackBar = SnackBar(
-      backgroundColor: Theme.of(context).colorScheme.error,
+      backgroundColor: color ?? Theme.of(context).colorScheme.error,
       content: Text(message,
           style: Theme.of(context).textTheme.displaySmall));
   return ScaffoldMessenger.of(context).showSnackBar(snackBar);

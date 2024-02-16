@@ -12,7 +12,6 @@ import 'package:dio/dio.dart';
 import 'package:getout/screens/book/bloc/book_bloc.dart';
 import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
-
 import 'package:getout/global.dart' as globals;
 
 class BookService {
@@ -35,16 +34,22 @@ class BookService {
         if (autorData is List) {
           for (var actor in autorData) {
             if (actor is Map<String, dynamic>) {
-              String? author = json.encode(actor['author']);
-              String? imageLink = json.encode(actor['imageLink']);
+              String author = json.encode(actor['author']);
+              String imageLink = json.encode(actor['imageLink']);
 
-              if (author != null && imageLink != null) {
+              if (author != '' && imageLink != '') {
                 autorList.add({'author': author, 'imageLink': imageLink});
-              } else if (author != null && imageLink == null) {
+              } else if (author != '') {
                 autorList.add({
                   'author': author,
                   'imageLink':
                       'https://upload.wikimedia.org/wikipedia/commons/0/0f/Blank_Square.svg'
+                });
+              } else {
+                autorList.add({
+                  'author': 'unknown',
+                  'imageLink':
+                  'https://upload.wikimedia.org/wikipedia/commons/0/0f/Blank_Square.svg'
                 });
               }
             }

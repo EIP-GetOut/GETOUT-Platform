@@ -6,19 +6,17 @@
 */
 
 import 'dart:convert';
-
-import 'package:dio/dio.dart';
-
 import 'dart:io';
 
-import 'package:getout/constants/api_path.dart';
-
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:cookie_jar/cookie_jar.dart';
-import 'package:getout/screens/connection/session/session_bloc.dart';
-import 'package:getout/screens/connection/session/session_event.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:path_provider/path_provider.dart';
-import '../../../../constants/http_status.dart';
+
+import 'package:getout/bloc/session/session_bloc.dart';
+import 'package:getout/bloc/session/session_event.dart';
+import 'package:getout/constants/api_path.dart';
+import 'package:getout/constants/http_status.dart';
 import 'package:getout/global.dart' as globals;
 
 class SessionService {
@@ -46,8 +44,7 @@ class SessionService {
     if (response?.statusCode == HttpStatus.OK) {
       try {
         if (response?.data['account'] != null) {
-          String session = json.encode(response?.data['account']);
-          globals.session = (session);
+          globals.session = json.encode(response?.data['account']);
           return SessionStatusResponse(statusCode: SessionStatus.found.index);
         } else {
           globals.session = null;

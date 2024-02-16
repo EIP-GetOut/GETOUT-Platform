@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dio/dio.dart';
 
 import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_page_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/pages/forgot_password_page.dart';

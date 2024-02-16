@@ -9,16 +9,15 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:getout/bloc/user/bloc.dart';
 
+import 'package:getout/bloc/session/session_bloc.dart';
+import 'package:getout/bloc/session/session_event.dart';
 import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_provider.dart';
-import 'package:getout/screens/connection/login/bloc/login_service.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/register/pages/register.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
-// import 'package:getout/screens/connection/login/bloc/login_service.dart';
 import 'package:getout/screens/connection/login/widgets/fields.dart';
 import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
@@ -35,8 +34,6 @@ class LoginPage extends StatelessWidget {
     ///
     /// StoreR
     ///
-    print("test dans login page");
-
     return Scaffold(
       body: BlocListener<LoginBloc, LoginState>(
       listenWhen: (previous, current) => previous.status != current.status,
@@ -49,12 +46,11 @@ class LoginPage extends StatelessWidget {
             showSnackBar(context, 'Le mot de passe ou l\'email est incorrect');
           } else {
             showSnackBar(context,
-                'Une erreur s\'est produite, veuillez reesayer plus tard');
+                '${state.exception.toString()} Une erreur s\'est produite, veuillez reesayer plus tard');
           }
         }
         if (state.status.isSuccess) {
-          print("dans le is success");
-          context.read<UserBloc>().add(UserSignIn());
+          context.read<SessionBloc>().add(const SessionRequest());
         }
       },
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [

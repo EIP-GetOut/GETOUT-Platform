@@ -38,14 +38,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           email: state.email,
           password: state.password,
         ));
-        print("infos : ");
-        print(state.email);
-        print(state.password);
         emit(state.copyWith(status: Status.success));
-        print("after emit success");
       } catch (e) {
-        print("e :");
-        print(e);
         emit(state.copyWith(status: Status.error));
       }
     }

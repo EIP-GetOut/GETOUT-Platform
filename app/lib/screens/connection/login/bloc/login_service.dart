@@ -16,7 +16,6 @@ class LoginService {
   Future<void> login(final LoginRequestModel request) async
   {
     try {
-      print("dans login service");
       await globals.dio?.post(
           '${ApiConstants.rootApiPath}${ApiConstants.loginPath}',
           data: {

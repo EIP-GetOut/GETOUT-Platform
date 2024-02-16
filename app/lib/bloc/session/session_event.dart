@@ -7,7 +7,7 @@
 
 import 'package:equatable/equatable.dart';
 
-import 'package:getout/screens/connection/session/session_bloc.dart';
+import 'package:getout/bloc/session/session_bloc.dart';
 
 class SessionEvent extends Equatable {
   @override

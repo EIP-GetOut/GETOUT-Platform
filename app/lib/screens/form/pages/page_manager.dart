@@ -83,7 +83,10 @@ class Forms extends StatelessWidget {
               showSnackBar(context, 'Veuillez sélectionner au moins une case');
             } else if (context.read<FormBloc>().state.status == FormStatus.endForm) {
               /// TODO: Send form
-              showSnackBar(context, 'Merci d\'avoir rempli le formulaire');
+              showSnackBar(context, 'Merci d\'avoir rempli le formulaire', color: Colors.green);
+//              showSnackBar(context, 'Connecter vous', color: Colors.green);
+              Navigator.pop(context);
+              Navigator.pop(context);
             } else {
               pageController.nextPage(
                   duration: const Duration(milliseconds: 200),
