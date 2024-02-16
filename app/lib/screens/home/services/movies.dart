@@ -11,6 +11,8 @@ class MoviesService extends ServiceTemplate {
 
   MoviesService();
 
+  final session = json.decode(globals.session ?? '');
+
   // RECOMMEND
   Future<GenerateMoviesResponse> getRecommendedMovies(
       GenerateMoviesRequest request) async {
@@ -32,7 +34,6 @@ class MoviesService extends ServiceTemplate {
           id: elem['id'],
           title: elem['title'],
           posterPath: elem['poster'],
-          //posterPath: 'https://image.tmdb.org/t/p/w600_and_h900_bestv2${elem['poster']}',
           overview: elem['overview']));
     });
     return result;
@@ -63,11 +64,9 @@ class MoviesService extends ServiceTemplate {
     final Response? response;
 
     response = await globals.dio?.get(
-        //Todo A changer avec le account id quand le get session sera fait
-        '${ApiConstants.rootApiPath}/account/${ApiConstants.token}/likedMovies',
+        '${ApiConstants.rootApiPath}/account/${session['id']}/likedMovies',
         options: Options(headers: {
           'Content-Type': 'application/json',
-          'Cookie': ApiConstants.cookies
         }));
     if (response?.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
@@ -103,11 +102,9 @@ class MoviesService extends ServiceTemplate {
     dynamic data;
 
     final response = await globals.dio?.get(
-        //Todo - A changer avec le account id quand le get session sera fait
-        '${ApiConstants.rootApiPath}/account/${ApiConstants.token}/watchlist',
+        '${ApiConstants.rootApiPath}/account/${session['id']}/watchlist',
         options: Options(headers: {
           'Content-Type': 'application/json',
-          'Cookie': ApiConstants.cookies
         }));
 
     if (response?.statusCode != HttpStatus.OK) {

@@ -8,6 +8,8 @@
 
 import 'package:dio/dio.dart';
 
+import 'dart:convert';
+
 import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/tools/format_with_genres_parameter.dart';

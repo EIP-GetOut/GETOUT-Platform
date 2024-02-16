@@ -5,10 +5,10 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-
 part of 'service.dart';
 
 class BooksService extends ServiceTemplate {
+  final session = json.decode(globals.session ?? '');
 
   BooksService();
 
@@ -62,13 +62,11 @@ class BooksService extends ServiceTemplate {
   Future<dynamic> getLikedBooksId(GenerateBooksRequest request) async {
     final Response? response;
 
-    response = await globals.dio?.get(
-        //Todo A changer avec le account id quand le get session sera fait
-        '${ApiConstants.rootApiPath}/account/${ApiConstants.token}/likedBooks',
-        options: Options(headers: {
-          'Content-Type': 'application/json',
-          'Cookie': ApiConstants.cookies
-        }));
+    response = await globals.dio
+        ?.get('${ApiConstants.rootApiPath}/account/${session['id']}/likedBooks',
+            options: Options(headers: {
+              'Content-Type': 'application/json',
+            }));
     if (response?.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
         'Error ${response?.statusCode} while fetching books: ${response?.statusMessage}',
@@ -101,13 +99,11 @@ class BooksService extends ServiceTemplate {
   Future<dynamic> getSavedBooksId(GenerateBooksRequest request) async {
     dynamic data;
 
-    final response = await globals.dio?.get(
-        //Todo - A changer avec le account id quand le get session sera fait + url es ce que c'est bien readinglist le path pour les livres
-        '${ApiConstants.rootApiPath}/account/${ApiConstants.token}/readinglist',
-        options: Options(headers: {
-          'Content-Type': 'application/json',
-          'Cookie': ApiConstants.cookies
-        }));
+    final response = await globals.dio
+        ?.get('${ApiConstants.rootApiPath}/account/${session['id']}/readinglist',
+            options: Options(headers: {
+              'Content-Type': 'application/json',
+            }));
 
     if (response?.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
@@ -130,13 +126,13 @@ class BooksService extends ServiceTemplate {
         options: Options(headers: {'Content-Type': 'application/json'}));
     try {
       if (response?.statusCode != MovieStatusResponse.success) {
-        return const BookStatusResponse(statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
+        return const BookStatusResponse(
+            statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
       }
       final dynamic data = response?.data;
       result = BookStatusResponse(
           title: data['book']['title'],
-          overview:
-              data['book']['overview'] ?? 'Pas de description disponible',
+          overview: data['book']['overview'] ?? 'Pas de description disponible',
           posterPath: data['book']['poster_path'],
           id: book,
           statusCode: response?.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR);

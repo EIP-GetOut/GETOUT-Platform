@@ -137,8 +137,8 @@ flutter:
     - assets/images/Logo_Prime_video.png
     - assets/images/Telephone.png
     - assets/images/Telephone_Check.png
-    # - assets/images/logo_DVD.png
-    # - assets/images/logo_cinema.png
+    - assets/images/logo_DVD.png
+    - assets/images/logo_cinema.png
     - assets/party_emoji.png
     - assets/popcorn_emoji.png
     - assets/separation.png

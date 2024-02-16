@@ -21,11 +21,8 @@ import 'package:getout/global.dart' as globals;
 
 class SessionService {
   Future<void> setCookies() async {
-    Directory appDocDir;
-    String appDocPath;
-
-    appDocDir = await getApplicationDocumentsDirectory();
-    appDocPath = appDocDir.path;
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
 
     globals.cookieJar = PersistCookieJar(
         ignoreExpires: true, storage: FileStorage('$appDocPath/.cookies/'));
