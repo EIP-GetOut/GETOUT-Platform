@@ -6,6 +6,7 @@
 */
 
 import 'package:bloc/bloc.dart';
+
 import 'package:flutter/foundation.dart';
 
 /// {@template app_bloc_observer}

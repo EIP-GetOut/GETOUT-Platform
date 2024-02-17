@@ -41,7 +41,7 @@ class RegisterPage extends StatelessWidget {
                 }
               }
               if (state.status.isSuccess) {
-                //retirer ça
+                /// remove this
                 Navigator.push(
                     context,
                     MaterialPageRoute(

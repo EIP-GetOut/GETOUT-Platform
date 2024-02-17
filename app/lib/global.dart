@@ -2,6 +2,7 @@ library my_app.globals;
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+
 import 'package:getout/bloc/session/session_service.dart';
 import 'package:getout/screens/settings/pages/notifications/notifications.dart';
 

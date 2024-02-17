@@ -46,7 +46,7 @@ class LoginPage extends StatelessWidget {
             showSnackBar(context, 'Le mot de passe ou l\'email est incorrect');
           } else {
             showSnackBar(context,
-                '${state.exception.toString()} Une erreur s\'est produite, veuillez reesayer plus tard');
+                'Une erreur s\'est produite, veuillez reesayer plus tard');
           }
         }
         if (state.status.isSuccess) {

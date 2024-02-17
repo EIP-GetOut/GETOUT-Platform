@@ -22,8 +22,8 @@ class ViewingPlatform extends StatelessWidget {
       ['Netflix', 'assets/images/Logo_Netflix.png'],
       ['Prime Video', 'assets/images/Logo_Prime_video.png'],
       ['Disney +', 'assets/images/Logo_Disney+.png'],
-      ['Cinema', 'assets/images/logo_cinema.png'], // la
-      ['DVD', 'assets/images/logo_DVD.png'] // la
+      ['Cinema', 'assets/images/logo_cinema.png'],
+      ['DVD', 'assets/images/logo_DVD.png']
     ];
 
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
