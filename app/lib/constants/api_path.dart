@@ -32,8 +32,6 @@ class ApiConstants {
   static const String generateBooksPath = '/generate-books';
   static const String getInfoBookPath = '/book';
 
-  //todo en attendant le getSession, on va mettre ici le token et le cookies en dur qui sera récupérer plus tard avec le getSession
-  static const String cookies = '';
-  static const String token = '';
+  static const String session = '/session';
 
 }

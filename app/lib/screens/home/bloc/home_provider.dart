@@ -7,7 +7,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/tools/map_box_movie_values_to_ids.dart';
@@ -43,8 +42,7 @@ class HomeProvider extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: RepositoryProvider(
-        create: (context) => HomeRepository(dio: Dio()),
+      body: RepositoryProvider(create: (context) => HomeRepository(),
         child: MultiBlocProvider(
           providers: [
             BlocProvider<HomePageBloc>(

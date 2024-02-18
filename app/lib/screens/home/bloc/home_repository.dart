@@ -8,5 +8,5 @@
 import 'package:getout/screens/home/services/service.dart';
 
 class HomeRepository extends HomeService {
-  HomeRepository({required super.dio});
+  HomeRepository();
 }

@@ -7,7 +7,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_page_bloc.dart';
@@ -26,7 +25,7 @@ class ConnectionProvider extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: RepositoryProvider(
-        create: (context) => ConnectionService(dio: Dio()),
+        create: (context) => ConnectionService(),
         child: MultiBlocProvider(
           providers: [
             /// Service Bloc

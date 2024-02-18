@@ -10,12 +10,13 @@ import 'package:dio/dio.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/constants/api_path.dart';
 
+import 'package:getout/global.dart' as globals;
+
 class RegisterService {
   Future<void> register(final RegisterRequestModel request) async
   {
     try {
-      final dio = Dio();
-      await dio.post(
+      await globals.dio?.post(
           '${ApiConstants.rootApiPath}${ApiConstants.registerPath}',
           data: {
             'email': request.email,
