@@ -7,9 +7,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:getout/models/settings/edit_password.dart';
-import 'package:getout/screens/connection/widgets/fields.dart';
-import 'package:getout/services/requests/requests_service.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/global.dart';
 
@@ -43,7 +40,7 @@ class _ParametersEditPasswordPageState extends State<ParametersEditPasswordPage>
       isLoading = true;
     });
 
-    return RequestsService.instance
+    /*return RequestsService.instance
         .settingsEditPassword(SettingsEditPasswordRequest(
         email: globalEmail ?? '', password: passwordController.text, newPassword: newPassword2Controller.text))
         .then((SettingsEditPasswordResponseInfo res) {
@@ -67,7 +64,7 @@ class _ParametersEditPasswordPageState extends State<ParametersEditPasswordPage>
           backgroundColor: (res.statusCode != 200
               ? const Color.fromARGB(255, 239, 46, 46)
               : const Color.fromARGB(255, 109, 154, 3))));
-    });
+    });*/
   }
 
   @override
@@ -85,20 +82,20 @@ class _ParametersEditPasswordPageState extends State<ParametersEditPasswordPage>
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Padding(
+                  /*Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                     child: PasswordField(controller: passwordController),
-                  ),
+                  ),*/
                   const Text('Votre nouveau mot de passe'),
-                  Padding(
+                  /*Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                     child: PasswordField(controller: newPasswordController),
-                  ),
-                  Padding(
+                  ),*/
+                  /*Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                     child: SecondPasswordField(controller: newPassword2Controller,
                         fstPassword: newPasswordController.text),
-                  ),
+                  ),*/
                   const SizedBox(
                     height: 70,
                   ),
