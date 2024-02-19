@@ -44,7 +44,7 @@ class HomeAppBarWidget extends AppBar {
             child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Image.asset(
-                  'assets/Profile_picture.png',
+                  'assets/images/icon/profile_picture.png',
                   width: 60,
                 )),
           ),
@@ -61,7 +61,7 @@ class HomeAppBarWidget extends AppBar {
             Padding(
                 padding: const EdgeInsets.all(10),
                 child: Image.asset(
-                  'assets/GetOut_logo.png',
+                  'assets/images/logo/getout.png',
                   width: 40,
                 )),
           ],

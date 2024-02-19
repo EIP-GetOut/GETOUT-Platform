@@ -29,7 +29,7 @@ class LikedBooksSuccessWidget extends StatelessWidget {
         child: Column(
       children: [
         const TitleWidget(
-            asset: 'heart_emoji', title: 'Vos coup de coeurs'),
+            asset: 'heart', title: 'Vos coup de coeurs'),
         Expanded(
             child: ListView(
                 controller: movieController,
