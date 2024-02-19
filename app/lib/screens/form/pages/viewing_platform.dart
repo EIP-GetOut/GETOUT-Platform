@@ -19,11 +19,11 @@ class ViewingPlatform extends StatelessWidget {
   Widget build(BuildContext context)
   {
     List<List<String>> checkboxText = [
-      ['Netflix', 'assets/images/Logo_Netflix.png'],
-      ['Prime Video', 'assets/images/Logo_Prime_video.png'],
-      ['Disney +', 'assets/images/Logo_Disney+.png'],
-      ['Cinema', 'assets/images/logo_cinema.png'],
-      ['DVD', 'assets/images/logo_DVD.png']
+      ['Netflix', 'assets/images/logo/netflix.png'],
+      ['Prime Video', 'assets/images/logo/prime_video.png'],
+      ['Disney +', 'assets/images/logo/disney+.png'],
+      ['Cinema', 'assets/images/logo/cinema.png'],
+      ['DVD', 'assets/images/logo/DVD.png']
     ];
 
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
