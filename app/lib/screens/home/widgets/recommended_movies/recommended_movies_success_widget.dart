@@ -29,7 +29,7 @@ class RecommendedMoviesSuccessWidget extends StatelessWidget {
         child: Column(
       children: [
         const TitleWidget(
-            asset: 'fire_emoji', title: 'Nous recommandons pour vous'),
+            asset: 'fire', title: 'Nous recommandons pour vous'),
         Expanded(
             child: ListView(
                 controller: movieController,

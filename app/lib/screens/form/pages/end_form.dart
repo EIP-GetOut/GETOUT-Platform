@@ -28,8 +28,8 @@ class EndForm extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget> [
-                Image.asset('assets/images/Telephone_Check.png', scale: 1.6),
-                Image.asset('assets/images/Dessin_fille.png', scale: 2.5),
+                Image.asset('assets/images/icon/phone_check.png', scale: 1.6),
+                Image.asset('assets/images/draw/welcome_image.png', scale: 2.5),
               ],
             ),
             const SizedBox(height: 20),

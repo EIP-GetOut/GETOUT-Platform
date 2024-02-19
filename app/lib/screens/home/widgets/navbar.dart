@@ -33,36 +33,36 @@ class HomeNavBarWidget extends StatelessWidget {
         child: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/svg/home_icon.svg',
+                icon: SvgPicture.asset('assets/images/icon/home.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.black26, BlendMode.srcIn)),
-                activeIcon: SvgPicture.asset('assets/svg/home_icon.svg',
+                activeIcon: SvgPicture.asset('assets/images/icon/home.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.red, BlendMode.srcIn)),
                 label: 'Dashboard'),
             BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/svg/movie_icon.svg',
+                icon: SvgPicture.asset('assets/images/icon/movie.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.black26, BlendMode.srcIn)),
-                activeIcon: SvgPicture.asset('assets/svg/movie_icon.svg',
+                activeIcon: SvgPicture.asset('assets/images/icon/movie.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.red, BlendMode.srcIn)),
                 label: 'Movie'),
             BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/svg/bookmark_icon.svg',
+                icon: SvgPicture.asset('assets/images/icon/bookmark.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.black26, BlendMode.srcIn)),
                 activeIcon: SvgPicture.asset(
-                    'assets/svg/bookmark_icon.svg',
+                    'assets/images/icon/bookmark.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.red, BlendMode.srcIn)),
                 label: 'Book'),
             BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/svg/location_pin_icon.svg',
+                icon: SvgPicture.asset('assets/images/icon/location_pin.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.black26, BlendMode.srcIn)),
                 activeIcon: SvgPicture.asset(
-                    'assets/svg/location_pin_icon.svg',
+                    'assets/images/icon/location_pin.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.red, BlendMode.srcIn)),
                 label: 'Activities')

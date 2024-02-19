@@ -57,7 +57,7 @@ class LoginPage extends StatelessWidget {
         Align(
           alignment: Alignment.bottomCenter,
           child: Image.asset(
-            'assets/entire_logo.png',
+            'assets/images/logo/full_getout.png',
             fit: BoxFit.contain,
           ),
         ),
@@ -103,7 +103,7 @@ class LoginPage extends StatelessWidget {
                 child: Align(
                     alignment: Alignment.center,
                     child: Image.asset(
-                      'assets/separation. png',
+                      'assets/images/other/split.png',
                       fit: BoxFit.contain,
                     )),
               ),
