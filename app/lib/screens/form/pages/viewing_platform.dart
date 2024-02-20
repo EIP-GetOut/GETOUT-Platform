@@ -18,17 +18,22 @@ class ViewingPlatform extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
-    List<List<String>> checkboxText = [
-      ['Netflix', 'assets/images/logo/netflix.png'],
-      ['Prime Video', 'assets/images/logo/prime_video.png'],
-      ['Disney +', 'assets/images/logo/disney+.png'],
-      ['Cinema', 'assets/images/logo/cinema.png'],
-      ['DVD', 'assets/images/logo/DVD.png']
+    List<String> checkboxImages = [
+      'assets/images/logo/netflix.png',
+      'assets/images/logo/prime_video.png',
+      'assets/images/logo/disney+.png',
+      'assets/images/logo/cinema.png',
+      'assets/images/logo/DVD.png'
     ];
 
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
       context.read<FormBloc>().add(const EmitEvent(status: FormStatus.viewingPlatform));
+      List<String> checkboxText =
+                      context.read<FormBloc>().state.viewingPlatform.keys.toList();
+      List<bool> checkboxValue =
+                      context.read<FormBloc>().state.viewingPlatform.values.toList();
+
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -56,12 +61,12 @@ class ViewingPlatform extends StatelessWidget {
                           title: Row(
                             children: [
                               const SizedBox(width: 50.0),
-                              Image.asset(checkboxText[i][1], width: 40, height: 40),
+                              Image.asset(checkboxImages[i], width: 40, height: 40),
                               const SizedBox(width: 8.0),
-                              Text(checkboxText[i][0], style: Theme.of(context).textTheme.bodyMedium),
+                              Text(checkboxText[i], style: Theme.of(context).textTheme.bodyMedium),
                             ],
                           ),
-                          value: context.read<FormBloc>().state.viewingPlatform[i],
+                          value: checkboxValue[i],
                           onChanged: (value) {
                             context.read<FormBloc>().add(ViewingPlatformEvent(index: i));
                           },

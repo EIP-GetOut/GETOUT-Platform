@@ -8,7 +8,7 @@
 part of 'service.dart';
 
 class BooksService extends ServiceTemplate {
-  final session = json.decode(globals.session ?? '');
+  final session = globals.session ?? {}; /// TODO NOT SAFE
 
   BooksService();
 

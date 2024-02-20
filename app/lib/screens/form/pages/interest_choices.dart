@@ -18,17 +18,13 @@ class InterestChoices extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
-    List<String> checkboxText = [
-      'Technologie',
-      'Sport',
-      'Musique',
-      'Voyage',
-      'Activité artistique'
-    ];
-
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
       context.read<FormBloc>().add(const EmitEvent(status: FormStatus.interestChoices));
+      List<String> checkboxText =
+                          context.read<FormBloc>().state.interest.keys.toList();
+      List<bool> checkboxValue =
+                          context.read<FormBloc>().state.interest.values.toList();
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -57,7 +53,7 @@ class InterestChoices extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.bodyMedium
                           ),
-                          value: context.read<FormBloc>().state.interest[i],
+                          value: checkboxValue[i],
                           onChanged: (value) {
                             context.read<FormBloc>().add(InterestChoicesEvent(index: i));
                           },

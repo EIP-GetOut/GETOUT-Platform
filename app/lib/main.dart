@@ -24,6 +24,8 @@ import 'package:getout/screens/home/bloc/home_provider.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/widgets/loading.dart';
 import 'package:getout/widgets/object_loading_error_widget.dart';
+import 'package:getout/global.dart' as globals;
+import 'package:getout/screens/form/pages/form.dart';
 
 Map<int, Color> colorMap = {
   50: const Color.fromRGBO(213, 86, 65, .1),
@@ -95,6 +97,9 @@ class MainPage extends StatelessWidget {
           home: BlocBuilder<SessionBloc, SessionState>(
             builder: (context, state) {
               if (state.status.isFound) {
+                if (globals.session?['preferences'] == null) {
+                  return const Forms();
+                }
                 return const HomeProvider();
               } else {
                 if (state.status.isLoading) {
@@ -104,7 +109,7 @@ class MainPage extends StatelessWidget {
                 } else if (state.status.isNotFound) {
                   return const ConnectionProvider();
                 } else {
-                  return const SizedBox();
+                  return const ColoredBox(color: Colors.red, child: ObjectLoadingErrorWidget(object: 'erreur inconnue'));
                 }
               }
             },

@@ -5,7 +5,6 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
@@ -41,7 +40,7 @@ class SessionService {
     if (response?.statusCode == HttpStatus.OK) {
       try {
         if (response?.data['account'] != null) {
-          globals.session = json.encode(response?.data['account']);
+          globals.session = response?.data['account'];
           return SessionStatusResponse(statusCode: SessionStatus.found.index);
         } else {
           globals.session = null;

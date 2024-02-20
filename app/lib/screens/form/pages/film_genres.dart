@@ -18,17 +18,14 @@ class FilmGenres extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
-    List<String> checkboxText = [
-      'Action',
-      'Thriller',
-      'Western',
-      'Horreur',
-      'Comédie'
-    ];
-
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
       context.read<FormBloc>().add(const EmitEvent(status: FormStatus.filmGenres));
+      List<String> checkboxText =
+                    context.read<FormBloc>().state.filmGenres.keys.toList();
+      List<bool> checkboxValue =
+                    context.read<FormBloc>().state.filmGenres.values.toList();
+
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -57,7 +54,7 @@ class FilmGenres extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.bodyMedium
                           ),
-                          value: context.read<FormBloc>().state.filmGenres[i],
+                          value: checkboxValue[i],
                           onChanged: (value) {
                             context.read<FormBloc>().add(FilmGenresEvent(index: i));
                           },

@@ -17,6 +17,7 @@ NotificationsServices notificationsServices = NotificationsServices();
 PersistCookieJar? cookieJar;
 Dio? dio;
 
-String? session;
+// Using dynamic type because data can be a string, a list, a map, etc
+Map<String, dynamic>? session;
 
 SessionService sessionManager = SessionService();
