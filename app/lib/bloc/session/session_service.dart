@@ -45,7 +45,7 @@ class SessionService {
                   statusCode: SessionStatus.found.index);
             } else {
               return SessionStatusResponse(
-                  statusCode: SessionStatus.foundNotFully.index);
+                  statusCode: SessionStatus.foundWithoutPreferences.index);
             }
           } else {
             globals.session = null;

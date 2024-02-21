@@ -97,7 +97,7 @@ class MainPage extends StatelessWidget {
             builder: (context, state) {
               if (state.status.isFound) {
                 return const HomeProvider();
-              } else if (state.status.isFoundNotFully) {
+              } else if (state.status.isFoundWithoutPreferences) {
                 return const Forms();
               } else if (state.status.isLoading) {
                   return const Center(child: LoadingPage());

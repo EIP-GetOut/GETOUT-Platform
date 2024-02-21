@@ -18,7 +18,7 @@ part 'session_state.dart';
 enum SessionStatus {
   notFound,
   found,
-  foundNotFully,
+  foundWithoutPreferences,
   error,
 }
 
@@ -26,7 +26,7 @@ extension SessionStatusX on SessionStatus {
   bool get error => this == SessionStatus.error;
   bool get notFound => this == SessionStatus.notFound;
   bool get found => this == SessionStatus.found;
-  bool get foundNotFully => this == SessionStatus.foundNotFully;
+  bool get foundWithoutPreferences => this == SessionStatus.foundWithoutPreferences;
 }
 
 class SessionBloc extends Bloc<SessionEvent, SessionState> {
@@ -46,11 +46,11 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
     try {
       final SessionStatusResponse sessionResponse = await globals.sessionManager.getSession();
       if (sessionResponse.statusCode == SessionStatus.found.index) {
-        emit(state.copyWith(status: Status.is_found));
+        emit(state.copyWith(status: Status.isFound));
       } else if (sessionResponse.statusCode == SessionStatus.notFound.index) {
-        emit(state.copyWith(status: Status.is_not_found));
-      } else if (sessionResponse.statusCode == SessionStatus.foundNotFully.index) {
-        emit(state.copyWith(status: Status.is_found_not_fully));
+        emit(state.copyWith(status: Status.isNotFound));
+      } else if (sessionResponse.statusCode == SessionStatus.foundWithoutPreferences.index) {
+        emit(state.copyWith(status: Status.isFoundWithoutPreferences));
       } else {
         emit(state.copyWith(status: Status.error));
       }

@@ -11,9 +11,9 @@ enum Status {
   error,
   loading,
   selected,
-  is_not_found,
-  is_found,
-  is_found_not_fully
+  isNotFound,
+  isFound,
+  isFoundWithoutPreferences
 }
 
 extension StatusX on Status {
@@ -22,7 +22,7 @@ extension StatusX on Status {
   bool get isSuccess => this == Status.success;
   bool get isError => this == Status.error;
   bool get isSelected => this == Status.selected;
-  bool get isNotFound => this == Status.is_not_found;
-  bool get isFound => this == Status.is_found;
-  bool get isFoundNotFully => this == Status.is_found_not_fully;
+  bool get isNotFound => this == Status.isNotFound;
+  bool get isFound => this == Status.isFound;
+  bool get isFoundWithoutPreferences => this == Status.isFoundWithoutPreferences;
 }
