@@ -22,9 +22,7 @@ class ConnectionProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: RepositoryProvider(
+    return RepositoryProvider(
         create: (context) => ConnectionService(),
         child: MultiBlocProvider(
           providers: [
@@ -42,7 +40,6 @@ class ConnectionProvider extends StatelessWidget {
           ],
           child: LoginPage(),
         ),
-      ),
-    );
+      );
   }
 }

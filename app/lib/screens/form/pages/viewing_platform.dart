@@ -18,16 +18,24 @@ class ViewingPlatform extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
-    List<List<String>> checkboxText = [
-      ['Netflix', 'assets/images/logo/netflix.png'],
-      ['Prime Video', 'assets/images/logo/prime_video.png'],
-      ['Disney +', 'assets/images/logo/disney+.png'],
-      ['Cinema', 'assets/images/logo/cinema.png'],
-      ['DVD', 'assets/images/logo/DVD.png']
+    List<String> imagesList = [
+      'assets/images/logo/netflix.png',
+      'assets/images/logo/prime_video.png',
+      'assets/images/logo/disney+.png',
+      'assets/images/logo/cinema.png',
+      'assets/images/logo/DVD.png'
     ];
-
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
+      final Map<String, bool> viewingPlatform =
+          context.read<FormBloc>().state.viewingPlatform;
+      // When I create this variable,
+      // only god and I knew how it worked. Now, only god knows it
+      final Map<String, String> checkboxImages = Map.fromEntries(
+          viewingPlatform.entries.map((entry) => MapEntry(
+              entry.key,
+              imagesList[viewingPlatform.keys.toList().indexOf(entry.key)])));
+
       context.read<FormBloc>().add(const EmitEvent(status: FormStatus.viewingPlatform));
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -49,21 +57,27 @@ class ViewingPlatform extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 children: <Widget>[
-                  for (int i = 0; i < checkboxText.length; i++)
+                  for (var checkbox
+                      in context.read<FormBloc>().state.viewingPlatform.entries)
                     Column(
                       children: [
                         CheckboxListTile(
                           title: Row(
                             children: [
                               const SizedBox(width: 50.0),
-                              Image.asset(checkboxText[i][1], width: 40, height: 40),
+                              Image.asset(checkboxImages[checkbox.key]!,
+                                  width: 40, height: 40),
                               const SizedBox(width: 8.0),
-                              Text(checkboxText[i][0], style: Theme.of(context).textTheme.bodyMedium),
+                              Text(checkbox.key,
+                                  style:
+                                      Theme.of(context).textTheme.bodyMedium),
                             ],
                           ),
-                          value: context.read<FormBloc>().state.viewingPlatform[i],
+                          value: checkbox.value,
                           onChanged: (value) {
-                            context.read<FormBloc>().add(ViewingPlatformEvent(index: i));
+                            context
+                                .read<FormBloc>()
+                                .add(ViewingPlatformEvent(key: checkbox.key));
                           },
                           contentPadding: EdgeInsets.zero,
                           controlAffinity: ListTileControlAffinity.leading,

@@ -15,15 +15,14 @@ class ApiConstants {
     : 'https://api.eip-getout.me';
 
   // ACCOUNT API PATH
-  static const String accountPath = '/account';
-
   static const String loginPath = '/account/login';
   static const String logoutPath = '/account/logout';
   static const String registerPath = '/account/signup';
-  static const String oauthPath = '/account/oauth';
+
   static const String resetPasswordEmailPath = '/account/reset-password/send-email';
   static const String resetPasswordNewPasswordPath = '/account/reset-password';
-  static const String getSessionApiPath = '/session';
+
+  static const String preferencesApiPath = '/account/preferences';
 
   // GENERATE THINGS API PATH
   static const String generateMoviesPath = '/generate-movies';
