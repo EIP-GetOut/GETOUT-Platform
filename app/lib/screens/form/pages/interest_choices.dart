@@ -18,14 +18,6 @@ class InterestChoices extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
-    List<String> checkboxText = [
-      'Technologie',
-      'Sport',
-      'Musique',
-      'Voyage',
-      'Activité artistique'
-    ];
-
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
       context.read<FormBloc>().add(const EmitEvent(status: FormStatus.interestChoices));
@@ -49,17 +41,17 @@ class InterestChoices extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 children: <Widget>[
-                  for (int i = 0; i < checkboxText.length; i++)
+                  for (var checkbox in context.read<FormBloc>().state.interest.entries)
                     Column(
                       children: [
                         CheckboxListTile(
-                          title: Text(checkboxText[i],
+                          title: Text(checkbox.key,
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.bodyMedium
                           ),
-                          value: context.read<FormBloc>().state.interest[i],
+                          value: checkbox.value,
                           onChanged: (value) {
-                            context.read<FormBloc>().add(InterestChoicesEvent(index: i));
+                            context.read<FormBloc>().add(InterestChoicesEvent(key: checkbox.key));
                           },
                           contentPadding: EdgeInsets.zero,
                           controlAffinity: ListTileControlAffinity.leading,

@@ -31,17 +31,42 @@ class FormStates extends Equatable {
   const FormStates({
     this.status = FormStatus.socialMediaTime,
     this.time = 0.0,
-    this.interest = const [false, false, false, false, false],
-    this.literaryGenres = const [false, false, false, false, false],
-    this.filmGenres = const [false, false, false, false, false],
-    this.viewingPlatform = const [false, false, false, false, false],
+    this.interest = const {
+      'Technologie' : false,
+      'Sport' : false,
+      'Musique' : false,
+      'Voyage' : false,
+      'Activité artistique' : false
+    },
+    this.literaryGenres = const {
+      'Polar' : false,
+      'Poésie' : false,
+      'Thriller' : false,
+      'Politique' : false,
+      'Comédie' : false
+    },
+    this.filmGenres = const {
+      'Action' : false,
+      'Thriller' : false,
+      'Western' : false,
+      'Horreur' : false,
+      'Comédie' : false
+    },
+    this.viewingPlatform = const {
+      'Netflix' : false,
+      'Prime Video' : false,
+      'Disney +' : false,
+      'Cinema' : false,
+      'DVD' : false
+    },
   });
   final FormStatus status;
   final double time;
-  final List<bool> interest;
-  final List<bool> literaryGenres;
-  final List<bool> filmGenres;
-  final List<bool> viewingPlatform;
+
+  final Map<String, bool> interest;
+  final Map<String, bool> literaryGenres;
+  final Map<String, bool> filmGenres;
+  final Map<String, bool> viewingPlatform;
 
   @override
   List<Object?> get props => [status, time, interest, literaryGenres, filmGenres, viewingPlatform];
@@ -49,10 +74,10 @@ class FormStates extends Equatable {
   FormStates copyWith({
     FormStatus? status,
     double? time,
-    List<bool>? interest,
-    List<bool>? literaryGenres,
-    List<bool>? filmGenres,
-    List<bool>? viewingPlatform,
+    Map<String, bool>? interest,
+    Map<String, bool>? literaryGenres,
+    Map<String, bool>? filmGenres,
+    Map<String, bool>? viewingPlatform,
   }) {
     return FormStates(
       status: status ?? this.status,

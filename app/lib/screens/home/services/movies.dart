@@ -11,7 +11,7 @@ class MoviesService extends ServiceTemplate {
 
   MoviesService();
 
-  final session = json.decode(globals.session ?? '');
+  final session = globals.session ?? {}; // TODO NOT SAFE
 
   // RECOMMEND
   Future<GenerateMoviesResponse> getRecommendedMovies(

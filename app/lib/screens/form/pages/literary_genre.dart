@@ -18,14 +18,6 @@ class LiteraryGenres extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
-    List<String> checkboxText = [
-      'Polar',
-      'Poésie',
-      'Thriller',
-      'Politique',
-      'Comédie'
-    ];
-
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
       context.read<FormBloc>().add(const EmitEvent(status: FormStatus.literaryGenres));
@@ -49,17 +41,17 @@ class LiteraryGenres extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 children: <Widget>[
-                  for (int i = 0; i < checkboxText.length; i++)
+                  for (var checkbox in context.read<FormBloc>().state.literaryGenres.entries)
                     Column(
                       children: [
                         CheckboxListTile(
-                          title: Text(checkboxText[i],
+                          title: Text(checkbox.key,
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.bodyMedium
                           ),
-                          value: context.read<FormBloc>().state.literaryGenres[i],
+                          value: checkbox.value,
                           onChanged: (value) {
-                            context.read<FormBloc>().add(LiteraryGenresEvent(index: i));
+                            context.read<FormBloc>().add(LiteraryGenresEvent(key: checkbox.key));
                           },
                           contentPadding: EdgeInsets.zero,
                           controlAffinity: ListTileControlAffinity.leading,

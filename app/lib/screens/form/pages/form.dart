@@ -9,14 +9,17 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:getout/screens/form/bloc/form_bloc.dart';
+import 'package:getout/screens/form/services/form_services.dart';
 import 'package:getout/screens/form/pages/social_media_time.dart';
-import 'package:getout/screens/form/pages/literary_genre.dart';
-import 'package:getout/screens/form/pages/interest_choices.dart';
-import 'package:getout/screens/form/pages/film_genres.dart';
 import 'package:getout/screens/form/pages/viewing_platform.dart';
+import 'package:getout/screens/form/pages/interest_choices.dart';
+import 'package:getout/screens/form/pages/literary_genre.dart';
+import 'package:getout/screens/form/pages/film_genres.dart';
 import 'package:getout/screens/form/pages/end_form.dart';
+import 'package:getout/screens/form/bloc/form_bloc.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
+import 'package:getout/bloc/session/session_bloc.dart';
+import 'package:getout/bloc/session/session_event.dart';
 
 class Forms extends StatelessWidget {
   const Forms({super.key});
@@ -67,26 +70,27 @@ class Forms extends StatelessWidget {
           child:
               Text('Suivant', style: Theme.of(context).textTheme.labelMedium),
           onPressed: () {
-            if (context.read<FormBloc>().state.status == FormStatus.socialMediaTime &&
-                context.read<FormBloc>().state.time == 0.0) {
-              showSnackBar(
-                  context, 'Veuillez mettre une valeur supérieure à 0');
-            } else if (
+            if (
                 (context.read<FormBloc>().state.status == FormStatus.interestChoices &&
-                    !context.read<FormBloc>().state.interest.contains(true)) ||
+                    !context.read<FormBloc>().state.interest.containsValue(true)) ||
                 (context.read<FormBloc>().state.status == FormStatus.literaryGenres &&
-                    !context.read<FormBloc>().state.literaryGenres.contains(true)) ||
+                    !context.read<FormBloc>().state.literaryGenres.containsValue(true)) ||
                 (context.read<FormBloc>().state.status == FormStatus.filmGenres &&
-                    !context.read<FormBloc>().state.filmGenres.contains(true)) ||
+                    !context.read<FormBloc>().state.filmGenres.containsValue(true)) ||
                 (context.read<FormBloc>().state.status == FormStatus.viewingPlatform &&
-                    !context.read<FormBloc>().state.viewingPlatform.contains(true))) {
+                    !context.read<FormBloc>().state.viewingPlatform.containsValue(true))) {
               showSnackBar(context, 'Veuillez sélectionner au moins une case');
             } else if (context.read<FormBloc>().state.status == FormStatus.endForm) {
-              /// TODO: Send form
-              showSnackBar(context, 'Merci d\'avoir rempli le formulaire', color: Colors.green);
-//              showSnackBar(context, 'Connecter vous', color: Colors.green);
-              Navigator.pop(context);
-              Navigator.pop(context);
+              FormServices().sendPreferences(FormRequestModel.fillFormRequest(
+                  filmGenres: context.read<FormBloc>().state.filmGenres,
+                  literaryGenres: context.read<FormBloc>().state.literaryGenres,
+                  viewingPlatform: context.read<FormBloc>().state.viewingPlatform)).then(
+                      (final FormResponseModel value) {
+                        if (!value.isSuccessful) {
+                          showSnackBar(context, 'Une erreur est survenue veuillez réessayer plus tard');
+                        }
+                        context.read<SessionBloc>().add(const SessionRequest());
+                      });
             } else {
               pageController.nextPage(
                   duration: const Duration(milliseconds: 200),
