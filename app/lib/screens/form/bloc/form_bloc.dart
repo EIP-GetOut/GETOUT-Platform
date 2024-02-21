@@ -25,33 +25,29 @@ class FormBloc extends Bloc<FormEvent, FormStates> {
 
   void _literaryGenresEvent(LiteraryGenresEvent literaryGenresEvent, Emitter<FormStates> emit) async
   {
-    List<bool> genreValues = state.literaryGenres.values.toList();
-    genreValues[literaryGenresEvent.index] = !genreValues[literaryGenresEvent.index];
-    final listGenres = Map.fromIterables(state.literaryGenres.keys, genreValues);
+    Map<String, bool> listGenres = Map.from(state.literaryGenres);
+    listGenres[literaryGenresEvent.key] = !listGenres[literaryGenresEvent.key]!;
     emit(state.copyWith(literaryGenres: listGenres));
   }
 
   void _interestChoices(InterestChoicesEvent interestChoices, Emitter<FormStates> emit) async
   {
-    List<bool> genreValues = state.interest.values.toList();
-    genreValues[interestChoices.index] = !genreValues[interestChoices.index];
-    final interestList = Map.fromIterables(state.interest.keys, genreValues);
+    Map<String, bool> interestList = Map.from(state.interest);
+    interestList[interestChoices.key] = !interestList[interestChoices.key]!;
     emit(state.copyWith(interest: interestList));
   }
 
   void _filmGenresEvent(FilmGenresEvent filmGenresEvent, Emitter<FormStates> emit) async
   {
-    List<bool> genreValues = state.filmGenres.values.toList();
-    genreValues[filmGenresEvent.index] = !genreValues[filmGenresEvent.index];
-    final filmList = Map.fromIterables(state.filmGenres.keys, genreValues);
+    Map<String, bool> filmList = Map.from(state.filmGenres);
+    filmList[filmGenresEvent.key] = !filmList[filmGenresEvent.key]!;
     emit(state.copyWith(filmGenres: filmList));
   }
 
   void _viewingPlatformEvent(ViewingPlatformEvent viewingPlatformEvent, Emitter<FormStates> emit) async
   {
-    List<bool> genreValues = state.viewingPlatform.values.toList();
-    genreValues[viewingPlatformEvent.index] = !genreValues[viewingPlatformEvent.index];
-    final viewingPlatformList = Map.fromIterables(state.viewingPlatform.keys, genreValues);
+    Map<String, bool> viewingPlatformList = Map.from(state.viewingPlatform);
+    viewingPlatformList[viewingPlatformEvent.key] = !viewingPlatformList[viewingPlatformEvent.key]!;
     emit(state.copyWith(viewingPlatform: viewingPlatformList));
   }
 }
