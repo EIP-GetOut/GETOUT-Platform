@@ -12,20 +12,19 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:getout/screens/connection/bloc/connection_provider.dart';
+import 'package:getout/screens/connection/services/service.dart';
+import 'package:getout/screens/home/bloc/home_provider.dart';
+import 'package:getout/screens/form/pages/form.dart';
+import 'package:getout/widgets/object_loading_error_widget.dart';
+import 'package:getout/bloc/session/session_service.dart';
+import 'package:getout/bloc/session/session_event.dart';
+import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/observer.dart';
 import 'package:getout/bloc/theme/bloc.dart';
-import 'package:getout/screens/connection/bloc/connection_provider.dart';
-import 'package:getout/bloc/session/session_bloc.dart';
-import 'package:getout/bloc/session/session_event.dart';
-import 'package:getout/screens/connection/services/service.dart';
-import 'package:getout/bloc/session/session_service.dart';
-import 'package:getout/screens/home/bloc/home_provider.dart';
-import 'package:getout/tools/status.dart';
 import 'package:getout/widgets/loading.dart';
-import 'package:getout/widgets/object_loading_error_widget.dart';
-import 'package:getout/global.dart' as globals;
-import 'package:getout/screens/form/pages/form.dart';
+import 'package:getout/tools/status.dart';
 
 Map<int, Color> colorMap = {
   50: const Color.fromRGBO(213, 86, 65, .1),
@@ -97,20 +96,22 @@ class MainPage extends StatelessWidget {
           home: BlocBuilder<SessionBloc, SessionState>(
             builder: (context, state) {
               if (state.status.isFound) {
-                if (globals.session?['preferences'] == null) {
-                  return const Forms();
-                }
                 return const HomeProvider();
-              } else {
-                if (state.status.isLoading) {
+              } else if (state.status.isFoundNotFully) {
+                return const Forms();
+              } else if (state.status.isLoading) {
                   return const Center(child: LoadingPage());
-                } else if (state.status.isError) {
-                  return const/*Bouton Pour Quitter l'app*/ColoredBox(color: Colors.white, child: ObjectLoadingErrorWidget(object: 'la session'));
-                } else if (state.status.isNotFound) {
-                  return const ConnectionProvider();
-                } else {
-                  return const ColoredBox(color: Colors.red, child: ObjectLoadingErrorWidget(object: 'erreur inconnue'));
-                }
+              } else if (state.status.isError) {
+                /// TODO : Add a retry button
+                return const ColoredBox(
+                        color: Colors.white,
+                        child: ObjectLoadingErrorWidget(object: 'la session'));
+              } else if (state.status.isNotFound) {
+                return const ConnectionProvider();
+              } else {
+                return const ColoredBox(
+                    color: Colors.red,
+                    child: ObjectLoadingErrorWidget(object: 'erreur inconnue'));
               }
             },
           ),

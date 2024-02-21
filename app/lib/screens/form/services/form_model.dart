@@ -20,7 +20,8 @@ class FormRequestModel {
 
   static List<int> filmGenresToCode(final List<String> filmGenres)
   {
-    final List<int?> tempFilmCode = filmGenres.map((genre) => MovieGenre[genre]).toList();
+    final List<int?> tempFilmCode =
+        filmGenres.map((genre) => MovieGenre[genre]).toList();
     List<int> filmCodes = [];
 
     for (int i = 0; i < tempFilmCode.length; i++) {
@@ -33,8 +34,8 @@ class FormRequestModel {
 
   static FormRequestModel fillFormRequest(
       {required final Map<String, bool> filmGenres,
-        required final Map<String, bool> literaryGenres,
-        required final Map<String, bool> viewingPlatform})
+      required final Map<String, bool> literaryGenres,
+      required final Map<String, bool> viewingPlatform})
   {
     final List<String> chosenLiteraryGenres = literaryGenres.entries
         .where((entry) => entry.value == true)
@@ -56,4 +57,12 @@ class FormRequestModel {
       viewingPlatform: chosenViewingPlatform,
     );
   }
+}
+
+class FormResponseModel {
+  final int statusCode;
+  bool get isSuccessful =>
+      statusCode == HttpStatus.OK || statusCode == HttpStatus.CREATED;
+
+  const FormResponseModel({required this.statusCode});
 }

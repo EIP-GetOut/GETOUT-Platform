@@ -34,18 +34,24 @@ class SessionService {
     if (globals.cookieJar == null && globals.dio == null) {
       await setCookies();
     }
-
-    final response = await globals.dio
-        ?.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
-    if (response?.statusCode == HttpStatus.OK) {
       try {
-        if (response?.data['account'] != null) {
-          globals.session = response?.data['account'];
-          return SessionStatusResponse(statusCode: SessionStatus.found.index);
-        } else {
-          globals.session = null;
-          return SessionStatusResponse(
-              statusCode: SessionStatus.notFound.index);
+        final response = await globals.dio
+            ?.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
+        if (response?.statusCode == HttpStatus.OK) {
+          if (response?.data['account'] != null) {
+            globals.session = response?.data['account'];
+            if (response?.data['account']['preferences'] != null) {
+              return SessionStatusResponse(
+                  statusCode: SessionStatus.found.index);
+            } else {
+              return SessionStatusResponse(
+                  statusCode: SessionStatus.foundNotFully.index);
+            }
+          } else {
+            globals.session = null;
+            return SessionStatusResponse(
+                statusCode: SessionStatus.notFound.index);
+          }
         }
       } on DioException {
         // add "catch (dioError)" for debugging
@@ -53,7 +59,6 @@ class SessionService {
       } catch (dioError) {
         rethrow;
       }
-    }
     return SessionStatusResponse(statusCode: SessionStatus.error.index);
   }
 }

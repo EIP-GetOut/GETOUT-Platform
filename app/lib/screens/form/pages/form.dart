@@ -84,7 +84,13 @@ class Forms extends StatelessWidget {
               FormServices().sendPreferences(FormRequestModel.fillFormRequest(
                   filmGenres: context.read<FormBloc>().state.filmGenres,
                   literaryGenres: context.read<FormBloc>().state.literaryGenres,
-                  viewingPlatform: context.read<FormBloc>().state.viewingPlatform)).then((value) => context.read<SessionBloc>().add(const SessionRequest()));
+                  viewingPlatform: context.read<FormBloc>().state.viewingPlatform)).then(
+                      (final FormResponseModel value) {
+                        if (!value.isSuccessful) {
+                          showSnackBar(context, 'Une erreur est survenue veuillez réessayer plus tard');
+                        }
+                        context.read<SessionBloc>().add(const SessionRequest());
+                      });
             } else {
               pageController.nextPage(
                   duration: const Duration(milliseconds: 200),

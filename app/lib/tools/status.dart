@@ -5,7 +5,16 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-enum Status { initial, success, error, loading, selected, is_not_found, is_found}
+enum Status {
+  initial,
+  success,
+  error,
+  loading,
+  selected,
+  is_not_found,
+  is_found,
+  is_found_not_fully
+}
 
 extension StatusX on Status {
   bool get isInitial => this == Status.initial;
@@ -15,4 +24,5 @@ extension StatusX on Status {
   bool get isSelected => this == Status.selected;
   bool get isNotFound => this == Status.is_not_found;
   bool get isFound => this == Status.is_found;
+  bool get isFoundNotFully => this == Status.is_found_not_fully;
 }
