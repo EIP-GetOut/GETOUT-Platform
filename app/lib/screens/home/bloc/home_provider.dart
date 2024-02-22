@@ -75,7 +75,7 @@ class HomeProvider extends StatelessWidget {
               create: (context) => RecommendedBooksBloc(
                 homeRepository: context.read<HomeRepository>(),
               )..add(
-                GenerateBooksRequest(genres: genreBooksIds),
+                const GenerateBooksRequest(genres: []),
               ),
             ),
             BlocProvider<LikedBooksBloc>(

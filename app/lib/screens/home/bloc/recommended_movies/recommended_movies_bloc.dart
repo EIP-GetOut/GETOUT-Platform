@@ -6,7 +6,7 @@
 */
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'package:getout/tools/status.dart';
 import 'package:getout/screens/home/bloc/home_repository.dart';
@@ -14,7 +14,7 @@ import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 
 part 'recommended_movies_state.dart';
 
-class RecommendedMoviesBloc extends Bloc<MoviesEvent, RecommendedMoviesState> {
+class RecommendedMoviesBloc extends HydratedBloc<MoviesEvent, RecommendedMoviesState> {
   final HomeRepository homeRepository;
 
   RecommendedMoviesBloc({
@@ -37,5 +37,15 @@ class RecommendedMoviesBloc extends Bloc<MoviesEvent, RecommendedMoviesState> {
     } catch (error) {
       emit(state.copyWith(status: Status.error));
     }
+  }
+
+  @override
+  RecommendedMoviesState? fromJson(Map<String, dynamic> json) {
+    return RecommendedMoviesState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(RecommendedMoviesState state) {
+    return state.toMap();
   }
 }

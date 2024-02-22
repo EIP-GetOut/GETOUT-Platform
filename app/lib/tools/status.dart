@@ -16,6 +16,19 @@ enum Status {
   isFoundWithoutPreferences
 }
 
+final Map<Status, String> statusToString = {
+  Status.initial: 'initial',
+  Status.success: 'success',
+  Status.error: 'error',
+  Status.loading: 'loading',
+  Status.selected: 'selected',
+  Status.isNotFound: 'isNotFound',
+  Status.isFound: 'isFound',
+  Status.isFoundWithoutPreferences: 'isFoundWithoutPreferences',
+};
+
+final Map<String, Status> stringToStatus = statusToString.map((key, value) => MapEntry(value, key));
+
 extension StatusX on Status {
   bool get isInitial => this == Status.initial;
   bool get isLoading => this == Status.loading;

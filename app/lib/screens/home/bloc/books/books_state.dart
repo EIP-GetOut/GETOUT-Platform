@@ -5,31 +5,35 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-part of 'recommended_books_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-class RecommendedBooksState extends Equatable {
-  const RecommendedBooksState({
+import 'package:getout/tools/status.dart';
+import 'package:getout/screens/home/bloc/books/books_event.dart';
+
+//todo make every books bloc use this state.
+class ListBooksState extends Equatable {
+  const ListBooksState({
     this.status = Status.initial,
-    List<BookPreview>? recommendedBooks,
-  }) : recommendedBooks = recommendedBooks ?? const [];
+    List<BookPreview>? listBooks,
+  }) : listBooks = listBooks ?? const [];
 
-  final List<BookPreview> recommendedBooks;
+  final List<BookPreview> listBooks;
   final Status status;
 
   @override
-  List<Object?> get props => [status, recommendedBooks];
+  List<Object?> get props => [status, listBooks];
 
-  RecommendedBooksState copyWith({
-    List<BookPreview>? recommendedBooks,
+  ListBooksState copyWith({
+    List<BookPreview>? listBooks,
     Status? status,
   }) {
-    return RecommendedBooksState(
-      recommendedBooks: recommendedBooks,
+    return ListBooksState(
+      listBooks: listBooks,
       status: status ?? this.status,
     );
   }
 
-  factory RecommendedBooksState.fromMap(Map<String, dynamic> map) {
+  factory ListBooksState.fromMap(Map<String, dynamic> map) {
     List<BookPreview> books = [];
 
     map['recommended']!.forEach((element) => {
@@ -39,14 +43,14 @@ class RecommendedBooksState extends Equatable {
               posterPath: element['posterPath'],
               overview: element['overview']))
         });
-    return RecommendedBooksState(
-        recommendedBooks: books,
+    return ListBooksState(
+        listBooks: books,
         status: stringToStatus[map['status']] ?? Status.error);
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'recommended': recommendedBooks
+      'recommended': listBooks
           .map((book) => {
                 'id': book.id,
                 'title': book.title,
