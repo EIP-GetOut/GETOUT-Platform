@@ -28,4 +28,39 @@ class LikedMoviesState extends Equatable {
       status: status ?? this.status,
     );
   }
+
+
+  factory LikedMoviesState.fromMap(Map<String, dynamic> map) {
+    if (kDebugMode) {
+      print('liked_movies.fromMap:${map['liked_movies_status']}');
+    }
+    List<MoviePreview> likedMovies = [];
+
+    map['liked_movies']!.forEach((element) => {
+      likedMovies.add(MoviePreview(
+          id: element['id'],
+          title: element['title'],
+          posterPath: element['posterPath'],
+          overview: element['overview']))
+    });
+    return LikedMoviesState(
+        likedMovies: likedMovies,
+        status: stringToStatus[map['liked_movies_status']] ?? Status.error);
+  }
+
+  Map<String, dynamic> toMap() {
+    if (kDebugMode) {
+      print('liked_movies.toMap:${statusToString[status]}');
+    }
+    return {
+      'liked_movies': likedMovies
+          .map((movie) => {
+        'id': movie.id,
+        'title': movie.title,
+        'posterPath': movie.posterPath,
+        'overview': movie.overview,
+      }).toList(),
+      'liked_movies_status': statusToString[status],
+    };
+  }
 }

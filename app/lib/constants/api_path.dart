@@ -10,9 +10,9 @@ import 'package:flutter/foundation.dart';
 class ApiConstants {
   const ApiConstants();
 
-  static const String rootApiPath = (kDebugMode)
+  static const String rootApiPath = 'http://192.168.0.3:8080';/*(kDebugMode)
     ? 'http://10.0.2.2:8080'
-    : 'https://api.eip-getout.me';
+    : 'https://api.eip-getout.me';*/
 
   // ACCOUNT API PATH
   static const String loginPath = '/account/login';

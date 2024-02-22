@@ -5,6 +5,8 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
+import 'package:flutter/foundation.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
@@ -20,18 +22,18 @@ class RecommendedBooksBloc extends HydratedBloc<BooksEvent, RecommendedBooksStat
   RecommendedBooksBloc({
     required this.homeRepository,
   }) : super(const RecommendedBooksState()) {
-    on<GenerateBooksRequest>(_onRecommendedBooksRequest);
+    on<GenerateBooksRequest>(_onRecmmendedBooksRequest);
   }
 
-  void _onRecommendedBooksRequest(
+  void _onRecmmendedBooksRequest(
       GenerateBooksRequest event, Emitter<RecommendedBooksState> emit) async {
     emit(state.copyWith(status: Status.loading));
     try {
-      final listBooks = await homeRepository.getRecommendedBooks(event);
+      final recommendedBooks = await homeRepository.getRecommendedBooks(event);
       emit(
         state.copyWith(
           status: Status.success,
-          recommendedBooks: listBooks,
+          recommendedBooks: recommendedBooks,
         ),
       );
     } catch (error) {

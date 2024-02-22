@@ -30,9 +30,12 @@ class RecommendedMoviesState extends Equatable {
   }
 
   factory RecommendedMoviesState.fromMap(Map<String, dynamic> map) {
+    if (kDebugMode) {
+      print('recommended_movies.fromMap:${map['recommended_movies_status']}');
+    }
     List<MoviePreview> movies = [];
 
-    map['recommended']!.forEach((element) => {
+    map['recommended_movies']!.forEach((element) => {
           movies.add(MoviePreview(
               id: element['id'],
               title: element['title'],
@@ -41,12 +44,15 @@ class RecommendedMoviesState extends Equatable {
         });
     return RecommendedMoviesState(
         recommendedMovies: movies,
-        status: stringToStatus[map['status']] ?? Status.error);
+        status: stringToStatus[map['recommended_movies_status']] ?? Status.error);
   }
 
   Map<String, dynamic> toMap() {
+    if (kDebugMode) {
+      print('recommended_movies.toMap:${statusToString[status]}');
+    }
     return {
-      'recommended': recommendedMovies
+      'recommended_movies': recommendedMovies
           .map((book) => {
                 'id': book.id,
                 'title': book.title,
@@ -54,7 +60,7 @@ class RecommendedMoviesState extends Equatable {
                 'overview': book.overview,
               })
           .toList(),
-      'status': statusToString[status],
+      'recommended_movies_status': statusToString[status],
     };
   }
 }

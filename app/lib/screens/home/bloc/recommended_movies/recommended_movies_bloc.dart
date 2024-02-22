@@ -5,6 +5,8 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
+import 'package:flutter/foundation.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
@@ -20,10 +22,10 @@ class RecommendedMoviesBloc extends HydratedBloc<MoviesEvent, RecommendedMoviesS
   RecommendedMoviesBloc({
     required this.homeRepository,
   }) : super(const RecommendedMoviesState()) {
-    on<GenerateMoviesRequest>(_onGenerateMoviesRequestEvent);
+    on<GenerateMoviesRequest>(_onRecommendedMoviesRequest);
   }
 
-  void _onGenerateMoviesRequestEvent(
+  void _onRecommendedMoviesRequest(
       GenerateMoviesRequest event, Emitter<RecommendedMoviesState> emit) async {
     emit(state.copyWith(status: Status.loading));
     try {

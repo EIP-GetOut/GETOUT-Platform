@@ -28,4 +28,39 @@ class LikedBooksState extends Equatable {
       status: status ?? this.status,
     );
   }
+
+  factory LikedBooksState.fromMap(Map<String, dynamic> map) {
+    if (kDebugMode) {
+      print('liked_books.fromMap:${map['liked_books_status']}');
+    }
+    List<BookPreview> likedBooks = [];
+
+    map['liked_books']!.forEach((element) => {
+      likedBooks.add(BookPreview(
+          id: element['id'],
+          title: element['title'],
+          posterPath: element['posterPath'],
+          overview: element['overview']))
+    });
+    return LikedBooksState(
+        likedBooks: likedBooks,
+        status: stringToStatus[map['liked_books_status']] ?? Status.error);
+  }
+
+  Map<String, dynamic> toMap() {
+    if (kDebugMode) {
+      print('liked_books.toMap:${statusToString[status]}');
+    }
+    return {
+      'liked_books': likedBooks
+          .map((book) => {
+        'id': book.id,
+        'title': book.title,
+        'posterPath': book.posterPath,
+        'overview': book.overview,
+      })
+          .toList(),
+      'liked_books_status': statusToString[status],
+    };
+  }
 }

@@ -5,8 +5,10 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/foundation.dart';
+
 import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'package:getout/tools/status.dart';
 import 'package:getout/screens/home/bloc/home_repository.dart';
@@ -14,7 +16,7 @@ import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 
 part 'liked_movies_state.dart';
 
-class LikedMoviesBloc extends Bloc<MoviesEvent, LikedMoviesState> {
+class LikedMoviesBloc extends HydratedBloc<MoviesEvent, LikedMoviesState> {
   final HomeRepository homeRepository;
 
   LikedMoviesBloc({
@@ -37,5 +39,15 @@ class LikedMoviesBloc extends Bloc<MoviesEvent, LikedMoviesState> {
     } catch (error) {
       emit(state.copyWith(status: Status.error));
     }
+  }
+
+  @override
+  LikedMoviesState? fromJson(Map<String, dynamic> json) {
+    return LikedMoviesState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(LikedMoviesState state) {
+    return state.toMap();
   }
 }
