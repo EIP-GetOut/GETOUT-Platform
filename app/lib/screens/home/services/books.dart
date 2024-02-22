@@ -8,7 +8,7 @@
 part of 'service.dart';
 
 class BooksService extends ServiceTemplate {
-  final String _id = globals.session?['id'].toString() ?? '';
+  final String _id = (globals.session != null) ? globals.session!['id'].toString() : '';
 
   BooksService();
 
@@ -17,23 +17,37 @@ class BooksService extends ServiceTemplate {
       GenerateBooksRequest request) async {
     GenerateBooksResponse result = [];
 
-    final response = await globals.dio?.get(
-        '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedBooksPath}',
-        options: Options(headers: {'Content-Type': 'application/json'}));
+    try { /// TODO we need to do something prettier
+      final response = await globals.dio?.get(
+          '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedBooksPath}',
+          options: Options(headers: {'Content-Type': 'application/json'}));
 
-    if (response?.statusCode != HttpStatus.OK) {
+      if (response?.statusCode != HttpStatus.OK) {
+        return Future.error(Exception(
+          'Error ${response?.statusCode} while fetching books: ${response?.statusMessage}',
+        ));
+      }
+
+      response?.data.forEach((elem) {
+        result.add(BookPreview(
+            id: elem['id'],
+            title: elem['title'],
+            posterPath: elem['poster_path'],
+            overview: elem['overview']));
+      });
+    } on DioException catch (dioException) {
+      if (dioException.response != null && dioException.response?.statusCode != null) {
+        return Future.error(Exception(
+          'Error ${dioException.response?.statusCode} while fetching books: ${dioException.response?.statusMessage}',
+        ));
+      }
       return Future.error(Exception(
-        'Error ${response?.statusCode} while fetching books: ${response?.statusMessage}',
+          'Unknown error:  ${dioException.toString()}'));
+    } catch (error) {
+      return Future.error(Exception(
+        'Unknown error: ${error.toString()}',
       ));
     }
-
-    response?.data.forEach((elem) {
-      result.add(BookPreview(
-          id: elem['id'],
-          title: elem['title'],
-          posterPath: elem['poster_path'],
-          overview: elem['overview']));
-    });
     return result;
   }
 

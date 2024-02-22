@@ -18,16 +18,18 @@ class MoviesService extends ServiceTemplate {
       GenerateMoviesRequest request) async {
     GenerateMoviesResponse result = [];
 
-    try {
+    try { /// TODO we need to do something prettier
       final response = await globals.dio?.get(
           '${ApiConstants.rootApiPath}/account/$_id${ApiConstants
               .recommendedMoviesPath}',
           options: Options(headers: {'Content-Type': 'application/json'}));
+
       if (response?.statusCode != HttpStatus.OK) {
         return Future.error(Exception(
           'Error ${response?.statusCode} while fetching movies: ${response?.statusMessage}',
         ));
       }
+
       response?.data.forEach((elem) {
         result.add(MoviePreview(
             id: elem['id'],
@@ -35,9 +37,17 @@ class MoviesService extends ServiceTemplate {
             posterPath: elem['poster_path'],
             overview: elem['overview']));
       });
+    } on DioException catch (dioException) {
+      if (dioException.response != null && dioException.response?.statusCode != null) {
+        return Future.error(Exception(
+          'Error ${dioException.response?.statusCode} while fetching movies: ${dioException.response?.statusMessage}',
+        ));
+      }
+      return Future.error(Exception(
+          'Unknown error:  ${dioException.toString()}'));
     } catch (error) {
       return Future.error(Exception(
-        'Error ${error.toString()} while fetching movies: ${error.toString()}',
+        'Unknown error: ${error.toString()}',
       ));
     }
     return result;
