@@ -24,7 +24,6 @@ class RegisterService {
             'firstName': request.firstName,
             'lastName': request.lastName,
             'bornDate': request.bornDate,
-            'salt': 'sdjqshjodijaoz'
           },
           options: Options(headers: {'Content-Type': 'application/json'}));
     } on DioException { // add "catch (dioError)" for debugging

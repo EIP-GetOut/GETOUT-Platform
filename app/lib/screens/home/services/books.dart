@@ -8,7 +8,7 @@
 part of 'service.dart';
 
 class BooksService extends ServiceTemplate {
-  final session = globals.session ?? {}; /// TODO NOT SAFE
+  final String _id = globals.session?['id'].toString() ?? '';
 
   BooksService();
 
@@ -16,10 +16,9 @@ class BooksService extends ServiceTemplate {
   Future<GenerateBooksResponse> getRecommendedBooks(
       GenerateBooksRequest request) async {
     GenerateBooksResponse result = [];
-    String withGenres = formatWithGenresParameter(request.genres);
 
     final response = await globals.dio?.get(
-        '${ApiConstants.rootApiPath}${ApiConstants.generateBooksPath}?with_genres=$withGenres&include_adult=${request.includeAdult.toString()}',
+        '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedBooksPath}',
         options: Options(headers: {'Content-Type': 'application/json'}));
 
     if (response?.statusCode != HttpStatus.OK) {
@@ -28,11 +27,11 @@ class BooksService extends ServiceTemplate {
       ));
     }
 
-    response?.data['books'].forEach((elem) {
+    response?.data.forEach((elem) {
       result.add(BookPreview(
           id: elem['id'],
           title: elem['title'],
-          posterPath: elem['poster'],
+          posterPath: elem['poster_path'],
           overview: elem['overview']));
     });
     return result;
@@ -63,7 +62,7 @@ class BooksService extends ServiceTemplate {
     final Response? response;
 
     response = await globals.dio
-        ?.get('${ApiConstants.rootApiPath}/account/${session['id']}/likedBooks',
+        ?.get('${ApiConstants.rootApiPath}/account/$_id/likedBooks',
             options: Options(headers: {
               'Content-Type': 'application/json',
             }));
@@ -100,7 +99,7 @@ class BooksService extends ServiceTemplate {
     dynamic data;
 
     final response = await globals.dio
-        ?.get('${ApiConstants.rootApiPath}/account/${session['id']}/readinglist',
+        ?.get('${ApiConstants.rootApiPath}/account/$_id/readinglist',
             options: Options(headers: {
               'Content-Type': 'application/json',
             }));
