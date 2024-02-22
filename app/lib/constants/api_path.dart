@@ -25,10 +25,10 @@ class ApiConstants {
   static const String preferencesApiPath = '/account/preferences';
 
   // GENERATE THINGS API PATH
-  static const String generateMoviesPath = '/generate-movies';
+  static const String recommendedMoviesPath = '/recommend-movies';
   static const String getInfoMoviePath = '/movie';
 
-  static const String generateBooksPath = '/generate-books';
+  static const String recommendedBooksPath = '/recommend-books';
   static const String getInfoBookPath = '/book';
 
   static const String session = '/session';
