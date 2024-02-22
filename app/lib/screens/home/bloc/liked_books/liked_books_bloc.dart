@@ -16,10 +16,10 @@ import 'package:getout/tools/status.dart';
 
 part 'liked_books_state.dart';
 
-class LikedBooksBloc extends HydratedBloc<BooksEvent, LikedBooksState> {
+class LikedBooksHydratedBloc extends HydratedBloc<BooksEvent, LikedBooksState> {
   final HomeRepository homeRepository;
 
-  LikedBooksBloc({
+  LikedBooksHydratedBloc({
     required this.homeRepository,
   }) : super(const LikedBooksState()) {
     on<GenerateBooksRequest>(_onLikedBooksRequest);

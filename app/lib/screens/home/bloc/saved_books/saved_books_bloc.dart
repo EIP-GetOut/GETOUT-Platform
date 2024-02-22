@@ -16,10 +16,10 @@ import 'package:getout/screens/home/bloc/books/books_event.dart';
 
 part 'saved_books_state.dart';
 
-class SavedBooksBloc extends HydratedBloc<BooksEvent, SavedBooksState> {
+class SavedBooksHydratedBloc extends HydratedBloc<BooksEvent, SavedBooksState> {
   final HomeRepository homeRepository;
 
-  SavedBooksBloc({
+  SavedBooksHydratedBloc({
     required this.homeRepository,
   }) : super(const SavedBooksState()) {
     on<GenerateBooksRequest>(_onSavedBooksRequest);

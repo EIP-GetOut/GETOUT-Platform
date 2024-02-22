@@ -21,7 +21,7 @@ class SavedBooksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SavedBooksBloc, SavedBooksState>(
+    return BlocBuilder<SavedBooksHydratedBloc, SavedBooksState>(
       builder: (context, state) {
         if (state.status.isSuccess) {
           return SavedBooksSuccessWidget(books: state.savedBooks);

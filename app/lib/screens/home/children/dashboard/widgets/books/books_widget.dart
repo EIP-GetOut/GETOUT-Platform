@@ -19,7 +19,7 @@ class BooksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RecommendedBooksBloc, RecommendedBooksState>(
+    return BlocBuilder<RecommendedBooksHydratedBloc, RecommendedBooksState>(
       builder: (context, state) {
         if (state.status.isSuccess) {
           return BooksSuccessWidget(books: state.recommendedBooks);

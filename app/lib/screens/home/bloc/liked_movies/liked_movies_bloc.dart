@@ -16,10 +16,10 @@ import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 
 part 'liked_movies_state.dart';
 
-class LikedMoviesBloc extends HydratedBloc<MoviesEvent, LikedMoviesState> {
+class LikedMoviesHydratedBloc extends HydratedBloc<MoviesEvent, LikedMoviesState> {
   final HomeRepository homeRepository;
 
-  LikedMoviesBloc({
+  LikedMoviesHydratedBloc({
     required this.homeRepository,
   }) : super(const LikedMoviesState()) {
     on<GenerateMoviesRequest>(_onLikedMoviesRequest);

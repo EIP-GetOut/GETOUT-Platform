@@ -16,10 +16,10 @@ import 'package:getout/screens/home/bloc/home_repository.dart';
 
 part 'recommended_books_state.dart';
 
-class RecommendedBooksBloc extends HydratedBloc<BooksEvent, RecommendedBooksState> {
+class RecommendedBooksHydratedBloc extends HydratedBloc<BooksEvent, RecommendedBooksState> {
   final HomeRepository homeRepository;
 
-  RecommendedBooksBloc({
+  RecommendedBooksHydratedBloc({
     required this.homeRepository,
   }) : super(const RecommendedBooksState()) {
     on<GenerateBooksRequest>(_onRecmmendedBooksRequest);
