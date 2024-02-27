@@ -14,8 +14,8 @@ import validate from '@services/middlewares/validator'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
-import { addBookToReadingList, removeBookFromReadingList } from '@models/book'
 import { findEntity } from '@models/getObjects'
+import { addMovieToSeenMovies, removeMovieFromSeenMovies } from '@models/movie'
 
 import { Account } from '@entities/Account'
 
@@ -23,10 +23,10 @@ const router = Router()
 
 /**
  * @swagger
- * /account/{accountId}/readingList:
+ * /account/{accountId}/seenMovies:
  *   post:
- *     summary: Add a book to the user's reading list.
- *     description: Add the book passed as body in the connected user's reading list.
+ *     summary: Add a movie to the user's seen movies.
+ *     description: Add the movie passed as body in the connected user's seen movies.
  *     consumes:
  *       - application/json
  *     parameters:
@@ -35,110 +35,116 @@ const router = Router()
  *         required: true
  *         type: string
  *         format: uuid
- *       - name: bookId
+ *         description: The ID of the user's account.
+ *       - name: movieId
  *         in: body
  *         required: true
  *         schema:
- *           type: string
- *           description: The book id that needs to be added to the reading list.
+ *           type: object
+ *           properties:
+ *             movieId:
+ *               type: integer
+ *               format: int32
+ *               description: The movie id that needs to be added to the user's seen movies.
  *     responses:
- *       "201":
- *         description: Book successfully added to the reading list.
+ *       '201':
+ *         description: Movie successfully added to the seen movies.
  *         schema:
  *           type: array
  *           items:
- *             type: string
- *       "400":
+ *             type: number
+ *       '400':
  *         description: Invalid request body or missing required fields.
- *       "401":
+ *       '401':
  *         description: Unauthorized - user is not connected.
- *       "500":
+ *       '500':
  *         description: Internal server error.
  *   delete:
- *     summary: Remove a book from the user's reading list.
- *     description: Remove the book passed in the url in the connected user's reading list.
+ *     summary: Remove a movie from the user's seen movies.
+ *     description: Remove the movie passed in the url in the connected user's seen movies.
  *     consumes:
  *       - application/json
  *     parameters:
- *       - name: accountId
- *         in: path
- *         required: true
- *         type: string
- *         format: uuid
- *       - name: bookId
- *         in: body
- *         required: true
- *         schema:
- *           type: string
- *           description: The book id that needs to be removed from the reading list.
+ *      - name: accountId
+ *        in: path
+ *        required: true
+ *        type: string
+ *        format: uuid
+ *      - name: movieId
+ *        in: body
+ *        required: true
+ *        schema:
+ *          type: integer
+ *          format: int32
+ *        description: "The movie id that needs to be removed from the user's seen movies."
  *     responses:
- *       "200":
- *         description: Book successfully removed from the reading list.
+ *       '200':
+ *         description: Movie successfully removed from the seen movies.
  *         schema:
  *           type: array
  *           items:
- *             type: string
- *       "400":
+ *             type: number
+ *       '400':
  *         description: Invalid request body or missing required fields.
- *       "401":
+ *       '401':
  *         description: Unauthorized - user is not connected.
- *       "404":
- *         description: Not Found - the requested book was not found in list.
- *       "500":
+ *       '404':
+ *         description: Not Found - the requested movie was not found in list.
+ *       '500':
  *         description: Internal server error.
  *   get:
- *     summary: Get the account's reading list.
- *     description: Retrieve a JSON which contains the user's reading list.
+ *     summary: Get the account's seen movies.
+ *     description: Retrieve a JSON which contains the user's seen movies.
  *     parameters:
- *       - name: accountId
- *         in: path
- *         required: true
- *         type: string
- *         format: uuid
+ *      - name: accountId
+ *        in: path
+ *        required: true
+ *        type: string
+ *        format: uuid
  *     responses:
- *       "200":
- *         description: Reading list successfully returned.
+ *       '200':
+ *         description: Seen movies list successfully returned.
  *         schema:
  *           type: array
  *           items:
- *             type: string
- *       "400":
+ *             type: number
+ *       '400':
  *         description: Invalid request body or missing required fields.
- *       "401":
+ *       '401':
  *         description: Unauthorized - user is not connected.
- *       "500":
+ *       '500':
  *         description: Internal server error.
  */
 
 const rulesPost = [
   param('accountId').isUUID(),
-  body('bookId').isString()
+  body('movieId').isNumeric()
 ]
 
-router.post('/account/:accountId/readingList', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
+router.post('/account/:accountId/seenMovies', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addBookToReadingList(req.params.accountId, req.body.bookId).then((updatedReadingList: string[]) => {
-    logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s reading list`)
-    return res.status(StatusCodes.CREATED).json(updatedReadingList)
+  addMovieToSeenMovies(req.params.accountId, req.body.movieId).then((updatedSeenMovies: number[]) => {
+    logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s seen movies.`)
+    return res.status(StatusCodes.CREATED).json(updatedSeenMovies)
   }).catch(handleErrorOnRoute(res))
 })
 
 const rulesDelete = [
   param('accountId').isUUID(),
-  param('bookId').isString()
+  param('movieId').isNumeric()
 ]
 
-router.delete('/account/:accountId/readingList/:bookId', rulesDelete, validate, logApiRequest, (req: Request, res: Response) => {
+router.delete('/account/:accountId/seenMovies/:movieId', rulesDelete, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  removeBookFromReadingList(req.params.accountId, req.params.bookId).then((updatedReadingList: string[]) => {
-    logger.info(`Successfully removed ${req.body.bookId} of ${req.session.account?.email}'s reading list.`)
-    return res.status(StatusCodes.OK).json(updatedReadingList)
+  removeMovieFromSeenMovies(req.params.accountId, parseInt(req.params.movieId)).then((updatedSeenMovies: number[]) => {
+    logger.info(`Successfully removed ${req.params.movieId} of ${req.session.account?.email}'s seen movies.`)
+    return res.status(StatusCodes.OK).json(updatedSeenMovies)
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -146,7 +152,7 @@ const rulesGet = [
   param('accountId').isUUID()
 ]
 
-router.get('/account/:accountId/readingList', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
+router.get('/account/:accountId/seenMovies', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
     handleErrorOnRoute(res)(new AuthenticationError())
     return
@@ -155,7 +161,7 @@ router.get('/account/:accountId/readingList', rulesGet, validate, logApiRequest,
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    return res.status(StatusCodes.OK).json(account?.readingList)
+    return res.status(StatusCodes.OK).json(account?.seenMovies)
   }).catch(handleErrorOnRoute(res))
 })
 

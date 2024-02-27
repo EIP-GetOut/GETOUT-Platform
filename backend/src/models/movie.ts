@@ -49,6 +49,7 @@ async function getMovie (id: number): Promise<any> {
     }
     return await fetchMovieCredits(id).then((cast: any) => {
       return ({
+        id,
         title: movieObtained.title,
         overview: movieObtained.overview,
         poster_path: movieObtained.poster_path,
@@ -106,6 +107,9 @@ const addMovieToLikedMovies = async (accountId: UUID, movieId: number): Promise<
 const addMovieToDislikedMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
   await addMovieToList(accountId, movieId, 'dislikedMovies')
 
+const addMovieToSeenMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
+  await addMovieToList(accountId, movieId, 'dislikedMovies')
+
 const removeMovieFromWatchlist = async (accountId: UUID, movieId: number): Promise<number[]> =>
   await removeMovieFromList(accountId, movieId, 'watchlist')
 
@@ -115,13 +119,18 @@ const removeMovieFromLikedMovies = async (accountId: UUID, movieId: number): Pro
 const removeMovieFromDislikedMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
   await removeMovieFromList(accountId, movieId, 'dislikedMovies')
 
+const removeMovieFromSeenMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
+  await removeMovieFromList(accountId, movieId, 'dislikedMovies')
+
 export {
   addMovieToDislikedMovies,
   addMovieToLikedMovies,
+  addMovieToSeenMovies,
   addMovieToWatchlist,
   getMovie,
   removeMovieFromDislikedMovies,
   removeMovieFromLikedMovies,
   removeMovieFromList,
+  removeMovieFromSeenMovies,
   removeMovieFromWatchlist
 }

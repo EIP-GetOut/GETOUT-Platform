@@ -14,7 +14,7 @@ import validate from '@services/middlewares/validator'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
-import { addBookToReadingList, removeBookFromReadingList } from '@models/book'
+import { addBookToReadBooks, removeBookFromReadBooks } from '@models/book'
 import { findEntity } from '@models/getObjects'
 
 import { Account } from '@entities/Account'
@@ -23,10 +23,10 @@ const router = Router()
 
 /**
  * @swagger
- * /account/{accountId}/readingList:
+ * /account/{accountId}/readBooks:
  *   post:
- *     summary: Add a book to the user's reading list.
- *     description: Add the book passed as body in the connected user's reading list.
+ *     summary: Add a book to the user's read books.
+ *     description: Add the book passed as body in the connected user's read books.
  *     consumes:
  *       - application/json
  *     parameters:
@@ -40,10 +40,10 @@ const router = Router()
  *         required: true
  *         schema:
  *           type: string
- *           description: The book id that needs to be added to the reading list.
+ *           description: The book id that needs to be added to the read books.
  *     responses:
  *       "201":
- *         description: Book successfully added to the reading list.
+ *         description: Book successfully added to the read books.
  *         schema:
  *           type: array
  *           items:
@@ -55,8 +55,8 @@ const router = Router()
  *       "500":
  *         description: Internal server error.
  *   delete:
- *     summary: Remove a book from the user's reading list.
- *     description: Remove the book passed in the url in the connected user's reading list.
+ *     summary: Remove a book from the user's read books.
+ *     description: Remove the book passed in the url in the connected user's read books.
  *     consumes:
  *       - application/json
  *     parameters:
@@ -70,10 +70,10 @@ const router = Router()
  *         required: true
  *         schema:
  *           type: string
- *           description: The book id that needs to be removed from the reading list.
+ *           description: The book id that needs to be removed from the read books.
  *     responses:
  *       "200":
- *         description: Book successfully removed from the reading list.
+ *         description: Book successfully removed from the read books.
  *         schema:
  *           type: array
  *           items:
@@ -87,8 +87,8 @@ const router = Router()
  *       "500":
  *         description: Internal server error.
  *   get:
- *     summary: Get the account's reading list.
- *     description: Retrieve a JSON which contains the user's reading list.
+ *     summary: Get the account's read books.
+ *     description: Retrieve a JSON which contains the user's read books.
  *     parameters:
  *       - name: accountId
  *         in: path
@@ -97,7 +97,7 @@ const router = Router()
  *         format: uuid
  *     responses:
  *       "200":
- *         description: Reading list successfully returned.
+ *         description: Read books successfully returned.
  *         schema:
  *           type: array
  *           items:
@@ -112,33 +112,33 @@ const router = Router()
 
 const rulesPost = [
   param('accountId').isUUID(),
-  body('bookId').isString()
+  body('bookId').isNumeric()
 ]
 
-router.post('/account/:accountId/readingList', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
+router.post('/account/:accountId/readBooks', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addBookToReadingList(req.params.accountId, req.body.bookId).then((updatedReadingList: string[]) => {
-    logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s reading list`)
-    return res.status(StatusCodes.CREATED).json(updatedReadingList)
+  addBookToReadBooks(req.params.accountId, req.body.bookId).then((updatedReadBooks: string[]) => {
+    logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s read books.`)
+    return res.status(StatusCodes.CREATED).json(updatedReadBooks)
   }).catch(handleErrorOnRoute(res))
 })
 
 const rulesDelete = [
   param('accountId').isUUID(),
-  param('bookId').isString()
+  param('bookId').isNumeric()
 ]
 
-router.delete('/account/:accountId/readingList/:bookId', rulesDelete, validate, logApiRequest, (req: Request, res: Response) => {
+router.delete('/account/:accountId/readBooks/:bookId', rulesDelete, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  removeBookFromReadingList(req.params.accountId, req.params.bookId).then((updatedReadingList: string[]) => {
-    logger.info(`Successfully removed ${req.body.bookId} of ${req.session.account?.email}'s reading list.`)
-    return res.status(StatusCodes.OK).json(updatedReadingList)
+  removeBookFromReadBooks(req.params.accountId, req.params.bookId).then((updatedReadBooks: string[]) => {
+    logger.info(`Successfully removed ${req.params.bookId} of ${req.session.account?.email}'s read books.`)
+    return res.status(StatusCodes.OK).json(updatedReadBooks)
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -146,7 +146,7 @@ const rulesGet = [
   param('accountId').isUUID()
 ]
 
-router.get('/account/:accountId/readingList', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
+router.get('/account/:accountId/readBooks', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
     handleErrorOnRoute(res)(new AuthenticationError())
     return
@@ -155,7 +155,7 @@ router.get('/account/:accountId/readingList', rulesGet, validate, logApiRequest,
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    return res.status(StatusCodes.OK).json(account?.readingList)
+    return res.status(StatusCodes.OK).json(account?.readBooks)
   }).catch(handleErrorOnRoute(res))
 })
 
