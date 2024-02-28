@@ -15,7 +15,7 @@ import 'package:getout/tools/status.dart';
 import 'package:getout/screens/connection/forgot_password/widgets/fields.dart';
 import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/constants/http_status.dart';
-import 'package:getout/widgets/show_snackbar.dart';
+import 'package:getout/widgets/show_snack_bar.dart';
 
 class CheckEmailPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

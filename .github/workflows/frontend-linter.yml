@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - dev
+      - app
     paths:
       - 'app/**'
 
@@ -27,10 +28,10 @@ jobs:
           distribution: 'microsoft'
           java-version: '17'
 
-      - name: Set up Flutter 3.16.0
+      - name: Set up Flutter 3.19.0
         uses: subosito/flutter-action@v2.12.0
         with:
-          flutter-version: '3.16.0'
+          flutter-version: '3.19.0'
           channel: 'stable'
           cache: true
 

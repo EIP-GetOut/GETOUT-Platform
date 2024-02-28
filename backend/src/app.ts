@@ -30,7 +30,8 @@ function checkRequiredEnvironmentVariables (): void {
     'TYPEORM_USERNAME',
     'TYPEORM_PASSWORD',
     'TYPEORM_DATABASE',
-    'GOOGLE_CLIENT_ID'
+    'GOOGLE_CLIENT_ID',
+    'MOVIE_DB_KEY'
   ]
 
   envVariablesToCheck.forEach((envVar: keyof NodeJS.ProcessEnv) => {

@@ -10,18 +10,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 
-import 'package:getout/bloc/user/bloc.dart';
-import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_provider.dart';
-import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
+import 'package:getout/bloc/session/session_bloc.dart';
+import 'package:getout/bloc/session/session_event.dart';
 import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
-import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
+import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
+import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_provider.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/register/pages/register.dart';
+import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/connection/login/widgets/fields.dart';
 import 'package:getout/screens/connection/widgets/fields_title.dart';
+import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/tools/status.dart';
-import 'package:getout/widgets/show_snackbar.dart';
 
 class LoginPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -33,9 +34,8 @@ class LoginPage extends StatelessWidget {
     ///
     /// StoreR
     ///
-
     return Scaffold(
-        body: BlocListener<LoginBloc, LoginState>(
+      body: BlocListener<LoginBloc, LoginState>(
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status.isError) {
@@ -50,141 +50,126 @@ class LoginPage extends StatelessWidget {
           }
         }
         if (state.status.isSuccess) {
-          context.read<UserBloc>().add(UserSignIn());
+          context.read<SessionBloc>().add(const SessionRequest());
         }
       },
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          //crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Image.asset(
-                'assets/entire_logo.png',
-                fit: BoxFit.contain,
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Image.asset(
+            'assets/images/logo/full_getout.png',
+            fit: BoxFit.contain,
+          ),
+        ),
+        const SizedBox(height: 30),
+        Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              const Row(
+                children: [
+                  SizedBox(width: 10),
+                  Text('ADRESSE EMAIL',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
+                  Text('*',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red)),
+                ],
               ),
-            ),
-            const SizedBox(height: 30),
-            Form(
-              key: _formKey,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Row(
-                        children: [
-                          SizedBox(width: 10),
-                          Text('ADRESSE EMAIL',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black)),
-                          Text('*',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.red)),
-                        ],
-                      ),
-                      const Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                          child: EmailField()),
-                      const SizedBox(height: 20),
-                      fieldTitle('MOT DE PASSE'),
-                      const Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                        child: PasswordField(),
-                      ),
-                      const SizedBox(height: 30),
-                      Align(
-                          alignment: Alignment.center,
-                          child: LoginButton(formKey: _formKey)),
-                      const SizedBox(height: 30),
-                      SizedBox(
-                        child: Align(
-                            alignment: Alignment.center,
-                            child: Image.asset(
-                              'assets/separation.png',
-                              fit: BoxFit.contain,
-                            )),
-                      ),
-                      const SizedBox(height: 30),
-                      Align(
-                        alignment: Alignment.center,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (_) {
-                                  return BlocProvider.value(
-                                      value: BlocProvider.of<RegisterBloc>(context),
-                                      child: RegisterPage());
-                            }));
-                          },
-                          child: const Text.rich(
-                            TextSpan(
-                              text: 'Première connection ?',
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
-                              children: <InlineSpan>[
-                                TextSpan(
-                                  text: ' Créer un compte',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color:
-                                          Color.fromRGBO(213, 86, 65, 0.992)),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      Align(
-                        alignment: Alignment.center,
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (_) {
-                                    return MultiBlocProvider(
-                                      providers: [
-                                        BlocProvider.value(value: BlocProvider.of<CheckEmailBloc>(context)),
-                                        BlocProvider.value(value: BlocProvider.of<NewPasswordBloc>(context)),
-                                      ],
-                                      child: const ForgotPasswordProvider());
-                                }));
-                           },
-                          child: const Text.rich(
-                            TextSpan(
-                              text: 'Mot de passe oublié ?',
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
-                              children: <InlineSpan>[
-                                TextSpan(
-                                  text: ' Changez le',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color:
-                                          Color.fromRGBO(213, 86, 65, 0.992)),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ]),
+              const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                  child: EmailField()),
+              const SizedBox(height: 20),
+              fieldTitle('MOT DE PASSE'),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+                child: PasswordField(),
               ),
-            ),
-          ]),
+              const SizedBox(height: 30),
+              Align(
+                  alignment: Alignment.center,
+                  child: LoginButton(formKey: _formKey)),
+              const SizedBox(height: 30),
+              SizedBox(
+                child: Align(
+                    alignment: Alignment.center,
+                    child: Image.asset(
+                      'assets/images/other/split.png',
+                      fit: BoxFit.contain,
+                    )),
+              ),
+              const SizedBox(height: 30),
+              Align(
+                alignment: Alignment.center,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return BlocProvider.value(
+                          value: BlocProvider.of<RegisterBloc>(context),
+                          child: RegisterPage());
+                    }));
+                  },
+                  child: const Text.rich(
+                    TextSpan(
+                      text: 'Première connection ?',
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                      children: <InlineSpan>[
+                        TextSpan(
+                          text: ' Créer un compte',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(213, 86, 65, 0.992)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+              Align(
+                alignment: Alignment.center,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return MultiBlocProvider(providers: [
+                        BlocProvider.value(
+                            value: BlocProvider.of<CheckEmailBloc>(context)),
+                        BlocProvider.value(
+                            value: BlocProvider.of<NewPasswordBloc>(context)),
+                      ], child: const ForgotPasswordProvider());
+                    }));
+                  },
+                  child: const Text.rich(
+                    TextSpan(
+                      text: 'Mot de passe oublié ?',
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                      children: <InlineSpan>[
+                        TextSpan(
+                          text: ' Changez le',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Color.fromRGBO(213, 86, 65, 0.992)),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ]),
+          ),
+        ),
+      ]),
     ));
   }
 }

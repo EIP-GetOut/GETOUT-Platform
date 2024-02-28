@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/python-shell": "^1.0.3",
     "@types/supertest": "^2.0.15",
     "@types/uuid": "^9.0.7",
     "bcrypt": "^5.1.0",
@@ -49,6 +50,7 @@
     "moviedb-promise": "^3.3.1",
     "node-fetch": "^2.6.11",
     "nodemailer": "^6.9.6",
+    "python-shell": "^5.0.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^4.6.3",
     "ts-node": "^10.9.1",

@@ -30,7 +30,7 @@ class BooksSuccessWidget extends StatelessWidget {
         child: Column(
       children: [
         const TitleWidget(
-            asset: 'books_emoji', title: 'Les livres qui vous passionneront'),
+            asset: 'books', title: 'Les livres qui vous passionneront'),
         Expanded(
             child: ListView(
                 controller: bookController,

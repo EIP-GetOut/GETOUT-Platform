@@ -12,7 +12,7 @@ import request from 'supertest'
 
 import { app } from '@config/jestSetup'
 
-import { extractConnectSidCookie } from '../../utils_funcs'
+import { extractConnectSidCookie } from '../../setupUtils'
 
 const loginBody = {
   email: 'supertester@tester.test',

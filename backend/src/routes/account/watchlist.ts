@@ -23,7 +23,7 @@ const router = Router()
 
 /**
  * @swagger
- * /account/:accountId/watchlist:
+ * /account/{accountId}/watchlist:
  *   post:
  *     summary: Add a movie to the user's watchlist.
  *     description: Add the movie passed as body in the connected user's watchlist.
@@ -33,9 +33,9 @@ const router = Router()
  *       - name: accountId
  *         in: path
  *         required: true
- *         schema:
- *           type: string
- *           format: uuid
+ *         type: string
+ *         format: uuid
+ *         description: The ID of the user's account.
  *       - name: movieId
  *         in: body
  *         required: true
@@ -45,16 +45,14 @@ const router = Router()
  *             movieId:
  *               type: integer
  *               format: int32
- *               description: The movie id that needs to be added to the watchlist.
+ *               description: The movie id that needs to be added to the user's watchlist.
  *     responses:
  *       '201':
  *         description: Movie successfully added to the watchlist.
- *         content:
- *           application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: number
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: number
  *       '400':
  *         description: Invalid request body or missing required fields.
  *       '401':
@@ -70,25 +68,22 @@ const router = Router()
  *      - name: accountId
  *        in: path
  *        required: true
- *        schema:
- *          type: string
- *          format: uuid
+ *        type: string
+ *        format: uuid
  *      - name: movieId
- *        in: path
+ *        in: body
  *        required: true
  *        schema:
  *          type: integer
  *          format: int32
- *        description: "The movie id that needs to be removed from the watchlist."
+ *        description: The movie id that needs to be removed from the user's watchlist.
  *     responses:
  *       '200':
  *         description: Movie successfully removed from the watchlist.
- *         content:
- *           application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: number
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: number
  *       '400':
  *         description: Invalid request body or missing required fields.
  *       '401':
@@ -99,23 +94,20 @@ const router = Router()
  *         description: Internal server error.
  *   get:
  *     summary: Get the account's watchlist.
- *     description: Retrieve a JSON which contains the list of user's watchlist.
+ *     description: Retrieve a JSON which contains the user's watchlist.
  *     parameters:
  *      - name: accountId
  *        in: path
  *        required: true
- *        schema:
- *          type: string
- *          format: uuid
+ *        type: string
+ *        format: uuid
  *     responses:
  *       '200':
  *         description: Watchlist successfully returned.
- *         content:
- *           application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: number
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: number
  *       '400':
  *         description: Invalid request body or missing required fields.
  *       '401':
@@ -151,7 +143,7 @@ router.delete('/account/:accountId/watchlist/:movieId', rulesDelete, validate, l
     return
   }
   removeMovieFromWatchlist(req.params.accountId, parseInt(req.params.movieId)).then((updatedWatchlist: number[]) => {
-    logger.info(`Successfully removed ${req.body.movieId} of ${req.session.account?.email}'s watchlist.`)
+    logger.info(`Successfully removed ${req.params.movieId} of ${req.session.account?.email}'s watchlist.`)
     return res.status(StatusCodes.OK).json(updatedWatchlist)
   }).catch(handleErrorOnRoute(res))
 })

@@ -26,12 +26,12 @@ class LoadingPage extends StatelessWidget {
           SizedBox(
               height: uniHeight(context, 13, isLandscape),
               width: uniWidth(context, 27, isLandscape),
-              child: Image.asset('assets/GetOut_logo.png')),
+              child: Image.asset('assets/images/logo/getout.png')),
           SizedBox(width: perWidth(context, 4)),
           SizedBox(
               height: uniHeight(context, 10, isLandscape),
               width: uniWidth(context, 45, isLandscape),
-              child: Image.asset('assets/GetOut_text.png'))
+              child: Image.asset('assets/images/other/text_getout.png'))
         ]),
         SizedBox(height: perHeight(context, (isLandscape ? 8 : 8))),
         const SizedBox(

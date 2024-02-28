@@ -166,9 +166,13 @@ class MovieSuccessWidget extends StatelessWidget {
       GestureDetector(
         onTap: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => MovieDescriptionPage(movie: movie)));
+            context,
+            MaterialPageRoute(
+              builder: (context) => MovieDescriptionPage(
+                movie: movie,
+              ),
+            ),
+          );
         },
         child: const Text(
           'voir plus >',

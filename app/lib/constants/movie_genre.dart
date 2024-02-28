@@ -5,42 +5,24 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
-class MovieGenre {
-  static const int ACTION = 28;
-
-  static const int ADVENTURE = 12;
-
-  static const int ANIMATION = 16;
-
-  static const int COMEDY = 35;
-
-  static const int CRIME = 80;
-
-  static const int DOCUMENTARY = 99;
-
-  static const int DRAMA = 18;
-
-  static const int FAMILY = 10751;
-
-  static const int FANTASY = 14;
-
-  static const int HISTORY = 36;
-
-  static const int HORROR = 27;
-
-  static const int MUSIC = 10402;
-
-  static const int MYSTERY = 9648;
-
-  static const int ROMANCE = 10749;
-
-  static const int SCIENCE_FICTION = 878;
-
-  static const int TV_MOVIE = 10770;
-
-  static const int THRILLER = 53;
-
-  static const int WAR = 10752;
-
-  static const int WESTERN = 37;
-}
+const Map<String, int> MovieGenre = {
+  'Action' : 28,
+  'Aventure' : 12,
+  'Animation' : 16,
+  'Comédie' : 35,
+  'Crime' : 80,
+  'Documentaire' : 99,
+  'Drama' : 18,
+  'Famille' : 10751,
+  'Fantaisie' : 14,
+  'Histoire' : 36,
+  'Horreur' : 27,
+  'Musique' : 10402,
+  'Mystère' : 9648,
+  'Romance' : 10749,
+  'Science fiction' : 878,
+  // 'TV_MOVIE' : 10770, // Pas sur
+  'Thriller' : 53,
+  'Guerre' : 10752,
+  'Western' : 37
+};

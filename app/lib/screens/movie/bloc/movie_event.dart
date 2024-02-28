@@ -29,8 +29,10 @@ class InfoMovieResponse extends MovieEvent {
       this.releaseDate,
       this.voteAverage,
       this.duration,
+      this.cast,
       required this.statusCode});
 
+  final List<Map<String, String?>>? cast;
   static const int success = HttpStatus.OK;
   final String? title;
   final String? overview;

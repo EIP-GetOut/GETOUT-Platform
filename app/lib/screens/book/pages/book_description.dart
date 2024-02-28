@@ -42,10 +42,12 @@ class BookDescriptionPage extends StatelessWidget {
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                         ))),
-                Padding(padding: const EdgeInsets.only(left: 10), child: Text(
-                    // textAlign: TextAlign.start,
-                    book.overview ?? 'Aucune description disponible',
-                style: Theme.of(context).textTheme.bodySmall)),
+                Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Text(
+                        // textAlign: TextAlign.start,
+                        book.overview ?? 'Aucune description disponible',
+                        style: Theme.of(context).textTheme.bodySmall)),
                 separateLine(),
                 const Padding(
                     padding: EdgeInsets.only(left: 10),
@@ -54,16 +56,30 @@ class BookDescriptionPage extends StatelessWidget {
                         'AUTEUR(S)',
                         style: TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold))),
-                Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Image.network(
-                      'https://upload.wikimedia.org/wikipedia/commons/5/5f/Grey.PNG?20071229171831',
-                      height: 50,
-                      width: 50,
-                    )),
-                const Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Text('Auteur 1')),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(
+                      book.authorsPicture?.length ?? 0,
+                      (index) => Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          children: [
+                            Image.network(
+                              book.authorsPicture![index]['imageLink']!,
+                              height: 120,
+                              width: 120,
+                            ),
+                            Text(
+                              book.authorsPicture![index]['author']!,
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ],

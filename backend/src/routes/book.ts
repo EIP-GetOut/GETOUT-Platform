@@ -12,10 +12,9 @@ import logger from '@middlewares/logging'
 
 import { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
-import { AppError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
-import { getBook, getPictures } from '@models/book'
+import { getBook } from '@models/book'
 
 const router = Router()
 
@@ -52,27 +51,19 @@ const router = Router()
  *                   type: array
  *                   items:
  *                     type: string
+ *                 authorsPicture:
+ *                   type: array
+ *                   items:
+ *                     type: string
  *                 category:
  *                   type: string
  *       '500':
  *         description: Internal server error.
  */
+
 router.get('/book/:id', validate, logApiRequest, (req: Request, res: Response) => {
-  getBook(req.params).then(async (bookObtained: any | undefined) => {
-    if (bookObtained == null) {
-      throw new AppError()
-    }
-    //    logger.info(JSON.stringify(bookObtained, null, 2))
-    const book = {
-      title: bookObtained.volumeInfo.title,
-      overview: bookObtained.volumeInfo.description,
-      poster_path: bookObtained.volumeInfo?.imageLinks?.thumbnail != null ? bookObtained.volumeInfo.imageLinks.thumbnail : null,
-      duration: Number(bookObtained.volumeInfo.pageCount) / 60 - (Number(bookObtained.volumeInfo.pageCount) / 60 % 1) + 'h' + Number(bookObtained.volumeInfo.pageCount) % 60 + 'min',
-      authors: bookObtained.volumeInfo.authors,
-      authorsPicture: await getPictures(bookObtained.volumeInfo.authors),
-      category: bookObtained.volumeInfo?.categories != null ? bookObtained.volumeInfo.categories : null
-    }
-    logger.info(JSON.stringify(book, null, 2))
+  getBook(req.params.id).then(async (book: any) => {
+    logger.info(`Successfully retreived book ${req.params.id}: ${JSON.stringify(book, null, 2)}`)
     return res.status(StatusCodes.OK).json({ book })
   }).catch(handleErrorOnRoute(res))
 })

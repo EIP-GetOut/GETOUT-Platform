@@ -28,7 +28,7 @@ class SavedMoviesSuccessWidget extends StatelessWidget {
         child: Column(
       children: [
         const TitleWidget(
-            asset: 'party_emoji', title: 'Vos films en cours'),
+            asset: 'party', title: 'Vos films en cours'),
         Expanded(
             child: ListView(
                 controller: movieController,

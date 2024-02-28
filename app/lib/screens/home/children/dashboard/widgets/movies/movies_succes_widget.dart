@@ -29,7 +29,7 @@ class MoviesSuccessWidget extends StatelessWidget {
         child: Column(
       children: [
         const TitleWidget(
-            asset: 'popcorn_emoji', title: 'Les films que vous allez aimer'),
+            asset: 'popcorn', title: 'Les films que vous allez aimer'),
         Expanded(
             child: ListView(
                 controller: movieController,

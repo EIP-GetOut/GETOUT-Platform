@@ -6,6 +6,7 @@
 */
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:getout/constants/api_path.dart';
 
@@ -17,6 +18,7 @@ import 'package:getout/screens/connection/forgot_password/children/check_email/b
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 
+import 'package:getout/global.dart' as globals;
 
 /**
  * parts:
@@ -25,12 +27,10 @@ part 'sign.dart';
 part 'forgot_password.dart';
 
 class ConnectionService extends _ConnectionService<SignService, ForgotPasswordService> {
-  ConnectionService({required this.dio}) {
-    t = SignService(dio: dio);
-    g = ForgotPasswordService(dio: dio);
+  ConnectionService() {
+    t = SignService();
+    g = ForgotPasswordService();
   }
-  final Dio dio;
-
   //Dashboard
   Future<void> login(LoginRequestModel request) => t.login(request);
   Future<void> register(RegisterRequestModel request) => t.register(request);

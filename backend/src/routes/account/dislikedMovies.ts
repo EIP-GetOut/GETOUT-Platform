@@ -23,7 +23,7 @@ const router = Router()
 
 /**
  * @swagger
- * /account/:accountId/dislikedMovies:
+ * /account/{accountId}/dislikedMovies:
  *   post:
  *     summary: Add a movie to the user's disliked movies.
  *     description: Add the movie passed as body in the connected user's disliked movies.
@@ -33,9 +33,9 @@ const router = Router()
  *       - name: accountId
  *         in: path
  *         required: true
- *         schema:
- *           type: string
- *           format: uuid
+ *         type: string
+ *         format: uuid
+ *         description: The ID of the user's account.
  *       - name: movieId
  *         in: body
  *         required: true
@@ -48,13 +48,11 @@ const router = Router()
  *               description: The movie id that needs to be added to the user's disliked movies.
  *     responses:
  *       '201':
- *         description: Movie successfully added to the user's disliked movies.
- *         content:
- *           application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: number
+ *         description: Movie successfully added to the disliked movies.
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: number
  *       '400':
  *         description: Invalid request body or missing required fields.
  *       '401':
@@ -62,19 +60,18 @@ const router = Router()
  *       '500':
  *         description: Internal server error.
  *   delete:
- *     summary: Removie a movie from the user's disliked movies.
- *     description: Removie the movie passed in the url in the connected user's disliked movies.
+ *     summary: Remove a movie from the user's disliked movies.
+ *     description: Remove the movie passed in the url in the connected user's disliked movies.
  *     consumes:
  *       - application/json
  *     parameters:
  *      - name: accountId
  *        in: path
  *        required: true
- *        schema:
- *          type: string
- *          format: uuid
+ *        type: string
+ *        format: uuid
  *      - name: movieId
- *        in: path
+ *        in: body
  *        required: true
  *        schema:
  *          type: integer
@@ -82,13 +79,11 @@ const router = Router()
  *        description: "The movie id that needs to be removed from the user's disliked movies."
  *     responses:
  *       '200':
- *         description: Movie successfully removed from the user's disliked movies.
- *         content:
- *           application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: number
+ *         description: Movie successfully removed from the disliked movies.
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: number
  *       '400':
  *         description: Invalid request body or missing required fields.
  *       '401':
@@ -98,24 +93,21 @@ const router = Router()
  *       '500':
  *         description: Internal server error.
  *   get:
- *     summary: Get the account's watchlist.
- *     description: Retrieve a JSON which contains the list of disliked movies.
+ *     summary: Get the account's disliked movies.
+ *     description: Retrieve a JSON which contains the user's disliked movies.
  *     parameters:
  *      - name: accountId
  *        in: path
  *        required: true
- *        schema:
- *          type: string
- *          format: uuid
+ *        type: string
+ *        format: uuid
  *     responses:
  *       '200':
- *         description: Watchlist successfully returned.
- *         content:
- *           application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: number
+ *         description: Disliked movies list successfully returned.
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: number
  *       '400':
  *         description: Invalid request body or missing required fields.
  *       '401':

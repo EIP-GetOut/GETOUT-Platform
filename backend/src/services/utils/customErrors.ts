@@ -36,6 +36,12 @@ class AlreadyLoggedInError extends AppError {
 }
 class ApiError extends AppError {}
 
+class AuthenticationError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message, status ?? StatusCodes.UNAUTHORIZED)
+  }
+}
+
 class BcryptError extends AppError {}
 
 class BookNotInListError extends AppError {
@@ -45,12 +51,6 @@ class BookNotInListError extends AppError {
 }
 
 class DbError extends AppError {}
-
-class AuthenticationError extends AppError {
-  constructor (message?: string, status?: StatusCodes) {
-    super(message, status ?? StatusCodes.UNAUTHORIZED)
-  }
-}
 
 class MovieDbError extends AppError {}
 
@@ -65,6 +65,23 @@ class NodeMailerError extends AppError {}
 class NotLoggedInError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
     super(message ?? 'User is not logged in.', status ?? StatusCodes.BAD_REQUEST)
+  }
+}
+
+class PreferencesAlreadyExistError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Preferences already exists.', status ?? StatusCodes.CONFLICT)
+  }
+}
+
+class PreferencesDoesNotExistError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Preferences does not exists.', status ?? StatusCodes.FORBIDDEN)
+  }
+}
+class RecommandationsDetailsError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Failed fetching recommandations details.')
   }
 }
 
@@ -88,5 +105,8 @@ export {
   MovieNotInListError,
   NodeMailerError,
   NotLoggedInError,
+  PreferencesAlreadyExistError,
+  PreferencesDoesNotExistError,
+  RecommandationsDetailsError,
   SamePasswordError
 }
