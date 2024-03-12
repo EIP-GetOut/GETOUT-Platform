@@ -30,9 +30,6 @@ class LikedBooksState extends Equatable {
   }
 
   factory LikedBooksState.fromMap(Map<String, dynamic> map) {
-    if (kDebugMode) {
-      print('liked_books.fromMap:${map['liked_books_status']}');
-    }
     List<BookPreview> likedBooks = [];
 
     map['liked_books']!.forEach((element) => {
@@ -48,9 +45,6 @@ class LikedBooksState extends Equatable {
   }
 
   Map<String, dynamic> toMap() {
-    if (kDebugMode) {
-      print('liked_books.toMap:${statusToString[status]}');
-    }
     return {
       'liked_books': likedBooks
           .map((book) => {

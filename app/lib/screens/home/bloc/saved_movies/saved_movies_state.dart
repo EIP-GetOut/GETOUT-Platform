@@ -40,9 +40,6 @@ class SavedMoviesState extends Equatable {
   }
 
   factory SavedMoviesState.fromMap(Map<String, dynamic> map) {
-    if (kDebugMode) {
-      print('saved_movies.fromMap:${map['saved_movies_status']}');
-    }
     List<MoviePreview> books = [];
 
     map['saved_movies']!.forEach((element) => {
@@ -58,9 +55,6 @@ class SavedMoviesState extends Equatable {
   }
 
   Map<String, dynamic> toMap() {
-    if (kDebugMode) {
-      print('saved_movies.toMap:${statusToString[status]}');
-    }
     return {
       'saved_movies': savedMovies
           .map((book) => {

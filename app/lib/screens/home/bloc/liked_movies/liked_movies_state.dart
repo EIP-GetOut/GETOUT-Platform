@@ -31,9 +31,6 @@ class LikedMoviesState extends Equatable {
 
 
   factory LikedMoviesState.fromMap(Map<String, dynamic> map) {
-    if (kDebugMode) {
-      print('liked_movies.fromMap:${map['liked_movies_status']}');
-    }
     List<MoviePreview> likedMovies = [];
 
     map['liked_movies']!.forEach((element) => {
@@ -49,9 +46,6 @@ class LikedMoviesState extends Equatable {
   }
 
   Map<String, dynamic> toMap() {
-    if (kDebugMode) {
-      print('liked_movies.toMap:${statusToString[status]}');
-    }
     return {
       'liked_movies': likedMovies
           .map((movie) => {
