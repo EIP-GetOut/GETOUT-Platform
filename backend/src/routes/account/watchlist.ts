@@ -128,6 +128,7 @@ router.post('/account/:accountId/watchlist', rulesPost, validate, logApiRequest,
   }
   addMovieToWatchlist(req.params.accountId, req.body.movieId).then((updatedWatchlist: number[]) => {
     logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s watchlist`)
+    req.session.account!.watchlist = updatedWatchlist
     return res.status(StatusCodes.CREATED).json(updatedWatchlist)
   }).catch(handleErrorOnRoute(res))
 })
@@ -144,6 +145,7 @@ router.delete('/account/:accountId/watchlist/:movieId', rulesDelete, validate, l
   }
   removeMovieFromWatchlist(req.params.accountId, parseInt(req.params.movieId)).then((updatedWatchlist: number[]) => {
     logger.info(`Successfully removed ${req.params.movieId} of ${req.session.account?.email}'s watchlist.`)
+    req.session.account!.watchlist = updatedWatchlist
     return res.status(StatusCodes.OK).json(updatedWatchlist)
   }).catch(handleErrorOnRoute(res))
 })
@@ -161,7 +163,7 @@ router.get('/account/:accountId/watchlist', rulesGet, validate, logApiRequest, (
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    return res.status(StatusCodes.OK).json(account?.watchlist)
+    return res.status(StatusCodes.OK).json(account.watchlist)
   }).catch(handleErrorOnRoute(res))
 })
 

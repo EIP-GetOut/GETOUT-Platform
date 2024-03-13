@@ -108,7 +108,7 @@ const addMovieToDislikedMovies = async (accountId: UUID, movieId: number): Promi
   await addMovieToList(accountId, movieId, 'dislikedMovies')
 
 const addMovieToSeenMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
-  await addMovieToList(accountId, movieId, 'dislikedMovies')
+  await addMovieToList(accountId, movieId, 'seenMovies')
 
 const removeMovieFromWatchlist = async (accountId: UUID, movieId: number): Promise<number[]> =>
   await removeMovieFromList(accountId, movieId, 'watchlist')
@@ -120,7 +120,7 @@ const removeMovieFromDislikedMovies = async (accountId: UUID, movieId: number): 
   await removeMovieFromList(accountId, movieId, 'dislikedMovies')
 
 const removeMovieFromSeenMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
-  await removeMovieFromList(accountId, movieId, 'dislikedMovies')
+  await removeMovieFromList(accountId, movieId, 'seenMovies')
 
 export {
   addMovieToDislikedMovies,

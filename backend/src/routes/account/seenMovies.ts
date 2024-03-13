@@ -128,6 +128,7 @@ router.post('/account/:accountId/seenMovies', rulesPost, validate, logApiRequest
   }
   addMovieToSeenMovies(req.params.accountId, req.body.movieId).then((updatedSeenMovies: number[]) => {
     logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s seen movies.`)
+    req.session.account!.seenMovies = updatedSeenMovies
     return res.status(StatusCodes.CREATED).json(updatedSeenMovies)
   }).catch(handleErrorOnRoute(res))
 })
@@ -144,6 +145,7 @@ router.delete('/account/:accountId/seenMovies/:movieId', rulesDelete, validate, 
   }
   removeMovieFromSeenMovies(req.params.accountId, parseInt(req.params.movieId)).then((updatedSeenMovies: number[]) => {
     logger.info(`Successfully removed ${req.params.movieId} of ${req.session.account?.email}'s seen movies.`)
+    req.session.account!.seenMovies = updatedSeenMovies
     return res.status(StatusCodes.OK).json(updatedSeenMovies)
   }).catch(handleErrorOnRoute(res))
 })
@@ -161,7 +163,7 @@ router.get('/account/:accountId/seenMovies', rulesGet, validate, logApiRequest, 
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    return res.status(StatusCodes.OK).json(account?.seenMovies)
+    return res.status(StatusCodes.OK).json(account.seenMovies)
   }).catch(handleErrorOnRoute(res))
 })
 

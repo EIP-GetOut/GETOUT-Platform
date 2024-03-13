@@ -122,6 +122,7 @@ router.post('/account/:accountId/likedBooks', rulesPost, validate, logApiRequest
   }
   addBookToLikedBooks(req.params.accountId, req.body.bookId).then((updatedLikedBooksList: string[]) => {
     logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s liked books`)
+    req.session.account!.likedBooks = updatedLikedBooksList
     return res.status(StatusCodes.CREATED).json(updatedLikedBooksList)
   }).catch(handleErrorOnRoute(res))
 })
@@ -138,6 +139,7 @@ router.delete('/account/:accountId/likedBooks/:bookId', rulesDelete, validate, l
   }
   removeBookFromLikedBooks(req.params.accountId, req.params.bookId).then((updatedLikedBooksList: string[]) => {
     logger.info(`Successfully removed ${req.body.bookId} of ${req.session.account?.email}'s liked books.`)
+    req.session.account!.likedBooks = updatedLikedBooksList
     return res.status(StatusCodes.OK).json(updatedLikedBooksList)
   }).catch(handleErrorOnRoute(res))
 })
@@ -155,7 +157,7 @@ router.get('/account/:accountId/likedBooks', rulesGet, validate, logApiRequest, 
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    return res.status(StatusCodes.OK).json(account?.likedBooks)
+    return res.status(StatusCodes.OK).json(account.likedBooks)
   }).catch(handleErrorOnRoute(res))
 })
 

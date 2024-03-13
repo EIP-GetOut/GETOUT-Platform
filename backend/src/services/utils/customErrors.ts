@@ -46,7 +46,7 @@ class BcryptError extends AppError {}
 
 class BookNotInListError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
-    super(message ?? 'Movie was not found in list.', status ?? StatusCodes.NOT_FOUND)
+    super(message ?? 'Book was not found in list.', status ?? StatusCodes.NOT_FOUND)
   }
 }
 

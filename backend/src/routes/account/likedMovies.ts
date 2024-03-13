@@ -128,6 +128,7 @@ router.post('/account/:accountId/likedMovies', rulesPost, validate, logApiReques
   }
   addMovieToLikedMovies(req.params.accountId, req.body.movieId).then((updatedLikedMoviesList: number[]) => {
     logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s liked movies.`)
+    req.session.account!.likedMovies = updatedLikedMoviesList
     return res.status(StatusCodes.CREATED).json(updatedLikedMoviesList)
   }).catch(handleErrorOnRoute(res))
 })
@@ -144,6 +145,7 @@ router.delete('/account/:accountId/likedMovies/:movieId', rulesDelete, validate,
   }
   removeMovieFromLikedMovies(req.params.accountId, parseInt(req.params.movieId)).then((updatedLikedMoviesList: number[]) => {
     logger.info(`Successfully removed ${req.body.movieId} of ${req.session.account?.email}'s liked movies.`)
+    req.session.account!.likedMovies = updatedLikedMoviesList
     return res.status(StatusCodes.OK).json(updatedLikedMoviesList)
   }).catch(handleErrorOnRoute(res))
 })
@@ -161,7 +163,7 @@ router.get('/account/:accountId/likedMovies', rulesGet, validate, logApiRequest,
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    return res.status(StatusCodes.OK).json(account?.likedMovies)
+    return res.status(StatusCodes.OK).json(account.likedMovies)
   }).catch(handleErrorOnRoute(res))
 })
 

@@ -122,6 +122,7 @@ router.post('/account/:accountId/readingList', rulesPost, validate, logApiReques
   }
   addBookToReadingList(req.params.accountId, req.body.bookId).then((updatedReadingList: string[]) => {
     logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s reading list`)
+    req.session.account!.readingList = updatedReadingList
     return res.status(StatusCodes.CREATED).json(updatedReadingList)
   }).catch(handleErrorOnRoute(res))
 })
@@ -138,6 +139,7 @@ router.delete('/account/:accountId/readingList/:bookId', rulesDelete, validate, 
   }
   removeBookFromReadingList(req.params.accountId, req.params.bookId).then((updatedReadingList: string[]) => {
     logger.info(`Successfully removed ${req.body.bookId} of ${req.session.account?.email}'s reading list.`)
+    req.session.account!.readingList = updatedReadingList
     return res.status(StatusCodes.OK).json(updatedReadingList)
   }).catch(handleErrorOnRoute(res))
 })
@@ -155,7 +157,7 @@ router.get('/account/:accountId/readingList', rulesGet, validate, logApiRequest,
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    return res.status(StatusCodes.OK).json(account?.readingList)
+    return res.status(StatusCodes.OK).json(account.readingList)
   }).catch(handleErrorOnRoute(res))
 })
 
