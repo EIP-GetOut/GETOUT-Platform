@@ -108,6 +108,9 @@ class BirthDateField extends StatelessWidget {
               if (date.isAfter(DateTime.now().subtract(const Duration(days: 365 * 13)))) {
                 return 'La date doit être supérieure à 13 ans';
               }
+              context.read<RegisterBloc>().add(
+                RegisterBirthDateChanged(birthDate: value),
+              );
               return null;
             },
             onTap: () async {
@@ -121,10 +124,6 @@ class BirthDateField extends StatelessWidget {
               if (pickedDate != null) {
                 String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
                 controller.text = formattedDate;
-                // ignore: use_build_context_synchronously
-                context.read<RegisterBloc>().add(
-                  RegisterBirthDateChanged(birthDate: formattedDate),
-                );
               }
             }
         ),
