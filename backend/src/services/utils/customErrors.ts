@@ -52,7 +52,13 @@ class BookNotInListError extends AppError {
 
 class DbError extends AppError {}
 
-class MovieDbError extends AppError {}
+class GoogleBookError extends AppError {}
+
+class IncorrectEmailOrPasswordError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Incorrect email or password.', status ?? StatusCodes.FORBIDDEN)
+  }
+}
 
 class MovieNotInListError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
@@ -101,7 +107,8 @@ export {
   BcryptError,
   BookNotInListError,
   DbError,
-  MovieDbError,
+  GoogleBookError,
+  IncorrectEmailOrPasswordError,
   MovieNotInListError,
   NodeMailerError,
   NotLoggedInError,

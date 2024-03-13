@@ -9,11 +9,11 @@ import { MovieDb, type DiscoverMovieRequest, type DiscoverMovieResponse, type Mo
 
 import logger from '@middlewares/logging'
 
-import { MovieDbError } from '@services/utils/customErrors'
+import { ApiError } from '@services/utils/customErrors'
 
 import { type MoviesDTO } from '@routes/generateMovies.dto'
 
-const moviedb = new MovieDb('1eec31e851e9ad1b8f3de3ccf39953b7')
+const moviedb = new MovieDb(process.env.MOVIE_DB_KEY)
 
 async function getMovies (params: MoviesDTO): Promise<MovieResult[] | undefined> {
   const discorverMovieRequest: DiscoverMovieRequest = {
@@ -27,7 +27,7 @@ async function getMovies (params: MoviesDTO): Promise<MovieResult[] | undefined>
     logger.info(JSON.stringify(value, null, 2))
     return value.results
   }).catch((err: Error) => {
-    throw new MovieDbError(err.message)
+    throw new ApiError(`Error whiled discovering movies (${err.name}: ${err.message}).`)
   })
 }
 

@@ -144,7 +144,7 @@ router.delete('/account/:accountId/likedMovies/:movieId', rulesDelete, validate,
     return
   }
   removeMovieFromLikedMovies(req.params.accountId, parseInt(req.params.movieId)).then((updatedLikedMoviesList: number[]) => {
-    logger.info(`Successfully removed ${req.body.movieId} of ${req.session.account?.email}'s liked movies.`)
+    logger.info(`Successfully removed ${req.params.movieId} of ${req.session.account?.email}'s liked movies.`)
     req.session.account!.likedMovies = updatedLikedMoviesList
     return res.status(StatusCodes.OK).json(updatedLikedMoviesList)
   }).catch(handleErrorOnRoute(res))

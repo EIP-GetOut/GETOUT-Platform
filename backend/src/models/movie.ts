@@ -9,7 +9,7 @@ import { type UUID } from 'crypto'
 import { StatusCodes } from 'http-status-codes'
 import { MovieDb, type MovieResponse } from 'moviedb-promise'
 
-import { AccountDoesNotExistError, AppError, DbError, MovieDbError, MovieNotInListError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError, ApiError, AppError, DbError, MovieNotInListError } from '@services/utils/customErrors'
 
 import { Account } from '@entities/Account'
 
@@ -28,9 +28,8 @@ async function fetchMovieCredits (movieId: number): Promise<any> {
         : null
     }))
     return cast
-  }).catch((error) => {
-    console.error('Error fetching movie credits:', error)
-    return null
+  }).catch((err: Error) => {
+    throw new ApiError(`Error whiled obtaining movie ${movieId}'s credits (${err.name}: ${err.message}).`)
   })
 }
 
@@ -38,7 +37,7 @@ async function getDetail (id: number): Promise<MovieResponse | undefined> {
   return await moviedb.movieInfo(id).then((value: MovieResponse) => {
     return value
   }).catch((err: Error) => {
-    throw new MovieDbError(err.message)
+    throw new ApiError(`Error whiled obtaining movie ${id}'s infos (${err.name}: ${err.message}).`)
   })
 }
 
@@ -57,7 +56,7 @@ async function getMovie (id: number): Promise<any> {
         release_date: movieObtained.release_date,
         vote_average: Number(movieObtained.vote_average) / 2,
         cast,
-        duration: Number(movieObtained.runtime) / 60 - (Number(movieObtained.runtime) / 60 % 1) + 'h' + String(Number(movieObtained.runtime) % 60).padStart(2, '0')
+        duration: movieObtained.runtime
       })
     })
   })

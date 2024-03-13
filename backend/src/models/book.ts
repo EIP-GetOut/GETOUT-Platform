@@ -77,7 +77,7 @@ async function getBook (id: string): Promise<any> {
       title: bookObtained.volumeInfo.title,
       overview: bookObtained.volumeInfo.description,
       poster_path: bookObtained.volumeInfo?.imageLinks?.thumbnail != null ? bookObtained.volumeInfo.imageLinks.thumbnail : null,
-      duration: Number(bookObtained.volumeInfo.pageCount) / 60 - (Number(bookObtained.volumeInfo.pageCount) / 60 % 1) + 'h' + Number(bookObtained.volumeInfo.pageCount) % 60 + 'min',
+      pageCount: bookObtained.volumeInfo.pageCount,
       authors: bookObtained.volumeInfo.authors,
       authors_picture: await getPictures(bookObtained.volumeInfo.authors),
       category: bookObtained.volumeInfo?.categories != null ? bookObtained.volumeInfo.categories : null

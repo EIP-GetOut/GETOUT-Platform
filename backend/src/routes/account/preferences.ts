@@ -42,7 +42,7 @@ router.post('/account/preferences', rulesPut, validate, logApiRequest, (req: Req
     handleErrorOnRoute(res)(new NotLoggedInError())
     return
   }
-  logger.warn(JSON.stringify(req.body, null, 0))
+  logger.info(`Preferences created: ${JSON.stringify(req.body, null, 0)}`)
   postPreferences(req.session.account.id, req.body, 'preferences').then((preferencesAdded: Preferences) => {
     req.session.account!.preferences = preferencesAdded
     return res.status(StatusCodes.CREATED).json(preferencesAdded)
