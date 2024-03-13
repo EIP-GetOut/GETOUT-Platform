@@ -55,7 +55,7 @@ dependencies:
   permission_handler: ^11.3.0
   is_first_run: ^1.0.0
   timezone: ^0.9.2
-#  flutter_localization: ^0.2.0
+  flutter_localization: ^0.2.0
 
 #  flutter_json: ^0.0.2
 
