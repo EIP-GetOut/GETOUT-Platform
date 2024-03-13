@@ -10,8 +10,6 @@ part of 'service.dart';
 class MoviesService extends ServiceTemplate {
   final String _id = globals.session?['id'].toString() ?? '';
 
-  final String _id = globals.session?['id'].toString() ?? '';
-  
   MoviesService();
   
   final session = globals.session ?? {}; // TODO NOT SAFE
