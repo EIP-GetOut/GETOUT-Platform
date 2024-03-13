@@ -57,6 +57,7 @@ class HomeNavBarWidget extends StatelessWidget {
                     colorFilter: const ColorFilter.mode(
                         Colors.red, BlendMode.srcIn)),
                 label: 'Book'),
+            //todo implement activities
             BottomNavigationBarItem(
                 icon: SvgPicture.asset('assets/images/icon/location_pin.svg',
                     colorFilter: const ColorFilter.mode(

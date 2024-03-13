@@ -41,44 +41,44 @@ class HomeProvider extends StatelessWidget {
               create: (context) => HomePageBloc(),
             ),
             ///Movies
-            BlocProvider<RecommendedMoviesBloc>(
-              create: (context) => RecommendedMoviesBloc(
+            BlocProvider<RecommendedMoviesHydratedBloc>(
+              create: (context) => RecommendedMoviesHydratedBloc(
                 homeRepository: context.read<HomeRepository>(),
               )..add(
                 const GenerateMoviesRequest(),
               ),
             ),
-            BlocProvider<LikedMoviesBloc>(
-              create: (context) => LikedMoviesBloc(
+            BlocProvider<LikedMoviesHydratedBloc>(
+              create: (context) => LikedMoviesHydratedBloc(
                 homeRepository: context.read<HomeRepository>(),
               )..add(
                 const GenerateMoviesRequest(),
               ),
             ),
-            BlocProvider<SavedMoviesBloc>(
-              create: (context) => SavedMoviesBloc(
+            BlocProvider<SavedMoviesHydratedBloc>(
+              create: (context) => SavedMoviesHydratedBloc(
                 homeRepository: context.read<HomeRepository>(),
               )..add(
                 const GenerateMoviesRequest(),
               ),
             ),
             ///Books
-            BlocProvider<RecommendedBooksBloc>(
-              create: (context) => RecommendedBooksBloc(
+            BlocProvider<RecommendedBooksHydratedBloc>(
+              create: (context) => RecommendedBooksHydratedBloc(
                 homeRepository: context.read<HomeRepository>(),
               )..add(
                 const GenerateBooksRequest(),
               ),
             ),
-            BlocProvider<LikedBooksBloc>(
-              create: (context) => LikedBooksBloc(
+            BlocProvider<LikedBooksHydratedBloc>(
+              create: (context) => LikedBooksHydratedBloc(
                 homeRepository: context.read<HomeRepository>(),
               )..add(
                 const GenerateBooksRequest(),
               ),
             ),
-            BlocProvider<SavedBooksBloc>(
-              create: (context) => SavedBooksBloc(
+            BlocProvider<SavedBooksHydratedBloc>(
+              create: (context) => SavedBooksHydratedBloc(
                 homeRepository: context.read<HomeRepository>(),
               )..add(
                 const GenerateBooksRequest(),

@@ -5,8 +5,9 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
+
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'package:getout/tools/status.dart';
 import 'package:getout/screens/home/bloc/home_repository.dart';
@@ -14,16 +15,16 @@ import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 
 part 'recommended_movies_state.dart';
 
-class RecommendedMoviesBloc extends Bloc<MoviesEvent, RecommendedMoviesState> {
+class RecommendedMoviesHydratedBloc extends HydratedBloc<MoviesEvent, RecommendedMoviesState> {
   final HomeRepository homeRepository;
 
-  RecommendedMoviesBloc({
+  RecommendedMoviesHydratedBloc({
     required this.homeRepository,
   }) : super(const RecommendedMoviesState()) {
-    on<GenerateMoviesRequest>(_onGenerateMoviesRequestEvent);
+    on<GenerateMoviesRequest>(_onRecommendedMoviesRequest);
   }
 
-  void _onGenerateMoviesRequestEvent(
+  void _onRecommendedMoviesRequest(
       GenerateMoviesRequest event, Emitter<RecommendedMoviesState> emit) async {
     emit(state.copyWith(status: Status.loading));
     try {
@@ -37,5 +38,15 @@ class RecommendedMoviesBloc extends Bloc<MoviesEvent, RecommendedMoviesState> {
     } catch (error) {
       emit(state.copyWith(status: Status.error));
     }
+  }
+
+  @override
+  RecommendedMoviesState? fromJson(Map<String, dynamic> json) {
+    return RecommendedMoviesState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(RecommendedMoviesState state) {
+    return state.toMap();
   }
 }

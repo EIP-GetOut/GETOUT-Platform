@@ -5,8 +5,9 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
+
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'package:getout/tools/status.dart';
 import 'package:getout/screens/home/bloc/home_repository.dart';
@@ -14,17 +15,16 @@ import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 
 part 'saved_movies_state.dart';
 
-class SavedMoviesBloc extends Bloc<MoviesEvent, SavedMoviesState> {
+class SavedMoviesHydratedBloc extends HydratedBloc<MoviesEvent, SavedMoviesState> {
   final HomeRepository homeRepository;
 
-  SavedMoviesBloc({
+  SavedMoviesHydratedBloc({
     required this.homeRepository,
   }) : super(const SavedMoviesState()) {
-    on<GenerateMoviesRequest>(_mapGetMoviesSavedEventToState);
+    on<GenerateMoviesRequest>(_onSavedMoviesRequest);
   }
-
-
-  void _mapGetMoviesSavedEventToState(
+  
+  void _onSavedMoviesRequest(
       GenerateMoviesRequest event, Emitter<SavedMoviesState> emit) async {
     emit(state.copyWith(status: Status.loading));
     try {
@@ -39,4 +39,15 @@ class SavedMoviesBloc extends Bloc<MoviesEvent, SavedMoviesState> {
       emit(state.copyWith(status: Status.error));
     }
   }
+
+  @override
+  SavedMoviesState? fromJson(Map<String, dynamic> json) {
+    return SavedMoviesState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(SavedMoviesState state) {
+    return state.toMap();
+  }
+
 }

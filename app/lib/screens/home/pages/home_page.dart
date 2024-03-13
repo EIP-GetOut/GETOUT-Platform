@@ -15,7 +15,6 @@ import 'package:getout/screens/home/children/your_books/pages/your_books.dart';
 import 'package:getout/screens/home/children/your_movies/pages/your_movies.dart';
 import 'package:getout/screens/home/widgets/header.dart';
 import 'package:getout/screens/home/widgets/navbar.dart';
-import 'package:getout/widgets/object_loading_error_widget.dart';
 import 'package:getout/global.dart' as globals;
 
 /// UserPage
@@ -52,11 +51,12 @@ class HomePage extends StatelessWidget {
               ListView(children: const [
                 SizedBox(height: 1000, child: YourBooksPage())
               ]),
-              const SizedBox(
+              //todo implement activities
+              /*const SizedBox(
                   width: 1000,
                   height: 2000,
                   child: ColoredBox(
-                      color: Colors.white, child: ObjectLoadingErrorWidget(object: 'Les Activités')))
+                      color: Colors.white, child: ObjectLoadingErrorWidget(object: 'Les Activités')))*/
             ],
           ),
           bottomNavigationBar: HomeNavBarWidget(

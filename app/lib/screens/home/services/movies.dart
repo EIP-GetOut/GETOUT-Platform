@@ -8,11 +8,14 @@
 part of 'service.dart';
 
 class MoviesService extends ServiceTemplate {
+  final String _id = globals.session?['id'].toString() ?? '';
 
   final String _id = globals.session?['id'].toString() ?? '';
   
   MoviesService();
   
+  final session = globals.session ?? {}; // TODO NOT SAFE
+
   // RECOMMEND
   Future<GenerateMoviesResponse> getRecommendedMovies(
       GenerateMoviesRequest request) async {
@@ -43,12 +46,11 @@ class MoviesService extends ServiceTemplate {
           'Error ${dioException.response?.statusCode} while fetching movies: ${dioException.response?.statusMessage}',
         ));
       }
-      return Future.error(Exception(
-          'Unknown error:  ${dioException.toString()}'));
+      return Future.error(
+          Exception('Unknown error:  ${dioException.toString()}'));
     } catch (error) {
       return Future.error(Exception(
-        'Unknown error: ${error.toString()}',
-      ));
+          'Unknown error:  ${error.toString()}'));
     }
     return result;
   }
@@ -76,6 +78,7 @@ class MoviesService extends ServiceTemplate {
 
   Future<dynamic> getLikedMoviesId(GenerateMoviesRequest request) async {
     final Response? response;
+
 
     response = await globals.dio?.get(
         '${ApiConstants.rootApiPath}/account/$_id/likedMovies',
@@ -142,7 +145,8 @@ class MoviesService extends ServiceTemplate {
         options: Options(headers: {'Content-Type': 'application/json'}));
     try {
       if (response?.statusCode != MovieStatusResponse.success) {
-        return const MovieStatusResponse(statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
+        return const MovieStatusResponse(
+            statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
       }
       //todo
       final dynamic data = response?.data;

@@ -5,8 +5,9 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
+
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'package:getout/tools/status.dart';
 import 'package:getout/screens/home/bloc/books/books_event.dart';
@@ -14,16 +15,16 @@ import 'package:getout/screens/home/bloc/home_repository.dart';
 
 part 'recommended_books_state.dart';
 
-class RecommendedBooksBloc extends Bloc<BooksEvent, RecommendedBooksState> {
+class RecommendedBooksHydratedBloc extends HydratedBloc<BooksEvent, RecommendedBooksState> {
   final HomeRepository homeRepository;
 
-  RecommendedBooksBloc({
+  RecommendedBooksHydratedBloc({
     required this.homeRepository,
   }) : super(const RecommendedBooksState()) {
-    on<GenerateBooksRequest>(_onRecommendedBooksRequest);
+    on<GenerateBooksRequest>(_onRecmmendedBooksRequest);
   }
 
-  void _onRecommendedBooksRequest(
+  void _onRecmmendedBooksRequest(
       GenerateBooksRequest event, Emitter<RecommendedBooksState> emit) async {
     emit(state.copyWith(status: Status.loading));
     try {
@@ -37,5 +38,15 @@ class RecommendedBooksBloc extends Bloc<BooksEvent, RecommendedBooksState> {
     } catch (error) {
       emit(state.copyWith(status: Status.error));
     }
+  }
+
+  @override
+  RecommendedBooksState? fromJson(Map<String, dynamic> json) {
+    return RecommendedBooksState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(RecommendedBooksState state) {
+    return state.toMap();
   }
 }

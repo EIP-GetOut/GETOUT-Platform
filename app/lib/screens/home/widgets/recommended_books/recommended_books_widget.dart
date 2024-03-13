@@ -19,7 +19,7 @@ class RecommendedBooksWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RecommendedBooksBloc, RecommendedBooksState>(
+    return BlocBuilder<RecommendedBooksHydratedBloc, RecommendedBooksState>(
       builder: (context, state) {
         if (state.status.isSuccess) {
           return RecommendedBooksSuccessWidget(books: state.recommendedBooks);
@@ -31,7 +31,7 @@ class RecommendedBooksWidget extends StatelessWidget {
                         backgroundColor: Color.fromARGB(0, 255, 5, 5))));
           } else if (state.status.isError) {
 //            return const MoviesErrorWidget();
-            return const ObjectLoadingErrorWidget(object: 'les films');
+            return const ObjectLoadingErrorWidget(object: 'les livres');
           } else {
             return const SizedBox();
           }

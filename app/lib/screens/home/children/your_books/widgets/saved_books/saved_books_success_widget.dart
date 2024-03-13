@@ -28,7 +28,7 @@ class SavedBooksSuccessWidget extends StatelessWidget {
         child: Column(
       children: [
         const TitleWidget(
-            asset: 'party', title: 'Vos films en cours'),
+            asset: 'party', title: 'Vos livres en cours'),
         Expanded(
             child: ListView(
                 controller: movieController,

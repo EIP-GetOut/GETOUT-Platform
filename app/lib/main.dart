@@ -5,12 +5,15 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>, Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'package:getout/screens/connection/bloc/connection_provider.dart';
 import 'package:getout/screens/connection/services/service.dart';
@@ -39,8 +42,12 @@ Map<int, Color> colorMap = {
   900: const Color.fromRGBO(213, 86, 65, 1),
 };
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(
+      storageDirectory: kIsWeb
+          ? HydratedStorage.webStorageDirectory
+          : await getApplicationDocumentsDirectory());
   Bloc.observer = const AppBlocObserver(); // BLoC MiddleWare.
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MainProvider());
@@ -91,7 +98,7 @@ class MainPage extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalMaterialLocalizations.delegate
           ],
-          supportedLocales: AppLocalizations.supportedLocales,
+          //supportedLocales: AppLocalizations.supportedLocales,
           theme: themeData,
           home: BlocBuilder<SessionBloc, SessionState>(
             builder: (context, state) {
