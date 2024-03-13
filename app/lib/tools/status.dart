@@ -15,7 +15,6 @@ enum Status {
   isFound,
   isFoundWithoutPreferences
 }
-
 final Map<Status, String> statusToString = {
   Status.initial: 'initial',
   Status.success: 'success',
