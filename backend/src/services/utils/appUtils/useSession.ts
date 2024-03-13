@@ -21,6 +21,14 @@ interface SessionAccount {
   bornDate?: Date
   createdDate: Date
   preferences?: Preferences
+  watchlist: number []
+  readingList: string []
+  likedMovies: number []
+  likedBooks: string []
+  dislikedMovies: number []
+  dislikedBooks: string []
+  seenMovies: number []
+  readBooks: string []
 }
 
 declare module 'express-session' {

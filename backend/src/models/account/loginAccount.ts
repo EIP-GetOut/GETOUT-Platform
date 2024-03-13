@@ -32,7 +32,15 @@ function createSession (sess: Session & Partial<SessionData>, account: Account):
     lastName: account.lastName,
     bornDate: account.bornDate,
     createdDate: account.createdDate,
-    preferences: account.preferences
+    preferences: account.preferences,
+    watchlist: account.watchlist,
+    readingList: account.readingList,
+    likedMovies: account.likedMovies,
+    likedBooks: account.likedBooks,
+    dislikedMovies: account.dislikedMovies,
+    dislikedBooks: account.dislikedBooks,
+    seenMovies: account.seenMovies,
+    readBooks: account.readBooks
   }
 }
 
