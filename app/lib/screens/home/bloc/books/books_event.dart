@@ -17,12 +17,7 @@ class BooksEvent extends Equatable {
 }
 
 class GenerateBooksRequest extends BooksEvent {
-  const GenerateBooksRequest({
-    required this.genres,
-    this.includeAdult = false,
-  });
-  final List<int> genres;
-  final bool includeAdult;
+  const GenerateBooksRequest();
 }
 
 class BookStatusResponse extends BooksEvent {

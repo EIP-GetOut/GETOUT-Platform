@@ -17,12 +17,7 @@ class MoviesEvent extends Equatable {
 }
 
 class GenerateMoviesRequest extends MoviesEvent {
-  const GenerateMoviesRequest({
-    required this.genres,
-    this.includeAdult = false,
-  });
-  final List<int> genres;
-  final bool includeAdult;
+  const GenerateMoviesRequest();
 }
 
 class MovieStatusResponse extends MoviesEvent {

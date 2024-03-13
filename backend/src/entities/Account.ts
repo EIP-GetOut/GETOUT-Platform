@@ -69,6 +69,12 @@ export class Account {
   @Column('text', { array: true, default: [] })
     dislikedBooks: string [] = []
 
+  @Column('integer', { array: true, default: [] })
+    seenMovies: number [] = []
+
+  @Column('text', { array: true, default: [] })
+    readBooks: string [] = []
+
   @CreateDateColumn()
     createdDate!: Date
 

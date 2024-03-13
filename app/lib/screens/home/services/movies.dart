@@ -8,6 +8,7 @@
 part of 'service.dart';
 
 class MoviesService extends ServiceTemplate {
+  final String _id = globals.session?['id'].toString() ?? '';
 
   MoviesService();
 
@@ -17,25 +18,40 @@ class MoviesService extends ServiceTemplate {
   Future<GenerateMoviesResponse> getRecommendedMovies(
       GenerateMoviesRequest request) async {
     GenerateMoviesResponse result = [];
-    String withGenres = formatWithGenresParameter(request.genres);
 
-    final response = await globals.dio?.get(
-        '${ApiConstants.rootApiPath}${ApiConstants.generateMoviesPath}?with_genres=$withGenres&include_adult=${request.includeAdult.toString()}',
-        options: Options(headers: {'Content-Type': 'application/json'}));
+    try {
+      /// TODO we need to do something prettier
+      final response = await globals.dio?.get(
+          '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedMoviesPath}',
+          options: Options(headers: {'Content-Type': 'application/json'}));
 
-    if (response?.statusCode != HttpStatus.OK) {
+      if (response?.statusCode != HttpStatus.OK) {
+        return Future.error(Exception(
+          'Error ${response?.statusCode} while fetching movies: ${response?.statusMessage}',
+        ));
+      }
+
+      response?.data.forEach((elem) {
+        result.add(MoviePreview(
+            id: elem['id'],
+            title: elem['title'],
+            posterPath: elem['poster_path'],
+            overview: elem['overview']));
+      });
+    } on DioException catch (dioException) {
+      if (dioException.response != null &&
+          dioException.response?.statusCode != null) {
+        return Future.error(Exception(
+          'Error ${dioException.response?.statusCode} while fetching movies: ${dioException.response?.statusMessage}',
+        ));
+      }
+      return Future.error(
+          Exception('Unknown error:  ${dioException.toString()}'));
+    } catch (error) {
       return Future.error(Exception(
-        'Error ${response?.statusCode} while fetching movies: ${response?.statusMessage}',
+        'Unknown error: ${error.toString()}',
       ));
     }
-
-    response?.data['movies'].forEach((elem) {
-      result.add(MoviePreview(
-          id: elem['id'],
-          title: elem['title'],
-          posterPath: elem['poster'],
-          overview: elem['overview']));
-    });
     return result;
   }
 
@@ -63,11 +79,11 @@ class MoviesService extends ServiceTemplate {
   Future<dynamic> getLikedMoviesId(GenerateMoviesRequest request) async {
     final Response? response;
 
-    response = await globals.dio?.get(
-        '${ApiConstants.rootApiPath}/account/${session['id']}/likedMovies',
-        options: Options(headers: {
-          'Content-Type': 'application/json',
-        }));
+    response = await globals.dio
+        ?.get('${ApiConstants.rootApiPath}/account/$_id/likedMovies',
+            options: Options(headers: {
+              'Content-Type': 'application/json',
+            }));
     if (response?.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
         'Error ${response?.statusCode} while fetching movies: ${response?.statusMessage}',
@@ -101,11 +117,11 @@ class MoviesService extends ServiceTemplate {
   Future<dynamic> getSavedMoviesId(GenerateMoviesRequest request) async {
     dynamic data;
 
-    final response = await globals.dio?.get(
-        '${ApiConstants.rootApiPath}/account/${session['id']}/watchlist',
-        options: Options(headers: {
-          'Content-Type': 'application/json',
-        }));
+    final response = await globals.dio
+        ?.get('${ApiConstants.rootApiPath}/account/$_id/watchlist',
+            options: Options(headers: {
+              'Content-Type': 'application/json',
+            }));
 
     if (response?.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
@@ -128,7 +144,8 @@ class MoviesService extends ServiceTemplate {
         options: Options(headers: {'Content-Type': 'application/json'}));
     try {
       if (response?.statusCode != MovieStatusResponse.success) {
-        return const MovieStatusResponse(statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
+        return const MovieStatusResponse(
+            statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
       }
       //todo
       final dynamic data = response?.data;

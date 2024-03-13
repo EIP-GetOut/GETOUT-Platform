@@ -23,7 +23,7 @@ const router = Router()
 
 /**
  * @swagger
- * /account/:accountId/likedBooks:
+ * /account/{accountId}/likedBooks:
  *   post:
  *     summary: Add a book to the user's liked books.
  *     description: Add the book passed as body in the connected user's liked books.
@@ -33,32 +33,26 @@ const router = Router()
  *       - name: accountId
  *         in: path
  *         required: true
- *         schema:
- *           type: string
- *           format: uuid
- *       - name: body
+ *         type: string
+ *         format: uuid
+ *       - name: bookId
  *         in: body
  *         required: true
  *         schema:
- *           type: object
- *           properties:
- *             bookId:
- *               type: string
- *               description: The book id that needs to be added to the liked books.
+ *           type: string
+ *           description: The book id that needs to be added to the liked books.
  *     responses:
- *       '201':
+ *       "201":
  *         description: Book successfully added to the liked books.
- *         content:
- *           application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: string
- *       '400':
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: string
+ *       "400":
  *         description: Invalid request body or missing required fields.
- *       '401':
+ *       "401":
  *         description: Unauthorized - user is not connected.
- *       '500':
+ *       "500":
  *         description: Internal server error.
  *   delete:
  *     summary: Remove a book from the user's liked books.
@@ -66,59 +60,53 @@ const router = Router()
  *     consumes:
  *       - application/json
  *     parameters:
- *      - name: accountId
- *        in: path
- *        required: true
- *        schema:
- *          type: string
- *          format: uuid
- *      - name: bookId
- *        in: path
- *        required: true
- *        schema:
- *          type: string
- *        description: "The book id that needs to be removed from the liked books."
+ *       - name: accountId
+ *         in: path
+ *         required: true
+ *         type: string
+ *         format: uuid
+ *       - name: bookId
+ *         in: body
+ *         required: true
+ *         schema:
+ *           type: string
+ *           description: The book id that needs to be removed from the liked books.
  *     responses:
- *       '200':
+ *       "200":
  *         description: Book successfully removed from the liked books.
- *         content:
- *           application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: string
- *       '400':
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: string
+ *       "400":
  *         description: Invalid request body or missing required fields.
- *       '401':
+ *       "401":
  *         description: Unauthorized - user is not connected.
- *       '404':
+ *       "404":
  *         description: Not Found - the requested book was not found in list.
- *       '500':
+ *       "500":
  *         description: Internal server error.
  *   get:
  *     summary: Get the account's liked books.
  *     description: Retrieve a JSON which contains the user's liked books.
  *     parameters:
- *      - name: accountId
- *        in: path
- *        required: true
- *        schema:
- *          type: string
- *          format: uuid
+ *       - name: accountId
+ *         in: path
+ *         required: true
+ *         type: string
+ *         format: uuid
  *     responses:
- *       '200':
- *         description: Liked books list successfully returned.
- *         content:
- *           application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: string
- *       '400':
+ *       "200":
+ *         description: Liked books successfully returned.
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: string
+ *       "400":
  *         description: Invalid request body or missing required fields.
- *       '401':
+ *       "401":
  *         description: Unauthorized - user is not connected.
- *       '500':
+ *       "500":
  *         description: Internal server error.
  */
 

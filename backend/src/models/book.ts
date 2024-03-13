@@ -119,31 +119,39 @@ async function removeBookFromList (accountId: UUID, bookId: string, bookList: ke
   })
 }
 
-const addBookToReadingList = async (accountId: UUID, movieId: string): Promise<string[]> =>
-  await addBookToList(accountId, movieId, 'readingList')
+const addBookToReadingList = async (accountId: UUID, bookId: string): Promise<string[]> =>
+  await addBookToList(accountId, bookId, 'readingList')
 
-const addBookToLikedBooks = async (accountId: UUID, movieId: string): Promise<string[]> =>
-  await addBookToList(accountId, movieId, 'likedBooks')
+const addBookToLikedBooks = async (accountId: UUID, bookId: string): Promise<string[]> =>
+  await addBookToList(accountId, bookId, 'likedBooks')
 
-const addBookToDislikedBooks = async (accountId: UUID, movieId: string): Promise<string[]> =>
-  await addBookToList(accountId, movieId, 'dislikedBooks')
+const addBookToDislikedBooks = async (accountId: UUID, bookId: string): Promise<string[]> =>
+  await addBookToList(accountId, bookId, 'dislikedBooks')
 
-const removeBookFromReadingList = async (accountId: UUID, movieId: string): Promise<string[]> =>
-  await removeBookFromList(accountId, movieId, 'readingList')
+const addBookToReadBooks = async (accountId: UUID, bookId: string): Promise<string[]> =>
+  await addBookToList(accountId, bookId, 'readBooks')
 
-const removeBookFromLikedBooks = async (accountId: UUID, movieId: string): Promise<string[]> =>
-  await removeBookFromList(accountId, movieId, 'likedBooks')
+const removeBookFromReadingList = async (accountId: UUID, bookId: string): Promise<string[]> =>
+  await removeBookFromList(accountId, bookId, 'readingList')
 
-const removeBookFromDislikedBooks = async (accountId: UUID, movieId: string): Promise<string[]> =>
-  await removeBookFromList(accountId, movieId, 'dislikedBooks')
+const removeBookFromLikedBooks = async (accountId: UUID, bookId: string): Promise<string[]> =>
+  await removeBookFromList(accountId, bookId, 'likedBooks')
+
+const removeBookFromDislikedBooks = async (accountId: UUID, bookId: string): Promise<string[]> =>
+  await removeBookFromList(accountId, bookId, 'dislikedBooks')
+
+const removeBookFromReadBooks = async (accountId: UUID, bookId: string): Promise<string[]> =>
+  await removeBookFromList(accountId, bookId, 'readBooks')
 
 export {
   addBookToDislikedBooks,
   addBookToLikedBooks,
+  addBookToReadBooks,
   addBookToReadingList,
   getBook,
   getPictures,
   removeBookFromDislikedBooks,
   removeBookFromLikedBooks,
+  removeBookFromReadBooks,
   removeBookFromReadingList
 }

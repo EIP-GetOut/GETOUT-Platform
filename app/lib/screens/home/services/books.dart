@@ -9,6 +9,7 @@ part of 'service.dart';
 
 class BooksService extends ServiceTemplate {
   final session = globals.session ?? {}; /// TODO NOT SAFE
+  final String _id = (globals.session != null) ? globals.session!['id'].toString() : '';
 
   BooksService();
 
@@ -16,25 +17,38 @@ class BooksService extends ServiceTemplate {
   Future<GenerateBooksResponse> getRecommendedBooks(
       GenerateBooksRequest request) async {
     GenerateBooksResponse result = [];
-    String withGenres = formatWithGenresParameter(request.genres);
 
-    final response = await globals.dio?.get(
-        '${ApiConstants.rootApiPath}${ApiConstants.generateBooksPath}?with_genres=$withGenres&include_adult=${request.includeAdult.toString()}',
-        options: Options(headers: {'Content-Type': 'application/json'}));
+    try { /// TODO we need to do something prettier
+      final response = await globals.dio?.get(
+          '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedBooksPath}',
+          options: Options(headers: {'Content-Type': 'application/json'}));
 
-    if (response?.statusCode != HttpStatus.OK) {
+      if (response?.statusCode != HttpStatus.OK) {
+        return Future.error(Exception(
+          'Error ${response?.statusCode} while fetching books: ${response?.statusMessage}',
+        ));
+      }
+
+      response?.data.forEach((elem) {
+        result.add(BookPreview(
+            id: elem['id'],
+            title: elem['title'],
+            posterPath: elem['poster_path'],
+            overview: elem['overview']));
+      });
+    } on DioException catch (dioException) {
+      if (dioException.response != null && dioException.response?.statusCode != null) {
+        return Future.error(Exception(
+          'Error ${dioException.response?.statusCode} while fetching books: ${dioException.response?.statusMessage}',
+        ));
+      }
       return Future.error(Exception(
-        'Error ${response?.statusCode} while fetching books: ${response?.statusMessage}',
+          'Unknown error:  ${dioException.toString()}'));
+    } catch (error) {
+      return Future.error(Exception(
+        'Unknown error: ${error.toString()}',
       ));
     }
-
-    response?.data['books'].forEach((elem) {
-      result.add(BookPreview(
-          id: elem['id'],
-          title: elem['title'],
-          posterPath: elem['poster'],
-          overview: elem['overview']));
-    });
     return result;
   }
 
@@ -63,7 +77,7 @@ class BooksService extends ServiceTemplate {
     final Response? response;
 
     response = await globals.dio
-        ?.get('${ApiConstants.rootApiPath}/account/${session['id']}/likedBooks',
+        ?.get('${ApiConstants.rootApiPath}/account/$_id/likedBooks',
             options: Options(headers: {
               'Content-Type': 'application/json',
             }));
@@ -100,7 +114,7 @@ class BooksService extends ServiceTemplate {
     dynamic data;
 
     final response = await globals.dio
-        ?.get('${ApiConstants.rootApiPath}/account/${session['id']}/readinglist',
+        ?.get('${ApiConstants.rootApiPath}/account/$_id/readinglist',
             options: Options(headers: {
               'Content-Type': 'application/json',
             }));
