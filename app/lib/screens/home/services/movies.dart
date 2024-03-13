@@ -19,10 +19,10 @@ class MoviesService extends ServiceTemplate {
       GenerateMoviesRequest request) async {
     GenerateMoviesResponse result = [];
 
-    try {
-      /// TODO we need to do something prettier
+    try { /// TODO we need to do something prettier
       final response = await globals.dio?.get(
-          '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedMoviesPath}',
+          '${ApiConstants.rootApiPath}/account/$_id${ApiConstants
+              .recommendedMoviesPath}',
           options: Options(headers: {'Content-Type': 'application/json'}));
 
       if (response?.statusCode != HttpStatus.OK) {
@@ -77,11 +77,12 @@ class MoviesService extends ServiceTemplate {
   Future<dynamic> getLikedMoviesId(GenerateMoviesRequest request) async {
     final Response? response;
 
-    response = await globals.dio
-        ?.get('${ApiConstants.rootApiPath}/account/$_id/likedMovies',
-            options: Options(headers: {
-              'Content-Type': 'application/json',
-            }));
+
+    response = await globals.dio?.get(
+        '${ApiConstants.rootApiPath}/account/$_id/likedMovies',
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+        }));
     if (response?.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
         'Error ${response?.statusCode} while fetching movies: ${response?.statusMessage}',
@@ -115,11 +116,11 @@ class MoviesService extends ServiceTemplate {
   Future<dynamic> getSavedMoviesId(GenerateMoviesRequest request) async {
     dynamic data;
 
-    final response = await globals.dio
-        ?.get('${ApiConstants.rootApiPath}/account/$_id/watchlist',
-            options: Options(headers: {
-              'Content-Type': 'application/json',
-            }));
+    final response = await globals.dio?.get(
+        '${ApiConstants.rootApiPath}/account/$_id/watchlist',
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+        }));
 
     if (response?.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
