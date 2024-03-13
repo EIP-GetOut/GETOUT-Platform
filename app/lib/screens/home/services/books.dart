@@ -8,7 +8,6 @@
 part of 'service.dart';
 
 class BooksService extends ServiceTemplate {
-  final session = globals.session ?? {}; /// TODO NOT SAFE
   final String _id = (globals.session != null) ? globals.session!['id'].toString() : '';
 
   BooksService();

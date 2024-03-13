@@ -11,6 +11,7 @@ import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/home/bloc/books/books_event.dart';
 import 'package:getout/screens/home/bloc/movies/movies_event.dart';
+
 import 'package:getout/global.dart' as globals;
 
 part 'dashboard.dart';

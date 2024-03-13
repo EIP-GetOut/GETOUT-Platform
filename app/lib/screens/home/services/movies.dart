@@ -39,8 +39,7 @@ class MoviesService extends ServiceTemplate {
             overview: elem['overview']));
       });
     } on DioException catch (dioException) {
-      if (dioException.response != null &&
-          dioException.response?.statusCode != null) {
+      if (dioException.response != null && dioException.response?.statusCode != null) {
         return Future.error(Exception(
           'Error ${dioException.response?.statusCode} while fetching movies: ${dioException.response?.statusMessage}',
         ));
@@ -49,8 +48,7 @@ class MoviesService extends ServiceTemplate {
           Exception('Unknown error:  ${dioException.toString()}'));
     } catch (error) {
       return Future.error(Exception(
-        'Unknown error: ${error.toString()}',
-      ));
+          'Unknown error:  ${error.toString()}'));
     }
     return result;
   }
