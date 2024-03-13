@@ -30,6 +30,10 @@ class InfoMovieResponse extends MovieEvent {
       this.voteAverage,
       this.duration,
       this.cast,
+      // this.liked,
+      // this.disliked,
+      // this.wishlisted,
+      // this.id,
       required this.statusCode});
 
   final List<Map<String, String?>>? cast;
@@ -41,5 +45,28 @@ class InfoMovieResponse extends MovieEvent {
   final String? releaseDate;
   final double? voteAverage;
   final String? duration;
+  // final bool? liked;
+  // final bool? disliked;
+  // final bool? wishlisted;
   final int statusCode;
+  // final int? id;
 }
+
+class AddLikeMovieRequest extends MovieEvent {
+  const AddLikeMovieRequest (
+    {required this.id}
+  );
+
+  final int id;
+}
+
+class AddLikeMovieResponse extends MovieEvent {
+  const AddLikeMovieResponse (
+    {required this.statusCode}
+  );
+
+  final int statusCode;
+
+  static const int success = HttpStatus.OK;
+}
+

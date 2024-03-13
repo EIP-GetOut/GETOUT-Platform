@@ -18,6 +18,7 @@ class ApiConstants {
   static const String loginPath = '/account/login';
   static const String logoutPath = '/account/logout';
   static const String registerPath = '/account/signup';
+  static const String accountPath = '/account';
 
   static const String resetPasswordEmailPath = '/account/reset-password/send-email';
   static const String resetPasswordNewPasswordPath = '/account/reset-password';
@@ -33,4 +34,10 @@ class ApiConstants {
 
   static const String session = '/session';
 
+  static const String addLikedMoviePath = '/likedMovies';
+  static const String addDislikedMoviePath = '/dislikedMovies';
+
+  static const String watchlistPath = '/watchlist';
+
+  static const String seenMoviesPath = '/seenMovies';
 }

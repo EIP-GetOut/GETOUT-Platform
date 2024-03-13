@@ -6,6 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:boxicons/boxicons.dart';
 
@@ -47,10 +48,22 @@ class MovieSuccessWidget extends StatelessWidget {
               ),
               Positioned(
                 top: 30,
+                right: 80,
+                child: IconButton(
+                  icon: const Icon(Icons.share),
+                  color: Colors.white,
+                  onPressed: () async {
+                    // await Clipboard.setData(ClipboardData(text: 'https://www.themoviedb.org/movie/${movie.id}'));
+                  },
+                ),
+              ),
+              Positioned(
+                top: 30,
                 right: 20,
                 child: IconButton(
                   icon: const Icon(Icons.thumb_up_alt_sharp),
                   color: Colors.white,
+                  // color: (movie.liked ?? false) ? Colors.red : Colors.white,
                   onPressed: () {
                     // print('Like');
                   },
@@ -62,6 +75,7 @@ class MovieSuccessWidget extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.thumb_down),
                   color: Colors.white,
+                  // color: (movie.disliked ?? false) ? Colors.red : Colors.white,
                   onPressed: () {
                     // print('Dislike');
                   },

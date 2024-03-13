@@ -29,6 +29,7 @@ class InfoBookResponse extends BookEvent {
       this.voteAverage,
       this.duration,
       this.authorsPicture,
+      this.id,
       required this.statusCode});
 
   final List<Map<String, String?>>? authorsPicture;
@@ -40,5 +41,6 @@ class InfoBookResponse extends BookEvent {
   final String? releaseDate;
   final double? voteAverage;
   final String? duration;
+  final int? id;
   final int statusCode;
 }

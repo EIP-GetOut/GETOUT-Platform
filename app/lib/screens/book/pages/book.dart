@@ -6,6 +6,8 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:boxicons/boxicons.dart';
 
 import 'package:getout/screens/book/pages/book_description.dart';
@@ -21,7 +23,6 @@ class BookSuccessWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String imageUrl = book.posterPath ?? '';
     Widget buildCoverImage() => Container(
           decoration: const BoxDecoration(
@@ -73,6 +74,42 @@ class BookSuccessWidget extends StatelessWidget {
                       Navigator.pop(context);
                     },
                   ))),
+          Positioned(
+            top: 30,
+            right: 80,
+            child: IconButton(
+              icon: const Icon(Icons.share),
+              color: Colors.white,
+              onPressed: () async {
+                await Clipboard.setData(ClipboardData(
+                    text: 'https://www.themoviedb.org/movie/${book.id}'));
+              },
+            ),
+          ),
+          Positioned(
+            top: 30,
+            right: 20,
+            child: IconButton(
+              icon: const Icon(Icons.thumb_up_alt_sharp),
+              color: Colors.white,
+              // color: (movie.liked ?? false) ? Colors.red : Colors.white,
+              onPressed: () {
+                // print('Like');
+              },
+            ),
+          ),
+          Positioned(
+            top: 80,
+            right: 20,
+            child: IconButton(
+              icon: const Icon(Icons.thumb_down),
+              color: Colors.white,
+              // color: (movie.disliked ?? false) ? Colors.red : Colors.white,
+              onPressed: () {
+                // print('Dislike');
+              },
+            ),
+          ),
         ],
       ),
       Text(

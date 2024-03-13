@@ -54,6 +54,8 @@ class HomeAppBarWidget extends AppBar {
               Text('Bienvenue !',
                   style: Theme.of(context).textTheme.titleLarge),
               Text('La productivité à portée de main',
+                  style: Theme.of(context).textTheme.displayMedium),
+              Text('Vous avez gagné 3h',
                   style: Theme.of(context).textTheme.displayMedium)
             ],
           ),
