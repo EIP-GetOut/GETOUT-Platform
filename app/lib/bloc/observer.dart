@@ -7,7 +7,6 @@
 
 import 'package:bloc/bloc.dart';
 
-import 'package:flutter/foundation.dart';
 
 /// {@template app_bloc_observer}
 /// Custom [BlocObserver] that observes all bloc and cubit state changes.
