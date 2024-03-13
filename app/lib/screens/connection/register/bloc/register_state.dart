@@ -13,7 +13,7 @@ class RegisterState extends Equatable {
   final String confirmPassword;
   final String firstName;
   final String lastName;
-  final String bornDate;
+  final String birthDate;
   final Status status;
   final Object? exception;
   bool get isEmailEmpty => email.isNotEmpty;
@@ -36,7 +36,7 @@ class RegisterState extends Equatable {
     this.confirmPassword = '',
     this.firstName = '',
     this.lastName = '',
-    this.bornDate = '',
+    this.birthDate = '',
     this.status = Status.initial,
     this.exception
   });
@@ -47,7 +47,7 @@ class RegisterState extends Equatable {
     String? confirmPassword,
     String? firstName,
     String? lastName,
-    String? bornDate,
+    String? birthDate,
     Status? status,
     Object? exception
   }) {
@@ -57,12 +57,12 @@ class RegisterState extends Equatable {
       confirmPassword: confirmPassword ?? this.confirmPassword,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
-      bornDate: bornDate ?? this.bornDate,
+      birthDate: birthDate ?? this.birthDate,
       status: status ?? this.status,
       exception: exception ?? this.exception
     );
   }
 
   @override
-  List<Object?> get props => [email, password, confirmPassword, firstName, lastName, bornDate, status, exception];
+  List<Object?> get props => [email, password, confirmPassword, firstName, lastName, birthDate, status, exception];
 }

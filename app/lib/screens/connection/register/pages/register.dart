@@ -74,7 +74,7 @@ class RegisterPage extends StatelessWidget {
                           Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 8),
-                              child: BornDateField()),
+                              child: BirthDateField()),
                           const SizedBox(height: 15),
                           fieldTitle('ADRESSE EMAIL'),
                           const Padding(

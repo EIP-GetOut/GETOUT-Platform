@@ -76,8 +76,8 @@ class FirstNameField extends StatelessWidget {
 }
 
 
-class BornDateField extends StatelessWidget {
-  BornDateField({super.key});
+class BirthDateField extends StatelessWidget {
+  BirthDateField({super.key});
   final TextEditingController controller = TextEditingController();
 
   @override
@@ -103,6 +103,11 @@ class BornDateField extends StatelessWidget {
               if (value == null || value.isEmpty) {
                 return 'Une date est requise';
               }
+              DateFormat format = DateFormat('dd/MM/yy');
+              DateTime date = format.parse(value);
+              if (date.isAfter(DateTime.now().subtract(const Duration(days: 365 * 13)))) {
+                return 'La date doit être supérieure à 13 ans';
+              }
               return null;
             },
             onTap: () async {
@@ -110,16 +115,15 @@ class BornDateField extends StatelessWidget {
                   context: context,
                   locale: const Locale('fr', 'FR'),
                   initialDate: DateTime.now(),
-                  firstDate: DateTime(1950),
-                  //DateTime.now() - not to allow to choose before today.
-                  lastDate: DateTime(2100));
+                  firstDate: DateTime.now().subtract(const Duration(days: 365 * 105)),
+                  lastDate: DateTime.now());
 
               if (pickedDate != null) {
                 String formattedDate = DateFormat('dd/MM/yyyy').format(pickedDate);
                 controller.text = formattedDate;
                 // ignore: use_build_context_synchronously
                 context.read<RegisterBloc>().add(
-                  RegisterBornDateChanged(bornDate: formattedDate),
+                  RegisterBirthDateChanged(birthDate: formattedDate),
                 );
               }
             }
