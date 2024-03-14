@@ -118,7 +118,7 @@ class BirthDateField extends StatelessWidget {
                   context: context,
                   locale: const Locale('fr', 'FR'),
                   initialDate: DateTime.now(),
-                  firstDate: DateTime.now().subtract(const Duration(days: 365 * 105)),
+                  firstDate: DateTime.now().subtract(const Duration(days: 365 * 150)),
                   lastDate: DateTime.now());
 
               if (pickedDate != null) {
