@@ -8,13 +8,13 @@
 part of 'register_bloc.dart';
 
 class RegisterRequestModel {
-  const RegisterRequestModel({required this.email, required this.password, required this.firstName, required this.lastName, required this.bornDate});
+  const RegisterRequestModel({required this.email, required this.password, required this.firstName, required this.lastName, required this.birthDate});
 
   final String email;
   final String password;
   final String firstName;
   final String lastName;
-  final String bornDate;
+  final String birthDate;
 }
 
 class RegisterResponseModel {
@@ -72,13 +72,13 @@ class RegisterLastNameChanged extends RegisterEvent {
   List<Object?> get props => [lastName];
 }
 
-class RegisterBornDateChanged extends RegisterEvent {
-  final String? bornDate;
+class RegisterBirthDateChanged extends RegisterEvent {
+  final String? birthDate;
 
-  RegisterBornDateChanged({this.bornDate});
+  RegisterBirthDateChanged({this.birthDate});
 
   @override
-  List<Object?> get props => [bornDate];
+  List<Object?> get props => [birthDate];
 }
 
 class RegisterSubmitted extends RegisterEvent {

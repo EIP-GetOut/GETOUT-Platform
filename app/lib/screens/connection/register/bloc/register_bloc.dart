@@ -36,8 +36,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(state.copyWith(firstName: event.firstName));
     } else if (event is RegisterLastNameChanged) {
       emit(state.copyWith(lastName: event.lastName));
-    } else if (event is RegisterBornDateChanged) {
-      emit(state.copyWith(bornDate: event.bornDate));
+    } else if (event is RegisterBirthDateChanged) {
+      emit(state.copyWith(birthDate: event.birthDate));
     } else if (event is RegisterSubmitted) {
       emit(state.copyWith(status: Status.loading));
 
@@ -47,7 +47,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           password: state.password,
           firstName: state.firstName,
           lastName: state.lastName,
-          bornDate: state.bornDate,
+          birthDate: state.birthDate,
         ));
         emit(state.copyWith(status: Status.success));
       } catch (e) {
