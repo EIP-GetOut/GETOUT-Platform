@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/form/services/form_services.dart';
-import 'package:getout/screens/form/pages/social_media_time.dart';
 import 'package:getout/screens/form/pages/viewing_platform.dart';
-import 'package:getout/screens/form/pages/interest_choices.dart';
+// import 'package:getout/screens/form/pages/social_media_time.dart';
+// import 'package:getout/screens/form/pages/interest_choices.dart';
 import 'package:getout/screens/form/pages/literary_genre.dart';
 import 'package:getout/screens/form/pages/film_genres.dart';
 import 'package:getout/screens/form/pages/end_form.dart';
@@ -47,8 +47,8 @@ class Forms extends StatelessWidget {
           controller: pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: const <Widget>[
-            SocialMediaSpentTime(),
-            InterestChoices(),
+            // SocialMediaSpentTime(),
+            // InterestChoices(),
             LiteraryGenres(),
             FilmGenres(),
             ViewingPlatform(),
@@ -71,8 +71,8 @@ class Forms extends StatelessWidget {
               Text('Suivant', style: Theme.of(context).textTheme.labelMedium),
           onPressed: () {
             if (
-                (context.read<FormBloc>().state.status == FormStatus.interestChoices &&
-                    !context.read<FormBloc>().state.interest.containsValue(true)) ||
+                /*(context.read<FormBloc>().state.status == FormStatus.interestChoices &&
+                    !context.read<FormBloc>().state.interest.containsValue(true)) ||*/
                 (context.read<FormBloc>().state.status == FormStatus.literaryGenres &&
                     !context.read<FormBloc>().state.literaryGenres.containsValue(true)) ||
                 (context.read<FormBloc>().state.status == FormStatus.filmGenres &&

@@ -4,7 +4,7 @@
 ** Proprietary and confidential
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
-
+/*
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -68,3 +68,4 @@ class SocialMediaSpentTime extends StatelessWidget {
     );
     }
   }
+*/
