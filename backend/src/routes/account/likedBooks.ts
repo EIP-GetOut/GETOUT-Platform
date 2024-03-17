@@ -120,7 +120,7 @@ router.post('/account/:accountId/likedBooks', rulesPost, validate, logApiRequest
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addBookToLikedBooks(req.params.accountId, req.body.bookId).then((updatedLikedBooksList: string[]) => {
+  addBookToLikedBooks(req.params.accountId, req.body.bookId, req.session).then((updatedLikedBooksList: string[]) => {
     logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s liked books`)
     req.session.account!.likedBooks = updatedLikedBooksList
     return res.status(StatusCodes.CREATED).json(updatedLikedBooksList)

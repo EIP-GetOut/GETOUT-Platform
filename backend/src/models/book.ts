@@ -6,6 +6,7 @@
 */
 
 import { type UUID } from 'crypto'
+import { type Session, type SessionData } from 'express-session'
 import { StatusCodes } from 'http-status-codes'
 import { type Response } from 'node-fetch'
 
@@ -123,11 +124,35 @@ async function removeBookFromList (accountId: UUID, bookId: string, bookList: ke
 const addBookToReadingList = async (accountId: UUID, bookId: string): Promise<string[]> =>
   await addBookToList(accountId, bookId, 'readingList')
 
-const addBookToLikedBooks = async (accountId: UUID, bookId: string): Promise<string[]> =>
-  await addBookToList(accountId, bookId, 'likedBooks')
+const addBookToLikedBooks = async (accountId: UUID, bookId: string, session: Session & Partial<SessionData>): Promise<string[]> => {
+  return await addBookToList(accountId, bookId, 'likedBooks').then(async (likedBooks: string []) => {
+    return await removeBookFromDislikedBooks(accountId, bookId).then((dislikedBooks: string[]) => {
+      session.account!.dislikedBooks = dislikedBooks
+      return likedBooks
+    }).catch((err: AppError) => {
+      if (err instanceof BookNotInListError) {
+        return likedBooks
+      } else {
+        throw err
+      }
+    })
+  })
+}
 
-const addBookToDislikedBooks = async (accountId: UUID, bookId: string): Promise<string[]> =>
-  await addBookToList(accountId, bookId, 'dislikedBooks')
+const addBookToDislikedBooks = async (accountId: UUID, bookId: string, session: Session & Partial<SessionData>): Promise<string[]> => {
+  return await addBookToList(accountId, bookId, 'dislikedBooks').then(async (dislikedBooks: string []) => {
+    return await removeBookFromLikedBooks(accountId, bookId).then((likedBooks: string[]) => {
+      session.account!.likedBooks = likedBooks
+      return dislikedBooks
+    }).catch((err: AppError) => {
+      if (err instanceof BookNotInListError) {
+        return dislikedBooks
+      } else {
+        throw err
+      }
+    })
+  })
+}
 
 const addBookToReadBooks = async (accountId: UUID, bookId: string): Promise<string[]> =>
   await addBookToList(accountId, bookId, 'readBooks')

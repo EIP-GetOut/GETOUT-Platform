@@ -126,7 +126,7 @@ router.post('/account/:accountId/watchlist', rulesPost, validate, logApiRequest,
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addMovieToWatchlist(req.params.accountId, req.body.movieId).then((updatedWatchlist: number[]) => {
+  addMovieToWatchlist(req.params.accountId, parseInt(req.body.movieId)).then((updatedWatchlist: number[]) => {
     logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s watchlist`)
     req.session.account!.watchlist = updatedWatchlist
     return res.status(StatusCodes.CREATED).json(updatedWatchlist)

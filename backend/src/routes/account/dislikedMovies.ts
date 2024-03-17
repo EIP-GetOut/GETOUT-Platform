@@ -126,7 +126,7 @@ router.post('/account/:accountId/dislikedMovies', rulesPost, validate, logApiReq
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addMovieToDislikedMovies(req.params.accountId, req.body.movieId).then((updatedDislikedMoviesList: number[]) => {
+  addMovieToDislikedMovies(req.params.accountId, parseInt(req.body.movieId), req.session).then((updatedDislikedMoviesList: number[]) => {
     logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s disliked movies.`)
     req.session.account!.dislikedMovies = updatedDislikedMoviesList
     return res.status(StatusCodes.CREATED).json(updatedDislikedMoviesList)

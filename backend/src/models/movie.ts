@@ -6,6 +6,7 @@
 */
 
 import { type UUID } from 'crypto'
+import { type Session, type SessionData } from 'express-session'
 import { StatusCodes } from 'http-status-codes'
 import { MovieDb, type MovieResponse } from 'moviedb-promise'
 
@@ -100,12 +101,35 @@ async function removeMovieFromList (accountId: UUID, movieId: number, movieList:
 const addMovieToWatchlist = async (accountId: UUID, movieId: number): Promise<number[]> =>
   await addMovieToList(accountId, movieId, 'watchlist')
 
-const addMovieToLikedMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
-  await addMovieToList(accountId, movieId, 'likedMovies')
+const addMovieToLikedMovies = async (accountId: UUID, movieId: number, session: Session & Partial<SessionData>): Promise<number[]> => {
+  return await addMovieToList(accountId, movieId, 'likedMovies').then(async (likedMovies: number []) => {
+    return await removeMovieFromDislikedMovies(accountId, movieId).then((dislikedMovies: number[]) => {
+      session.account!.dislikedMovies = dislikedMovies
+      return likedMovies
+    }).catch((err: AppError) => {
+      if (err instanceof MovieNotInListError) {
+        return likedMovies
+      } else {
+        throw err
+      }
+    })
+  })
+}
 
-const addMovieToDislikedMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
-  await addMovieToList(accountId, movieId, 'dislikedMovies')
-
+const addMovieToDislikedMovies = async (accountId: UUID, movieId: number, session: Session & Partial<SessionData>): Promise<number[]> => {
+  return await addMovieToList(accountId, movieId, 'dislikedMovies').then(async (dislikedMovies: number []) => {
+    return await removeMovieFromLikedMovies(accountId, movieId).then((likedMovies: number[]) => {
+      session.account!.likedMovies = likedMovies
+      return dislikedMovies
+    }).catch((err: AppError) => {
+      if (err instanceof MovieNotInListError) {
+        return dislikedMovies
+      } else {
+        throw err
+      }
+    })
+  })
+}
 const addMovieToSeenMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
   await addMovieToList(accountId, movieId, 'seenMovies')
 

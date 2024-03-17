@@ -126,7 +126,7 @@ router.post('/account/:accountId/seenMovies', rulesPost, validate, logApiRequest
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addMovieToSeenMovies(req.params.accountId, req.body.movieId).then((updatedSeenMovies: number[]) => {
+  addMovieToSeenMovies(req.params.accountId, parseInt(req.body.movieId)).then((updatedSeenMovies: number[]) => {
     logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s seen movies.`)
     req.session.account!.seenMovies = updatedSeenMovies
     return res.status(StatusCodes.CREATED).json(updatedSeenMovies)

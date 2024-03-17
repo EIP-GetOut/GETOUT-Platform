@@ -126,7 +126,7 @@ router.post('/account/:accountId/likedMovies', rulesPost, validate, logApiReques
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addMovieToLikedMovies(req.params.accountId, req.body.movieId).then((updatedLikedMoviesList: number[]) => {
+  addMovieToLikedMovies(req.params.accountId, parseInt(req.body.movieId), req.session).then((updatedLikedMoviesList: number[]) => {
     logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s liked movies.`)
     req.session.account!.likedMovies = updatedLikedMoviesList
     return res.status(StatusCodes.CREATED).json(updatedLikedMoviesList)
