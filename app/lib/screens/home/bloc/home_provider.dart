@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 ///home_page
-import 'package:getout/screens/home/pages/home_page.dart';
+import 'package:getout/screens/home/home_page.dart';
 import 'package:getout/screens/home/bloc/home_page/home_page_bloc.dart';
 import 'package:getout/screens/home/bloc/home_repository.dart';
 

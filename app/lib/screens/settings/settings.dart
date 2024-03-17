@@ -6,8 +6,8 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/screens/settings/pages/edit_mail.dart';
-import 'package:getout/screens/settings/pages/edit_password.dart';
+import 'package:getout/screens/settings/pages/edit_email/edit_mail.dart';
+import 'package:getout/screens/settings/pages/edit_password/edit_password.dart';
 import 'package:getout/screens/settings/pages/notifications/notifications_page.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -33,6 +33,7 @@ class _SettingsPageState extends State<SettingsPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: 40),
+            const Divider(height: 20, thickness: 1),
             Container(
               width: double.infinity,
               margin: const EdgeInsets.all(12.0),
@@ -50,14 +51,34 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
             ),
-            const Divider(height: 20, thickness: 1),
-            buildParameters(context, 'Changer le Mot de Passe',
-                const ParametersEditPasswordPage()),
             InkWell(
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const MyMailPage()),
+                  MaterialPageRoute(builder: (context) => const EditPasswordPage()),
+                );
+              },
+              child: Container(
+                padding:
+                const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Icon(Icons.shield_outlined, color: Colors.grey),
+                    Text(
+                      'Changer de mot de passe',
+                      style: TextStyle(fontSize: 20, color: Colors.grey[800]),
+                    ),
+                    Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
+                  ],
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const EditMailPage()),
                 );
               },
               child: Container(

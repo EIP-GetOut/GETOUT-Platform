@@ -35,7 +35,7 @@ class LoginPage extends StatelessWidget {
     /// StoreR
     ///
     return Scaffold(
-      body: BlocListener<LoginBloc, LoginState>(
+        body: BlocListener<LoginBloc, LoginState>(
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status.isError) {

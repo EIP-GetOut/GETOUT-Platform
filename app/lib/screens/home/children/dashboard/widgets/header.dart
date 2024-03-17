@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:getout/screens/settings/pages/settings.dart';
+import 'package:getout/screens/settings/settings.dart';
 
 class DashboardHeader extends StatelessWidget {
   const DashboardHeader({super.key});
