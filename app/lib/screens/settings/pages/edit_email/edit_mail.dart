@@ -30,13 +30,17 @@ class EditMailPage extends StatelessWidget {
               children: [
                 PasswordField(
                     onChanged: (String value) => password = value,
-                    validator: (value) => password.isNotEmpty? null: 'le champs est vide'),
+                    validator: (value) =>
+                        password.isNotEmpty ? null : 'le champs est vide'),
                 NewEmailField(
                     onChanged: (String value) => newEmail = value,
-                    validator: (value) => (newEmail.isNotEmpty) ? null: 'l\'email est invalide'),
+                    validator: (value) =>
+                        (newEmail.isNotEmpty) ? null : 'l\'email est invalide'),
                 ConfirmEmailField(
                     onChanged: (value) => confirmEmail = value,
-                    validator: (value) => (confirmEmail.isNotEmpty) ? null: 'la confirmation est invalide'),
+                    validator: (value) => (confirmEmail.isNotEmpty)
+                        ? null
+                        : 'la confirmation est invalide'),
                 const SizedBox(height: 32),
               ],
             ),
@@ -46,9 +50,8 @@ class EditMailPage extends StatelessWidget {
         floatingActionButton: FloatingButton(
           title: 'Changer d\'email',
           onPressed: () {
-            (formKey.currentState!.validate())
-              ? print('no request')
-              :print('not valid');
+            //todo: if (..validate()) { request }
+            formKey.currentState!.validate();
           },
         ));
   }

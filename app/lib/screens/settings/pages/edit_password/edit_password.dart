@@ -37,10 +37,10 @@ class EditPasswordPage extends StatelessWidget {
                         ? null
                         : 'le champs ne peut etre vide'),
                 ConfirmPasswordField(
-                  onChanged: (value) => confirmPassword = value,
-                  validator: (value) => 'Une erreur est survenu',
-//                  state.isEmailEmpty ? null : 'Un email est requis',
-                ),
+                    onChanged: (value) => confirmPassword = value,
+                    validator: (value) => confirmPassword.isNotEmpty
+                        ? null
+                        : 'le champs ne peut etre vide'),
                 const SizedBox(height: 32),
               ],
             ),
@@ -49,9 +49,8 @@ class EditPasswordPage extends StatelessWidget {
       floatingActionButton: FloatingButton(
           title: 'changer le mot de passe',
           onPressed: () {
-            (formKey.currentState!.validate())
-                ? print('no request')
-                : print('not valid');
+            //todo: if (..validate()) { request }
+            formKey.currentState!.validate();
           }),
     );
   }
