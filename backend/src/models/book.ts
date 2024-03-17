@@ -11,7 +11,7 @@ import { StatusCodes } from 'http-status-codes'
 import { type Response } from 'node-fetch'
 
 import logger from '@services/middlewares/logging'
-import { AccountDoesNotExistError, ApiError, AppError, BookNotInListError, DbError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError, ApiError, type AppError, BookNotInListError, DbError } from '@services/utils/customErrors'
 
 import { Account } from '@entities/Account'
 
@@ -53,35 +53,26 @@ async function getPictures (authors: any): Promise<any> {
   return authorInfoArray
 }
 
-async function getBookDetail (id: string): Promise<Response> {
+async function getBookDetails (id: string): Promise<Response> {
   return await (fetch(`https://www.googleapis.com/books/v1/volumes/${id}?key=${key}`)).then(async (res) => {
     if (!res.ok) {
-      throw new ApiError(res.statusText)
+      throw new ApiError(`Error whiled obtaining book ${id}'s details (${res.status}: ${res.statusText}).`)
     }
     return await res.json()
-  }).catch((err: AppError | Error) => {
-    if (err instanceof AppError) {
-      throw err
-    } else {
-      throw new AppError()
-    }
   })
 }
 
 async function getBook (id: string): Promise<any> {
-  return await getBookDetail(id).then(async (bookObtained: any | undefined) => {
-    if (bookObtained == null) {
-      throw new AppError()
-    }
+  return await getBookDetails(id).then(async (bookObtained: any) => {
     return ({
       id,
       title: bookObtained.volumeInfo.title,
       overview: bookObtained.volumeInfo.description,
-      poster_path: bookObtained.volumeInfo?.imageLinks?.thumbnail != null ? bookObtained.volumeInfo.imageLinks.thumbnail : null,
+      poster_path: bookObtained.volumeInfo?.imageLinks?.thumbnail ?? null,
       pageCount: bookObtained.volumeInfo.pageCount,
       authors: bookObtained.volumeInfo.authors,
       authors_picture: await getPictures(bookObtained.volumeInfo.authors),
-      category: bookObtained.volumeInfo?.categories != null ? bookObtained.volumeInfo.categories : null
+      category: bookObtained.volumeInfo?.categories ?? null
     })
   })
 }

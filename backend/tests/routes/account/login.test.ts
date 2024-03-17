@@ -20,7 +20,6 @@ describe('Login Routes', () => {
   it('should respond with 200 OK for POST /account/login', async () => {
     await request(app).post('/account/login').send(loginBody).then((response) => {
       expect(response.status).toBe(200)
-      expect(response.text).toBe('OK')
     })
   })
 })

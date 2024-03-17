@@ -10,7 +10,7 @@ import { type Session, type SessionData } from 'express-session'
 import { StatusCodes } from 'http-status-codes'
 import { MovieDb, type MovieResponse } from 'moviedb-promise'
 
-import { AccountDoesNotExistError, ApiError, AppError, DbError, MovieNotInListError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError, ApiError, type AppError, DbError, MovieNotInListError } from '@services/utils/customErrors'
 
 import { Account } from '@entities/Account'
 
@@ -34,7 +34,7 @@ async function fetchMovieCredits (movieId: number): Promise<any> {
   })
 }
 
-async function getDetail (id: number): Promise<MovieResponse | undefined> {
+async function getMovieDetail (id: number): Promise<MovieResponse> {
   return await moviedb.movieInfo(id).then((value: MovieResponse) => {
     return value
   }).catch((err: Error) => {
@@ -43,10 +43,7 @@ async function getDetail (id: number): Promise<MovieResponse | undefined> {
 }
 
 async function getMovie (id: number): Promise<any> {
-  return await getDetail(id).then(async (movieObtained: MovieResponse | undefined) => {
-    if (movieObtained == null) {
-      throw new AppError()
-    }
+  return await getMovieDetail(id).then(async (movieObtained: MovieResponse) => {
     return await fetchMovieCredits(id).then((cast: any) => {
       return ({
         id,
