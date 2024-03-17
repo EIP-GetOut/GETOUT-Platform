@@ -10,7 +10,11 @@ import 'package:flutter/services.dart';
 
 import 'package:getout/screens/settings/pages/settings.dart';
 
+import 'package:getout/global.dart' as globals;
+
 class HomeAppBarWidget extends AppBar {
+  final win = 'Vous avez gagné';
+  final spendTime = globals.session?['spentMinutesReadingAndWatching'] % 60 < 10 ? {globals.session?['spentMinutesReadingAndWatching'] % 60} : {globals.session?['spentMinutesReadingAndWatching'] % 60};
   HomeAppBarWidget({super.key, required BuildContext context})
       : super(
           /**
@@ -55,8 +59,8 @@ class HomeAppBarWidget extends AppBar {
                   style: Theme.of(context).textTheme.titleLarge),
               Text('La productivité à portée de main',
                   style: Theme.of(context).textTheme.displayMedium),
-              Text('Vous avez gagné 3h',
-                  style: Theme.of(context).textTheme.displayMedium)
+                Text(globals.session?['spentMinutesReadingAndWatching'] % 60 < 10 ? 'Vous avez gagné ' : 'test2',
+                style: Theme.of(context).textTheme.displayMedium)
             ],
           ),
           actions: [

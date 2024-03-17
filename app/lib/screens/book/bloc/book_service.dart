@@ -27,7 +27,6 @@ class BookService {
         return InfoBookResponse(statusCode: response?.statusCode ?? 500);
       }
       final dynamic data = response?.data;
-
       List<Map<String, String?>> parseAutor(dynamic autorData) {
         List<Map<String, String?>> autorList = [];
 
@@ -60,7 +59,7 @@ class BookService {
 
       final bool isOverviewEmpty = (response?.data['book']['overview'] == '');
       final bool isDurationEmpty =
-          (response?.data['book']['duration'] == '0h0min');
+          (response?.data['book']['duration'] == '0');
 
       result = InfoBookResponse(
           title: response?.data['book']['title'],
@@ -71,7 +70,7 @@ class BookService {
           backdropPath: response?.data['book']['backdrop_path'],
           releaseDate: response?.data['book']['release_date'],
           voteAverage: response?.data['book']['vote_average'],
-          duration: isDurationEmpty ? response?.data['book']['duration'] : 'N/A',
+          pageCount: isDurationEmpty ? response?.data['book']['pageCount'] : 'N/A',
           authorsPicture: parseAutor(data['book']['authorsPicture']),
           statusCode: response?.statusCode ?? 500);
     } catch (error) {

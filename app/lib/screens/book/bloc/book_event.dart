@@ -27,7 +27,7 @@ class InfoBookResponse extends BookEvent {
       this.backdropPath,
       this.releaseDate,
       this.voteAverage,
-      this.duration,
+      this.pageCount,
       this.authorsPicture,
       this.id,
       required this.statusCode});
@@ -40,7 +40,7 @@ class InfoBookResponse extends BookEvent {
   final String? backdropPath;
   final String? releaseDate;
   final double? voteAverage;
-  final String? duration;
+  final int? pageCount;
   final int? id;
   final int statusCode;
 }

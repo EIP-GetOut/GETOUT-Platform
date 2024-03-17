@@ -37,6 +37,9 @@ class SessionService {
       try {
         final response = await globals.dio
             ?.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
+        // print(response?.statusCode);
+        // print(response?.data['account']['likedMovies']);
+        // print(response?.data['account']['dislikedMovies']);
         if (response?.statusCode == HttpStatus.OK) {
           if (response?.data['account'] != null) {
             globals.session = response?.data['account'];
@@ -57,6 +60,7 @@ class SessionService {
         // add "catch (dioError)" for debugging
         rethrow;
       } catch (dioError) {
+        print(dioError);
         rethrow;
       }
     return SessionStatusResponse(statusCode: SessionStatus.error.index);

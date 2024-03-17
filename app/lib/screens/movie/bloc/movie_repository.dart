@@ -18,7 +18,7 @@ class MovieRepository {
           CreateInfoMovieRequest request) async =>
       service.getInfoMovie(request);
 
-  Future<AddLikeMovieResponse> addLikeMovie(
+  Future<AddLikeMovieResponse> addLikedMovie(
           AddLikeMovieRequest request) async =>
-      service.addLikeMovie(request);
+      service.addLikedMovie(request);
 }
