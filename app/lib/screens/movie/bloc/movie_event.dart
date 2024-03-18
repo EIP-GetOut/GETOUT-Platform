@@ -54,16 +54,16 @@ class InfoMovieResponse extends MovieEvent {
   final int? id;
 }
 
-class AddLikeMovieRequest extends MovieEvent {
-  const AddLikeMovieRequest (
+class AddMovieRequest extends MovieEvent {
+  const AddMovieRequest (
     {required this.id}
   );
 
   final int id;
 }
 
-class AddLikeMovieResponse extends MovieEvent {
-  const AddLikeMovieResponse (
+class AddMovieResponse extends MovieEvent {
+  const AddMovieResponse (
     {required this.statusCode}
   );
 

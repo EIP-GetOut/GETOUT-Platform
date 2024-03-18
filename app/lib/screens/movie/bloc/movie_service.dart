@@ -76,10 +76,10 @@ class MovieService {
     return result;
   }
 
-  Future<AddLikeMovieResponse> addLikedMovie(
-      AddLikeMovieRequest request) async {
-    AddLikeMovieResponse result =
-        const AddLikeMovieResponse(statusCode: HttpStatus.APP_ERROR);
+  Future<AddMovieResponse> addLikedMovie(
+      AddMovieRequest request) async {
+    AddMovieResponse result =
+        const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     final response = await globals.dio?.post(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedMoviePath}',
@@ -89,17 +89,17 @@ class MovieService {
         data: {'movieId': request.id});
     try {
       if (response?.statusCode != HttpStatus.CREATED) {
-        return AddLikeMovieResponse(statusCode: response?.statusCode ?? 500);
+        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
 
-      result = AddLikeMovieResponse(
+      result = AddMovieResponse(
         statusCode: response?.statusCode ?? 500,
       );
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() ==
               'Connection closed before full header was received') {
-        return const AddLikeMovieResponse(statusCode: HttpStatus.NO_INTERNET);
+        return const AddMovieResponse(statusCode: HttpStatus.NO_INTERNET);
       }
       return result;
     }
@@ -107,10 +107,10 @@ class MovieService {
     return result;
   }
 
-  Future<AddLikeMovieResponse> removeLikedMovie(
-      AddLikeMovieRequest request) async {
-    AddLikeMovieResponse result =
-        const AddLikeMovieResponse(statusCode: HttpStatus.APP_ERROR);
+  Future<AddMovieResponse> removeLikedMovie(
+      AddMovieRequest request) async {
+    AddMovieResponse result =
+        const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     final response = await globals.dio?.delete(
       '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedMoviePath}/${request.id}',
@@ -120,17 +120,17 @@ class MovieService {
     );
     try {
       if (response?.statusCode != HttpStatus.OK) {
-        return AddLikeMovieResponse(statusCode: response?.statusCode ?? 500);
+        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
 
-      result = AddLikeMovieResponse(
+      result = AddMovieResponse(
         statusCode: response?.statusCode ?? 500,
       );
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() ==
               'Connection closed before full header was received') {
-        return const AddLikeMovieResponse(statusCode: HttpStatus.NO_INTERNET);
+        return const AddMovieResponse(statusCode: HttpStatus.NO_INTERNET);
       }
       return result;
     }
@@ -138,10 +138,10 @@ class MovieService {
     return result;
   }
 
-  Future<AddLikeMovieResponse> removeDislikedMovie(
-      AddLikeMovieRequest request) async {
-    AddLikeMovieResponse result =
-        const AddLikeMovieResponse(statusCode: HttpStatus.APP_ERROR);
+  Future<AddMovieResponse> removeDislikedMovie(
+      AddMovieRequest request) async {
+    AddMovieResponse result =
+        const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     final response = await globals.dio?.delete(
       '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addDislikedMoviePath}/${request.id}',
@@ -151,17 +151,17 @@ class MovieService {
     );
     try {
       if (response?.statusCode != HttpStatus.OK) {
-        return AddLikeMovieResponse(statusCode: response?.statusCode ?? 500);
+        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
 
-      result = AddLikeMovieResponse(
+      result = AddMovieResponse(
         statusCode: response?.statusCode ?? 500,
       );
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() ==
               'Connection closed before full header was received') {
-        return const AddLikeMovieResponse(statusCode: HttpStatus.NO_INTERNET);
+        return const AddMovieResponse(statusCode: HttpStatus.NO_INTERNET);
       }
       return result;
     }
@@ -169,10 +169,10 @@ class MovieService {
     return result;
   }
 
-  Future<AddLikeMovieResponse> addDislikedMovie(
-      AddLikeMovieRequest request) async {
-    AddLikeMovieResponse result =
-        const AddLikeMovieResponse(statusCode: HttpStatus.APP_ERROR);
+  Future<AddMovieResponse> addDislikedMovie(
+      AddMovieRequest request) async {
+    AddMovieResponse result =
+        const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     final response = await globals.dio?.post(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addDislikedMoviePath}',
@@ -182,17 +182,17 @@ class MovieService {
         data: {'movieId': request.id});
     try {
       if (response?.statusCode != HttpStatus.CREATED) {
-        return AddLikeMovieResponse(statusCode: response?.statusCode ?? 500);
+        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
 
-      result = AddLikeMovieResponse(
+      result = AddMovieResponse(
         statusCode: response?.statusCode ?? 500,
       );
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() ==
               'Connection closed before full header was received') {
-        return const AddLikeMovieResponse(statusCode: HttpStatus.NO_INTERNET);
+        return const AddMovieResponse(statusCode: HttpStatus.NO_INTERNET);
       }
       return result;
     }
@@ -200,10 +200,10 @@ class MovieService {
     return result;
   }
 
-  Future<AddLikeMovieResponse> addWishlistedMovie(
-      AddLikeMovieRequest request) async {
-    AddLikeMovieResponse result =
-        const AddLikeMovieResponse(statusCode: HttpStatus.APP_ERROR);
+  Future<AddMovieResponse> addWishlistedMovie(
+      AddMovieRequest request) async {
+    AddMovieResponse result =
+        const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     final response = await globals.dio?.post(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.watchlistPath}',
@@ -213,17 +213,17 @@ class MovieService {
         data: {'movieId': request.id});
     try {
       if (response?.statusCode != HttpStatus.CREATED) {
-        return AddLikeMovieResponse(statusCode: response?.statusCode ?? 500);
+        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
 
-      result = AddLikeMovieResponse(
+      result = AddMovieResponse(
         statusCode: response?.statusCode ?? 500,
       );
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() ==
               'Connection closed before full header was received') {
-        return const AddLikeMovieResponse(statusCode: HttpStatus.NO_INTERNET);
+        return const AddMovieResponse(statusCode: HttpStatus.NO_INTERNET);
       }
       return result;
     }
@@ -231,10 +231,10 @@ class MovieService {
     return result;
   }
 
-    Future<AddLikeMovieResponse> removeWishlistedMovie(
-      AddLikeMovieRequest request) async {
-    AddLikeMovieResponse result =
-        const AddLikeMovieResponse(statusCode: HttpStatus.APP_ERROR);
+    Future<AddMovieResponse> removeWishlistedMovie(
+      AddMovieRequest request) async {
+    AddMovieResponse result =
+        const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     final response = await globals.dio?.delete(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.watchlistPath}/${request.id}',
@@ -242,18 +242,18 @@ class MovieService {
           headers: {'Content-Type': 'application/json'},
         ));
     try {
-      if (response?.statusCode != AddLikeMovieResponse.success) {
-        return AddLikeMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response?.statusCode != AddMovieResponse.success) {
+        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
 
-      result = AddLikeMovieResponse(
+      result = AddMovieResponse(
         statusCode: response?.statusCode ?? 500,
       );
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() ==
               'Connection closed before full header was received') {
-        return const AddLikeMovieResponse(statusCode: HttpStatus.NO_INTERNET);
+        return const AddMovieResponse(statusCode: HttpStatus.NO_INTERNET);
       }
       return result;
     }
@@ -261,10 +261,10 @@ class MovieService {
     return result;
   }
 
-    Future<AddLikeMovieResponse> addSeenMovie(
-      AddLikeMovieRequest request) async {
-    AddLikeMovieResponse result =
-        const AddLikeMovieResponse(statusCode: HttpStatus.APP_ERROR);
+    Future<AddMovieResponse> addSeenMovie(
+      AddMovieRequest request) async {
+    AddMovieResponse result =
+        const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     final response = await globals.dio?.post(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.seenMoviesPath}',
@@ -274,17 +274,17 @@ class MovieService {
         data: {'movieId': request.id});
     try {
       if (response?.statusCode != HttpStatus.CREATED) {
-        return AddLikeMovieResponse(statusCode: response?.statusCode ?? 500);
+        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
 
-      result = AddLikeMovieResponse(
+      result = AddMovieResponse(
         statusCode: response?.statusCode ?? 500,
       );
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() ==
               'Connection closed before full header was received') {
-        return const AddLikeMovieResponse(statusCode: HttpStatus.NO_INTERNET);
+        return const AddMovieResponse(statusCode: HttpStatus.NO_INTERNET);
       }
       return result;
     }
@@ -292,10 +292,10 @@ class MovieService {
     return result;
   }
 
-    Future<AddLikeMovieResponse> removeSeenMovie(
-      AddLikeMovieRequest request) async {
-    AddLikeMovieResponse result =
-        const AddLikeMovieResponse(statusCode: HttpStatus.APP_ERROR);
+    Future<AddMovieResponse> removeSeenMovie(
+      AddMovieRequest request) async {
+    AddMovieResponse result =
+        const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     final response = await globals.dio?.delete(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.seenMoviesPath}/${request.id}',
@@ -303,18 +303,18 @@ class MovieService {
           headers: {'Content-Type': 'application/json'},
         ));
     try {
-      if (response?.statusCode != AddLikeMovieResponse.success) {
-        return AddLikeMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response?.statusCode != AddMovieResponse.success) {
+        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
 
-      result = AddLikeMovieResponse(
+      result = AddMovieResponse(
         statusCode: response?.statusCode ?? 500,
       );
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() ==
               'Connection closed before full header was received') {
-        return const AddLikeMovieResponse(statusCode: HttpStatus.NO_INTERNET);
+        return const AddMovieResponse(statusCode: HttpStatus.NO_INTERNET);
       }
       return result;
     }
