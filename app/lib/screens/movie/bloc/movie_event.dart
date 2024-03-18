@@ -33,6 +33,7 @@ class InfoMovieResponse extends MovieEvent {
       this.liked,
       this.disliked,
       this.wishlisted,
+      this.seen,
       this.id,
       required this.statusCode});
 
@@ -48,6 +49,7 @@ class InfoMovieResponse extends MovieEvent {
   final bool? liked;
   final bool? disliked;
   final bool? wishlisted;
+  final bool? seen;
   final int statusCode;
   final int? id;
 }
