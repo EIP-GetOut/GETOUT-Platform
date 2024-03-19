@@ -69,10 +69,13 @@ async function getBook (id: string): Promise<any> {
       title: bookObtained.volumeInfo.title,
       overview: bookObtained.volumeInfo.description,
       poster_path: bookObtained.volumeInfo?.imageLinks?.thumbnail ?? null,
+      backdrop_path: bookObtained.volumeInfo?.imageLinks?.extraLarge ?? null,
       pageCount: bookObtained.volumeInfo.pageCount,
       authors: bookObtained.volumeInfo.authors,
       authors_picture: await getPictures(bookObtained.volumeInfo.authors),
-      category: bookObtained.volumeInfo?.categories ?? null
+      category: bookObtained.volumeInfo?.categories ?? null,
+      vote_average: bookObtained.volumeInfo.averageRating,
+      release_date: bookObtained.volumeInfo.publishedDate
     })
   })
 }
