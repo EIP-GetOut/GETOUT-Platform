@@ -12,7 +12,7 @@ import 'package:getout/screens/settings/pages/settings.dart';
 
 import 'package:getout/global.dart' as globals;
 
-import 'package:getout/tools/format_spend_times.dart';
+import 'package:getout/tools/duration_format.dart';
 
 class HomeAppBarWidget extends AppBar {
   HomeAppBarWidget({super.key, required BuildContext context})
@@ -59,7 +59,7 @@ class HomeAppBarWidget extends AppBar {
                   style: Theme.of(context).textTheme.titleLarge),
               Text('La productivité à portée de main',
                   style: Theme.of(context).textTheme.displayMedium),
-                Text(formatSpendTime('Vous avez gagné',globals.session?['spentMinutesReadingAndWatching']),
+                Text(durationFormat('Vous avez gagné',globals.session?['spentMinutesReadingAndWatching']),
                 style: Theme.of(context).textTheme.displayMedium)
             ],
           ),

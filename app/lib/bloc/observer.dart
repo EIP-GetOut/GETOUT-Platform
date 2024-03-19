@@ -20,7 +20,7 @@ class AppBlocObserver extends BlocObserver {
   void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
     super.onChange(bloc, change);
     if (kDebugMode) {
-      // print(change);
+      print(change);
     }
   }
 
@@ -28,7 +28,7 @@ class AppBlocObserver extends BlocObserver {
   void onTransition(Bloc<dynamic, dynamic> bloc, Transition<dynamic, dynamic> transition) {
     super.onTransition(bloc, transition);
     if (kDebugMode) {
-      // print(transition);
+      print(transition);
     }
   }
 

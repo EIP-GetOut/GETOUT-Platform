@@ -156,7 +156,7 @@ class BookSuccessWidget extends StatelessWidget {
                 thickness: 0,
                 // height : double.infinity,
               )),
-          Text(book.pageCount.toString(),
+          Text('${book.pageCount.toString()} pages',
               // widget.book.duration,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall),

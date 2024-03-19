@@ -57,20 +57,14 @@ class BookService {
         return autorList;
       }
 
-      final bool isOverviewEmpty = (response?.data['book']['overview'] == '');
-      final bool isDurationEmpty =
-          (response?.data['book']['duration'] == '0');
-
       result = InfoBookResponse(
           title: response?.data['book']['title'],
-          overview: isOverviewEmpty
-              ? response?.data['book']['overview']
-              : 'Pas de description disponible',
+          overview: response?.data['book']['overview'] ?? 'Pas de description disponible',
           posterPath: response?.data['book']['poster_path'],
           backdropPath: response?.data['book']['backdrop_path'],
           releaseDate: response?.data['book']['release_date'],
           voteAverage: response?.data['book']['vote_average'],
-          pageCount: isDurationEmpty ? response?.data['book']['pageCount'] : 'N/A',
+          pageCount: response?.data['book']['pageCount'] ?? 0,
           authorsPicture: parseAutor(data['book']['authorsPicture']),
           statusCode: response?.statusCode ?? 500);
     } catch (error) {

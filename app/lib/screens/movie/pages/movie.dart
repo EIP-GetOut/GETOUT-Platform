@@ -7,14 +7,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:boxicons/boxicons.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/movie/pages/movie_description.dart';
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
 
-import 'package:getout/tools/format_spend_times.dart';
+import 'package:getout/tools/duration_format.dart';
 
 class MovieSuccessWidget extends StatelessWidget {
   const MovieSuccessWidget({
@@ -258,7 +258,7 @@ class MovieSuccessWidget extends StatelessWidget {
                 thickness: 0,
                 // height : double.infinity,
               )),
-          Text(formatSpendTime('', movie.duration ?? 0),
+          Text(durationFormat('', movie.duration ?? 0),
               // widget.movie.duration,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall),
