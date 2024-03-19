@@ -14,7 +14,6 @@ enum Important {
 }
 
 class SettingRow extends StatelessWidget {
-
   final Widget page;
   final Widget? icon;
   final IconData? iconData;
@@ -34,7 +33,9 @@ class SettingRow extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         height: MediaQuery.of(context).size.height * 0.06,
-        color: (important == Important.important) ? const Color.fromRGBO(255, 82, 65, 0.4) : Colors.white,
+        color: (important == Important.important)
+            ? const Color.fromRGBO(255, 82, 65, 0.4)
+            : Colors.white,
         child: InkWell(
             onTap: () {
               Navigator.push(
@@ -46,8 +47,13 @@ class SettingRow extends StatelessWidget {
                   icon ?? Icon(iconData),
                   Text(value,
                       style: TextStyle(
-                          fontSize: 20,
-                          color: (important == Important.warning) ? Colors.red : Colors.black87)),
+                          fontSize:
+                              (MediaQuery.of(context).size.width > 400)
+                                  ? 20
+                                  : 12,
+                          color: (important == Important.warning)
+                              ? Colors.red
+                              : Colors.black87)),
                   const Icon(Icons.arrow_forward_ios_rounded,
                       color: Colors.black54),
                 ])));

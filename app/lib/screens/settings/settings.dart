@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:getout/screens/settings/pages/edit_email/edit_mail.dart';
 import 'package:getout/screens/settings/pages/edit_password/edit_password.dart';
+import 'package:getout/screens/settings/widget/account_info.dart';
 import 'package:getout/screens/settings/widget/setting_row.dart';
 import 'package:getout/screens/settings/widget/title.dart';
 
@@ -34,7 +35,8 @@ class _SettingsPageState extends State<SettingsPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 40),
-            Divider(height: 20, thickness: 1),
+//            Divider(height: 20, thickness: 1),
+            AccountInfo(),
             TitleRow(value: 'compte'),
             SettingRow(page: EditPasswordPage(), iconData: Icons.shield_outlined, value: 'Changer de mot de passe'),
             SettingRow(page: EditMailPage(), iconData: Icons.mail_outlined, value: 'Changer d\'adresse email'),
