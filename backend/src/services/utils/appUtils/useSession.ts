@@ -15,7 +15,7 @@ import { type Preferences } from '@models/account/preferences.intefaces'
 
 import { type Role } from '@entities/Role'
 
-interface SessionAccount {
+export interface SessionAccount {
   id: UUID
   email: string
   firstName?: string
