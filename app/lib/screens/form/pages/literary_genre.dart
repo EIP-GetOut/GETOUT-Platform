@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/form/widgets/four_point.dart';
 import 'package:getout/screens/form/bloc/form_bloc.dart';
+import 'package:getout/tools/screen_size_factor.dart';
 
 class LiteraryGenres extends StatelessWidget {
   const LiteraryGenres({super.key});
@@ -24,9 +25,9 @@ class LiteraryGenres extends StatelessWidget {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          const SizedBox(height: 140),
+          SizedBox(height: heightFactor(context, 0.10)),
           const PageIndicator(currentPage: 2, pageCount: 5),
-          const SizedBox(height: 20),
+          SizedBox(height: heightFactor(context, 0.05)),
           Center(
             child: Text(
               'GENRES LITTÉRAIRES :',
@@ -34,7 +35,7 @@ class LiteraryGenres extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: heightFactor(context, 0.03)),
           Expanded(
             child: ListView(
                 padding: const EdgeInsets.all(16.0),
@@ -65,7 +66,7 @@ class LiteraryGenres extends StatelessWidget {
                             top: BorderSide(color: Colors.black, width: 2.0),
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        SizedBox(height: heightFactor(context, 0.012)),
                       ],
                     ),
                 ]),

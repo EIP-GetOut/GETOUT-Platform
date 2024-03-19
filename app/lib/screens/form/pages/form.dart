@@ -20,6 +20,7 @@ import 'package:getout/screens/form/bloc/form_bloc.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/session/session_event.dart';
+import 'package:getout/tools/screen_size_factor.dart';
 
 class Forms extends StatelessWidget {
   const Forms({super.key});
@@ -64,7 +65,7 @@ class Forms extends StatelessWidget {
   {
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state) {
       return SizedBox(
-        width: 90 * MediaQuery.of(context).size.width / 100,
+        width: widthFactor(context, 0.9),
         height: 65,
         child: FloatingActionButton(
           child:
