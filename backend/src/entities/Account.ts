@@ -11,10 +11,13 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  Column
+  Column,
+  ManyToOne
 } from 'typeorm'
 
 import { Preferences } from '@models/account/preferences.intefaces'
+
+import { Role } from './Role'
 
 @Entity()
 export class Account {
@@ -74,6 +77,9 @@ export class Account {
 
   @Column('text', { array: true, default: [] })
     readBooks: string [] = []
+
+  @ManyToOne(() => Role, role => role.owners)
+    role!: Role
 
   @CreateDateColumn()
     createdDate!: Date

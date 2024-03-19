@@ -42,7 +42,8 @@ async function createSession (sess: Session & Partial<SessionData>, account: Acc
     dislikedBooks: account.dislikedBooks,
     seenMovies: account.seenMovies,
     readBooks: account.readBooks,
-    spentMinutesReadingAndWatching: 0
+    spentMinutesReadingAndWatching: 0,
+    role: account.role
   }
   await calculateSpentMinutesReadingAndWatching(sess.account).then((spentMinutes: number) => {
     sess.account!.spentMinutesReadingAndWatching = spentMinutes

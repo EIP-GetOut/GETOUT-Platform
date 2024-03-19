@@ -74,6 +74,12 @@ class NotLoggedInError extends AppError {
   }
 }
 
+class PermissionsError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Error', status ?? StatusCodes.BAD_REQUEST)
+  }
+}
+
 class PreferencesAlreadyExistError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
     super(message ?? 'Preferences already exists.', status ?? StatusCodes.CONFLICT)
@@ -85,6 +91,7 @@ class PreferencesDoesNotExistError extends AppError {
     super(message ?? 'Preferences does not exists.', status ?? StatusCodes.FORBIDDEN)
   }
 }
+
 class RecommandationsDetailsError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
     super(message ?? 'Failed fetching recommandations details.')
@@ -112,6 +119,7 @@ export {
   MovieNotInListError,
   NodeMailerError,
   NotLoggedInError,
+  PermissionsError,
   PreferencesAlreadyExistError,
   PreferencesDoesNotExistError,
   RecommandationsDetailsError,

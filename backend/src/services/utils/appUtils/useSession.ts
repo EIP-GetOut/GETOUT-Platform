@@ -13,7 +13,9 @@ import { type RedisClientType, createClient } from 'redis'
 
 import { type Preferences } from '@models/account/preferences.intefaces'
 
-export interface SessionAccount {
+import { type Role } from '@entities/Role'
+
+interface SessionAccount {
   id: UUID
   email: string
   firstName?: string
@@ -30,6 +32,7 @@ export interface SessionAccount {
   seenMovies: number []
   readBooks: string []
   spentMinutesReadingAndWatching: number
+  role: Role
 }
 
 declare module 'express-session' {

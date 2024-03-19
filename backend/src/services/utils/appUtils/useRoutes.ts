@@ -7,6 +7,7 @@
 
 import { type Application } from 'express'
 
+import account from '@routes/account'
 import changePassword from '@routes/account/changePassword'
 import dislikedBooks from '@routes/account/dislikedBooks'
 import dislikedMovies from '@routes/account/dislikedMovies'
@@ -32,6 +33,7 @@ import book from '@routes/book'
 import generateBooks from '@routes/generateBooks'
 import generateMovies from '@routes/generateMovies'
 import movie from '@routes/movie'
+import permissions from '@routes/permissions'
 import session from '@routes/session'
 
 const useRoutes = (app: Application): Application => (
@@ -70,6 +72,8 @@ const useRoutes = (app: Application): Application => (
     .use(login)
     .use(signup)
 
+    .use(permissions)
+    .use(account)
     .use(basicEndpoints)
 )
 
