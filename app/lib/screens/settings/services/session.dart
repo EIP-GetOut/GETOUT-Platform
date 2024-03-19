@@ -7,60 +7,10 @@
 
 part of 'service.dart';
 
-class SessionEvent extends Equatable {
-  @override
-  List<Object?> get props => [];
-  const SessionEvent();
-}
+class StatusResponse {
+  const StatusResponse({this.status = HttpStatus.NOT_FOUND, this.error});
 
-class ChangeEmailRequest extends SessionEvent {
-  const ChangeEmailRequest({
-    required this.password,
-    required this.newEmail,
-  });
-
-  final String password;
-  final String newEmail;
-}
-
-class ChangePasswordRequest extends SessionEvent {
-  const ChangePasswordRequest({
-    required this.password,
-    required this.newPassword,
-  });
-
-  final String password;
-  final String newPassword;
-}
-
-class DeleteAccountRequest extends SessionEvent {
-  const DeleteAccountRequest({
-    required this.password,
-  });
-
-  final String password;
-}
-
-class SetLanguageRequest extends SessionEvent {
-  const SetLanguageRequest({
-    required this.lang,
-  });
-
-  final String lang;
-}
-
-class SetThemeRequest extends SessionEvent {
-  const SetThemeRequest({
-    required this.theme,
-  });
-
-  final String theme;
-}
-
-class StatusResponse extends SessionEvent {
-  const StatusResponse({required this.status, this.error});
-
-  final Status status;
+  final int status;
   final String? error;
 }
 
@@ -69,14 +19,14 @@ class SessionService extends ServiceTemplate {
 
   SessionService();
 
-  Future<StatusResponse> changeEmail(ChangeEmailRequest changeEmailRequest) async {
+  Future<StatusResponse> changeEmail(String password, String newEmail) async {
     try { /// TODO we need to do something prettier
       ///
       final response = await globals.dio?.delete(
           '${ApiConstants.rootApiPath}/account',
           options: Options(headers: {'Content-Type': 'application/json'}));
 
-      if (response?.statusCode != HttpStatus.ok) {
+      if (response?.statusCode != HttpStatus.OK) {
         return Future.error(Exception(
           'Error ${response?.statusCode} while editing account email: ${response?.statusMessage}',
         ));
@@ -94,21 +44,27 @@ class SessionService extends ServiceTemplate {
         'Unknown error: ${error.toString()}',
       ));
     }
-    return const StatusResponse(status: Status.error);
+    return const StatusResponse();
   }
 
-  Future<StatusResponse> changePassword(ChangePasswordRequest changePasswordRequest) async {
-    return const StatusResponse(status: Status.error);
+  Future<StatusResponse> changePassword(String password, String newPassword) async {
+    return const StatusResponse();
   }
 
-  Future<StatusResponse> deleteAccount(DeleteAccountRequest deleteAccountRequest) async {
-    return const StatusResponse(status: Status.error);
+  Future<StatusResponse> disconnect() async {
+    return const StatusResponse();
   }
-  Future<StatusResponse> setLanguage(SetLanguageRequest setLanguageRequest) async {
-    return const StatusResponse(status: Status.error);
+
+  Future<StatusResponse> deleteAccount(String password) async {
+    return const StatusResponse();
   }
-  Future<StatusResponse> setTheme(SetThemeRequest themeRequest) async {
-    return const StatusResponse(status: Status.error);
+
+  Future<StatusResponse> setLanguage(String language) async {
+    return const StatusResponse();
+  }
+
+  Future<StatusResponse> setTheme(String theme) async {
+    return const StatusResponse();
   }
 
 }

@@ -8,7 +8,8 @@
 import 'package:flutter/material.dart';
 import 'package:getout/screens/settings/pages/edit_email/edit_mail.dart';
 import 'package:getout/screens/settings/pages/edit_password/edit_password.dart';
-import 'package:getout/screens/settings/pages/notifications/notifications_page.dart';
+import 'package:getout/screens/settings/widget/setting_row.dart';
+import 'package:getout/screens/settings/widget/title.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -27,284 +28,25 @@ class _SettingsPageState extends State<SettingsPage> {
         title: const Text('PARAMÈTRES'),
         leading: const BackButton(),
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 40),
-            const Divider(height: 20, thickness: 1),
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.all(12.0),
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Text(
-                'COMPTE',
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const EditPasswordPage()),
-                );
-              },
-              child: Container(
-                padding:
-                const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Icon(Icons.shield_outlined, color: Colors.grey),
-                    Text(
-                      'Changer de mot de passe',
-                      style: TextStyle(fontSize: 20, color: Colors.grey[800]),
-                    ),
-                    Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
-                  ],
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const EditMailPage()),
-                );
-              },
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Icon(Icons.email_outlined, color: Colors.grey),
-                    Text(
-                      "Changer d'adresse mail",
-                      style: TextStyle(fontSize: 20, color: Colors.grey[800]),
-                    ),
-                    Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
-                  ],
-                ),
-              ),
-            ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       const Icon(Icons.email_outlined, color: Colors.grey),
-            //       Text("changer d'adresse mail",
-            //           style: TextStyle(fontSize: 20, color: Colors.grey[800])),
-            //       Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
-            //     ],
-            //   ),
-            // ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(Icons.delete, color: Colors.grey),
-                  const Text('supprimer son compte',
-                      style: TextStyle(fontSize: 20, color: Colors.red)),
-                  Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.all(12.0),
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Text(
-                'APPARENCE',
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(Icons.public, color: Colors.grey),
-                  Text('choisir la langue',
-                      style: TextStyle(fontSize: 20, color: Colors.grey[800])),
-                  Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(Icons.visibility, color: Colors.grey),
-                  Text('dark mode',
-                      style: TextStyle(fontSize: 20, color: Colors.grey[800])),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        isActivated = !isActivated;
-                      });
-                    },
-                    child: Container(
-                      width: 60.0,
-                      height: 30.0,
-                      decoration: BoxDecoration(
-                        color: isActivated ? Colors.grey : Colors.grey,
-                        borderRadius: BorderRadius.circular(15.0),
-                        border: Border.all(
-                          color: Colors.black.withOpacity(0.6),
-                          width: 3,
-                        ),
-                      ),
-                      child: Stack(
-                        children: [
-                          AnimatedPositioned(
-                            duration: const Duration(milliseconds: 200),
-                            left: isActivated ? 30.0 : 0.0,
-                            right: isActivated ? 0.0 : 30.0,
-                            child: Container(
-                              width: 30.0,
-                              height: 30.0,
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.all(12.0),
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Text(
-                'PREFERENCE',
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       const Icon(Icons.settings, color: Colors.grey),
-            //       Text('changer les preferences',
-            //           style: TextStyle(fontSize: 20, color: Colors.grey[800])),
-            //       Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
-            //     ],
-            //   ),
-            // ),
-            InkWell(
-              onTap: () {
-                /// TODO: redirect to preferences
-              },
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Icon(Icons.settings, color: Colors.grey),
-                    Text(
-                      'changer les preferences',
-                      style: TextStyle(fontSize: 20, color: Colors.grey[800]),
-                    ),
-                    Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-              child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const NotificationsPage()));
-                    },
-                    child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(Icons.notifications, color: Colors.grey),
-                  Text('notifications',
-                      style: TextStyle(fontSize: 20, color: Colors.grey[800])),
-                  Icon(Icons.arrow_forward_ios, color: Colors.grey[800]),
-          ]),
-          ),
-            ),
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.all(12.0),
-              padding: const EdgeInsets.all(8.0),
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: Text(
-                'AUTRE',
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Icon(Icons.help_outline, color: Colors.grey),
-                  Text('support',
-                      style: TextStyle(fontSize: 20, color: Colors.grey[800])),
-                  Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-              child: ElevatedButton(
-                style: Theme.of(context).elevatedButtonTheme.style,
-                child: Text('Déconection',
-                    style: Theme.of(context).textTheme.bodyLarge),
-                onPressed: () {
-                  Navigator.maybePop(context);
-                },
-              ),
-            ),
+            SizedBox(height: 40),
+            Divider(height: 20, thickness: 1),
+            TitleRow(value: 'compte'),
+            SettingRow(page: EditPasswordPage(), iconData: Icons.shield_outlined, value: 'Changer de mot de passe'),
+            SettingRow(page: EditMailPage(), iconData: Icons.mail_outlined, value: 'Changer d\'adresse email'),
+            SettingRow(page: SizedBox(), iconData: Icons.exit_to_app_outlined, value: 'Se déconnecter', important: Important.warning),
+            SettingRow(page: SizedBox(), iconData: Icons.delete_outlined, value: 'Supprimer son compte', important: Important.important),
+            TitleRow(value: 'apparence'),
+            SettingRow(page: SizedBox(), iconData: Icons.public_outlined, value: 'Choisir la langue'),
+            TitleRow(value: 'preference'),
+            SettingRow(page: SizedBox(), iconData: Icons.settings_outlined, value: 'Changer les preferences'),
+            SettingRow(page: SizedBox(), iconData: Icons.notifications_outlined, value: 'Notifications'),
+            TitleRow(value: 'autre'),
+            SettingRow(page: SizedBox(), iconData: Icons.help_outline, value: 'Support'),
           ],
         ),
       ),

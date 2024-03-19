@@ -1,4 +1,13 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
+*/
+
 import 'package:flutter/material.dart';
+import 'package:getout/constants/http_status.dart';
+import 'package:getout/screens/settings/services/service.dart';
 
 import 'package:getout/widgets/fields/email_field.dart';
 import 'package:getout/widgets/fields/password_field.dart';
@@ -9,6 +18,7 @@ class EditMailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SettingService service = SettingService();
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     String password = '';
     String newEmail = '';
@@ -49,9 +59,20 @@ class EditMailPage extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingButton(
           title: 'Changer d\'email',
-          onPressed: () {
-            //todo: if (..validate()) { request }
-            formKey.currentState!.validate();
+          onPressed: () async {
+            //todo setup request & error handling, setup validator with tools function;
+            if (formKey.currentState!.validate()) {
+              try {
+                StatusResponse response =
+                    await service.changeEmail(password, newEmail);
+                if (response.status == HttpStatus.OK) {
+
+                }
+                //handle response
+              } catch (e) {
+                //handle error
+              }
+            }
           },
         ));
   }

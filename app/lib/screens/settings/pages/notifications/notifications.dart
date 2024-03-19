@@ -98,9 +98,8 @@ class NotificationsServices {
      SharedPreferences prefs = await SharedPreferences.getInstance();
      isActiveFromCache = prefs.getBool('notificationsIsActive');
 
-
      if (isActiveFromCache == null) {
-       //todo faire la requete depuis le back
+       //todo faire la requete depuis le back (perry: peut etre pas besoin de deps du back ici)
        isActive = false;
      } else {
        isActive = isActiveFromCache;

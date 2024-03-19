@@ -11,7 +11,7 @@ class ApiConstants {
   const ApiConstants();
 
   static const String rootApiPath = (kDebugMode)
-    ? /*'http://10.0.2.2:8080'*/ 'http://192.168.0.3:8080'
+      ? 'http://10.0.2.2:8080'
       : 'https://api.eip-getout.me';
 
   // ACCOUNT API PATH
@@ -32,5 +32,4 @@ class ApiConstants {
   static const String getInfoBookPath = '/book';
 
   static const String session = '/session';
-
 }

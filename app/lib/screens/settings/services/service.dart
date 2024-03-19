@@ -5,13 +5,10 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-import 'dart:io';
-
 import 'package:dio/dio.dart';
-import 'package:equatable/equatable.dart';
+import 'package:getout/constants/http_status.dart';
 
 import 'package:getout/global.dart' as globals;
-import 'package:getout/tools/status.dart';
 
 import '../../../constants/api_path.dart';
 
@@ -25,22 +22,21 @@ class SettingService extends _SettingService<SessionService> {
     t = SessionService();
   }
 
-  Future<StatusResponse> changeEmail(String password, String email) =>
-      t.changeEmail(
-          ChangeEmailRequest(password: password, newEmail: email));
+  Future<StatusResponse> changeEmail(String password, String email) async =>
+      t.changeEmail(password, email);
 
-  Future<StatusResponse> changePassword(String password, String newPassword) =>
-      t.changePassword(
-          ChangePasswordRequest(password: password, newPassword: newPassword));
+  Future<StatusResponse> changePassword(String password, String newPassword) async =>
+      t.changePassword(password, newPassword);
 
-  Future<StatusResponse> deleteAccount(String password) =>
-      t.deleteAccount(DeleteAccountRequest(password: password));
+  Future<StatusResponse> disconnect() async => t.disconnect();
 
-  Future<StatusResponse> setLanguage(String language) =>
-      t.setLanguage(SetLanguageRequest(lang: language));
+  Future<StatusResponse> deleteAccount(String password) async =>
+      t.deleteAccount(password);
 
-  Future<StatusResponse> setTheme(String theme) =>
-      t.setTheme(SetThemeRequest(theme: theme));
+  Future<StatusResponse> setLanguage(String language) async =>
+      t.setLanguage(language);
+
+  Future<StatusResponse> setTheme(String theme) async => t.setTheme(theme);
 }
 
 abstract class ServiceTemplate {}
