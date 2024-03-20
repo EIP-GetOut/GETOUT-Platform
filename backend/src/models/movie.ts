@@ -8,7 +8,7 @@
 import { type UUID } from 'crypto'
 import { type Session, type SessionData } from 'express-session'
 import { StatusCodes } from 'http-status-codes'
-import { MovieDb, type MovieResponse } from 'moviedb-promise'
+import { type CreditsResponse, MovieDb, type MovieResponse } from 'moviedb-promise'
 
 import { AccountDoesNotExistError, ApiError, type AppError, DbError, MovieNotInListError } from '@services/utils/customErrors'
 
@@ -34,6 +34,20 @@ async function fetchMovieCredits (movieId: number): Promise<any> {
   })
 }
 
+async function getDirector (movieId: number): Promise<any> {
+  return await moviedb.movieCredits({ id: movieId }).then((credits: CreditsResponse) => {
+    const director = credits.crew?.find(member => member.job === 'Director')
+    return ({
+      name: director?.name,
+      picture: ((director?.profile_path ?? '').length > 0)
+        ? `https://image.tmdb.org/t/p/w200${director?.profile_path}`
+        : null
+    })
+  }).catch((err: Error) => {
+    throw new ApiError(`Error whiled obtaining movie ${movieId}'s director (${err.name}: ${err.message}).`)
+  })
+}
+
 async function getMovieDetail (id: number): Promise<MovieResponse> {
   return await moviedb.movieInfo(id).then((value: MovieResponse) => {
     return value
@@ -44,17 +58,20 @@ async function getMovieDetail (id: number): Promise<MovieResponse> {
 
 async function getMovie (id: number): Promise<any> {
   return await getMovieDetail(id).then(async (movieObtained: MovieResponse) => {
-    return await fetchMovieCredits(id).then((cast: any) => {
-      return ({
-        id,
-        title: movieObtained.title,
-        overview: movieObtained.overview,
-        poster_path: movieObtained.poster_path,
-        backdrop_path: movieObtained.backdrop_path,
-        release_date: movieObtained.release_date,
-        vote_average: Number(movieObtained.vote_average) / 2,
-        cast,
-        duration: movieObtained.runtime
+    return await fetchMovieCredits(id).then(async (cast: any) => {
+      return await getDirector(id).then((director: any) => {
+        return ({
+          id,
+          title: movieObtained.title,
+          overview: movieObtained.overview,
+          poster_path: movieObtained.poster_path,
+          backdrop_path: movieObtained.backdrop_path,
+          release_date: movieObtained.release_date,
+          vote_average: Number(movieObtained.vote_average) / 2,
+          cast,
+          director,
+          duration: movieObtained.runtime
+        })
       })
     })
   })
