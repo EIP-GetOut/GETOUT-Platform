@@ -74,8 +74,8 @@ async function getBook (id: string): Promise<any> {
       authors: bookObtained.volumeInfo.authors,
       authors_picture: await getPictures(bookObtained.volumeInfo.authors),
       category: bookObtained.volumeInfo?.categories ?? null,
-      vote_average: bookObtained.volumeInfo.averageRating,
-      release_date: bookObtained.volumeInfo.publishedDate
+      vote_average: bookObtained.volumeInfo?.averageRating ?? null,
+      release_date: bookObtained.volumeInfo?.publishedDate ?? null
     })
   })
 }
