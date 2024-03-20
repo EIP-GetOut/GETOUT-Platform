@@ -6,11 +6,10 @@
 */
 
 import 'package:dio/dio.dart';
+
 import 'package:getout/constants/http_status.dart';
-
 import 'package:getout/global.dart' as globals;
-
-import '../../../constants/api_path.dart';
+import 'package:getout/constants/api_path.dart';
 
 part 'session.dart';
 

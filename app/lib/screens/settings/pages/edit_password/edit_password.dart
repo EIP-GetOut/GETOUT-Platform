@@ -6,9 +6,9 @@
 */
 
 import 'package:flutter/material.dart';
+
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/settings/services/service.dart';
-
 import 'package:getout/widgets/fields/password_field.dart';
 import 'package:getout/widgets/button/floating_button.dart';
 

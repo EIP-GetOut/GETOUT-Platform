@@ -6,6 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
+
 import 'package:getout/screens/settings/pages/edit_email/edit_mail.dart';
 import 'package:getout/screens/settings/pages/edit_password/edit_password.dart';
 import 'package:getout/screens/settings/widget/account_info.dart';
