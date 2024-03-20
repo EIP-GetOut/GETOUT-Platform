@@ -36,8 +36,11 @@ class ApiConstants {
 
   static const String addLikedMoviePath = '/likedMovies';
   static const String addDislikedMoviePath = '/dislikedMovies';
-
   static const String watchlistPath = '/watchlist';
-
   static const String seenMoviesPath = '/seenMovies';
+
+  static const String addLikedBookPath = '/likedBooks';
+  static const String addDislikedBookPath = '/dislikedBooks';
+  static const String readingPath = '/readingList';
+  static const String seenBooksPath = '/readBooks';
 }

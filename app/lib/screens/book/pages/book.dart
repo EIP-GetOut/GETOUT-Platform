@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:boxicons/boxicons.dart';
 
 import 'package:getout/screens/book/pages/book_description.dart';
@@ -91,10 +92,25 @@ class BookSuccessWidget extends StatelessWidget {
             right: 20,
             child: IconButton(
               icon: const Icon(Icons.thumb_up_alt_sharp),
-              color: Colors.white,
-              // color: (movie.liked ?? false) ? Colors.red : Colors.white,
-              onPressed: () {
-                // print('Like');
+              color: (book.liked ?? false) ? Colors.red : Colors.white,
+              onPressed: () async {
+                if (book.liked == true) {
+                  await context
+                      .read<BookBloc>()
+                      .bookRepository
+                      .service
+                      .removeLikedBook(AddBookRequest(id: book.id ?? ''));
+                } else {
+                  await context
+                      .read<BookBloc>()
+                      .bookRepository
+                      .service
+                      .addLikedBook(AddBookRequest(id: book.id ?? ''));
+                }
+                if (!context.mounted) return;
+                context
+                    .read<BookBloc>()
+                    .add(CreateInfoBookRequest(id: book.id.toString()));
               },
             ),
           ),
@@ -103,10 +119,25 @@ class BookSuccessWidget extends StatelessWidget {
             right: 20,
             child: IconButton(
               icon: const Icon(Icons.thumb_down),
-              color: Colors.white,
-              // color: (movie.disliked ?? false) ? Colors.red : Colors.white,
-              onPressed: () {
-                // print('Dislike');
+              color: (book.disliked ?? false) ? Colors.red : Colors.white,
+              onPressed: () async {
+                if (book.disliked == true) {
+                  await context
+                      .read<BookBloc>()
+                      .bookRepository
+                      .service
+                      .removeDislikedBook(AddBookRequest(id: book.id ?? ''));
+                } else {
+                  await context
+                      .read<BookBloc>()
+                      .bookRepository
+                      .service
+                      .addDislikedBook(AddBookRequest(id: book.id ?? ''));
+                }
+                if (!context.mounted) return;
+                context
+                    .read<BookBloc>()
+                    .add(CreateInfoBookRequest(id: book.id.toString()));
               },
             ),
           ),

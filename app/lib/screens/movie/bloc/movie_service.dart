@@ -76,18 +76,17 @@ class MovieService {
     return result;
   }
 
-  Future<AddMovieResponse> addLikedMovie(
-      AddMovieRequest request) async {
+  Future<AddMovieResponse> addLikedMovie(AddMovieRequest request) async {
     AddMovieResponse result =
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
-    final response = await globals.dio?.post(
-        '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedMoviePath}',
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-        ),
-        data: {'movieId': request.id});
     try {
+      final response = await globals.dio?.post(
+          '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedMoviePath}',
+          options: Options(
+            headers: {'Content-Type': 'application/json'},
+          ),
+          data: {'movieId': request.id});
       if (response?.statusCode != HttpStatus.CREATED) {
         return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
@@ -95,30 +94,27 @@ class MovieService {
       result = AddMovieResponse(
         statusCode: response?.statusCode ?? 500,
       );
-    } catch (error) {
-      if (error.toString() == 'Connection reset by peer' ||
-          error.toString() ==
-              'Connection closed before full header was received') {
-        return const AddMovieResponse(statusCode: HttpStatus.NO_INTERNET);
-      }
+      await globals.sessionManager.getSession();
       return result;
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
     }
-    await globals.sessionManager.getSession();
-    return result;
   }
 
-  Future<AddMovieResponse> removeLikedMovie(
-      AddMovieRequest request) async {
+  Future<AddMovieResponse> removeLikedMovie(AddMovieRequest request) async {
     AddMovieResponse result =
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
-    final response = await globals.dio?.delete(
-      '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedMoviePath}/${request.id}',
-      options: Options(
-        headers: {'Content-Type': 'application/json'},
-      ),
-    );
     try {
+      final response = await globals.dio?.delete(
+        '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedMoviePath}/${request.id}',
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+      );
       if (response?.statusCode != HttpStatus.OK) {
         return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
@@ -126,30 +122,27 @@ class MovieService {
       result = AddMovieResponse(
         statusCode: response?.statusCode ?? 500,
       );
-    } catch (error) {
-      if (error.toString() == 'Connection reset by peer' ||
-          error.toString() ==
-              'Connection closed before full header was received') {
-        return const AddMovieResponse(statusCode: HttpStatus.NO_INTERNET);
-      }
+      await globals.sessionManager.getSession();
       return result;
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
     }
-    await globals.sessionManager.getSession();
-    return result;
   }
 
-  Future<AddMovieResponse> removeDislikedMovie(
-      AddMovieRequest request) async {
+  Future<AddMovieResponse> removeDislikedMovie(AddMovieRequest request) async {
     AddMovieResponse result =
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
-    final response = await globals.dio?.delete(
-      '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addDislikedMoviePath}/${request.id}',
-      options: Options(
-        headers: {'Content-Type': 'application/json'},
-      ),
-    );
     try {
+      final response = await globals.dio?.delete(
+        '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addDislikedMoviePath}/${request.id}',
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+      );
       if (response?.statusCode != HttpStatus.OK) {
         return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
@@ -157,30 +150,29 @@ class MovieService {
       result = AddMovieResponse(
         statusCode: response?.statusCode ?? 500,
       );
-    } catch (error) {
-      if (error.toString() == 'Connection reset by peer' ||
-          error.toString() ==
-              'Connection closed before full header was received') {
-        return const AddMovieResponse(statusCode: HttpStatus.NO_INTERNET);
-      }
+
+      await globals.sessionManager.getSession();
       return result;
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
     }
-    await globals.sessionManager.getSession();
-    return result;
   }
 
-  Future<AddMovieResponse> addDislikedMovie(
-      AddMovieRequest request) async {
+  Future<AddMovieResponse> addDislikedMovie(AddMovieRequest request) async {
     AddMovieResponse result =
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
-    final response = await globals.dio?.post(
-        '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addDislikedMoviePath}',
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-        ),
-        data: {'movieId': request.id});
     try {
+      final response = await globals.dio?.post(
+          '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addDislikedMoviePath}',
+          options: Options(
+            headers: {'Content-Type': 'application/json'},
+          ),
+          data: {'movieId': request.id});
+
       if (response?.statusCode != HttpStatus.CREATED) {
         return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
@@ -188,30 +180,27 @@ class MovieService {
       result = AddMovieResponse(
         statusCode: response?.statusCode ?? 500,
       );
-    } catch (error) {
-      if (error.toString() == 'Connection reset by peer' ||
-          error.toString() ==
-              'Connection closed before full header was received') {
-        return const AddMovieResponse(statusCode: HttpStatus.NO_INTERNET);
-      }
+
+      await globals.sessionManager.getSession();
       return result;
+    } on DioException {
+      rethrow;
+    } catch (dioError) {
+      rethrow;
     }
-    await globals.sessionManager.getSession();
-    return result;
   }
 
-  Future<AddMovieResponse> addWishlistedMovie(
-      AddMovieRequest request) async {
+  Future<AddMovieResponse> addWishlistedMovie(AddMovieRequest request) async {
     AddMovieResponse result =
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
-    final response = await globals.dio?.post(
-        '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.watchlistPath}',
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-        ),
-        data: {'movieId': request.id});
     try {
+      final response = await globals.dio?.post(
+          '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.watchlistPath}',
+          options: Options(
+            headers: {'Content-Type': 'application/json'},
+          ),
+          data: {'movieId': request.id});
       if (response?.statusCode != HttpStatus.CREATED) {
         return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
@@ -219,29 +208,27 @@ class MovieService {
       result = AddMovieResponse(
         statusCode: response?.statusCode ?? 500,
       );
-    } catch (error) {
-      if (error.toString() == 'Connection reset by peer' ||
-          error.toString() ==
-              'Connection closed before full header was received') {
-        return const AddMovieResponse(statusCode: HttpStatus.NO_INTERNET);
-      }
+      await globals.sessionManager.getSession();
       return result;
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
     }
-    await globals.sessionManager.getSession();
-    return result;
   }
 
-    Future<AddMovieResponse> removeWishlistedMovie(
+  Future<AddMovieResponse> removeWishlistedMovie(
       AddMovieRequest request) async {
     AddMovieResponse result =
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
-    final response = await globals.dio?.delete(
-        '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.watchlistPath}/${request.id}',
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-        ));
     try {
+      final response = await globals.dio?.delete(
+          '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.watchlistPath}/${request.id}',
+          options: Options(
+            headers: {'Content-Type': 'application/json'},
+          ));
       if (response?.statusCode != AddMovieResponse.success) {
         return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
@@ -249,30 +236,27 @@ class MovieService {
       result = AddMovieResponse(
         statusCode: response?.statusCode ?? 500,
       );
-    } catch (error) {
-      if (error.toString() == 'Connection reset by peer' ||
-          error.toString() ==
-              'Connection closed before full header was received') {
-        return const AddMovieResponse(statusCode: HttpStatus.NO_INTERNET);
-      }
+      await globals.sessionManager.getSession();
       return result;
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
     }
-    await globals.sessionManager.getSession();
-    return result;
   }
 
-    Future<AddMovieResponse> addSeenMovie(
-      AddMovieRequest request) async {
+  Future<AddMovieResponse> addSeenMovie(AddMovieRequest request) async {
     AddMovieResponse result =
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
-    final response = await globals.dio?.post(
-        '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.seenMoviesPath}',
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-        ),
-        data: {'movieId': request.id});
     try {
+      final response = await globals.dio?.post(
+          '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.seenMoviesPath}',
+          options: Options(
+            headers: {'Content-Type': 'application/json'},
+          ),
+          data: {'movieId': request.id});
       if (response?.statusCode != HttpStatus.CREATED) {
         return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
@@ -280,29 +264,26 @@ class MovieService {
       result = AddMovieResponse(
         statusCode: response?.statusCode ?? 500,
       );
-    } catch (error) {
-      if (error.toString() == 'Connection reset by peer' ||
-          error.toString() ==
-              'Connection closed before full header was received') {
-        return const AddMovieResponse(statusCode: HttpStatus.NO_INTERNET);
-      }
+      await globals.sessionManager.getSession();
       return result;
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
     }
-    await globals.sessionManager.getSession();
-    return result;
   }
 
-    Future<AddMovieResponse> removeSeenMovie(
-      AddMovieRequest request) async {
+  Future<AddMovieResponse> removeSeenMovie(AddMovieRequest request) async {
     AddMovieResponse result =
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
-    final response = await globals.dio?.delete(
-        '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.seenMoviesPath}/${request.id}',
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-        ));
     try {
+      final response = await globals.dio?.delete(
+          '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.seenMoviesPath}/${request.id}',
+          options: Options(
+            headers: {'Content-Type': 'application/json'},
+          ));
       if (response?.statusCode != AddMovieResponse.success) {
         return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
@@ -310,15 +291,13 @@ class MovieService {
       result = AddMovieResponse(
         statusCode: response?.statusCode ?? 500,
       );
-    } catch (error) {
-      if (error.toString() == 'Connection reset by peer' ||
-          error.toString() ==
-              'Connection closed before full header was received') {
-        return const AddMovieResponse(statusCode: HttpStatus.NO_INTERNET);
-      }
+      await globals.sessionManager.getSession();
       return result;
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
     }
-    await globals.sessionManager.getSession();
-    return result;
   }
 }
