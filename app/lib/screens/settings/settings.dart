@@ -13,15 +13,9 @@ import 'package:getout/screens/settings/widget/account_info.dart';
 import 'package:getout/screens/settings/widget/setting_row.dart';
 import 'package:getout/screens/settings/widget/title.dart';
 
-class SettingsPage extends StatefulWidget {
+class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
-  @override
-  State<SettingsPage> createState() => _SettingsPageState();
-}
-
-class _SettingsPageState extends State<SettingsPage> {
-  bool isActivated = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

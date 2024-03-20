@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/settings/services/service.dart';
+import 'package:getout/tools/validator/email.dart';
+import 'package:getout/tools/validator/field.dart';
 import 'package:getout/widgets/fields/email_field.dart';
 import 'package:getout/widgets/fields/password_field.dart';
 import 'package:getout/widgets/button/floating_button.dart';
@@ -40,17 +42,13 @@ class EditMailPage extends StatelessWidget {
               children: [
                 PasswordField(
                     onChanged: (String value) => password = value,
-                    validator: (value) =>
-                        password.isNotEmpty ? null : 'le champs est vide'),
+                    validator: (value) => mandatoryValidator(password)),
                 NewEmailField(
                     onChanged: (String value) => newEmail = value,
-                    validator: (value) =>
-                        (newEmail.isNotEmpty) ? null : 'l\'email est invalide'),
+                    validator: (value) => emailValidator(value)),
                 ConfirmEmailField(
                     onChanged: (value) => confirmEmail = value,
-                    validator: (value) => (confirmEmail.isNotEmpty)
-                        ? null
-                        : 'la confirmation est invalide'),
+                    validator: (value) => confirmEmailValidator(newEmail, confirmEmail)),
                 const SizedBox(height: 32),
               ],
             ),
@@ -77,71 +75,3 @@ class EditMailPage extends StatelessWidget {
         ));
   }
 }
-
-/*
-  void _validateEmails() {
-    String oldEmail = passwordController.text;
-    String newEmail = newEmailController.text;
-    String confirmEmail = confirmNewEmailController.text;
-
-    if (_isValidEmail(oldEmail) &&
-        _isValidEmail(newEmail) &&
-        _isValidEmail(confirmEmail)) {
-      if (newEmail != confirmEmail) {
-        _showErrorDialog('Les adresses e-mail ne correspondent pas.');
-        return;
-      }
-
-      // Changements enregistrés avec succès
-      _showSuccessDialog('Changements enregistrés avec succès !');
-    } else {
-      _showErrorDialog('Veuillez entrer des adresses e-mail valides.');
-    }
-  }
-
-  bool _isValidEmail(String email) {
-    // Utiliser une expression régulière pour valider l'adresse e-mail
-    String emailRegex = r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$';
-    RegExp regex = RegExp(emailRegex);
-    return regex.hasMatch(email);
-  }
-
-  void _showErrorDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Erreur'),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _showSuccessDialog(String message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Succès'),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const HomePage()),
-              );
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
-}*/
