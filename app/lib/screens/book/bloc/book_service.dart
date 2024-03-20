@@ -12,9 +12,12 @@ import 'package:dio/dio.dart';
 import 'package:getout/screens/book/bloc/book_bloc.dart';
 import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
+
 import 'package:getout/global.dart' as globals;
 
 class BookService {
+  final String userId = globals.session?['id'].toString() ?? '';
+
   Future<InfoBookResponse> getInfoBook(CreateInfoBookRequest request) async {
     InfoBookResponse result =
         const InfoBookResponse(statusCode: HttpStatus.APP_ERROR);
@@ -27,7 +30,6 @@ class BookService {
         return InfoBookResponse(statusCode: response?.statusCode ?? 500);
       }
       final dynamic data = response?.data;
-
       List<Map<String, String?>> parseAutor(dynamic autorData) {
         List<Map<String, String?>> autorList = [];
 
@@ -58,21 +60,18 @@ class BookService {
         return autorList;
       }
 
-      final bool isOverviewEmpty = (response?.data['book']['overview'] == '');
-      final bool isDurationEmpty =
-          (response?.data['book']['duration'] == '0h0min');
-
       result = InfoBookResponse(
           title: response?.data['book']['title'],
-          overview: isOverviewEmpty
-              ? response?.data['book']['overview']
-              : 'Pas de description disponible',
+          overview: response?.data['book']['overview'] ?? 'Pas de description disponible',
           posterPath: response?.data['book']['poster_path'],
           backdropPath: response?.data['book']['backdrop_path'],
           releaseDate: response?.data['book']['release_date'],
           voteAverage: response?.data['book']['vote_average'],
-          duration: isDurationEmpty ? response?.data['book']['duration'] : 'N/A',
+          pageCount: response?.data['book']['pageCount'] ?? 0,
           authorsPicture: parseAutor(data['book']['authorsPicture']),
+          liked: globals.session?['likedBooks'].contains(request.id),
+          disliked: globals.session?['dislikedBooks'].contains(request.id),
+          id: response?.data['book']['id'],
           statusCode: response?.statusCode ?? 500);
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||
@@ -83,5 +82,120 @@ class BookService {
       return result;
     }
     return result;
+  }
+
+  Future<AddBookResponse> addLikedBook(AddBookRequest request) async {
+    AddBookResponse result =
+        const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
+
+    try {
+      final response = await globals.dio?.post(
+          '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedBookPath}',
+          options: Options(
+            headers: {'Content-Type': 'application/json'},
+          ),
+          data: {'bookId': request.id});
+      if (response?.statusCode != HttpStatus.CREATED) {
+        return AddBookResponse(statusCode: response?.statusCode ?? 500);
+      }
+
+      result = AddBookResponse(
+        statusCode: response?.statusCode ?? 500,
+      );
+
+      await globals.sessionManager.getSession();
+      return result;
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
+    }
+  }
+
+  Future<AddBookResponse> removeLikedBook(AddBookRequest request) async {
+    AddBookResponse result =
+        const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
+
+    try {
+      final response = await globals.dio?.delete(
+        '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedBookPath}/${request.id}',
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+      );
+      if (response?.statusCode != HttpStatus.OK) {
+        return AddBookResponse(statusCode: response?.statusCode ?? 500);
+      }
+
+      result = AddBookResponse(
+        statusCode: response?.statusCode ?? 500,
+      );
+      await globals.sessionManager.getSession();
+      return result;
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
+    }
+  }
+
+  Future<AddBookResponse> removeDislikedBook(AddBookRequest request) async {
+    AddBookResponse result =
+        const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
+
+    try {
+      final response = await globals.dio?.delete(
+        '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addDislikedBookPath}/${request.id}',
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+      );
+      if (response?.statusCode != HttpStatus.OK) {
+        return AddBookResponse(statusCode: response?.statusCode ?? 500);
+      }
+
+      result = AddBookResponse(
+        statusCode: response?.statusCode ?? 500,
+      );
+
+      await globals.sessionManager.getSession();
+      return result;
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
+    }
+  }
+
+  Future<AddBookResponse> addDislikedBook(AddBookRequest request) async {
+    AddBookResponse result =
+        const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
+
+    try {
+      final response = await globals.dio?.post(
+          '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addDislikedBookPath}',
+          options: Options(
+            headers: {'Content-Type': 'application/json'},
+          ),
+          data: {'bookId': request.id});
+
+      if (response?.statusCode != HttpStatus.CREATED) {
+        return AddBookResponse(statusCode: response?.statusCode ?? 500);
+      }
+
+      result = AddBookResponse(
+        statusCode: response?.statusCode ?? 500,
+      );
+
+      await globals.sessionManager.getSession();
+      return result;
+    } on DioException {
+      rethrow;
+    } catch (dioError) {
+      rethrow;
+    }
   }
 }
