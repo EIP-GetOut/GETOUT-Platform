@@ -5,8 +5,6 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 
 import 'package:getout/screens/book/bloc/book_bloc.dart';
@@ -17,6 +15,25 @@ import 'package:getout/global.dart' as globals;
 
 class BookService {
   final String userId = globals.session?['id'].toString() ?? '';
+
+  List<Map<String, String?>> parseAutor(dynamic authorData) {
+    List<Map<String, String?>> authorList = [];
+
+    if (authorData is List) {
+      for (var actor in authorData) {
+        if (actor is Map<String, dynamic>) {
+          String author = actor['author'] ?? '';
+          String imageLink = actor['imageLink'] ??
+              'https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg';
+
+          if (author != '') {
+            authorList.add({author: author, imageLink: imageLink});
+          }
+        }
+      }
+    }
+    return authorList;
+  }
 
   Future<InfoBookResponse> getInfoBook(CreateInfoBookRequest request) async {
     InfoBookResponse result =
@@ -30,45 +47,17 @@ class BookService {
         return InfoBookResponse(statusCode: response?.statusCode ?? 500);
       }
       final dynamic data = response?.data;
-      List<Map<String, String?>> parseAutor(dynamic autorData) {
-        List<Map<String, String?>> autorList = [];
-
-        if (autorData is List) {
-          for (var actor in autorData) {
-            if (actor is Map<String, dynamic>) {
-              String author = json.encode(actor['author']);
-              String imageLink = json.encode(actor['imageLink']);
-
-              if (author != '' && imageLink != '') {
-                autorList.add({'author': author, 'imageLink': imageLink});
-              } else if (author != '') {
-                autorList.add({
-                  'author': author,
-                  'imageLink':
-                      'https://upload.wikimedia.org/wikipedia/commons/0/0f/Blank_Square.svg'
-                });
-              } else {
-                autorList.add({
-                  'author': 'unknown',
-                  'imageLink':
-                  'https://upload.wikimedia.org/wikipedia/commons/0/0f/Blank_Square.svg'
-                });
-              }
-            }
-          }
-        }
-        return autorList;
-      }
 
       result = InfoBookResponse(
           title: response?.data['book']['title'],
-          overview: response?.data['book']['overview'] ?? 'Pas de description disponible',
+          overview: response?.data['book']['overview'] ??
+              'Pas de description disponible',
           posterPath: response?.data['book']['poster_path'],
           backdropPath: response?.data['book']['backdrop_path'],
           releaseDate: response?.data['book']['release_date'],
           voteAverage: response?.data['book']['vote_average'],
           pageCount: response?.data['book']['pageCount'] ?? 0,
-          authorsPicture: parseAutor(data['book']['authorsPicture']),
+          authorsPicture: parseAutor(data['book']['authors_picture']),
           liked: globals.session?['likedBooks'].contains(request.id),
           disliked: globals.session?['dislikedBooks'].contains(request.id),
           id: response?.data['book']['id'],

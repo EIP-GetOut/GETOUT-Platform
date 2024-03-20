@@ -67,20 +67,30 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                         'RÉALISATEUR',
                         style: TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold))),
-                Padding(
-                    padding: const EdgeInsets.only(
-                        left: 10), //apply padding to all four sides
-                    child: Image.network(
-                      'https://upload.wikimedia.org/wikipedia/commons/5/5f/Grey.PNG?20071229171831',
-                      height: 50,
-                      width: 50,
-                    )),
-                const Padding(
-                    padding: EdgeInsets.only(
-                        left: 10), //apply padding to all four sides
-                    child: Text(
-                        // textAlign: TextAlign.start,
-                        'Réalisateur 1')),
+                                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: List.generate(
+                      widget.movie.director?.length ?? 0,
+                      (index) => Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Column(
+                          children: [
+                            Image.network(
+                              widget.movie.director![index]['picture']!,
+                              height: 120,
+                              width: 120,
+                            ),
+                            Text(
+                              widget.movie.director![index]['name']!,
+                              style: const TextStyle(fontSize: 14),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
                 separateLine(),
                 const Padding(
                   padding: EdgeInsets.only(
@@ -115,25 +125,6 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                     ),
                   ),
                 ),
-                // Padding(
-                //     padding: const EdgeInsets.only(
-                //         left: 10), //apply padding to all four sides
-                //     child: Image.network(
-                //       (movie.cast?.isNotEmpty == true)
-                //           ? movie.cast![0][0]
-                //           : 'https://upload.wikimedia.org/wikipedia/commons/5/5f/Grey.PNG?20071229171831',
-                //       height: 50,
-                //       width: 50,
-                //     )),
-                // Padding(
-                //   padding: const EdgeInsets.only(
-                //       left: 10), //apply padding to all four sides
-                //   child: Text(
-                //     (movie.cast?.isNotEmpty == true)
-                //         ? movie.cast![0][0]
-                //         : 'Non disponibe',
-                //   ),
-                // ),
               ],
             ),
           ],
