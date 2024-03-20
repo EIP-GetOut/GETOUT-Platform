@@ -30,6 +30,8 @@ class InfoBookResponse extends BookEvent {
       this.authorsPicture,
       this.liked,
       this.disliked,
+      this.wishlisted,
+      this.read,
       this.id,
       required this.statusCode});
 
@@ -44,6 +46,8 @@ class InfoBookResponse extends BookEvent {
   final int? pageCount;
   final bool? liked;
   final bool? disliked;
+  final bool? wishlisted;
+  final bool? read;
   final String? id;
   final int statusCode;
 }

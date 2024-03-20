@@ -77,13 +77,40 @@ class BookSuccessWidget extends StatelessWidget {
                   ))),
           Positioned(
             top: 30,
-            right: 80,
+            right: 140,
             child: IconButton(
               icon: const Icon(Icons.share),
               color: Colors.white,
               onPressed: () async {
                 await Clipboard.setData(ClipboardData(
                     text: 'https://www.themoviedb.org/movie/${book.id}'));
+              },
+            ),
+          ),
+          Positioned(
+            top: 30,
+            right: 80,
+            child: IconButton(
+              icon: const Icon(Icons.remove_red_eye),
+              color: (book.read ?? false) ? Colors.red : Colors.white,
+              onPressed: () async {
+                if (book.read == true) {
+                  await context
+                      .read<BookBloc>()
+                      .bookRepository
+                      .service
+                      .removeReadBook(AddBookRequest(id: book.id ?? ''));
+                } else {
+                  await context
+                      .read<BookBloc>()
+                      .bookRepository
+                      .service
+                      .addReadBook(AddBookRequest(id: book.id ?? ''));
+                }
+                if (!context.mounted) return;
+                context
+                    .read<BookBloc>()
+                    .add(CreateInfoBookRequest(id: book.id ?? ''));
               },
             ),
           ),
@@ -141,6 +168,33 @@ class BookSuccessWidget extends StatelessWidget {
               },
             ),
           ),
+          Positioned(
+            top: 130,
+            right: 20,
+            child: IconButton(
+              icon: const Icon(Icons.add_circle_outlined),
+              color: (book.wishlisted ?? false) ? Colors.red : Colors.white,
+              onPressed: () async {
+                if (book.wishlisted == true) {
+                  await context
+                      .read<BookBloc>()
+                      .bookRepository
+                      .service
+                      .removeWishlistedBook(AddBookRequest(id: book.id ?? ''));
+                } else {
+                  await context
+                      .read<BookBloc>()
+                      .bookRepository
+                      .service
+                      .addWishlistedBook(AddBookRequest(id: book.id ?? ''));
+                }
+                if (!context.mounted) return;
+                context
+                    .read<BookBloc>()
+                    .add(CreateInfoBookRequest(id: book.id ?? ''));
+              },
+            ),
+          )
         ],
       ),
       Text(
