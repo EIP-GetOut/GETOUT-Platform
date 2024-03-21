@@ -50,23 +50,3 @@ class SettingsPage extends StatelessWidget {
     );
   }
 }
-
-GestureDetector buildParameters(
-    BuildContext context, String title, StatefulWidget page) {
-  return GestureDetector(
-    onTap: () {
-      Navigator.push(context, MaterialPageRoute(builder: (context) => page));
-    },
-    child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Icon(Icons.lock, color: Colors.grey),
-            Text(title,
-                style: TextStyle(fontSize: 20, color: Colors.grey[800])),
-            Icon(Icons.arrow_forward_ios, color: Colors.grey[800])
-          ],
-        )),
-  );
-}
