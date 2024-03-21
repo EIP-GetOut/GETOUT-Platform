@@ -10,6 +10,10 @@ import 'package:flutter/services.dart';
 
 import 'package:getout/screens/settings/settings.dart';
 
+import 'package:getout/global.dart' as globals;
+
+import 'package:getout/tools/duration_format.dart';
+
 class HomeAppBarWidget extends AppBar {
   HomeAppBarWidget({super.key, required BuildContext context})
       : super(
@@ -54,7 +58,9 @@ class HomeAppBarWidget extends AppBar {
               Text('Bienvenue !',
                   style: Theme.of(context).textTheme.titleLarge),
               Text('La productivité à portée de main',
-                  style: Theme.of(context).textTheme.displayMedium)
+                  style: Theme.of(context).textTheme.displayMedium),
+                Text(durationFormat('Vous avez gagné',globals.session?['spentMinutesReadingAndWatching']),
+                style: Theme.of(context).textTheme.displayMedium)
             ],
           ),
           actions: [

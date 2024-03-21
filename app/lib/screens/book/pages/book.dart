@@ -6,6 +6,9 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:boxicons/boxicons.dart';
 
 import 'package:getout/screens/book/pages/book_description.dart';
@@ -21,7 +24,6 @@ class BookSuccessWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String imageUrl = book.posterPath ?? '';
     Widget buildCoverImage() => Container(
           decoration: const BoxDecoration(
@@ -73,6 +75,72 @@ class BookSuccessWidget extends StatelessWidget {
                       Navigator.pop(context);
                     },
                   ))),
+          Positioned(
+            top: 30,
+            right: 80,
+            child: IconButton(
+              icon: const Icon(Icons.share),
+              color: Colors.white,
+              onPressed: () async {
+                await Clipboard.setData(ClipboardData(
+                    text: 'https://www.themoviedb.org/movie/${book.id}'));
+              },
+            ),
+          ),
+          Positioned(
+            top: 30,
+            right: 20,
+            child: IconButton(
+              icon: const Icon(Icons.thumb_up_alt_sharp),
+              color: (book.liked ?? false) ? Colors.red : Colors.white,
+              onPressed: () async {
+                if (book.liked == true) {
+                  await context
+                      .read<BookBloc>()
+                      .bookRepository
+                      .service
+                      .removeLikedBook(AddBookRequest(id: book.id ?? ''));
+                } else {
+                  await context
+                      .read<BookBloc>()
+                      .bookRepository
+                      .service
+                      .addLikedBook(AddBookRequest(id: book.id ?? ''));
+                }
+                if (!context.mounted) return;
+                context
+                    .read<BookBloc>()
+                    .add(CreateInfoBookRequest(id: book.id.toString()));
+              },
+            ),
+          ),
+          Positioned(
+            top: 80,
+            right: 20,
+            child: IconButton(
+              icon: const Icon(Icons.thumb_down),
+              color: (book.disliked ?? false) ? Colors.red : Colors.white,
+              onPressed: () async {
+                if (book.disliked == true) {
+                  await context
+                      .read<BookBloc>()
+                      .bookRepository
+                      .service
+                      .removeDislikedBook(AddBookRequest(id: book.id ?? ''));
+                } else {
+                  await context
+                      .read<BookBloc>()
+                      .bookRepository
+                      .service
+                      .addDislikedBook(AddBookRequest(id: book.id ?? ''));
+                }
+                if (!context.mounted) return;
+                context
+                    .read<BookBloc>()
+                    .add(CreateInfoBookRequest(id: book.id.toString()));
+              },
+            ),
+          ),
         ],
       ),
       Text(
@@ -119,7 +187,7 @@ class BookSuccessWidget extends StatelessWidget {
                 thickness: 0,
                 // height : double.infinity,
               )),
-          Text(book.duration ?? 'N/A',
+          Text('${book.pageCount.toString()} pages',
               // widget.book.duration,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall),

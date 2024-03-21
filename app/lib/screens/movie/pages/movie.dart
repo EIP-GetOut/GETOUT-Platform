@@ -6,11 +6,15 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:boxicons/boxicons.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/movie/pages/movie_description.dart';
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
+
+import 'package:getout/tools/duration_format.dart';
 
 class MovieSuccessWidget extends StatelessWidget {
   const MovieSuccessWidget({
@@ -47,12 +51,71 @@ class MovieSuccessWidget extends StatelessWidget {
               ),
               Positioned(
                 top: 30,
+                right: 140,
+                child: IconButton(
+                  icon: const Icon(Icons.share),
+                  color: Colors.white,
+                  onPressed: () async {
+                    await Clipboard.setData(ClipboardData(
+                        text: 'https://www.themoviedb.org/movie/${movie.id}'));
+                  },
+                ),
+              ),
+              Positioned(
+                top: 30,
+                right: 80,
+                child: IconButton(
+                  icon: const Icon(Icons.remove_red_eye),
+                  color: (movie.seen ?? false) ? Colors.red : Colors.white,
+                  onPressed: () async {
+                    if (movie.seen == true) {
+                      await context
+                          .read<MovieBloc>()
+                          .movieRepository
+                          .service
+                          .removeSeenMovie(
+                              AddMovieRequest(id: movie.id ?? -1));
+                    } else {
+                      await context
+                          .read<MovieBloc>()
+                          .movieRepository
+                          .service
+                          .addSeenMovie(
+                              AddMovieRequest(id: movie.id ?? -1));
+                    }
+                    if (!context.mounted) return;
+                    context
+                        .read<MovieBloc>()
+                        .add(CreateInfoMovieRequest(id: movie.id ?? -1));
+                  },
+                ),
+              ),
+              Positioned(
+                top: 30,
                 right: 20,
                 child: IconButton(
                   icon: const Icon(Icons.thumb_up_alt_sharp),
-                  color: Colors.white,
-                  onPressed: () {
-                    // print('Like');
+                  color: (movie.liked ?? false) ? Colors.red : Colors.white,
+                  onPressed: () async {
+                    if (movie.liked == true) {
+                      await context
+                          .read<MovieBloc>()
+                          .movieRepository
+                          .service
+                          .removeLikedMovie(
+                              AddMovieRequest(id: movie.id ?? -1));
+                    } else {
+                      await context
+                          .read<MovieBloc>()
+                          .movieRepository
+                          .service
+                          .addLikedMovie(
+                              AddMovieRequest(id: movie.id ?? -1));
+                    }
+                    if (!context.mounted) return;
+                    context
+                        .read<MovieBloc>()
+                        .add(CreateInfoMovieRequest(id: movie.id ?? -1));
                   },
                 ),
               ),
@@ -61,9 +124,57 @@ class MovieSuccessWidget extends StatelessWidget {
                 right: 20,
                 child: IconButton(
                   icon: const Icon(Icons.thumb_down),
-                  color: Colors.white,
-                  onPressed: () {
-                    // print('Dislike');
+                  color: (movie.disliked ?? false) ? Colors.red : Colors.white,
+                  onPressed: () async {
+                    if (movie.disliked == true) {
+                      await context
+                          .read<MovieBloc>()
+                          .movieRepository
+                          .service
+                          .removeDislikedMovie(
+                              AddMovieRequest(id: movie.id ?? -1));
+                    } else {
+                      await context
+                          .read<MovieBloc>()
+                          .movieRepository
+                          .service
+                          .addDislikedMovie(
+                              AddMovieRequest(id: movie.id ?? -1));
+                    }
+                    if (!context.mounted) return;
+                    context
+                        .read<MovieBloc>()
+                        .add(CreateInfoMovieRequest(id: movie.id ?? -1));
+                  },
+                ),
+              ),
+              Positioned(
+                top: 130,
+                right: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.add_circle_outlined),
+                  color:
+                      (movie.wishlisted ?? false) ? Colors.red : Colors.white,
+                  onPressed: () async {
+                    if (movie.wishlisted == true) {
+                      await context
+                          .read<MovieBloc>()
+                          .movieRepository
+                          .service
+                          .removeWishlistedMovie(
+                              AddMovieRequest(id: movie.id ?? -1));
+                    } else {
+                      await context
+                          .read<MovieBloc>()
+                          .movieRepository
+                          .service
+                          .addWishlistedMovie(
+                              AddMovieRequest(id: movie.id ?? -1));
+                    }
+                    if (!context.mounted) return;
+                    context
+                        .read<MovieBloc>()
+                        .add(CreateInfoMovieRequest(id: movie.id ?? -1));
                   },
                 ),
               ),
@@ -97,7 +208,7 @@ class MovieSuccessWidget extends StatelessWidget {
                       Icons.arrow_back,
                       color: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       Navigator.pop(context);
                     },
                   ))),
@@ -147,7 +258,7 @@ class MovieSuccessWidget extends StatelessWidget {
                 thickness: 0,
                 // height : double.infinity,
               )),
-          Text(movie.duration ?? 'N/A',
+          Text(durationFormat('', movie.duration ?? 0),
               // widget.movie.duration,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall),
