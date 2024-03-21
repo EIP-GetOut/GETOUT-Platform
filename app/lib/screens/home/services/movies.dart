@@ -11,8 +11,6 @@ class MoviesService extends ServiceTemplate {
   final String _id = globals.session?['id'].toString() ?? '';
 
   MoviesService();
-  
-  final session = globals.session ?? {}; // TODO NOT SAFE
 
   // RECOMMEND
   Future<GenerateMoviesResponse> getRecommendedMovies(

@@ -1,24 +1,47 @@
 {
   "@@locale": "fr",
+  "@@last_modified": "2024-03-18T17:10:00",
+  "@@author": "Perry Chouteau",
   "appName": "GetOut",
-  "@_Error": {},
-  "errorFetch": "Erreur {statusCode} lors de la recuperation {object}: {statusMessage}",
-  "@errorFetch": {
+
+  "@_ERROR":{},
+
+  "@error_unknow": "Une erreur est survenu",
+  "error_internet": "Vérifier votre connexion et recommencer",
+  "error_server": "Surprenant ! Attendez un peu, ou contactez le support",
+  "error_unauthorized": "Vérifier les informations et recommencer",
+  "error_expired": "Il semblerais que vos authorisation est expiré",
+
+  "@_CONNECTION": {},
+
+  "@_LOGIN": {},
+  "signInWith": "Se connecter avec {Service}",
+  "@signInWith": {
     "placeholders": {
-      "statusCode": {
-        "type": "int",
-        "example": 404
-      },
-      "object": {
+      "Service": {
         "type": "string",
-        "example": "books"
-      },
-      "statusMessage": {
-        "type": "string",
-        "example": "Not found"
+        "example": "Google"
       }
     }
   },
+
+  "@_HOMEPAGE": {},
+
+  "@_DASHBOARD": {},
+
+  "dashboard_title": "Bienvenue !",
+  "dashboard_subtitle": "La productivité à portée de main",
+  "dashboardTitle" : "Vos livres",
+
+  "@_BOOKS": {},
+
+  "yourBooks" : "Vos livres",
+  "yourMovies" : "Vos films",
+  "yourBooksDescription" : "Toutes vos lectures sont ici.",
+  "likeBooksTitle": "Vos coups de coeur",
+  "@viewBooksTitle": "vos livres fini",
+  "@wishlistBooksTitle": "ce que vous comptez lire",
+
   "errorLoad": "Impossible de charger {object}",
   "@errorLoad": {
     "placeholders": {
@@ -28,21 +51,48 @@
       }
     }
   },
-  "@_LOGIN": {},
-  "signInWith": "Se connecter avec {Service}",
-  "@signInWith": {
-    "placeholders": {
-      "Service": {
-        "type": "string"
-      }
-    }
-  },
-  "@_DASHBOARD": {},
-  "@dashboardTitle" : "Vos livres",
-  "@_YOUR_BOOKS": {},
-  "@yourBooksTitle" : "Vos livres",
-  "yourBooksDescription" : "Toutes vos lectures sont ici.",
-  "likeBooksTitle": "Vos coups de coeur",
-  "@viewBooksTitle": "vos livres fini",
-  "@wishlistBooksTitle": "ce que vous comptez lire"
+
+  "@_PASSWORD": {},
+
+  "password": "MOT DE PASSE",
+  "password_hint": "Entrer votre mot de passe",
+  "new_password": "NOUVEAU MOT DE PASSE",
+  "new_password_hint": "Entrer votre nouveau mot de passe",
+  "confirm_password": "CONFIRMATION DE MOT DE PASSE",
+  "confirm_password_hint": "Confirmer votre mot de passe",
+  "edit_password": "Changer de mot de passe",
+
+  "@_EMAIL": {},
+
+  "email": "ADRESSE EMAIL",
+  "email_hint": "Entrer votre adresse email",
+  "new_email": "NOUVELLE ADRESSE EMAIL",
+  "new_email_hint": "Entrer votre nouvelle adresse email",
+  "confirm_email": "CONFIRMATION D'ADRESSE EMAIL",
+  "confirm_email_hint": "Confirmer votre adresse email",
+  "edit_email": "Changer d'adressse email",
+
+  "@_CODE": {},
+
+  "email": "CODE",
+  "email_hint": "Entrer votre code",
+  "@_mail_hint": "Entrer votre code reçu par mail",
+
+  "@_SETTING": {},
+
+  "settings": "paramètres",
+  "account": "compte",
+  "delete_account": "supprimer son compte",
+  "disconect": "déconnection",
+
+  "appearance": "apparence",
+  "select_language": "choisir la langue",
+  "select_theme": "mode sombre",
+
+  "preference": "preference",
+  "select_preferences": "choisir les preferences",
+  "notifications": "notifications",
+
+  "more": "autre",
+  "support": "support"
 }

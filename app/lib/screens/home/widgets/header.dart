@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:getout/screens/settings/pages/settings.dart';
+import 'package:getout/screens/settings/settings.dart';
 
 import 'package:getout/global.dart' as globals;
 

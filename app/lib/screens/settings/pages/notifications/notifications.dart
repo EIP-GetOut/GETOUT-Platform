@@ -14,11 +14,10 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationsServices {
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  final AndroidInitializationSettings initializationSettingsAndroid =
-      const AndroidInitializationSettings('@mipmap/ic_launcher');
+  final AndroidInitializationSettings initializationSettingsAndroid = const AndroidInitializationSettings('@mipmap/ic_launcher');
+  final DarwinInitializationSettings initializationSettingsIOS = const DarwinInitializationSettings();
 
   bool isActive = false;
   bool _firstRun = false;
@@ -48,7 +47,7 @@ class NotificationsServices {
 
   void initNotif() async {
     InitializationSettings initializationSettings =
-        InitializationSettings(android: initializationSettingsAndroid);
+        InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
@@ -99,9 +98,8 @@ class NotificationsServices {
      SharedPreferences prefs = await SharedPreferences.getInstance();
      isActiveFromCache = prefs.getBool('notificationsIsActive');
 
-
      if (isActiveFromCache == null) {
-       //todo faire la requete depuis le back
+       //todo faire la requete depuis le back (perry: peut etre pas besoin de deps du back ici)
        isActive = false;
      } else {
        isActive = isActiveFromCache;
