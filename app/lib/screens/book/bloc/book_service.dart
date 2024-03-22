@@ -16,23 +16,20 @@ import 'package:getout/global.dart' as globals;
 class BookService {
   final String userId = globals.session?['id'].toString() ?? '';
 
-  List<Map<String, String?>> parseAutor(dynamic authorData) {
-    List<Map<String, String?>> authorList = [];
+  PersonList parseAuthor(final castData) {
+    PersonList castList = [];
 
-    if (authorData is List) {
-      for (var actor in authorData) {
-        if (actor is Map<String, dynamic>) {
-          String author = actor['author'] ?? '';
-          String imageLink = actor['imageLink'] ??
+        for (final author in castData) {
+          String? name = author['author'];
+          String picture = author['picture'] ??
               'https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg';
 
-          if (author != '') {
-            authorList.add({author: author, imageLink: imageLink});
+          if (name != null) {
+            castList.add(Person(name: name, picture: picture));
           }
         }
-      }
-    }
-    return authorList;
+
+    return castList;
   }
 
   Future<InfoBookResponse> getInfoBook(CreateInfoBookRequest request) async {
@@ -57,7 +54,7 @@ class BookService {
           releaseDate: response?.data['book']['release_date'],
           voteAverage: response?.data['book']['vote_average'],
           pageCount: response?.data['book']['pageCount'] ?? 0,
-          authorsPicture: parseAutor(data['book']['authors_picture']),
+          authorsPicture: parseAuthor(data['book']['authors_picture']),
           liked: globals.session?['likedBooks'].contains(request.id),
           disliked: globals.session?['dislikedBooks'].contains(request.id),
           id: response?.data['book']['id'],

@@ -66,12 +66,12 @@ class BookDescriptionPage extends StatelessWidget {
                         child: Column(
                           children: [
                             Image.network(
-                              book.authorsPicture![index]['imageLink']!,
+                              book.authorsPicture![index].picture,
                               height: 120,
                               width: 120,
                             ),
                             Text(
-                              book.authorsPicture![index]['author']!,
+                              book.authorsPicture![index].name,
                               style: const TextStyle(fontSize: 14),
                             ),
                           ],

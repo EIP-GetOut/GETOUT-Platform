@@ -33,7 +33,7 @@ class InfoBookResponse extends BookEvent {
       this.id,
       required this.statusCode});
 
-  final List<Map<String, String?>>? authorsPicture;
+  final PersonList? authorsPicture;
   static const int success = HttpStatus.OK;
   final String? title;
   final String? overview;
@@ -66,3 +66,16 @@ class AddBookResponse extends BookEvent {
 
   static const int success = HttpStatus.OK;
 }
+
+class Person extends BookEvent {
+  const Person (
+    {required this.name,
+    required this.picture}
+  );
+
+  final String name;
+  final String picture;
+}
+
+
+typedef PersonList = List<Person>;

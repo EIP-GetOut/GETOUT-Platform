@@ -16,35 +16,29 @@ import 'package:getout/global.dart' as globals;
 class MovieService {
   final String userId = globals.session?['id'].toString() ?? '';
 
-  List<Map<String, String?>> parseCast(dynamic castData) {
-    List<Map<String, String?>> castList = [];
+  PersonList parseCast(final castData) {
+    PersonList castList = [];
 
-    if (castData is List) {
-      for (var actor in castData) {
-        if (actor is Map<String, dynamic>) {
+        for (final actor in castData) {
           String? name = actor['name'];
-          String? picture = actor['picture'] ?? 'https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg';
+          String picture = actor['picture'] ??
+              'https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg';
 
           if (name != null) {
-            castList.add({'name': name, 'picture': picture});
+            castList.add(Person(name: name, picture: picture));
           }
         }
-      }
-    }
 
     return castList;
   }
 
-  List<Map<String, String?>> parseDirector(dynamic directorData) {
-    List<Map<String, String?>> directorList = [];
-    String? name = directorData['name'];
-    String? picture = directorData['picture'] ??
-        'https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg';
-    if (name != null) {
-      directorList.add({'name': name, 'picture': picture});
-    }
+  Person parseDirector(final directorData) {
 
-    return directorList;
+    String name = directorData['name'];
+    String picture = directorData['picture'] ??
+        'https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg';
+
+    return Person(name: name, picture: picture);
   }
 
   Future<InfoMovieResponse> getInfoMovie(CreateInfoMovieRequest request) async {

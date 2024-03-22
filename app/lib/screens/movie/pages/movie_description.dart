@@ -67,27 +67,22 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                         'RÉALISATEUR',
                         style: TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold))),
-                                SingleChildScrollView(
+                SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: List.generate(
-                      widget.movie.director?.length ?? 0,
-                      (index) => Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Column(
-                          children: [
-                            Image.network(
-                              widget.movie.director![index]['picture']!,
-                              height: 120,
-                              width: 120,
-                            ),
-                            Text(
-                              widget.movie.director![index]['name']!,
-                              style: const TextStyle(fontSize: 14),
-                            ),
-                          ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Column(
+                      children: [
+                        Image.network(
+                          widget.movie.director!.picture,
+                          height: 120,
+                          width: 120,
                         ),
-                      ),
+                        Text(
+                          widget.movie.director!.name,
+                          style: const TextStyle(fontSize: 14),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -111,12 +106,12 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                         child: Column(
                           children: [
                             Image.network(
-                              widget.movie.cast![index]['picture']!,
+                              widget.movie.cast![index].picture,
                               height: 120,
                               width: 120,
                             ),
                             Text(
-                              widget.movie.cast![index]['name']!,
+                              widget.movie.cast![index].name,
                               style: const TextStyle(fontSize: 14),
                             ),
                           ],

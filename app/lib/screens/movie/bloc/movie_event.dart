@@ -38,8 +38,8 @@ class InfoMovieResponse extends MovieEvent {
       this.id,
       required this.statusCode});
 
-  final List<Map<String, String?>>? cast;
-  final List<Map<String, String?>>? director;
+  final PersonList? cast;
+  final Person? director;
   static const int success = HttpStatus.OK;
   final String? title;
   final String? overview;
@@ -74,3 +74,15 @@ class AddMovieResponse extends MovieEvent {
   static const int success = HttpStatus.OK;
 }
 
+class Person extends MovieEvent {
+  const Person (
+    {required this.name,
+    required this.picture}
+  );
+
+  final String name;
+  final String picture;
+}
+
+
+typedef PersonList = List<Person>;
