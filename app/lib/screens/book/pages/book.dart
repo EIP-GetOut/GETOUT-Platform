@@ -97,14 +97,12 @@ class BookSuccessWidget extends StatelessWidget {
                 if (book.read == true) {
                   await context
                       .read<BookBloc>()
-                      .bookRepository
-                      .service
+                      .bookService
                       .removeReadBook(AddBookRequest(id: book.id ?? ''));
                 } else {
                   await context
                       .read<BookBloc>()
-                      .bookRepository
-                      .service
+                      .bookService
                       .addReadBook(AddBookRequest(id: book.id ?? ''));
                 }
                 if (!context.mounted) return;
@@ -124,14 +122,12 @@ class BookSuccessWidget extends StatelessWidget {
                 if (book.liked == true) {
                   await context
                       .read<BookBloc>()
-                      .bookRepository
-                      .service
+                      .bookService
                       .removeLikedBook(AddBookRequest(id: book.id ?? ''));
                 } else {
                   await context
                       .read<BookBloc>()
-                      .bookRepository
-                      .service
+                      .bookService
                       .addLikedBook(AddBookRequest(id: book.id ?? ''));
                 }
                 if (!context.mounted) return;
@@ -151,14 +147,12 @@ class BookSuccessWidget extends StatelessWidget {
                 if (book.disliked == true) {
                   await context
                       .read<BookBloc>()
-                      .bookRepository
-                      .service
+                      .bookService
                       .removeDislikedBook(AddBookRequest(id: book.id ?? ''));
                 } else {
                   await context
                       .read<BookBloc>()
-                      .bookRepository
-                      .service
+                      .bookService
                       .addDislikedBook(AddBookRequest(id: book.id ?? ''));
                 }
                 if (!context.mounted) return;
@@ -178,14 +172,12 @@ class BookSuccessWidget extends StatelessWidget {
                 if (book.wishlisted == true) {
                   await context
                       .read<BookBloc>()
-                      .bookRepository
-                      .service
+                      .bookService
                       .removeWishlistedBook(AddBookRequest(id: book.id ?? ''));
                 } else {
                   await context
                       .read<BookBloc>()
-                      .bookRepository
-                      .service
+                      .bookService
                       .addWishlistedBook(AddBookRequest(id: book.id ?? ''));
                 }
                 if (!context.mounted) return;

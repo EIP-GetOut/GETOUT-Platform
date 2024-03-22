@@ -8,26 +8,27 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:getout/screens/movie/bloc/movie_repository.dart';
 import 'package:getout/constants/http_status.dart';
+import 'package:getout/screens/movie/bloc/movie_service.dart';
 
 part 'movie_event.dart';
 part 'movie_state.dart';
 
 class MovieBloc extends Bloc<MovieEvent, MovieState> {
+  final MovieService movieService;
+
   MovieBloc({
-    required this.movieRepository,
+    required this.movieService,
   }) : super(const MovieState()) {
     on<CreateInfoMovieRequest>(_mapGetMovieEventToState);
   }
 
-  final MovieRepository movieRepository;
 
   void _mapGetMovieEventToState(
       CreateInfoMovieRequest event, Emitter<MovieState> emit) async {
     emit(state.copyWith(status: MovieStatus.loading));
     try {
-      final InfoMovieResponse movie = await movieRepository.getInfoMovie(event);
+      final InfoMovieResponse movie = await movieService.getInfoMovie(event);
       emit(
         state.copyWith(
           status: MovieStatus.success,

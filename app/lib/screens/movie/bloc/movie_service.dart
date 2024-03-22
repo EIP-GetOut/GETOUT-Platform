@@ -229,7 +229,7 @@ class MovieService {
           options: Options(
             headers: {'Content-Type': 'application/json'},
           ));
-      if (response?.statusCode != AddMovieResponse.success) {
+      if (response?.statusCode != HttpStatus.OK) {
         return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
 
@@ -284,7 +284,7 @@ class MovieService {
           options: Options(
             headers: {'Content-Type': 'application/json'},
           ));
-      if (response?.statusCode != AddMovieResponse.success) {
+      if (response?.statusCode != HttpStatus.OK) {
         return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
 

@@ -71,15 +71,13 @@ class MovieSuccessWidget extends StatelessWidget {
                     if (movie.seen == true) {
                       await context
                           .read<MovieBloc>()
-                          .movieRepository
-                          .service
+                          .movieService
                           .removeSeenMovie(
                               AddMovieRequest(id: movie.id ?? -1));
                     } else {
                       await context
                           .read<MovieBloc>()
-                          .movieRepository
-                          .service
+                          .movieService
                           .addSeenMovie(
                               AddMovieRequest(id: movie.id ?? -1));
                     }
@@ -100,15 +98,13 @@ class MovieSuccessWidget extends StatelessWidget {
                     if (movie.liked == true) {
                       await context
                           .read<MovieBloc>()
-                          .movieRepository
-                          .service
+                          .movieService
                           .removeLikedMovie(
                               AddMovieRequest(id: movie.id ?? -1));
                     } else {
                       await context
                           .read<MovieBloc>()
-                          .movieRepository
-                          .service
+                          .movieService
                           .addLikedMovie(
                               AddMovieRequest(id: movie.id ?? -1));
                     }
@@ -129,15 +125,13 @@ class MovieSuccessWidget extends StatelessWidget {
                     if (movie.disliked == true) {
                       await context
                           .read<MovieBloc>()
-                          .movieRepository
-                          .service
+                          .movieService
                           .removeDislikedMovie(
                               AddMovieRequest(id: movie.id ?? -1));
                     } else {
                       await context
                           .read<MovieBloc>()
-                          .movieRepository
-                          .service
+                          .movieService
                           .addDislikedMovie(
                               AddMovieRequest(id: movie.id ?? -1));
                     }
@@ -159,15 +153,13 @@ class MovieSuccessWidget extends StatelessWidget {
                     if (movie.wishlisted == true) {
                       await context
                           .read<MovieBloc>()
-                          .movieRepository
-                          .service
+                          .movieService
                           .removeWishlistedMovie(
                               AddMovieRequest(id: movie.id ?? -1));
                     } else {
                       await context
                           .read<MovieBloc>()
-                          .movieRepository
-                          .service
+                          .movieService
                           .addWishlistedMovie(
                               AddMovieRequest(id: movie.id ?? -1));
                     }
