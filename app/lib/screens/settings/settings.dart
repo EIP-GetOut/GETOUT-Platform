@@ -9,9 +9,11 @@ import 'package:flutter/material.dart';
 
 import 'package:getout/screens/settings/pages/edit_email/edit_mail.dart';
 import 'package:getout/screens/settings/pages/edit_password/edit_password.dart';
+import 'package:getout/screens/settings/pages/notifications/notifications_page.dart';
 import 'package:getout/screens/settings/widget/account_info.dart';
 import 'package:getout/screens/settings/widget/setting_row.dart';
 import 'package:getout/screens/settings/widget/title.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -24,24 +26,24 @@ class SettingsPage extends StatelessWidget {
         title: const Text('PARAMÈTRES'),
         leading: const BackButton(),
       ),
-      body: const SingleChildScrollView(
+      body:  SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
 //            Divider(height: 20, thickness: 1),
-            AccountInfo(),
-            TitleRow(value: 'compte'),
-            SettingRow(page: EditPasswordPage(), iconData: Icons.shield_outlined, value: 'Changer de mot de passe'),
-            SettingRow(page: EditMailPage(), iconData: Icons.mail_outlined, value: 'Changer d\'adresse email'),
-            SettingRow(page: SizedBox(), iconData: Icons.exit_to_app_outlined, value: 'Se déconnecter', important: Important.warning),
-            SettingRow(page: SizedBox(), iconData: Icons.delete_outlined, value: 'Supprimer son compte', important: Important.important),
+            const AccountInfo(),
+            TitleRow(value: appL10n(context)!.account),
+            SettingRow(page: EditPasswordPage(), iconData: Icons.shield_outlined, value: appL10n(context)!.edit_password),
+            SettingRow(page: EditMailPage(), iconData: Icons.mail_outlined, value: appL10n(context)!.edit_email),
+            SettingRow(page: SizedBox(), iconData: Icons.exit_to_app_outlined, value: appL10n(context)!.disconnect, important: Important.warning),
+            SettingRow(page: SizedBox(), iconData: Icons.delete_outlined, value: appL10n(context)!.delete_account, important: Important.important),
             TitleRow(value: 'apparence'),
-            SettingRow(page: SizedBox(), iconData: Icons.public_outlined, value: 'Choisir la langue'),
+            SettingRow(page: SizedBox(), iconData: Icons.public_outlined, value: appL10n(context)!.select_language),
             TitleRow(value: 'preference'),
-            SettingRow(page: SizedBox(), iconData: Icons.settings_outlined, value: 'Changer les preferences'),
-            SettingRow(page: SizedBox(), iconData: Icons.notifications_outlined, value: 'Notifications'),
+            SettingRow(page: SizedBox(), iconData: Icons.settings_outlined, value: appL10n(context)!.select_preferences),
+            SettingRow(page: NotificationsPage(), iconData: Icons.notifications_outlined, value: appL10n(context)!.notifications),
             TitleRow(value: 'autre'),
             SettingRow(page: SizedBox(), iconData: Icons.help_outline, value: 'Support'),
           ],

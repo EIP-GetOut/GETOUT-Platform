@@ -6,6 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class BookPreviewWidget extends StatelessWidget {
   const BookPreviewWidget({
@@ -45,7 +46,7 @@ class BookPreviewWidget extends StatelessWidget {
           child: Container(
             alignment: Alignment.topLeft,
             padding: const EdgeInsets.only(right: 13.0),
-            child: Text(overview ?? 'Aucune description disponible',
+            child: Text(overview ?? appL10n(context)!.no_description,
                 textAlign: TextAlign.left,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 3,

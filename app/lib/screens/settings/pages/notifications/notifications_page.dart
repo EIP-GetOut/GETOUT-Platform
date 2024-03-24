@@ -10,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
 import 'package:getout/global.dart' as globals;
+import 'package:getout/screens/settings/widget/setting_row.dart';
+import 'package:getout/screens/settings/widget/title.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});
@@ -23,35 +26,18 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('NOTIFICATIONS'),
+          title: Text(appL10n(context)!.notifications.toUpperCase()),
           leading: const BackButton(),
         ),
         body: Column(children: [
           const SizedBox(height: 50),
-          Container(
-            width: double.infinity,
-            margin: const EdgeInsets.all(12.0),
-            padding: const EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Text(
-              'NOTIFICATIONS PUSH',
-              style: TextStyle(
-                color: Colors.grey[600],
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const SizedBox(height: 30),
+          TitleRow(value: 'Global notification'),
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Recommandations',
+                    Text(appL10n(context)!.recommendations,
                         style:
                             TextStyle(fontSize: 20, color: Colors.grey[800])),
                     FlutterSwitch(

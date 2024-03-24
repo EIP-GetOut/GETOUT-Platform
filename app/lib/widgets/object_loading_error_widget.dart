@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:boxicons/boxicons.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 //todo responsive
 class ObjectLoadingErrorWidget extends StatelessWidget {
@@ -17,15 +18,19 @@ class ObjectLoadingErrorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: Center(
-        child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-          const Icon(Boxicons.bx_error, size: 40, color: Colors.red),
-          Text('Impossible de charger $object.',
+
+    return Expanded(
+        child: Center(
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+          const Icon(Boxicons.bx_error,
+              size: 40, color: Colors.red),
+          Text(appL10n(context)!.error_loading(object),
               textAlign: TextAlign.justify,
               style: const TextStyle(
+                fontSize: 32,
                 color: Colors.red,
                 fontWeight: FontWeight.w600,
               )),

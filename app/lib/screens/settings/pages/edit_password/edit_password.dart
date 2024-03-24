@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/settings/services/service.dart';
+import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/validator/field.dart';
 import 'package:getout/tools/validator/password.dart';
 import 'package:getout/widgets/fields/password_field.dart';
@@ -41,20 +42,20 @@ class EditPasswordPage extends StatelessWidget {
               children: [
                 PasswordField(
                     onChanged: (value) => password = value,
-                    validator: (value) => mandatoryValidator(password)),
+                    validator: (value) => mandatoryValidator(context, password)),
                 NewPasswordField(
                     onChanged: (value) => newPassword = value,
-                    validator: (value) => newPasswordValidator(password)),
+                    validator: (value) => newPasswordValidator(context, newPassword)),
                 ConfirmPasswordField(
                     onChanged: (value) => confirmPassword = value,
-                    validator: (value) => confirmPasswordValidator(newPassword, confirmPassword)),
+                    validator: (value) => confirmPasswordValidator(context, newPassword, confirmPassword)),
                 const SizedBox(height: 32),
               ],
             ),
           )),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingButton(
-          title: 'changer le mot de passe',
+          title: appL10n(context)!.edit_password,
           onPressed: () async {
             //todo setup request & error handling
             if (formKey.currentState!.validate()) {

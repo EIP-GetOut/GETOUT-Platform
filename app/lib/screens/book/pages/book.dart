@@ -10,9 +10,11 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:boxicons/boxicons.dart';
+import 'package:getout/constants/extern_url.dart';
 
 import 'package:getout/screens/book/pages/book_description.dart';
 import 'package:getout/screens/book/bloc/book_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class BookSuccessWidget extends StatelessWidget {
   const BookSuccessWidget({
@@ -83,7 +85,7 @@ class BookSuccessWidget extends StatelessWidget {
               color: Colors.white,
               onPressed: () async {
                 await Clipboard.setData(ClipboardData(
-                    text: 'https://www.themoviedb.org/movie/${book.id}'));
+                    text: '${ExternalConstants.ShareMoviePath}${book.id}'));
               },
             ),
           ),
@@ -198,7 +200,7 @@ class BookSuccessWidget extends StatelessWidget {
         ],
       ),
       Text(
-        book.title ?? 'N/A',
+        book.title ?? appL10n(context)!.not_applicable,
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
       ),

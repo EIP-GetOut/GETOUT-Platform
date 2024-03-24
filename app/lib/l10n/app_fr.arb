@@ -1,6 +1,6 @@
 {
   "@@locale": "fr",
-  "@@last_modified": "2024-03-18T17:10:00",
+  "@@last_modified": "2024-03-24T21:38:00",
   "@@author": "Perry Chouteau",
   "appName": "GetOut",
 
@@ -10,16 +10,28 @@
   "error_internet": "Vérifier votre connexion et recommencer",
   "error_server": "Surprenant ! Attendez un peu, ou contactez le support",
   "error_unauthorized": "Vérifier les informations et recommencer",
-  "error_expired": "Il semblerais que vos authorisation est expiré",
+  "error_expired": "Il semblerait que vos authorisation est expiré",
+  "error_loading": "Impossible de charger {object}",
+  "@error_loading": {
+    "placeholders": {
+      "object": {
+        "type": "String",
+        "example": "les livres"
+      }
+    }
+  },
+  "not_applicable": "non applicable",
+  "n_a": "N/A",
+  "no_description": "Aucune description",
 
   "@_CONNECTION": {},
 
   "@_LOGIN": {},
-  "signInWith": "Se connecter avec {Service}",
+  "signInWith": "Se connecter avec {service}",
   "@signInWith": {
     "placeholders": {
-      "Service": {
-        "type": "string",
+      "service": {
+        "type": "String",
         "example": "Google"
       }
     }
@@ -27,72 +39,86 @@
 
   "@_HOMEPAGE": {},
 
+  "homepage_title": "Bienvenue !",
+  "homepage_subtitle": "La productivité à portée de main",
+  "you_saved": "Vous avez gagné",
+
   "@_DASHBOARD": {},
 
-  "dashboard_title": "Bienvenue !",
-  "dashboard_subtitle": "La productivité à portée de main",
-  "dashboardTitle" : "Vos livres",
+  "dashboard": "Principale",
+  "movie_recommendations": "Les films que vous allez aimer",
+  "book_recommendations": "Les livres qui vous passionneront",
+  "any_recommendations": "Nos recommandation pour vous",
+
+  "@_MOVIES": {},
+
+  "movie" : "Film",
+  "yourMovies" : "Vos films",
+  "yourMoviesDescription" : "Toutes vos films sont ici.",
+  "likeMoviesTitle": "Vos coups de coeur",
+  "@viewMoviesTitle": "vos film vu",
+  "@wishlistMoviesTitle": "ce que vous comptez voir",
 
   "@_BOOKS": {},
 
+  "book" : "Livre",
   "yourBooks" : "Vos livres",
-  "yourMovies" : "Vos films",
   "yourBooksDescription" : "Toutes vos lectures sont ici.",
   "likeBooksTitle": "Vos coups de coeur",
-  "@viewBooksTitle": "vos livres fini",
+  "@viewBooksTitle": "vos livres lu",
   "@wishlistBooksTitle": "ce que vous comptez lire",
 
-  "errorLoad": "Impossible de charger {object}",
-  "@errorLoad": {
-    "placeholders": {
-      "object": {
-        "type": "string",
-        "example": "les livres"
-      }
-    }
-  },
+  "@_FIELD": {},
+
+  "mandatory_validator": "Ce champs ne peut pas etre vide",
 
   "@_PASSWORD": {},
 
-  "password": "MOT DE PASSE",
+  "password": "Mot de passe",
   "password_hint": "Entrer votre mot de passe",
-  "new_password": "NOUVEAU MOT DE PASSE",
+  "new_password": "Nouveau mot de passe",
   "new_password_hint": "Entrer votre nouveau mot de passe",
-  "confirm_password": "CONFIRMATION DE MOT DE PASSE",
+  "confirm_password": "Confirmation de mot de passe",
   "confirm_password_hint": "Confirmer votre mot de passe",
   "edit_password": "Changer de mot de passe",
+  "password_validator": "Le mot de passe dois contenir au minimum 8 caractères, dont une majuscule, une minuscule et un chiffre",
+  "password_matching": "'Les nouveaux mots de passe saisies ne correspondent pas.'",
 
   "@_EMAIL": {},
 
-  "email": "ADRESSE EMAIL",
+  "email": "Adresse email",
   "email_hint": "Entrer votre adresse email",
-  "new_email": "NOUVELLE ADRESSE EMAIL",
+  "new_email": "Nouvelle adresse email",
   "new_email_hint": "Entrer votre nouvelle adresse email",
-  "confirm_email": "CONFIRMATION D'ADRESSE EMAIL",
+  "confirm_email": "confirmation d'adresse email",
   "confirm_email_hint": "Confirmer votre adresse email",
   "edit_email": "Changer d'adressse email",
+  "email_validator": "Entrer un email valide",
+  "email_matching": "Les nouvelles adresses email saisies ne correspondent pas",
 
   "@_CODE": {},
 
-  "email": "CODE",
-  "email_hint": "Entrer votre code",
-  "@_mail_hint": "Entrer votre code reçu par mail",
+  "code": "Code",
+  "code_hint": "Entrer votre code",
+  "@_code_hint": "Entrer votre code reçu par mail",
 
   "@_SETTING": {},
 
-  "settings": "paramètres",
-  "account": "compte",
-  "delete_account": "supprimer son compte",
-  "disconect": "déconnection",
+  "settings": "Paramètres",
+  "account": "Compte",
+  "your_account": "Votre compte",
+  "disconnect": "Se déconnecter",
+  "delete_account": "Supprimer son compte",
 
-  "appearance": "apparence",
-  "select_language": "choisir la langue",
-  "select_theme": "mode sombre",
+  "appearance": "Apparence",
+  "select_language": "Choisir la langue",
+  "select_theme": "Mode sombre",
 
-  "preference": "preference",
-  "select_preferences": "choisir les preferences",
-  "notifications": "notifications",
+  "preference": "Preference",
+  "select_preferences": "Choisir les preferences",
+  "notifications": "Notifications",
+  "recommendations": "Recommandations",
 
-  "more": "autre",
-  "support": "support"
+  "more": "Autre",
+  "support": "Support"
 }
