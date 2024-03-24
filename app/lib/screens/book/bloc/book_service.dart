@@ -55,6 +55,7 @@ class BookService {
           voteAverage: response?.data['book']['vote_average'],
           pageCount: response?.data['book']['pageCount'] ?? 0,
           authorsPicture: parseAuthor(data['book']['authors_picture']),
+          bookLink: response?.data['book']['book_link'],
           liked: globals.session?['likedBooks'].contains(request.id),
           disliked: globals.session?['dislikedBooks'].contains(request.id),
           id: response?.data['book']['id'],

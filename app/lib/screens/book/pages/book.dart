@@ -83,7 +83,7 @@ class BookSuccessWidget extends StatelessWidget {
               color: Colors.white,
               onPressed: () async {
                 await Clipboard.setData(ClipboardData(
-                    text: 'https://www.themoviedb.org/movie/${book.id}'));
+                    text:  '${book.bookLink}'));
               },
             ),
           ),
