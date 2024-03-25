@@ -77,13 +77,45 @@ class BookSuccessWidget extends StatelessWidget {
                   ))),
           Positioned(
             top: 30,
-            right: 80,
+            right: 80, //todo head
+//            right: 140, //todo app
             child: IconButton(
               icon: const Icon(Icons.share),
               color: Colors.white,
               onPressed: () async {
                 await Clipboard.setData(ClipboardData(
-                    text:  '${book.bookLink}'));
+//<<<<<<< HEAD
+                    text: '${book.bookLink}')); //todo head
+//=======
+//                    text: 'https://www.themoviedb.org/movie/${book.id}')); //todo app
+ /*             },
+            ),
+          ),
+          Positioned(
+            top: 30,
+            right: 80,
+            child: IconButton(
+              icon: const Icon(Icons.remove_red_eye),
+              color: (book.read ?? false) ? Colors.red : Colors.white,
+              onPressed: () async {
+                if (book.read == true) {
+                  await context
+                      .read<BookBloc>()
+                      .bookRepository
+                      .service
+                      .removeReadBook(AddBookRequest(id: book.id ?? ''));
+                } else {
+                  await context
+                      .read<BookBloc>()
+                      .bookRepository
+                      .service
+                      .addReadBook(AddBookRequest(id: book.id ?? ''));
+                }
+                if (!context.mounted) return;
+                context
+                    .read<BookBloc>()
+                    .add(CreateInfoBookRequest(id: book.id ?? ''));*/
+//>>>>>>> origin/app
               },
             ),
           ),
@@ -141,6 +173,36 @@ class BookSuccessWidget extends StatelessWidget {
               },
             ),
           ),
+//<<<<<<< HEAD
+//=======
+/*          Positioned(
+            top: 130,
+            right: 20,
+            child: IconButton(
+              icon: const Icon(Icons.add_circle_outlined),
+              color: (book.wishlisted ?? false) ? Colors.red : Colors.white,
+              onPressed: () async {
+                if (book.wishlisted == true) {
+                  await context
+                      .read<BookBloc>()
+                      .bookRepository
+                      .service
+                      .removeWishlistedBook(AddBookRequest(id: book.id ?? ''));
+                } else {
+                  await context
+                      .read<BookBloc>()
+                      .bookRepository
+                      .service
+                      .addWishlistedBook(AddBookRequest(id: book.id ?? ''));
+                }
+                if (!context.mounted) return;
+                context
+                    .read<BookBloc>()
+                    .add(CreateInfoBookRequest(id: book.id ?? ''));
+              },
+            ),
+          )*/
+//>>>>>>> origin/app
         ],
       ),
       Text(

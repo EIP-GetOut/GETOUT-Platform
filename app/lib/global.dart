@@ -6,7 +6,13 @@ import 'package:dio/dio.dart';
 import 'package:getout/bloc/session/session_service.dart';
 import 'package:getout/screens/settings/pages/notifications/notifications.dart';
 
-String? globalEmail;
+/*Todo:
+   - create anything not global (bloc/class)
+   - handle real type
+   - add session.isNull method
+   */
+
+//String? globalEmail;
 
 NotificationsServices notificationsServices = NotificationsServices();
 

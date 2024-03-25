@@ -58,7 +58,7 @@ class HomeNavBarWidget extends StatelessWidget {
                         Colors.red, BlendMode.srcIn)),
                 label: 'Book'),
             //todo implement activities
-            BottomNavigationBarItem(
+            /*BottomNavigationBarItem(
                 icon: SvgPicture.asset('assets/images/icon/location_pin.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.black26, BlendMode.srcIn)),
@@ -66,7 +66,7 @@ class HomeNavBarWidget extends StatelessWidget {
                     'assets/images/icon/location_pin.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.red, BlendMode.srcIn)),
-                label: 'Activities')
+                label: 'Activities')*/
           ],
           elevation: 20,
           onTap: (int value) => {
