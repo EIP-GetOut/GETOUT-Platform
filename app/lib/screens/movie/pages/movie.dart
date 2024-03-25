@@ -74,19 +74,19 @@ class MovieSuccessWidget extends StatelessWidget {
                           .movieRepository
                           .service
                           .removeSeenMovie(
-                              AddMovieRequest(id: movie.id ?? -1));
+                              AddMovieRequest(id: movie.id!));
                     } else {
                       await context
                           .read<MovieBloc>()
                           .movieRepository
                           .service
                           .addSeenMovie(
-                              AddMovieRequest(id: movie.id ?? -1));
+                              AddMovieRequest(id: movie.id!));
                     }
                     if (!context.mounted) return;
                     context
                         .read<MovieBloc>()
-                        .add(CreateInfoMovieRequest(id: movie.id ?? -1));
+                        .add(CreateInfoMovieRequest(id: movie.id!));
                   },
                 ),
               ),
@@ -103,19 +103,19 @@ class MovieSuccessWidget extends StatelessWidget {
                           .movieRepository
                           .service
                           .removeLikedMovie(
-                              AddMovieRequest(id: movie.id ?? -1));
+                              AddMovieRequest(id: movie.id!));
                     } else {
                       await context
                           .read<MovieBloc>()
                           .movieRepository
                           .service
                           .addLikedMovie(
-                              AddMovieRequest(id: movie.id ?? -1));
+                              AddMovieRequest(id: movie.id!));
                     }
                     if (!context.mounted) return;
                     context
                         .read<MovieBloc>()
-                        .add(CreateInfoMovieRequest(id: movie.id ?? -1));
+                        .add(CreateInfoMovieRequest(id: movie.id!));
                   },
                 ),
               ),
@@ -132,19 +132,19 @@ class MovieSuccessWidget extends StatelessWidget {
                           .movieRepository
                           .service
                           .removeDislikedMovie(
-                              AddMovieRequest(id: movie.id ?? -1));
+                              AddMovieRequest(id: movie.id!));
                     } else {
                       await context
                           .read<MovieBloc>()
                           .movieRepository
                           .service
                           .addDislikedMovie(
-                              AddMovieRequest(id: movie.id ?? -1));
+                              AddMovieRequest(id: movie.id!));
                     }
                     if (!context.mounted) return;
                     context
                         .read<MovieBloc>()
-                        .add(CreateInfoMovieRequest(id: movie.id ?? -1));
+                        .add(CreateInfoMovieRequest(id: movie.id!));
                   },
                 ),
               ),
@@ -162,19 +162,19 @@ class MovieSuccessWidget extends StatelessWidget {
                           .movieRepository
                           .service
                           .removeWishlistedMovie(
-                              AddMovieRequest(id: movie.id ?? -1));
+                              AddMovieRequest(id: movie.id!));
                     } else {
                       await context
                           .read<MovieBloc>()
                           .movieRepository
                           .service
                           .addWishlistedMovie(
-                              AddMovieRequest(id: movie.id ?? -1));
+                              AddMovieRequest(id: movie.id!));
                     }
                     if (!context.mounted) return;
                     context
                         .read<MovieBloc>()
-                        .add(CreateInfoMovieRequest(id: movie.id ?? -1));
+                        .add(CreateInfoMovieRequest(id: movie.id!));
                   },
                 ),
               ),

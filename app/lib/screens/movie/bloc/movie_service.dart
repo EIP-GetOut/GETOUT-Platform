@@ -16,6 +16,31 @@ import 'package:getout/global.dart' as globals;
 class MovieService {
   final String userId = globals.session?['id'].toString() ?? '';
 
+  PersonList parseCast(final castData) {
+    PersonList castList = [];
+
+        for (final actor in castData) {
+          String? name = actor['name'];
+          String picture = actor['picture'] ??
+              'https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg';
+
+          if (name != null) {
+            castList.add(Person(name: name, picture: picture));
+          }
+        }
+
+    return castList;
+  }
+
+  Person parseDirector(final directorData) {
+
+    String name = directorData['name'];
+    String picture = directorData['picture'] ??
+        'https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg';
+
+    return Person(name: name, picture: picture);
+  }
+
   Future<InfoMovieResponse> getInfoMovie(CreateInfoMovieRequest request) async {
     InfoMovieResponse result =
         const InfoMovieResponse(statusCode: HttpStatus.APP_ERROR);
@@ -28,24 +53,6 @@ class MovieService {
         return InfoMovieResponse(statusCode: response?.statusCode ?? 500);
       }
       final dynamic data = response?.data;
-      List<Map<String, String?>> parseCast(dynamic castData) {
-        List<Map<String, String?>> castList = [];
-
-        if (castData is List) {
-          for (var actor in castData) {
-            if (actor is Map<String, dynamic>) {
-              String? name = actor['name'];
-              String? picture = actor['picture'];
-
-              if (name != null && picture != null) {
-                castList.add({'name': name, 'picture': picture});
-              }
-            }
-          }
-        }
-
-        return castList;
-      }
 
       result = InfoMovieResponse(
           title: data['movie']['title'],
@@ -59,6 +66,7 @@ class MovieService {
               ? 'N/A'
               : data['movie']['duration'],
           cast: parseCast(data['movie']['cast']),
+          director: parseDirector(data['movie']['director']),
           statusCode: response?.statusCode ?? 500,
           liked: globals.session?['likedMovies'].contains(request.id),
           disliked: globals.session?['dislikedMovies'].contains(request.id),
