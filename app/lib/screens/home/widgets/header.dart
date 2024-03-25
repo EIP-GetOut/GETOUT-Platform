@@ -14,10 +14,6 @@ import 'package:getout/global.dart' as globals;
 
 import 'package:getout/tools/duration_format.dart';
 
-import 'package:getout/global.dart' as globals;
-
-import 'package:getout/tools/duration_format.dart';
-
 class HomeAppBarWidget extends AppBar {
   HomeAppBarWidget({super.key, required BuildContext context})
       : super(
