@@ -76,21 +76,15 @@ class BookSuccessWidget extends StatelessWidget {
                     },
                   ))),
           Positioned(
-            top: 30,
-            right: 80, //todo head
-//            right: 140, //todo app
-            child: IconButton(
-              icon: const Icon(Icons.share),
-              color: Colors.white,
-              onPressed: () async {
-                await Clipboard.setData(ClipboardData(
-//<<<<<<< HEAD
-                    text: '${book.bookLink}')); //todo head
-//=======
-//                    text: 'https://www.themoviedb.org/movie/${book.id}')); //todo app
- /*             },
-            ),
-          ),
+              top: 30,
+           right: 140,
+              child: IconButton(
+                  icon: const Icon(Icons.share),
+                  color: Colors.white,
+                  onPressed: () async {
+                    await Clipboard.setData(
+                        ClipboardData(text: '${book.bookLink}'));
+                  })), //todo head
           Positioned(
             top: 30,
             right: 80,
@@ -114,8 +108,7 @@ class BookSuccessWidget extends StatelessWidget {
                 if (!context.mounted) return;
                 context
                     .read<BookBloc>()
-                    .add(CreateInfoBookRequest(id: book.id ?? ''));*/
-//>>>>>>> origin/app
+                    .add(CreateInfoBookRequest(id: book.id ?? ''));
               },
             ),
           ),
@@ -173,9 +166,7 @@ class BookSuccessWidget extends StatelessWidget {
               },
             ),
           ),
-//<<<<<<< HEAD
-//=======
-/*          Positioned(
+          Positioned(
             top: 130,
             right: 20,
             child: IconButton(
@@ -201,8 +192,7 @@ class BookSuccessWidget extends StatelessWidget {
                     .add(CreateInfoBookRequest(id: book.id ?? ''));
               },
             ),
-          )*/
-//>>>>>>> origin/app
+          ),
         ],
       ),
       Text(

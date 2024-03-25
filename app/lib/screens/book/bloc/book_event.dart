@@ -30,14 +30,10 @@ class InfoBookResponse extends BookEvent {
       this.authorsPicture,
       this.liked,
       this.disliked,
-//<<<<<<< HEAD
-//      this.id,
       this.bookLink,
-//=======
       this.wishlisted,
       this.read,
       this.id,
-//>>>>>>> origin/app
       required this.statusCode});
 
   final PersonList? authorsPicture;
@@ -51,14 +47,10 @@ class InfoBookResponse extends BookEvent {
   final int? pageCount;
   final bool? liked;
   final bool? disliked;
-//<<<<<<< HEAD
-//  final String? id;
   final String? bookLink;
-//=======
   final bool? wishlisted;
   final bool? read;
   final String? id;
-//>>>>>>> origin/app
   final int statusCode;
 }
 

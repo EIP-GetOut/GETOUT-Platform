@@ -58,8 +58,8 @@ class BookService {
           authorsPicture: parseAuthor(data['book']['authors_picture']),
           liked: globals.session?['likedBooks'].contains(request.id),
           disliked: globals.session?['dislikedBooks'].contains(request.id),
-          wishlisted: globals.session?['readingList'].contains(request.id), //todo added from app
-          read: globals.session?['readBooks'].contains(request.id), //todo added from app
+          wishlisted: globals.session?['readingList'].contains(request.id),
+          read: globals.session?['readBooks'].contains(request.id),
           id: response?.data['book']['id'],
           statusCode: response?.statusCode ?? 500);
     } catch (error) {
