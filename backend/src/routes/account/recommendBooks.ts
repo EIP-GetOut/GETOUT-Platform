@@ -17,6 +17,8 @@ import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { getBook } from '@models/book'
 
+import { addRecommendedBooksToHistory } from '../../models/account/recommandationsHistory'
+
 const router = Router()
 
 router.get('/account/:accountId/recommend-books', logApiRequest, (req: Request, res: Response) => {
@@ -43,14 +45,13 @@ router.get('/account/:accountId/recommend-books', logApiRequest, (req: Request, 
       promisesArray.push(getBook(recommandation.id))
     })
 
-    await Promise.all(promisesArray).then((resolvedPromises) => {
-      resolvedPromises.forEach((resolvedPromise: any, index) => {
-        resolvedPromise.score = recommandations[index].score
-      })
-      logger.info(`Successfully retreived movie recommandations: ${JSON.stringify(recommandations, null, 2)}`)
-      return res.status(StatusCodes.OK).json(resolvedPromises)
+    await addRecommendedBooksToHistory(recommandations, req.session.account!.id).then(async (): Promise<any []> => {
+      return await Promise.all(promisesArray)
     }).catch(() => {
       throw new RecommandationsDetailsError()
+    }).then((resolvedPromises) => {
+      logger.info(`Successfully retreived movie recommandations: ${JSON.stringify(resolvedPromises, null, 2)}`)
+      return res.status(StatusCodes.OK).json(recommandations)
     })
   }).catch(handleErrorOnRoute(res))
 })

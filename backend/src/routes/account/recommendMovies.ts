@@ -13,6 +13,7 @@ import logger, { logApiRequest } from '@services/middlewares/logging'
 import { NotLoggedInError, PreferencesDoesNotExistError, RecommandationsDetailsError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
+import { addRecommendedMoviesToHistory } from '@models/account/recommandationsHistory'
 import { getMovie } from '@models/movie'
 
 const router = Router()
@@ -41,14 +42,13 @@ router.get('/account/:accountId/recommend-movies', logApiRequest, (req: Request,
       promisesArray.push(getMovie(recommandation.id))
     })
 
-    await Promise.all(promisesArray).then((resolvedPromises) => {
-      resolvedPromises.forEach((resolvedPromise: any, index) => {
-        resolvedPromise.score = recommandations[index].score
-      })
-      logger.info(`Successfully retreived movie recommandations: ${JSON.stringify(recommandations, null, 2)}`)
-      return res.status(StatusCodes.OK).json(resolvedPromises)
+    await addRecommendedMoviesToHistory(recommandations, req.session.account!.id).then(async (): Promise<any []> => {
+      return await Promise.all(promisesArray)
     }).catch(() => {
       throw new RecommandationsDetailsError()
+    }).then((resolvedPromises) => {
+      logger.info(`Successfully retreived movie recommandations: ${JSON.stringify(recommandations, null, 2)}`)
+      return res.status(StatusCodes.OK).json(resolvedPromises)
     })
   }).catch(handleErrorOnRoute(res))
 })

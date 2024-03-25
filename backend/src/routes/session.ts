@@ -32,6 +32,10 @@ router.get('/session', validate, logApiRequest, (req: Request, res: Response) =>
   if (req.session.account?.id != null) {
     calculateSpentMinutesReadingAndWatching(req.session.account).then((spentMinutes: number) => {
       req.session.account!.spentMinutesReadingAndWatching = spentMinutes
+      const week = 3600000 * 24 * 7
+
+      req.session.cookie.expires = new Date(Date.now() + week)
+      req.session.cookie.maxAge = week
       res.status(StatusCodes.OK).json(req.session)
     }).catch(handleErrorOnRoute(res))
   } else {

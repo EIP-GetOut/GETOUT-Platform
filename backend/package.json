@@ -30,6 +30,7 @@
     "npm": ">=7.*"
   },
   "dependencies": {
+    "@googleapis/books": "^2.0.0",
     "@types/bcrypt": "^5.0.0",
     "@types/python-shell": "^1.0.3",
     "@types/supertest": "^2.0.15",

@@ -21,6 +21,8 @@ import preferences from '@routes/account/preferences'
 import readBooks from '@routes/account/readBooks'
 import readingList from '@routes/account/readingList'
 import recommendBooks from '@routes/account/recommendBooks'
+import recommendedBooksHistory from '@routes/account/recommendedBooksHistory'
+import recommendedMoviesHistory from '@routes/account/recommendedMoviesHistory'
 import recommendMovies from '@routes/account/recommendMovies'
 import isAllowed from '@routes/account/resetPassword/isAllowed/isAllowed'
 import resetPassword from '@routes/account/resetPassword/resetPassword'
@@ -43,6 +45,9 @@ const useRoutes = (app: Application): Application => (
 
     .use(recommendBooks)
     .use(recommendMovies)
+
+    .use(recommendedBooksHistory)
+    .use(recommendedMoviesHistory)
 
     .use(watchlist)
     .use(readingList)

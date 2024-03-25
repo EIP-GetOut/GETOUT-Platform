@@ -5,6 +5,7 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
+import { books, type books_v1 } from '@googleapis/books'
 import { type UUID } from 'crypto'
 import { type Session, type SessionData } from 'express-session'
 import { StatusCodes } from 'http-status-codes'
@@ -21,6 +22,8 @@ import { findEntity } from './getObjects'
 
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 const fetch = async (...args: Parameters<typeof import('node-fetch')['default']>): Promise<Response> => await import('node-fetch').then(async ({ default: fetch }) => await fetch(...args))
+
+const booksApi = books('v1')
 
 const key = 'AIzaSyDDxf1nRkG6eMcufxYp2LHIWgA-2MEMlK8'
 
@@ -49,35 +52,40 @@ async function getPictures (authors: any): Promise<any> {
   const authorInfoPromises = authors.map(fetchAuthorInfo)
   const authorInfoArray = await Promise.all(authorInfoPromises)
 
-  logger.info(JSON.stringify(authorInfoArray))
   return authorInfoArray
 }
 
-async function getBookDetails (id: string): Promise<Response> {
-  return await (fetch(`https://www.googleapis.com/books/v1/volumes/${id}?key=${key}`)).then(async (res) => {
-    if (!res.ok) {
+async function getBookDetails (id: string): Promise<books_v1.Schema$Volume> {
+  return await booksApi.volumes.get({ volumeId: id, key }).then((res) => {
+    if (res.status !== StatusCodes.OK || res?.data?.volumeInfo == null || res.data.saleInfo == null) {
       throw new ApiError(`Error whiled obtaining book ${id}'s details (${res.status}: ${res.statusText}).`)
     }
-    return await res.json()
+    return res.data
   })
 }
 
 async function getBook (id: string): Promise<any> {
-  return await getBookDetails(id).then(async (bookObtained: any) => {
+  return await getBookDetails(id).then(async (book: books_v1.Schema$Volume) => {
+    const volumeInfo = book.volumeInfo!
+    const saleInfo = book.saleInfo!
+
     return ({
       id,
-      title: bookObtained.volumeInfo.title,
-      overview: bookObtained.volumeInfo.description,
-      poster_path: bookObtained.volumeInfo?.imageLinks?.thumbnail ?? null,
-      backdrop_path: bookObtained.volumeInfo?.imageLinks?.extraLarge ?? null,
-      pageCount: bookObtained.volumeInfo.pageCount,
-      authors: bookObtained.volumeInfo.authors,
-      authors_picture: await getPictures(bookObtained.volumeInfo.authors),
-      category: bookObtained.volumeInfo?.categories ?? null,
-      vote_average: bookObtained.volumeInfo?.averageRating ?? null,
-      release_date: bookObtained.volumeInfo?.publishedDate ?? null,
-      book_link: bookObtained.volumeInfo?.infoLink ?? bookObtained.saleInfo?.buyLink ?? null
+      title: volumeInfo.title,
+      overview: volumeInfo.description,
+      poster_path: volumeInfo.imageLinks?.thumbnail ?? null,
+      backdrop_path: volumeInfo.imageLinks?.extraLarge ?? null,
+      pageCount: volumeInfo.pageCount,
+      authors: volumeInfo.authors,
+      authors_picture: await getPictures(volumeInfo.authors),
+      category: volumeInfo?.categories ?? null,
+      vote_average: volumeInfo.averageRating ?? null,
+      release_date: volumeInfo.publishedDate ?? null,
+      book_link: volumeInfo.infoLink ?? saleInfo?.buyLink ?? null
     })
+  }).catch((error: any) => {
+    console.log('FAAAAAAAAAAAAILING:', error)
+    throw error
   })
 }
 

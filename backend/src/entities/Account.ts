@@ -54,6 +54,9 @@ export class Account {
   @Column('jsonb', { nullable: true, default: null })
     preferences?: Preferences
 
+  @Column('jsonb', { array: true, default: [] })
+    readBooks: string [] = []
+
   @Column('integer', { array: true, default: [] })
     watchlist: number [] = []
 
@@ -76,7 +79,10 @@ export class Account {
     seenMovies: number [] = []
 
   @Column('text', { array: true, default: [] })
-    readBooks: string [] = []
+    recommendedBooksHistory: string [] = []
+
+  @Column('integer', { array: true, default: [] })
+    recommendedMoviesHistory: number [] = []
 
   @ManyToOne(() => Role, role => role.owners)
     role!: Role
