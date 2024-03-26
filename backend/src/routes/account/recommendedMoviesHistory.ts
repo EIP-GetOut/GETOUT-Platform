@@ -15,6 +15,7 @@ import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/c
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { findEntity } from '@models/getObjects'
+import { getMovie } from '@models/movie'
 
 import { Account } from '@entities/Account'
 
@@ -56,12 +57,21 @@ router.get('/account/:accountId/recommendedMoviesHistory', rulesGet, validate, l
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  findEntity<Account>(Account, { id: req.params.accountId }).then((account: Account | null) => {
+  findEntity<Account>(Account, { id: req.params.accountId }).then(async (account: Account | null) => {
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
     req.session.account!.recommendedMoviesHistory = account.recommendedMoviesHistory
-    return res.status(StatusCodes.OK).json(account.recommendedMoviesHistory)
+
+    const promisesArray: Array<Promise<any>> = []
+
+    account.recommendedMoviesHistory.forEach((movieId: number) => {
+      promisesArray.push(getMovie(movieId))
+    })
+
+    return await Promise.all(promisesArray)
+  }).then((resolvedPromises) => {
+    return res.status(StatusCodes.OK).json(resolvedPromises)
   }).catch(handleErrorOnRoute(res))
 })
 

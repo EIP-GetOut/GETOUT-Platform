@@ -14,6 +14,7 @@ import validate from '@services/middlewares/validator'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
+import { getBook } from '@models/book'
 import { findEntity } from '@models/getObjects'
 
 import { Account } from '@entities/Account'
@@ -56,12 +57,21 @@ router.get('/account/:accountId/recommendedBooksHistory', rulesGet, validate, lo
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  findEntity<Account>(Account, { id: req.params.accountId }).then((account: Account | null) => {
+  findEntity<Account>(Account, { id: req.params.accountId }).then(async (account: Account | null) => {
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
     req.session.account!.recommendedBooksHistory = account.recommendedBooksHistory
-    return res.status(StatusCodes.OK).json(account.recommendedBooksHistory)
+
+    const promisesArray: Array<Promise<any>> = []
+
+    account.recommendedBooksHistory.forEach((bookId: string) => {
+      promisesArray.push(getBook(bookId))
+    })
+
+    return await Promise.all(promisesArray)
+  }).then((resolvedPromises) => {
+    return res.status(StatusCodes.OK).json(resolvedPromises)
   }).catch(handleErrorOnRoute(res))
 })
 

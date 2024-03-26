@@ -11,7 +11,6 @@ import { type Session, type SessionData } from 'express-session'
 import { StatusCodes } from 'http-status-codes'
 import { type Response } from 'node-fetch'
 
-import logger from '@services/middlewares/logging'
 import { AccountDoesNotExistError, ApiError, type AppError, BookNotInListError, DbError } from '@services/utils/customErrors'
 
 import { Account } from '@entities/Account'
@@ -84,7 +83,6 @@ async function getBook (id: string): Promise<any> {
       book_link: volumeInfo.infoLink ?? saleInfo?.buyLink ?? null
     })
   }).catch((error: any) => {
-    console.log('FAAAAAAAAAAAAILING:', error)
     throw error
   })
 }
