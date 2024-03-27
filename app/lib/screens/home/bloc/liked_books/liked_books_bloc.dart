@@ -9,16 +9,16 @@ import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'package:getout/screens/home/bloc/books/books_event.dart';
-import 'package:getout/screens/home/bloc/home_repository.dart';
+import 'package:getout/screens/home/services/service.dart';
 import 'package:getout/tools/status.dart';
 
 part 'liked_books_state.dart';
 
 class LikedBooksHydratedBloc extends HydratedBloc<BooksEvent, LikedBooksState> {
-  final HomeRepository homeRepository;
+  final HomeService homeService;
 
   LikedBooksHydratedBloc({
-    required this.homeRepository,
+    required this.homeService,
   }) : super(const LikedBooksState()) {
     on<GenerateBooksRequest>(_onLikedBooksRequest);
   }
@@ -27,7 +27,7 @@ class LikedBooksHydratedBloc extends HydratedBloc<BooksEvent, LikedBooksState> {
       GenerateBooksRequest event, Emitter<LikedBooksState> emit) async {
     emit(state.copyWith(status: Status.loading));
     try {
-      final likedBooks = await homeRepository.getLikedBooks(event);
+      final likedBooks = await homeService.getLikedBooks(event);
       emit(
         state.copyWith(
           status: Status.success,

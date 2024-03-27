@@ -12,6 +12,7 @@ import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
 
 import 'package:getout/global.dart' as globals;
+import 'package:getout/constants/http_status.dart';
 
 class MovieService {
   final String userId = globals.session?['id'].toString() ?? '';
@@ -49,7 +50,7 @@ class MovieService {
         '${ApiConstants.rootApiPath}${ApiConstants.getInfoMoviePath}/${request.id}',
         options: Options(headers: {'Content-Type': 'application/json'}));
     try {
-      if (response?.statusCode != InfoMovieResponse.success) {
+      if (response?.statusCode != HttpStatus.OK) {
         return InfoMovieResponse(statusCode: response?.statusCode ?? 500);
       }
       final dynamic data = response?.data;
@@ -237,7 +238,7 @@ class MovieService {
           options: Options(
             headers: {'Content-Type': 'application/json'},
           ));
-      if (response?.statusCode != AddMovieResponse.success) {
+      if (response?.statusCode != HttpStatus.OK) {
         return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
 
@@ -292,7 +293,7 @@ class MovieService {
           options: Options(
             headers: {'Content-Type': 'application/json'},
           ));
-      if (response?.statusCode != AddMovieResponse.success) {
+      if (response?.statusCode != HttpStatus.OK) {
         return AddMovieResponse(statusCode: response?.statusCode ?? 500);
       }
 
