@@ -22,7 +22,25 @@ class CreateInfoMovieRequest extends MovieEvent {
 }
 
 class InfoMovieResponse extends MovieEvent {
-  final List<Map<String, String?>>? cast;
+  const InfoMovieResponse(
+      {this.title,
+      this.overview,
+      this.posterPath,
+      this.backdropPath,
+      this.releaseDate,
+      this.voteAverage,
+      this.duration,
+      this.cast,
+      this.director,
+      this.liked,
+      this.disliked,
+      this.wishlisted,
+      this.seen,
+      this.id,
+      required this.statusCode});
+
+  final PersonList? cast;
+  final Person? director;
   static const int success = HttpStatus.OK;
   final String? title;
   final String? overview;
@@ -37,22 +55,6 @@ class InfoMovieResponse extends MovieEvent {
   final bool? seen;
   final int statusCode;
   final int? id;
-
-  const InfoMovieResponse(
-      {this.title,
-      this.overview,
-      this.posterPath,
-      this.backdropPath,
-      this.releaseDate,
-      this.voteAverage,
-      this.duration,
-      this.cast,
-      this.liked,
-      this.disliked,
-      this.wishlisted,
-      this.seen,
-      this.id,
-      required this.statusCode});
 }
 
 class AddMovieRequest extends MovieEvent {
@@ -73,3 +75,15 @@ class AddMovieResponse extends MovieEvent {
 
 }
 
+class Person extends MovieEvent {
+  const Person (
+    {required this.name,
+    required this.picture}
+  );
+
+  final String name;
+  final String picture;
+}
+
+
+typedef PersonList = List<Person>;

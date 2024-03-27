@@ -73,18 +73,18 @@ class MovieSuccessWidget extends StatelessWidget {
                           .read<MovieBloc>()
                           .movieService
                           .removeSeenMovie(
-                              AddMovieRequest(id: movie.id ?? -1));
+                              AddMovieRequest(id: movie.id!));
                     } else {
                       await context
                           .read<MovieBloc>()
                           .movieService
                           .addSeenMovie(
-                              AddMovieRequest(id: movie.id ?? -1));
+                              AddMovieRequest(id: movie.id!));
                     }
                     if (!context.mounted) return;
                     context
                         .read<MovieBloc>()
-                        .add(CreateInfoMovieRequest(id: movie.id ?? -1));
+                        .add(CreateInfoMovieRequest(id: movie.id!));
                   },
                 ),
               ),
@@ -100,18 +100,18 @@ class MovieSuccessWidget extends StatelessWidget {
                           .read<MovieBloc>()
                           .movieService
                           .removeLikedMovie(
-                              AddMovieRequest(id: movie.id ?? -1));
+                              AddMovieRequest(id: movie.id!));
                     } else {
                       await context
                           .read<MovieBloc>()
                           .movieService
                           .addLikedMovie(
-                              AddMovieRequest(id: movie.id ?? -1));
+                              AddMovieRequest(id: movie.id!));
                     }
                     if (!context.mounted) return;
                     context
                         .read<MovieBloc>()
-                        .add(CreateInfoMovieRequest(id: movie.id ?? -1));
+                        .add(CreateInfoMovieRequest(id: movie.id!));
                   },
                 ),
               ),
@@ -127,18 +127,18 @@ class MovieSuccessWidget extends StatelessWidget {
                           .read<MovieBloc>()
                           .movieService
                           .removeDislikedMovie(
-                              AddMovieRequest(id: movie.id ?? -1));
+                              AddMovieRequest(id: movie.id!));
                     } else {
                       await context
                           .read<MovieBloc>()
                           .movieService
                           .addDislikedMovie(
-                              AddMovieRequest(id: movie.id ?? -1));
+                              AddMovieRequest(id: movie.id!));
                     }
                     if (!context.mounted) return;
                     context
                         .read<MovieBloc>()
-                        .add(CreateInfoMovieRequest(id: movie.id ?? -1));
+                        .add(CreateInfoMovieRequest(id: movie.id!));
                   },
                 ),
               ),
@@ -155,18 +155,18 @@ class MovieSuccessWidget extends StatelessWidget {
                           .read<MovieBloc>()
                           .movieService
                           .removeWishlistedMovie(
-                              AddMovieRequest(id: movie.id ?? -1));
+                              AddMovieRequest(id: movie.id!));
                     } else {
                       await context
                           .read<MovieBloc>()
                           .movieService
                           .addWishlistedMovie(
-                              AddMovieRequest(id: movie.id ?? -1));
+                              AddMovieRequest(id: movie.id!));
                     }
                     if (!context.mounted) return;
                     context
                         .read<MovieBloc>()
-                        .add(CreateInfoMovieRequest(id: movie.id ?? -1));
+                        .add(CreateInfoMovieRequest(id: movie.id!));
                   },
                 ),
               ),
