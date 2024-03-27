@@ -12,7 +12,6 @@ import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
 
 import 'package:getout/global.dart' as globals;
-import 'package:getout/constants/http_status.dart';
 
 class MovieService {
   final String userId = globals.session?['id'].toString() ?? '';
