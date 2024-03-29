@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/form/widgets/four_point.dart';
 import 'package:getout/screens/form/bloc/form_bloc.dart';
-import 'package:getout/tools/screen_size_factor.dart';
+import 'package:getout/tools/tools.dart';
 
 class FilmGenres extends StatelessWidget {
   const FilmGenres({super.key});
@@ -25,9 +25,9 @@ class FilmGenres extends StatelessWidget {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: heightFactor(context, 0.10)),
-          const PageIndicator(currentPage: 3, pageCount: 5),
-          SizedBox(height: heightFactor(context, 0.05)),
+          SizedBox(height: Tools.heightFactor(context, 0.10)),
+          const PageIndicator(currentPage: 2, pageCount: 3),
+          SizedBox(height: Tools.heightFactor(context, 0.05)),
           Center(
             child: Text(
               'GENRES CINÉMATOGRAPHIQUES :',
@@ -35,7 +35,7 @@ class FilmGenres extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
-          SizedBox(height: heightFactor(context, 0.03)),
+          SizedBox(height: Tools.heightFactor(context, 0.03)),
           Expanded(
             child: ListView(
                 padding: const EdgeInsets.all(16.0),
@@ -66,7 +66,7 @@ class FilmGenres extends StatelessWidget {
                             top: BorderSide(color: Colors.black, width: 2.0),
                           ),
                         ),
-                        SizedBox(height: heightFactor(context, 0.012)),
+                        SizedBox(height: Tools.heightFactor(context, 0.012)),
                       ],
                     ),
                 ]),

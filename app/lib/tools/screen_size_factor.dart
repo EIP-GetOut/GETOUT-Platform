@@ -5,9 +5,9 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-import 'package:flutter/material.dart';
+part of 'tools.dart';
 
-double widthFactor(final BuildContext context, final double factor)
+double _widthFactor(final BuildContext context, final double factor)
 {
   if (factor >= 1 || factor <= 0) {
     return MediaQuery.of(context).size.width;
@@ -15,7 +15,7 @@ double widthFactor(final BuildContext context, final double factor)
   return MediaQuery.of(context).size.width * factor;
 }
 
-double heightFactor(final  BuildContext context, final double factor)
+double _heightFactor(final BuildContext context, final double factor)
 {
   if (factor >= 1 || factor <= 0) {
     return MediaQuery.of(context).size.height;

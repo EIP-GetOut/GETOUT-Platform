@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:getout/tools/screen_size_factor.dart';
+import 'package:getout/tools/tools.dart';
 
 /// TODO responsive
 class LoadingPage extends StatelessWidget {
@@ -18,20 +18,20 @@ class LoadingPage extends StatelessWidget {
   {
     return Column(
       children: [
-        SizedBox(height: heightFactor(context, 0.3)),
+        SizedBox(height: Tools.heightFactor(context, 0.3)),
         Row(children: [
-          SizedBox(width: widthFactor(context,0.1)),
+          SizedBox(width: Tools.widthFactor(context,0.1)),
           SizedBox(
-              height: heightFactor(context, 0.13),
-              width: widthFactor(context, 0.27),
+              height: Tools.heightFactor(context, 0.13),
+              width: Tools.widthFactor(context, 0.27),
               child: Image.asset('assets/images/logo/getout.png')),
-          SizedBox(width: widthFactor(context, 0.04)),
+          SizedBox(width: Tools.widthFactor(context, 0.04)),
           SizedBox(
-              height: heightFactor(context, 0.1),
-              width: widthFactor(context, 0.45),
+              height: Tools.heightFactor(context, 0.1),
+              width: Tools.widthFactor(context, 0.45),
               child: Image.asset('assets/images/other/text_getout.png'))
         ]),
-        SizedBox(height: heightFactor(context, 0.08)),
+        SizedBox(height: Tools.heightFactor(context, 0.08)),
         const SizedBox(
           height: 85,
           width: 85,

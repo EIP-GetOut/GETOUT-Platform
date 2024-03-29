@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/form/bloc/form_bloc.dart';
-import 'package:getout/tools/screen_size_factor.dart';
+import 'package:getout/tools/tools.dart';
 
 class EndForm extends StatelessWidget {
   const EndForm({super.key});
@@ -25,16 +25,16 @@ class EndForm extends StatelessWidget {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget> [
-            SizedBox(height: heightFactor(context, 0.17)),
+            SizedBox(height: Tools.heightFactor(context, 0.17)),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget> [
                 Image.asset('assets/images/icon/phone_check.png', scale: 2),
-                SizedBox(width: widthFactor(context, 0.06)),
+                SizedBox(width: Tools.widthFactor(context, 0.06)),
                 Image.asset('assets/images/draw/welcome_image.png', scale: 3.3),
               ],
             ),
-            SizedBox(height: heightFactor(context, 0.035)),
+            SizedBox(height: Tools.heightFactor(context, 0.035)),
             const Center(
               child: Text(
                 'VOS RÉPONSES ONT BIEN ÉTÉ ENREGISTRÉES !',
