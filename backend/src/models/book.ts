@@ -36,7 +36,7 @@ async function fetchAuthorInfo (author: any): Promise<any> {
 
   try {
     const response = await fetch(apiUrl)
-    const data = await response.json()
+    const data: any = await response.json()
 
     const imageLink = data.itemListElement[0]?.result?.image?.contentUrl
 

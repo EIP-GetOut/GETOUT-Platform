@@ -24,7 +24,7 @@ export class Account {
   @PrimaryGeneratedColumn('uuid')
     id!: UUID
 
-  @Column({ length: 32 })
+  @Column({ length: 64 })
     email!: string
 
   @Column({ length: 32, nullable: true })
@@ -33,14 +33,11 @@ export class Account {
   @Column({ length: 64, nullable: true })
     password!: string
 
-  @Column('uuid', { nullable: true, default: null })
-    passwordResetToken: string | null = null
+  @Column('integer', { nullable: true, default: null })
+    passwordResetCode: number | null = null
 
   @Column('timestamp', { nullable: true, default: null })
     passwordResetExpiration: Date | null = null
-
-  @Column('integer', { nullable: true, default: null })
-    passwordResetPassword: number | null = null
 
   @Column({ length: 32, nullable: true })
     firstName?: string

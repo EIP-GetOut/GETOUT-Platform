@@ -31,7 +31,8 @@ router.get('/account/:accountId/recommend-movies', logApiRequest, (req: Request,
     pythonPath: '/usr/bin/python3',
     pythonOptions: [],
     scriptPath: 'src/services/recommandations/',
-    args: [JSON.stringify(req.session.account)]
+    args: [JSON.stringify(req.session.account)],
+    env: process.env
   }
 
   PythonShell.run('movies.py', options).then(async ([output]: any) => {

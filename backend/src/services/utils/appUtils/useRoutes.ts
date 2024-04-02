@@ -32,17 +32,12 @@ import signup from '@routes/account/signup'
 import watchlist from '@routes/account/watchlist'
 import basicEndpoints from '@routes/basicEndpoints'
 import book from '@routes/book'
-import generateBooks from '@routes/generateBooks'
-import generateMovies from '@routes/generateMovies'
 import movie from '@routes/movie'
 import permissions from '@routes/permissions'
 import session from '@routes/session'
 
 const useRoutes = (app: Application): Application => (
   app
-    .use(generateMovies)
-    .use(generateBooks)
-
     .use(recommendBooks)
     .use(recommendMovies)
 

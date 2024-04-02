@@ -7,9 +7,9 @@
 
 import { type Request, type Response, Router } from 'express'
 import { query } from 'express-validator'
-import { StatusCodes, getReasonPhrase } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 
-import logger, { logApiRequest } from '@middlewares/logging'
+import { logApiRequest } from '@middlewares/logging'
 import validate from '@middlewares/validator'
 
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
@@ -19,18 +19,12 @@ import { accountIsAllowedToResetPassword } from '@models/account/password'
 const router = Router()
 
 const rulesGet = [
-  query('token').isString(),
-  query('password').isNumeric()
+  query('code').isNumeric()
 ]
 
 router.get('/account/reset-password/is-allowed', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
-  accountIsAllowedToResetPassword(req.query.token as string, parseInt(req.query.password as string)).then((isAllowed: boolean) => {
-    if (!isAllowed) {
-      logger.error('Account is not allowed to reset password.')
-      res.status(StatusCodes.FORBIDDEN).send(getReasonPhrase(StatusCodes.FORBIDDEN))
-      return
-    }
-    return res.status(StatusCodes.OK).send(true)
+  accountIsAllowedToResetPassword(parseInt(req.query.code as string)).then((isAllowed: boolean) => {
+    return res.status(StatusCodes.OK).send(isAllowed)
   }).catch(handleErrorOnRoute(res))
 })
 

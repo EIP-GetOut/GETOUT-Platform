@@ -34,7 +34,8 @@ router.get('/account/:accountId/recommend-books', logApiRequest, (req: Request, 
     pythonPath: '/usr/bin/python3',
     pythonOptions: [],
     scriptPath: 'src/services/recommandations/',
-    args: [JSON.stringify(req.session.account)]
+    args: [JSON.stringify(req.session.account)],
+    env: process.env
   }
 
   PythonShell.run('books.py', options).then(async ([output]: any) => {

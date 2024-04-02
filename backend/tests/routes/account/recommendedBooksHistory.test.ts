@@ -11,12 +11,14 @@ import { type UUID } from 'node:crypto'
 import { describe } from 'node:test'
 import request from 'supertest'
 
+import { type Preferences } from '@models/account/preferences.intefaces'
+
 import { app } from '@config/jestSetup'
 
 import { extractConnectSidCookie } from '../../setupUtils'
 
 const bodySignup = {
-  email: 'likedMovies@test.com',
+  email: 'recommendedBooksHistory@test.com',
   firstName: 'Super',
   lastName: 'Tester',
   bornDate: '07/06/2001',
@@ -24,11 +26,17 @@ const bodySignup = {
 }
 
 const loginBody = {
-  email: 'likedMovies@test.com',
+  email: 'recommendedBooksHistory@test.com',
   password: 'toto'
 }
 
-void describe('Liked movies list routes', async () => {
+const preferences: Preferences = {
+  moviesGenres: [115, 59],
+  booksGenres: ['Aventure'],
+  platforms: ['PrimeVideo']
+}
+
+void describe('Reading List Route', async () => {
   let accountId: UUID
   let cookie: string
 
@@ -48,31 +56,15 @@ void describe('Liked movies list routes', async () => {
     })
   })
 
-  it('should respond with 201 CREATED and the liked movies for POST /account/:accountId/likedMovies', async () => {
-    await request(app).post(`/account/${accountId}/likedMovies`).send({ movieId: 41 }).set('Cookie', cookie)
-      .then((response) => {
-        expect(response.status).toBe(StatusCodes.CREATED)
-        expect(response.body).toContain(41)
-      })
-  })
-
-  it('should respond with 200 OK and the liked movies for GET /account/:accountId/likedMovies', async () => {
-    await request(app).post(`/account/${accountId}/likedMovies`).send({ movieId: 42 }).set('Cookie', cookie)
+  it('should respond with 200 OK and the recommended books history for GET /account/:accountId/recommendedBooksHistory', async () => {
+    await request(app).post('/account/preferences').send(preferences).set('Cookie', cookie)
       .then(async () => {
-        return await request(app).get(`/account/${accountId}/likedMovies`).set('Cookie', cookie)
+        return await request(app).get(`/account/${accountId}/recommend-books`).set('Cookie', cookie)
+      }).then(async () => {
+        return await request(app).get(`/account/${accountId}/recommendedBooksHistory`).set('Cookie', cookie)
       }).then((response) => {
         expect(response.status).toBe(StatusCodes.OK)
-        expect(response.body).toContain(42)
-      })
-  })
-
-  it('should respond with 200 OK and the liked movies for DELETE /account/:accountId/likedMovies/43', async () => {
-    await request(app).post(`/account/${accountId}/likedMovies`).send({ movieId: 43 }).set('Cookie', cookie)
-      .then(async () => {
-        return await request(app).delete(`/account/${accountId}/likedMovies/43`).set('Cookie', cookie)
-      }).then((response) => {
-        expect(response.status).toBe(StatusCodes.OK)
-        expect(response.body).not.toContain(43)
+        expect(response.body).toHaveLength(5)
       })
   })
 })

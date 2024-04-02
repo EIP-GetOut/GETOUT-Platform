@@ -49,7 +49,7 @@ async function getAccountInfoWithGithubCode (code: string): Promise< any | null>
       throw Error(res.statusText)
     }
     return await res.json()
-  }).then(async (data) => {
+  }).then(async (data: any) => {
     return await fetch('https://api.github.com/user', {
       headers: { Authorization: `${data.token_type} ${data.access_token}` }
     })
@@ -58,7 +58,7 @@ async function getAccountInfoWithGithubCode (code: string): Promise< any | null>
       throw Error(res.statusText)
     }
     return await res.json()
-  }).then((data) => {
+  }).then((data: any) => {
     const [firstName, lastName] = data.name.split(' ')
     return { firstName, lastName, email: data.login, authentifiedWithGithub: true }
   }).catch((err) => {
