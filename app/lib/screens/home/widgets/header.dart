@@ -46,7 +46,7 @@ class HomeAppBarWidget extends AppBar {
                       builder: (context) => const SettingsPage()));
             },
             child: Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.only(left: 10, right : 0),
                 child: Image.asset(
                   'assets/images/icon/profile_picture.png',
                   width: 60,

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 import 'package:getout/screens/book/bloc/book_provider.dart';
 import 'package:getout/screens/home/bloc/books/books_event.dart';
-import 'package:getout/screens/home/widgets/common/book_preview_widget.dart';
+// import 'package:getout/screens/home/widgets/common/book_preview_widget.dart';
 import 'package:getout/screens/home/widgets/common/title_widget.dart';
 
 class LikedBooksSuccessWidget extends StatelessWidget {
@@ -42,10 +42,11 @@ class LikedBooksSuccessWidget extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => Book(books[index].id)));
                       },
-                      child: BookPreviewWidget(
-                          posterPath: books[index].posterPath,
-                          title: books[index].title,
-                          overview: books[index].overview));
+                      // child: BookPreviewWidget(
+                      //     posterPath: books[index].posterPath,
+                      //     title: books[index].title,
+                      //     overview: books[index].overview)
+                          );
                 }))),
       ],
     ));

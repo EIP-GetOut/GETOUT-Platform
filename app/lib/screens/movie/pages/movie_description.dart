@@ -52,16 +52,20 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                         ))),
                 Padding(
                     padding: const EdgeInsets.only(
-                        left: 10), //apply padding to all four sides
-                    child: Text(
-                        // textAlign: TextAlign.start,
-                        widget.movie.overview ??
-                            'Aucune description disponible',
-                        style: Theme.of(context).textTheme.bodySmall)),
+                        left: 10,
+                        top: 10,
+                        bottom: 10),
+                    child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text(
+                            // textAlign: TextAlign.start,
+                            widget.movie.overview ??
+                                'Aucune description disponible',
+                            style: Theme.of(context).textTheme.titleSmall))),
                 separateLine(),
                 const Padding(
                     padding: EdgeInsets.only(
-                        left: 10), //apply padding to all four sides
+                        left: 10, top: 10), //apply padding to all four sides
                     child: Text(
                         // textAlign: TextAlign.start,
                         'RÉALISATEUR',
@@ -78,10 +82,12 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                           height: 120,
                           width: 120,
                         ),
-                        Text(
-                          widget.movie.director!.name,
-                          style: const TextStyle(fontSize: 14),
-                        ),
+                        Padding(
+                            padding: const EdgeInsets.only(bottom: 10, top: 10),
+                            child: Text(
+                              widget.movie.director!.name,
+                              style: const TextStyle(fontSize: 14),
+                            )),
                       ],
                     ),
                   ),
@@ -89,7 +95,7 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                 separateLine(),
                 const Padding(
                   padding: EdgeInsets.only(
-                      left: 10), //apply padding to all four sides
+                      left: 10, top: 10), //apply padding to all four sides
                   child: Text(
                     // textAlign: TextAlign.start,
                     'CASTING',
@@ -110,10 +116,12 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                               height: 120,
                               width: 120,
                             ),
-                            Text(
-                              widget.movie.cast![index].name,
-                              style: const TextStyle(fontSize: 14),
-                            ),
+                            Padding(
+                                padding: const EdgeInsets.only(bottom: 10, top: 10),
+                                child: Text(
+                                  widget.movie.cast![index].name,
+                                  style: const TextStyle(fontSize: 14),
+                                )),
                           ],
                         ),
                       ),

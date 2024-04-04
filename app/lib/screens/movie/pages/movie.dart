@@ -246,18 +246,20 @@ class MovieSuccessWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment
             .center, //Center Row contents vertically,            children: [
         children: [
-          Text('Film',
+          Padding(padding: EdgeInsets.only(left : 8),
+          child: Text('Film',
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelSmall),
+              style: Theme.of(context).textTheme.labelSmall)),
           const SizedBox(width: 15),
           const SizedBox(
               height: 20,
-              child: VerticalDivider(
-                width: 10,
-                // color: Colors.black,
-                thickness: 0,
-                // height : double.infinity,
-              )),
+              // child: VerticalDivider(
+              //   width: 10,
+              //   // color: Colors.black,
+              //   thickness: 0,
+              //   // height : double.infinity,
+              // )
+              ),
           Text(durationFormat('', movie.duration ?? 0),
               // widget.movie.duration,
               textAlign: TextAlign.center,
@@ -270,7 +272,7 @@ class MovieSuccessWidget extends StatelessWidget {
           child: Text(movie.overview ?? 'Aucune description disponible',
               textAlign: TextAlign.justify,
               overflow: TextOverflow.ellipsis,
-              maxLines: 11,
+              maxLines: 10,
               style: Theme.of(context).textTheme.bodySmall),
         ),
       ),

@@ -94,14 +94,8 @@ class MoviesService extends ServiceTemplate {
 
     dynamic data = await getSavedMoviesId(request);
 
-    print(data);
     for (int movie in data) {
-      print("avant item");
       MovieStatusResponse item = await getMovieById(movie);
-      print(item.id);
-      print(item.title);
-      print(item.posterPath);
-      print(item.overview);
       if (item.statusCode == HttpStatus.OK) {
         result.add(MoviePreview(
             id: item.id!,
@@ -141,8 +135,6 @@ class MoviesService extends ServiceTemplate {
     final Response? response = await globals.dio?.get(
         '${ApiConstants.rootApiPath}${ApiConstants.getInfoMoviePath}/$movie',
         options: Options(headers: {'Content-Type': 'application/json'}));
-    //     print("data = ");
-    // print(response?.data);
     try {
       if (response?.statusCode != MovieStatusResponse.success) {
         return const MovieStatusResponse(
@@ -157,13 +149,8 @@ class MoviesService extends ServiceTemplate {
           id: movie,
           statusCode: response?.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR);
     } catch (error) {
-      print("ERORRRRR : ");
-      print(error);
+      return Future.error(Exception('Unknown error:  ${error.toString()}'));
     }
-    print(result.id);
-    print(result.title);
-    print(result.overview);
-    print(result.posterPath);
     return result;
   }
 }

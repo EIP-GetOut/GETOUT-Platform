@@ -27,6 +27,8 @@ class BooksSuccessWidget extends StatelessWidget {
     PageController(viewportFraction: 0.1, initialPage: 0);
 
     return Expanded(
+        child: Padding(
+        padding: EdgeInsets.only(top: 0),
         child: Column(
       children: [
         const TitleWidget(
@@ -46,9 +48,10 @@ class BooksSuccessWidget extends StatelessWidget {
                       child: BookPreviewWidget(
                           posterPath: books[index].posterPath,
                           title: books[index].title,
-                          overview: books[index].overview));
+                          // overview: books[index].overview
+                          ));
                 }))),
       ],
-    ));
-  }
+    )));
+  } 
 }

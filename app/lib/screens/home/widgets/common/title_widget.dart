@@ -31,7 +31,7 @@ class TitleWidget extends StatelessWidget {
         Text(title,
             style: const TextStyle(
               color: Color(0xFFD55641),
-              fontSize: 23,
+              fontSize: 22,
               fontFamily: 'Urbanist',
               fontWeight: FontWeight.bold,
             )),

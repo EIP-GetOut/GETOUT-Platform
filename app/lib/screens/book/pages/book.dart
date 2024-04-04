@@ -217,7 +217,8 @@ class BookSuccessWidget extends StatelessWidget {
                 color: Colors.black,
                 thickness: 1,
                 // heigth : double.infinity,
-              )),
+              )
+              ),
           Icon(Boxicons.bx_time, size: 40),
         ],
       ),
