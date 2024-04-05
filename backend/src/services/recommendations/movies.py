@@ -28,17 +28,17 @@ def RecommandMovies(account: json) -> json:
     movie = Movie()
     popular = movie.popular({"language": "fr-FR", "page": 500})
 
-    result = { "recommandations": [] }
+    result = { "recommendations": [] }
     copy_list = []
     for p in popular:
         copy_list.append(p)
     for p in range(len(copy_list)):
-        result["recommandations"].append({
+        result["recommendations"].append({
             "id": copy_list[p].id,
             "title": copy_list[p].title,
             "score": calculate_score(copy_list[p], account)
         })
-    result["recommandations"] = sorted(result["recommandations"], key=lambda k: k['score'], reverse=True)[:5]
+    result["recommendations"] = sorted(result["recommendations"], key=lambda k: k['score'], reverse=True)[:5]
     return result
 
 def calculate_score(movie, account):

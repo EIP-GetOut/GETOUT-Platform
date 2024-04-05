@@ -92,9 +92,9 @@ class PreferencesDoesNotExistError extends AppError {
   }
 }
 
-class RecommandationsDetailsError extends AppError {
+class RecommendationsDetailsError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
-    super(message ?? 'Failed fetching recommandations details.')
+    super(message ?? 'Failed fetching recommendations details.')
   }
 }
 
@@ -122,6 +122,6 @@ export {
   PermissionsError,
   PreferencesAlreadyExistError,
   PreferencesDoesNotExistError,
-  RecommandationsDetailsError,
+  RecommendationsDetailsError,
   SamePasswordError
 }

@@ -6,11 +6,12 @@
 */
 
 import { books, type books_v1 } from '@googleapis/books'
+import axios from 'axios'
 import { type UUID } from 'crypto'
 import { type Session, type SessionData } from 'express-session'
 import { StatusCodes } from 'http-status-codes'
-import { type Response } from 'node-fetch'
 
+import logger from '@services/middlewares/logging'
 import { AccountDoesNotExistError, ApiError, type AppError, BookNotInListError, DbError } from '@services/utils/customErrors'
 
 import { Account } from '@entities/Account'
@@ -18,9 +19,6 @@ import { Account } from '@entities/Account'
 import { appDataSource } from '@config/dataSource'
 
 import { findEntity } from './getObjects'
-
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
-const fetch = async (...args: Parameters<typeof import('node-fetch')['default']>): Promise<Response> => await import('node-fetch').then(async ({ default: fetch }) => await fetch(...args))
 
 const booksApi = books('v1')
 
@@ -35,14 +33,14 @@ async function fetchAuthorInfo (author: any): Promise<any> {
   const apiUrl = `https://kgsearch.googleapis.com/v1/entities:search?query=${formattedAuthor}&key=${key}`
 
   try {
-    const response = await fetch(apiUrl)
-    const data: any = await response.json()
+    const response = await axios.get(apiUrl)
+    const data = response.data
 
     const imageLink = data.itemListElement[0]?.result?.image?.contentUrl
 
     return { author, imageLink }
   } catch (error) {
-    console.error(`Error fetching data for ${author}:`, error)
+    logger.error(`Error fetching data for ${author}:${JSON.stringify(error, null, 2)}`)
     return { author, imageLink: null }
   }
 }

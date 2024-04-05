@@ -12,12 +12,12 @@ import { type Options, PythonShell } from 'python-shell'
 import logger from '@middlewares/logging'
 
 import { logApiRequest } from '@services/middlewares/logging'
-import { NotLoggedInError, PreferencesDoesNotExistError, RecommandationsDetailsError } from '@services/utils/customErrors'
+import { NotLoggedInError, PreferencesDoesNotExistError, RecommendationsDetailsError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { getBook } from '@models/book'
 
-import { addRecommendedBooksToHistory } from '../../models/account/recommandationsHistory'
+import { addRecommendedBooksToHistory } from '../../models/account/recommendationsHistory'
 
 const router = Router()
 
@@ -33,26 +33,26 @@ router.get('/account/:accountId/recommend-books', logApiRequest, (req: Request, 
     mode: 'json',
     pythonPath: '/usr/bin/python3',
     pythonOptions: [],
-    scriptPath: 'src/services/recommandations/',
+    scriptPath: 'src/services/recommendations/',
     args: [JSON.stringify(req.session.account)],
     env: process.env
   }
 
   PythonShell.run('books.py', options).then(async ([output]: any) => {
-    const recommandations = output.recommandations
+    const recommendations = output.recommendations
     const promisesArray: Array<Promise<any>> = []
 
-    recommandations.forEach((recommandation: any) => {
+    recommendations.forEach((recommandation: any) => {
       promisesArray.push(getBook(recommandation.id))
     })
 
-    await addRecommendedBooksToHistory(recommandations, req.session.account!.id).then(async (): Promise<any []> => {
+    await addRecommendedBooksToHistory(recommendations, req.session.account!.id).then(async (): Promise<any []> => {
       return await Promise.all(promisesArray)
     }).catch(() => {
-      throw new RecommandationsDetailsError()
+      throw new RecommendationsDetailsError()
     }).then((resolvedPromises) => {
-      logger.info(`Successfully retreived movie recommandations: ${JSON.stringify(resolvedPromises, null, 2)}`)
-      return res.status(StatusCodes.OK).json(recommandations)
+      logger.info(`Successfully retreived movie recommendations: ${JSON.stringify(recommendations, null, 2)}`)
+      return res.status(StatusCodes.OK).json(resolvedPromises)
     })
   }).catch(handleErrorOnRoute(res))
 })
