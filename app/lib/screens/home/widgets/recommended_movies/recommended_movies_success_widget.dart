@@ -44,9 +44,7 @@ class RecommendedMoviesSuccessWidget extends StatelessWidget {
                       },
                       child: MoviePreviewWidget(
                           posterPath: movies[index].posterPath,
-                          title: movies[index].title,
-                          // overview: movies[index].overview
-                          ));
+                          title: movies[index].title));
                 }))),
       ],
     ));

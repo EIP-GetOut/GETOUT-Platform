@@ -22,6 +22,7 @@ class RecommendedBooksWidget extends StatelessWidget {
     return BlocBuilder<RecommendedBooksHydratedBloc, RecommendedBooksState>(
       builder: (context, state) {
         if (state.status.isSuccess) {
+          print('recBooksState-> $state');
           return RecommendedBooksSuccessWidget(books: state.recommendedBooks);
         } else {
           if (state.status.isLoading) {

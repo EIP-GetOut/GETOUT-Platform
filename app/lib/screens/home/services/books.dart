@@ -60,13 +60,13 @@ class BooksService extends ServiceTemplate {
 
     for (String book in data) {
       BookStatusResponse item = await getBookById(book);
+      print('item-> $item');
       if (item.statusCode == HttpStatus.OK) {
-        final book = (item as BookPreview);
         result.add(BookPreview(
-            id: book.id,
-            title: book.title,
-            posterPath: book.posterPath,
-            overview: book.overview));
+            id: item.id!,
+            title: item.title!,
+            posterPath: item.posterPath,
+            overview: item.overview));
       }
     }
     return result;
@@ -94,16 +94,16 @@ class BooksService extends ServiceTemplate {
     GenerateBooksResponse result = [];
 
     dynamic data = await getSavedBooksId(request);
+    print('-> $data');
 
     for (String book in data) {
       BookStatusResponse item = await getBookById(book);
       if (item.statusCode == HttpStatus.OK) {
-        final book = (item as BookPreview);
         result.add(BookPreview(
-            id: book.id,
-            title: book.title,
-            posterPath: book.posterPath,
-            overview: book.overview));
+            id: item.id!,
+            title: item.title!,
+            posterPath: item.posterPath,
+            overview: item.overview));
       }
     }
     return result;
@@ -113,7 +113,7 @@ class BooksService extends ServiceTemplate {
     dynamic data;
 
     final response = await globals.dio
-        ?.get('${ApiConstants.rootApiPath}/account/$_id/readinglist',
+        ?.get('${ApiConstants.rootApiPath}/account/$_id/readBooks',
             options: Options(headers: {
               'Content-Type': 'application/json',
             }));
@@ -135,7 +135,7 @@ class BooksService extends ServiceTemplate {
         const BookStatusResponse(statusCode: HttpStatus.APP_ERROR);
 
     final Response? response = await globals.dio?.get(
-        '${ApiConstants.rootApiPath}${ApiConstants.getInfoMoviePath}/$book',
+        '${ApiConstants.rootApiPath}${ApiConstants.getInfoBookPath}/$book',
         options: Options(headers: {'Content-Type': 'application/json'}));
     try {
       if (response?.statusCode != MovieStatusResponse.success) {
