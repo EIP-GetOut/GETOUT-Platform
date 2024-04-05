@@ -35,13 +35,14 @@ class BookPreviewWidget extends StatelessWidget {
             height: 150,
           ),
         ),
-        Container(
+        Padding(padding: const EdgeInsets.only(top: 10),
+        child : Container(
         //  height: 30,
         alignment: Alignment.topLeft,
           child: Text(title,
               // maxLines: 2,
               style: Theme.of(context).textTheme.titleSmall),
-        ),
+        )),
         const SizedBox(height: 5),
         // Flexible(
         //   child: Container(

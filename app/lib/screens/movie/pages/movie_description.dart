@@ -61,7 +61,7 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                             // textAlign: TextAlign.start,
                             widget.movie.overview ??
                                 'Aucune description disponible',
-                            style: Theme.of(context).textTheme.titleSmall))),
+                            style: Theme.of(context).textTheme.bodySmall))),
                 separateLine(),
                 const Padding(
                     padding: EdgeInsets.only(

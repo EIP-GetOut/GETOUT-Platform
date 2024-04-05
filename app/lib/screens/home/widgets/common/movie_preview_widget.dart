@@ -12,11 +12,9 @@ class MoviePreviewWidget extends StatelessWidget {
     super.key,
     required this.posterPath,
     required this.title,
-    // required this.overview,
   });
 
   final String? posterPath;
-  // final String? overview;
   final String title;
 
 
@@ -34,25 +32,13 @@ class MoviePreviewWidget extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        Container(
-        // height: 100,
+        Padding(padding: const EdgeInsets.only(top: 10),
+        child : Container(
         alignment: Alignment.topLeft,
           child: Text(title,
-              // maxLines: 4,
               style: Theme.of(context).textTheme.titleSmall),
-        ),
+        )),
         const SizedBox(height: 5),
-        // Flexible(
-        //   child: Container(
-        //     alignment: Alignment.topLeft,
-        //     padding: const EdgeInsets.only(right: 13.0),
-        //     // child: Text(overview ?? 'Aucune description disponible',
-        //     //     textAlign: TextAlign.left,
-        //     //     overflow: TextOverflow.ellipsis,
-        //     //     maxLines: 3,
-        //     //     style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 10)),
-        //   ),
-        // ),
       ]),
     );
   }

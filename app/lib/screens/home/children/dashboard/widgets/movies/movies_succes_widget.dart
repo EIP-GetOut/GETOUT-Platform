@@ -30,6 +30,7 @@ class MoviesSuccessWidget extends StatelessWidget {
       children: [
         const TitleWidget(
             asset: 'popcorn', title: 'Les films que vous allez aimer'),
+        const Padding(padding: EdgeInsets.only(top: 10)),
         Expanded(
             child: ListView(
                 controller: movieController,
@@ -45,7 +46,6 @@ class MoviesSuccessWidget extends StatelessWidget {
                       child: MoviePreviewWidget(
                           posterPath: movies[index].posterPath,
                           title: movies[index].title,
-                          // overview: movies[index].overview
                           ));
                 }))),
       ],

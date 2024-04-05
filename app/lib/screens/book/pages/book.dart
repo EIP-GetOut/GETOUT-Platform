@@ -49,7 +49,6 @@ class BookSuccessWidget extends StatelessWidget {
         child: Image.network(imageUrl, height: 250));
 
     return Column(children: [
-      // AppBar(leading: const BackButton()),
       Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.center,
@@ -231,16 +230,10 @@ class BookSuccessWidget extends StatelessWidget {
           Text('Livre',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall),
-          const SizedBox(width: 15),
+          const SizedBox(width: 25),
           const SizedBox(
-              height: 20,
-              child: VerticalDivider(
-                width: 10,
-                // color: Colors.black,
-                thickness: 0,
-                // height : double.infinity,
-              )),
-          Text('${book.pageCount.toString()} pages',
+              height: 10,),
+          Text('${book.pageCount.toString()}',
               // widget.book.duration,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall),

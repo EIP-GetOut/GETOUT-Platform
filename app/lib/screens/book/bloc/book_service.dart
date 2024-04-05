@@ -13,21 +13,23 @@ import 'package:getout/constants/http_status.dart';
 
 import 'package:getout/global.dart' as globals;
 
+import 'package:html/parser.dart'; // pour utiliser parseFragment()
+
 class BookService {
   final String userId = globals.session?['id'].toString() ?? '';
 
-  PersonList parseAuthor(final castData) { //todo head parseAuthor
+  PersonList parseAuthor(final castData) {
     PersonList castList = [];
 
-        for (final author in castData) {
-          String? name = author['author'];
-          String picture = author['picture'] ??
-              'https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg';
+    for (final author in castData) {
+      String? name = author['author'];
+      String picture = author['picture'] ??
+          'https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg';
 
-          if (name != null) {
-            castList.add(Person(name: name, picture: picture));
-          }
-        }
+      if (name != null) {
+        castList.add(Person(name: name, picture: picture));
+      }
+    }
 
     return castList;
   }
@@ -43,11 +45,11 @@ class BookService {
       if (response?.statusCode != InfoBookResponse.success) {
         return InfoBookResponse(statusCode: response?.statusCode ?? 500);
       }
-      final dynamic data = response?.data;
 
+      final dynamic data = response?.data;
       result = InfoBookResponse(
           title: response?.data['book']['title'],
-          overview: response?.data['book']['overview'] ??
+          overview: parseFragment(response?.data['book']['overview']).text ??
               'Pas de description disponible',
           posterPath: response?.data['book']['poster_path'],
           backdropPath: response?.data['book']['backdrop_path'],
@@ -62,15 +64,13 @@ class BookService {
           read: globals.session?['readBooks'].contains(request.id),
           id: response?.data['book']['id'],
           statusCode: response?.statusCode ?? 500);
-    } catch (error) {
-      if (error.toString() == 'Connection reset by peer' ||
-          error.toString() ==
-              'Connection closed before full header was received') {
-        return const InfoBookResponse(statusCode: HttpStatus.NO_INTERNET);
-      }
       return result;
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
     }
-    return result;
   }
 
   Future<AddBookResponse> addLikedBook(AddBookRequest request) async {
