@@ -26,6 +26,7 @@ class SavedMoviesHydratedBloc extends HydratedBloc<MoviesEvent, SavedMoviesState
   
   void _onSavedMoviesRequest(
       GenerateMoviesRequest event, Emitter<SavedMoviesState> emit) async {
+    print('object2');
     emit(state.copyWith(status: Status.loading));
     try {
       final moviesSaved = await homeService.getSavedMovies(event);

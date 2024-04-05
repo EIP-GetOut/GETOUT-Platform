@@ -57,16 +57,16 @@ class MoviesService extends ServiceTemplate {
     GenerateMoviesResponse result = [];
 
     dynamic data = await getLikedMoviesId(request);
-
+    print('-> $data');
     for (int movie in data) {
       MovieStatusResponse item = await getMovieById(movie);
       if (item.statusCode == HttpStatus.OK) {
-        final movie = (item as MoviePreview);
         result.add(MoviePreview(
-            id: movie.id,
-            title: movie.title,
-            posterPath: movie.posterPath,
-            overview: movie.overview));
+            id: item.id!,
+            title: item.title!,
+            posterPath: item.posterPath,
+            overview: item.overview));
+      } else {
       }
     }
     return result;

@@ -24,13 +24,14 @@ class LikedBooksState extends Equatable {
     Status? status,
   }) {
     return LikedBooksState(
-      likedBooks: likedBooks ?? this.likedBooks,
+      likedBooks: likedBooks,
       status: status ?? this.status,
     );
   }
 
   factory LikedBooksState.fromMap(Map<String, dynamic> map) {
     List<BookPreview> likedBooks = [];
+    print('likedFromMap');
 
     map['liked_books']!.forEach((element) => {
       likedBooks.add(BookPreview(
@@ -45,6 +46,7 @@ class LikedBooksState extends Equatable {
   }
 
   Map<String, dynamic> toMap() {
+    print('likedToMap');
     return {
       'liked_books': likedBooks
           .map((book) => {
