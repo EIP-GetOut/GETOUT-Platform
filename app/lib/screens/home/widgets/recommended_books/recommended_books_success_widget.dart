@@ -30,7 +30,8 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
         child: Column(
       children: [
         const TitleWidget(
-            asset: 'fire', title: 'Nous recommandons pour vous'),
+            asset: 'fire', title: 'Nos recommandations pour vous'),
+            const Padding(padding: EdgeInsets.only(top: 10)),
         Expanded(
             child: ListView(
                 controller: movieController,

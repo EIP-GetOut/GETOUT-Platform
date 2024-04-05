@@ -37,22 +37,22 @@ class BookDescriptionPage extends StatelessWidget {
                 const Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Text('RÉSUMÉ',
-                        // textAlign: TextAlign.left,
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
                         ))),
                 Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                        // textAlign: TextAlign.start,
+                    padding:
+                        const EdgeInsets.only(left: 10, top: 10, bottom: 10),
+                    child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text(
                         book.overview ?? 'Aucune description disponible',
-                        style: Theme.of(context).textTheme.bodySmall)),
+                        style: Theme.of(context).textTheme.bodySmall))),
                 separateLine(),
                 const Padding(
-                    padding: EdgeInsets.only(left: 10),
+                    padding: EdgeInsets.only(left: 10, top: 10),
                     child: Text(
-                        // textAlign: TextAlign.start,
                         'AUTEUR(S)',
                         style: TextStyle(
                             fontSize: 22, fontWeight: FontWeight.bold))),
@@ -70,9 +70,11 @@ class BookDescriptionPage extends StatelessWidget {
                               height: 120,
                               width: 120,
                             ),
-                            Text(
+                            Padding(
+                                padding: const EdgeInsets.only(bottom: 10, top: 10),
+                                child: Text(
                               book.authorsPicture![index].name,
-                              style: const TextStyle(fontSize: 14),
+                              style: const TextStyle(fontSize: 14)),
                             ),
                           ],
                         ),

@@ -43,7 +43,7 @@ class InfoBookResponse extends BookEvent {
   final String? posterPath;
   final String? backdropPath;
   final String? releaseDate;
-  final double? voteAverage;
+  final int? voteAverage;
   final int? pageCount;
   final bool? liked;
   final bool? disliked;

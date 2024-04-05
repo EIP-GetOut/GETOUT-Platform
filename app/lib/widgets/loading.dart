@@ -38,7 +38,7 @@ class LoadingPage extends StatelessWidget {
           height: 85,
           width: 85,
           child: CircularProgressIndicator(
-            backgroundColor: Color.fromARGB(0, 255, 5, 5),
+            backgroundColor: Color.fromARGB(255, 255, 255, 255),
           ),
         )
       ],
