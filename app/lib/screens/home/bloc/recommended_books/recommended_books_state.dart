@@ -31,7 +31,7 @@ class RecommendedBooksState extends Equatable {
 
   factory RecommendedBooksState.fromMap(Map<String, dynamic> map) {
     List<BookPreview> books = [];
-    print('recommendedFromMap');
+
     map['recommended_books']!.forEach((element) => {
           books.add(BookPreview(
               id: element['id'],
@@ -45,7 +45,6 @@ class RecommendedBooksState extends Equatable {
   }
 
   Map<String, dynamic> toMap() {
-    print('recommendedToMap');
     return {
       'recommended_books': recommendedBooks
           .map((book) => {

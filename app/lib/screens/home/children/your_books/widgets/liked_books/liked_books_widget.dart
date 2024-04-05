@@ -30,7 +30,7 @@ class LikedBooksWidget extends StatelessWidget {
             return const Center(child: Center(child: CircularProgressIndicator(backgroundColor: Color.fromARGB(0, 255, 5, 5))));
 
           } else if (state.status.isError) {
-            return const ObjectLoadingErrorWidget(object: 'les livres aimés');
+            return const ObjectLoadingErrorWidget(object: 'les films aimés');
           } else {
             return const SizedBox();
           }

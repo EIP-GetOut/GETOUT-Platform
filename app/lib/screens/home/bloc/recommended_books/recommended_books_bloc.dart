@@ -21,13 +21,12 @@ class RecommendedBooksHydratedBloc extends HydratedBloc<BooksEvent, RecommendedB
   RecommendedBooksHydratedBloc({
     required this.homeService,
   }) : super(const RecommendedBooksState()) {
-    on<GenerateBooksRequest>(_onRecommendedBooksRequest);
+    on<GenerateBooksRequest>(_onRecmmendedBooksRequest);
   }
 
-  void _onRecommendedBooksRequest(
+  void _onRecmmendedBooksRequest(
       GenerateBooksRequest event, Emitter<RecommendedBooksState> emit) async {
     emit(state.copyWith(status: Status.loading));
-    print('_onRecommendedBookRequest');
     try {
       final recommendedBooks = await homeService.getRecommendedBooks(event);
       emit(

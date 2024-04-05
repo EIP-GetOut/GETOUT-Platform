@@ -31,7 +31,6 @@ class HomeProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
-    print('yooo');
     return Scaffold(
       backgroundColor: Colors.white,
       body: RepositoryProvider(create: (context) => HomeService(),

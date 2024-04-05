@@ -25,7 +25,7 @@ class BookStatusResponse extends BooksEvent {
       {this.id,
         this.title,
         this.posterPath,
-        this.overview = 'Pas de description disponible',
+        this.overview,
         required this.statusCode});
 
   bool get isSuccess => statusCode == HttpStatus.OK;
@@ -33,7 +33,7 @@ class BookStatusResponse extends BooksEvent {
   final String? id;
   final String? title;
   final String? posterPath;
-  final String overview;
+  final String? overview;
   final int statusCode;
   static const int success = HttpStatus.OK;
 }

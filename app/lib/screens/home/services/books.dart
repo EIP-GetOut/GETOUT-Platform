@@ -61,11 +61,12 @@ class BooksService extends ServiceTemplate {
     for (String book in data) {
       BookStatusResponse item = await getBookById(book);
       if (item.statusCode == HttpStatus.OK) {
+        final book = (item as BookPreview);
         result.add(BookPreview(
-            id: item.id!,
-            title: item.title!,
-            posterPath: item.posterPath,
-            overview: item.overview));
+            id: book.id,
+            title: book.title,
+            posterPath: book.posterPath,
+            overview: book.overview));
       }
     }
     return result;
@@ -112,7 +113,7 @@ class BooksService extends ServiceTemplate {
     dynamic data;
 
     final response = await globals.dio
-        ?.get('${ApiConstants.rootApiPath}/account/$_id/readBooks',
+        ?.get('${ApiConstants.rootApiPath}/account/$_id/readinglist',
             options: Options(headers: {
               'Content-Type': 'application/json',
             }));
@@ -133,11 +134,10 @@ class BooksService extends ServiceTemplate {
     BookStatusResponse result =
         const BookStatusResponse(statusCode: HttpStatus.APP_ERROR);
 
+    final Response? response = await globals.dio?.get(
+        '${ApiConstants.rootApiPath}${ApiConstants.getInfoMoviePath}/$book',
+        options: Options(headers: {'Content-Type': 'application/json'}));
     try {
-      final Response? response = await globals.dio?.get(
-          '${ApiConstants.rootApiPath}${ApiConstants.getInfoBookPath}/$book',
-          options: Options(headers: {'Content-Type': 'application/json'}));
-
       if (response?.statusCode != MovieStatusResponse.success) {
         return const BookStatusResponse(
             statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
