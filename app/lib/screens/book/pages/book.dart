@@ -36,7 +36,7 @@ class BookSuccessWidget extends StatelessWidget {
           ),
           child: Image.network(
             imageUrl,
-            color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.6),
+            color: const Color.fromRGBO(150, 150, 150, 255).withOpacity(1),
             colorBlendMode: BlendMode.modulate,
             width: double.infinity,
             fit: BoxFit.cover,
@@ -218,7 +218,7 @@ class BookSuccessWidget extends StatelessWidget {
                 // heigth : double.infinity,
               )
               ),
-          Icon(Boxicons.bx_time, size: 40),
+          Icon(Boxicons.bx_receipt, size: 40),
         ],
       ),
       Row(

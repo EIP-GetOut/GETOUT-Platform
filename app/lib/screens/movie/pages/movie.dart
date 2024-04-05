@@ -42,8 +42,7 @@ class MovieSuccessWidget extends StatelessWidget {
             children: [
               Image.network(
                 imageUrl,
-                color:
-                    const Color.fromARGB(255, 255, 255, 255).withOpacity(0.6),
+                color: const Color.fromRGBO(150, 150, 150, 255).withOpacity(1),
                 colorBlendMode: BlendMode.modulate,
                 width: double.infinity,
                 fit: BoxFit.cover,
