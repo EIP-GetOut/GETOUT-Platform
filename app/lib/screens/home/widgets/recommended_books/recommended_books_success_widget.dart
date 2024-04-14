@@ -23,7 +23,7 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PageController movieController =
+    final PageController bookController =
     PageController(viewportFraction: 0.1, initialPage: 0);
 
     return Expanded(
@@ -34,7 +34,7 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
             const Padding(padding: EdgeInsets.only(top: 10)),
         Expanded(
             child: ListView(
-                controller: movieController,
+                controller: bookController,
                 scrollDirection: Axis.horizontal,
                 children: List.generate(5, (index) {
                   return InkWell(

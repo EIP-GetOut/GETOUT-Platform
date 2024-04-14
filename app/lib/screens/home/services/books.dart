@@ -60,7 +60,6 @@ class BooksService extends ServiceTemplate {
 
     for (String book in data) {
       BookStatusResponse item = await getBookById(book);
-      print('item-> $item');
       if (item.statusCode == HttpStatus.OK) {
         result.add(BookPreview(
             id: item.id!,
@@ -94,7 +93,6 @@ class BooksService extends ServiceTemplate {
     GenerateBooksResponse result = [];
 
     dynamic data = await getSavedBooksId(request);
-    print('-> $data');
 
     for (String book in data) {
       BookStatusResponse item = await getBookById(book);
@@ -113,11 +111,10 @@ class BooksService extends ServiceTemplate {
     dynamic data;
 
     final response = await globals.dio
-        ?.get('${ApiConstants.rootApiPath}/account/$_id/readBooks',
+        ?.get('${ApiConstants.rootApiPath}/account/$_id/readinglist',
             options: Options(headers: {
               'Content-Type': 'application/json',
             }));
-
     if (response?.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
         'Error ${response?.statusCode} while fetching books: ${response?.statusMessage}',

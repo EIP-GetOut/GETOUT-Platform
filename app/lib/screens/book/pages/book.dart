@@ -233,7 +233,7 @@ class BookSuccessWidget extends StatelessWidget {
           const SizedBox(width: 25),
           const SizedBox(
               height: 10,),
-          Text('${book.pageCount.toString()}',
+          Text(book.pageCount.toString(),
               // widget.book.duration,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall),

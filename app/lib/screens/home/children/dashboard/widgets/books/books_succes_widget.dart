@@ -27,7 +27,7 @@ class BooksSuccessWidget extends StatelessWidget {
 
     return Expanded(
         child: Padding(
-            padding: EdgeInsets.only(top: 0),
+            padding: const EdgeInsets.only(top: 0),
             child: Column(
               children: [
                 const TitleWidget(
