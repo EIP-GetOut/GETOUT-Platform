@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:getout/screens/book/bloc/book_provider.dart';
 import 'package:getout/screens/home/bloc/books/books_event.dart';
 import 'package:getout/screens/home/widgets/common/book_preview_widget.dart';
+// import 'package:getout/screens/home/widgets/common/book_preview_widget.dart';
 import 'package:getout/screens/home/widgets/common/title_widget.dart';
 
 class RecommendedBooksSuccessWidget extends StatelessWidget {
@@ -22,17 +23,18 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PageController movieController =
+    final PageController bookController =
     PageController(viewportFraction: 0.1, initialPage: 0);
 
     return Expanded(
         child: Column(
       children: [
         const TitleWidget(
-            asset: 'fire', title: 'Nous recommandons pour vous'),
+            asset: 'fire', title: 'Nos recommandations pour vous'),
+            const Padding(padding: EdgeInsets.only(top: 10)),
         Expanded(
             child: ListView(
-                controller: movieController,
+                controller: bookController,
                 scrollDirection: Axis.horizontal,
                 children: List.generate(5, (index) {
                   return InkWell(
@@ -43,9 +45,8 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
                                 builder: (context) => Book(books[index].id)));
                       },
                       child: BookPreviewWidget(
-                          posterPath: books[index].posterPath,
-                          title: books[index].title,
-                          overview: books[index].overview));
+                           posterPath: books[index].posterPath,
+                           title: books[index].title));
                 }))),
       ],
     ));

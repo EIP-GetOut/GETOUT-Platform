@@ -42,8 +42,7 @@ class MovieSuccessWidget extends StatelessWidget {
             children: [
               Image.network(
                 imageUrl,
-                color:
-                    const Color.fromARGB(255, 255, 255, 255).withOpacity(0.6),
+                color: const Color.fromRGBO(150, 150, 150, 255).withOpacity(1),
                 colorBlendMode: BlendMode.modulate,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -238,18 +237,12 @@ class MovieSuccessWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment
             .center, //Center Row contents vertically,            children: [
         children: [
-          Text('Film',
+          Padding(padding: const EdgeInsets.only(left : 8),
+          child: Text('Film',
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelSmall),
+              style: Theme.of(context).textTheme.labelSmall)),
           const SizedBox(width: 15),
-          const SizedBox(
-              height: 20,
-              child: VerticalDivider(
-                width: 10,
-                // color: Colors.black,
-                thickness: 0,
-                // height : double.infinity,
-              )),
+          const SizedBox(height: 20,),
           Text(durationFormat('', movie.duration ?? 0),
               // widget.movie.duration,
               textAlign: TextAlign.center,
@@ -262,7 +255,7 @@ class MovieSuccessWidget extends StatelessWidget {
           child: Text(movie.overview ?? 'Aucune description disponible',
               textAlign: TextAlign.justify,
               overflow: TextOverflow.ellipsis,
-              maxLines: 11,
+              maxLines: 10,
               style: Theme.of(context).textTheme.bodySmall),
         ),
       ),

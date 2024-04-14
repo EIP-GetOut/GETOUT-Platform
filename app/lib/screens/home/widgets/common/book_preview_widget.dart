@@ -12,11 +12,11 @@ class BookPreviewWidget extends StatelessWidget {
     super.key,
     required this.posterPath,
     required this.title,
-    required this.overview,
+    // required this.overview,
   });
 
   final String? posterPath;
-  final String? overview;
+  // final String? overview;
   final String title;
 
 
@@ -31,27 +31,30 @@ class BookPreviewWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(7.0),
           child: Image.network('$posterPath',
             fit: BoxFit.cover,
+            width: 200,
+            height: 150,
           ),
         ),
-        Container(
-         height: 30,
+        Padding(padding: const EdgeInsets.only(top: 10),
+        child : Container(
+        //  height: 30,
         alignment: Alignment.topLeft,
           child: Text(title,
-              maxLines: 2,
+              // maxLines: 2,
               style: Theme.of(context).textTheme.titleSmall),
-        ),
+        )),
         const SizedBox(height: 5),
-        Flexible(
-          child: Container(
-            alignment: Alignment.topLeft,
-            padding: const EdgeInsets.only(right: 13.0),
-            child: Text(overview ?? 'Aucune description disponible',
-                textAlign: TextAlign.left,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 3,
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 10)),
-          ),
-        ),
+        // Flexible(
+        //   child: Container(
+        //     alignment: Alignment.topLeft,
+        //     padding: const EdgeInsets.only(right: 13.0),
+        //     // child: Text(overview ?? 'Aucune description disponible',
+        //     //     textAlign: TextAlign.left,
+        //     //     overflow: TextOverflow.ellipsis,
+        //     //     maxLines: 3,
+        //     //     style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 10)),
+        //   ),
+        // ),
       ]),
     );
   }

@@ -17,10 +17,9 @@ class MoviesService extends ServiceTemplate {
       GenerateMoviesRequest request) async {
     GenerateMoviesResponse result = [];
 
-    try { /// TODO we need to do something prettier
+    try {
       final response = await globals.dio?.get(
-          '${ApiConstants.rootApiPath}/account/$_id${ApiConstants
-              .recommendedMoviesPath}',
+          '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedMoviesPath}',
           options: Options(headers: {'Content-Type': 'application/json'}));
 
       if (response?.statusCode != HttpStatus.OK) {
@@ -37,7 +36,8 @@ class MoviesService extends ServiceTemplate {
             overview: elem['overview']));
       });
     } on DioException catch (dioException) {
-      if (dioException.response != null && dioException.response?.statusCode != null) {
+      if (dioException.response != null &&
+          dioException.response?.statusCode != null) {
         return Future.error(Exception(
           'Error ${dioException.response?.statusCode} while fetching movies: ${dioException.response?.statusMessage}',
         ));
@@ -45,8 +45,7 @@ class MoviesService extends ServiceTemplate {
       return Future.error(
           Exception('Unknown error:  ${dioException.toString()}'));
     } catch (error) {
-      return Future.error(Exception(
-          'Unknown error:  ${error.toString()}'));
+      return Future.error(Exception('Unknown error:  ${error.toString()}'));
     }
     return result;
   }
@@ -61,12 +60,11 @@ class MoviesService extends ServiceTemplate {
     for (int movie in data) {
       MovieStatusResponse item = await getMovieById(movie);
       if (item.statusCode == HttpStatus.OK) {
-        final movie = (item as MoviePreview);
         result.add(MoviePreview(
-            id: movie.id,
-            title: movie.title,
-            posterPath: movie.posterPath,
-            overview: movie.overview));
+            id: item.id!,
+            title: item.title!,
+            posterPath: item.posterPath!,
+            overview: item.overview));
       }
     }
     return result;
@@ -75,12 +73,11 @@ class MoviesService extends ServiceTemplate {
   Future<dynamic> getLikedMoviesId(GenerateMoviesRequest request) async {
     final Response? response;
 
-
-    response = await globals.dio?.get(
-        '${ApiConstants.rootApiPath}/account/$_id/likedMovies',
-        options: Options(headers: {
-          'Content-Type': 'application/json',
-        }));
+    response = await globals.dio
+        ?.get('${ApiConstants.rootApiPath}/account/$_id/likedMovies',
+            options: Options(headers: {
+              'Content-Type': 'application/json',
+            }));
     if (response?.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
         'Error ${response?.statusCode} while fetching movies: ${response?.statusMessage}',
@@ -100,12 +97,11 @@ class MoviesService extends ServiceTemplate {
     for (int movie in data) {
       MovieStatusResponse item = await getMovieById(movie);
       if (item.statusCode == HttpStatus.OK) {
-        final movie = (item as MoviePreview);
         result.add(MoviePreview(
-            id: movie.id,
-            title: movie.title,
-            posterPath: movie.posterPath,
-            overview: movie.overview));
+            id: item.id!,
+            title: item.title!,
+            posterPath: item.posterPath!,
+            overview: item.overview!));
       }
     }
     return result;
@@ -114,11 +110,11 @@ class MoviesService extends ServiceTemplate {
   Future<dynamic> getSavedMoviesId(GenerateMoviesRequest request) async {
     dynamic data;
 
-    final response = await globals.dio?.get(
-        '${ApiConstants.rootApiPath}/account/$_id/watchlist',
-        options: Options(headers: {
-          'Content-Type': 'application/json',
-        }));
+    final response = await globals.dio
+        ?.get('${ApiConstants.rootApiPath}/account/$_id/watchlist',
+            options: Options(headers: {
+              'Content-Type': 'application/json',
+            }));
 
     if (response?.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
@@ -144,7 +140,6 @@ class MoviesService extends ServiceTemplate {
         return const MovieStatusResponse(
             statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
       }
-      //todo
       final dynamic data = response?.data;
       result = MovieStatusResponse(
           title: data['movie']['title'],
@@ -154,12 +149,7 @@ class MoviesService extends ServiceTemplate {
           id: movie,
           statusCode: response?.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR);
     } catch (error) {
-      if (error.toString() == 'Connection reset by peer' ||
-          error.toString() ==
-              'Connection closed before full header was received') {
-        return const MovieStatusResponse(statusCode: HttpStatus.NO_INTERNET);
-      }
-      return result;
+      return Future.error(Exception('Unknown error:  ${error.toString()}'));
     }
     return result;
   }
