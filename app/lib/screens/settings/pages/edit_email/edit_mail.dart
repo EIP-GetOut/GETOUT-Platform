@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/settings/services/service.dart';
 import 'package:getout/tools/app_l10n.dart';
-import 'package:getout/tools/string_extension.dart';
 import 'package:getout/tools/validator/email.dart';
 import 'package:getout/tools/validator/field.dart';
 import 'package:getout/widgets/fields/email_field.dart';

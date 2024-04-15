@@ -9,15 +9,16 @@ part of 'movie_bloc.dart';
 
 // Equatable check if two objects are equals
 class MovieEvent extends Equatable {
+  const MovieEvent();
+
   @override
   List<Object?> get props => [];
-  const MovieEvent();
 }
 
 class CreateInfoMovieRequest extends MovieEvent {
-  const CreateInfoMovieRequest({required this.id});
-
   final int id;
+
+  const CreateInfoMovieRequest({required this.id});
 }
 
 class InfoMovieResponse extends MovieEvent {
@@ -30,6 +31,7 @@ class InfoMovieResponse extends MovieEvent {
       this.voteAverage,
       this.duration,
       this.cast,
+      this.director,
       this.liked,
       this.disliked,
       this.wishlisted,
@@ -37,7 +39,8 @@ class InfoMovieResponse extends MovieEvent {
       this.id,
       required this.statusCode});
 
-  final List<Map<String, String?>>? cast;
+  final PersonList? cast;
+  final Person? director;
   static const int success = HttpStatus.OK;
   final String? title;
   final String? overview;
@@ -55,20 +58,32 @@ class InfoMovieResponse extends MovieEvent {
 }
 
 class AddMovieRequest extends MovieEvent {
+  final int id;
+
   const AddMovieRequest (
     {required this.id}
   );
-
-  final int id;
 }
 
 class AddMovieResponse extends MovieEvent {
+  final int statusCode;
+
   const AddMovieResponse (
     {required this.statusCode}
   );
 
-  final int statusCode;
 
-  static const int success = HttpStatus.OK;
 }
 
+class Person extends MovieEvent {
+  const Person (
+    {required this.name,
+    required this.picture}
+  );
+
+  final String name;
+  final String picture;
+}
+
+
+typedef PersonList = List<Person>;

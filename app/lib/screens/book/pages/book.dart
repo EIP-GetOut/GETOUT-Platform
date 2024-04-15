@@ -10,7 +10,6 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:boxicons/boxicons.dart';
-import 'package:getout/constants/extern_url.dart';
 
 import 'package:getout/screens/book/pages/book_description.dart';
 import 'package:getout/screens/book/bloc/book_bloc.dart';
@@ -38,7 +37,7 @@ class BookSuccessWidget extends StatelessWidget {
           ),
           child: Image.network(
             imageUrl,
-            color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.6),
+            color: const Color.fromRGBO(150, 150, 150, 255).withOpacity(1),
             colorBlendMode: BlendMode.modulate,
             width: double.infinity,
             fit: BoxFit.cover,
@@ -51,7 +50,6 @@ class BookSuccessWidget extends StatelessWidget {
         child: Image.network(imageUrl, height: 250));
 
     return Column(children: [
-      // AppBar(leading: const BackButton()),
       Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.center,
@@ -78,17 +76,15 @@ class BookSuccessWidget extends StatelessWidget {
                     },
                   ))),
           Positioned(
-            top: 30,
-            right: 140,
-            child: IconButton(
-              icon: const Icon(Icons.share),
-              color: Colors.white,
-              onPressed: () async {
-                await Clipboard.setData(ClipboardData(
-                    text: '${ExternalConstants.ShareMoviePath}${book.id}'));
-              },
-            ),
-          ),
+              top: 30,
+              right: 140,
+              child: IconButton(
+                  icon: const Icon(Icons.share),
+                  color: Colors.white,
+                  onPressed: () async {
+                    await Clipboard.setData(
+                        ClipboardData(text: '${book.bookLink}'));
+                  })),//todo head
           Positioned(
             top: 30,
             right: 80,
@@ -99,14 +95,12 @@ class BookSuccessWidget extends StatelessWidget {
                 if (book.read == true) {
                   await context
                       .read<BookBloc>()
-                      .bookRepository
-                      .service
+                      .bookService
                       .removeReadBook(AddBookRequest(id: book.id ?? ''));
                 } else {
                   await context
                       .read<BookBloc>()
-                      .bookRepository
-                      .service
+                      .bookService
                       .addReadBook(AddBookRequest(id: book.id ?? ''));
                 }
                 if (!context.mounted) return;
@@ -126,14 +120,12 @@ class BookSuccessWidget extends StatelessWidget {
                 if (book.liked == true) {
                   await context
                       .read<BookBloc>()
-                      .bookRepository
-                      .service
+                      .bookService
                       .removeLikedBook(AddBookRequest(id: book.id ?? ''));
                 } else {
                   await context
                       .read<BookBloc>()
-                      .bookRepository
-                      .service
+                      .bookService
                       .addLikedBook(AddBookRequest(id: book.id ?? ''));
                 }
                 if (!context.mounted) return;
@@ -153,14 +145,12 @@ class BookSuccessWidget extends StatelessWidget {
                 if (book.disliked == true) {
                   await context
                       .read<BookBloc>()
-                      .bookRepository
-                      .service
+                      .bookService
                       .removeDislikedBook(AddBookRequest(id: book.id ?? ''));
                 } else {
                   await context
                       .read<BookBloc>()
-                      .bookRepository
-                      .service
+                      .bookService
                       .addDislikedBook(AddBookRequest(id: book.id ?? ''));
                 }
                 if (!context.mounted) return;
@@ -180,14 +170,12 @@ class BookSuccessWidget extends StatelessWidget {
                 if (book.wishlisted == true) {
                   await context
                       .read<BookBloc>()
-                      .bookRepository
-                      .service
+                      .bookService
                       .removeWishlistedBook(AddBookRequest(id: book.id ?? ''));
                 } else {
                   await context
                       .read<BookBloc>()
-                      .bookRepository
-                      .service
+                      .bookService
                       .addWishlistedBook(AddBookRequest(id: book.id ?? ''));
                 }
                 if (!context.mounted) return;
@@ -196,7 +184,7 @@ class BookSuccessWidget extends StatelessWidget {
                     .add(CreateInfoBookRequest(id: book.id ?? ''));
               },
             ),
-          )
+          ),
         ],
       ),
       Text(
@@ -221,8 +209,9 @@ class BookSuccessWidget extends StatelessWidget {
                 color: Colors.black,
                 thickness: 1,
                 // heigth : double.infinity,
-              )),
-          Icon(Boxicons.bx_time, size: 40),
+              )
+              ),
+          Icon(Boxicons.bx_receipt, size: 40),
         ],
       ),
       Row(
@@ -234,16 +223,10 @@ class BookSuccessWidget extends StatelessWidget {
           Text('Livre',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall),
-          const SizedBox(width: 15),
+          const SizedBox(width: 25),
           const SizedBox(
-              height: 20,
-              child: VerticalDivider(
-                width: 10,
-                // color: Colors.black,
-                thickness: 0,
-                // height : double.infinity,
-              )),
-          Text('${book.pageCount.toString()} pages',
+              height: 10,),
+          Text(book.pageCount.toString(),
               // widget.book.duration,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall),

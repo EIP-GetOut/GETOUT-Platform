@@ -6,8 +6,8 @@
 */
 
 import 'package:flutter/material.dart';
-
 import 'package:getout/screens/home/widgets/common/movie_preview_widget.dart';
+
 import 'package:getout/screens/movie/bloc/movie_provider.dart';
 import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 import 'package:getout/screens/home/widgets/common/title_widget.dart';
@@ -42,10 +42,9 @@ class LikedMoviesSuccessWidget extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => Movie(movies[index].id)));
                       },
-                      child: MoviePreviewWidget(
-                          posterPath: movies[index].posterPath,
-                          title: movies[index].title,
-                          overview: movies[index].overview));
+                       child: MoviePreviewWidget(
+                           posterPath: movies[index].posterPath,
+                           title: movies[index].title));
                 }))),
       ],
     ));

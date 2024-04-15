@@ -8,9 +8,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:getout/screens/home/widgets/common/movie_preview_widget.dart';
-import 'package:getout/screens/movie/bloc/movie_provider.dart';
 import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 import 'package:getout/screens/home/widgets/common/title_widget.dart';
+
+import 'package:getout/screens/movie/bloc/movie_provider.dart';
 
 class MoviesSuccessWidget extends StatelessWidget {
   final List<MoviePreview> movies;
@@ -30,6 +31,7 @@ class MoviesSuccessWidget extends StatelessWidget {
       children: [
         const TitleWidget(
             asset: 'popcorn', title: 'Les films que vous allez aimer'),
+        const Padding(padding: EdgeInsets.only(top: 10)),
         Expanded(
             child: ListView(
                 controller: movieController,
@@ -45,7 +47,7 @@ class MoviesSuccessWidget extends StatelessWidget {
                       child: MoviePreviewWidget(
                           posterPath: movies[index].posterPath,
                           title: movies[index].title,
-                          overview: movies[index].overview));
+                          ));
                 }))),
       ],
     ));

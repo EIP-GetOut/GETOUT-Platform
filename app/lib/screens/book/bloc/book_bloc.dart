@@ -9,25 +9,25 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/constants/http_status.dart';
-import 'package:getout/screens/book/bloc/book_repository.dart';
+import 'package:getout/screens/book/bloc/book_service.dart';
 
 part 'book_event.dart';
 part 'book_state.dart';
 
 class BookBloc extends Bloc<BookEvent, BookState> {
+  final BookService bookService;
+
   BookBloc({
-    required this.bookRepository,
+    required this.bookService,
   }) : super(const BookState()) {
     on<CreateInfoBookRequest>(_mapGetBookEventToState);
   }
-
-  final BookRepository bookRepository;
 
   void _mapGetBookEventToState(
       CreateInfoBookRequest event, Emitter<BookState> emit) async {
     emit(state.copyWith(status: BookStatus.loading));
     try {
-      final InfoBookResponse book = await bookRepository.getInfoBook(event);
+      final InfoBookResponse book = await bookService.getInfoBook(event);
       emit(
         state.copyWith(
           status: BookStatus.success,

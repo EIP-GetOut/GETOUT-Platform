@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
 import 'package:getout/global.dart' as globals;
-import 'package:getout/screens/settings/widget/setting_row.dart';
 import 'package:getout/screens/settings/widget/title.dart';
 import 'package:getout/tools/app_l10n.dart';
 
@@ -31,7 +30,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
         ),
         body: Column(children: [
           const SizedBox(height: 50),
-          TitleRow(value: 'Global notification'),
+          const TitleRow(value: 'Global notification'),
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
               child: Row(

@@ -108,7 +108,9 @@ class MainPage extends StatelessWidget {
               } else if (state.status.isFoundWithoutPreferences) {
                 return const Forms();
               } else if (state.status.isLoading) {
-                  return const Center(child: LoadingPage());
+                  return const ColoredBox(
+                      color: Colors.white,
+                      child: Center(child: LoadingPage()));
               } else if (state.status.isError) {
                 /// TODO : Add a retry button
                 return ColoredBox(

@@ -11,7 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/book/bloc/book_bloc.dart';
 import 'package:getout/screens/book/bloc/book_service.dart';
-import 'package:getout/screens/book/bloc/book_repository.dart';
 import 'package:getout/screens/book/widgets/book_widget.dart';
 
 class Book extends StatelessWidget {
@@ -24,12 +23,12 @@ class Book extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: RepositoryProvider(
-        create: (context) => BookRepository(service: BookService()),
+        create: (context) => BookService(),
         child: MultiBlocProvider(
           providers: [
             BlocProvider<BookBloc>(
               create: (context) => BookBloc(
-                bookRepository: context.read<BookRepository>(),
+                bookService: context.read<BookService>(),
               )..add(
                   CreateInfoBookRequest(id: id),
                 ),

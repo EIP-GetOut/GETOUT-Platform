@@ -30,22 +30,24 @@ class InfoBookResponse extends BookEvent {
       this.authorsPicture,
       this.liked,
       this.disliked,
+      this.bookLink,
       this.wishlisted,
       this.read,
       this.id,
       required this.statusCode});
 
-  final List<Map<String, String?>>? authorsPicture;
+  final PersonList? authorsPicture;
   static const int success = HttpStatus.OK;
   final String? title;
   final String? overview;
   final String? posterPath;
   final String? backdropPath;
   final String? releaseDate;
-  final double? voteAverage;
+  final int? voteAverage;
   final int? pageCount;
   final bool? liked;
   final bool? disliked;
+  final String? bookLink;
   final bool? wishlisted;
   final bool? read;
   final String? id;
@@ -70,3 +72,16 @@ class AddBookResponse extends BookEvent {
 
   static const int success = HttpStatus.OK;
 }
+
+class Person extends BookEvent {
+  const Person (
+    {required this.name,
+    required this.picture}
+  );
+
+  final String name;
+  final String picture;
+}
+
+
+typedef PersonList = List<Person>;

@@ -20,35 +20,38 @@ class BooksSuccessWidget extends StatelessWidget {
     required this.books,
   });
 
-
   @override
   Widget build(BuildContext context) {
     final PageController bookController =
-    PageController(viewportFraction: 0.1, initialPage: 0);
+        PageController(viewportFraction: 0.1, initialPage: 0);
 
     return Expanded(
-        child: Column(
-      children: [
-        const TitleWidget(
-            asset: 'books', title: 'Les livres qui vous passionneront'),
-        Expanded(
-            child: ListView(
-                controller: bookController,
-                scrollDirection: Axis.horizontal,
-                children: List.generate(5, (index) {
-                  return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Book(books[index].id)));
-                      },
-                      child: BookPreviewWidget(
-                          posterPath: books[index].posterPath,
-                          title: books[index].title,
-                          overview: books[index].overview));
-                }))),
-      ],
-    ));
+        child: Padding(
+            padding: const EdgeInsets.only(top: 0),
+            child: Column(
+              children: [
+                const TitleWidget(
+                    asset: 'books', title: 'Les livres qui vous passionneront'),
+                const Padding(padding: EdgeInsets.only(top: 10)),
+                Expanded(
+                    child: ListView(
+                        controller: bookController,
+                        scrollDirection: Axis.horizontal,
+                        children: List.generate(5, (index) {
+                          return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            Book(books[index].id)));
+                              },
+                              child: BookPreviewWidget(
+                                posterPath: books[index].posterPath,
+                                title: books[index].title,
+                              ));
+                        }))),
+              ],
+            )));
   }
 }

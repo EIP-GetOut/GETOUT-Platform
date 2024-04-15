@@ -43,13 +43,13 @@ class HomePage extends StatelessWidget {
             },
             children: <Widget>[
               ListView(children: const [
-                SizedBox(height: 800, child: DashboardPage())
+                SizedBox(height: 600, child: DashboardPage())
               ]),
               ListView(children: const [
-                SizedBox(height: 1000, child: YourMoviesPage())
+                SizedBox(height: 900, child: YourMoviesPage())
               ]),
               ListView(children: const [
-                SizedBox(height: 1000, child: YourBooksPage())
+                SizedBox(height: 900, child: YourBooksPage())
               ]),
               //todo implement activities
               /*const SizedBox(

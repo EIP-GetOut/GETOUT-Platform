@@ -9,17 +9,17 @@
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-import 'package:getout/tools/status.dart';
-import 'package:getout/screens/home/bloc/home_repository.dart';
 import 'package:getout/screens/home/bloc/movies/movies_event.dart';
+import 'package:getout/screens/home/services/service.dart';
+import 'package:getout/tools/status.dart';
 
 part 'saved_movies_state.dart';
 
 class SavedMoviesHydratedBloc extends HydratedBloc<MoviesEvent, SavedMoviesState> {
-  final HomeRepository homeRepository;
+  final HomeService homeService;
 
   SavedMoviesHydratedBloc({
-    required this.homeRepository,
+    required this.homeService,
   }) : super(const SavedMoviesState()) {
     on<GenerateMoviesRequest>(_onSavedMoviesRequest);
   }
@@ -28,7 +28,7 @@ class SavedMoviesHydratedBloc extends HydratedBloc<MoviesEvent, SavedMoviesState
       GenerateMoviesRequest event, Emitter<SavedMoviesState> emit) async {
     emit(state.copyWith(status: Status.loading));
     try {
-      final moviesSaved = await homeRepository.getSavedMovies(event);
+      final moviesSaved = await homeService.getSavedMovies(event);
       emit(
         state.copyWith(
           status: Status.success,
