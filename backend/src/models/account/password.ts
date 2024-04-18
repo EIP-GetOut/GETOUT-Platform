@@ -25,8 +25,8 @@ function getDateIn1Hour (): Date {
   return followingDay
 }
 
-async function generatePasswordResetCode (accountId: UUID, email?: string): Promise<number> {
-  const criteria: FindOptionsWhere<Account> = { id: accountId, email }
+async function generatePasswordResetCode (accountId: UUID): Promise<number> {
+  const criteria: FindOptionsWhere<Account> = { id: accountId }
 
   return await findEntity<Account>(Account, criteria).then(async (account: Account | null) => {
     if (account == null) {
