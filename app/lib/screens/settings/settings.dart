@@ -23,7 +23,7 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: const Text('PARAMÈTRES'),
+        title: Text(appL10n(context)!.settings.toString().toUpperCase()),
         leading: const BackButton(),
       ),
       body:  SingleChildScrollView(
@@ -39,13 +39,13 @@ class SettingsPage extends StatelessWidget {
             SettingRow(page: const EditMailPage(), iconData: Icons.mail_outlined, value: appL10n(context)!.edit_email),
             SettingRow(page: const SizedBox(), iconData: Icons.exit_to_app_outlined, value: appL10n(context)!.disconnect, important: Important.warning),
             SettingRow(page: const SizedBox(), iconData: Icons.delete_outlined, value: appL10n(context)!.delete_account, important: Important.important),
-            const TitleRow(value: 'apparence'),
+            TitleRow(value: appL10n(context)!.appearance),
             SettingRow(page: const SizedBox(), iconData: Icons.public_outlined, value: appL10n(context)!.select_language),
-            const TitleRow(value: 'preference'),
+            TitleRow(value: appL10n(context)!.preference),
             SettingRow(page: const SizedBox(), iconData: Icons.settings_outlined, value: appL10n(context)!.select_preferences),
             SettingRow(page: const NotificationsPage(), iconData: Icons.notifications_outlined, value: appL10n(context)!.notifications),
-            const TitleRow(value: 'autre'),
-            const SettingRow(page: SizedBox(), iconData: Icons.help_outline, value: 'Support'),
+            TitleRow(value: appL10n(context)!.more),
+            SettingRow(page: const SizedBox(), iconData: Icons.help_outline, value: appL10n(context)!.support),
           ],
         ),
       ),

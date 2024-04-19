@@ -6,7 +6,7 @@
 
   "@_ERROR":{},
 
-  "@error_unknow": "Something went wrong",
+  "error_unknow": "Something went wrong, retry later",
   "error_internet": "Check your internet connection and restart",
   "error_server": "What ! Wait a minute, or contact the support",
   "error_unauthorized": "Check your information and restart",
@@ -20,6 +20,7 @@
       }
     }
   },
+  "error_password_email": "email and password don't match",
   "not_applicable": "Not applicable",
   "n_a": "N/A",
   "no_description": "No description",
@@ -27,8 +28,9 @@
   "@_CONNECTION": {},
 
   "@_LOGIN": {},
-  "signInWith": "Login with {Service}",
-  "@signInWith": {
+  "sign_in": "Sign in",
+  "sign_in_with": "Login with {Service}",
+  "@sign_in_with": {
     "placeholders": {
       "Service": {
         "type": "String",
@@ -37,11 +39,36 @@
     }
   },
 
+  "@_SIGN_UP": {},
+
+  "first_connection": "First connection ?",
+  "create_account": "Create an account",
+  "account_created": "Your account was succesfully created, you can now sign in.",
+  "your_profile": "Your profile",
+  "lastname": "Lastname",
+  "lastname_hint": "Enter your lastname",
+  "lastname_validator": "Lastname is required",
+  "firstname": "Firstname",
+  "firstname_hint": "Enter your firstname",
+  "firstname_validator": "Firstname is required",
+  "birthday": "Birthday",
+  "birthday_hint": "Select your birthday",
+  "birthday_validator": "Birthday is required",
+  "too_young": "You should be older than 13years old",
+  "next": "Next",
+
+  "@_FORGOT_PASSWORD": {},
+
+  "change_it": "Change it",
+
   "@_HOMEPAGE": {},
 
   "homepage_title": "Welcome !",
   "homepage_subtitle": "The productivity within reach",
   "you_saved": "You saved",
+  "see_more": "see more >",
+  "description": "Description",
+  "summary": "Summary",
 
   "@_DASHBOARD": {},
 
@@ -53,20 +80,37 @@
   "@_MOVIES": {},
 
   "movie" : "Movie",
-  "your_movies" : "Your Movies",
-  "your_books_description" : "All your books are here.",
-  "likeBooksTitle": "Your crush",
-  "@viewBooksTitle": "Your books read",
-  "@wishlistBooksTitle": "what you intend to read",
+  "movies" : "movies",
+  "the_movie": "The Movie",
+  "your_movies" : "Your movies",
+
+  "recommended_movies" : "recommended movies",
+  "liked_movies" : "liked movies",
+  "saved_movies" : "saved movies",
+
+  "your_movies_description" : "All your books are here.",
+  "like_movies_title": "Your crush",
+  "view_movies_title": "Your books read",
+  "wishlist_movies_title": "what you intend to read",
+  "director": "Director(s)",
+  "casting": "Casting",
 
   "@_BOOKS": {},
 
   "book" : "Book",
-  "yourBooks" : "Your Books",
-  "yourBooksDescription" : "All your books are here.",
-  "likeBooksTitle": "Your crush",
-  "@viewBooksTitle": "Your books read",
-  "@wishlistBooksTitle": "what you intend to read",
+  "books" : "books",
+  "the_book": "The book",
+  "your_books" : "Your Books",
+
+  "recommended_books" : "recommended books",
+  "liked_books" : "liked books",
+  "saved_books" : "liked books",
+
+  "your_books_description" : "All your books are here.",
+  "like_books_title": "Your crush",
+  "view_books_title": "Your books read",
+  "wishlist_books_title": "what you intend to read",
+  "author": "Author(s)",
 
   "@_FIELD": {},
 
@@ -75,6 +119,7 @@
   "@_PASSWORD": {},
 
   "password": "Password",
+  "forgot_password": "Mot de passe oublié",
   "password_hint": "Enter your password",
   "new_password": "New password",
   "new_password_hint": "Enter your new password",
@@ -98,9 +143,10 @@
 
   "@_CODE": {},
 
-  "email": "Code",
-  "email_hint": "Enter your code",
-  "@_code_hint": "Enter the code sent by email",
+  "code": "Code",
+  "code_hint": "Enter the code",
+  "code_validator": "code is a mandatory",
+  "@_code_hint": "Enter the code received by email",
 
   "@_SETTING": {},
 

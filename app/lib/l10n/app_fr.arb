@@ -6,7 +6,7 @@
 
   "@_ERROR":{},
 
-  "@error_unknow": "Une erreur est survenu",
+  "error_unknow": "Une erreur s'est produite, veuillez réessayer plus tard",
   "error_internet": "Vérifier votre connexion et recommencer",
   "error_server": "Surprenant ! Attendez un peu, ou contactez le support",
   "error_unauthorized": "Vérifier les informations et recommencer",
@@ -20,6 +20,7 @@
       }
     }
   },
+  "error_password_email": "Le mot de passe ou l'email est incorrect",
   "not_applicable": "non applicable",
   "n_a": "N/A",
   "no_description": "Aucune description",
@@ -27,8 +28,9 @@
   "@_CONNECTION": {},
 
   "@_LOGIN": {},
-  "signInWith": "Se connecter avec {service}",
-  "@signInWith": {
+  "sign_in": "Se connecter",
+  "sign_in_with": "Se connecter avec {service}",
+  "@sign_in_with": {
     "placeholders": {
       "service": {
         "type": "String",
@@ -37,11 +39,36 @@
     }
   },
 
+  "@_SIGN_UP": {},
+
+  "first_connection": "Première connexion ?",
+  "create_account": "Créer un compte",
+  "account_created": "Votre compte a bien été créé, vous pouvez maintenant vous connecter",
+  "your_profile": "Votre profil",
+  "lastname": "Nom",
+  "lastname_hint": "Entrez votre nom",
+  "lastname_validator": "Un nom est requis",
+  "firstname": "Prénom",
+  "firstname_hint": "Entrez votre prénom",
+  "firstname_validator": "Un prénom est requis",
+  "birthday": "Date de naissance",
+  "birthday_hint": "Sélectionnez votre date de naissance",
+  "birthday_validator": "Une date de naissance est requise",
+  "too_young": "Vous devez avoir plus de 13ans",
+  "next": "Suivant",
+
+  "@_FORGOT_PASSWORD": {},
+
+  "change_it": "Changez le",
+
   "@_HOMEPAGE": {},
 
   "homepage_title": "Bienvenue !",
   "homepage_subtitle": "La productivité à portée de main",
   "you_saved": "Vous avez gagné",
+  "see_more": "voir plus >",
+  "description": "Description",
+  "summary": "Résumé",
 
   "@_DASHBOARD": {},
 
@@ -53,20 +80,37 @@
   "@_MOVIES": {},
 
   "movie" : "Film",
-  "yourMovies" : "Vos films",
-  "yourMoviesDescription" : "Toutes vos films sont ici.",
-  "likeMoviesTitle": "Vos coups de coeur",
-  "@viewMoviesTitle": "vos film vu",
-  "@wishlistMoviesTitle": "ce que vous comptez voir",
+  "movies" : "les films",
+  "the_movie": "Le film",
+  "your_movies" : "Vos films",
+
+  "recommended_movies" : "les films recommandés",
+  "liked_movies" : "les films aimés",
+  "saved_movies" : "les films enregistrés",
+
+  "your_movies_description" : "Toutes vos films sont ici.",
+  "like_movies_title": "Vos coups de coeur",
+  "view_movies_title": "vos film vu",
+  "wishlist_movies_title": "ce que vous comptez voir",
+  "director": "réalisateur(s)",
+  "casting": "Distribution",
 
   "@_BOOKS": {},
 
   "book" : "Livre",
-  "yourBooks" : "Vos livres",
-  "yourBooksDescription" : "Toutes vos lectures sont ici.",
-  "likeBooksTitle": "Vos coups de coeur",
-  "@viewBooksTitle": "vos livres lu",
-  "@wishlistBooksTitle": "ce que vous comptez lire",
+  "books" : "les livres",
+  "the_book": "Le livre",
+  "your_books" : "Vos livres",
+
+  "recommended_books" : "les livres recommandés",
+  "liked_books" : "les livres aimés",
+  "saved_books" : "les livres enregistrés",
+
+  "your_books_description" : "Toutes vos lectures sont ici.",
+  "like_books_title": "Vos coups de coeur",
+  "view_books_title": "Vos livres lu",
+  "wishlist_books_title": "Ce que vous comptez lire",
+  "author": "Auteur(s)",
 
   "@_FIELD": {},
 
@@ -75,6 +119,7 @@
   "@_PASSWORD": {},
 
   "password": "Mot de passe",
+  "forgot_password": "Mot de passe oublié",
   "password_hint": "Entrer votre mot de passe",
   "new_password": "Nouveau mot de passe",
   "new_password_hint": "Entrer votre nouveau mot de passe",
@@ -99,8 +144,9 @@
   "@_CODE": {},
 
   "code": "Code",
-  "code_hint": "Entrer votre code",
-  "@_code_hint": "Entrer votre code reçu par mail",
+  "code_hint": "Entrer le code",
+  "code_validator": "le code est requis",
+  "@_code_hint": "Entrer le code reçu par mail",
 
   "@_SETTING": {},
 

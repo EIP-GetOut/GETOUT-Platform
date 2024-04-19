@@ -26,17 +26,3 @@ AppLocalizations? appL10n(BuildContext context) {
 String appL10nCallback(BuildContext context, String Function(AppLocalizations? appLocalizations) function) {
   return function(appL10n(context));
 }
-
-///test
-/*void test(context) {
-  //class
-  print('class:');
-  print(AppL10n.of(context)!.password);
-  print(AppL10n.ofCallback(context, (apl) => apl!.error_loading(apl.password)));
-  //function
-  print('function:');
-  print(appL10n(context)!.password);
-  print(appL10nCallback(context, (apl) {
-    return apl!.error_loading(apl.password);
-  }));
-}*/

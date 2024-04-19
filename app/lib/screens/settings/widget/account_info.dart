@@ -6,6 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:getout/global.dart' as globals;
 
 class AccountInfo extends StatelessWidget {
   const AccountInfo({super.key});
@@ -24,14 +25,14 @@ class AccountInfo extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Perry Chouteau',
+                  Text('${globals.session?['firstName']} ${globals.session?['lastName']}'.toLowerCase(),
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: (MediaQuery.of(context).size.width > 400)
                               ? 30
                               : 16,
                           color: Colors.black87)),
-                  Text('perry.chouteau@epitech.eu',
+                  Text(globals.session?['email'],
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: (MediaQuery.of(context).size.width > 400)

@@ -8,6 +8,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
+import 'package:getout/widgets/description_title.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class MovieDescriptionPage extends StatefulWidget {
   final InfoMovieResponse movie;
@@ -31,7 +33,7 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('DESCRIPTION'),
+        title: Text(appL10n(context)!.description.toUpperCase()),
         leading: const BackButton(),
       ),
       body: SingleChildScrollView(
@@ -41,15 +43,7 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                const Padding(
-                    padding: EdgeInsets.only(
-                        left: 10), //apply padding to all four sides
-                    child: Text('RÉSUMÉ',
-                        // textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ))),
+                DescriptionTitle(value: appL10n(context)!.summary),
                 Padding(
                     padding: const EdgeInsets.only(
                         left: 10,
@@ -59,18 +53,10 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                         padding: const EdgeInsets.only(bottom: 10),
                         child: Text(
                             // textAlign: TextAlign.start,
-                            widget.movie.overview ??
-                                'Aucune description disponible',
+                            widget.movie.overview ?? appL10n(context)!.no_description,
                             style: Theme.of(context).textTheme.bodySmall))),
                 separateLine(),
-                const Padding(
-                    padding: EdgeInsets.only(
-                        left: 10, top: 10), //apply padding to all four sides
-                    child: Text(
-                        // textAlign: TextAlign.start,
-                        'RÉALISATEUR',
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold))),
+                DescriptionTitle(value: appL10n(context)!.director),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Padding(
@@ -93,15 +79,7 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                   ),
                 ),
                 separateLine(),
-                const Padding(
-                  padding: EdgeInsets.only(
-                      left: 10, top: 10), //apply padding to all four sides
-                  child: Text(
-                    // textAlign: TextAlign.start,
-                    'CASTING',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                ),
+                DescriptionTitle(value: appL10n(context)!.casting),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(

@@ -13,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/movie/pages/movie_description.dart';
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 import 'package:getout/tools/duration_format.dart';
 
@@ -252,7 +253,7 @@ class MovieSuccessWidget extends StatelessWidget {
       Flexible(
         child: Padding(
           padding: const EdgeInsets.all(25.0),
-          child: Text(movie.overview ?? 'Aucune description disponible',
+          child: Text(movie.overview ?? appL10n(context)!.no_description,
               textAlign: TextAlign.justify,
               overflow: TextOverflow.ellipsis,
               maxLines: 10,
@@ -270,9 +271,9 @@ class MovieSuccessWidget extends StatelessWidget {
             ),
           );
         },
-        child: const Text(
-          'voir plus >',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        child: Text(
+          appL10n(context)!.see_more,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       )
     ]);

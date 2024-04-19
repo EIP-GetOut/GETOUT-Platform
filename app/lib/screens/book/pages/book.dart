@@ -220,7 +220,7 @@ class BookSuccessWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment
             .center, //Center Row contents vertically,            children: [
         children: [
-          Text('Livre',
+          Text(appL10n(context)!.book,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall),
           const SizedBox(width: 25),
@@ -235,7 +235,7 @@ class BookSuccessWidget extends StatelessWidget {
       Flexible(
         child: Padding(
           padding: const EdgeInsets.all(25.0),
-          child: Text(book.overview ?? 'Aucune description disponible',
+          child: Text(book.overview ?? appL10n(context)!.no_description,
               textAlign: TextAlign.justify,
               overflow: TextOverflow.ellipsis,
               maxLines: 11,
@@ -249,9 +249,9 @@ class BookSuccessWidget extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => BookDescriptionPage(book: book)));
         },
-        child: const Text(
-          'voir plus >',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        child: Text(
+          appL10n(context)!.see_more,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       )
     ]);

@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/home/bloc/recommended_books/recommended_books_bloc.dart';
 import 'package:getout/screens/home/widgets/recommended_books/recommended_books_success_widget.dart';
+import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/widgets/object_loading_error_widget.dart';
 
@@ -30,8 +31,7 @@ class RecommendedBooksWidget extends StatelessWidget {
                     child: CircularProgressIndicator(
                         backgroundColor: Color.fromARGB(0, 255, 5, 5))));
           } else if (state.status.isError) {
-//            return const MoviesErrorWidget();
-            return const ObjectLoadingErrorWidget(object: 'les livres');
+            return ObjectLoadingErrorWidget(object: appL10n(context)!.recommended_books);
           } else {
             return const SizedBox();
           }
