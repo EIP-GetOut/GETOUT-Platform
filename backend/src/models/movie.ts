@@ -159,12 +159,17 @@ const removeMovieFromDislikedMovies = async (accountId: UUID, movieId: number): 
 const removeMovieFromSeenMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
   await removeMovieFromList(accountId, movieId, 'seenMovies')
 
+async function getRecommendation (movieId: number): Promise<any> {
+  return await moviedb.movieRecommendations({ id: movieId })
+}
+
 export {
   addMovieToDislikedMovies,
   addMovieToLikedMovies,
   addMovieToSeenMovies,
   addMovieToWatchlist,
   getMovie,
+  getRecommendation,
   removeMovieFromDislikedMovies,
   removeMovieFromLikedMovies,
   removeMovieFromList,

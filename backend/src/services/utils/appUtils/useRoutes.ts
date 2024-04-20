@@ -30,11 +30,14 @@ import sendEmail from '@routes/account/resetPassword/sendEmail/sendEmail'
 import seenMovies from '@routes/account/seenMovies'
 import signup from '@routes/account/signup'
 import watchlist from '@routes/account/watchlist'
+import accounts from '@routes/accounts'
 import basicEndpoints from '@routes/basicEndpoints'
 import book from '@routes/book'
 import movie from '@routes/movie'
 import permissions from '@routes/permissions'
+import recommendationsTmdb from '@routes/recommendationsTmdb'
 import session from '@routes/session'
+import sessions from '@routes/sessions'
 
 const useRoutes = (app: Application): Application => (
   app
@@ -60,8 +63,11 @@ const useRoutes = (app: Application): Application => (
     .use(resetPassword)
     .use(isAllowed)
 
+    .use(sessions)
+    .use(accounts)
     .use(movie)
     .use(book)
+    .use(recommendationsTmdb)
 
     .use(oauth)
     .use(preferences)
