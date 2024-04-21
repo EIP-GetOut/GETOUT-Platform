@@ -7,12 +7,13 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/form/services/form_services.dart';
-import 'package:getout/screens/form/pages/social_media_time.dart';
 import 'package:getout/screens/form/pages/viewing_platform.dart';
-import 'package:getout/screens/form/pages/interest_choices.dart';
+// import 'package:getout/screens/form/pages/social_media_time.dart';
+// import 'package:getout/screens/form/pages/interest_choices.dart';
 import 'package:getout/screens/form/pages/literary_genre.dart';
 import 'package:getout/screens/form/pages/film_genres.dart';
 import 'package:getout/screens/form/pages/end_form.dart';
@@ -20,6 +21,7 @@ import 'package:getout/screens/form/bloc/form_bloc.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/session/session_event.dart';
+import 'package:getout/tools/tools.dart';
 
 class Forms extends StatelessWidget {
   const Forms({super.key});
@@ -33,22 +35,28 @@ class Forms extends StatelessWidget {
       create: (context) => FormBloc(),
       child: Scaffold(
         appBar: AppBar(
-            title: const Text('VOS PRÉFÉRENCES'),
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                pageController.previousPage(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeInOut,
-                );
-              },
+            //title: const Text('VOS PRÉFÉRENCES'),
+          title: const AutoSizeText('VOS PRÉFÉRENCES', maxLines: 1, minFontSize: 16.0, maxFontSize: 32.0),
+            leading: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    pageController.previousPage(
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                ),
+
+              ],
             )),
         body: PageView(
           controller: pageController,
           physics: const NeverScrollableScrollPhysics(),
           children: const <Widget>[
-            SocialMediaSpentTime(),
-            InterestChoices(),
+            // SocialMediaSpentTime(),
+            // InterestChoices(),
             LiteraryGenres(),
             FilmGenres(),
             ViewingPlatform(),
@@ -56,23 +64,29 @@ class Forms extends StatelessWidget {
           ],
         ),
         floatingActionButton: _nextButton(pageController),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
-  }
+  } 
 
   Widget _nextButton(final PageController pageController)
   {
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state) {
       return SizedBox(
-        width: 90 * MediaQuery.of(context).size.width / 100,
+        width: Tools.widthFactor(context, 0.9),
         height: 65,
         child: FloatingActionButton(
           child:
-              Text('Suivant', style: Theme.of(context).textTheme.labelMedium),
+          AutoSizingText('Suivant',
+              minSize: 70,
+              maxSize: 100,
+              sizeFactor: 0.12,
+              height: 40,
+              style: Theme.of(context).textTheme.labelMedium),
           onPressed: () {
             if (
-                (context.read<FormBloc>().state.status == FormStatus.interestChoices &&
-                    !context.read<FormBloc>().state.interest.containsValue(true)) ||
+                /*(context.read<FormBloc>().state.status == FormStatus.interestChoices &&
+                    !context.read<FormBloc>().state.interest.containsValue(true)) ||*/
                 (context.read<FormBloc>().state.status == FormStatus.literaryGenres &&
                     !context.read<FormBloc>().state.literaryGenres.containsValue(true)) ||
                 (context.read<FormBloc>().state.status == FormStatus.filmGenres &&

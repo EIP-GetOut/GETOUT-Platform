@@ -29,19 +29,6 @@ import 'package:getout/bloc/theme/bloc.dart';
 import 'package:getout/widgets/loading.dart';
 import 'package:getout/tools/status.dart';
 
-Map<int, Color> colorMap = {
-  50: const Color.fromRGBO(213, 86, 65, .1),
-  100: const Color.fromRGBO(213, 86, 65, .2),
-  200: const Color.fromRGBO(213, 86, 65, .3),
-  300: const Color.fromRGBO(213, 86, 65, .4),
-  400: const Color.fromRGBO(213, 86, 65, .5),
-  500: const Color.fromRGBO(213, 86, 65, .6),
-  600: const Color.fromRGBO(213, 86, 65, .7),
-  700: const Color.fromRGBO(213, 86, 65, .8),
-  800: const Color.fromRGBO(213, 86, 65, .9),
-  900: const Color.fromRGBO(213, 86, 65, 1),
-};
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HydratedBloc.storage = await HydratedStorage.build(

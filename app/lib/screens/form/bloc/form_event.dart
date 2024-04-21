@@ -23,23 +23,23 @@ class EmitEvent extends FormEvent {
   List<Object?> get props => [status];
 }
 
-class SocialMediaTimeEvent extends FormEvent {
+/*class SocialMediaTimeEvent extends FormEvent {
   final double? time;
 
   const SocialMediaTimeEvent({this.time});
 
   @override
   List<Object?> get props => [time];
-}
+}*/
 
-class InterestChoicesEvent extends FormEvent {
+/*class InterestChoicesEvent extends FormEvent {
   final String key;
 
   const InterestChoicesEvent({required this.key});
 
   @override
   List<Object?> get props => [key];
-}
+}*/
 
 class LiteraryGenresEvent extends FormEvent {
   final String key;

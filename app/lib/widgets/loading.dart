@@ -7,33 +7,31 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:getout/tools/flex_size.dart';
+import 'package:getout/tools/tools.dart';
 
-//todo responsive
+/// TODO responsive
 class LoadingPage extends StatelessWidget {
   const LoadingPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    bool isLandscape = (MediaQuery.of(context).size.width >
-        MediaQuery.of(context).size.height);
-
+  Widget build(BuildContext context)
+  {
     return Column(
       children: [
-        SizedBox(height: perHeight(context, (isLandscape ? 25 : 30))),
+        SizedBox(height: Tools.heightFactor(context, 0.3)),
         Row(children: [
-          SizedBox(width: perWidth(context, (isLandscape ? 25 : 10))),
+          SizedBox(width: Tools.widthFactor(context,0.1)),
           SizedBox(
-              height: uniHeight(context, 13, isLandscape),
-              width: uniWidth(context, 27, isLandscape),
+              height: Tools.heightFactor(context, 0.13),
+              width: Tools.widthFactor(context, 0.27),
               child: Image.asset('assets/images/logo/getout.png')),
-          SizedBox(width: perWidth(context, 4)),
+          SizedBox(width: Tools.widthFactor(context, 0.04)),
           SizedBox(
-              height: uniHeight(context, 10, isLandscape),
-              width: uniWidth(context, 45, isLandscape),
+              height: Tools.heightFactor(context, 0.1),
+              width: Tools.widthFactor(context, 0.45),
               child: Image.asset('assets/images/other/text_getout.png'))
         ]),
-        SizedBox(height: perHeight(context, (isLandscape ? 8 : 8))),
+        SizedBox(height: Tools.heightFactor(context, 0.08)),
         const SizedBox(
           height: 85,
           width: 85,
