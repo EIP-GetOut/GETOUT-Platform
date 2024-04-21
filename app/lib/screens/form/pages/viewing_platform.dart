@@ -43,7 +43,7 @@ class ViewingPlatform extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(height: Tools.heightFactor(context, 0.10)),
-          const PageIndicator(currentPage: 3, pageCount: 3),
+          const PageIndicator(currentPage: 2, pageCount: 3),
           SizedBox(height: Tools.heightFactor(context, 0.05)),
           Center(
             child: SizedBox(

@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/form/widgets/four_point.dart';
@@ -28,13 +29,19 @@ class LiteraryGenres extends StatelessWidget {
           SizedBox(height: Tools.heightFactor(context, 0.10)),
           SizedBox(
             width: MediaQuery.of(context).size.width,
-              child: const PageIndicator(currentPage: 1, pageCount: 3)),
+              child: const PageIndicator(currentPage: 0, pageCount: 3)),
           SizedBox(height: Tools.heightFactor(context, 0.05)),
           Center(
-            child: Text(
-              'GENRES LITTÉRAIRES :',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium,
+            child: SizedBox(
+              width: Tools.widthFactor(context, 0.80),
+              child: AutoSizeText(
+                'GENRES LITTÉRAIRES :',
+                maxLines: 1,
+                minFontSize: 18.0,
+                maxFontSize: 24.0,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ),
           ),
           SizedBox(height: Tools.heightFactor(context, 0.03)),
