@@ -8,10 +8,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getout/tools/app_l10n.dart';
 import 'package:intl/intl.dart';
 
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class LastNameField extends StatelessWidget {
   const LastNameField({super.key});
