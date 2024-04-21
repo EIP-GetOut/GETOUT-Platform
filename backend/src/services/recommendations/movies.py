@@ -2,8 +2,10 @@ import sys
 import os
 import json
 import random
+import requests
 from datetime import datetime, timedelta
 from tmdbv3api import TMDb, Movie
+from dotenv import load_dotenv
 
 WEIGHTS = {
     "genres": 0.2,
@@ -12,33 +14,39 @@ WEIGHTS = {
     "popularity": 0.35
 }
 
-def RecommandMovies(account: json) -> json:
-    # if last refresh is less than 24h ago return null
-    # if account["lastRefresh"] != None:
-    #     print("last refresh")
-    #     last_refresh = datetime.strptime(account["lastRefresh"], "%Y-%m-%dT%H:%M:%S.%fZ")
-    #     print(last_refresh)
-    #     if last_refresh + timedelta(hours=24) > datetime.now():
-    #         return None
-
+def recommandMovies(account: json) -> json:
+    load_dotenv()
     tmdb = TMDb()
     tmdb.api_key = os.getenv("MOVIE_DB_KEY")
 
     # give me a 500 popular movies
     movie = Movie()
-    popular = movie.popular({"language": "fr-FR", "page": 500})
+    # popular = movie.popular({"language": "fr-FR", "page": 500})
 
+    get_similar_movies('693134', movie)
     result = { "recommendations": [] }
     copy_list = []
-    for p in popular:
-        copy_list.append(p)
-    for p in range(len(copy_list)):
-        result["recommendations"].append({
-            "id": copy_list[p].id,
-            "title": copy_list[p].title,
-            "score": calculate_score(copy_list[p], account)
-        })
-    result["recommendations"] = sorted(result["recommendations"], key=lambda k: k['score'], reverse=True)[:5]
+    films_likes = [385687, 9615, 584, 168259]
+    scores = {}
+    for movie_id in films_likes:
+        similar_movies = get_similar_movies(movie_id, movie)
+        for similar_movie_id in similar_movies:
+            if similar_movie_id in scores:
+                scores[similar_movie_id] += 1
+            else:
+                scores[similar_movie_id] = 1
+    print("Scores des films similaires :")
+    for movie_id, score in scores.items():
+        print(f"ID du film : {movie_id}, Score : {score}")
+    # for p in popular:
+    #     copy_list.append(p)
+    # for p in range(len(copy_list)):
+    #     result["recommendations"].append({
+    #         "id": copy_list[p].id,
+    #         "title": copy_list[p].title,
+    #         "score": calculate_score(copy_list[p], account)
+    #     })
+    # result["recommendations"] = sorted(result["recommendations"], key=lambda k: k['score'], reverse=True)[:5]
     return result
 
 def calculate_score(movie, account):
@@ -63,6 +71,11 @@ def calculate_genre_score(movie, account):
     # print("genre score: " + str(score))
     return score
 
+def get_similar_movies(idMovie, movie: Movie):
+    data = movie.recommendations(idMovie)
+    ids = [entry['id'] for entry in data['results']]
+    return ids
+
 def calculate_plateform_score(movie, account):
     #Note: TMDB need to call another route to get available platforms (and i am not able to find them yet on account)
     v = random.randint(1, 100) * WEIGHTS["plateform"]
@@ -86,7 +99,7 @@ def calculate_popularity_score(movie, account):
 
 def main():
     externalSessionAccount = json.loads(sys.argv[1])
-    result = RecommandMovies(externalSessionAccount)
+    result = recommandMovies(externalSessionAccount)
     print(json.dumps(result))
 
 main()
