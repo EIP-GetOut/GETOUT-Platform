@@ -6,6 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:getout/constants/extern_url.dart';
 
 class MoviePreviewWidget extends StatelessWidget {
   const MoviePreviewWidget({
@@ -28,7 +29,7 @@ class MoviePreviewWidget extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(7.0),
           child: Image.network(
-            'https://image.tmdb.org/t/p/w600_and_h900_bestv2$posterPath',
+            '${ExternalConstants.BookImagePreviewPath}$posterPath',
             fit: BoxFit.cover,
           ),
         ),
@@ -39,6 +40,17 @@ class MoviePreviewWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall),
         )),
         const SizedBox(height: 5),
+        /*Flexible(
+          child: Container(
+            alignment: Alignment.topLeft,
+            padding: const EdgeInsets.only(right: 13.0),
+            child: Text(overview ?? appL10n(context)!.no_description,
+                textAlign: TextAlign.left,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 3,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 10)),
+          ),
+        ),*/
       ]),
     );
   }

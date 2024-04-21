@@ -13,6 +13,7 @@ import 'package:boxicons/boxicons.dart';
 
 import 'package:getout/screens/book/pages/book_description.dart';
 import 'package:getout/screens/book/bloc/book_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class BookSuccessWidget extends StatelessWidget {
   const BookSuccessWidget({
@@ -76,14 +77,14 @@ class BookSuccessWidget extends StatelessWidget {
                   ))),
           Positioned(
               top: 30,
-           right: 140,
+              right: 140,
               child: IconButton(
                   icon: const Icon(Icons.share),
                   color: Colors.white,
                   onPressed: () async {
                     await Clipboard.setData(
                         ClipboardData(text: '${book.bookLink}'));
-                  })), //todo head
+                  })),//todo head
           Positioned(
             top: 30,
             right: 80,
@@ -187,7 +188,7 @@ class BookSuccessWidget extends StatelessWidget {
         ],
       ),
       Text(
-        book.title ?? 'N/A',
+        book.title ?? appL10n(context)!.not_applicable,
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
       ),
@@ -219,7 +220,7 @@ class BookSuccessWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment
             .center, //Center Row contents vertically,            children: [
         children: [
-          Text('Livre',
+          Text(appL10n(context)!.book,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall),
           const SizedBox(width: 25),
@@ -234,7 +235,7 @@ class BookSuccessWidget extends StatelessWidget {
       Flexible(
         child: Padding(
           padding: const EdgeInsets.all(25.0),
-          child: Text(book.overview ?? 'Aucune description disponible',
+          child: Text(book.overview ?? appL10n(context)!.no_description,
               textAlign: TextAlign.justify,
               overflow: TextOverflow.ellipsis,
               maxLines: 11,
@@ -248,9 +249,9 @@ class BookSuccessWidget extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => BookDescriptionPage(book: book)));
         },
-        child: const Text(
-          'voir plus >',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        child: Text(
+          appL10n(context)!.see_more,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       )
     ]);

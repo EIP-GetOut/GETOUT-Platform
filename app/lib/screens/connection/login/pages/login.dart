@@ -20,6 +20,7 @@ import 'package:getout/screens/connection/register/pages/register.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/connection/login/widgets/fields.dart';
 import 'package:getout/screens/connection/widgets/fields_title.dart';
+import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/tools/status.dart';
@@ -43,10 +44,9 @@ class LoginPage extends StatelessWidget {
               (state.exception as DioException).response != null &&
               (state.exception as DioException).response!.statusCode ==
                   HttpStatus.FORBIDDEN) {
-            showSnackBar(context, 'Le mot de passe ou l\'email est incorrect');
+            showSnackBar(context, appL10n(context)!.error_password_email);
           } else {
-            showSnackBar(context,
-                'Une erreur s\'est produite, veuillez reesayer plus tard');
+            showSnackBar(context, appL10n(context)!.error_unknow);
           }
         }
         if (state.status.isSuccess) {
@@ -68,16 +68,16 @@ class LoginPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Row(
+               Row(
                 children: [
-                  SizedBox(width: 10),
-                  Text('ADRESSE EMAIL',
+                  const SizedBox(width: 10),
+                  Text(appL10n(context)!.email.toUpperCase(),
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.black)),
-                  Text('*',
+                  const Text('*',
                       textAlign: TextAlign.left,
                       style: TextStyle(
                           fontSize: 16,
@@ -89,7 +89,7 @@ class LoginPage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                   child: EmailField()),
               const SizedBox(height: 20),
-              fieldTitle('MOT DE PASSE'),
+              fieldTitle(appL10n(context)!.password.toUpperCase()),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
                 child: PasswordField(),
@@ -118,14 +118,14 @@ class LoginPage extends StatelessWidget {
                           child: RegisterPage());
                     }));
                   },
-                  child: const Text.rich(
+                  child: Text.rich(
                     TextSpan(
-                      text: 'Première connection ?',
-                      style: TextStyle(color: Colors.black, fontSize: 16),
+                      text: appL10n(context)!.first_connection,
+                      style: const TextStyle(color: Colors.black, fontSize: 16),
                       children: <InlineSpan>[
                         TextSpan(
-                          text: ' Créer un compte',
-                          style: TextStyle(
+                          text: appL10n(context)!.create_account,
+                          style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Color.fromRGBO(213, 86, 65, 0.992)),
@@ -149,14 +149,14 @@ class LoginPage extends StatelessWidget {
                       ], child: const ForgotPasswordProvider());
                     }));
                   },
-                  child: const Text.rich(
+                  child: Text.rich(
                     TextSpan(
-                      text: 'Mot de passe oublié ?',
-                      style: TextStyle(color: Colors.black, fontSize: 16),
+                      text: '${appL10n(context)!.forgot_password} ?',
+                      style: const TextStyle(color: Colors.black, fontSize: 16),
                       children: <InlineSpan>[
                         TextSpan(
-                          text: ' Changez le',
-                          style: TextStyle(
+                          text: ' ${appL10n(context)!.change_it}',
+                          style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Color.fromRGBO(213, 86, 65, 0.992)),
@@ -191,7 +191,7 @@ class LoginButton extends StatelessWidget {
                 width: 90 * phoneWidth / 100,
                 height: 65,
                 child: FloatingActionButton(
-                  child: Text('Se connecter',
+                  child: Text(appL10n(context)!.sign_in,
                       style: Theme.of(context).textTheme.labelMedium),
                   onPressed: () {
                     if (formKey.currentState!.validate()) {

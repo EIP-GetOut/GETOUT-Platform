@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/home/bloc/recommended_movies/recommended_movies_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/widgets/object_loading_error_widget.dart';
 import 'package:getout/screens/home/children/dashboard/widgets/movies/movies_succes_widget.dart';
@@ -33,7 +34,7 @@ class MoviesWidget extends StatelessWidget {
               backgroundColor: Color.fromARGB(0, 255, 5, 5),
             ));
           } else if (state.status.isError) {
-            return const ObjectLoadingErrorWidget(object: 'les films');
+            return ObjectLoadingErrorWidget(object: appL10n(context)!.movies);
           } else {
             return const SizedBox();
           }

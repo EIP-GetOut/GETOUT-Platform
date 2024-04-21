@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class LastNameField extends StatelessWidget {
   const LastNameField({super.key});
@@ -24,7 +25,7 @@ class LastNameField extends StatelessWidget {
         child: TextFormField(
           style: const TextStyle(fontSize: 17, color: Colors.black),
           decoration: InputDecoration(
-              labelText: 'Entrez votre nom',
+              labelText: appL10n(context)!.lastname_hint,
               floatingLabelBehavior: FloatingLabelBehavior.never,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(0.5),
@@ -33,7 +34,7 @@ class LastNameField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(0.5),
               )),
           validator: (value) =>
-          state.isLastNameEmpty ? null : 'Un nom est requis',
+          state.isLastNameEmpty ? null : appL10n(context)!.lastname_validator,
           onChanged: (value) => context.read<RegisterBloc>().add(
             RegisterLastNameChanged(lastName: value),
           ),
@@ -56,7 +57,7 @@ class FirstNameField extends StatelessWidget {
         child: TextFormField(
           style: const TextStyle(fontSize: 17, color: Colors.black),
           decoration: InputDecoration(
-              labelText: 'Entrez votre prénom',
+              labelText: appL10n(context)!.firstname_hint,
               floatingLabelBehavior: FloatingLabelBehavior.never,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(0.5),
@@ -65,7 +66,7 @@ class FirstNameField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(0.5),
               )),
           validator: (value) =>
-          state.isFirstNameEmpty ? null : 'Un prénom est requis',
+          state.isFirstNameEmpty ? null : appL10n(context)!.firstname_validator,
           onChanged: (value) => context.read<RegisterBloc>().add(
             RegisterFirstNameChanged(firstName: value),
           ),
@@ -90,7 +91,7 @@ class BirthDateField extends StatelessWidget {
             controller: controller,
             style: const TextStyle(fontSize: 17, color: Colors.black),
             decoration: InputDecoration(
-                labelText: 'Sélectionnez votre date de naissance',
+                labelText: appL10n(context)!.birthday_hint,
                 floatingLabelBehavior: FloatingLabelBehavior.never,
                 enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(0.5),
@@ -101,12 +102,12 @@ class BirthDateField extends StatelessWidget {
             readOnly: true,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Une date est requise';
+                return appL10n(context)!.birthday_validator;
               }
               DateFormat format = DateFormat('dd/MM/yy');
               DateTime date = format.parse(value);
               if (date.isAfter(DateTime.now().subtract(const Duration(days: 365 * 13)))) {
-                return 'La date doit être supérieure à 13 ans';
+                return appL10n(context)!.too_young;
               }
               context.read<RegisterBloc>().add(
                 RegisterBirthDateChanged(birthDate: value),
@@ -146,7 +147,7 @@ class EmailField extends StatelessWidget {
           child: TextFormField(
             style: const TextStyle(fontSize: 17, color: Colors.black),
             decoration: InputDecoration(
-              labelText: 'Entrez votre adresse email',
+              labelText: appL10n(context)!.email_hint,
               floatingLabelBehavior: FloatingLabelBehavior.never,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(0.5),
@@ -156,7 +157,7 @@ class EmailField extends StatelessWidget {
               ),
             ),
             validator: (value) =>
-            state.isEmailValid ? null : 'Un email valide est requis',
+            state.isEmailValid ? null : appL10n(context)!.email_validator,
             onChanged: (value) =>
                 context.read<RegisterBloc>().add(
                   RegisterEmailChanged(email: value),
@@ -182,7 +183,7 @@ class PasswordField extends StatelessWidget {
           obscureText: true,
           style: const TextStyle(fontSize: 17, color: Colors.black),
           decoration: InputDecoration(
-              labelText: 'Entrez votre mot de passe',
+              labelText: appL10n(context)!.password_hint,
               floatingLabelBehavior: FloatingLabelBehavior.never,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(0.5),
@@ -214,7 +215,7 @@ class ConfirmPasswordField extends StatelessWidget {
           obscureText: true,
           style: const TextStyle(fontSize: 17, color: Colors.black),
           decoration: InputDecoration(
-              labelText: 'Confirmez votre mot de passe',
+              labelText: appL10n(context)!.confirm_password_hint,
               floatingLabelBehavior: FloatingLabelBehavior.never,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(0.5),
@@ -223,7 +224,7 @@ class ConfirmPasswordField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(0.5),
               )),
           validator: (value) =>
-          state.isConfirmPasswordValid ? null : 'Le mot de passe est différent',
+          state.isConfirmPasswordValid ? null : appL10n(context)!.password_matching,
           onChanged: (value) => context.read<RegisterBloc>().add(
             RegisterConfirmPasswordChanged(confirmPassword: value),
           ),

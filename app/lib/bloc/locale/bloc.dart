@@ -30,7 +30,7 @@ class LocaleToEn extends LocaleEvent {}
 /// {@endtemplate}
 class LocaleBloc extends Bloc<LocaleEvent, Locale?> {
   /// {@macro counter_bloc}
-  LocaleBloc(BuildContext context) : super(null) {
+  LocaleBloc(BuildContext context) : super(const Locale('fr')) {
     on<LocaleToDefault>((event, emit) => emit(Localizations.localeOf(event.context)));
     on<LocaleToFr>((event, emit) => emit(const Locale('fr')));
     on<LocaleToEn>((event, emit) => emit(const Locale('en')));

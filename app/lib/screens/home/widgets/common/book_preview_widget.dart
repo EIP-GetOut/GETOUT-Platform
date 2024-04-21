@@ -44,18 +44,18 @@ class BookPreviewWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.titleSmall),
         )),
         const SizedBox(height: 5),
-        // Flexible(
-        //   child: Container(
-        //     alignment: Alignment.topLeft,
-        //     padding: const EdgeInsets.only(right: 13.0),
-        //     // child: Text(overview ?? 'Aucune description disponible',
-        //     //     textAlign: TextAlign.left,
-        //     //     overflow: TextOverflow.ellipsis,
-        //     //     maxLines: 3,
-        //     //     style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 10)),
-        //   ),
-        // ),
-      ]),
+        /*Flexible(
+          child: Container(
+            alignment: Alignment.topLeft,
+            padding: const EdgeInsets.only(right: 13.0),
+            child: Text(overview ?? appL10n(context)!.no_description,
+                textAlign: TextAlign.left,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 3,
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 10)),
+          ),
+        ),*/
+     ]),
     );
   }
 }

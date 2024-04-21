@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/settings/services/service.dart';
+import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/validator/email.dart';
 import 'package:getout/tools/validator/field.dart';
 import 'package:getout/widgets/fields/email_field.dart';
@@ -42,13 +43,13 @@ class EditMailPage extends StatelessWidget {
               children: [
                 PasswordField(
                     onChanged: (String value) => password = value,
-                    validator: (value) => mandatoryValidator(password)),
+                    validator: (_) => mandatoryValidator(context, password)),
                 NewEmailField(
                     onChanged: (String value) => newEmail = value,
-                    validator: (value) => emailValidator(value)),
+                    validator: (_) => emailValidator(context, newEmail)),
                 ConfirmEmailField(
                     onChanged: (value) => confirmEmail = value,
-                    validator: (value) => confirmEmailValidator(newEmail, confirmEmail)),
+                    validator: (_) => confirmEmailValidator(context, newEmail, confirmEmail)),
                 const SizedBox(height: 32),
               ],
             ),
@@ -56,7 +57,7 @@ class EditMailPage extends StatelessWidget {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingButton(
-          title: 'Changer d\'email',
+          title: appL10n(context)!.edit_email,
           onPressed: () async {
             //todo setup request & error handling, setup validator with tools function;
             if (formKey.currentState!.validate()) {

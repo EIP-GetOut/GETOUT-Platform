@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:getout/screens/book/bloc/book_provider.dart';
 import 'package:getout/screens/home/bloc/books/books_event.dart';
 import 'package:getout/screens/home/widgets/common/book_preview_widget.dart';
-// import 'package:getout/screens/home/widgets/common/book_preview_widget.dart';
 import 'package:getout/screens/home/widgets/common/title_widget.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class RecommendedBooksSuccessWidget extends StatelessWidget {
   final List<BookPreview> books;
@@ -29,8 +29,8 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
     return Expanded(
         child: Column(
       children: [
-        const TitleWidget(
-            asset: 'fire', title: 'Nos recommandations pour vous'),
+        TitleWidget(
+            asset: 'fire', title: appL10n(context)!.book_recommendations),
             const Padding(padding: EdgeInsets.only(top: 10)),
         Expanded(
             child: ListView(

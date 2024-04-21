@@ -5,24 +5,27 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'package:flutter/cupertino.dart';
 import 'package:getout/constants/regular_expression.dart';
+import 'package:getout/tools/app_l10n.dart';
 
-String? newPasswordValidator(String? password) {
+String? newPasswordValidator(BuildContext context, String? password) {
   RegExp regex = RegExp(RegularExpression.password);
 
   if (password == null || !regex.hasMatch(password)) {
-    return 'Le mot de passe dois contenir au minimum 8 caractères, dont une majuscule, une minuscule et un chiffre';
+    return appL10n(context)!.password_validator;
   }
   return null;
 }
 
-String? confirmPasswordValidator(String? newPassword, String? confirmPassword) {
-  String? result = newPasswordValidator(confirmPassword);
+String? confirmPasswordValidator(
+    BuildContext context, String? newPassword, String? confirmPassword) {
+  String? result = newPasswordValidator(context, confirmPassword);
 
   if (result != null) {
     return result;
   }
   return (newPassword != confirmPassword)
-      ? 'Les nouveaux mots de passe saisies ne correspondent pas.'
+      ? appL10n(context)!.password_matching
       : null;
 }

@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:getout/tools/app_l10n.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -71,13 +72,13 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Builder(builder: (context) {
       final locale = context.watch<LocaleBloc>().state;
       final themeData = context.watch<ThemeBloc>().state;
 
       return MaterialApp(
           title: 'Get Out',
+          supportedLocales: const [Locale('en'), Locale('fr')],
           locale: locale,
           localizationsDelegates: const [
             AppLocalizations.delegate,
@@ -99,15 +100,15 @@ class MainPage extends StatelessWidget {
                       child: Center(child: LoadingPage()));
               } else if (state.status.isError) {
                 /// TODO : Add a retry button
-                return const ColoredBox(
+                return ColoredBox(
                         color: Colors.white,
-                        child: ObjectLoadingErrorWidget(object: 'la session'));
+                        child: ObjectLoadingErrorWidget(object: appL10n(context)!.your_account));
               } else if (state.status.isNotFound) {
                 return const ConnectionProvider();
               } else {
-                return const ColoredBox(
+                return ColoredBox(
                     color: Colors.red,
-                    child: ObjectLoadingErrorWidget(object: 'erreur inconnue'));
+                    child: ObjectLoadingErrorWidget(object: appL10n(context)!.your_account));
               }
             },
           ),

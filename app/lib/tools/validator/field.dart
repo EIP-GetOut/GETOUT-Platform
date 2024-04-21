@@ -5,9 +5,12 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-String? mandatoryValidator(String? field) {
+import 'package:flutter/cupertino.dart';
+import 'package:getout/tools/app_l10n.dart';
+
+String? mandatoryValidator(BuildContext context, String? field) {
   if (field == null || field == '') {
-    return 'Ce champs ne peut pas etre vide';
+    return appL10n(context)!.mandatory_validator;
   }
   return null;
 }
