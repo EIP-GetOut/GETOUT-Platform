@@ -19,7 +19,6 @@ const router = Router()
 router.get('/accounts/:page', logApiRequest, (req: Request, res: Response) => {
   getAccounts(parseInt(req.params.page, 10)).then(async (accounts: any) => {
     // logger.info(`Successfully retreived 50 accounts at page ${req.params.page}`)
-    logger.warn(accounts.length)
     return res.status(StatusCodes.OK).json({ accounts })
   }).catch(handleErrorOnRoute(res))
 })
