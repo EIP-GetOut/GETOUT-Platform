@@ -31,7 +31,8 @@ export interface SessionAccount {
   dislikedBooks: string []
   seenMovies: number []
   readBooks: string []
-  lastRecommandation?: Date
+  lastMovieRecommandation?: Date
+  lastBookRecommandation?: Date
   recommendedBooksHistory: string []
   recommendedMoviesHistory: number []
   spentMinutesReadingAndWatching: number

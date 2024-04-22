@@ -79,7 +79,13 @@ export class Account {
     nullable: true,
     default: null
   })
-    lastRecommandation: Date | null = null
+    lastMovieRecommandation: Date | null = null
+
+  @Column('timestamp', {
+    nullable: true,
+    default: null
+  })
+    lastBookRecommandation: Date | null = null
 
   @Column('text', { array: true, default: [] })
     recommendedBooksHistory: string [] = []

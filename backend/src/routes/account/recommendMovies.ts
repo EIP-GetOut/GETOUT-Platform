@@ -44,10 +44,10 @@ router.get('/account/:accountId/recommend-movies', logApiRequest, (req: Request,
     env: process.env
   }
 
-  logger.debug(`Missing ${(60000 - (Date.now() - new Date(req.session.account!.lastRecommandation!).getTime())) / 1000} seconds to generate new recommendations.`)
+  logger.debug(`Missing ${(60000 - (Date.now() - new Date(req.session.account!.lastMovieRecommandation!).getTime())) / 1000} seconds to generate new recommendations.`)
 
-  if (req.session.account?.lastRecommandation != null &&
-    Date.now() - new Date(req.session.account.lastRecommandation).getTime() < 60000) { // 1 minutes
+  if (req.session.account?.lastMovieRecommandation != null &&
+    Date.now() - new Date(req.session.account.lastMovieRecommandation).getTime() < 60000) { // 1 minutes
     getRecommandationsFromHistory(req.session.account).then((resolvedPromises) => {
       logger.info('Successfully retrieved last 5 recommendations.')
       return res.status(StatusCodes.OK).json(resolvedPromises)
@@ -68,13 +68,13 @@ router.get('/account/:accountId/recommend-movies', logApiRequest, (req: Request,
     }).catch(() => {
       throw new RecommendationsDetailsError()
     }).then(async (resolvedPromises) => {
-      return await modifyAccount(req.session.account!.id, { lastRecommandation: new Date() }).then(() => {
+      return await modifyAccount(req.session.account!.id, { lastMovieRecommandation: new Date() }).then(() => {
         logger.info(`Successfully retrieved movie recommendations: ${JSON.stringify(recommendations, null, 2)}`)
         return res.status(StatusCodes.OK).json(resolvedPromises)
       })
     })
   }).catch((err: any) => {
-    if (req.session.account?.lastRecommandation != null && !(err instanceof AppError)) {
+    if (req.session.account?.lastMovieRecommandation != null && !(err instanceof AppError)) {
       getRecommandationsFromHistory(req.session.account).then((resolvedPromises) => {
         logger.error(`${err.name}: ${err.message}`)
         logger.info('Unknown error detected, retrieved last 5 recommendations.')
