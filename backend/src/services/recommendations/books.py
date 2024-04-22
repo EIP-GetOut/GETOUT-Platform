@@ -2,6 +2,7 @@ import sys
 import os
 import json
 import random
+import requests
 from datetime import datetime, timedelta
 from googleapiclient.discovery import build
 # from google_books_api_wrapper.api import GoogleBooksAPI
@@ -16,36 +17,44 @@ WEIGHTS = {
 
 # API_GOOGLE = GoogleBooksAPI()
 
+
+
 def RecommandBooks(user: json) -> json:
-    nyt = NYTAPI("EWZh85CC8ZWDpC7eL2fi8zBnIu9Gtwp3", parse_dates=True)
-    # get a 100 best sellers
-    best_sellers = nyt.best_sellers_list()
+    read_books = user["readBooks"]
+    genres = user["preferences"]["booksGenres"]
     result = { "recommendations": [] }
-    copy_list = []
-    for p in best_sellers:
-        copy_list.append(p)
-    for p in range(len(copy_list)):
+    # print("READ BOOKS / GENRE :")
+    # print(read_books)
+    # print(genres)
+
+    ids_titres_livres = []  # Liste de tuples (ID, titre)
+
+    while len(ids_titres_livres) < 5:
+        for genre in genres:
+            # Appel à l'API Google Books pour récupérer les livres par genre
+            url = f"https://www.googleapis.com/books/v1/volumes?q=subject:{genre}&maxResults=20&orderBy=relevance"
+            response = requests.get(url)
+            data = response.json()
+            items = data.get("items", [])
+            for item in items:
+                book_id = item.get("id")
+                book_title = item.get("volumeInfo", {}).get("title")
+                if book_id not in read_books and book_id not in [id for id, _ in ids_titres_livres]:
+                    ids_titres_livres.append((book_id, book_title))
+                if len(ids_titres_livres) >= 5:
+                    break
+            if len(ids_titres_livres) >= 5:
+                break
+
+    # print("IDS ET TITRES DES LIVRES :")
+    # print(ids_titres_livres)
+    for p in range(5):
         result["recommendations"].append({
-            "title": copy_list[p]["title"],
-            "isbn13": copy_list[p]["primary_isbn13"],
-            "score": calculate_score(copy_list[p], user)
-        })
-    result["recommendations"] = sorted(result["recommendations"], key=lambda k: k['score'], reverse=True)[:5]
-    google_books_api = build("books", "v1", developerKey=os.getenv("GOOGLE_BOOKS_API_KEY"))
-    for r in result["recommendations"]:
-        r["id"] = google_books_api.volumes().list(q="isbn:" + r["isbn13"]).execute()["items"][0]["id"]
+        "title": ids_titres_livres[p][1],
+        "score": random.randint(1, 100)})
+    sorted(result["recommendations"], key=lambda k: k['score'], reverse=True)
     return result
-    # get info from google api about the first book
-    #print(best_sellers[0]["primary_isbn13"])
-    #print(best_sellers[0]["title"])
-    #service = build("books", "v1", developerKey=os.environ.get("GOOGLE_BOOKS_API_KEY"))
-    ## search a book by isbn13
-    #response = service.volumes().list(q="isbn:" +"9781781105542").execute()
-#
-    #if "items" in response:
-    #    # print the book in json formatted string
-    #    print(json.dumps(response["items"][0], indent=4, sort_keys=True))
-    #return None
+
 
 def calculate_score(book, user):
     # print("---------------------------------")
@@ -104,13 +113,13 @@ def calculate_popularity_score(book, user):
     #    copy_list.append(p)
     #random.shuffle(copy_list)
     #print(copy_list[0])
-    #for p in range(5):
+    # for p in range(5):
     #    result["recommendations"].append({
     #        "title": copy_list[p].title,
     #        "score": random.randint(1, 100)
     #    })
-    #sorted(result["recommendations"], key=lambda k: k['score'], reverse=True)
-    #return result
+    # sorted(result["recommendations"], key=lambda k: k['score'], reverse=True)
+    # return result
 
 def main():
     externalSessionAccount = json.loads(sys.argv[1])

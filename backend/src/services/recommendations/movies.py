@@ -5,7 +5,7 @@ import random
 import requests
 from datetime import datetime, timedelta
 from tmdbv3api import TMDb, Movie
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 WEIGHTS = {
     "genres": 0.2,
@@ -14,20 +14,67 @@ WEIGHTS = {
     "popularity": 0.35
 }
 
-def recommandMovies(account: json) -> json:
-    load_dotenv()
+def comparer_genre_ids(films, mes_genre_ids):
+    films_correspondants = []
+    for film in films:
+        for genre_id in film['genre_ids']:
+            if genre_id in mes_genre_ids:
+                films_correspondants.append(film['id'])
+                if len(films_correspondants) >= 5:
+                    return films_correspondants
+                break
+    return films_correspondants
+
+def recommendation_genre(account, movie: Movie):
+    movie = Movie()
+    popular = movie.popular({"language": "fr-FR", "page": 500})
+    films_correspondants = comparer_genre_ids(popular, account["preferences"]["moviesGenres"])
+    result = {}
+    id_title_pairs = []
+    result["recommandations"] = []
+    for book_id in films_correspondants:
+        title = movie.details(book_id)["original_title"]
+        id_title_pairs.append([book_id, title])
+    for p in range(len(id_title_pairs)):
+        result["recommandations"].append({
+            "id": id_title_pairs[p][0],
+            "title": id_title_pairs[p][1],
+            "score": random.randint(0, 100)
+        })
+    result["recommandations"] = sorted(result["recommandations"], key=lambda k: k['score'], reverse=True)[:5]
+    print(result)
+    return result
+
+
+def give_recommendation(account, list):
+    test = sorted(list.items(), key=lambda x: x[1], reverse=True)
+    films_non_vus = []
+    for film in test:
+        if film[0] not in account["seenMovies"]:
+            films_non_vus.append(film[0])
+            if len(films_non_vus) == 5:
+                break
+    return films_non_vus
+
+def test(account: json) -> json:
     tmdb = TMDb()
     tmdb.api_key = os.getenv("MOVIE_DB_KEY")
 
-    # give me a 500 popular movies
     movie = Movie()
-    # popular = movie.popular({"language": "fr-FR", "page": 500})
+    if (len(account["likedMovies"]) != 0):
+        return recommandMovies(account)
+    else:
+        return recommendation_genre(account, movie)
 
-    get_similar_movies('693134', movie)
-    result = { "recommendations": [] }
-    copy_list = []
-    films_likes = [385687, 9615, 584, 168259]
+def recommandMovies(account):
+    # load_dotenv()
+    tmdb = TMDb()
+    tmdb.api_key = os.getenv("MOVIE_DB_KEY")
+
+    movie = Movie()
+    films_likes = account["likedMovies"]
     scores = {}
+    result = {}
     for movie_id in films_likes:
         similar_movies = get_similar_movies(movie_id, movie)
         for similar_movie_id in similar_movies:
@@ -35,31 +82,26 @@ def recommandMovies(account: json) -> json:
                 scores[similar_movie_id] += 1
             else:
                 scores[similar_movie_id] = 1
-    print("Scores des films similaires :")
-    for movie_id, score in scores.items():
-        print(f"ID du film : {movie_id}, Score : {score}")
-    # for p in popular:
-    #     copy_list.append(p)
-    # for p in range(len(copy_list)):
-    #     result["recommendations"].append({
-    #         "id": copy_list[p].id,
-    #         "title": copy_list[p].title,
-    #         "score": calculate_score(copy_list[p], account)
-    #     })
-    # result["recommendations"] = sorted(result["recommendations"], key=lambda k: k['score'], reverse=True)[:5]
+    result2 = give_recommendation(account, scores)
+    id_title_pairs = []
+    result["recommandations"] = []
+    for book_id in result2:
+        title = movie.details(book_id)["original_title"]
+        id_title_pairs.append([book_id, title])
+    for p in range(len(id_title_pairs)):
+        result["recommandations"].append({
+            "id": id_title_pairs[p][0],
+            "title": id_title_pairs[p][1],
+            "score": random.randint(0, 100)
+        })
+    result["recommandations"] = sorted(result["recommandations"], key=lambda k: k['score'], reverse=True)[:5]
+    print(result)
     return result
 
 def calculate_score(movie, account):
-    # print("---------------------------------")
-    # print("calculate score")
-    # print(movie)
     score = 0
     score += calculate_genre_score(movie, account)
-    # score += calculate_plateform_score(movie, account)
     score += calculate_critics_score(movie, account)
-    # score += calculate_popularity_score(movie, account)
-    # print("total score: " + str(score))
-    # print("---------------------------------")
     return score
 
 def calculate_genre_score(movie, account):
@@ -68,38 +110,21 @@ def calculate_genre_score(movie, account):
     for g in movie.genre_ids:
         if g in account["preferences"]["moviesGenres"]:
             score += WEIGHTS["genres"] / nb_genre
-    # print("genre score: " + str(score))
     return score
 
 def get_similar_movies(idMovie, movie: Movie):
     data = movie.recommendations(idMovie)
     ids = [entry['id'] for entry in data['results']]
+    title = [entry['title'] for entry in data['results']]
     return ids
-
-def calculate_plateform_score(movie, account):
-    #Note: TMDB need to call another route to get available platforms (and i am not able to find them yet on account)
-    v = random.randint(1, 100) * WEIGHTS["plateform"]
-    # print("plateform score (random): " + str(v))
-    return v
-    score = 0
-    for p in movie.production_companies:
-        if p["id"] in account["avalailablePlateform"]:
-            score += WEIGHTS["plateform"]
-    return score
 
 def calculate_critics_score(movie, account):
     score = (movie.vote_average * 10) * WEIGHTS["critics"]
-    # print("critics score: " + str(score))
-    return score
-
-def calculate_popularity_score(movie, account):
-    score = (movie.popularity / 10) * WEIGHTS["popularity"]
-    # print("popularity score: " + str(score))
     return score
 
 def main():
     externalSessionAccount = json.loads(sys.argv[1])
-    result = recommandMovies(externalSessionAccount)
-    print(json.dumps(result))
+    result = test(externalSessionAccount)
+    return result
 
 main()
