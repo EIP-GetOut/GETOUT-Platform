@@ -14,6 +14,7 @@ import validate from '@services/middlewares/validator'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
+import { modifyAccount } from '@models/account'
 import { findEntity } from '@models/getObjects'
 import { addMovieToDislikedMovies, removeMovieFromDislikedMovies } from '@models/movie'
 
@@ -126,10 +127,11 @@ router.post('/account/:accountId/dislikedMovies', rulesPost, validate, logApiReq
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addMovieToDislikedMovies(req.params.accountId, parseInt(req.body.movieId), req.session).then((updatedDislikedMoviesList: number[]) => {
-    logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s disliked movies.`)
-    req.session.account!.dislikedMovies = updatedDislikedMoviesList
-    return res.status(StatusCodes.CREATED).json(updatedDislikedMoviesList)
+  addMovieToDislikedMovies(req.params.accountId, parseInt(req.body.movieId), req.session).then(async (updatedDislikedMoviesList: number[]) => {
+    return await modifyAccount(req.session.account!.id, { dislikedMovies: updatedDislikedMoviesList }).then(() => {
+      logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s disliked movies.`)
+      return res.status(StatusCodes.CREATED).json(updatedDislikedMoviesList)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -143,10 +145,11 @@ router.delete('/account/:accountId/dislikedMovies/:movieId', rulesDelete, valida
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  removeMovieFromDislikedMovies(req.params.accountId, parseInt(req.params.movieId)).then((updatedDislikedMoviesList: number[]) => {
-    logger.info(`Successfully removed ${req.body.movieId} of ${req.session.account?.email}'s disliked movies.`)
-    req.session.account!.dislikedMovies = updatedDislikedMoviesList
-    return res.status(StatusCodes.OK).json(updatedDislikedMoviesList)
+  removeMovieFromDislikedMovies(req.params.accountId, parseInt(req.params.movieId)).then(async (updatedDislikedMoviesList: number[]) => {
+    return await modifyAccount(req.session.account!.id, { dislikedMovies: updatedDislikedMoviesList }).then(() => {
+      logger.info(`Successfully removed ${req.body.movieId} of ${req.session.account?.email}'s disliked movies.`)
+      return res.status(StatusCodes.OK).json(updatedDislikedMoviesList)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 

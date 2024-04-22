@@ -75,6 +75,12 @@ export class Account {
   @Column('integer', { array: true, default: [] })
     seenMovies: number [] = []
 
+  @Column('timestamp', {
+    nullable: true,
+    default: null
+  })
+    lastRecommandation: Date | null = null
+
   @Column('text', { array: true, default: [] })
     recommendedBooksHistory: string [] = []
 

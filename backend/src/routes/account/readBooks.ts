@@ -14,6 +14,7 @@ import validate from '@services/middlewares/validator'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
+import { modifyAccount } from '@models/account'
 import { addBookToReadBooks, removeBookFromReadBooks } from '@models/book'
 import { findEntity } from '@models/getObjects'
 
@@ -120,10 +121,11 @@ router.post('/account/:accountId/readBooks', rulesPost, validate, logApiRequest,
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addBookToReadBooks(req.params.accountId, req.body.bookId).then((updatedReadBooks: string[]) => {
-    logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s read books.`)
-    req.session.account!.readBooks = updatedReadBooks
-    return res.status(StatusCodes.CREATED).json(updatedReadBooks)
+  addBookToReadBooks(req.params.accountId, req.body.bookId).then(async (updatedReadBooks: string[]) => {
+    return await modifyAccount(req.session.account!.id, { readBooks: updatedReadBooks }).then(() => {
+      logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s read books.`)
+      return res.status(StatusCodes.CREATED).json(updatedReadBooks)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -137,10 +139,11 @@ router.delete('/account/:accountId/readBooks/:bookId', rulesDelete, validate, lo
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  removeBookFromReadBooks(req.params.accountId, req.params.bookId).then((updatedReadBooks: string[]) => {
-    logger.info(`Successfully removed ${req.params.bookId} of ${req.session.account?.email}'s read books.`)
-    req.session.account!.readBooks = updatedReadBooks
-    return res.status(StatusCodes.OK).json(updatedReadBooks)
+  removeBookFromReadBooks(req.params.accountId, req.params.bookId).then(async (updatedReadBooks: string[]) => {
+    return await modifyAccount(req.session.account!.id, { readBooks: updatedReadBooks }).then(() => {
+      logger.info(`Successfully removed ${req.params.bookId} of ${req.session.account?.email}'s read books.`)
+      return res.status(StatusCodes.OK).json(updatedReadBooks)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 

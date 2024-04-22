@@ -14,6 +14,7 @@ import validate from '@services/middlewares/validator'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
+import { modifyAccount } from '@models/account'
 import { addBookToLikedBooks, removeBookFromLikedBooks } from '@models/book'
 import { findEntity } from '@models/getObjects'
 
@@ -120,10 +121,11 @@ router.post('/account/:accountId/likedBooks', rulesPost, validate, logApiRequest
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addBookToLikedBooks(req.params.accountId, req.body.bookId, req.session).then((updatedLikedBooksList: string[]) => {
-    logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s liked books`)
-    req.session.account!.likedBooks = updatedLikedBooksList
-    return res.status(StatusCodes.CREATED).json(updatedLikedBooksList)
+  addBookToLikedBooks(req.params.accountId, req.body.bookId).then(async (updatedLikedBooksList: string[]) => {
+    return await modifyAccount(req.session.account!.id, { likedBooks: updatedLikedBooksList }).then(() => {
+      logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s liked books`)
+      return res.status(StatusCodes.CREATED).json(updatedLikedBooksList)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -137,10 +139,11 @@ router.delete('/account/:accountId/likedBooks/:bookId', rulesDelete, validate, l
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  removeBookFromLikedBooks(req.params.accountId, req.params.bookId).then((updatedLikedBooksList: string[]) => {
-    logger.info(`Successfully removed ${req.body.bookId} of ${req.session.account?.email}'s liked books.`)
-    req.session.account!.likedBooks = updatedLikedBooksList
-    return res.status(StatusCodes.OK).json(updatedLikedBooksList)
+  removeBookFromLikedBooks(req.params.accountId, req.params.bookId).then(async (updatedLikedBooksList: string[]) => {
+    return await modifyAccount(req.session.account!.id, { likedBooks: updatedLikedBooksList }).then(() => {
+      logger.info(`Successfully removed ${req.body.bookId} of ${req.session.account?.email}'s liked books.`)
+      return res.status(StatusCodes.OK).json(updatedLikedBooksList)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 

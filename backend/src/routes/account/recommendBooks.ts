@@ -46,12 +46,12 @@ router.get('/account/:accountId/recommend-books', logApiRequest, (req: Request, 
       promisesArray.push(getBook(recommandation.id))
     })
 
-    await addRecommendedBooksToHistory(recommendations, req.session.account!.id).then(async (): Promise<any []> => {
+    return await addRecommendedBooksToHistory(recommendations, req.session.account!.id).then(async (): Promise<any []> => {
       return await Promise.all(promisesArray)
     }).catch(() => {
       throw new RecommendationsDetailsError()
     }).then((resolvedPromises) => {
-      logger.info(`Successfully retreived movie recommendations: ${JSON.stringify(recommendations, null, 2)}`)
+      logger.info(`Successfully retrieved book recommendations: ${JSON.stringify(recommendations, null, 2)}`)
       return res.status(StatusCodes.OK).json(resolvedPromises)
     })
   }).catch(handleErrorOnRoute(res))

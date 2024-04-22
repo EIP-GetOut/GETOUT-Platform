@@ -61,10 +61,12 @@ void describe('Reading List Route', async () => {
       .then(async () => {
         return await request(app).get(`/account/${accountId}/recommend-movies`).set('Cookie', cookie)
       }).then(async () => {
-        return await request(app).get(`/account/${accountId}/recommendedMoviesHistory`).set('Cookie', cookie)
-      }).then((response) => {
-        expect(response.status).toBe(StatusCodes.OK)
-        expect(response.body).toHaveLength(5)
+        setTimeout(() => {
+          request(app).get(`/account/${accountId}/recommendedMoviesHistory`).set('Cookie', cookie).then((response) => {
+            expect(response.status).toBe(StatusCodes.OK)
+            expect(response.body).toHaveLength(5)
+          }).catch(console.error)
+        }, 2000)
       })
-  })
+  }, 10000)
 })

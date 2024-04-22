@@ -61,8 +61,6 @@ router.get('/account/:accountId/recommendedMoviesHistory', rulesGet, validate, l
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    req.session.account!.recommendedMoviesHistory = account.recommendedMoviesHistory
-
     const promisesArray: Array<Promise<any>> = []
 
     account.recommendedMoviesHistory.forEach((movieId: number) => {

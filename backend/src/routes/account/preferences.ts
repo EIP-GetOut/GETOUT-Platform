@@ -15,6 +15,7 @@ import validate from '@services/middlewares/validator'
 import { NotLoggedInError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
+import { modifyAccount } from '@models/account'
 import { addPreferences, postPreferences } from '@models/account/preferences'
 import { type Preferences } from '@models/account/preferences.intefaces'
 
@@ -31,9 +32,11 @@ router.put('/account/preferences', rulesPut, validate, logApiRequest, (req: Requ
     handleErrorOnRoute(res)(new NotLoggedInError())
     return
   }
-  addPreferences(req.session.account.id, req.body, 'preferences').then((preferencesAdded: Preferences) => {
+  addPreferences(req.session.account.id, req.body, 'preferences').then(async (preferencesAdded: Preferences) => {
     req.session.account!.preferences = preferencesAdded
-    return res.status(StatusCodes.OK).json(preferencesAdded)
+    return await modifyAccount(req.session.account!.id, { preferences: preferencesAdded }).then(() => {
+      return res.status(StatusCodes.OK).json(preferencesAdded)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -42,10 +45,11 @@ router.post('/account/preferences', rulesPut, validate, logApiRequest, (req: Req
     handleErrorOnRoute(res)(new NotLoggedInError())
     return
   }
-  logger.info(`Preferences created: ${JSON.stringify(req.body, null, 0)}`)
-  postPreferences(req.session.account.id, req.body, 'preferences').then((preferencesAdded: Preferences) => {
-    req.session.account!.preferences = preferencesAdded
-    return res.status(StatusCodes.CREATED).json(preferencesAdded)
+  postPreferences(req.session.account.id, req.body, 'preferences').then(async (preferencesAdded: Preferences) => {
+    return await modifyAccount(req.session.account!.id, { preferences: preferencesAdded }).then(() => {
+      logger.info(`Preferences created: ${JSON.stringify(req.body, null, 0)}`)
+      return res.status(StatusCodes.CREATED).json(preferencesAdded)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 

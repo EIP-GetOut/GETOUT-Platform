@@ -5,10 +5,11 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
+import { type UUID } from 'crypto'
 import { type SessionData } from 'express-session'
 import { StatusCodes } from 'http-status-codes'
 
-import { AccountDoesNotExistError, NotLoggedInError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError, DbError, NotLoggedInError } from '@services/utils/customErrors'
 
 import { Account } from '@entities/Account'
 
@@ -31,6 +32,19 @@ async function deleteAccount (sess: Partial<SessionData>): Promise<StatusCodes> 
   return StatusCodes.BAD_REQUEST
 }
 
-export default deleteAccount
+async function modifyAccount (accountId: UUID, propertiesToChange: Partial<Account>): Promise<void> {
+  const accountRepository = appDataSource.getRepository(Account)
+  await findEntity<Account>(Account, { id: accountId }).then(async (foundAccount: Account | null) => {
+    if (foundAccount == null) {
+      throw new AccountDoesNotExistError()
+    }
+    for (const propertyToModify in propertiesToChange) {
+      (foundAccount as any)[propertyToModify] = (propertiesToChange as any)[propertyToModify]
+    }
+    await accountRepository.save(foundAccount).catch((err) => {
+      throw new DbError(`Failed patching account in DB (${err}).`)
+    })
+  })
+}
 
-export { deleteAccount }
+export { deleteAccount, modifyAccount }

@@ -16,8 +16,8 @@ import { type Account } from '@entities/Account'
 
 import { appDataSource } from '@config/dataSource'
 
-async function addRecommendedBooksToHistory (recommendations: any [], accountId: UUID): Promise<void> {
-  await findEntity<Account>('Account', { id: accountId }).then(async (account: Account | null): Promise<void> => {
+async function addRecommendedBooksToHistory (recommendations: any [], accountId: UUID): Promise<Account> {
+  return await findEntity<Account>('Account', { id: accountId }).then(async (account: Account | null): Promise<Account> => {
     if (account == null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.NOT_FOUND)
     }
@@ -27,12 +27,12 @@ async function addRecommendedBooksToHistory (recommendations: any [], accountId:
     recommendations.forEach((recommandation) => {
       account.recommendedBooksHistory.push(recommandation.id)
     })
-    await appDataSource.getRepository<Account>('Account').save(account)
+    return await appDataSource.getRepository<Account>('Account').save(account)
   })
 }
 
-async function addRecommendedMoviesToHistory (recommendations: any [], accountId: UUID): Promise<void> {
-  await findEntity<Account>('Account', { id: accountId }).then(async (account: Account | null): Promise<void> => {
+async function addRecommendedMoviesToHistory (recommendations: any [], accountId: UUID): Promise<Account> {
+  return await findEntity<Account>('Account', { id: accountId }).then(async (account: Account | null): Promise<Account> => {
     if (account == null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.NOT_FOUND)
     }
@@ -42,7 +42,7 @@ async function addRecommendedMoviesToHistory (recommendations: any [], accountId
     recommendations.forEach((recommandation) => {
       account.recommendedMoviesHistory.push(recommandation.id)
     })
-    await appDataSource.getRepository<Account>('Account').save(account)
+    return await appDataSource.getRepository<Account>('Account').save(account)
   })
 }
 

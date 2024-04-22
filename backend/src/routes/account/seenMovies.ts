@@ -14,6 +14,7 @@ import validate from '@services/middlewares/validator'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
+import { modifyAccount } from '@models/account'
 import { findEntity } from '@models/getObjects'
 import { addMovieToSeenMovies, removeMovieFromSeenMovies } from '@models/movie'
 
@@ -126,10 +127,11 @@ router.post('/account/:accountId/seenMovies', rulesPost, validate, logApiRequest
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addMovieToSeenMovies(req.params.accountId, parseInt(req.body.movieId)).then((updatedSeenMovies: number[]) => {
-    logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s seen movies.`)
-    req.session.account!.seenMovies = updatedSeenMovies
-    return res.status(StatusCodes.CREATED).json(updatedSeenMovies)
+  addMovieToSeenMovies(req.params.accountId, parseInt(req.body.movieId)).then(async (updatedSeenMovies: number[]) => {
+    return await modifyAccount(req.session.account!.id, { seenMovies: updatedSeenMovies }).then(() => {
+      logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s seen movies.`)
+      return res.status(StatusCodes.CREATED).json(updatedSeenMovies)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -143,10 +145,11 @@ router.delete('/account/:accountId/seenMovies/:movieId', rulesDelete, validate, 
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  removeMovieFromSeenMovies(req.params.accountId, parseInt(req.params.movieId)).then((updatedSeenMovies: number[]) => {
-    logger.info(`Successfully removed ${req.params.movieId} of ${req.session.account?.email}'s seen movies.`)
-    req.session.account!.seenMovies = updatedSeenMovies
-    return res.status(StatusCodes.OK).json(updatedSeenMovies)
+  removeMovieFromSeenMovies(req.params.accountId, parseInt(req.params.movieId)).then(async (updatedSeenMovies: number[]) => {
+    return await modifyAccount(req.session.account!.id, { seenMovies: updatedSeenMovies }).then(() => {
+      logger.info(`Successfully removed ${req.params.movieId} of ${req.session.account?.email}'s seen movies.`)
+      return res.status(StatusCodes.OK).json(updatedSeenMovies)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 

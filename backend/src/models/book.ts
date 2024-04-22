@@ -8,7 +8,6 @@
 import { books, type books_v1 } from '@googleapis/books'
 import axios from 'axios'
 import { type UUID } from 'crypto'
-import { type Session, type SessionData } from 'express-session'
 import { StatusCodes } from 'http-status-codes'
 
 import logger from '@services/middlewares/logging'
@@ -18,6 +17,7 @@ import { Account } from '@entities/Account'
 
 import { appDataSource } from '@config/dataSource'
 
+import { modifyAccount } from './account'
 import { findEntity } from './getObjects'
 
 const booksApi = books('v1')
@@ -123,10 +123,11 @@ async function removeBookFromList (accountId: UUID, bookId: string, bookList: ke
 const addBookToReadingList = async (accountId: UUID, bookId: string): Promise<string[]> =>
   await addBookToList(accountId, bookId, 'readingList')
 
-const addBookToLikedBooks = async (accountId: UUID, bookId: string, session: Session & Partial<SessionData>): Promise<string[]> => {
+const addBookToLikedBooks = async (accountId: UUID, bookId: string): Promise<string[]> => {
   return await addBookToList(accountId, bookId, 'likedBooks').then(async (likedBooks: string []) => {
-    return await removeBookFromDislikedBooks(accountId, bookId).then((dislikedBooks: string[]) => {
-      session.account!.dislikedBooks = dislikedBooks
+    return await removeBookFromDislikedBooks(accountId, bookId).then(async (dislikedBooks: string[]) => {
+      await modifyAccount(accountId, { dislikedBooks })
+    }).then(() => {
       return likedBooks
     }).catch((err: AppError) => {
       if (err instanceof BookNotInListError) {
@@ -138,10 +139,11 @@ const addBookToLikedBooks = async (accountId: UUID, bookId: string, session: Ses
   })
 }
 
-const addBookToDislikedBooks = async (accountId: UUID, bookId: string, session: Session & Partial<SessionData>): Promise<string[]> => {
+const addBookToDislikedBooks = async (accountId: UUID, bookId: string): Promise<string[]> => {
   return await addBookToList(accountId, bookId, 'dislikedBooks').then(async (dislikedBooks: string []) => {
-    return await removeBookFromLikedBooks(accountId, bookId).then((likedBooks: string[]) => {
-      session.account!.likedBooks = likedBooks
+    return await removeBookFromLikedBooks(accountId, bookId).then(async (likedBooks: string[]) => {
+      await modifyAccount(accountId, { likedBooks })
+    }).then(() => {
       return dislikedBooks
     }).catch((err: AppError) => {
       if (err instanceof BookNotInListError) {

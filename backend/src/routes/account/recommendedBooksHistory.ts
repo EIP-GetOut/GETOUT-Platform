@@ -61,8 +61,6 @@ router.get('/account/:accountId/recommendedBooksHistory', rulesGet, validate, lo
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    req.session.account!.recommendedBooksHistory = account.recommendedBooksHistory
-
     const promisesArray: Array<Promise<any>> = []
 
     account.recommendedBooksHistory.forEach((bookId: string) => {

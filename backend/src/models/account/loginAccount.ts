@@ -26,28 +26,16 @@ async function createSession (sess: Session & Partial<SessionData>, account: Acc
 
   sess.cookie.expires = new Date(Date.now() + week)
   sess.cookie.maxAge = week
-  sess.account = {
-    id: account.id,
-    email: account.email,
-    firstName: account.firstName,
-    lastName: account.lastName,
-    bornDate: account.bornDate,
-    createdDate: account.createdDate,
-    preferences: account.preferences,
-    watchlist: account.watchlist,
-    readingList: account.readingList,
-    likedMovies: account.likedMovies,
-    likedBooks: account.likedBooks,
-    dislikedMovies: account.dislikedMovies,
-    dislikedBooks: account.dislikedBooks,
-    seenMovies: account.seenMovies,
-    readBooks: account.readBooks,
-    role: account.role,
-    recommendedBooksHistory: account.recommendedBooksHistory,
-    recommendedMoviesHistory: account.recommendedMoviesHistory,
-    spentMinutesReadingAndWatching: 0
-  }
-  await calculateSpentMinutesReadingAndWatching(sess.account).then((spentMinutes: number) => {
+
+  const sessAccount: any = { ...account }
+  delete sessAccount.password
+  delete sessAccount.salt
+  delete sessAccount.passwordResetCode
+  delete sessAccount.passwordResetExpiration
+  sessAccount.spentMinutesReadingAndWatching = 0
+  sess.account = sessAccount
+
+  await calculateSpentMinutesReadingAndWatching(sess.account!).then((spentMinutes: number) => {
     sess.account!.spentMinutesReadingAndWatching = spentMinutes
   }).catch((err: Error) => {
     throw new ApiError(`Failed calculating spent time reading and watching (${err.name}: ${err.message}).`)
