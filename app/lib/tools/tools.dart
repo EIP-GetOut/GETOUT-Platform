@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 part 'screen_size_factor.dart';
 part 'auto_sizing_text.dart';
+part 'empty_sized_box.dart';
 
 class Tools {
   static const double Function(BuildContext context, double factor) widthFactor = _widthFactor;

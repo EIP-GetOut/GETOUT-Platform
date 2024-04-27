@@ -20,10 +20,11 @@ import 'package:getout/screens/connection/register/pages/register.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/connection/login/widgets/fields.dart';
 import 'package:getout/screens/connection/widgets/fields_title.dart';
-import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/constants/http_status.dart';
+import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
+import 'package:getout/tools/tools.dart';
 
 class LoginPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -180,15 +181,14 @@ class LoginButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
 
   @override
-  Widget build(BuildContext context) {
-    final double phoneWidth = MediaQuery.of(context).size.width;
-
+  Widget build(BuildContext context)
+  {
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
         return (state.status.isLoading)
             ? const CircularProgressIndicator()
             : SizedBox(
-                width: 90 * phoneWidth / 100,
+                width: Tools.widthFactor(context, 0.90),
                 height: 65,
                 child: FloatingActionButton(
                   child: Text(appL10n(context)!.sign_in,
