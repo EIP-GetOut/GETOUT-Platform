@@ -71,7 +71,7 @@ class RegisterPage extends StatelessWidget {
                                   horizontal: 8, vertical: 8),
                               child: FirstNameField()),
                           const SizedBox(height: 15),
-                          fieldTitle(appL10n(context)!.birthday),
+                          fieldTitle(appL10n(context)!.birthday.toUpperCase()),
                           Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 8),
@@ -91,7 +91,7 @@ class RegisterPage extends StatelessWidget {
                             child: PasswordField(),
                           ),
                           const SizedBox(height: 15),
-                          fieldTitle(appL10n(context)!.confirm_password),
+                          fieldTitle(appL10n(context)!.confirm_password.toUpperCase()),
                           const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 8),

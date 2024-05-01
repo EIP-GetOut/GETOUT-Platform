@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 
@@ -29,7 +30,8 @@ class NewPasswordPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: const Text('MOT DE PASSE OUBLIÉ'),
+        title: AutoSizeText(' MOT DE PASSE OUBLIÉ'.padRight(21, String.fromCharCodes([0x00A0, 0x0020])),
+            maxLines: 1, minFontSize: 16.0, maxFontSize: 32.0),
         leading: BackButton(onPressed: () => pageController.jumpToPage(0)),
       ),
       body: BlocListener<NewPasswordBloc, NewPasswordState>(
