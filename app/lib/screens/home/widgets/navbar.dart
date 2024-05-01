@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:getout/screens/home/bloc/home_page/home_page_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 
 class HomeNavBarWidget extends StatelessWidget {
@@ -39,7 +40,7 @@ class HomeNavBarWidget extends StatelessWidget {
                 activeIcon: SvgPicture.asset('assets/images/icon/home.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.red, BlendMode.srcIn)),
-                label: 'Dashboard'),
+                label: appL10n(context)!.dashboard),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset('assets/images/icon/movie.svg',
                     colorFilter: const ColorFilter.mode(
@@ -47,7 +48,7 @@ class HomeNavBarWidget extends StatelessWidget {
                 activeIcon: SvgPicture.asset('assets/images/icon/movie.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.red, BlendMode.srcIn)),
-                label: 'Movie'),
+                label: appL10n(context)!.movie),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset('assets/images/icon/bookmark.svg',
                     colorFilter: const ColorFilter.mode(
@@ -56,8 +57,9 @@ class HomeNavBarWidget extends StatelessWidget {
                     'assets/images/icon/bookmark.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.red, BlendMode.srcIn)),
-                label: 'Book'),
-            BottomNavigationBarItem(
+                label: appL10n(context)!.book),
+            //todo implement activities
+            /*BottomNavigationBarItem(
                 icon: SvgPicture.asset('assets/images/icon/location_pin.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.black26, BlendMode.srcIn)),
@@ -65,7 +67,7 @@ class HomeNavBarWidget extends StatelessWidget {
                     'assets/images/icon/location_pin.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.red, BlendMode.srcIn)),
-                label: 'Activities')
+                label: 'Activities')*/
           ],
           elevation: 20,
           onTap: (int value) => {

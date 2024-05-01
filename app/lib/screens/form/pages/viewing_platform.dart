@@ -7,10 +7,12 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/form/widgets/four_point.dart';
 import 'package:getout/screens/form/bloc/form_bloc.dart';
+import 'package:getout/tools/tools.dart';
 
 class ViewingPlatform extends StatelessWidget {
   const ViewingPlatform({super.key});
@@ -40,20 +42,26 @@ class ViewingPlatform extends StatelessWidget {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          const SizedBox(height: 140),
-          const PageIndicator(currentPage: 4, pageCount: 5),
-          const SizedBox(height: 20),
+          SizedBox(height: Tools.heightFactor(context, 0.10)),
+          const PageIndicator(currentPage: 2, pageCount: 3),
+          SizedBox(height: Tools.heightFactor(context, 0.05)),
           Center(
-            child: Text(
-              'SUPPORT DE VISIONNAGE :',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium,
+            child: SizedBox(
+              width: Tools.widthFactor(context, 0.45),
+              child: AutoSizeText(
+                'SUPPORT DE VISIONNAGE :',
+                maxLines: 2,
+                minFontSize: 18.0,
+                maxFontSize: 24.0,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
             ),
           ),
-          const SizedBox(height: 20),
+          SizedBox(height: Tools.heightFactor(context, 0.03)),
           Expanded(
             child: ListView(
-                padding: const EdgeInsets.all(16.0),
+                //padding: const EdgeInsets.all(16.0),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 children: <Widget>[
@@ -61,37 +69,47 @@ class ViewingPlatform extends StatelessWidget {
                       in context.read<FormBloc>().state.viewingPlatform.entries)
                     Column(
                       children: [
-                        CheckboxListTile(
-                          title: Row(
-                            children: [
-                              const SizedBox(width: 50.0),
-                              Image.asset(checkboxImages[checkbox.key]!,
-                                  width: 40, height: 40),
-                              const SizedBox(width: 8.0),
-                              Text(checkbox.key,
-                                  style:
-                                      Theme.of(context).textTheme.bodyMedium),
-                            ],
+                        Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Colors.red)
                           ),
-                          value: checkbox.value,
-                          onChanged: (value) {
-                            context
-                                .read<FormBloc>()
-                                .add(ViewingPlatformEvent(key: checkbox.key));
-                          },
-                          contentPadding: EdgeInsets.zero,
-                          controlAffinity: ListTileControlAffinity.leading,
-                          tileColor: Colors.transparent,
-                          checkColor: Colors.transparent,
-                          activeColor: Theme.of(context).primaryColor,
-                          shape: const Border(
-                            bottom: BorderSide(color: Colors.black, width: 2.0),
-                            left: BorderSide(color: Colors.black, width: 2.0),
-                            right: BorderSide(color: Colors.black, width: 2.0),
-                            top: BorderSide(color: Colors.black, width: 2.0),
+                          width: Tools.widthFactor(context, 0.9),
+                          height: Tools.heightFactor(context, 0.08),
+                          child: CheckboxListTile(
+                            title: Row(
+                              children: [
+                                SizedBox(width: Tools.widthFactor(context, 0.12)),
+                                Image.asset(checkboxImages[checkbox.key]!,
+                                    width: 40, height: 40),
+                                SizedBox(width: Tools.widthFactor(context, 0.02)),
+                                AutoSizeText(checkbox.key,
+                                    maxLines: 1,
+                                    minFontSize: 16.0,
+                                    maxFontSize: 20.0,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium),
+                              ],
+                            ),
+                            value: checkbox.value,
+                            onChanged: (value) {
+                              context
+                                  .read<FormBloc>()
+                                  .add(ViewingPlatformEvent(key: checkbox.key));
+                            },
+                            //contentPadding: EdgeInsets.zero,
+                            controlAffinity: ListTileControlAffinity.leading,
+                            tileColor: Colors.transparent,
+                            checkColor: Colors.transparent,
+                            activeColor: Theme.of(context).primaryColor,
+                            shape: const Border(
+                              bottom: BorderSide(color: Colors.black, width: 2.0),
+                              left: BorderSide(color: Colors.black, width: 2.0),
+                              right: BorderSide(color: Colors.black, width: 2.0),
+                              top: BorderSide(color: Colors.black, width: 2.0),
+                            ),
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        SizedBox(height: Tools.heightFactor(context, 0.012)),
                       ],
                     ),
                 ]),

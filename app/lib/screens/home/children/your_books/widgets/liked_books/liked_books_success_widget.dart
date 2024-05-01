@@ -22,7 +22,7 @@ class LikedBooksSuccessWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PageController movieController =
+    final PageController bookController =
     PageController(viewportFraction: 0.1, initialPage: 0);
 
     return Expanded(
@@ -32,7 +32,7 @@ class LikedBooksSuccessWidget extends StatelessWidget {
             asset: 'heart', title: 'Vos coup de coeurs'),
         Expanded(
             child: ListView(
-                controller: movieController,
+                controller: bookController,
                 scrollDirection: Axis.horizontal,
                 children: List.generate(books.length, (index) {
                   return InkWell(
@@ -42,10 +42,9 @@ class LikedBooksSuccessWidget extends StatelessWidget {
                             MaterialPageRoute(
                                 builder: (context) => Book(books[index].id)));
                       },
-                      child: BookPreviewWidget(
-                          posterPath: books[index].posterPath,
-                          title: books[index].title,
-                          overview: books[index].overview));
+                       child: BookPreviewWidget(
+                           posterPath: books[index].posterPath,
+                           title: books[index].title));
                 }))),
       ],
     ));

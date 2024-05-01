@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class EmailField extends StatelessWidget {
   const EmailField({super.key});
@@ -21,7 +22,7 @@ class EmailField extends StatelessWidget {
         return TextFormField(
           style: const TextStyle(fontSize: 17, color: Colors.black),
           decoration: InputDecoration(
-            labelText: 'Entrez votre adresse email',
+            labelText: appL10n(context)!.email_hint,
             floatingLabelBehavior: FloatingLabelBehavior.never,
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(0.5),
@@ -31,7 +32,7 @@ class EmailField extends StatelessWidget {
             ),
           ),
           validator: (value) =>
-              state.isEmailEmpty ? null : 'Un email est requis',
+              state.isEmailEmpty ? null : appL10n(context)!.email_validator,
           onChanged: (value) =>
               context.read<LoginBloc>().add(LoginEmailChanged(email: value)),
         );
@@ -50,7 +51,7 @@ class PasswordField extends StatelessWidget {
         obscureText: true,
         style: const TextStyle(fontSize: 17, color: Colors.black),
         decoration: InputDecoration(
-            labelText: 'Entrez votre mot de passe',
+            labelText: appL10n(context)!.password_hint,
             floatingLabelBehavior: FloatingLabelBehavior.never,
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(0.5),
@@ -59,7 +60,7 @@ class PasswordField extends StatelessWidget {
               borderRadius: BorderRadius.circular(0.5),
             )),
         validator: (value) =>
-            state.isPasswordEmpty ? null : 'Un mot de passe est requis',
+            state.isPasswordEmpty ? null : appL10n(context)!.password_validator,
         onChanged: (value) => context
             .read<LoginBloc>()
             .add(LoginPasswordChanged(password: value)),

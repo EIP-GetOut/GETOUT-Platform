@@ -8,7 +8,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:getout/screens/settings/pages/settings.dart';
+import 'package:getout/screens/settings/settings.dart';
+
+import 'package:getout/global.dart' as globals;
+import 'package:getout/tools/app_l10n.dart';
+
+import 'package:getout/tools/duration_format.dart';
 
 class HomeAppBarWidget extends AppBar {
   HomeAppBarWidget({super.key, required BuildContext context})
@@ -42,7 +47,7 @@ class HomeAppBarWidget extends AppBar {
                       builder: (context) => const SettingsPage()));
             },
             child: Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.only(left: 10, right : 0),
                 child: Image.asset(
                   'assets/images/icon/profile_picture.png',
                   width: 60,
@@ -51,10 +56,12 @@ class HomeAppBarWidget extends AppBar {
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Bienvenue !',
+              Text(appL10n(context)!.homepage_title,
                   style: Theme.of(context).textTheme.titleLarge),
-              Text('La productivité à portée de main',
-                  style: Theme.of(context).textTheme.displayMedium)
+              Text(appL10n(context)!.homepage_subtitle,
+                  style: Theme.of(context).textTheme.displayMedium),
+                Text(durationFormat(appL10n(context)!.you_saved, globals.session?['spentMinutesReadingAndWatching']),
+                style: Theme.of(context).textTheme.bodySmall)
             ],
           ),
           actions: [

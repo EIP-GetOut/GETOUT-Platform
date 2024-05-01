@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 import 'package:getout/widgets/object_loading_error_widget.dart';
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
@@ -20,7 +21,7 @@ class MovieWidget extends StatelessWidget {
           if (state.status.isLoading) {
             return const Center(child: LoadingPage());
           } else if (state.status.isError) {
-            return const ObjectLoadingErrorWidget(object: 'le film');
+            return ObjectLoadingErrorWidget(object: appL10n(context)!.the_movie.toLowerCase());
           } else {
             return const SizedBox();
           }

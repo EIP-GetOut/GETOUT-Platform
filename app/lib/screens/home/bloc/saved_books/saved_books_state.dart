@@ -28,4 +28,32 @@ class SavedBooksState extends Equatable {
       status: status ?? this.status,
     );
   }
+
+  factory SavedBooksState.fromMap(Map<String, dynamic> map) {
+    List<BookPreview> books = [];
+
+    map['saved_books']!.forEach((element) => {
+      books.add(BookPreview(
+          id: element['id'],
+          title: element['title'],
+          posterPath: element['posterPath'],
+          overview: element['overview']))
+    });
+    return SavedBooksState(
+        savedBooks: books,
+        status: stringToStatus[map['saved_books_status']] ?? Status.error);
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'saved_books': savedBooks
+          .map((book) => {
+        'id': book.id,
+        'title': book.title,
+        'posterPath': book.posterPath,
+        'overview': book.overview,
+      }).toList(),
+      'saved_books_status': statusToString[status],
+    };
+  }
 }

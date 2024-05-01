@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 import 'package:getout/tools/status.dart';
 import 'package:getout/widgets/object_loading_error_widget.dart';
@@ -21,7 +22,7 @@ class SavedMoviesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SavedMoviesBloc, SavedMoviesState>(
+    return BlocBuilder<SavedMoviesHydratedBloc, SavedMoviesState>(
       builder: (context, state) {
         if (state.status.isSuccess) {
           return SavedMoviesSuccessWidget(movies: state.savedMovies);
@@ -29,7 +30,7 @@ class SavedMoviesWidget extends StatelessWidget {
           if (state.status.isLoading) {
             return const Center(child: Center(child: CircularProgressIndicator(backgroundColor: Color.fromARGB(0, 255, 5, 5))));
           } else if (state.status.isError) {
-            return const ObjectLoadingErrorWidget(object: 'votre selection de films');
+            return ObjectLoadingErrorWidget(object: appL10n(context)!.saved_movies);
           } else {
             return const SizedBox();
           }

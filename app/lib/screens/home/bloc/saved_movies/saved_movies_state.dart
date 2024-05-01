@@ -38,4 +38,32 @@ class SavedMoviesState extends Equatable {
       status: status ?? this.status,
     );
   }
+
+  factory SavedMoviesState.fromMap(Map<String, dynamic> map) {
+    List<MoviePreview> books = [];
+
+    map['saved_movies']!.forEach((element) => {
+      books.add(MoviePreview(
+          id: element['id'],
+          title: element['title'],
+          posterPath: element['posterPath'],
+          overview: element['overview']))
+    });
+    return SavedMoviesState(
+        savedMovies: books,
+        status: stringToStatus[map['saved_movies_status']] ?? Status.error);
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'saved_movies': savedMovies
+          .map((book) => {
+        'id': book.id,
+        'title': book.title,
+        'posterPath': book.posterPath,
+        'overview': book.overview,
+      }).toList(),
+      'saved_movies_status': statusToString[status],
+    };
+  }
 }

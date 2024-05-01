@@ -23,7 +23,7 @@ class RegisterService {
             'password': request.password,
             'firstName': request.firstName,
             'lastName': request.lastName,
-            'bornDate': request.bornDate,
+            'bornDate': request.birthDate,
           },
           options: Options(headers: {'Content-Type': 'application/json'}));
     } on DioException { // add "catch (dioError)" for debugging

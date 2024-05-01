@@ -16,7 +16,6 @@ class BookEvent extends Equatable {
 class CreateInfoBookRequest extends BookEvent {
   final String id;
   const CreateInfoBookRequest({required this.id});
-
 }
 
 class InfoBookResponse extends BookEvent {
@@ -27,18 +26,62 @@ class InfoBookResponse extends BookEvent {
       this.backdropPath,
       this.releaseDate,
       this.voteAverage,
-      this.duration,
+      this.pageCount,
       this.authorsPicture,
+      this.liked,
+      this.disliked,
+      this.bookLink,
+      this.wishlisted,
+      this.read,
+      this.id,
       required this.statusCode});
 
-  final List<Map<String, String?>>? authorsPicture;
+  final PersonList? authorsPicture;
   static const int success = HttpStatus.OK;
   final String? title;
   final String? overview;
   final String? posterPath;
   final String? backdropPath;
   final String? releaseDate;
-  final double? voteAverage;
-  final String? duration;
+  final int? voteAverage;
+  final int? pageCount;
+  final bool? liked;
+  final bool? disliked;
+  final String? bookLink;
+  final bool? wishlisted;
+  final bool? read;
+  final String? id;
   final int statusCode;
 }
+
+
+class AddBookRequest extends BookEvent {
+  const AddBookRequest (
+    {required this.id}
+  );
+
+  final String id;
+}
+
+class AddBookResponse extends BookEvent {
+  const AddBookResponse (
+    {required this.statusCode}
+  );
+
+  final int statusCode;
+
+  static const int success = HttpStatus.OK;
+}
+
+class Person extends BookEvent {
+  const Person (
+    {required this.name,
+    required this.picture}
+  );
+
+  final String name;
+  final String picture;
+}
+
+
+typedef PersonList = List<Person>;

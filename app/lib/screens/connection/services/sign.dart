@@ -28,7 +28,6 @@ class SignService extends ServiceTemplate {
     } catch (dioError) {
       //todo
       if (kDebugMode) {
-        print('error : ');
         print(dioError);
       }
       rethrow;
@@ -43,7 +42,7 @@ class SignService extends ServiceTemplate {
             'password': request.password,
             'firstName': request.firstName,
             'lastName': request.lastName,
-            'bornDate': request.bornDate,
+            'bornDate': request.birthDate,
             'salt': 'sdjqshjodijaoz'
           },
           options: Options(headers: {'Content-Type': 'application/json'}));

@@ -41,34 +41,10 @@ final getOutTheme = ThemeData(
   colorScheme: const ColorScheme.light(
       primary: Color(0xFFD55641),
       error: Color(0xFFAD343E)),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ButtonStyle(
-      minimumSize: MaterialStateProperty.all<Size>(const Size(double.infinity, 60)),
-      backgroundColor: MaterialStateProperty.all<Color>(
-        const Color.fromRGBO(213, 86, 65, 1),
-      ),
-      foregroundColor: MaterialStateProperty.all<Color>(
-        const Color.fromARGB(255, 255, 255, 255),
-      ),
-      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-        RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ),
-      ),
-    ),
-  ),
-  floatingActionButtonTheme: FloatingActionButtonThemeData(
-    backgroundColor: const Color.fromRGBO(213, 86, 65, 1),
-    foregroundColor: Colors.white,
-    elevation: 4.0,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(100.0),
-    ),
-  ),
   textTheme:  const TextTheme(
-    // Button
+    /// Button
       labelMedium: TextStyle(
-          fontSize: 17.5,
+          fontSize: 23,
           fontWeight: FontWeight.w600,
           color: Colors.white),
       bodyLarge: TextStyle(
@@ -77,49 +53,49 @@ final getOutTheme = ThemeData(
         color: Colors.white,
         fontFamily: 'Poppins',
       ),
-      // Title of each page of the preferences
+      /// Title of each page of the preferences
       titleMedium: TextStyle(
         color: Colors.black,
         fontSize: 24,
         fontFamily: 'Poppins',
         fontWeight: FontWeight.bold,
       ),
-      // text of each checkbox of the preferences
+      /// text of each checkbox of the preferences
       bodyMedium: TextStyle(
         color: Colors.black,
         fontSize: 20,
         fontFamily: 'Poppins',
         fontWeight: FontWeight.bold,
       ),
-      // title of book/movie in the home page
+      /// title of book/movie in the home page
       titleSmall: TextStyle(
         color: Colors.black,
-        fontSize: 16,
+        fontSize: 13,
         fontFamily: 'Urbanist',
         decorationColor: Colors.black,
         fontWeight: FontWeight.bold,
       ),
-      // description of book/movie in the home page
+      /// description of book/movie in the home page
       headlineSmall: TextStyle(
         color: Color.fromRGBO(0, 0, 0, 0.5),
         fontSize: 15,
         fontFamily: 'Urbanist',
         fontWeight: FontWeight.bold,
       ),
-      // description of book/movie in the description page
+      /// description of book/movie in the description page
       bodySmall: TextStyle(
         color: Color.fromRGBO(0, 0, 0, 0.8),
-        fontSize: 21,
+        fontSize: 16,
         fontFamily: 'Urbanist',
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w600,
       ),
-      // text for the "type" (book/movie) and duration
+      /// text for the "type" (book/movie) and duration
       labelSmall: TextStyle(
           fontSize: 22,
           fontFamily: 'Urbanist',
           color: Colors.black,
           fontWeight: FontWeight.w600),
-      // SnackBar
+      /// SnackBar
       displaySmall: TextStyle(
         fontFamily: 'Urbanist',
         color: Colors.white,
@@ -127,14 +103,14 @@ final getOutTheme = ThemeData(
         fontWeight: FontWeight.w600,
         letterSpacing: 1.1,
       ),
-      // Welcome text of the home page
+      /// Welcome text of the home page
       titleLarge: TextStyle(
         color: Colors.black,
         fontSize: 30,
         fontFamily: 'Urbanist',
         fontWeight: FontWeight.bold,
       ),
-      // text below the welcome text of the home page
+      /// text below the welcome text of the home page
       displayMedium: TextStyle(
         fontFamily: 'Urbanist',
         color: Colors.black,
@@ -158,6 +134,30 @@ final getOutTheme = ThemeData(
       decorationColor: Color.fromRGBO(213, 86, 65, 0.5),
       decoration: TextDecoration.underline,
       fontWeight: FontWeight.bold,
+    ),
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ButtonStyle(
+      minimumSize: MaterialStateProperty.all<Size>(const Size(double.infinity, 60)),
+      backgroundColor: MaterialStateProperty.all<Color>(
+        const Color.fromRGBO(213, 86, 65, 1),
+      ),
+      foregroundColor: MaterialStateProperty.all<Color>(
+        const Color.fromARGB(255, 255, 255, 255),
+      ),
+      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30.0),
+        ),
+      ),
+    ),
+  ),
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: const Color.fromRGBO(213, 86, 65, 1),
+    foregroundColor: Colors.white,
+    elevation: 4.0,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(100.0),
     ),
   ),
 );

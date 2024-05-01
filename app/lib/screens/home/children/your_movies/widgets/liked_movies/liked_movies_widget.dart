@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 import 'package:getout/tools/status.dart';
 import 'package:getout/widgets/object_loading_error_widget.dart';
@@ -21,7 +22,7 @@ class LikedMoviesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<LikedMoviesBloc, LikedMoviesState>(
+    return BlocBuilder<LikedMoviesHydratedBloc, LikedMoviesState>(
       builder: (context, state) {
         if (state.status.isSuccess) {
           return LikedMoviesSuccessWidget(movies: state.likedMovies);
@@ -30,7 +31,7 @@ class LikedMoviesWidget extends StatelessWidget {
             return const Center(child: Center(child: CircularProgressIndicator(backgroundColor: Color.fromARGB(0, 255, 5, 5))));
 
           } else if (state.status.isError) {
-            return const ObjectLoadingErrorWidget(object: 'les films aimés');
+            return ObjectLoadingErrorWidget(object: appL10n(context)!.liked_movies);
           } else {
             return const SizedBox();
           }

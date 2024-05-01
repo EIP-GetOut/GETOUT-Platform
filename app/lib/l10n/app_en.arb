@@ -1,7 +1,170 @@
 {
   "@@locale": "en",
-  "signin_google": "Sign in with Google",
-  "@signin_google": {
-    "description": "String On Oauth2 Google Button"
-  }
+  "@@last_modified": "2024-03-24T21:38:00",
+  "@@author": "Perry Chouteau",
+  "appName": "GetOut",
+
+  "@_ERROR":{},
+
+  "error_unknow": "Something went wrong, retry later",
+  "error_internet": "Check your internet connection and restart",
+  "error_server": "What ! Wait a minute, or contact the support",
+  "error_unauthorized": "Check your information and restart",
+  "error_expired": "It seems that your authorisation has expired",
+  "error_loading": "Unable to load {object}",
+  "@error_loading": {
+    "placeholders": {
+      "object": {
+        "type": "String",
+        "example": "the books"
+      }
+    }
+  },
+  "error_password_email": "email and password don't match",
+  "not_applicable": "Not applicable",
+  "n_a": "N/A",
+  "no_description": "No description",
+
+  "@_CONNECTION": {},
+
+  "@_LOGIN": {},
+  "sign_in": "Sign in",
+  "sign_in_with": "Login with {Service}",
+  "@sign_in_with": {
+    "placeholders": {
+      "Service": {
+        "type": "String",
+        "example": "Google"
+      }
+    }
+  },
+
+  "@_SIGN_UP": {},
+
+  "first_connection": "First connection ?",
+  "create_account": "Create an account",
+  "account_created": "Your account was succesfully created, you can now sign in.",
+  "your_profile": "Your profile",
+  "lastname": "Lastname",
+  "lastname_hint": "Enter your lastname",
+  "lastname_validator": "Lastname is required",
+  "firstname": "Firstname",
+  "firstname_hint": "Enter your firstname",
+  "firstname_validator": "Firstname is required",
+  "birthday": "Birthday",
+  "birthday_hint": "Select your birthday",
+  "birthday_validator": "Birthday is required",
+  "too_young": "You should be older than 13years old",
+  "next": "Next",
+
+  "@_FORGOT_PASSWORD": {},
+
+  "change_it": "Change it",
+
+  "@_HOMEPAGE": {},
+
+  "homepage_title": "Welcome !",
+  "homepage_subtitle": "The productivity within reach",
+  "you_saved": "You saved",
+  "see_more": "see more >",
+  "description": "Description",
+  "summary": "Summary",
+
+  "@_DASHBOARD": {},
+
+  "dashboard" : "Dashboard",
+  "movie_recommendations": "The movie you will love",
+  "book_recommendations": "Books that will fascinate you",
+  "any_recommendations": "Our recommendation for you",
+
+  "@_MOVIES": {},
+
+  "movie" : "Movie",
+  "movies" : "movies",
+  "the_movie": "The Movie",
+  "your_movies" : "Your movies",
+
+  "recommended_movies" : "recommended movies",
+  "liked_movies" : "liked movies",
+  "saved_movies" : "saved movies",
+
+  "your_movies_description" : "All your books are here.",
+  "like_movies_title": "Your crush",
+  "view_movies_title": "Your books read",
+  "wishlist_movies_title": "what you intend to read",
+  "director": "Director(s)",
+  "casting": "Casting",
+
+  "@_BOOKS": {},
+
+  "book" : "Book",
+  "books" : "books",
+  "the_book": "The book",
+  "your_books" : "Your Books",
+
+  "recommended_books" : "recommended books",
+  "liked_books" : "liked books",
+  "saved_books" : "liked books",
+
+  "your_books_description" : "All your books are here.",
+  "like_books_title": "Your crush",
+  "view_books_title": "Your books read",
+  "wishlist_books_title": "what you intend to read",
+  "author": "Author(s)",
+
+  "@_FIELD": {},
+
+  "mandatory_validator": "This field can't be empty",
+
+  "@_PASSWORD": {},
+
+  "password": "Password",
+  "forgot_password": "Mot de passe oublié",
+  "password_hint": "Enter your password",
+  "new_password": "New password",
+  "new_password_hint": "Enter your new password",
+  "confirm_password": "Password confirmation",
+  "confirm_password_hint": "Confirm your new password",
+  "edit_password": "Edit your password",
+  "password_validator": "The password must contains 8 or more characters, with uppercase, lowercase and numbers",
+  "password_matching": "New passwords written don't match",
+
+  "@_EMAIL": {},
+
+  "email": "Email address",
+  "email_hint": "Enter your email address",
+  "new_email": "New email address",
+  "new_email_hint": "Enter your new email address",
+  "confirm_email": "Email address confirmation",
+  "confirm_email_hint": "Confirm your email address",
+  "edit_email": "Edit your email address",
+  "email_validator": "Enter a valid email",
+  "email_matching": "New emails addresses written don't match",
+
+  "@_CODE": {},
+
+  "code": "Code",
+  "code_hint": "Enter the code",
+  "code_validator": "code is a mandatory",
+  "@_code_hint": "Enter the code received by email",
+
+  "@_SETTING": {},
+
+  "settings": "Parameters",
+  "account": "Account",
+  "your_account": "Your account",
+  "disconnect": "Logout",
+  "delete_account": "Delete your account",
+
+  "appearance": "Appearance",
+  "select_language": "Choose your language",
+  "select_theme": "Dark theme",
+
+  "preference": "Preference",
+  "select_preferences": "Choose your preferences",
+  "notifications": "Notifications",
+  "recommendations": "Recommendations",
+
+  "more": "Other",
+  "support": "Support"
 }

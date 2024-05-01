@@ -5,29 +5,30 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:getout/tools/status.dart';
+import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+
 import 'package:getout/screens/home/bloc/books/books_event.dart';
-import 'package:getout/screens/home/bloc/home_repository.dart';
+import 'package:getout/screens/home/services/service.dart';
+import 'package:getout/tools/status.dart';
 
 part 'recommended_books_state.dart';
 
-class RecommendedBooksBloc extends Bloc<BooksEvent, RecommendedBooksState> {
-  final HomeRepository homeRepository;
+class RecommendedBooksHydratedBloc extends HydratedBloc<BooksEvent, RecommendedBooksState> {
+  final HomeService homeService;
 
-  RecommendedBooksBloc({
-    required this.homeRepository,
+  RecommendedBooksHydratedBloc({
+    required this.homeService,
   }) : super(const RecommendedBooksState()) {
-    on<GenerateBooksRequest>(_onRecommendedBooksRequest);
+    on<GenerateBooksRequest>(_onRecmmendedBooksRequest);
   }
 
-  void _onRecommendedBooksRequest(
+  void _onRecmmendedBooksRequest(
       GenerateBooksRequest event, Emitter<RecommendedBooksState> emit) async {
     emit(state.copyWith(status: Status.loading));
     try {
-      final recommendedBooks = await homeRepository.getRecommendedBooks(event);
+      final recommendedBooks = await homeService.getRecommendedBooks(event);
       emit(
         state.copyWith(
           status: Status.success,
@@ -37,5 +38,15 @@ class RecommendedBooksBloc extends Bloc<BooksEvent, RecommendedBooksState> {
     } catch (error) {
       emit(state.copyWith(status: Status.error));
     }
+  }
+
+  @override
+  RecommendedBooksState? fromJson(Map<String, dynamic> json) {
+    return RecommendedBooksState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(RecommendedBooksState state) {
+    return state.toMap();
   }
 }

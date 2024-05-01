@@ -7,9 +7,11 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 
+import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
 import 'package:getout/screens/connection/widgets/fields_title.dart';
@@ -28,7 +30,8 @@ class NewPasswordPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: const Text('MOT DE PASSE OUBLIÉ'),
+        title: AutoSizeText(' MOT DE PASSE OUBLIÉ'.padRight(21, String.fromCharCodes([0x00A0, 0x0020])),
+            maxLines: 1, minFontSize: 16.0, maxFontSize: 32.0),
         leading: BackButton(onPressed: () => pageController.jumpToPage(0)),
       ),
       body: BlocListener<NewPasswordBloc, NewPasswordState>(
@@ -51,19 +54,19 @@ class NewPasswordPage extends StatelessWidget {
               key: _formKey,
               child: Column(children: [
                     const SizedBox(height: 30),
-                    fieldTitle('CODE'),
+                    fieldTitle(appL10n(context)!.code.toUpperCase()),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                       child: CodeField(),
                     ),
                     const SizedBox(height: 15),
-                    fieldTitle('MOT DE PASSE'),
+                    fieldTitle(appL10n(context)!.password.toUpperCase()),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                       child: PasswordField(),
                     ),
                     const SizedBox(height: 15),
-                    fieldTitle('CONFIRMEZ VOTRE MOT DE PASSE'),
+                    fieldTitle(appL10n(context)!.confirm_password_hint.toUpperCase()),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                       child: ConfirmPasswordField(),
@@ -105,8 +108,8 @@ class ForgotPasswordButton extends StatelessWidget {
                   context.read<NewPasswordBloc>().add(ForgotPasswordSubmitted());
                 }
               },
-              child: const Text('Changer de mot de passe',
-                  style: TextStyle(
+              child: Text(appL10n(context)!.edit_password,
+                  style: const TextStyle(
                       fontSize: 17.5,
                       fontWeight: FontWeight.w600,
                       color: Colors.white)),

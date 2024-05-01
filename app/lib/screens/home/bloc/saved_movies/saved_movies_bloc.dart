@@ -5,30 +5,30 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:getout/tools/status.dart';
-import 'package:getout/screens/home/bloc/home_repository.dart';
+import 'package:equatable/equatable.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+
 import 'package:getout/screens/home/bloc/movies/movies_event.dart';
+import 'package:getout/screens/home/services/service.dart';
+import 'package:getout/tools/status.dart';
 
 part 'saved_movies_state.dart';
 
-class SavedMoviesBloc extends Bloc<MoviesEvent, SavedMoviesState> {
-  final HomeRepository homeRepository;
+class SavedMoviesHydratedBloc extends HydratedBloc<MoviesEvent, SavedMoviesState> {
+  final HomeService homeService;
 
-  SavedMoviesBloc({
-    required this.homeRepository,
+  SavedMoviesHydratedBloc({
+    required this.homeService,
   }) : super(const SavedMoviesState()) {
-    on<GenerateMoviesRequest>(_mapGetMoviesSavedEventToState);
+    on<GenerateMoviesRequest>(_onSavedMoviesRequest);
   }
-
-
-  void _mapGetMoviesSavedEventToState(
+  
+  void _onSavedMoviesRequest(
       GenerateMoviesRequest event, Emitter<SavedMoviesState> emit) async {
     emit(state.copyWith(status: Status.loading));
     try {
-      final moviesSaved = await homeRepository.getSavedMovies(event);
+      final moviesSaved = await homeService.getSavedMovies(event);
       emit(
         state.copyWith(
           status: Status.success,
@@ -39,4 +39,15 @@ class SavedMoviesBloc extends Bloc<MoviesEvent, SavedMoviesState> {
       emit(state.copyWith(status: Status.error));
     }
   }
+
+  @override
+  SavedMoviesState? fromJson(Map<String, dynamic> json) {
+    return SavedMoviesState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(SavedMoviesState state) {
+    return state.toMap();
+  }
+
 }
