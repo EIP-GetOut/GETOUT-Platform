@@ -31,18 +31,19 @@ def recommendation_genre(account, movie: Movie):
     films_correspondants = comparer_genre_ids(popular, account["preferences"]["moviesGenres"])
     result = {}
     id_title_pairs = []
-    result["recommandations"] = []
+    result["recommendations"] = []
     for book_id in films_correspondants:
         title = movie.details(book_id)["original_title"]
         id_title_pairs.append([book_id, title])
+    # print(id_title_pairs)
     for p in range(len(id_title_pairs)):
-        result["recommandations"].append({
+        result["recommendations"].append({
             "id": id_title_pairs[p][0],
             "title": id_title_pairs[p][1],
             "score": random.randint(0, 100)
         })
-    result["recommandations"] = sorted(result["recommandations"], key=lambda k: k['score'], reverse=True)[:5]
-    print(result)
+    result["recommendations"] = sorted(result["recommendations"], key=lambda k: k['score'], reverse=True)[:5]
+    # print(result)
     return result
 
 
@@ -84,18 +85,17 @@ def recommandMovies(account):
                 scores[similar_movie_id] = 1
     result2 = give_recommendation(account, scores)
     id_title_pairs = []
-    result["recommandations"] = []
+    result["recommendations"] = []
     for book_id in result2:
         title = movie.details(book_id)["original_title"]
         id_title_pairs.append([book_id, title])
     for p in range(len(id_title_pairs)):
-        result["recommandations"].append({
+        result["recommendations"].append({
             "id": id_title_pairs[p][0],
             "title": id_title_pairs[p][1],
             "score": random.randint(0, 100)
         })
-    result["recommandations"] = sorted(result["recommandations"], key=lambda k: k['score'], reverse=True)[:5]
-    print(result)
+    result["recommendations"] = sorted(result["recommendations"], key=lambda k: k['score'], reverse=True)[:5]
     return result
 
 def calculate_score(movie, account):
@@ -125,6 +125,7 @@ def calculate_critics_score(movie, account):
 def main():
     externalSessionAccount = json.loads(sys.argv[1])
     result = test(externalSessionAccount)
+    print(json.dumps(result))
     return result
 
 main()

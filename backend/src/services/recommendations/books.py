@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 from googleapiclient.discovery import build
 # from google_books_api_wrapper.api import GoogleBooksAPI
 
-from pynytimes import NYTAPI
+# from pynytimes import NYTAPI
 
 WEIGHTS = {
     "genres": 0.3,
@@ -51,7 +51,8 @@ def RecommandBooks(user: json) -> json:
     for p in range(5):
         result["recommendations"].append({
         "title": ids_titres_livres[p][1],
-        "score": random.randint(1, 100)})
+        "score": random.randint(1, 100),
+        "id": ids_titres_livres[p][0]})
     sorted(result["recommendations"], key=lambda k: k['score'], reverse=True)
     return result
 
