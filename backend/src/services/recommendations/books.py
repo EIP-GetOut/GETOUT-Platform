@@ -39,7 +39,7 @@ def RecommandBooks(user: json) -> json:
             for item in items:
                 book_id = item.get("id")
                 book_title = item.get("volumeInfo", {}).get("title")
-                if book_id not in read_books and book_id not in [id for id, _ in ids_titres_livres]:
+                if book_id not in read_books or book_id not in user["recommendedBooksHistory"] and book_id not in [id for id, _ in ids_titres_livres]:
                     ids_titres_livres.append((book_id, book_title))
                 if len(ids_titres_livres) >= 5:
                     break

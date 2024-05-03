@@ -51,7 +51,7 @@ def give_recommendation(account, list):
     test = sorted(list.items(), key=lambda x: x[1], reverse=True)
     films_non_vus = []
     for film in test:
-        if film[0] not in account["seenMovies"]:
+        if film[0] not in account["seenMovies"] or film[0] not in account["recommendedMoviesHistory"]:
             films_non_vus.append(film[0])
             if len(films_non_vus) == 5:
                 break
