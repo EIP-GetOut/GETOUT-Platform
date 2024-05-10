@@ -31,9 +31,11 @@ class ApiConstants {
 
   // GENERATE THINGS API PATH
   static const String recommendedMoviesPath = '/recommend-movies';
+  static const String recommendedMoviesHistoryPath = '/recommendedMoviesHistory';
   static const String getInfoMoviePath = '/movie';
 
   static const String recommendedBooksPath = '/recommend-books';
+  static const String recommendedBooksHistoryPath = '/recommendedBooksHistory';
   static const String getInfoBookPath = '/book';
 
   static const String session = '/session';
