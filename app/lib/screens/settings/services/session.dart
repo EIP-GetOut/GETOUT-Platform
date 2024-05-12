@@ -52,7 +52,26 @@ class SessionService extends ServiceTemplate {
   }
 
   Future<StatusResponse> disconnect() async {
-    return const StatusResponse();
+ try {
+      final response = await globals.dio?.post(
+        '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/logout',
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+      );
+      if (response?.statusCode != HttpStatus.NO_CONTENT) {
+        return Future.error(Exception(
+          'Error ${response?.statusCode} while editing account email: ${response?.statusMessage}',
+        ));
+      }
+      await globals.sessionManager.getSession();
+      return const StatusResponse(status: 200);
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
+    }
   }
 
   Future<StatusResponse> deleteAccount(String password) async {

@@ -14,6 +14,9 @@ import 'package:getout/global.dart' as globals;
 import 'package:getout/tools/app_l10n.dart';
 
 import 'package:getout/tools/duration_format.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 
 class HomeAppBarWidget extends AppBar {
   HomeAppBarWidget({super.key, required BuildContext context})
@@ -45,6 +48,15 @@ class HomeAppBarWidget extends AppBar {
                   context,
                   MaterialPageRoute(
                       builder: (context) => const SettingsPage()));
+          //     Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => BlocProvider.value(
+          //       value: BlocProvider.of<LoginBloc>(context),
+          //       child: const SettingsPage(),
+          //     ),
+          //   ),
+          // );
             },
             child: Padding(
                 padding: const EdgeInsets.only(left: 10, right : 0),

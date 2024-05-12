@@ -42,6 +42,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       } catch (e) {
         emit(state.copyWith(status: Status.error));
       }
+    } else if (event is Logout) {
+      emit(state.copyWith(status: Status.loading));
     }
   }
 }
