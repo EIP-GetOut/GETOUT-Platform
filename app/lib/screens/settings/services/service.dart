@@ -29,8 +29,8 @@ class SettingService extends _SettingService<SessionService> {
 
   Future<StatusResponse> disconnect() async => t.disconnect();
 
-  Future<StatusResponse> deleteAccount(String password) async =>
-      t.deleteAccount(password);
+  Future<StatusResponse> deleteAccount() async =>
+      t.deleteAccount();
 
   Future<StatusResponse> setLanguage(String language) async =>
       t.setLanguage(language);

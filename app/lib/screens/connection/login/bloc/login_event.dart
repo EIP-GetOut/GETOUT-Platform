@@ -33,14 +33,6 @@ class LoginEmailChanged extends LoginEvent {
   List<Object?> get props => [email];
 }
 
-class Logout extends LoginEvent {
-
-  Logout();
-
-  @override
-  List<Object?> get props => [];
-}
-
 class LoginPasswordChanged extends LoginEvent {
   final String? password;
 

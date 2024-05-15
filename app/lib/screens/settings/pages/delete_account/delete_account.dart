@@ -7,72 +7,79 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/settings/services/service.dart';
 import 'package:getout/tools/app_l10n.dart';
-import 'package:getout/tools/validator/email.dart';
-import 'package:getout/tools/validator/field.dart';
-import 'package:getout/widgets/fields/email_field.dart';
-import 'package:getout/widgets/fields/password_field.dart';
-import 'package:getout/widgets/button/floating_button.dart';
 
-class DeleteAccount extends StatelessWidget {
-  const DeleteAccount({super.key});
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/bloc/session/session_bloc.dart';
+import 'package:getout/bloc/session/session_event.dart';
+
+void showAlertDialog(BuildContext context) {
+  final SettingService service = SettingService();
+
+  Widget cancelButton = TextButton(
+    child: const Text('Annuler'),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+  Widget continueButton = TextButton(
+      child: const Text('Supprimer son compte'),
+      onPressed: () async {
+        try {
+          await service.deleteAccount();
+          await service.disconnect();
+          context.read<SessionBloc>().add(const DisconnectRequest());
+          Navigator.pop(context);
+          Navigator.pop(context);
+        } catch (e) {
+          print(e);
+        }
+      });
+
+  AlertDialog alert = AlertDialog(
+    title: const Text('Suppression de compte'),
+    content: const Text('Êtes-vous sûr de vouloir supprimer votre compte ?'),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+class DeleteAccountPage extends StatelessWidget {
+  const DeleteAccountPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final SettingService service = SettingService();
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    String password = '';
-    String newEmail = '';
-    String confirmEmail = '';
-
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('ADRESSE EMAIL'),
-          leading: const BackButton(),
-        ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.only(
-              left: 8.0, right: 8.0, top: 16.0, bottom: 64.0),
-          child: Form(
-            key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-//              mainAxisAlignment: MainAxisAlignment.center, todo remove scroll or set height.
-              children: [
-                PasswordField(
-                    onChanged: (String value) => password = value,
-                    validator: (_) => mandatoryValidator(context, password)),
-                NewEmailField(
-                    onChanged: (String value) => newEmail = value,
-                    validator: (_) => emailValidator(context, newEmail)),
-                ConfirmEmailField(
-                    onChanged: (value) => confirmEmail = value,
-                    validator: (_) => confirmEmailValidator(context, newEmail, confirmEmail)),
-                const SizedBox(height: 32),
-              ],
-            ),
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: FloatingButton(
-          title: appL10n(context)!.edit_email,
-          onPressed: () async {
-            //todo setup request & error handling, setup validator with tools function;
-            if (formKey.currentState!.validate()) {
-              try {
-                StatusResponse response =
-                    await service.changeEmail(password, newEmail);
-                if (response.status == HttpStatus.OK) {
-
-                }
-                //handle response
-              } catch (e) {
-                //handle error
-              }
-            }
-          },
-        ));
+    return Container(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        height: MediaQuery.of(context).size.height * 0.06,
+        color: const Color.fromRGBO(255, 82, 65, 0.4),
+        child: InkWell(
+            onTap: () {
+              return showAlertDialog(context);
+            },
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Icon(Icons.delete_outlined),
+                  Text(
+                    appL10n(context)!.delete_account,
+                    style: TextStyle(
+                        fontSize:
+                            (MediaQuery.of(context).size.width > 400) ? 20 : 12,
+                        color: Colors.black),
+                  ),
+                  const Icon(Icons.arrow_forward_ios_rounded,
+                      color: Colors.black54),
+                ])));
   }
 }

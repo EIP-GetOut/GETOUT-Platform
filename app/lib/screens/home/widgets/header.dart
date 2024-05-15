@@ -48,18 +48,9 @@ class HomeAppBarWidget extends AppBar {
                   context,
                   MaterialPageRoute(
                       builder: (context) => const SettingsPage()));
-          //     Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => BlocProvider.value(
-          //       value: BlocProvider.of<LoginBloc>(context),
-          //       child: const SettingsPage(),
-          //     ),
-          //   ),
-          // );
             },
             child: Padding(
-                padding: const EdgeInsets.only(left: 10, right : 0),
+                padding: const EdgeInsets.only(left: 10, right: 0),
                 child: Image.asset(
                   'assets/images/icon/profile_picture.png',
                   width: 60,
@@ -72,8 +63,10 @@ class HomeAppBarWidget extends AppBar {
                   style: Theme.of(context).textTheme.titleLarge),
               Text(appL10n(context)!.homepage_subtitle,
                   style: Theme.of(context).textTheme.displayMedium),
-                Text(durationFormat(appL10n(context)!.you_saved, globals.session?['spentMinutesReadingAndWatching']),
-                style: Theme.of(context).textTheme.bodySmall)
+              Text(
+                  durationFormat(appL10n(context)!.you_saved,
+                      globals.session?['spentMinutesReadingAndWatching']),
+                  style: Theme.of(context).textTheme.bodySmall)
             ],
           ),
           actions: [

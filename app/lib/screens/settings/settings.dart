@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:getout/screens/settings/pages/disconnect/disconnect.dart';
+import 'package:getout/screens/settings/pages/delete_account/delete_account.dart';
 
 import 'package:getout/screens/settings/pages/edit_email/edit_mail.dart';
 import 'package:getout/screens/settings/pages/edit_password/edit_password.dart';
@@ -46,11 +47,7 @@ class SettingsPage extends StatelessWidget {
                 value: appL10n(context)!.edit_email),
 
             const DisconnectPage(),
-            SettingRow(
-                page: const SizedBox(),
-                iconData: Icons.delete_outlined,
-                value: appL10n(context)!.delete_account,
-                important: Important.important),
+            const DeleteAccountPage(),
             TitleRow(value: appL10n(context)!.appearance),
             SettingRow(
                 page: const SizedBox(),

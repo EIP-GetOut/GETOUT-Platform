@@ -17,13 +17,13 @@ void showAlertDialog(BuildContext context) {
   final SettingService service = SettingService();
 
   Widget cancelButton = TextButton(
-    child: const Text("Annuler"),
+    child: const Text('Annuler'),
     onPressed: () {
       Navigator.pop(context);
     },
   );
   Widget continueButton = TextButton(
-      child: Text("Se déconnecter"),
+      child: const Text('Se déconnecter'),
       onPressed: () async {
         try {
           await service.disconnect();
@@ -36,8 +36,8 @@ void showAlertDialog(BuildContext context) {
       });
 
   AlertDialog alert = AlertDialog(
-    title: const Text("Déconnexion"),
-    content: const Text("Êtes-vous sûr de vouloir vous déconnecter ?"),
+    title: const Text('Déconnexion'),
+    content: const Text('Êtes-vous sûr de vouloir vous déconnecter ?'),
     actions: [
       cancelButton,
       continueButton,

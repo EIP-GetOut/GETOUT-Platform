@@ -31,16 +31,12 @@ class SessionService {
   }
 
   Future<SessionStatusResponse> getSession() async {
-    print("DANS LE GET SESSION !");
     if (globals.cookieJar == null && globals.dio == null) {
       await setCookies();
     }
       try {
         final response = await globals.dio
             ?.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
-        print("response session : ");
-        print(response?.statusCode);
-        print(response?.data);
         if (response?.statusCode == HttpStatus.OK) {
           if (response?.data['account'] != null) {
             globals.session = response?.data['account'];

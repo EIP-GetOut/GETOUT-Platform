@@ -20,7 +20,8 @@ class SessionService extends ServiceTemplate {
   SessionService();
 
   Future<StatusResponse> changeEmail(String password, String newEmail) async {
-    try { /// TODO we need to do something prettier
+    try {
+      /// TODO we need to do something prettier
       ///
       final response = await globals.dio?.delete(
           '${ApiConstants.rootApiPath}/account',
@@ -32,13 +33,14 @@ class SessionService extends ServiceTemplate {
         ));
       }
     } on DioException catch (dioException) {
-      if (dioException.response != null && dioException.response?.statusCode != null) {
+      if (dioException.response != null &&
+          dioException.response?.statusCode != null) {
         return Future.error(Exception(
           'Error ${dioException.response?.statusCode} while editing account email: ${dioException.response?.statusMessage}',
         ));
       }
-      return Future.error(Exception(
-          'Unknown error:  ${dioException.toString()}'));
+      return Future.error(
+          Exception('Unknown error:  ${dioException.toString()}'));
     } catch (error) {
       return Future.error(Exception(
         'Unknown error: ${error.toString()}',
@@ -47,12 +49,13 @@ class SessionService extends ServiceTemplate {
     return const StatusResponse();
   }
 
-  Future<StatusResponse> changePassword(String password, String newPassword) async {
+  Future<StatusResponse> changePassword(
+      String password, String newPassword) async {
     return const StatusResponse();
   }
 
   Future<StatusResponse> disconnect() async {
- try {
+    try {
       final response = await globals.dio?.post(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/logout',
         options: Options(
@@ -64,7 +67,6 @@ class SessionService extends ServiceTemplate {
           'Error ${response?.statusCode} while editing account email: ${response?.statusMessage}',
         ));
       }
-      print("deconnecté !");
       await globals.sessionManager.getSession();
       return const StatusResponse(status: 200);
     } on DioException {
@@ -75,8 +77,31 @@ class SessionService extends ServiceTemplate {
     }
   }
 
-  Future<StatusResponse> deleteAccount(String password) async {
-    return const StatusResponse();
+  Future<StatusResponse> deleteAccount() async {
+//     curl --location --request DELETE 'http://localhost:8080/account' \
+// --header 'Cookie: connect.sid=s%3A1zu9KylpBuUASsPykaVO9c536847gJ7-.CcXoRUqqdCDBNPTIIhbwtYrfOg%2BjeZpvmOrSF4e5984'
+    try {
+      print("dans le delete account");
+      final response = await globals.dio?.delete(
+        '${ApiConstants.rootApiPath}/account',
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+      );
+      print(response?.statusCode);
+      if (response?.statusCode != HttpStatus.OK) {
+        return Future.error(Exception(
+          'Error ${response?.statusCode} while editing account email: ${response?.statusMessage}',
+        ));
+      }
+      await globals.sessionManager.getSession();
+      return const StatusResponse(status: 200);
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
+    }
   }
 
   Future<StatusResponse> setLanguage(String language) async {
@@ -86,5 +111,4 @@ class SessionService extends ServiceTemplate {
   Future<StatusResponse> setTheme(String theme) async {
     return const StatusResponse();
   }
-
 }
