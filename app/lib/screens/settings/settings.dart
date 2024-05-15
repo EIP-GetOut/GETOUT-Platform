@@ -6,10 +6,9 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:getout/screens/settings/pages/disconnect/disconnect.dart';
 
 import 'package:getout/screens/settings/pages/edit_email/edit_mail.dart';
-import 'package:getout/screens/settings/pages/delete_account/delete_account.dart';
-import 'package:getout/screens/settings/pages/disconnect/disconnect.dart';
 import 'package:getout/screens/settings/pages/edit_password/edit_password.dart';
 import 'package:getout/screens/settings/pages/notifications/notifications_page.dart';
 import 'package:getout/screens/settings/widget/account_info.dart';
@@ -45,33 +44,10 @@ class SettingsPage extends StatelessWidget {
                 page: const EditMailPage(),
                 iconData: Icons.mail_outlined,
                 value: appL10n(context)!.edit_email),
-            // SettingRow(page: const disconnect(), iconData: Icons.exit_to_app_outlined, value: appL10n(context)!.disconnect, important: Important.warning),
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all<Color>(Colors.red),
-              ),
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                height: MediaQuery.of(context).size.height * 0.06,
-                child : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Icon(Icons.exit_to_app_outlined),
-                    Text(
-                      appL10n(context)!.disconnect,
-                      style: TextStyle(
-                        fontSize:
-                            (MediaQuery.of(context).size.width > 400) ? 20 : 12,
-                      ),
-                    )
-                  ]),
-              ),
-              onPressed: () {
-                return showAlertDialog(context);
-              },
-            ),
+
+            const DisconnectPage(),
             SettingRow(
-                page: const DeleteAccount(),
+                page: const SizedBox(),
                 iconData: Icons.delete_outlined,
                 value: appL10n(context)!.delete_account,
                 important: Important.important),

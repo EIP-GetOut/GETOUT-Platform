@@ -35,13 +35,15 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
   SessionBloc({
     required this.sessionService
   }): super(const SessionState()) {
-    on<SessionEvent>((event, emit) async {
-      await mapEventToState(event, emit);
+    on<SessionRequest>((event, emit) async {
+      await login(event, emit);
+    });
+    on<DisconnectRequest>((event, emit) async {
+      await disconnect(event, emit);
     });
   }
 
-  Future mapEventToState(SessionEvent event, Emitter<SessionState> emit) async
-  {
+  Future login(SessionEvent event, Emitter<SessionState> emit) async {
     emit(state.copyWith(status: Status.loading));
     try {
       final SessionStatusResponse sessionResponse = await globals.sessionManager.getSession();
@@ -52,10 +54,14 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
       } else if (sessionResponse.statusCode == SessionStatus.foundWithoutPreferences.index) {
         emit(state.copyWith(status: Status.isFoundWithoutPreferences));
       } else {
-        emit(state.copyWith(status: Status.error));
+        emit(state.copyWith(status: Status.isNotFound));
       }
     } catch (error) {
       emit(state.copyWith(status: Status.error));
     }
+  }
+
+  Future disconnect(SessionEvent event, Emitter<SessionState> emit) async {
+    emit(state.copyWith(status: Status.isNotFound));
   }
 }

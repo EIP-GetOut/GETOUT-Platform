@@ -6,82 +6,78 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/bloc/session/session_bloc.dart';
-
-import 'package:getout/global.dart' as globals;
-
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-
-import 'package:getout/constants/http_status.dart';
-import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
-import 'package:getout/screens/settings/services/service.dart';
-import 'package:getout/screens/connection/login/pages/login.dart';
+import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/session/session_event.dart';
 
-
+import 'package:getout/tools/app_l10n.dart';
+import 'package:getout/screens/settings/services/service.dart';
 
 void showAlertDialog(BuildContext context) {
+  final SettingService service = SettingService();
 
-    final SettingService service = SettingService();
-
-    Widget cancelButton = TextButton(
-      child: const Text("Annuler"),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-    Widget continueButton = TextButton(
+  Widget cancelButton = TextButton(
+    child: const Text("Annuler"),
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+  Widget continueButton = TextButton(
       child: Text("Se déconnecter"),
-//         curl --location 'http://localhost:8080/account/logout' \
-// --header 'Content-Type: application/json' \
-// --data '{
-// }'
-        // print("disconnect");
+      onPressed: () async {
+        try {
+          await service.disconnect();
+          context.read<SessionBloc>().add(const DisconnectRequest());
+          Navigator.pop(context);
+          Navigator.pop(context);
+        } catch (e) {
+          print(e);
+        }
+      });
 
-        onPressed: () async {
-            //todo setup request & error handling, setup validator with tools function;
-              try {
-                // StatusResponse response =
-                //     await service.disconnect();
-                // Navigator.pop(context);
-                print("RESPONSE = ");
-                // print(response.status);
-                // BlocProvider.of<LoginBloc>(context)
-                //         .add(Logout());
+  AlertDialog alert = AlertDialog(
+    title: const Text("Déconnexion"),
+    content: const Text("Êtes-vous sûr de vouloir vous déconnecter ?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
 
-                BlocProvider.of<LoginBloc>(context).add(Logout());
-                // if (response.status == HttpStatus.NO_CONTENT) {
-                // }
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 
-                // if (response.status == HttpStatus.NO_CONTENT) {
-                //   print("DISCONNNNNNNNNNNNNNNNNNNECTDBHZEHFZUEGIZU");
-                //   // await globals.sessionManager.getSession();
-                // }
-                //handle response
-                
-              } catch (e) {
-                  print("error");
-                  print(e);
+class DisconnectPage extends StatelessWidget {
+  const DisconnectPage({super.key});
 
-                //handle error
-              }
-            }
-    );
-
-    AlertDialog alert = AlertDialog(
-      title: const Text("Déconnexion"),
-      content: const Text("Êtes-vous sûr de vouloir vous déconnecter ?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        height: MediaQuery.of(context).size.height * 0.06,
+        color: const Color.fromRGBO(255, 82, 65, 0.4),
+        child: InkWell(
+            onTap: () {
+              return showAlertDialog(context);
+            },
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Icon(Icons.exit_to_app_outlined),
+                  Text(
+                    appL10n(context)!.disconnect,
+                    style: TextStyle(
+                        fontSize:
+                            (MediaQuery.of(context).size.width > 400) ? 20 : 12,
+                        color: Colors.black),
+                  ),
+                  const Icon(Icons.arrow_forward_ios_rounded,
+                      color: Colors.black54),
+                ])));
   }
+}

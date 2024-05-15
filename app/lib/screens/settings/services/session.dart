@@ -64,6 +64,7 @@ class SessionService extends ServiceTemplate {
           'Error ${response?.statusCode} while editing account email: ${response?.statusMessage}',
         ));
       }
+      print("deconnecté !");
       await globals.sessionManager.getSession();
       return const StatusResponse(status: 200);
     } on DioException {
