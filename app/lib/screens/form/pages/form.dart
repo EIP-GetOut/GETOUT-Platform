@@ -22,13 +22,13 @@ import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/session/session_event.dart';
 import 'package:getout/tools/tools.dart';
+import 'package:getout/global.dart' as globals;
 
 class Forms extends StatelessWidget {
   const Forms({super.key});
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     final PageController pageController = PageController();
 
     return BlocProvider(
@@ -36,7 +36,8 @@ class Forms extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
             //title: const Text('VOS PRÉFÉRENCES'),
-          title: const AutoSizeText('VOS PRÉFÉRENCES', maxLines: 1, minFontSize: 16.0, maxFontSize: 32.0),
+            title: const AutoSizeText('VOS PRÉFÉRENCES',
+                maxLines: 1, minFontSize: 16.0, maxFontSize: 32.0),
             leading: Row(
               children: [
                 IconButton(
@@ -48,7 +49,6 @@ class Forms extends StatelessWidget {
                     );
                   },
                 ),
-
               ],
             )),
         body: PageView(
@@ -67,17 +67,20 @@ class Forms extends StatelessWidget {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
-  } 
+  }
 
-  Widget _nextButton(final PageController pageController)
-  {
+  Widget _nextButton(final PageController pageController) {
+    bool isEdit = false;
+    if (globals.session?['preferences'] != null) {
+      isEdit = true;
+    }
+
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state) {
       return SizedBox(
         width: Tools.widthFactor(context, 0.9),
         height: 65,
         child: FloatingActionButton(
-          child:
-          AutoSizingText('Suivant',
+          child: AutoSizingText('Suivant',
               minSize: 70,
               maxSize: 100,
               sizeFactor: 0.12,
@@ -87,24 +90,47 @@ class Forms extends StatelessWidget {
             if (
                 /*(context.read<FormBloc>().state.status == FormStatus.interestChoices &&
                     !context.read<FormBloc>().state.interest.containsValue(true)) ||*/
-                (context.read<FormBloc>().state.status == FormStatus.literaryGenres &&
-                    !context.read<FormBloc>().state.literaryGenres.containsValue(true)) ||
-                (context.read<FormBloc>().state.status == FormStatus.filmGenres &&
-                    !context.read<FormBloc>().state.filmGenres.containsValue(true)) ||
-                (context.read<FormBloc>().state.status == FormStatus.viewingPlatform &&
-                    !context.read<FormBloc>().state.viewingPlatform.containsValue(true))) {
+                (context.read<FormBloc>().state.status ==
+                            FormStatus.literaryGenres &&
+                        !context
+                            .read<FormBloc>()
+                            .state
+                            .literaryGenres
+                            .containsValue(true)) ||
+                    (context.read<FormBloc>().state.status ==
+                            FormStatus.filmGenres &&
+                        !context
+                            .read<FormBloc>()
+                            .state
+                            .filmGenres
+                            .containsValue(true)) ||
+                    (context.read<FormBloc>().state.status ==
+                            FormStatus.viewingPlatform &&
+                        !context
+                            .read<FormBloc>()
+                            .state
+                            .viewingPlatform
+                            .containsValue(true))) {
               showSnackBar(context, 'Veuillez sélectionner au moins une case');
-            } else if (context.read<FormBloc>().state.status == FormStatus.endForm) {
-              FormServices().sendPreferences(FormRequestModel.fillFormRequest(
-                  filmGenres: context.read<FormBloc>().state.filmGenres,
-                  literaryGenres: context.read<FormBloc>().state.literaryGenres,
-                  viewingPlatform: context.read<FormBloc>().state.viewingPlatform)).then(
-                      (final FormResponseModel value) {
-                        if (!value.isSuccessful) {
-                          showSnackBar(context, 'Une erreur est survenue veuillez réessayer plus tard');
-                        }
-                        context.read<SessionBloc>().add(const SessionRequest());
-                      });
+            } else if (context.read<FormBloc>().state.status ==
+                FormStatus.endForm) {
+              FormServices()
+                  .sendPreferences(FormRequestModel.fillFormRequest(
+                      filmGenres: context.read<FormBloc>().state.filmGenres,
+                      literaryGenres:
+                          context.read<FormBloc>().state.literaryGenres,
+                      viewingPlatform:
+                          context.read<FormBloc>().state.viewingPlatform))
+                  .then((final FormResponseModel value) {
+                if (!value.isSuccessful) {
+                  showSnackBar(context,
+                      'Une erreur est survenue veuillez réessayer plus tard');
+                }
+                if (isEdit) {
+                  Navigator.pop(context);
+                }
+                context.read<SessionBloc>().add(const SessionRequest());
+              });
             } else {
               pageController.nextPage(
                   duration: const Duration(milliseconds: 200),
