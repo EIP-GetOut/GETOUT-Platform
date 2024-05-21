@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:getout/screens/form/pages/form.dart';
 import 'package:getout/screens/settings/pages/edit_email/edit_mail.dart';
 import 'package:getout/screens/settings/pages/edit_password/edit_password.dart';
 import 'package:getout/screens/settings/pages/history/history_provider.dart';
@@ -44,7 +45,7 @@ class SettingsPage extends StatelessWidget {
             SettingRow(page: const SizedBox(), iconData: Icons.public_outlined, value: appL10n(context)!.select_language),
             TitleRow(value: appL10n(context)!.preference),
             const SettingRow(page: HistoryProvider(), iconData: Icons.history_outlined, value: 'history'),
-            SettingRow(page: const SizedBox(), iconData: Icons.settings_outlined, value: appL10n(context)!.select_preferences),
+            SettingRow(page: const Forms(), iconData : Icons.settings_outlined, value: appL10n(context)!.select_preferences),
             SettingRow(page: const NotificationsPage(), iconData: Icons.notifications_outlined, value: appL10n(context)!.notifications),
             TitleRow(value: appL10n(context)!.more),
             SettingRow(page: const SizedBox(), iconData: Icons.help_outline, value: appL10n(context)!.support),
