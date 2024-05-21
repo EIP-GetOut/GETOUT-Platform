@@ -71,24 +71,20 @@ class SessionService extends ServiceTemplate {
   }
 
   Future<StatusResponse> deleteAccount() async {
-//     curl --location --request DELETE 'http://localhost:8080/account' \
-// --header 'Cookie: connect.sid=s%3A1zu9KylpBuUASsPykaVO9c536847gJ7-.CcXoRUqqdCDBNPTIIhbwtYrfOg%2BjeZpvmOrSF4e5984'
     try {
-      print("dans le delete account");
       final response = await globals.dio?.delete(
         '${ApiConstants.rootApiPath}/account',
         options: Options(
           headers: {'Content-Type': 'application/json'},
         ),
       );
-      print(response?.statusCode);
-      if (response?.statusCode != HttpStatus.OK) {
+      if (response?.statusCode != HttpStatus.NO_CONTENT) {
         return Future.error(Exception(
-          'Error ${response?.statusCode} while editing account email: ${response?.statusMessage}',
+          'Error ${response?.statusCode} while deleting account : ${response?.statusMessage}',
         ));
       }
       await globals.sessionManager.getSession();
-      return const StatusResponse(status: 200);
+      return const StatusResponse(status: 204);
     } on DioException {
       // add "catch (dioError)" for debugging
       rethrow;

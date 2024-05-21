@@ -27,11 +27,13 @@ void showAlertDialog(BuildContext context) {
       onPressed: () async {
         try {
           await service.disconnect();
-          context.read<SessionBloc>().add(const DisconnectRequest());
-          Navigator.pop(context);
-          Navigator.pop(context);
+          if (context.mounted) {
+            context.read<SessionBloc>().add(const DisconnectRequest());
+            Navigator.pop(context);
+            Navigator.pop(context);
+          }
         } catch (e) {
-          print(e);
+          // print(e);
         }
       });
 
