@@ -13,7 +13,8 @@ class SessionService extends ServiceTemplate {
   SessionService();
 
   Future<StatusResponse> changeEmail(String password, String newEmail) async {
-    try { /// TODO we need to do something prettier
+    try {
+      /// TODO we need to do something prettier
       ///
       final response = await globals.dio?.delete(
           '${ApiConstants.rootApiPath}/account',
@@ -25,13 +26,14 @@ class SessionService extends ServiceTemplate {
         ));
       }
     } on DioException catch (dioException) {
-      if (dioException.response != null && dioException.response?.statusCode != null) {
+      if (dioException.response != null &&
+          dioException.response?.statusCode != null) {
         return Future.error(Exception(
           'Error ${dioException.response?.statusCode} while editing account email: ${dioException.response?.statusMessage}',
         ));
       }
-      return Future.error(Exception(
-          'Unknown error:  ${dioException.toString()}'));
+      return Future.error(
+          Exception('Unknown error:  ${dioException.toString()}'));
     } catch (error) {
       return Future.error(Exception(
         'Unknown error: ${error.toString()}',
@@ -40,16 +42,55 @@ class SessionService extends ServiceTemplate {
     return const StatusResponse();
   }
 
-  Future<StatusResponse> changePassword(String password, String newPassword) async {
+  Future<StatusResponse> changePassword(
+      String password, String newPassword) async {
     return const StatusResponse();
   }
 
   Future<StatusResponse> disconnect() async {
-    return const StatusResponse();
+    try {
+      final response = await globals.dio?.post(
+        '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/logout',
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+      );
+      if (response?.statusCode != HttpStatus.NO_CONTENT) {
+        return Future.error(Exception(
+          'Error ${response?.statusCode} while editing account email: ${response?.statusMessage}',
+        ));
+      }
+      await globals.sessionManager.getSession();
+      return const StatusResponse(status: 200);
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
+    }
   }
 
-  Future<StatusResponse> deleteAccount(String password) async {
-    return const StatusResponse();
+  Future<StatusResponse> deleteAccount() async {
+    try {
+      final response = await globals.dio?.delete(
+        '${ApiConstants.rootApiPath}/account',
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+      );
+      if (response?.statusCode != HttpStatus.NO_CONTENT) {
+        return Future.error(Exception(
+          'Error ${response?.statusCode} while deleting account : ${response?.statusMessage}',
+        ));
+      }
+      await globals.sessionManager.getSession();
+      return const StatusResponse(status: 204);
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
+    }
   }
 
   Future<StatusResponse> setLanguage(String language) async {
@@ -59,5 +100,4 @@ class SessionService extends ServiceTemplate {
   Future<StatusResponse> setTheme(String theme) async {
     return const StatusResponse();
   }
-
 }
