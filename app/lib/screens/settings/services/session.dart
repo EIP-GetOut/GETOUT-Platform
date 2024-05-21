@@ -7,13 +7,6 @@
 
 part of 'service.dart';
 
-class StatusResponse {
-  const StatusResponse({this.status = HttpStatus.NOT_FOUND, this.error});
-
-  final int status;
-  final String? error;
-}
-
 class SessionService extends ServiceTemplate {
 //  final String _id = (globals.session != null) ? globals.session!['id'].toString() : '';
 
