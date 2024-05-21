@@ -14,7 +14,7 @@ import 'package:getout/tools/app_l10n.dart';
  class ObjectLoadingErrorWidget extends StatelessWidget {
   final String object;
 
-  const ObjectLoadingErrorWidget({Key? key, required this.object}) : super(key: key);
+  const ObjectLoadingErrorWidget({super.key, required this.object});
 
   @override
   Widget build(BuildContext context) {
