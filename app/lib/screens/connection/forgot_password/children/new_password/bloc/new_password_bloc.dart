@@ -24,22 +24,24 @@ class NewPasswordBloc extends Bloc<NewPasswordEvent, NewPasswordState> {
     });
   }
 
-  Future mapEventToState(NewPasswordEvent event, Emitter<NewPasswordState> emit) async
-  {
+  Future mapEventToState(NewPasswordEvent event, Emitter<NewPasswordState> emit) async {
+    print("EVENT");
+    print(event);
     if (event is ForgotPasswordCodeChanged) {
       emit(state.copyWith(code: event.code));
     } else if (event is ForgotPasswordPasswordChanged) {
-        emit(state.copyWith(password: event.password));
+      emit(state.copyWith(password: event.password));
     } else if (event is ForgotPasswordConfirmPasswordChanged) {
       emit(state.copyWith(confirmPassword: event.confirmPassword));
     } else if (event is ForgotPasswordSubmitted) {
       emit(state.copyWith(status: Status.loading));
 
       try {
+        print("apres le try");
         await service?.newPassword(NewPasswordRequestModel(
-          code: state.code,
-          password: state.password
-        ));
+            code: state.code,
+            password: state.password,
+            confirmPassword: state.confirmPassword));
         emit(state.copyWith(status: Status.success));
       } catch (e) {
         emit(state.copyWith(status: Status.error, exception: e));

@@ -8,10 +8,11 @@
 part of 'new_password_bloc.dart';
 
 class NewPasswordRequestModel {
-  const NewPasswordRequestModel({required this.code, required this.password});
+  const NewPasswordRequestModel({required this.code, required this.password,  required this.confirmPassword});
 
   final String code;
   final String password;
+  final String confirmPassword;
 }
 
 class NewPasswordResponseModel {

@@ -31,14 +31,18 @@ class ForgotPasswordService extends ServiceTemplate {
   Future<void> sendNewPassword(final NewPasswordRequestModel request) async
   {
     try {
-      await globals.dio?.post(
+      print("in send new password");
+      final response = await globals.dio?.post(
           '${ApiConstants.rootApiPath}${ApiConstants.resetPasswordNewPasswordPath}',
           data: {
             'newPassword' : request.password,
-            'token': request.code,
-            'password' : 'Charles',
+            'code': request.code
+            // ,
+            // 'password' : 'Charles',
           },
           options: Options(headers: {'Content-Type': 'application/json'}));
+          print("response = ");
+          print(response?.statusCode);
     } on DioException { // add "catch (dioError)" for debugging
       rethrow;
     } catch (error) {
