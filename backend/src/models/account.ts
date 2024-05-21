@@ -22,14 +22,16 @@ async function deleteAccount (sess: Partial<SessionData>): Promise<StatusCodes> 
   if (sess.account == null) {
     throw new NotLoggedInError()
   }
-  await findEntity<Account>(Account, { id: sess.account.id }).then(async (foundAccount: Account | null) => {
+  return await findEntity<Account>(Account, { id: sess.account.id }).then(async (foundAccount: Account | null) => {
     if (foundAccount == null) {
       throw new AccountDoesNotExistError()
     }
+  }).then(async () => {
     await accountRepository.delete(sess.account?.id as string)
-    return StatusCodes.OK
+    return StatusCodes.NO_CONTENT
+  }).catch(() => {
+    return StatusCodes.BAD_REQUEST
   })
-  return StatusCodes.BAD_REQUEST
 }
 
 async function modifyAccount (accountId: UUID, propertiesToChange: Partial<Account>): Promise<void> {

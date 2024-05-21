@@ -6,10 +6,10 @@
 */
 
 import { type Request, type Response, Router } from 'express'
-import { type StatusCodes } from 'http-status-codes'
+import { StatusCodes, getReasonPhrase } from 'http-status-codes'
 
 import { logApiRequest } from '@services/middlewares/logging'
-import { NotLoggedInError } from '@services/utils/customErrors'
+import { AppError, NotLoggedInError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { deleteAccount } from '@models/account'
@@ -23,6 +23,13 @@ router.delete('/account', logApiRequest, (req: Request, res: Response) => {
   }
   deleteAccount(req.session).then((result: StatusCodes) => {
     return res.status(result)
+  }).then(() => {
+    return req.session.destroy((err) => {
+      if (err != null) {
+        handleErrorOnRoute(res)(new AppError(err.message ?? undefined))
+      }
+      return res.status(StatusCodes.NO_CONTENT).send(getReasonPhrase(StatusCodes.NO_CONTENT))
+    })
   }).catch(handleErrorOnRoute(res))
 })
 
