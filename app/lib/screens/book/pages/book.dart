@@ -69,7 +69,7 @@ class BookSuccessWidget extends StatelessWidget {
                   child: IconButton(
                     icon: const Icon(
                       Icons.arrow_back,
-                      color: Colors.black,
+                      color: Color.fromARGB(255, 255, 255, 255),
                     ),
                     onPressed: () {
                       Navigator.pop(context);
@@ -90,7 +90,7 @@ class BookSuccessWidget extends StatelessWidget {
             right: 80,
             child: IconButton(
               icon: const Icon(Icons.remove_red_eye),
-              color: (book.read ?? false) ? Colors.red : Colors.white,
+              color: (book.read ?? false) ? Colors.green : Colors.white,
               onPressed: () async {
                 if (book.read == true) {
                   await context
@@ -115,7 +115,7 @@ class BookSuccessWidget extends StatelessWidget {
             right: 20,
             child: IconButton(
               icon: const Icon(Icons.thumb_up_alt_sharp),
-              color: (book.liked ?? false) ? Colors.red : Colors.white,
+              color: (book.liked ?? false) ? Colors.green : Colors.white,
               onPressed: () async {
                 if (book.liked == true) {
                   await context
@@ -165,7 +165,7 @@ class BookSuccessWidget extends StatelessWidget {
             right: 20,
             child: IconButton(
               icon: const Icon(Icons.add_circle_outlined),
-              color: (book.wishlisted ?? false) ? Colors.red : Colors.white,
+              color: (book.wishlisted ?? false) ? Colors.green : Colors.white,
               onPressed: () async {
                 if (book.wishlisted == true) {
                   await context

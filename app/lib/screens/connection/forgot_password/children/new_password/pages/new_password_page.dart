@@ -30,7 +30,7 @@ class NewPasswordPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: AutoSizeText(' MOT DE PASSE OUBLIÉ'.padRight(21, String.fromCharCodes([0x00A0, 0x0020])),
+        title: AutoSizeText(' ${appL10n(context)!.forgot_password.toUpperCase()}'.padRight(21, String.fromCharCodes([0x00A0, 0x0020])),
             maxLines: 1, minFontSize: 16.0, maxFontSize: 32.0),
         leading: BackButton(onPressed: () => pageController.jumpToPage(0)),
       ),
