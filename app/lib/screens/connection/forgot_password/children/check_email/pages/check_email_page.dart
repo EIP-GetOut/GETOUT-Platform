@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 
 import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/screens/connection/forgot_password/widgets/fields.dart';
 import 'package:getout/screens/connection/widgets/fields_title.dart';
@@ -29,7 +30,7 @@ class CheckEmailPage extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          title: AutoSizeText(' MOT DE PASSE OUBLIÉ'.padRight(21, String.fromCharCodes([0x00A0, 0x0020])),
+          title: AutoSizeText(' ${appL10n(context)!.forgot_password.toUpperCase()}'.padRight(21, String.fromCharCodes([0x00A0, 0x0020])),
               maxLines: 1, minFontSize: 16.0, maxFontSize: 32.0),
           leading: BackButton(onPressed: () => Navigator.pop(context)),
         ),
@@ -40,14 +41,14 @@ class CheckEmailPage extends StatelessWidget {
           if (state.exception is DioException && (state.exception as DioException).response != null) {
             switch((state.exception as DioException).response!.statusCode) {
               case HttpStatus.INTERNAL_SERVER_ERROR:
-                showSnackBar(context, 'L\'email est incorrect');
+                showSnackBar(context, appL10n(context)!.email_validator);
                 break;
               case HttpStatus.UNPROCESSABLE_ENTITY:
-                showSnackBar(context, 'L\'email n\'est pas valide');
+                showSnackBar(context, appL10n(context)!.email_validator);
                 break;
             }
           } else {
-            showSnackBar(context, 'Une erreur s\'est produite, veuillez reesayer plus tard');
+            showSnackBar(context, appL10n(context)!.error_unknow);
           }
         }
         if (state.status.isSuccess) {
@@ -56,7 +57,7 @@ class CheckEmailPage extends StatelessWidget {
       },
       child: Column(children: [
             const SizedBox(height: 40),
-            fieldTitle('EMAIL'),
+            fieldTitle(appL10n(context)!.email),
             Form(
               key: _formKey,
               child: const Padding(
@@ -97,8 +98,8 @@ class ForgotPasswordButton extends StatelessWidget {
                       context.read<CheckEmailBloc>().add(CheckEmailSubmitted());
                     }
                   },
-                  child: const Text('Recevoir un code',
-                      style: TextStyle(
+                  child: Text(appL10n(context)!.receive_code,
+                      style: const TextStyle(
                           fontSize: 17.5,
                           fontWeight: FontWeight.w600,
                           color: Colors.white)),
