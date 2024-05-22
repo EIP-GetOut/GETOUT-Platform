@@ -52,6 +52,8 @@ class MovieService {
       if (response?.statusCode != HttpStatus.OK) {
         return InfoMovieResponse(statusCode: response?.statusCode ?? 500);
       }
+      print("status code");
+      print(response?.statusCode);
       final dynamic data = response?.data;
 
       result = InfoMovieResponse(

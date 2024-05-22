@@ -30,7 +30,7 @@ class ObjectLoadingErrorWidget extends StatelessWidget {
           Text(appL10n(context)!.error_loading(object),
               textAlign: TextAlign.justify,
               style: const TextStyle(
-                fontSize: 32,
+                fontSize: 12,
                 color: Colors.red,
                 fontWeight: FontWeight.w600,
               )),

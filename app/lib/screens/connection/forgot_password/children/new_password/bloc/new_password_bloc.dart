@@ -37,7 +37,6 @@ class NewPasswordBloc extends Bloc<NewPasswordEvent, NewPasswordState> {
       emit(state.copyWith(status: Status.loading));
 
       try {
-        print("apres le try");
         await service?.newPassword(NewPasswordRequestModel(
             code: state.code,
             password: state.password,
