@@ -8,7 +8,6 @@
 import bcrypt from 'bcrypt'
 import { type UUID } from 'crypto'
 import { StatusCodes } from 'http-status-codes'
-import { type FindOptionsWhere } from 'typeorm'
 
 import { AccountDoesNotExistError, AuthenticationError, DbError, SamePasswordError } from '@services/utils/customErrors'
 
@@ -25,10 +24,8 @@ function getDateIn1Hour (): Date {
   return followingDay
 }
 
-async function generatePasswordResetCode (accountId: UUID): Promise<number> {
-  const criteria: FindOptionsWhere<Account> = { id: accountId }
-
-  return await findEntity<Account>(Account, criteria).then(async (account: Account | null) => {
+async function generatePasswordResetCode (email: string): Promise<number> {
+  return await findEntity<Account>(Account, { email }).then(async (account: Account | null) => {
     if (account == null) {
       throw new AccountDoesNotExistError()
     }

@@ -66,8 +66,6 @@ class MovieNotInListError extends AppError {
   }
 }
 
-class NodeMailerError extends AppError {}
-
 class NotLoggedInError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
     super(message ?? 'User is not logged in.', status ?? StatusCodes.BAD_REQUEST)
@@ -104,6 +102,12 @@ class SamePasswordError extends AppError {
   }
 }
 
+class SessionDestroyError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Failed destroying session.', status)
+  }
+}
+
 export {
   AccountAlreadyExistError,
   AccountDoesNotExistError,
@@ -117,11 +121,11 @@ export {
   GoogleBookError,
   IncorrectEmailOrPasswordError,
   MovieNotInListError,
-  NodeMailerError,
   NotLoggedInError,
   PermissionsError,
   PreferencesAlreadyExistError,
   PreferencesDoesNotExistError,
   RecommendationsDetailsError,
-  SamePasswordError
+  SamePasswordError,
+  SessionDestroyError
 }

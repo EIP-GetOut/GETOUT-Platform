@@ -6,10 +6,9 @@
 */
 
 import { type UUID } from 'crypto'
-import { type SessionData } from 'express-session'
-import { StatusCodes } from 'http-status-codes'
+import { type Session, type SessionData } from 'express-session'
 
-import { AccountDoesNotExistError, DbError, NotLoggedInError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError, DbError, NotLoggedInError, SessionDestroyError } from '@services/utils/customErrors'
 
 import { Account } from '@entities/Account'
 
@@ -17,20 +16,22 @@ import { appDataSource } from '@config/dataSource'
 
 import { findEntity } from './getObjects'
 
-async function deleteAccount (sess: Partial<SessionData>): Promise<StatusCodes> {
+async function deleteAccount (sess: Session & Partial<SessionData>): Promise<void> {
   const accountRepository = appDataSource.getRepository(Account)
   if (sess.account == null) {
     throw new NotLoggedInError()
   }
-  return await findEntity<Account>(Account, { id: sess.account.id }).then(async (foundAccount: Account | null) => {
+  await findEntity<Account>(Account, { id: sess.account.id }).then(async (foundAccount: Account | null) => {
     if (foundAccount == null) {
       throw new AccountDoesNotExistError()
     }
-  }).then(async () => {
-    await accountRepository.delete(sess.account?.id as string)
-    return StatusCodes.NO_CONTENT
-  }).catch(() => {
-    return StatusCodes.BAD_REQUEST
+    return await accountRepository.delete(sess.account?.id as string)
+  }).then(() => {
+    return sess.destroy((err: any) => {
+      if (err != null) {
+        throw new SessionDestroyError(`Failed destroying session (${err}).`)
+      }
+    })
   })
 }
 
