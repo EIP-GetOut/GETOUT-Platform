@@ -13,16 +13,12 @@ class ForgotPasswordService extends ServiceTemplate {
   Future<void> checkEmail(final CheckEmailRequestModel request) async
   {
     try {
-      final response = await globals.dio?.post(
+      await globals.dio?.post(
           '${ApiConstants.rootApiPath}${ApiConstants.resetPasswordEmailPath}',
           data: {
             'email': request.email,
-            // 'firstName': 'Louis',
-            // 'lastName': 'Primas'
           },
           options: Options(headers: {'Content-Type': 'application/json'}));
-          print("status =");
-          print(response?.statusCode);
     } on DioException { // add "catch (dioError)" for debugging
       rethrow;
     } catch (error) {
@@ -33,9 +29,7 @@ class ForgotPasswordService extends ServiceTemplate {
   Future<void> sendNewPassword(final NewPasswordRequestModel request) async
   {
     try {
-      print("in send new password");
-      print(request.code);
-      final response = await globals.dio?.post(
+      await globals.dio?.post(
           '${ApiConstants.rootApiPath}${ApiConstants.resetPasswordNewPasswordPath}',
           data: {
             'newPassword' : request.password,
@@ -44,8 +38,6 @@ class ForgotPasswordService extends ServiceTemplate {
             // 'password' : 'Charles',
           },
           options: Options(headers: {'Content-Type': 'application/json'}));
-          print("response = ");
-          print(response?.statusCode);
     } on DioException { // add "catch (dioError)" for debugging
       rethrow;
     } catch (error) {

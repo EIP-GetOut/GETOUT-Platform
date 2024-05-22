@@ -25,8 +25,6 @@ class NewPasswordBloc extends Bloc<NewPasswordEvent, NewPasswordState> {
   }
 
   Future mapEventToState(NewPasswordEvent event, Emitter<NewPasswordState> emit) async {
-    print("EVENT");
-    print(event);
     if (event is ForgotPasswordCodeChanged) {
       emit(state.copyWith(code: event.code));
     } else if (event is ForgotPasswordPasswordChanged) {
