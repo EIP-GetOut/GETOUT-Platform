@@ -6,10 +6,14 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:boxicons/boxicons.dart';
 
 import 'package:getout/screens/book/pages/book_description.dart';
 import 'package:getout/screens/book/bloc/book_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class BookSuccessWidget extends StatelessWidget {
   const BookSuccessWidget({
@@ -21,7 +25,6 @@ class BookSuccessWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String imageUrl = book.posterPath ?? '';
     Widget buildCoverImage() => Container(
           decoration: const BoxDecoration(
@@ -34,7 +37,7 @@ class BookSuccessWidget extends StatelessWidget {
           ),
           child: Image.network(
             imageUrl,
-            color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.6),
+            color: const Color.fromRGBO(150, 150, 150, 255).withOpacity(1),
             colorBlendMode: BlendMode.modulate,
             width: double.infinity,
             fit: BoxFit.cover,
@@ -47,7 +50,6 @@ class BookSuccessWidget extends StatelessWidget {
         child: Image.network(imageUrl, height: 250));
 
     return Column(children: [
-      // AppBar(leading: const BackButton()),
       Stack(
         clipBehavior: Clip.none,
         alignment: Alignment.center,
@@ -73,10 +75,120 @@ class BookSuccessWidget extends StatelessWidget {
                       Navigator.pop(context);
                     },
                   ))),
+          Positioned(
+              top: 30,
+              right: 140,
+              child: IconButton(
+                  icon: const Icon(Icons.share),
+                  color: Colors.white,
+                  onPressed: () async {
+                    await Clipboard.setData(
+                        ClipboardData(text: '${book.bookLink}'));
+                  })),//todo head
+          Positioned(
+            top: 30,
+            right: 80,
+            child: IconButton(
+              icon: const Icon(Icons.remove_red_eye),
+              color: (book.read ?? false) ? Colors.red : Colors.white,
+              onPressed: () async {
+                if (book.read == true) {
+                  await context
+                      .read<BookBloc>()
+                      .bookService
+                      .removeReadBook(AddBookRequest(id: book.id ?? ''));
+                } else {
+                  await context
+                      .read<BookBloc>()
+                      .bookService
+                      .addReadBook(AddBookRequest(id: book.id ?? ''));
+                }
+                if (!context.mounted) return;
+                context
+                    .read<BookBloc>()
+                    .add(CreateInfoBookRequest(id: book.id ?? ''));
+              },
+            ),
+          ),
+          Positioned(
+            top: 30,
+            right: 20,
+            child: IconButton(
+              icon: const Icon(Icons.thumb_up_alt_sharp),
+              color: (book.liked ?? false) ? Colors.red : Colors.white,
+              onPressed: () async {
+                if (book.liked == true) {
+                  await context
+                      .read<BookBloc>()
+                      .bookService
+                      .removeLikedBook(AddBookRequest(id: book.id ?? ''));
+                } else {
+                  await context
+                      .read<BookBloc>()
+                      .bookService
+                      .addLikedBook(AddBookRequest(id: book.id ?? ''));
+                }
+                if (!context.mounted) return;
+                context
+                    .read<BookBloc>()
+                    .add(CreateInfoBookRequest(id: book.id.toString()));
+              },
+            ),
+          ),
+          Positioned(
+            top: 80,
+            right: 20,
+            child: IconButton(
+              icon: const Icon(Icons.thumb_down),
+              color: (book.disliked ?? false) ? Colors.red : Colors.white,
+              onPressed: () async {
+                if (book.disliked == true) {
+                  await context
+                      .read<BookBloc>()
+                      .bookService
+                      .removeDislikedBook(AddBookRequest(id: book.id ?? ''));
+                } else {
+                  await context
+                      .read<BookBloc>()
+                      .bookService
+                      .addDislikedBook(AddBookRequest(id: book.id ?? ''));
+                }
+                if (!context.mounted) return;
+                context
+                    .read<BookBloc>()
+                    .add(CreateInfoBookRequest(id: book.id.toString()));
+              },
+            ),
+          ),
+          Positioned(
+            top: 130,
+            right: 20,
+            child: IconButton(
+              icon: const Icon(Icons.add_circle_outlined),
+              color: (book.wishlisted ?? false) ? Colors.red : Colors.white,
+              onPressed: () async {
+                if (book.wishlisted == true) {
+                  await context
+                      .read<BookBloc>()
+                      .bookService
+                      .removeWishlistedBook(AddBookRequest(id: book.id ?? ''));
+                } else {
+                  await context
+                      .read<BookBloc>()
+                      .bookService
+                      .addWishlistedBook(AddBookRequest(id: book.id ?? ''));
+                }
+                if (!context.mounted) return;
+                context
+                    .read<BookBloc>()
+                    .add(CreateInfoBookRequest(id: book.id ?? ''));
+              },
+            ),
+          ),
         ],
       ),
       Text(
-        book.title ?? 'N/A',
+        book.title ?? appL10n(context)!.not_applicable,
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
       ),
@@ -97,8 +209,9 @@ class BookSuccessWidget extends StatelessWidget {
                 color: Colors.black,
                 thickness: 1,
                 // heigth : double.infinity,
-              )),
-          Icon(Boxicons.bx_time, size: 40),
+              )
+              ),
+          Icon(Boxicons.bx_receipt, size: 40),
         ],
       ),
       Row(
@@ -107,19 +220,13 @@ class BookSuccessWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment
             .center, //Center Row contents vertically,            children: [
         children: [
-          Text('Livre',
+          Text(appL10n(context)!.book,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall),
-          const SizedBox(width: 15),
+          const SizedBox(width: 25),
           const SizedBox(
-              height: 20,
-              child: VerticalDivider(
-                width: 10,
-                // color: Colors.black,
-                thickness: 0,
-                // height : double.infinity,
-              )),
-          Text(book.duration ?? 'N/A',
+              height: 10,),
+          Text(book.pageCount.toString(),
               // widget.book.duration,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall),
@@ -128,7 +235,7 @@ class BookSuccessWidget extends StatelessWidget {
       Flexible(
         child: Padding(
           padding: const EdgeInsets.all(25.0),
-          child: Text(book.overview ?? 'Aucune description disponible',
+          child: Text(book.overview ?? appL10n(context)!.no_description,
               textAlign: TextAlign.justify,
               overflow: TextOverflow.ellipsis,
               maxLines: 11,
@@ -142,9 +249,9 @@ class BookSuccessWidget extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => BookDescriptionPage(book: book)));
         },
-        child: const Text(
-          'voir plus >',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        child: Text(
+          appL10n(context)!.see_more,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       )
     ]);

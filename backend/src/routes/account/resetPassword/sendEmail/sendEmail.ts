@@ -5,71 +5,63 @@
 ** Wrote by Firstname Lastname <firstname.lastname@domain.com>
 */
 
-import { type UUID } from 'crypto'
 import { type Request, type Response, Router } from 'express'
 import { body } from 'express-validator'
 import { StatusCodes, getReasonPhrase } from 'http-status-codes'
-// import nodemailer, { type SentMessageInfo } from 'nodemailer'
-// import type Mail from 'nodemailer/lib/mailer'
 import type SMTPTransport from 'nodemailer/lib/smtp-transport'
 
 import logger, { logApiRequest } from '@middlewares/logging'
 import validate from '@middlewares/validator'
 
-// import { NodeMailerError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError } from '@services/utils/customErrors'
+import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
-import { generateResetPasswordUrl } from '@models/account/password'
+import { generatePasswordResetCode } from '@models/account/password'
+import { findEntity } from '@models/getObjects'
 
-// import { emailConfig } from '@config/emailConfig'
+import { Account } from '@entities/Account'
 
 const router = Router()
 
 const rulesPost = [
-  body('email').isEmail(),
-  body('firstName').isString(),
-  body('lastName').isString()
+  body('email').isEmail()
 ]
 
-async function sendEmail (body: any, resetPasswordUrl: string): Promise<SMTPTransport.SentMessageInfo> {
+async function sendEmail (email: string, passwordResetCode: number): Promise<SMTPTransport.SentMessageInfo> {
   // const mailOptions: Mail.Options = {
   //   from: emailConfig.auth?.user,
-  //   to: body.email,
+  //   to: email,
   //   subject: 'Subject of the Email',
   //   text: `<p>Hello my friend ${body.firstName} ${body.lastName}: ${process.env.ORIGIN}${resetPasswordUrl}</p>`
   // }
-  // const transporter = nodemailer.createTransport(emailConfig)
+  return await findEntity<Account>(Account, { email }).then(async (account: Account | null) => {
+    if (account == null) {
+      throw new AccountDoesNotExistError()
+    }
 
-  const example: SMTPTransport.SentMessageInfo = {
-    envelope: { from: 'mailOptions.from', to: ['mailOptions.to'] },
-    accepted: ['true'],
-    messageId: '',
-    pending: [''],
-    rejected: [''],
-    response: ''
-  }
-  logger.debug(`Sending email: "Hello my friend ${body.firstName} ${body.lastName}: ${resetPasswordUrl}".`)
-  return await Promise.resolve(example)
-  // return await transporter.sendMail(mailOptions).then(async (info: SentMessageInfo): Promise<SentMessageInfo> => {
-  //   console.log('Email sent: ', info)
-  //   return info
-  // }).catch((err) => {
-  //   throw new NodeMailerError(`Failed sending email (${err.name}: ${err.message})`)
-  // })
+    const example: SMTPTransport.SentMessageInfo = {
+      envelope: { from: 'mailOptions.from', to: ['mailOptions.to'] },
+      accepted: ['true'],
+      messageId: '',
+      pending: [''],
+      rejected: [''],
+      response: ''
+    }
+    console.log(account, passwordResetCode)
+    logger.debug(`Sending email: "${account.firstName} ${account.lastName}: ${passwordResetCode}".`)
+    return await Promise.resolve(example)
+  })
 }
 
 router.post('/account/reset-password/send-email', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
-  generateResetPasswordUrl(req.session?.account?.id as UUID, req.body.email).then(async (url) => {
-    return await sendEmail(req.body, url).then((sendEmailRes) => {
+  generatePasswordResetCode(req.body.email).then(async (passwordResetCode: number) => {
+    return await sendEmail(req.body.email, passwordResetCode).then((sendEmailRes) => {
       // if (!sendEmailRes.ok) {
       //   throw Error(`Failed sending reset password email: ${sendEmailRes.statusText}`)
       // }
       return res.status(StatusCodes.OK).send(getReasonPhrase(StatusCodes.OK))
     })
-  }).catch((err) => {
-    logger.error(err.toString())
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
-  })
+  }).catch(handleErrorOnRoute)
 })
 
 export default router

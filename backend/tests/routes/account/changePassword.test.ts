@@ -22,7 +22,7 @@ const body = {
   password: 'toto'
 }
 
-describe('Reading List Route', async () => {
+void describe('Reading List Route', async () => {
   it('should respond with 204 NO_CONTENT for POST /account/change-password', async () => {
     let cookie: string
     await request(app).post('/account/signup').send(body).then(async () => {

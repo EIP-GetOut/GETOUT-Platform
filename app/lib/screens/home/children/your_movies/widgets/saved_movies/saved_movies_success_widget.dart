@@ -6,8 +6,8 @@
 */
 
 import 'package:flutter/material.dart';
-
 import 'package:getout/screens/home/widgets/common/movie_preview_widget.dart';
+
 import 'package:getout/screens/movie/bloc/movie_provider.dart';
 import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 import 'package:getout/screens/home/widgets/common/title_widget.dart';
@@ -23,12 +23,11 @@ class SavedMoviesSuccessWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PageController movieController =
-    PageController(viewportFraction: 0.1, initialPage: 0);
+        PageController(viewportFraction: 0.1, initialPage: 0);
     return Expanded(
         child: Column(
       children: [
-        const TitleWidget(
-            asset: 'party_emoji', title: 'Vos films en cours'),
+        const TitleWidget(asset: 'party', title: 'Vos films en cours'),
         Expanded(
             child: ListView(
                 controller: movieController,
@@ -43,8 +42,7 @@ class SavedMoviesSuccessWidget extends StatelessWidget {
                       },
                       child: MoviePreviewWidget(
                           posterPath: movies[index].posterPath,
-                          title: movies[index].title,
-                          overview: movies[index].overview));
+                          title: movies[index].title));
                 }))),
       ],
     ));

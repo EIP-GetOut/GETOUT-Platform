@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:getout/screens/home/bloc/home_page/home_page_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 
 class HomeNavBarWidget extends StatelessWidget {
@@ -33,39 +34,40 @@ class HomeNavBarWidget extends StatelessWidget {
         child: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/svg/home_icon.svg',
+                icon: SvgPicture.asset('assets/images/icon/home.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.black26, BlendMode.srcIn)),
-                activeIcon: SvgPicture.asset('assets/svg/home_icon.svg',
+                activeIcon: SvgPicture.asset('assets/images/icon/home.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.red, BlendMode.srcIn)),
-                label: 'Dashboard'),
+                label: appL10n(context)!.dashboard),
             BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/svg/movie_icon.svg',
+                icon: SvgPicture.asset('assets/images/icon/movie.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.black26, BlendMode.srcIn)),
-                activeIcon: SvgPicture.asset('assets/svg/movie_icon.svg',
+                activeIcon: SvgPicture.asset('assets/images/icon/movie.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.red, BlendMode.srcIn)),
-                label: 'Movie'),
+                label: appL10n(context)!.movie),
             BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/svg/bookmark_icon.svg',
+                icon: SvgPicture.asset('assets/images/icon/bookmark.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.black26, BlendMode.srcIn)),
                 activeIcon: SvgPicture.asset(
-                    'assets/svg/bookmark_icon.svg',
+                    'assets/images/icon/bookmark.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.red, BlendMode.srcIn)),
-                label: 'Book'),
-            BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/svg/location_pin_icon.svg',
+                label: appL10n(context)!.book),
+            //todo implement activities
+            /*BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/images/icon/location_pin.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.black26, BlendMode.srcIn)),
                 activeIcon: SvgPicture.asset(
-                    'assets/svg/location_pin_icon.svg',
+                    'assets/images/icon/location_pin.svg',
                     colorFilter: const ColorFilter.mode(
                         Colors.red, BlendMode.srcIn)),
-                label: 'Activities')
+                label: 'Activities')*/
           ],
           elevation: 20,
           onTap: (int value) => {

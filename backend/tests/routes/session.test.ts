@@ -18,7 +18,7 @@ const loginBody = {
   password: 'toto'
 }
 
-describe('Session route', () => {
+void describe('Session route', () => {
   it('should respond with 200 OK for GET /session with authentified account', async () => {
     let cookie: string
     await request(app).post('/account/login').send(loginBody).then(async (res) => {

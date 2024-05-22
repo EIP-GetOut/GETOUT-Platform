@@ -19,7 +19,7 @@ const loginBody = {
   password: 'toto'
 }
 
-describe('Logout Route', async () => {
+void describe('Logout Route', async () => {
   it('should respond with 204 NO_CONTENT for POST /account/logout', async () => {
     await request(app).post('/account/login').send(loginBody).then(async (res) => {
       const cookie = extractConnectSidCookie(res.headers['set-cookie'][0])

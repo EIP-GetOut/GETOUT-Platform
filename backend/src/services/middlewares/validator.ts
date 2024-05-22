@@ -16,7 +16,7 @@ const validate = (req: Request, res: Response, next: NextFunction): Response<any
     return
   }
   const extractedErrors: any[] = []
-  errors.array().map(err => extractedErrors.push({ [err.param]: err.msg }))
+  errors.array().map(err => extractedErrors.push({ [err.msg]: err.msg }))
   return res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
     errors: extractedErrors
   })

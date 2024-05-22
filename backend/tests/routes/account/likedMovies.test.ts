@@ -28,7 +28,7 @@ const loginBody = {
   password: 'toto'
 }
 
-describe('Liked movies list routes', async () => {
+void describe('Liked movies list routes', async () => {
   let accountId: UUID
   let cookie: string
 

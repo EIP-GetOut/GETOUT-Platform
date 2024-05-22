@@ -24,14 +24,14 @@ class TitleWidget extends StatelessWidget {
         const SizedBox(width: 10),
         Image.asset(
           // popcorn_emoji
-          'assets/$asset.png',
+          'assets/images/icon/$asset.png',
         ),
         const SizedBox(width: 10),
         // Les films que vous allez aimer
         Text(title,
             style: const TextStyle(
               color: Color(0xFFD55641),
-              fontSize: 23,
+              fontSize: 22,
               fontFamily: 'Urbanist',
               fontWeight: FontWeight.bold,
             )),

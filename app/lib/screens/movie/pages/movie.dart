@@ -6,11 +6,16 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:boxicons/boxicons.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/movie/pages/movie_description.dart';
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
+
+import 'package:getout/tools/duration_format.dart';
 
 class MovieSuccessWidget extends StatelessWidget {
   const MovieSuccessWidget({
@@ -38,8 +43,7 @@ class MovieSuccessWidget extends StatelessWidget {
             children: [
               Image.network(
                 imageUrl,
-                color:
-                    const Color.fromARGB(255, 255, 255, 255).withOpacity(0.6),
+                color: const Color.fromRGBO(150, 150, 150, 255).withOpacity(1),
                 colorBlendMode: BlendMode.modulate,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -47,12 +51,67 @@ class MovieSuccessWidget extends StatelessWidget {
               ),
               Positioned(
                 top: 30,
+                right: 140,
+                child: IconButton(
+                  icon: const Icon(Icons.share),
+                  color: Colors.white,
+                  onPressed: () async {
+                    await Clipboard.setData(ClipboardData(
+                        text: 'https://www.themoviedb.org/movie/${movie.id}'));
+                  },
+                ),
+              ),
+              Positioned(
+                top: 30,
+                right: 80,
+                child: IconButton(
+                  icon: const Icon(Icons.remove_red_eye),
+                  color: (movie.seen ?? false) ? Colors.red : Colors.white,
+                  onPressed: () async {
+                    if (movie.seen == true) {
+                      await context
+                          .read<MovieBloc>()
+                          .movieService
+                          .removeSeenMovie(
+                              AddMovieRequest(id: movie.id!));
+                    } else {
+                      await context
+                          .read<MovieBloc>()
+                          .movieService
+                          .addSeenMovie(
+                              AddMovieRequest(id: movie.id!));
+                    }
+                    if (!context.mounted) return;
+                    context
+                        .read<MovieBloc>()
+                        .add(CreateInfoMovieRequest(id: movie.id!));
+                  },
+                ),
+              ),
+              Positioned(
+                top: 30,
                 right: 20,
                 child: IconButton(
                   icon: const Icon(Icons.thumb_up_alt_sharp),
-                  color: Colors.white,
-                  onPressed: () {
-                    // print('Like');
+                  color: (movie.liked ?? false) ? Colors.red : Colors.white,
+                  onPressed: () async {
+                    if (movie.liked == true) {
+                      await context
+                          .read<MovieBloc>()
+                          .movieService
+                          .removeLikedMovie(
+                              AddMovieRequest(id: movie.id!));
+                    } else {
+                      await context
+                          .read<MovieBloc>()
+                          .movieService
+                          .addLikedMovie(
+                              AddMovieRequest(id: movie.id!));
+                    }
+                    if (!context.mounted) return;
+                    context
+                        .read<MovieBloc>()
+                        .add(CreateInfoMovieRequest(id: movie.id!));
                   },
                 ),
               ),
@@ -61,9 +120,53 @@ class MovieSuccessWidget extends StatelessWidget {
                 right: 20,
                 child: IconButton(
                   icon: const Icon(Icons.thumb_down),
-                  color: Colors.white,
-                  onPressed: () {
-                    // print('Dislike');
+                  color: (movie.disliked ?? false) ? Colors.red : Colors.white,
+                  onPressed: () async {
+                    if (movie.disliked == true) {
+                      await context
+                          .read<MovieBloc>()
+                          .movieService
+                          .removeDislikedMovie(
+                              AddMovieRequest(id: movie.id!));
+                    } else {
+                      await context
+                          .read<MovieBloc>()
+                          .movieService
+                          .addDislikedMovie(
+                              AddMovieRequest(id: movie.id!));
+                    }
+                    if (!context.mounted) return;
+                    context
+                        .read<MovieBloc>()
+                        .add(CreateInfoMovieRequest(id: movie.id!));
+                  },
+                ),
+              ),
+              Positioned(
+                top: 130,
+                right: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.add_circle_outlined),
+                  color:
+                      (movie.wishlisted ?? false) ? Colors.red : Colors.white,
+                  onPressed: () async {
+                    if (movie.wishlisted == true) {
+                      await context
+                          .read<MovieBloc>()
+                          .movieService
+                          .removeWishlistedMovie(
+                              AddMovieRequest(id: movie.id!));
+                    } else {
+                      await context
+                          .read<MovieBloc>()
+                          .movieService
+                          .addWishlistedMovie(
+                              AddMovieRequest(id: movie.id!));
+                    }
+                    if (!context.mounted) return;
+                    context
+                        .read<MovieBloc>()
+                        .add(CreateInfoMovieRequest(id: movie.id!));
                   },
                 ),
               ),
@@ -97,7 +200,7 @@ class MovieSuccessWidget extends StatelessWidget {
                       Icons.arrow_back,
                       color: Colors.black,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       Navigator.pop(context);
                     },
                   ))),
@@ -135,19 +238,13 @@ class MovieSuccessWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment
             .center, //Center Row contents vertically,            children: [
         children: [
-          Text('Film',
+          Padding(padding: const EdgeInsets.only(left : 8),
+          child: Text('Film',
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelSmall),
+              style: Theme.of(context).textTheme.labelSmall)),
           const SizedBox(width: 15),
-          const SizedBox(
-              height: 20,
-              child: VerticalDivider(
-                width: 10,
-                // color: Colors.black,
-                thickness: 0,
-                // height : double.infinity,
-              )),
-          Text(movie.duration ?? 'N/A',
+          const SizedBox(height: 20,),
+          Text(durationFormat('', movie.duration ?? 0),
               // widget.movie.duration,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelSmall),
@@ -156,10 +253,10 @@ class MovieSuccessWidget extends StatelessWidget {
       Flexible(
         child: Padding(
           padding: const EdgeInsets.all(25.0),
-          child: Text(movie.overview ?? 'Aucune description disponible',
+          child: Text(movie.overview ?? appL10n(context)!.no_description,
               textAlign: TextAlign.justify,
               overflow: TextOverflow.ellipsis,
-              maxLines: 11,
+              maxLines: 10,
               style: Theme.of(context).textTheme.bodySmall),
         ),
       ),
@@ -174,9 +271,9 @@ class MovieSuccessWidget extends StatelessWidget {
             ),
           );
         },
-        child: const Text(
-          'voir plus >',
-          style: TextStyle(fontWeight: FontWeight.bold),
+        child: Text(
+          appL10n(context)!.see_more,
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       )
     ]);

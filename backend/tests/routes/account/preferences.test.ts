@@ -19,7 +19,7 @@ const loginBody = {
   password: 'toto'
 }
 
-describe('Preferences List Route', async () => {
+void describe('Preferences List Route', async () => {
   let cookie: string
 
   beforeAll(async () => {

@@ -10,20 +10,20 @@ import 'package:dio/dio.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/constants/api_path.dart';
 
+import 'package:getout/global.dart' as globals;
+
 class RegisterService {
   Future<void> register(final RegisterRequestModel request) async
   {
     try {
-      final dio = Dio();
-      await dio.post(
+      await globals.dio?.post(
           '${ApiConstants.rootApiPath}${ApiConstants.registerPath}',
           data: {
             'email': request.email,
             'password': request.password,
             'firstName': request.firstName,
             'lastName': request.lastName,
-            'bornDate': request.bornDate,
-            'salt': 'sdjqshjodijaoz'
+            'bornDate': request.birthDate,
           },
           options: Options(headers: {'Content-Type': 'application/json'}));
     } on DioException { // add "catch (dioError)" for debugging

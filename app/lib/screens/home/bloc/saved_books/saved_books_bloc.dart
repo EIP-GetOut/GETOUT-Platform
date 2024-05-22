@@ -6,19 +6,19 @@
 */
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/screens/home/services/service.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import 'package:getout/tools/status.dart';
-import 'package:getout/screens/home/bloc/home_repository.dart';
 import 'package:getout/screens/home/bloc/books/books_event.dart';
 
 part 'saved_books_state.dart';
 
-class SavedBooksBloc extends Bloc<BooksEvent, SavedBooksState> {
-  final HomeRepository homeRepository;
+class SavedBooksHydratedBloc extends HydratedBloc<BooksEvent, SavedBooksState> {
+  final HomeService homeService;
 
-  SavedBooksBloc({
-    required this.homeRepository,
+  SavedBooksHydratedBloc({
+    required this.homeService,
   }) : super(const SavedBooksState()) {
     on<GenerateBooksRequest>(_onSavedBooksRequest);
   }
@@ -27,7 +27,7 @@ class SavedBooksBloc extends Bloc<BooksEvent, SavedBooksState> {
       GenerateBooksRequest event, Emitter<SavedBooksState> emit) async {
     emit(state.copyWith(status: Status.loading));
     try {
-      final savedBooks = await homeRepository.getSavedBooks(event);
+      final savedBooks = await homeService.getSavedBooks(event);
       emit(
         state.copyWith(
           status: Status.success,
@@ -37,5 +37,15 @@ class SavedBooksBloc extends Bloc<BooksEvent, SavedBooksState> {
     } catch (error) {
       emit(state.copyWith(status: Status.error));
     }
+  }
+
+  @override
+  SavedBooksState? fromJson(Map<String, dynamic> json) {
+    return SavedBooksState.fromMap(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(SavedBooksState state) {
+    return state.toMap();
   }
 }

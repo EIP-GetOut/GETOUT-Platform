@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class EmailField extends StatelessWidget {
   const EmailField({super.key});
@@ -23,7 +24,7 @@ class EmailField extends StatelessWidget {
         return TextFormField(
           style: const TextStyle(fontSize: 17, color: Colors.black),
           decoration: InputDecoration(
-            labelText: 'Entrez votre adresse email',
+            labelText: appL10n(context)!.email_hint,
             floatingLabelBehavior: FloatingLabelBehavior.never,
             enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(0.5),
@@ -33,7 +34,7 @@ class EmailField extends StatelessWidget {
             ),
           ),
           validator: (value) =>
-          state.isEmailEmpty ? null : 'Un email est requis',
+          state.isEmailEmpty ? null : appL10n(context)!.email_validator,
           onChanged: (value) =>
               context.read<CheckEmailBloc>().add(
                 ForgotPasswordEmailChanged(email: value),
@@ -57,7 +58,7 @@ class CodeField extends StatelessWidget {
           obscureText: true,
           style: const TextStyle(fontSize: 17, color: Colors.black),
           decoration: InputDecoration(
-              labelText: 'Entrez le code',
+              labelText: appL10n(context)!.code_hint,
               floatingLabelBehavior: FloatingLabelBehavior.never,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(0.5),
@@ -66,7 +67,7 @@ class CodeField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(0.5),
               )),
           validator: (value) =>
-          state.isCodeValid ? null : 'un code requis',
+          state.isCodeValid ? null : appL10n(context)!.code_validator,
           onChanged: (value) => context.read<NewPasswordBloc>().add(
             ForgotPasswordCodeChanged(code: value),
           ),
@@ -90,7 +91,7 @@ class PasswordField extends StatelessWidget {
           obscureText: true,
           style: const TextStyle(fontSize: 17, color: Colors.black),
           decoration: InputDecoration(
-              labelText: 'Entrez votre mot de passe',
+              labelText: appL10n(context)!.password_hint,
               floatingLabelBehavior: FloatingLabelBehavior.never,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(0.5),
@@ -99,7 +100,7 @@ class PasswordField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(0.5),
               )),
           validator: (value) =>
-          state.isPasswordValid ? null : 'Un mot de passe contenant au moins 8 caractères est requis, avec au moins une majuscule, une minuscule et un chiffre est requis',
+          state.isPasswordValid ? null : appL10n(context)!.password_validator,
           onChanged: (value) => context.read<NewPasswordBloc>().add(
             ForgotPasswordPasswordChanged(password: value),
           ),
@@ -122,7 +123,7 @@ class ConfirmPasswordField extends StatelessWidget {
           obscureText: true,
           style: const TextStyle(fontSize: 17, color: Colors.black),
           decoration: InputDecoration(
-              labelText: 'Confirmez votre mot de passe',
+              labelText: appL10n(context)!.confirm_password_hint,
               floatingLabelBehavior: FloatingLabelBehavior.never,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(0.5),
@@ -131,8 +132,7 @@ class ConfirmPasswordField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(0.5),
               )),
           validator: (value) =>
-          //(state.password == value) ? null : 'hmmmm',
-          state.isConfirmPasswordValid ? null : 'Le mot de passe est différent',
+          state.isConfirmPasswordValid ? null : appL10n(context)!.password_matching,
           onChanged: (value) => context.read<NewPasswordBloc>().add(
             ForgotPasswordConfirmPasswordChanged(confirmPassword: value),
           ),

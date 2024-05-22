@@ -14,24 +14,23 @@ import validate from '@middlewares/validator'
 
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
-import { accountIsAllowedToResetPassword, changeAccountPasswordFromToken } from '@models/account/password'
+import { accountIsAllowedToResetPassword, changeAccountPasswordFromCode } from '@models/account/password'
 
 const router = Router()
 
 const rulesPost = [
-  body('token').isString(),
-  body('password').isNumeric(),
+  body('code').isNumeric(),
   body('newPassword').isString()
 ]
 
 router.post('/account/reset-password/', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
-  accountIsAllowedToResetPassword(req.body.token, req.body.password).then((isAllowed: boolean): void => {
+  accountIsAllowedToResetPassword(req.body.code).then((isAllowed: boolean): void => {
     if (!isAllowed) {
       logger.error('Account is not allowed to reset password.')
       res.status(StatusCodes.FORBIDDEN).send(getReasonPhrase(StatusCodes.FORBIDDEN))
       return
     }
-    changeAccountPasswordFromToken(req.body.token, req.body.newPassword).then(() => {
+    changeAccountPasswordFromCode(req.body.code, req.body.newPassword).then(() => {
       res.status(StatusCodes.OK).send(getReasonPhrase(StatusCodes.OK))
     }).catch(handleErrorOnRoute(res))
   }).catch(handleErrorOnRoute(res))

@@ -11,7 +11,7 @@ import request from 'supertest'
 
 import { app } from '@config/jestSetup'
 
-describe('Book Route', () => {
+void describe('Book Route', () => {
   it('should respond with 200 OK for GET /book/:id', async () => {
     await request(app).get('/book/t34OAAAAIAAJ').then((response) => {
       expect(response.status).toBe(200)

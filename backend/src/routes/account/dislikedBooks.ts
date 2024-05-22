@@ -14,6 +14,7 @@ import validate from '@services/middlewares/validator'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
+import { modifyAccount } from '@models/account'
 import { addBookToDislikedBooks, removeBookFromDislikedBooks } from '@models/book'
 import { findEntity } from '@models/getObjects'
 
@@ -23,7 +24,7 @@ const router = Router()
 
 /**
  * @swagger
- * /account/:accountId/dislikedBooks:
+ * /account/{accountId}/dislikedBooks:
  *   post:
  *     summary: Add a book to the user's disliked books.
  *     description: Add the book passed as body in the connected user's disliked books.
@@ -33,32 +34,26 @@ const router = Router()
  *       - name: accountId
  *         in: path
  *         required: true
- *         schema:
- *           type: string
- *           format: uuid
- *       - name: body
+ *         type: string
+ *         format: uuid
+ *       - name: bookId
  *         in: body
  *         required: true
  *         schema:
- *           type: object
- *           properties:
- *             bookId:
- *               type: string
- *               description: The book id that needs to be added to the disliked books.
+ *           type: string
+ *           description: The book id that needs to be added to the disliked books.
  *     responses:
- *       '201':
+ *       "201":
  *         description: Book successfully added to the disliked books.
- *         content:
- *           application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: string
- *       '400':
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: string
+ *       "400":
  *         description: Invalid request body or missing required fields.
- *       '401':
+ *       "401":
  *         description: Unauthorized - user is not connected.
- *       '500':
+ *       "500":
  *         description: Internal server error.
  *   delete:
  *     summary: Remove a book from the user's disliked books.
@@ -66,59 +61,53 @@ const router = Router()
  *     consumes:
  *       - application/json
  *     parameters:
- *      - name: accountId
- *        in: path
- *        required: true
- *        schema:
- *          type: string
- *          format: uuid
- *      - name: bookId
- *        in: path
- *        required: true
- *        schema:
- *          type: string
- *        description: "The book id that needs to be removed from the disliked books."
+ *       - name: accountId
+ *         in: path
+ *         required: true
+ *         type: string
+ *         format: uuid
+ *       - name: bookId
+ *         in: body
+ *         required: true
+ *         schema:
+ *           type: string
+ *           description: The book id that needs to be removed from the disliked books.
  *     responses:
- *       '200':
+ *       "200":
  *         description: Book successfully removed from the disliked books.
- *         content:
- *           application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: string
- *       '400':
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: string
+ *       "400":
  *         description: Invalid request body or missing required fields.
- *       '401':
+ *       "401":
  *         description: Unauthorized - user is not connected.
- *       '404':
+ *       "404":
  *         description: Not Found - the requested book was not found in list.
- *       '500':
+ *       "500":
  *         description: Internal server error.
  *   get:
  *     summary: Get the account's disliked books.
  *     description: Retrieve a JSON which contains the user's disliked books.
  *     parameters:
- *      - name: accountId
- *        in: path
- *        required: true
- *        schema:
- *          type: string
- *          format: uuid
+ *       - name: accountId
+ *         in: path
+ *         required: true
+ *         type: string
+ *         format: uuid
  *     responses:
- *       '200':
- *         description: Disliked books list successfully returned.
- *         content:
- *           application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: string
- *       '400':
+ *       "200":
+ *         description: Disliked books successfully returned.
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: string
+ *       "400":
  *         description: Invalid request body or missing required fields.
- *       '401':
+ *       "401":
  *         description: Unauthorized - user is not connected.
- *       '500':
+ *       "500":
  *         description: Internal server error.
  */
 
@@ -132,9 +121,11 @@ router.post('/account/:accountId/dislikedBooks', rulesPost, validate, logApiRequ
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addBookToDislikedBooks(req.params.accountId, req.body.bookId).then((updatedDislikedBooksList: string[]) => {
-    logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s disliked books`)
-    return res.status(StatusCodes.CREATED).json(updatedDislikedBooksList)
+  addBookToDislikedBooks(req.params.accountId, req.body.bookId).then(async (updatedDislikedBooksList: string[]) => {
+    return await modifyAccount(req.session.account!.id, { dislikedBooks: updatedDislikedBooksList }).then(() => {
+      logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s disliked books`)
+      return res.status(StatusCodes.CREATED).json(updatedDislikedBooksList)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -148,9 +139,11 @@ router.delete('/account/:accountId/dislikedBooks/:bookId', rulesDelete, validate
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  removeBookFromDislikedBooks(req.params.accountId, req.params.bookId).then((updatedDislikedBooksList: string[]) => {
-    logger.info(`Successfully removed ${req.body.bookId} of ${req.session.account?.email}'s disliked books.`)
-    return res.status(StatusCodes.OK).json(updatedDislikedBooksList)
+  removeBookFromDislikedBooks(req.params.accountId, req.params.bookId).then(async (updatedDislikedBooksList: string[]) => {
+    return await modifyAccount(req.session.account!.id, { dislikedBooks: updatedDislikedBooksList }).then(() => {
+      logger.info(`Successfully removed ${req.body.bookId} of ${req.session.account?.email}'s disliked books.`)
+      return res.status(StatusCodes.OK).json(updatedDislikedBooksList)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -167,7 +160,7 @@ router.get('/account/:accountId/dislikedBooks', rulesGet, validate, logApiReques
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    return res.status(StatusCodes.OK).json(account?.dislikedBooks)
+    return res.status(StatusCodes.OK).json(account.dislikedBooks)
   }).catch(handleErrorOnRoute(res))
 })
 

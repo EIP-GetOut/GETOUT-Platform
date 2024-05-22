@@ -31,6 +31,7 @@ function checkRequiredEnvironmentVariables (): void {
     'TYPEORM_PASSWORD',
     'TYPEORM_DATABASE',
     'GOOGLE_CLIENT_ID',
+    'GOOGLE_BOOKS_API_KEY',
     'MOVIE_DB_KEY'
   ]
 

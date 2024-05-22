@@ -11,7 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
 import 'package:getout/screens/movie/bloc/movie_service.dart';
-import 'package:getout/screens/movie/bloc/movie_repository.dart';
 import 'package:getout/screens/movie/widgets/movie_widget.dart';
 
 class Movie extends StatelessWidget {
@@ -24,12 +23,12 @@ class Movie extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: RepositoryProvider(
-        create: (context) => MovieRepository(service: MovieService()),
+        create: (context) => MovieService(),
         child: MultiBlocProvider(
           providers: [
             BlocProvider<MovieBloc>(
               create: (context) => MovieBloc(
-                movieRepository: context.read<MovieRepository>(),
+                movieService: context.read<MovieService>(),
               )..add(
                   CreateInfoMovieRequest(id: id),
                 ),

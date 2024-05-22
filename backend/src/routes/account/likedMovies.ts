@@ -14,6 +14,7 @@ import validate from '@services/middlewares/validator'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
+import { modifyAccount } from '@models/account'
 import { findEntity } from '@models/getObjects'
 import { addMovieToLikedMovies, removeMovieFromLikedMovies } from '@models/movie'
 
@@ -23,7 +24,7 @@ const router = Router()
 
 /**
  * @swagger
- * /account/:accountId/likedMovies:
+ * /account/{accountId}/likedMovies:
  *   post:
  *     summary: Add a movie to the user's liked movies.
  *     description: Add the movie passed as body in the connected user's liked movies.
@@ -33,9 +34,9 @@ const router = Router()
  *       - name: accountId
  *         in: path
  *         required: true
- *         schema:
- *           type: string
- *           format: uuid
+ *         type: string
+ *         format: uuid
+ *         description: The ID of the user's account.
  *       - name: movieId
  *         in: body
  *         required: true
@@ -48,13 +49,11 @@ const router = Router()
  *               description: The movie id that needs to be added to the user's liked movies.
  *     responses:
  *       '201':
- *         description: Movie successfully added to the user's liked movies.
- *         content:
- *           application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: number
+ *         description: Movie successfully added to the liked movies.
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: number
  *       '400':
  *         description: Invalid request body or missing required fields.
  *       '401':
@@ -62,19 +61,18 @@ const router = Router()
  *       '500':
  *         description: Internal server error.
  *   delete:
- *     summary: Removie a movie from the user's liked movies.
- *     description: Removie the movie passed in the url in the connected user's liked movies.
+ *     summary: Remove a movie from the user's liked movies.
+ *     description: Remove the movie passed in the url in the connected user's liked movies.
  *     consumes:
  *       - application/json
  *     parameters:
  *      - name: accountId
  *        in: path
  *        required: true
- *        schema:
- *          type: string
- *          format: uuid
+ *        type: string
+ *        format: uuid
  *      - name: movieId
- *        in: path
+ *        in: body
  *        required: true
  *        schema:
  *          type: integer
@@ -82,13 +80,11 @@ const router = Router()
  *        description: "The movie id that needs to be removed from the user's liked movies."
  *     responses:
  *       '200':
- *         description: Movie successfully removed from the user's liked movies.
- *         content:
- *           application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: number
+ *         description: Movie successfully removed from the liked movies.
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: number
  *       '400':
  *         description: Invalid request body or missing required fields.
  *       '401':
@@ -98,24 +94,21 @@ const router = Router()
  *       '500':
  *         description: Internal server error.
  *   get:
- *     summary: Get the account's watchlist.
- *     description: Retrieve a JSON which contains the list of liked movies.
+ *     summary: Get the account's liked movies.
+ *     description: Retrieve a JSON which contains the user's liked movies.
  *     parameters:
  *      - name: accountId
  *        in: path
  *        required: true
- *        schema:
- *          type: string
- *          format: uuid
+ *        type: string
+ *        format: uuid
  *     responses:
  *       '200':
- *         description: Watchlist successfully returned.
- *         content:
- *           application/json:
- *           schema:
- *             type: array
- *             items:
- *               type: number
+ *         description: Liked movies list successfully returned.
+ *         schema:
+ *           type: array
+ *           items:
+ *             type: number
  *       '400':
  *         description: Invalid request body or missing required fields.
  *       '401':
@@ -134,9 +127,11 @@ router.post('/account/:accountId/likedMovies', rulesPost, validate, logApiReques
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addMovieToLikedMovies(req.params.accountId, req.body.movieId).then((updatedLikedMoviesList: number[]) => {
-    logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s liked movies.`)
-    return res.status(StatusCodes.CREATED).json(updatedLikedMoviesList)
+  addMovieToLikedMovies(req.params.accountId, parseInt(req.body.movieId), req.session).then(async (updatedLikedMoviesList: number[]) => {
+    return await modifyAccount(req.session.account!.id, { likedMovies: updatedLikedMoviesList }).then(() => {
+      logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s liked movies.`)
+      return res.status(StatusCodes.CREATED).json(updatedLikedMoviesList)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -150,9 +145,11 @@ router.delete('/account/:accountId/likedMovies/:movieId', rulesDelete, validate,
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  removeMovieFromLikedMovies(req.params.accountId, parseInt(req.params.movieId)).then((updatedLikedMoviesList: number[]) => {
-    logger.info(`Successfully removed ${req.body.movieId} of ${req.session.account?.email}'s liked movies.`)
-    return res.status(StatusCodes.OK).json(updatedLikedMoviesList)
+  removeMovieFromLikedMovies(req.params.accountId, parseInt(req.params.movieId)).then(async (updatedLikedMoviesList: number[]) => {
+    return await modifyAccount(req.session.account!.id, { likedMovies: updatedLikedMoviesList }).then(() => {
+      logger.info(`Successfully removed ${req.params.movieId} of ${req.session.account?.email}'s liked movies.`)
+      return res.status(StatusCodes.OK).json(updatedLikedMoviesList)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -169,7 +166,7 @@ router.get('/account/:accountId/likedMovies', rulesGet, validate, logApiRequest,
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    return res.status(StatusCodes.OK).json(account?.likedMovies)
+    return res.status(StatusCodes.OK).json(account.likedMovies)
   }).catch(handleErrorOnRoute(res))
 })
 

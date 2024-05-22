@@ -5,40 +5,39 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>, Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'package:dio/dio.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:getout/tools/app_l10n.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'package:getout/screens/connection/bloc/connection_provider.dart';
+import 'package:getout/screens/connection/services/service.dart';
+import 'package:getout/screens/home/bloc/home_provider.dart';
+import 'package:getout/screens/form/pages/form.dart';
+import 'package:getout/widgets/object_loading_error_widget.dart';
+import 'package:getout/bloc/session/session_service.dart';
+import 'package:getout/bloc/session/session_event.dart';
+import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/observer.dart';
 import 'package:getout/bloc/theme/bloc.dart';
-import 'package:getout/bloc/user/bloc.dart';
-import 'package:getout/screens/connection/services/service.dart';
-import 'package:getout/screens/connection/bloc/connection_provider.dart';
-import 'package:getout/screens/home/bloc/home_provider.dart';
+import 'package:getout/widgets/loading.dart';
+import 'package:getout/tools/status.dart';
 
-Map<int, Color> colorMap = {
-  50: const Color.fromRGBO(213, 86, 65, .1),
-  100: const Color.fromRGBO(213, 86, 65, .2),
-  200: const Color.fromRGBO(213, 86, 65, .3),
-  300: const Color.fromRGBO(213, 86, 65, .4),
-  400: const Color.fromRGBO(213, 86, 65, .5),
-  500: const Color.fromRGBO(213, 86, 65, .6),
-  600: const Color.fromRGBO(213, 86, 65, .7),
-  700: const Color.fromRGBO(213, 86, 65, .8),
-  800: const Color.fromRGBO(213, 86, 65, .9),
-  900: const Color.fromRGBO(213, 86, 65, 1),
-};
-
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HydratedBloc.storage = await HydratedStorage.build(
+      storageDirectory: kIsWeb
+          ? HydratedStorage.webStorageDirectory
+          : await getApplicationDocumentsDirectory());
   Bloc.observer = const AppBlocObserver(); // BLoC MiddleWare.
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
   runApp(const MainProvider());
 }
 
@@ -47,15 +46,24 @@ class MainProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        //Data
-        BlocProvider(create: (_) => LocaleBloc(context)),
-        BlocProvider(create: (_) => ThemeBloc()),
-        BlocProvider(create: (_) => UserBloc()),
-      ],
-      child: const MainPage(),
-    );
+    return MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider(create: (context) => ConnectionService()),
+          RepositoryProvider(create: (context) => SessionService()),
+        ],
+        child: MultiBlocProvider(
+          providers: [
+            //Data
+            BlocProvider(create: (_) => LocaleBloc(context)),
+            BlocProvider(create: (_) => ThemeBloc()),
+            BlocProvider<SessionBloc>(
+                create: (context) => SessionBloc(
+                  sessionService: context.read<SessionService>(),
+                )..add(const SessionRequest())
+            ),
+          ],
+          child: const MainPage(),
+        ));
   }
 }
 
@@ -64,14 +72,13 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Builder(builder: (context) {
       final locale = context.watch<LocaleBloc>().state;
       final themeData = context.watch<ThemeBloc>().state;
-      final user = context.watch<UserBloc>().state;
 
       return MaterialApp(
           title: 'Get Out',
+          supportedLocales: const [Locale('en'), Locale('fr')],
           locale: locale,
           localizationsDelegates: const [
             AppLocalizations.delegate,
@@ -79,13 +86,31 @@ class MainPage extends StatelessWidget {
             GlobalWidgetsLocalizations.delegate,
             GlobalMaterialLocalizations.delegate
           ],
-          supportedLocales: AppLocalizations.supportedLocales,
+          //supportedLocales: AppLocalizations.supportedLocales,
           theme: themeData,
-          home: RepositoryProvider(
-            create: (context) => ConnectionService(dio: Dio()),
-            child: (!user.isSigned)
-                ? const ConnectionProvider()
-                : const HomeProvider(),
+          home: BlocBuilder<SessionBloc, SessionState>(
+            builder: (context, state) {
+              if (state.status.isFound) {
+                return const HomeProvider();
+              } else if (state.status.isFoundWithoutPreferences) {
+                return const Forms();
+              } else if (state.status.isLoading) {
+                  return const ColoredBox(
+                      color: Colors.white,
+                      child: Center(child: LoadingPage()));
+              } else if (state.status.isError) {
+                /// TODO : Add a retry button
+                return ColoredBox(
+                        color: Colors.white,
+                        child: ObjectLoadingErrorWidget(object: appL10n(context)!.your_account));
+              } else if (state.status.isNotFound) {
+                return const ConnectionProvider();
+              } else {
+                return ColoredBox(
+                    color: Colors.red,
+                    child: ObjectLoadingErrorWidget(object: appL10n(context)!.your_account));
+              }
+            },
           ),
       );
     });

@@ -7,91 +7,80 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:getout/tools/map_box_movie_values_to_ids.dart';
-
+///home
+import 'package:getout/screens/home/services/service.dart';
 ///home_page
-import 'package:getout/screens/home/pages/home_page.dart';
+import 'package:getout/screens/home/home_page.dart';
 import 'package:getout/screens/home/bloc/home_page/home_page_bloc.dart';
-import 'package:getout/screens/home/bloc/home_repository.dart';
-
 ///movies
 import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 import 'package:getout/screens/home/bloc/recommended_movies/recommended_movies_bloc.dart';
 import 'package:getout/screens/home/bloc/saved_movies/saved_movies_bloc.dart';
 import 'package:getout/screens/home/bloc/liked_movies/liked_movies_bloc.dart';
-
 ///books
 import 'package:getout/screens/home/bloc/books/books_event.dart';
 import 'package:getout/screens/home/bloc/recommended_books/recommended_books_bloc.dart';
 import 'package:getout/screens/home/bloc/saved_books/saved_books_bloc.dart';
 import 'package:getout/screens/home/bloc/liked_books/liked_books_bloc.dart';
 
-//todo - to remove
-import 'package:getout/global.dart';
-
 class HomeProvider extends StatelessWidget {
   const HomeProvider({super.key});
 
   @override
-  Widget build(BuildContext context) {
-
-    List<int> genreMoviesIds = mapBoxMovieValuesToIds(boxMovieValue);
-    List<int> genreBooksIds = mapBoxMovieValuesToIds(boxBookValue);
-
+  Widget build(BuildContext context)
+  {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: RepositoryProvider(
-        create: (context) => HomeRepository(dio: Dio()),
+      body: RepositoryProvider(create: (context) => HomeService(),
         child: MultiBlocProvider(
           providers: [
             BlocProvider<HomePageBloc>(
               create: (context) => HomePageBloc(),
             ),
             ///Movies
-            BlocProvider<RecommendedMoviesBloc>(
-              create: (context) => RecommendedMoviesBloc(
-                homeRepository: context.read<HomeRepository>(),
+            BlocProvider<RecommendedMoviesHydratedBloc>(
+              create: (context) => RecommendedMoviesHydratedBloc(
+                homeService: context.read<HomeService>(),
               )..add(
-                GenerateMoviesRequest(genres: genreMoviesIds),
+                const GenerateMoviesRequest(),
               ),
             ),
-            BlocProvider<LikedMoviesBloc>(
-              create: (context) => LikedMoviesBloc(
-                homeRepository: context.read<HomeRepository>(),
+            BlocProvider<LikedMoviesHydratedBloc>(
+              create: (context) => LikedMoviesHydratedBloc(
+                homeService: context.read<HomeService>(),
               )..add(
-                GenerateMoviesRequest(genres: genreMoviesIds),
+                const GenerateMoviesRequest(),
               ),
             ),
-            BlocProvider<SavedMoviesBloc>(
-              create: (context) => SavedMoviesBloc(
-                homeRepository: context.read<HomeRepository>(),
+            BlocProvider<SavedMoviesHydratedBloc>(
+              create: (context) => SavedMoviesHydratedBloc(
+                homeService: context.read<HomeService>(),
               )..add(
-                GenerateMoviesRequest(genres: genreMoviesIds),
+                const GenerateMoviesRequest(),
               ),
             ),
             ///Books
-            BlocProvider<RecommendedBooksBloc>(
-              create: (context) => RecommendedBooksBloc(
-                homeRepository: context.read<HomeRepository>(),
+            BlocProvider<RecommendedBooksHydratedBloc>(
+              create: (context) => RecommendedBooksHydratedBloc(
+                homeService: context.read<HomeService>(),
               )..add(
-                GenerateBooksRequest(genres: genreBooksIds),
+                const GenerateBooksRequest(),
               ),
             ),
-            BlocProvider<LikedBooksBloc>(
-              create: (context) => LikedBooksBloc(
-                homeRepository: context.read<HomeRepository>(),
+            BlocProvider<LikedBooksHydratedBloc>(
+              create: (context) => LikedBooksHydratedBloc(
+                homeService: context.read<HomeService>(),
               )..add(
-                GenerateBooksRequest(genres: genreBooksIds),
+                const GenerateBooksRequest(),
               ),
             ),
-            BlocProvider<SavedBooksBloc>(
-              create: (context) => SavedBooksBloc(
-                homeRepository: context.read<HomeRepository>(),
+            BlocProvider<SavedBooksHydratedBloc>(
+              create: (context) => SavedBooksHydratedBloc(
+                homeService: context.read<HomeService>(),
               )..add(
-                GenerateBooksRequest(genres: genreBooksIds),
+                const GenerateBooksRequest(),
               ),
             ),
           ],

@@ -7,7 +7,7 @@
 
 import { type Request, type Response, Router } from 'express'
 import { body } from 'express-validator'
-import { StatusCodes, getReasonPhrase } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
@@ -60,13 +60,9 @@ router.post('/account/login', rulesPost, validate, logApiRequest, (req: Request,
     handleErrorOnRoute(res)(new AlreadyLoggedInError())
     return
   }
-  loginAccount(req.body, req.session).then((code: StatusCodes) => {
-    if (code === StatusCodes.OK) {
-      logger.info(`Account successfully logged in${req.body.email != null ? `: ${req.body.email}` : ' !'}`)
-    } else {
-      logger.info(`Account's email or password is incorrect: ${req.body.email != null || req.body.githubCode}`)
-    }
-    return res.status(code).send(getReasonPhrase(code))
+  loginAccount(req.body, req.session).then(() => {
+    logger.info(`Account successfully logged in${req.body.email != null ? `: ${req.body.email}` : ' !'}`)
+    return res.status(StatusCodes.OK).json(req.session)
   }).catch(handleErrorOnRoute(res))
 })
 

@@ -7,11 +7,15 @@
 
 import compression from 'compression'
 import cors from 'cors'
-import express, { type Application } from 'express'
+import express, { type NextFunction, type Application, type Request, type Response } from 'express'
 import rateLimit from 'express-rate-limit'
 import helmet from 'helmet'
 
 import logger from '@middlewares/logging'
+
+import { findEntity } from '@models/getObjects'
+
+import { type Account } from '@entities/Account'
 
 type StaticOrigin = boolean | string | RegExp | Array<boolean | string | RegExp>
 type CustomOrigin = (requestOrigin: string | undefined,
@@ -58,14 +62,46 @@ function useUncacheErrors (app: Application): void {
   })
 }
 
+function useSessionMappedToAccount (app: Application): void {
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    res.on('finish', (): void => {
+      if (req.session?.account == null) {
+        return
+      }
+      findEntity<Account>('Account', { id: req.session.account.id }).then(async (account: Account | null): Promise<void> => {
+        if (account == null) {
+          logger.error('Failed remaping session.')
+          return
+        }
+        const sessAccount: any = { ...account }
+        delete sessAccount.password
+        delete sessAccount.salt
+        delete sessAccount.passwordResetCode
+        delete sessAccount.passwordResetExpiration
+        sessAccount.spentMinutesReadingAndWatching = NaN
+        req.session.account = sessAccount
+
+        const week = 3600000 * 24 * 7
+        req.session.cookie.expires = new Date(Date.now() + week)
+        req.session.cookie.maxAge = week
+
+        req.session.save()
+      }).catch(console.error)
+    })
+    next()
+  })
+}
+
 function useMiddlewares (app: Application): void {
-//  createMorganToken()
   useCors(app)
   app.use(compression())
   app.use(helmet())
   app.use(express.json())
   useRateLimit(app)
   useUncacheErrors(app)
+  if (process.env.NODE_ENV !== 'test') {
+    useSessionMappedToAccount(app)
+  }
 }
 
 export default useMiddlewares

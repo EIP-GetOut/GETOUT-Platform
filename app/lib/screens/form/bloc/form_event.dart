@@ -23,49 +23,49 @@ class EmitEvent extends FormEvent {
   List<Object?> get props => [status];
 }
 
-class SocialMediaTimeEvent extends FormEvent {
+/*class SocialMediaTimeEvent extends FormEvent {
   final double? time;
 
   const SocialMediaTimeEvent({this.time});
 
   @override
   List<Object?> get props => [time];
-}
+}*/
 
-class InterestChoicesEvent extends FormEvent {
-  final int index;
+/*class InterestChoicesEvent extends FormEvent {
+  final String key;
 
-  const InterestChoicesEvent({required this.index});
+  const InterestChoicesEvent({required this.key});
 
   @override
-  List<Object?> get props => [index];
-}
+  List<Object?> get props => [key];
+}*/
 
 class LiteraryGenresEvent extends FormEvent {
-  final int index;
+  final String key;
 
-  const LiteraryGenresEvent({required this.index});
+  const LiteraryGenresEvent({required this.key});
 
   @override
-  List<Object?> get props => [index];
+  List<Object?> get props => [key];
 }
 
 class FilmGenresEvent extends FormEvent {
-  final int index;
+  final String key;
 
-  const FilmGenresEvent({required this.index});
+  const FilmGenresEvent({required this.key});
 
   @override
-  List<Object?> get props => [index];
+  List<Object?> get props => [key];
 }
 
 class ViewingPlatformEvent extends FormEvent {
-  final int index;
+  final String key;
 
-  const ViewingPlatformEvent({required this.index});
+  const ViewingPlatformEvent({required this.key});
 
   @override
-  List<Object?> get props => [index];
+  List<Object?> get props => [key];
 }
 
 class EndFormEvent extends FormEvent {

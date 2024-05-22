@@ -13,8 +13,8 @@ import 'package:dio/dio.dart';
 import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/screens/connection/register/widgets/fields.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
-import 'package:getout/screens/form/pages/page_manager.dart';
 import 'package:getout/constants/http_status.dart';
+import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/tools/status.dart';
 
@@ -37,21 +37,18 @@ class RegisterPage extends StatelessWidget {
                     (state.exception as DioException).response!.statusCode == HttpStatus.CONFLICT) {
                   showSnackBar(context, 'Un compte avec cette adresse email existe déjà');
                 } else {
-                  showSnackBar(context, 'Une erreur s\'est produite, veuillez reesayer plus tard');
+                  showSnackBar(context, appL10n(context)!.error_unknow);
                 }
               }
               if (state.status.isSuccess) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                        const Forms()));
+                Navigator.pop(context);
+                showSnackBar(context, appL10n(context)!.account_created, color: Colors.green);
               }
             },
             child: Scaffold(
               resizeToAvoidBottomInset: true,
               appBar: AppBar(
-                title: const Text('VOTRE PROFIL'),
+                title: Text(appL10n(context)!.your_profile),
                 leading: const BackButton(),
               ),
               body: SingleChildScrollView(
@@ -62,39 +59,39 @@ class RegisterPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 25),
-                          fieldTitle('NOM'),
+                          fieldTitle(appL10n(context)!.lastname.toUpperCase()),
                           const Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 8),
                               child: LastNameField()),
                           const SizedBox(height: 15),
-                          fieldTitle('PRÉNOM'),
+                          fieldTitle(appL10n(context)!.firstname.toUpperCase()),
                           const Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 8),
                               child: FirstNameField()),
                           const SizedBox(height: 15),
-                          fieldTitle('DATE DE NAISSANCE'),
+                          fieldTitle(appL10n(context)!.birthday.toUpperCase()),
                           Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 8),
-                              child: BornDateField()),
+                              child: BirthDateField()),
                           const SizedBox(height: 15),
-                          fieldTitle('ADRESSE EMAIL'),
+                          fieldTitle(appL10n(context)!.email.toUpperCase()),
                           const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 8),
                             child: EmailField(),
                           ),
                           const SizedBox(height: 15),
-                          fieldTitle('MOT DE PASSE'),
+                          fieldTitle(appL10n(context)!.password.toUpperCase()),
                           const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 8),
                             child: PasswordField(),
                           ),
                           const SizedBox(height: 15),
-                          fieldTitle('CONFIRMEZ VOTRE MOT DE PASSE'),
+                          fieldTitle(appL10n(context)!.confirm_password.toUpperCase()),
                           const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 8),
@@ -131,7 +128,7 @@ class RegisterButton extends StatelessWidget {
             width: 90 * phoneWidth / 100,
             height: 65,
             child: FloatingActionButton(
-              child: Text('Suivant', style: Theme.of(context).textTheme.labelMedium),
+              child: Text(appL10n(context)!.next, style: Theme.of(context).textTheme.labelMedium),
               onPressed: () {
                 if (formKey.currentState!.validate()) {
                   context.read<RegisterBloc>().add(RegisterSubmitted());

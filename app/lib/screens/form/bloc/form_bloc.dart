@@ -15,39 +15,39 @@ class FormBloc extends Bloc<FormEvent, FormStates> {
   FormBloc() : super(const FormStates())
   {
     on<EmitEvent>((event, emit) => emit(state.copyWith(status: event.status)));
-    on<SocialMediaTimeEvent>((event, emit) => emit(state.copyWith(time: event.time)));
-    on<InterestChoicesEvent>(_interestChoices);
+    // on<SocialMediaTimeEvent>((event, emit) => emit(state.copyWith(time: event.time)));
+    // on<InterestChoicesEvent>(_interestChoices);
     on<LiteraryGenresEvent>(_literaryGenresEvent);
     on<FilmGenresEvent>(_filmGenresEvent);
     on<ViewingPlatformEvent>(_viewingPlatformEvent);
     on<EndFormEvent>((event, emit) => emit(state.copyWith()));
   }
 
+  /*void _interestChoices(InterestChoicesEvent interestChoices, Emitter<FormStates> emit) async
+  {
+    Map<String, bool> interestList = Map.from(state.interest);
+    interestList[interestChoices.key] = !interestList[interestChoices.key]!;
+    emit(state.copyWith(interest: interestList));
+  }*/
+
   void _literaryGenresEvent(LiteraryGenresEvent literaryGenresEvent, Emitter<FormStates> emit) async
   {
-    List<bool> listGenres = List.from(state.literaryGenres);
-    listGenres[literaryGenresEvent.index] = !listGenres[literaryGenresEvent.index];
-        emit(state.copyWith(literaryGenres: listGenres));
-  }
-
-  void _interestChoices(InterestChoicesEvent interestChoices, Emitter<FormStates> emit) async
-  {
-    List<bool> interestList = List.from(state.interest);
-    interestList[interestChoices.index] = !interestList[interestChoices.index];
-    emit(state.copyWith(interest: interestList));
+    Map<String, bool> listGenres = Map.from(state.literaryGenres);
+    listGenres[literaryGenresEvent.key] = !listGenres[literaryGenresEvent.key]!;
+    emit(state.copyWith(literaryGenres: listGenres));
   }
 
   void _filmGenresEvent(FilmGenresEvent filmGenresEvent, Emitter<FormStates> emit) async
   {
-    List<bool> filmList = List.from(state.filmGenres);
-    filmList[filmGenresEvent.index] = !filmList[filmGenresEvent.index];
+    Map<String, bool> filmList = Map.from(state.filmGenres);
+    filmList[filmGenresEvent.key] = !filmList[filmGenresEvent.key]!;
     emit(state.copyWith(filmGenres: filmList));
   }
 
   void _viewingPlatformEvent(ViewingPlatformEvent viewingPlatformEvent, Emitter<FormStates> emit) async
   {
-    List<bool> viewingPlatformList = List.from(state.viewingPlatform);
-    viewingPlatformList[viewingPlatformEvent.index] = !viewingPlatformList[viewingPlatformEvent.index];
+    Map<String, bool> viewingPlatformList = Map.from(state.viewingPlatform);
+    viewingPlatformList[viewingPlatformEvent.key] = !viewingPlatformList[viewingPlatformEvent.key]!;
     emit(state.copyWith(viewingPlatform: viewingPlatformList));
   }
 }

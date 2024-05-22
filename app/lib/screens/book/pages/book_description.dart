@@ -8,6 +8,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:getout/screens/book/bloc/book_bloc.dart';
+import 'package:getout/widgets/description_title.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class BookDescriptionPage extends StatelessWidget {
   final InfoBookResponse book;
@@ -24,7 +26,7 @@ class BookDescriptionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('DESCRIPTION'),
+        title: Text(appL10n(context)!.description.toUpperCase()),
         leading: const BackButton(),
       ),
       body: SingleChildScrollView(
@@ -34,28 +36,17 @@ class BookDescriptionPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                const Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Text('RÉSUMÉ',
-                        // textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                        ))),
+                DescriptionTitle(value: appL10n(context)!.summary),
                 Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Text(
-                        // textAlign: TextAlign.start,
-                        book.overview ?? 'Aucune description disponible',
-                        style: Theme.of(context).textTheme.bodySmall)),
+                    padding:
+                        const EdgeInsets.only(left: 10, top: 10, bottom: 10),
+                    child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text(
+                        book.overview ?? appL10n(context)!.no_description,
+                        style: Theme.of(context).textTheme.bodySmall))),
                 separateLine(),
-                const Padding(
-                    padding: EdgeInsets.only(left: 10),
-                    child: Text(
-                        // textAlign: TextAlign.start,
-                        'AUTEUR(S)',
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold))),
+                DescriptionTitle(value: appL10n(context)!.author),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Row(
@@ -66,13 +57,15 @@ class BookDescriptionPage extends StatelessWidget {
                         child: Column(
                           children: [
                             Image.network(
-                              book.authorsPicture![index]['imageLink']!,
+                              book.authorsPicture![index].picture,
                               height: 120,
                               width: 120,
                             ),
-                            Text(
-                              book.authorsPicture![index]['author']!,
-                              style: const TextStyle(fontSize: 14),
+                            Padding(
+                                padding: const EdgeInsets.only(bottom: 10, top: 10),
+                                child: Text(
+                              book.authorsPicture![index].name,
+                              style: const TextStyle(fontSize: 14)),
                             ),
                           ],
                         ),
