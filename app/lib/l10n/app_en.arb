@@ -146,6 +146,7 @@
   "code": "Code",
   "code_hint": "Enter the code",
   "code_validator": "code is a mandatory",
+  "receive_code": "Recevoir un code",
   "@_code_hint": "Enter the code received by email",
 
   "@_SETTING": {},

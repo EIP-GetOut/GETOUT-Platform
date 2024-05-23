@@ -30,6 +30,7 @@
     "npm": ">=7.*"
   },
   "dependencies": {
+    "@getbrevo/brevo": "^2.1.1",
     "@googleapis/books": "^2.0.0",
     "@types/bcrypt": "^5.0.2",
     "@types/python-shell": "^1.0.3",
