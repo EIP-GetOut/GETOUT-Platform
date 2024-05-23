@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.1](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.5.0...v0.5.1) (2024-05-23)
+
+
+### Features
+
+* **app:** :sparkles: add a button for disconnect user ([6f8e80c](https://github.com/EIP-GetOut/GETOUT-Platform/commit/6f8e80ce1dece72b6b955b73d8384020ee9e00ca))
+* **app:** :sparkles: add delete account page and request ([3a5a363](https://github.com/EIP-GetOut/GETOUT-Platform/commit/3a5a36398168f31b076ac3bfd549dd8c1e1c3687))
+* **app:** :sparkles: add more l10n ([174cf37](https://github.com/EIP-GetOut/GETOUT-Platform/commit/174cf3768b2d019c2fda462197c8033e0e2244ee))
+* **app:** :sparkles: add redirection to login page after disconnect ([10cd005](https://github.com/EIP-GetOut/GETOUT-Platform/commit/10cd0050c30c0f4dd3c526f5a77a3b92e4942d86))
+* **app:** :sparkles: add small history for books & movies. ([fa668bb](https://github.com/EIP-GetOut/GETOUT-Platform/commit/fa668bbcb1f2fd03d161d2d667b4d8fc452c511d))
+* **app:** :sparkles: add some errors handling for forgot password ([f10e852](https://github.com/EIP-GetOut/GETOUT-Platform/commit/f10e852e3d12d320d746c951fb7aa8957e96ca00))
+* **app:** :sparkles: change request params ([6d499ca](https://github.com/EIP-GetOut/GETOUT-Platform/commit/6d499caa612af1b5811e7b327cc88c2dc3127828))
+* **app:** :sparkles: redirect user to settings after refill forms ([8d94a40](https://github.com/EIP-GetOut/GETOUT-Platform/commit/8d94a402cff7039e261803d287b322d6be69b212))
+* **app:** :twisted_rightwards_arrows: merge app into feature/deconnection ([a903f5a](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a903f5afa3cb8ccf4fa86968657abe4ab37939ce))
+* **backend:** :sparkles: welcome email and password reset email ([fd9066c](https://github.com/EIP-GetOut/GETOUT-Platform/commit/fd9066cd9362781cf984aaa35515abd3c269364b))
+
+
+### Bug Fixes
+
+* **app:** :bug: fix errors due to expanded (get session) ([db4d799](https://github.com/EIP-GetOut/GETOUT-Platform/commit/db4d7991c801930ed1b61845cb50d6bde804d03d))
+
+
+### UI Updates
+
+* **app:** :art: clean code,and fix issues from flutter analyze ([76e0590](https://github.com/EIP-GetOut/GETOUT-Platform/commit/76e059020839c5f192dbca4b24ebcc6e3860d8d3))
+* **app:** :art: fix errors due to flutter analyze ([96dad12](https://github.com/EIP-GetOut/GETOUT-Platform/commit/96dad121795a0378c422219e6a1c0553bc0a45dc))
+* **app:** :art: remove issues from flutter analyze ([2087610](https://github.com/EIP-GetOut/GETOUT-Platform/commit/20876101c3d0bea3af309e5d16ddb70b5bdb6bf0))
+* **app:** :lipstick: change red color by green for interaction for movie and book ([5f056f4](https://github.com/EIP-GetOut/GETOUT-Platform/commit/5f056f486a7111fb5c666c1f141d9265cabcd53f))
+
 ## [0.5.0](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.4.0...v0.5.0) (2024-05-22)
 
 
