@@ -9,6 +9,7 @@ import 'package:equatable/equatable.dart';
 
 import 'package:getout/bloc/session/session_bloc.dart';
 
+//Session
 class SessionEvent extends Equatable {
   @override
   List<Object?> get props => [];
@@ -17,6 +18,10 @@ class SessionEvent extends Equatable {
 
 class SessionRequest extends SessionEvent {
   const SessionRequest();
+}
+
+class DisconnectRequest extends SessionEvent {
+  const DisconnectRequest();
 }
 
 class SessionStatusResponse extends SessionEvent {
