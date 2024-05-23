@@ -66,7 +66,7 @@ class MovieSuccessWidget extends StatelessWidget {
                 right: 80,
                 child: IconButton(
                   icon: const Icon(Icons.remove_red_eye),
-                  color: (movie.seen ?? false) ? Colors.red : Colors.white,
+                  color: (movie.seen ?? false) ? Colors.green : Colors.white,
                   onPressed: () async {
                     if (movie.seen == true) {
                       await context
@@ -93,7 +93,7 @@ class MovieSuccessWidget extends StatelessWidget {
                 right: 20,
                 child: IconButton(
                   icon: const Icon(Icons.thumb_up_alt_sharp),
-                  color: (movie.liked ?? false) ? Colors.red : Colors.white,
+                  color: (movie.liked ?? false) ? Colors.green : Colors.white,
                   onPressed: () async {
                     if (movie.liked == true) {
                       await context
@@ -148,7 +148,7 @@ class MovieSuccessWidget extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.add_circle_outlined),
                   color:
-                      (movie.wishlisted ?? false) ? Colors.red : Colors.white,
+                      (movie.wishlisted ?? false) ? Colors.green : Colors.white,
                   onPressed: () async {
                     if (movie.wishlisted == true) {
                       await context
@@ -198,7 +198,7 @@ class MovieSuccessWidget extends StatelessWidget {
                   child: IconButton(
                     icon: const Icon(
                       Icons.arrow_back,
-                      color: Colors.black,
+                      color: Color.fromARGB(255, 255, 255, 255),
                     ),
                     onPressed: () async {
                       Navigator.pop(context);
