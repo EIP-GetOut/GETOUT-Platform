@@ -17,8 +17,6 @@ class ForgotPasswordService extends ServiceTemplate {
           '${ApiConstants.rootApiPath}${ApiConstants.resetPasswordEmailPath}',
           data: {
             'email': request.email,
-            'firstName': 'Louis',
-            'lastName': 'Primas'
           },
           options: Options(headers: {'Content-Type': 'application/json'}));
     } on DioException { // add "catch (dioError)" for debugging
@@ -35,8 +33,9 @@ class ForgotPasswordService extends ServiceTemplate {
           '${ApiConstants.rootApiPath}${ApiConstants.resetPasswordNewPasswordPath}',
           data: {
             'newPassword' : request.password,
-            'token': request.code,
-            'password' : 'Charles',
+            'code': int.parse(request.code)
+            // ,
+            // 'password' : 'Charles',
           },
           options: Options(headers: {'Content-Type': 'application/json'}));
     } on DioException { // add "catch (dioError)" for debugging
