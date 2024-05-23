@@ -32,7 +32,8 @@ function checkRequiredEnvironmentVariables (): void {
     'TYPEORM_DATABASE',
     'GOOGLE_CLIENT_ID',
     'GOOGLE_BOOKS_API_KEY',
-    'MOVIE_DB_KEY'
+    'MOVIE_DB_KEY',
+    'BREVO_API_KEY'
   ]
 
   envVariablesToCheck.forEach((envVar: keyof NodeJS.ProcessEnv) => {

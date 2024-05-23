@@ -5,13 +5,14 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
+import { SendSmtpEmail, TransactionalEmailsApi } from '@getbrevo/brevo'
 import { type Request, type Response, Router } from 'express'
 import { body } from 'express-validator'
 import { StatusCodes } from 'http-status-codes'
 
 import { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
-import { AlreadyLoggedInError } from '@services/utils/customErrors'
+import { AlreadyLoggedInError, ApiError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import registerAccount from '@models/account/registerAccount'
@@ -63,44 +64,36 @@ const rulesPost = [
  *         description: Internal server error.
  */
 
-// {
-//   "salt": "$2b$10$zqLRykXBQ7/mUgQKb0wYY.",
-//   "email": "user162928@example.com",
-//   "password": "$2b$10$WyrObiyVJ5cy/7EPScYBg.2dTM78dYkz.Yr7YE0bZ5A3XaCoPCjeK",
-//   "firstName": "Ozella",
-//   "lastName": "Kulas",
-//   "bornDate": "2001-06-07T00:00:00.000Z",
-//   "passwordResetToken": null,
-//   "passwordResetExpiration": null,
-//   "passwordResetPassword": null,
-//   "preferences": null,
-//   "id": "c90adeff-53f5-46a2-afcb-6cdb82373f36",
-//   "watchlist": [],
-//   "readingList": [],
-//   "likedMovies": [],
-//   "likedBooks": [],
-//   "dislikedMovies": [],
-//   "dislikedBooks": [],
-//   "seenMovies": [],
-//   "readBooks": [],
-//   "createdDate": "2024-03-13T04:00:47.606Z",
-//   "modifiedDate": "2024-03-13T04:00:47.606Z"
-// }
+async function sendWelcomeEmail (account: Account): Promise<ReturnType<TransactionalEmailsApi['sendTransacEmail']>> {
+  const apiInstance = new TransactionalEmailsApi()
+  apiInstance.setApiKey(0, process.env.BREVO_API_KEY)
+  const sendSmtpEmail = new SendSmtpEmail()
+
+  sendSmtpEmail.templateId = 5
+  sendSmtpEmail.to = [{ email: account.email }]
+  sendSmtpEmail.params = { fullName: `${account.firstName} ${account.lastName}` }
+
+  return await apiInstance.sendTransacEmail(sendSmtpEmail).catch((err: Error) => {
+    throw new ApiError(`Error while sending reset password email to ${account.email}: ${err.message}.`)
+  })
+}
 
 router.post('/account/signup', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session?.account?.id != null) {
     handleErrorOnRoute(res)(new AlreadyLoggedInError())
     return
   }
-  registerAccount(req.body).then((account: Account) => {
-    return res.status(StatusCodes.CREATED).json({
-      id: account.id,
-      email: account.email,
-      firstName: account.firstName,
-      lastName: account.lastName,
-      bornDate: account.bornDate,
-      preferences: account.preferences,
-      createdDate: account.createdDate
+  registerAccount(req.body).then(async (account: Account) => {
+    return await sendWelcomeEmail(account).then(() => {
+      return res.status(StatusCodes.CREATED).json({
+        id: account.id,
+        email: account.email,
+        firstName: account.firstName,
+        lastName: account.lastName,
+        bornDate: account.bornDate,
+        preferences: account.preferences,
+        createdDate: account.createdDate
+      })
     })
   }).catch(handleErrorOnRoute(res))
 })
