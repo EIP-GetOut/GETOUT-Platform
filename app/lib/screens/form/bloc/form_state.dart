@@ -71,7 +71,7 @@ class FormStates extends Equatable {
       'DVD' : false,
       'VOD' : false,
       'Netflix' : false,
-      'Amazon Prime Video' : false,
+      'Prime Video' : false,
       'Disney+' : false,
       'Apple TV+' : false,
       'myCanal' : false,
