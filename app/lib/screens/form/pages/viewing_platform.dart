@@ -29,7 +29,7 @@ class ViewingPlatform extends StatelessWidget {
       'assets/images/logo/disney+.png',
       'assets/images/logo/apple_tv+.png',
       'assets/images/logo/mycanal.png',
-      'assets/images/logo/autre_sources2.png'
+      'assets/images/logo/autre_sources.png'
     ];
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
