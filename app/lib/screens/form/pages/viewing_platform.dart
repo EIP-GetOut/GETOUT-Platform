@@ -5,6 +5,7 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
@@ -27,9 +28,9 @@ class ViewingPlatform extends StatelessWidget {
       'assets/images/logo/netflix.png',
       'assets/images/logo/prime_video.png',
       'assets/images/logo/disney+.png',
-      'assets/images/logo/Apple TV+.png',
-      'assets/images/logo/myCanal.png',
-      'assets/images/logo/Autre sources.png'
+      'assets/images/logo/apple_tv+.png',
+      'assets/images/logo/mycanal.png',
+      'assets/images/logo/autre_sources2.png'
     ];
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
@@ -86,11 +87,15 @@ class ViewingPlatform extends StatelessWidget {
                             height: Tools.heightFactor(context, 0.08),
                             child: CheckboxListTile(
                               title: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  SizedBox(width: Tools.widthFactor(context, 0.12)),
-                                  Image.asset(checkboxImages[checkbox.key]!,
-                                      width: 40, height: 40),
-                                  SizedBox(width: Tools.widthFactor(context, 0.02)),
+                                  SizedBox(width: Tools.widthFactor(context, 0.10)),
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    child: Image.asset(checkboxImages[checkbox.key]!,
+                                        width: 50),
+                                  ),
+                                  SizedBox(width: Tools.widthFactor(context, 0.03)),
                                   AutoSizeText(checkbox.key,
                                       maxLines: 1,
                                       minFontSize: 16.0,

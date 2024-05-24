@@ -125,14 +125,18 @@ flutter:
     - assets/images/icon/location_pin.svg # not used yet
     - assets/images/icon/movie.svg
 #    Logo:
-    - assets/images/logo/DVD.png
     - assets/images/logo/cinema.png
+    - assets/images/logo/DVD.png
+    - assets/images/logo/VOD.png
+    - assets/images/logo/netflix.png
+    - assets/images/logo/prime_video.png
     - assets/images/logo/disney+.png
+    - assets/images/logo/apple_tv+.png
+    - assets/images/logo/mycanal.png
+    - assets/images/logo/autre_sources.png
     - assets/images/logo/full_getout.png
     - assets/images/logo/getout.png
     - assets/images/logo/google.png # not used yet
-    - assets/images/logo/netflix.png
-    - assets/images/logo/prime_video.png
 #    Other:
     - assets/images/other/split.png
     - assets/images/other/text_getout.png
