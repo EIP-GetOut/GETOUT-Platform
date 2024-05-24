@@ -46,39 +46,46 @@ class LiteraryGenres extends StatelessWidget {
           ),
           SizedBox(height: Tools.heightFactor(context, 0.03)),
           Expanded(
-            child: ListView(
-                padding: const EdgeInsets.all(16.0),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: <Widget>[
-                  for (var checkbox in context.read<FormBloc>().state.literaryGenres.entries)
-                    Column(
-                      children: [
-                        CheckboxListTile(
-                          title: Text(checkbox.key,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodyMedium
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 65.0),
+              child: ListView(
+                  padding: const EdgeInsets.all(16.0),
+                  shrinkWrap: true,
+                  //physics: const NeverScrollableScrollPhysics(),
+                  children: <Widget>[
+                    for (var checkbox in context.read<FormBloc>().state.literaryGenres.entries)
+                      Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2.0,
+                              ),
+                            ),
+                            child: CheckboxListTile(
+                              title: Text(checkbox.key,
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.bodyMedium
+                              ),
+                              value: checkbox.value,
+                              onChanged: (value) {
+                                context.read<FormBloc>().add(LiteraryGenresEvent(key: checkbox.key));
+                              },
+                              contentPadding: EdgeInsets.zero,
+                              controlAffinity: ListTileControlAffinity.leading,
+                              tileColor: Colors.transparent,
+                              checkColor: Colors.transparent,
+                              activeColor: Theme.of(context).primaryColor,
+
+                            ),
                           ),
-                          value: checkbox.value,
-                          onChanged: (value) {
-                            context.read<FormBloc>().add(LiteraryGenresEvent(key: checkbox.key));
-                          },
-                          contentPadding: EdgeInsets.zero,
-                          controlAffinity: ListTileControlAffinity.leading,
-                          tileColor: Colors.transparent,
-                          checkColor: Colors.transparent,
-                          activeColor: Theme.of(context).primaryColor,
-                          shape: const Border(
-                            bottom: BorderSide(color: Colors.black, width: 2.0),
-                            left: BorderSide(color: Colors.black, width: 2.0),
-                            right: BorderSide(color: Colors.black, width: 2.0),
-                            top: BorderSide(color: Colors.black, width: 2.0),
-                          ),
-                        ),
-                        SizedBox(height: Tools.heightFactor(context, 0.012)),
-                      ],
-                    ),
-                ]),
+                          SizedBox(height: Tools.heightFactor(context, 0.016)),
+                        ],
+                      ),
+                  ]),
+            ),
           )
         ],
       );
