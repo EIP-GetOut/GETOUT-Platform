@@ -51,7 +51,7 @@ router.get('/account/:accountId/recommend-books', logApiRequest, (req: Request, 
   logger.debug(`Missing ${(60000 - (Date.now() - new Date(req.session.account!.lastBookRecommandation!).getTime())) / 1000} seconds to generate new recommendations.`)
 
   if (req.session.account?.lastBookRecommandation != null &&
-    Date.now() - new Date(req.session.account.lastBookRecommandation).getTime() < 1) { // 1 minutes
+    Date.now() - new Date(req.session.account.lastBookRecommandation).getTime() < 60000) { // 1 minutes
     getRecommandationsFromHistory(req.session.account).then((resolvedPromises) => {
       logger.info('Successfully retrieved last 5 recommendations.')
       return res.status(StatusCodes.OK).json(resolvedPromises)
