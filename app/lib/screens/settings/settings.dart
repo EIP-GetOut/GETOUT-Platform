@@ -51,19 +51,19 @@ class SettingsPage extends StatelessWidget {
             const DisconnectPage(),
             const DeleteAccountPage(),
             TitleRow(value: appL10n(context)!.appearance),
-            SettingRow(
+            /*SettingRow(
                 page: const SizedBox(),
                 iconData: Icons.public_outlined,
-                value: appL10n(context)!.select_language),
+                value: appL10n(context)!.select_language),*/
             TitleRow(value: appL10n(context)!.preference),
-            const SettingRow(page: HistoryProvider(), iconData: Icons.history_outlined, value: 'history'),
+            SettingRow(page: const HistoryProvider(), iconData: Icons.history_outlined, value: appL10n(context)!.history),
             SettingRow(page: const Forms(), iconData : Icons.settings_outlined, value: appL10n(context)!.select_preferences),
             SettingRow(page: const NotificationsPage(), iconData: Icons.notifications_outlined, value: appL10n(context)!.notifications),
-            TitleRow(value: appL10n(context)!.more),
-            SettingRow(
+            //TitleRow(value: appL10n(context)!.more),
+            /*todo SettingRow(
                 page: const SizedBox(),
                 iconData: Icons.help_outline,
-                value: appL10n(context)!.support),
+                value: appL10n(context)!.support),*/
           ],
         ),
       ),
