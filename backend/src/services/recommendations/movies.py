@@ -14,11 +14,11 @@ WEIGHTS = {
     "popularity": 0.35
 }
 
-def comparer_genre_ids(films, movieGenres):
+def comparer_genre_ids(account, films, movieGenres):
     films_correspondants = []
     for film in films:
         for genre_id in film['genre_ids']:
-            if genre_id in movieGenres:
+            if genre_id in movieGenres and film['id'] and film['id'] not in account["recommendedMoviesHistory"]:
                 films_correspondants.append(film['id'])
                 if len(films_correspondants) >= 5:
                     return films_correspondants
@@ -27,16 +27,17 @@ def comparer_genre_ids(films, movieGenres):
 
 def recommendation_genre(account, movie: Movie):
     movie = Movie()
-    popular = movie.popular({"language": "fr-FR", "page": 500})
+    popular = []
+    for page in range(1, 20):
+        popular += movie.popular(region="fr-FR", page=page)
     genres = account["preferences"]["moviesGenres"]
-    films_correspondants = comparer_genre_ids(popular, genres)
+    films_correspondants = comparer_genre_ids(account, popular, genres)
     result = {}
     id_title_pairs = []
     result["recommendations"] = []
-    for book_id in films_correspondants:
-        title = movie.details(book_id)["original_title"]
-        id_title_pairs.append([book_id, title])
-    # print(id_title_pairs)
+    for movieId in films_correspondants:
+        title = movie.details(movieId)["original_title"]
+        id_title_pairs.append([movieId, title])
     for p in range(len(id_title_pairs)):
         result["recommendations"].append({
             "id": id_title_pairs[p][0],
@@ -44,7 +45,6 @@ def recommendation_genre(account, movie: Movie):
             "score": random.randint(0, 100)
         })
     result["recommendations"] = sorted(result["recommendations"], key=lambda k: k['score'], reverse=True)[:5]
-    # print(result)
     return result
 
 
@@ -114,9 +114,12 @@ def calculate_genre_score(movie, account):
     return score
 
 def get_similar_movies(idMovie, movie: Movie):
-    data = movie.recommendations(idMovie)
-    ids = [entry['id'] for entry in data['results']]
-    title = [entry['title'] for entry in data['results']]
+    data = []
+    for page in range(1, 10):
+        res = movie.recommendations(idMovie, page=page)
+        data += res['results']
+    ids = [entry['id'] for entry in data]
+    title = [entry['title'] for entry in data]
     return ids
 
 def calculate_critics_score(movie, account):
