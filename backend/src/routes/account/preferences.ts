@@ -27,11 +27,28 @@ const rulesPut = [
   body('platforms').isArray()
 ]
 
+const BOOKS_GENRES_TO_GOOGLE_BOOKS_GENRES: Record<string, string> = {
+  Policier: 'crime',
+  'Science-fiction': 'fiction',
+  Politique: 'political',
+  Poesie: 'poesy',
+  Histoire: 'history',
+  Science: 'science',
+  Philosophie: 'philosophy',
+  Biographie: 'biography',
+  'Contes et légendes': 'tale',
+  Romance: 'romance',
+  'Autre genre': 'TODO'
+}
+
 router.put('/account/preferences', rulesPut, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session?.account?.id == null) {
     handleErrorOnRoute(res)(new NotLoggedInError())
     return
   }
+  req.body.booksGenres.forEach((bookGenre: string, index: number) => {
+    req.body.booksGenres[index] = BOOKS_GENRES_TO_GOOGLE_BOOKS_GENRES[bookGenre]
+  })
   addPreferences(req.session.account.id, req.body, 'preferences').then(async (preferencesAdded: Preferences) => {
     req.session.account!.preferences = preferencesAdded
     return await modifyAccount(req.session.account!.id, { preferences: preferencesAdded }).then(() => {
@@ -45,6 +62,9 @@ router.post('/account/preferences', rulesPut, validate, logApiRequest, (req: Req
     handleErrorOnRoute(res)(new NotLoggedInError())
     return
   }
+  req.body.booksGenres.forEach((bookGenre: string, index: number) => {
+    req.body.booksGenres[index] = BOOKS_GENRES_TO_GOOGLE_BOOKS_GENRES[bookGenre]
+  })
   postPreferences(req.session.account.id, req.body, 'preferences').then(async (preferencesAdded: Preferences) => {
     return await modifyAccount(req.session.account!.id, { preferences: preferencesAdded }).then(() => {
       logger.info(`Preferences created: ${JSON.stringify(req.body, null, 0)}`)
