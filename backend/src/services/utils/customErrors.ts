@@ -46,13 +46,19 @@ class BcryptError extends AppError {}
 
 class BookNotInListError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
-    super(message ?? 'Movie was not found in list.', status ?? StatusCodes.NOT_FOUND)
+    super(message ?? 'Book was not found in list.', status ?? StatusCodes.NOT_FOUND)
   }
 }
 
 class DbError extends AppError {}
 
-class MovieDbError extends AppError {}
+class GoogleBookError extends AppError {}
+
+class IncorrectEmailOrPasswordError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Incorrect email or password.', status ?? StatusCodes.FORBIDDEN)
+  }
+}
 
 class MovieNotInListError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
@@ -60,11 +66,15 @@ class MovieNotInListError extends AppError {
   }
 }
 
-class NodeMailerError extends AppError {}
-
 class NotLoggedInError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
     super(message ?? 'User is not logged in.', status ?? StatusCodes.BAD_REQUEST)
+  }
+}
+
+class PermissionsError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Error', status ?? StatusCodes.BAD_REQUEST)
   }
 }
 
@@ -79,15 +89,22 @@ class PreferencesDoesNotExistError extends AppError {
     super(message ?? 'Preferences does not exists.', status ?? StatusCodes.FORBIDDEN)
   }
 }
-class RecommandationsDetailsError extends AppError {
+
+class RecommendationsDetailsError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
-    super(message ?? 'Failed fetching recommandations details.')
+    super(message ?? 'Failed fetching recommendations details.')
   }
 }
 
 class SamePasswordError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
     super(message ?? 'Can\'t reset password with an old password.', status ?? StatusCodes.BAD_REQUEST)
+  }
+}
+
+class SessionDestroyError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Failed destroying session.', status)
   }
 }
 
@@ -101,12 +118,14 @@ export {
   BcryptError,
   BookNotInListError,
   DbError,
-  MovieDbError,
+  GoogleBookError,
+  IncorrectEmailOrPasswordError,
   MovieNotInListError,
-  NodeMailerError,
   NotLoggedInError,
+  PermissionsError,
   PreferencesAlreadyExistError,
   PreferencesDoesNotExistError,
-  RecommandationsDetailsError,
-  SamePasswordError
+  RecommendationsDetailsError,
+  SamePasswordError,
+  SessionDestroyError
 }

@@ -6,10 +6,8 @@
 */
 
 import bcrypt from 'bcrypt'
-import { type UUID, randomBytes } from 'crypto'
+import { type UUID } from 'crypto'
 import { StatusCodes } from 'http-status-codes'
-import { type FindOptionsWhere } from 'typeorm'
-import { v4 as uuidv4 } from 'uuid'
 
 import { AccountDoesNotExistError, AuthenticationError, DbError, SamePasswordError } from '@services/utils/customErrors'
 
@@ -26,35 +24,30 @@ function getDateIn1Hour (): Date {
   return followingDay
 }
 
-async function generateResetPasswordUrl (accountId: UUID, email?: string): Promise<string> {
-  const criteria: FindOptionsWhere<Account> = { id: accountId, email }
-
-  return await findEntity<Account>(Account, criteria).then(async (account: Account | null) => {
+async function generatePasswordResetCode (email: string): Promise<number> {
+  return await findEntity<Account>(Account, { email }).then(async (account: Account | null) => {
     if (account == null) {
       throw new AccountDoesNotExistError()
     }
+    account.passwordResetCode = process.env.NODE_ENV === 'development'
+      ? 123456
+      : Math.floor(100000 + Math.random() * 900000)
     account.passwordResetExpiration = getDateIn1Hour()
-    account.passwordResetToken = uuidv4()
-    const pswd: number = randomBytes(4).readInt32LE()
-    account.passwordResetPassword = pswd
     return await appDataSource.getRepository<Account>('Account').save(account)
   }).then((account: Account) => {
-    if (account?.passwordResetPassword == null) {
-      throw new DbError('Failed generating password url.')
+    if (account?.passwordResetCode == null) {
+      throw new DbError('Failed generating password reset code.')
     }
-    return `/reset-password?token=${account.passwordResetToken}&password=${account.passwordResetPassword.toString()}`
+    return account.passwordResetCode
   })
 }
 
-async function accountIsAllowedToResetPassword (token: string, password: number): Promise<boolean> {
-  return await findEntity<Account>(Account, { passwordResetToken: token }).then((account: Account | null) => {
-    if (account == null) {
-      throw new AccountDoesNotExistError()
-    }
-    console.warn('PASSWORD:', password, 'PASSWORDRESETPASS:', account.passwordResetPassword, ':', 'account.passwordResetExpiration:', account.passwordResetExpiration)
+async function accountIsAllowedToResetPassword (code: number): Promise<boolean> {
+  return await findEntity<Account>(Account, { passwordResetCode: code }).then((account: Account | null) => {
     return (
-      password === account.passwordResetPassword &&
-      account.passwordResetExpiration !== null &&
+      account != null &&
+      code === account.passwordResetCode &&
+      account.passwordResetExpiration != null &&
       Date.now() < new Date(account.passwordResetExpiration).getTime()
     )
   })
@@ -84,10 +77,10 @@ async function changeAccountPassword (accountId: UUID, oldPassword: string, newP
   })
 }
 
-async function changeAccountPasswordFromToken (token: string, newPassword: string): Promise<Account> {
+async function changeAccountPasswordFromCode (code: number, newPassword: string): Promise<Account> {
   let foundAccount: Account
 
-  return await findEntity<Account>(Account, { passwordResetToken: token }).then(async (account: Account | null) => {
+  return await findEntity<Account>(Account, { passwordResetCode: code }).then(async (account: Account | null) => {
     if (account == null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.NOT_FOUND)
     }
@@ -103,8 +96,8 @@ async function changeAccountPasswordFromToken (token: string, newPassword: strin
     return await bcrypt.hash(newPassword + salt, 10)
   }).then(async (password) => {
     foundAccount.password = password
-    foundAccount.passwordResetToken = null
-    foundAccount.passwordResetPassword = null
+    foundAccount.passwordResetCode = null
+    foundAccount.passwordResetExpiration = null
     return await appDataSource.getRepository<Account>('Account').save(foundAccount)
   }).then((account: Account | null) => {
     if (account == null) {
@@ -117,6 +110,6 @@ async function changeAccountPasswordFromToken (token: string, newPassword: strin
 export {
   accountIsAllowedToResetPassword,
   changeAccountPassword,
-  changeAccountPasswordFromToken,
-  generateResetPasswordUrl
+  changeAccountPasswordFromCode,
+  generatePasswordResetCode
 }

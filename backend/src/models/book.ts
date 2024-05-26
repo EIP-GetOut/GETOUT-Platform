@@ -5,21 +5,22 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
+import { books, type books_v1 } from '@googleapis/books'
+import axios from 'axios'
 import { type UUID } from 'crypto'
 import { StatusCodes } from 'http-status-codes'
-import { type Response } from 'node-fetch'
 
 import logger from '@services/middlewares/logging'
-import { AccountDoesNotExistError, ApiError, AppError, BookNotInListError, DbError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError, ApiError, type AppError, BookNotInListError, DbError } from '@services/utils/customErrors'
 
 import { Account } from '@entities/Account'
 
 import { appDataSource } from '@config/dataSource'
 
+import { modifyAccount } from './account'
 import { findEntity } from './getObjects'
 
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
-const fetch = async (...args: Parameters<typeof import('node-fetch')['default']>): Promise<Response> => await import('node-fetch').then(async ({ default: fetch }) => await fetch(...args))
+const booksApi = books('v1')
 
 const key = 'AIzaSyDDxf1nRkG6eMcufxYp2LHIWgA-2MEMlK8'
 
@@ -32,14 +33,14 @@ async function fetchAuthorInfo (author: any): Promise<any> {
   const apiUrl = `https://kgsearch.googleapis.com/v1/entities:search?query=${formattedAuthor}&key=${key}`
 
   try {
-    const response = await fetch(apiUrl)
-    const data = await response.json()
+    const response = await axios.get(apiUrl)
+    const data = response.data
 
     const imageLink = data.itemListElement[0]?.result?.image?.contentUrl
 
     return { author, imageLink }
   } catch (error) {
-    console.error(`Error fetching data for ${author}:`, error)
+    logger.error(`Error fetching data for ${author}:${JSON.stringify(error, null, 2)}`)
     return { author, imageLink: null }
   }
 }
@@ -48,39 +49,39 @@ async function getPictures (authors: any): Promise<any> {
   const authorInfoPromises = authors.map(fetchAuthorInfo)
   const authorInfoArray = await Promise.all(authorInfoPromises)
 
-  logger.info(JSON.stringify(authorInfoArray))
   return authorInfoArray
 }
 
-async function getBookDetail (id: string): Promise<Response> {
-  return await (fetch(`https://www.googleapis.com/books/v1/volumes/${id}?key=${key}`)).then(async (res) => {
-    if (!res.ok) {
-      throw new ApiError(res.statusText)
+async function getBookDetails (id: string): Promise<books_v1.Schema$Volume> {
+  return await booksApi.volumes.get({ volumeId: id, key }).then((res) => {
+    if (res.status !== StatusCodes.OK || res?.data?.volumeInfo == null || res.data.saleInfo == null) {
+      throw new ApiError(`Error whiled obtaining book ${id}'s details (${res.status}: ${res.statusText}).`)
     }
-    return await res.json()
-  }).catch((err: AppError | Error) => {
-    if (err instanceof AppError) {
-      throw err
-    } else {
-      throw new AppError()
-    }
+    return res.data
   })
 }
 
 async function getBook (id: string): Promise<any> {
-  return await getBookDetail(id).then(async (bookObtained: any | undefined) => {
-    if (bookObtained == null) {
-      throw new AppError()
-    }
+  return await getBookDetails(id).then(async (book: books_v1.Schema$Volume) => {
+    const volumeInfo = book.volumeInfo!
+    const saleInfo = book.saleInfo!
+
     return ({
-      title: bookObtained.volumeInfo.title,
-      overview: bookObtained.volumeInfo.description,
-      poster_path: bookObtained.volumeInfo?.imageLinks?.thumbnail != null ? bookObtained.volumeInfo.imageLinks.thumbnail : null,
-      duration: Number(bookObtained.volumeInfo.pageCount) / 60 - (Number(bookObtained.volumeInfo.pageCount) / 60 % 1) + 'h' + Number(bookObtained.volumeInfo.pageCount) % 60 + 'min',
-      authors: bookObtained.volumeInfo.authors,
-      authors_picture: await getPictures(bookObtained.volumeInfo.authors),
-      category: bookObtained.volumeInfo?.categories != null ? bookObtained.volumeInfo.categories : null
+      id,
+      title: volumeInfo.title,
+      overview: volumeInfo.description,
+      poster_path: volumeInfo.imageLinks?.thumbnail ?? null,
+      backdrop_path: volumeInfo.imageLinks?.extraLarge ?? null,
+      pageCount: volumeInfo.pageCount,
+      authors: volumeInfo.authors,
+      authors_picture: await getPictures(volumeInfo.authors),
+      category: volumeInfo?.categories ?? null,
+      vote_average: volumeInfo.averageRating ?? null,
+      release_date: volumeInfo.publishedDate ?? null,
+      book_link: volumeInfo.infoLink ?? saleInfo?.buyLink ?? null
     })
+  }).catch((error: any) => {
+    throw error
   })
 }
 
@@ -122,11 +123,37 @@ async function removeBookFromList (accountId: UUID, bookId: string, bookList: ke
 const addBookToReadingList = async (accountId: UUID, bookId: string): Promise<string[]> =>
   await addBookToList(accountId, bookId, 'readingList')
 
-const addBookToLikedBooks = async (accountId: UUID, bookId: string): Promise<string[]> =>
-  await addBookToList(accountId, bookId, 'likedBooks')
+const addBookToLikedBooks = async (accountId: UUID, bookId: string): Promise<string[]> => {
+  return await addBookToList(accountId, bookId, 'likedBooks').then(async (likedBooks: string []) => {
+    return await removeBookFromDislikedBooks(accountId, bookId).then(async (dislikedBooks: string[]) => {
+      await modifyAccount(accountId, { dislikedBooks })
+    }).then(() => {
+      return likedBooks
+    }).catch((err: AppError) => {
+      if (err instanceof BookNotInListError) {
+        return likedBooks
+      } else {
+        throw err
+      }
+    })
+  })
+}
 
-const addBookToDislikedBooks = async (accountId: UUID, bookId: string): Promise<string[]> =>
-  await addBookToList(accountId, bookId, 'dislikedBooks')
+const addBookToDislikedBooks = async (accountId: UUID, bookId: string): Promise<string[]> => {
+  return await addBookToList(accountId, bookId, 'dislikedBooks').then(async (dislikedBooks: string []) => {
+    return await removeBookFromLikedBooks(accountId, bookId).then(async (likedBooks: string[]) => {
+      await modifyAccount(accountId, { likedBooks })
+    }).then(() => {
+      return dislikedBooks
+    }).catch((err: AppError) => {
+      if (err instanceof BookNotInListError) {
+        return dislikedBooks
+      } else {
+        throw err
+      }
+    })
+  })
+}
 
 const addBookToReadBooks = async (accountId: UUID, bookId: string): Promise<string[]> =>
   await addBookToList(accountId, bookId, 'readBooks')

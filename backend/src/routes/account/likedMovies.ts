@@ -14,6 +14,7 @@ import validate from '@services/middlewares/validator'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
+import { modifyAccount } from '@models/account'
 import { findEntity } from '@models/getObjects'
 import { addMovieToLikedMovies, removeMovieFromLikedMovies } from '@models/movie'
 
@@ -126,9 +127,11 @@ router.post('/account/:accountId/likedMovies', rulesPost, validate, logApiReques
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addMovieToLikedMovies(req.params.accountId, req.body.movieId).then((updatedLikedMoviesList: number[]) => {
-    logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s liked movies.`)
-    return res.status(StatusCodes.CREATED).json(updatedLikedMoviesList)
+  addMovieToLikedMovies(req.params.accountId, parseInt(req.body.movieId), req.session).then(async (updatedLikedMoviesList: number[]) => {
+    return await modifyAccount(req.session.account!.id, { likedMovies: updatedLikedMoviesList }).then(() => {
+      logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s liked movies.`)
+      return res.status(StatusCodes.CREATED).json(updatedLikedMoviesList)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -142,9 +145,11 @@ router.delete('/account/:accountId/likedMovies/:movieId', rulesDelete, validate,
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  removeMovieFromLikedMovies(req.params.accountId, parseInt(req.params.movieId)).then((updatedLikedMoviesList: number[]) => {
-    logger.info(`Successfully removed ${req.body.movieId} of ${req.session.account?.email}'s liked movies.`)
-    return res.status(StatusCodes.OK).json(updatedLikedMoviesList)
+  removeMovieFromLikedMovies(req.params.accountId, parseInt(req.params.movieId)).then(async (updatedLikedMoviesList: number[]) => {
+    return await modifyAccount(req.session.account!.id, { likedMovies: updatedLikedMoviesList }).then(() => {
+      logger.info(`Successfully removed ${req.params.movieId} of ${req.session.account?.email}'s liked movies.`)
+      return res.status(StatusCodes.OK).json(updatedLikedMoviesList)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -161,7 +166,7 @@ router.get('/account/:accountId/likedMovies', rulesGet, validate, logApiRequest,
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    return res.status(StatusCodes.OK).json(account?.likedMovies)
+    return res.status(StatusCodes.OK).json(account.likedMovies)
   }).catch(handleErrorOnRoute(res))
 })
 

@@ -20,7 +20,7 @@ const body = {
   password: 'toto'
 }
 
-describe('User Routes', () => {
+void describe('User Routes', () => {
   it('should respond with 200 OK for POST /account/signup', async () => {
     await request(app).post('/account/signup').send(body).then((response) => {
       expect(response.status).toBe(StatusCodes.CREATED)

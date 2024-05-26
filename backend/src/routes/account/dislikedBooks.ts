@@ -14,6 +14,7 @@ import validate from '@services/middlewares/validator'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
+import { modifyAccount } from '@models/account'
 import { addBookToDislikedBooks, removeBookFromDislikedBooks } from '@models/book'
 import { findEntity } from '@models/getObjects'
 
@@ -120,9 +121,11 @@ router.post('/account/:accountId/dislikedBooks', rulesPost, validate, logApiRequ
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addBookToDislikedBooks(req.params.accountId, req.body.bookId).then((updatedDislikedBooksList: string[]) => {
-    logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s disliked books`)
-    return res.status(StatusCodes.CREATED).json(updatedDislikedBooksList)
+  addBookToDislikedBooks(req.params.accountId, req.body.bookId).then(async (updatedDislikedBooksList: string[]) => {
+    return await modifyAccount(req.session.account!.id, { dislikedBooks: updatedDislikedBooksList }).then(() => {
+      logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s disliked books`)
+      return res.status(StatusCodes.CREATED).json(updatedDislikedBooksList)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -136,9 +139,11 @@ router.delete('/account/:accountId/dislikedBooks/:bookId', rulesDelete, validate
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  removeBookFromDislikedBooks(req.params.accountId, req.params.bookId).then((updatedDislikedBooksList: string[]) => {
-    logger.info(`Successfully removed ${req.body.bookId} of ${req.session.account?.email}'s disliked books.`)
-    return res.status(StatusCodes.OK).json(updatedDislikedBooksList)
+  removeBookFromDislikedBooks(req.params.accountId, req.params.bookId).then(async (updatedDislikedBooksList: string[]) => {
+    return await modifyAccount(req.session.account!.id, { dislikedBooks: updatedDislikedBooksList }).then(() => {
+      logger.info(`Successfully removed ${req.body.bookId} of ${req.session.account?.email}'s disliked books.`)
+      return res.status(StatusCodes.OK).json(updatedDislikedBooksList)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -155,7 +160,7 @@ router.get('/account/:accountId/dislikedBooks', rulesGet, validate, logApiReques
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    return res.status(StatusCodes.OK).json(account?.dislikedBooks)
+    return res.status(StatusCodes.OK).json(account.dislikedBooks)
   }).catch(handleErrorOnRoute(res))
 })
 

@@ -14,6 +14,7 @@ import validate from '@services/middlewares/validator'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
+import { modifyAccount } from '@models/account'
 import { findEntity } from '@models/getObjects'
 import { addMovieToWatchlist, removeMovieFromWatchlist } from '@models/movie'
 
@@ -126,9 +127,11 @@ router.post('/account/:accountId/watchlist', rulesPost, validate, logApiRequest,
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  addMovieToWatchlist(req.params.accountId, req.body.movieId).then((updatedWatchlist: number[]) => {
-    logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s watchlist`)
-    return res.status(StatusCodes.CREATED).json(updatedWatchlist)
+  addMovieToWatchlist(req.params.accountId, parseInt(req.body.movieId)).then(async (updatedWatchlist: number[]) => {
+    return await modifyAccount(req.session.account!.id, { watchlist: updatedWatchlist }).then(() => {
+      logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s watchlist`)
+      return res.status(StatusCodes.CREATED).json(updatedWatchlist)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -142,9 +145,11 @@ router.delete('/account/:accountId/watchlist/:movieId', rulesDelete, validate, l
     handleErrorOnRoute(res)(new AuthenticationError())
     return
   }
-  removeMovieFromWatchlist(req.params.accountId, parseInt(req.params.movieId)).then((updatedWatchlist: number[]) => {
-    logger.info(`Successfully removed ${req.params.movieId} of ${req.session.account?.email}'s watchlist.`)
-    return res.status(StatusCodes.OK).json(updatedWatchlist)
+  removeMovieFromWatchlist(req.params.accountId, parseInt(req.params.movieId)).then(async (updatedWatchlist: number[]) => {
+    return await modifyAccount(req.session.account!.id, { watchlist: updatedWatchlist }).then(() => {
+      logger.info(`Successfully removed ${req.params.movieId} of ${req.session.account?.email}'s watchlist.`)
+      return res.status(StatusCodes.OK).json(updatedWatchlist)
+    })
   }).catch(handleErrorOnRoute(res))
 })
 
@@ -161,7 +166,7 @@ router.get('/account/:accountId/watchlist', rulesGet, validate, logApiRequest, (
     if (account === null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
     }
-    return res.status(StatusCodes.OK).json(account?.watchlist)
+    return res.status(StatusCodes.OK).json(account.watchlist)
   }).catch(handleErrorOnRoute(res))
 })
 

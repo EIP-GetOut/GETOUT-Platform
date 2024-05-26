@@ -7,6 +7,7 @@
 
 import { type Application } from 'express'
 
+import account from '@routes/account'
 import changePassword from '@routes/account/changePassword'
 import dislikedBooks from '@routes/account/dislikedBooks'
 import dislikedMovies from '@routes/account/dislikedMovies'
@@ -20,6 +21,8 @@ import preferences from '@routes/account/preferences'
 import readBooks from '@routes/account/readBooks'
 import readingList from '@routes/account/readingList'
 import recommendBooks from '@routes/account/recommendBooks'
+import recommendedBooksHistory from '@routes/account/recommendedBooksHistory'
+import recommendedMoviesHistory from '@routes/account/recommendedMoviesHistory'
 import recommendMovies from '@routes/account/recommendMovies'
 import isAllowed from '@routes/account/resetPassword/isAllowed/isAllowed'
 import resetPassword from '@routes/account/resetPassword/resetPassword'
@@ -27,20 +30,22 @@ import sendEmail from '@routes/account/resetPassword/sendEmail/sendEmail'
 import seenMovies from '@routes/account/seenMovies'
 import signup from '@routes/account/signup'
 import watchlist from '@routes/account/watchlist'
+import accounts from '@routes/accounts'
 import basicEndpoints from '@routes/basicEndpoints'
 import book from '@routes/book'
-import generateBooks from '@routes/generateBooks'
-import generateMovies from '@routes/generateMovies'
 import movie from '@routes/movie'
+import permissions from '@routes/permissions'
+import recommendationsTmdb from '@routes/recommendationsTmdb'
 import session from '@routes/session'
+import sessions from '@routes/sessions'
 
 const useRoutes = (app: Application): Application => (
   app
-    .use(generateMovies)
-    .use(generateBooks)
-
     .use(recommendBooks)
     .use(recommendMovies)
+
+    .use(recommendedBooksHistory)
+    .use(recommendedMoviesHistory)
 
     .use(watchlist)
     .use(readingList)
@@ -58,8 +63,11 @@ const useRoutes = (app: Application): Application => (
     .use(resetPassword)
     .use(isAllowed)
 
+    .use(sessions)
+    .use(accounts)
     .use(movie)
     .use(book)
+    .use(recommendationsTmdb)
 
     .use(oauth)
     .use(preferences)
@@ -70,6 +78,8 @@ const useRoutes = (app: Application): Application => (
     .use(login)
     .use(signup)
 
+    .use(permissions)
+    .use(account)
     .use(basicEndpoints)
 )
 

@@ -28,7 +28,7 @@ const loginBody = {
   password: 'toto'
 }
 
-describe('Reading List Route', async () => {
+void describe('Reading List Route', async () => {
   let accountId: UUID
   let cookie: string
 

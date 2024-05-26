@@ -27,7 +27,7 @@ const loginBody = {
   email: 'dislikedBooks@test.com',
   password: 'toto'
 }
-describe('Reading List Route', async () => {
+void describe('Reading List Route', async () => {
   let accountId: UUID
   let cookie: string
 

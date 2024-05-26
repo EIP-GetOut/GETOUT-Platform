@@ -21,23 +21,23 @@ if __name__ == "__main__":
     try:
         load_dotenv()
         print("user")
-        f = open("backend/src/services/recommandations/user.json")
+        f = open("backend/src/services/recommendations/user.json")
         user = json.load(f).get("account")[0]
         print(user)
-        print("movie recommandations")
+        print("movie recommendations")
         movie_recomandations = RecommandMovies(user)
         if movie_recomandations == None:
-            print("no recommandations")
+            print("no recommendations")
         else :
-            for r in movie_recomandations["recommandations"]:
+            for r in movie_recomandations["recommendations"]:
                 print("----------------------")
                 print(r)
-        print("book recommandations")
+        print("book recommendations")
         book_recomandations = RecommandBooks(user)
         if book_recomandations == None:
-            print("no recommandations")
+            print("no recommendations")
         else :
-            for r in book_recomandations["recommandations"]:
+            for r in book_recomandations["recommendations"]:
                 print("----------------------")
                 print(r)
 

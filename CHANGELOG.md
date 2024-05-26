@@ -2,6 +2,127 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.1](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.5.0...v0.5.1) (2024-05-23)
+
+
+### Features
+
+* **app:** :sparkles: add a button for disconnect user ([6f8e80c](https://github.com/EIP-GetOut/GETOUT-Platform/commit/6f8e80ce1dece72b6b955b73d8384020ee9e00ca))
+* **app:** :sparkles: add delete account page and request ([3a5a363](https://github.com/EIP-GetOut/GETOUT-Platform/commit/3a5a36398168f31b076ac3bfd549dd8c1e1c3687))
+* **app:** :sparkles: add more l10n ([174cf37](https://github.com/EIP-GetOut/GETOUT-Platform/commit/174cf3768b2d019c2fda462197c8033e0e2244ee))
+* **app:** :sparkles: add redirection to login page after disconnect ([10cd005](https://github.com/EIP-GetOut/GETOUT-Platform/commit/10cd0050c30c0f4dd3c526f5a77a3b92e4942d86))
+* **app:** :sparkles: add small history for books & movies. ([fa668bb](https://github.com/EIP-GetOut/GETOUT-Platform/commit/fa668bbcb1f2fd03d161d2d667b4d8fc452c511d))
+* **app:** :sparkles: add some errors handling for forgot password ([f10e852](https://github.com/EIP-GetOut/GETOUT-Platform/commit/f10e852e3d12d320d746c951fb7aa8957e96ca00))
+* **app:** :sparkles: change request params ([6d499ca](https://github.com/EIP-GetOut/GETOUT-Platform/commit/6d499caa612af1b5811e7b327cc88c2dc3127828))
+* **app:** :sparkles: redirect user to settings after refill forms ([8d94a40](https://github.com/EIP-GetOut/GETOUT-Platform/commit/8d94a402cff7039e261803d287b322d6be69b212))
+* **app:** :twisted_rightwards_arrows: merge app into feature/deconnection ([a903f5a](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a903f5afa3cb8ccf4fa86968657abe4ab37939ce))
+* **backend:** :sparkles: welcome email and password reset email ([fd9066c](https://github.com/EIP-GetOut/GETOUT-Platform/commit/fd9066cd9362781cf984aaa35515abd3c269364b))
+
+
+### Bug Fixes
+
+* **app:** :bug: fix errors due to expanded (get session) ([db4d799](https://github.com/EIP-GetOut/GETOUT-Platform/commit/db4d7991c801930ed1b61845cb50d6bde804d03d))
+
+
+### UI Updates
+
+* **app:** :art: clean code,and fix issues from flutter analyze ([76e0590](https://github.com/EIP-GetOut/GETOUT-Platform/commit/76e059020839c5f192dbca4b24ebcc6e3860d8d3))
+* **app:** :art: fix errors due to flutter analyze ([96dad12](https://github.com/EIP-GetOut/GETOUT-Platform/commit/96dad121795a0378c422219e6a1c0553bc0a45dc))
+* **app:** :art: remove issues from flutter analyze ([2087610](https://github.com/EIP-GetOut/GETOUT-Platform/commit/20876101c3d0bea3af309e5d16ddb70b5bdb6bf0))
+* **app:** :lipstick: change red color by green for interaction for movie and book ([5f056f4](https://github.com/EIP-GetOut/GETOUT-Platform/commit/5f056f486a7111fb5c666c1f141d9265cabcd53f))
+
+## [0.5.0](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.4.0...v0.5.0) (2024-05-22)
+
+
+### Features
+
+* :sparkles: books and movies recommendations ([fcba41b](https://github.com/EIP-GetOut/GETOUT-Platform/commit/fcba41b7e9b879c4d690b55e83d984ba9132070d))
+* :sparkles: Check si les livres et films afficher dans les recommendation n'étaient pas dans les recommendation précedantes ([b7a78a8](https://github.com/EIP-GetOut/GETOUT-Platform/commit/b7a78a828bf5c2d98182d61bbccc2364770516c1))
+* **app:** :arrow_up: :heavy_minus_sign: Upgrade dependencies and Android Gradle + deleting old dependencies ([22cf599](https://github.com/EIP-GetOut/GETOUT-Platform/commit/22cf599bcdaec44ed3735fd5b1d3d84cca0fbe1b))
+* **app:** :art: add tools/validator(email, password) + constant/regex, remove oldCommentedErrorHandling, fix StatefullWidget->StatelessWidget ([5b30429](https://github.com/EIP-GetOut/GETOUT-Platform/commit/5b304295d1901be2674442b433e01fdcad4568ee))
+* **app:** :iphone: form is now responsive (and have only 3 pages) ([920493a](https://github.com/EIP-GetOut/GETOUT-Platform/commit/920493a61e67e3e4200ec241c07cc9175fd00783))
+* **app:** :sparkles: add director for movie and authors for books ([8314b6e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/8314b6e50b6ac5d6e29af07c61e87ef8b054f3eb))
+* **app:** :sparkles: add director for movie, authors for books ans share for books ([74cf3d9](https://github.com/EIP-GetOut/GETOUT-Platform/commit/74cf3d9cc9729d70d2106b2f88ca76a12dfa97b2))
+* **app:** :sparkles: add like and dislike feature ([6408ab7](https://github.com/EIP-GetOut/GETOUT-Platform/commit/6408ab78c077e58335652c5cee83b84010210e4b))
+* **app:** :sparkles: add reading book and wishlist for books ([6cdeb42](https://github.com/EIP-GetOut/GETOUT-Platform/commit/6cdeb422f748a988f59331ab061291318b852eea))
+* **app:** :sparkles: add share link for books ([c73e834](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c73e834e4827602c0947c095de7285fa9b1716fa))
+* **app:** :sparkles: adding preferences request and put it in the login part ([a4d310d](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a4d310d233ed7ebfc9408d3ee743fd2d3b8bbd24))
+* **app:** :sparkles: birth date limit when you register (between 13 and 150 years old) ([885728b](https://github.com/EIP-GetOut/GETOUT-Platform/commit/885728b0590e98910ef2ae2df9f3141130a92f31))
+* **app:** :sparkles: change more than 75% of static string with l10n ([812a68d](https://github.com/EIP-GetOut/GETOUT-Platform/commit/812a68d9acb088f3dfac5e21d92980a7e1b72732))
+* **app:** :sparkles: edit services, setting_importance, language, (restore api_path) ([1df6190](https://github.com/EIP-GetOut/GETOUT-Platform/commit/1df6190a3ae3449d7c940b3250b3eaea4279908c))
+* **app:** :sparkles: handle (parameters and book, movie,homepage, preview) with intl, I've forget some string ([551c0f9](https://github.com/EIP-GetOut/GETOUT-Platform/commit/551c0f9788414bde3338b93551a258608dd9f192))
+* **app:** :sparkles: hydratedBloc to the application ([039657b](https://github.com/EIP-GetOut/GETOUT-Platform/commit/039657bc6aaed0145db1597cdf0c372857e4c2c1))
+* **app:** :sparkles: merge with app can be transform in a PR. ([27b364f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/27b364f36951a6604cac6eb90113f614f6fd290d))
+* **app:** :sparkles: recommended movies and books request are now without preferences ([a00ad9a](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a00ad9a8dcc26db9e86558f40dea24682e765598))
+* **app:** :sparkles: setting, setting_row, account_info, (add responsive things) ([6c2863c](https://github.com/EIP-GetOut/GETOUT-Platform/commit/6c2863c2facb30116634dde52dd84dfdfc68c9ca))
+* **app:** :twisted_rightwards_arrows: fix errors due to merge ([40b01fd](https://github.com/EIP-GetOut/GETOUT-Platform/commit/40b01fd58029716e4f6ad3dad2a3d80d1053b94d))
+* **app:** ✨ add get session (with bloc) ([35cf168](https://github.com/EIP-GetOut/GETOUT-Platform/commit/35cf168ce817a94b549760ec46789ce66625cc3f))
+* **app:** 📱 connection part (login, register, etc) is now responsive ([a84ff42](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a84ff421e9e78cac3775d27729e816ccfe937031))
+* **backend:** :label: updated session with all new fields of Account entity ([0f2987f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/0f2987fe389a8b1607d32f43ab3b04590d204384))
+* **backend:** :sparkles: book link ([7952ec1](https://github.com/EIP-GetOut/GETOUT-Platform/commit/7952ec18b43f4b018925ad794653e098aaf5d958))
+* **backend:** :sparkles: books recommendations refresh ([3eb4529](https://github.com/EIP-GetOut/GETOUT-Platform/commit/3eb4529006bc8eec08969af172f894dea8d0a6e9))
+* **backend:** :sparkles: delete account ([89958ef](https://github.com/EIP-GetOut/GETOUT-Platform/commit/89958efd7368011fc15ae32b6442861d7528c8e2))
+* **backend:** :sparkles: director ([8ae4532](https://github.com/EIP-GetOut/GETOUT-Platform/commit/8ae4532a77ff3b693b96eb6c22212123aedd3faa))
+* **backend:** :sparkles: disliking movie or book now removes It from liked list and vice versa ([6a5d023](https://github.com/EIP-GetOut/GETOUT-Platform/commit/6a5d023705b21f8ead778df4ff73fac3c6a1b700))
+* **backend:** :sparkles: get similar movies from tmdb ([1bac00d](https://github.com/EIP-GetOut/GETOUT-Platform/commit/1bac00d44c0daf0ad23615832a6d1bcc0e710d6e))
+* **backend:** :sparkles: new fields returned in the book details ([5bf617e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/5bf617e3a946eca838cc7eab5a7092a039ffa20c))
+* **backend:** :sparkles: number of user connected, accounts details with a page system and movie recommendations from tmdb ([c20a42b](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c20a42b5b235ba451dc4248ad69fc57488abc00d))
+* **backend:** :sparkles: recommandations history routes, use of google books's sdk, session refresh ([9a66dad](https://github.com/EIP-GetOut/GETOUT-Platform/commit/9a66dad3917e4cdee8cfc242ab448d62ce18b735))
+* **backend:** :sparkles: Refresh of movies recommendations, auto session / account maping middleware ([5ada37d](https://github.com/EIP-GetOut/GETOUT-Platform/commit/5ada37d93e07deff90eba4133ec1bbd0d885a807))
+* **backend:** :sparkles: seen movies and read books routes (GET, POST, DELETE) and logout all route. ([9bd69d5](https://github.com/EIP-GetOut/GETOUT-Platform/commit/9bd69d5b2ae4c42c58d3b812e898064c04db2ccc))
+* **backend:** :sparkles: user permissions ([ee5d6da](https://github.com/EIP-GetOut/GETOUT-Platform/commit/ee5d6dacd980e633d180a7e9de1bc1096ccc0997))
+* **recommandations:** :sparkles: add structure of the functions for the recommandation algorithm ([0f45f68](https://github.com/EIP-GetOut/GETOUT-Platform/commit/0f45f68e9d87c676d627499a29975a96b98165ff))
+* **recommandations:** :sparkles: books are now given back with id ([905f082](https://github.com/EIP-GetOut/GETOUT-Platform/commit/905f0820c48a8e29003ed9eeba21ed618fcc038d))
+* **recommandations:** :sparkles: books score are now properly evaluated ([172e501](https://github.com/EIP-GetOut/GETOUT-Platform/commit/172e501a889bbec53c5d509a2e6ddaa126abab08))
+* **recommandations:** :sparkles: score calculation basic for books and movies ([e7f96fe](https://github.com/EIP-GetOut/GETOUT-Platform/commit/e7f96fea7da1e172e9395d5c3c88c0b962a7f717))
+
+
+### Bug Fixes
+
+* :bug: condition for recommendation with the history book / movie ([b575c99](https://github.com/EIP-GetOut/GETOUT-Platform/commit/b575c996cc1522db70978db19e20c3651b94fb58))
+* **app:** :art: fix setting import ([443ba60](https://github.com/EIP-GetOut/GETOUT-Platform/commit/443ba601347c156d40fecb37bfb2356259063ab6))
+* **app:** :art: remove useless function ([1620e1e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/1620e1e10a941974618c14d4f0690bce454e1356))
+* **app:** :bento: images are now organized (along with their path in the code) ([04841f4](https://github.com/EIP-GetOut/GETOUT-Platform/commit/04841f4b43041f0141d3607cad0d6f4b5ba31c04))
+* **app:** :boom: :art: :zap: build settings(edit_password,edit_email) with lightweight architecture <3 ([60ae840](https://github.com/EIP-GetOut/GETOUT-Platform/commit/60ae84027df72982fd00532ee0273cb564172949))
+* **app:** :bug: fix likedMoviesList & likedBooksList ([46bd8f9](https://github.com/EIP-GetOut/GETOUT-Platform/commit/46bd8f92bd6f1f5676bfbfd4af2bde1545310bd9))
+* **app:** :bug: fix movieList & bookList ([2960448](https://github.com/EIP-GetOut/GETOUT-Platform/commit/29604483f7a73cedaace7fdee97aa05411505c5b))
+* **app:** :bug: movies liked wasn't display to due bad cast ([e2172b1](https://github.com/EIP-GetOut/GETOUT-Platform/commit/e2172b1f920c3375f7301cb5e8446aa9f92423b6))
+* **app:** :bug: remove line duplicata ([f07646f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/f07646fe2ee13f0a91b6e521755bfc524cb2711f))
+* **app:** :bug: savedBooks wasn't working on book page. ([a2fadf8](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a2fadf879f07d769fc14dc197eebfd552cc5d5ef))
+* **app:** :bug: set each validator with empty check & remove print ([cf52f90](https://github.com/EIP-GetOut/GETOUT-Platform/commit/cf52f9025a43ec717e9041ee74cbd1c8b7c01df7))
+* **app:** :fire: remove service repo ([afa5ce8](https://github.com/EIP-GetOut/GETOUT-Platform/commit/afa5ce82974828e0eb7f2fb381369eaa76097f6c))
+* **app:** :pencil2: fix typo ([bc05fa5](https://github.com/EIP-GetOut/GETOUT-Platform/commit/bc05fa525378c6722de1364cb4fb6879e5e80192))
+* **app:** :pencil2: remove duplicate import ([52e86ef](https://github.com/EIP-GetOut/GETOUT-Platform/commit/52e86ef11c949891d652fd2edfbba14c4898ae2d))
+* **app:** set localeBloc to french ([32b644e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/32b644ed8e8cc324bf52b739ae24cca40651b71e))
+* **backend:** :ambulance: useSession interface ([4802819](https://github.com/EIP-GetOut/GETOUT-Platform/commit/48028195965c3a011c4f3d33043c7fbd2e4d871c))
+* **backend:** :bug: books recommendations return body and proper naming, axios instead of node-fetch ([b96501b](https://github.com/EIP-GetOut/GETOUT-Platform/commit/b96501b7b74ecc7809f283c97d6402eaa7976674))
+* **backend:** :bug: google books api key env validation ([6edadf8](https://github.com/EIP-GetOut/GETOUT-Platform/commit/6edadf8fee38bb806698c7ea05b3178c43955510))
+* **backend:** :bug: infinite loading while removing an account ([dc06c38](https://github.com/EIP-GetOut/GETOUT-Platform/commit/dc06c383159ffa5be46ffc0963c7a615aba216a7))
+* **backend:** :bug: reset-password unauthentified and refactored account deleting ([88a67fb](https://github.com/EIP-GetOut/GETOUT-Platform/commit/88a67fbb868b3e09bfe4fec8fe21c8a74da8eb2b))
+* **backend:** :bug: seenMovies and readBooks, session updating in all account's lists routes ([9488561](https://github.com/EIP-GetOut/GETOUT-Platform/commit/948856110095fc4531a6234e67171f80e1ad4f59))
+* **backend:** response body of signup request ([4471393](https://github.com/EIP-GetOut/GETOUT-Platform/commit/447139315e45b26e9262268676e9b9630f4fc321))
+
+
+### UI Updates
+
+* **app:** :lipstick: add html parser for overview, remove overview in preview ([e206f78](https://github.com/EIP-GetOut/GETOUT-Platform/commit/e206f788bbaf6f42c958230744278ac11e94fa09))
+* **app:** :lipstick: change text size and spacing ([80fce65](https://github.com/EIP-GetOut/GETOUT-Platform/commit/80fce65d022a8e307709884b13684e6be51aecb2))
+
+
+### Refactors
+
+* **app:** :art: change map<string, string> by a Person class ([9f8084f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/9f8084f4fa3b2141c7514ade4441fedb99562705))
+* **app:** :art: transform movie.id ?? -1 in movie.id! ([e57ae97](https://github.com/EIP-GetOut/GETOUT-Platform/commit/e57ae97af9646a5db710ecc8857d704a1e8c7719))
+* **backend:** :fire: removed the body params firstName and lastName in reset-password/send-email route ([2e097fb](https://github.com/EIP-GetOut/GETOUT-Platform/commit/2e097fbaf0f86da8d51e9e8059282f153d002775))
+* **backend:** :heavy_minus_sign: removed node-fetch and github oauth ([501551b](https://github.com/EIP-GetOut/GETOUT-Platform/commit/501551b9fe981b126c402b7647234f32ff160aa7))
+* **backend:** :recycle: getMovieDetail and getBookDetail ([bc42274](https://github.com/EIP-GetOut/GETOUT-Platform/commit/bc42274f4b95b742ba79d24258eb6ff32398db94))
+* **backend:** :recycle: loginAccount model, error handling, duration format, added spent time calculation ([4969097](https://github.com/EIP-GetOut/GETOUT-Platform/commit/49690970ea4c7f38aa56a110d2ac79e5bf0b3bf4))
+* **backend:** :recycle: recommandations history now returns the full content ([a619f4e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a619f4e30339773c9a14c7176d3072e6a8e6a4fb))
+* **backend:** :recycle: reset-password, unit tests, dependencies ([95ef08f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/95ef08f155c6f6820289705d72cc24b9fee92211))
+* **backend:** :recycle: returning null if there is no vote_average or release date ([1f11fd4](https://github.com/EIP-GetOut/GETOUT-Platform/commit/1f11fd4c24c42f10f06c143bdfa6d3ad2a5e6dfb))
+* **merge:** merge dev inside my branch ([3a9b1eb](https://github.com/EIP-GetOut/GETOUT-Platform/commit/3a9b1eb29d1ff683d97d826055748f7298802e5a))
+* **recommandations:** :art: cleaned code following PR comments ([cf1b090](https://github.com/EIP-GetOut/GETOUT-Platform/commit/cf1b090a5577b5f7f79680c85f0119e7f8cbc258))
+
 ## [0.4.0](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.3.0...v0.4.0) (2024-01-29)
 
 

@@ -40,7 +40,7 @@ class BookPreviewWidget extends StatelessWidget {
         //  height: 30,
         alignment: Alignment.topLeft,
           child: Text(title,
-              // maxLines: 2,
+              maxLines: 2,
               style: Theme.of(context).textTheme.titleSmall),
         )),
         const SizedBox(height: 5),

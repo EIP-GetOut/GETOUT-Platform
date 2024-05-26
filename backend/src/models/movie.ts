@@ -6,10 +6,11 @@
 */
 
 import { type UUID } from 'crypto'
+import { type Session, type SessionData } from 'express-session'
 import { StatusCodes } from 'http-status-codes'
-import { MovieDb, type MovieResponse } from 'moviedb-promise'
+import { type CreditsResponse, MovieDb, type MovieResponse } from 'moviedb-promise'
 
-import { AccountDoesNotExistError, AppError, DbError, MovieDbError, MovieNotInListError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError, ApiError, type AppError, DbError, MovieNotInListError } from '@services/utils/customErrors'
 
 import { Account } from '@entities/Account'
 
@@ -28,36 +29,49 @@ async function fetchMovieCredits (movieId: number): Promise<any> {
         : null
     }))
     return cast
-  }).catch((error) => {
-    console.error('Error fetching movie credits:', error)
-    return null
+  }).catch((err: Error) => {
+    throw new ApiError(`Error whiled obtaining movie ${movieId}'s credits (${err.name}: ${err.message}).`)
   })
 }
 
-async function getDetail (id: number): Promise<MovieResponse | undefined> {
+async function getDirector (movieId: number): Promise<any> {
+  return await moviedb.movieCredits({ id: movieId }).then((credits: CreditsResponse) => {
+    const director = credits.crew?.find(member => member.job === 'Director')
+    return ({
+      name: director?.name,
+      picture: ((director?.profile_path ?? '').length > 0)
+        ? `https://image.tmdb.org/t/p/w200${director?.profile_path}`
+        : null
+    })
+  }).catch((err: Error) => {
+    throw new ApiError(`Error whiled obtaining movie ${movieId}'s director (${err.name}: ${err.message}).`)
+  })
+}
+
+async function getMovieDetail (id: number): Promise<MovieResponse> {
   return await moviedb.movieInfo(id).then((value: MovieResponse) => {
     return value
   }).catch((err: Error) => {
-    throw new MovieDbError(err.message)
+    throw new ApiError(`Error whiled obtaining movie ${id}'s infos (${err.name}: ${err.message}).`)
   })
 }
 
 async function getMovie (id: number): Promise<any> {
-  return await getDetail(id).then(async (movieObtained: MovieResponse | undefined) => {
-    if (movieObtained == null) {
-      throw new AppError()
-    }
-    return await fetchMovieCredits(id).then((cast: any) => {
-      return ({
-        id,
-        title: movieObtained.title,
-        overview: movieObtained.overview,
-        poster_path: movieObtained.poster_path,
-        backdrop_path: movieObtained.backdrop_path,
-        release_date: movieObtained.release_date,
-        vote_average: Number(movieObtained.vote_average) / 2,
-        cast,
-        duration: Number(movieObtained.runtime) / 60 - (Number(movieObtained.runtime) / 60 % 1) + 'h' + String(Number(movieObtained.runtime) % 60).padStart(2, '0')
+  return await getMovieDetail(id).then(async (movieObtained: MovieResponse) => {
+    return await fetchMovieCredits(id).then(async (cast: any) => {
+      return await getDirector(id).then((director: any) => {
+        return ({
+          id,
+          title: movieObtained.title,
+          overview: movieObtained.overview,
+          poster_path: movieObtained.poster_path,
+          backdrop_path: movieObtained.backdrop_path,
+          release_date: movieObtained.release_date,
+          vote_average: Number(movieObtained.vote_average) / 2,
+          cast,
+          director,
+          duration: movieObtained.runtime
+        })
       })
     })
   })
@@ -101,14 +115,37 @@ async function removeMovieFromList (accountId: UUID, movieId: number, movieList:
 const addMovieToWatchlist = async (accountId: UUID, movieId: number): Promise<number[]> =>
   await addMovieToList(accountId, movieId, 'watchlist')
 
-const addMovieToLikedMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
-  await addMovieToList(accountId, movieId, 'likedMovies')
+const addMovieToLikedMovies = async (accountId: UUID, movieId: number, session: Session & Partial<SessionData>): Promise<number[]> => {
+  return await addMovieToList(accountId, movieId, 'likedMovies').then(async (likedMovies: number []) => {
+    return await removeMovieFromDislikedMovies(accountId, movieId).then((dislikedMovies: number[]) => {
+      session.account!.dislikedMovies = dislikedMovies
+      return likedMovies
+    }).catch((err: AppError) => {
+      if (err instanceof MovieNotInListError) {
+        return likedMovies
+      } else {
+        throw err
+      }
+    })
+  })
+}
 
-const addMovieToDislikedMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
-  await addMovieToList(accountId, movieId, 'dislikedMovies')
-
+const addMovieToDislikedMovies = async (accountId: UUID, movieId: number, session: Session & Partial<SessionData>): Promise<number[]> => {
+  return await addMovieToList(accountId, movieId, 'dislikedMovies').then(async (dislikedMovies: number []) => {
+    return await removeMovieFromLikedMovies(accountId, movieId).then((likedMovies: number[]) => {
+      session.account!.likedMovies = likedMovies
+      return dislikedMovies
+    }).catch((err: AppError) => {
+      if (err instanceof MovieNotInListError) {
+        return dislikedMovies
+      } else {
+        throw err
+      }
+    })
+  })
+}
 const addMovieToSeenMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
-  await addMovieToList(accountId, movieId, 'dislikedMovies')
+  await addMovieToList(accountId, movieId, 'seenMovies')
 
 const removeMovieFromWatchlist = async (accountId: UUID, movieId: number): Promise<number[]> =>
   await removeMovieFromList(accountId, movieId, 'watchlist')
@@ -120,7 +157,11 @@ const removeMovieFromDislikedMovies = async (accountId: UUID, movieId: number): 
   await removeMovieFromList(accountId, movieId, 'dislikedMovies')
 
 const removeMovieFromSeenMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
-  await removeMovieFromList(accountId, movieId, 'dislikedMovies')
+  await removeMovieFromList(accountId, movieId, 'seenMovies')
+
+async function getRecommendation (movieId: number): Promise<any> {
+  return await moviedb.movieRecommendations({ id: movieId })
+}
 
 export {
   addMovieToDislikedMovies,
@@ -128,6 +169,7 @@ export {
   addMovieToSeenMovies,
   addMovieToWatchlist,
   getMovie,
+  getRecommendation,
   removeMovieFromDislikedMovies,
   removeMovieFromLikedMovies,
   removeMovieFromList,

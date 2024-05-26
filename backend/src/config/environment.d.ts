@@ -21,8 +21,9 @@ declare global {
       TYPEORM_DATABASE: string
 
       GOOGLE_CLIENT_ID: string
-
+      GOOGLE_BOOKS_API_KEY: string
       MOVIE_DB_KEY: string
+      BREVO_API_KEY: string
     }
   }
 }

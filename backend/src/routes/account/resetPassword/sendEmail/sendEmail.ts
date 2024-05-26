@@ -5,71 +5,55 @@
 ** Wrote by Firstname Lastname <firstname.lastname@domain.com>
 */
 
-import { type UUID } from 'crypto'
+import { SendSmtpEmail, TransactionalEmailsApi } from '@getbrevo/brevo'
 import { type Request, type Response, Router } from 'express'
 import { body } from 'express-validator'
 import { StatusCodes, getReasonPhrase } from 'http-status-codes'
-// import nodemailer, { type SentMessageInfo } from 'nodemailer'
-// import type Mail from 'nodemailer/lib/mailer'
-import type SMTPTransport from 'nodemailer/lib/smtp-transport'
 
 import logger, { logApiRequest } from '@middlewares/logging'
 import validate from '@middlewares/validator'
 
-// import { NodeMailerError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError, ApiError } from '@services/utils/customErrors'
+import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
-import { generateResetPasswordUrl } from '@models/account/password'
+import { generatePasswordResetCode } from '@models/account/password'
+import { findEntity } from '@models/getObjects'
 
-// import { emailConfig } from '@config/emailConfig'
+import { Account } from '@entities/Account'
 
 const router = Router()
 
 const rulesPost = [
-  body('email').isEmail(),
-  body('firstName').isString(),
-  body('lastName').isString()
+  body('email').isEmail()
 ]
 
-async function sendEmail (body: any, resetPasswordUrl: string): Promise<SMTPTransport.SentMessageInfo> {
-  // const mailOptions: Mail.Options = {
-  //   from: emailConfig.auth?.user,
-  //   to: body.email,
-  //   subject: 'Subject of the Email',
-  //   text: `<p>Hello my friend ${body.firstName} ${body.lastName}: ${process.env.ORIGIN}${resetPasswordUrl}</p>`
-  // }
-  // const transporter = nodemailer.createTransport(emailConfig)
+async function sendEmail (email: string, passwordResetCode: number): Promise<ReturnType<TransactionalEmailsApi['sendTransacEmail']>> {
+  return await findEntity<Account>(Account, { email }).then(async (account: Account | null) => {
+    if (account == null) {
+      throw new AccountDoesNotExistError()
+    }
 
-  const example: SMTPTransport.SentMessageInfo = {
-    envelope: { from: 'mailOptions.from', to: ['mailOptions.to'] },
-    accepted: ['true'],
-    messageId: '',
-    pending: [''],
-    rejected: [''],
-    response: ''
-  }
-  logger.debug(`Sending email: "Hello my friend ${body.firstName} ${body.lastName}: ${resetPasswordUrl}".`)
-  return await Promise.resolve(example)
-  // return await transporter.sendMail(mailOptions).then(async (info: SentMessageInfo): Promise<SentMessageInfo> => {
-  //   console.log('Email sent: ', info)
-  //   return info
-  // }).catch((err) => {
-  //   throw new NodeMailerError(`Failed sending email (${err.name}: ${err.message})`)
-  // })
+    const apiInstance = new TransactionalEmailsApi()
+    apiInstance.setApiKey(0, process.env.BREVO_API_KEY)
+    const sendSmtpEmail = new SendSmtpEmail()
+
+    sendSmtpEmail.templateId = 9
+    sendSmtpEmail.to = [{ email }]
+    sendSmtpEmail.params = { fullName: `${account.firstName} ${account.lastName}`, code: passwordResetCode }
+
+    logger.debug(`Sending email: "${account.firstName} ${account.lastName}: ${passwordResetCode}".`)
+    return await apiInstance.sendTransacEmail(sendSmtpEmail).catch((err: Error) => {
+      throw new ApiError(`Error while sending reset password email to ${email}: ${err.message}.`)
+    })
+  })
 }
 
 router.post('/account/reset-password/send-email', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
-  generateResetPasswordUrl(req.session?.account?.id as UUID, req.body.email).then(async (url) => {
-    return await sendEmail(req.body, url).then((sendEmailRes) => {
-      // if (!sendEmailRes.ok) {
-      //   throw Error(`Failed sending reset password email: ${sendEmailRes.statusText}`)
-      // }
+  generatePasswordResetCode(req.body.email).then(async (passwordResetCode: number) => {
+    return await sendEmail(req.body.email, passwordResetCode).then((sendEmailRes) => {
       return res.status(StatusCodes.OK).send(getReasonPhrase(StatusCodes.OK))
     })
-  }).catch((err) => {
-    logger.error(err.toString())
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .send(getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR))
-  })
+  }).catch(handleErrorOnRoute)
 })
 
 export default router
