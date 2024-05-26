@@ -29,8 +29,7 @@ class HistoryRow extends StatelessWidget {
         child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  //SizedBox(),
-                  Container(
+                  SizedBox(
                   width: MediaQuery.of(context).size.width * 0.9,
 
                   child: Text(value,
