@@ -6,23 +6,17 @@
 */
 
 const Map<String, int> MovieGenre = {
-  'Action' : 28,
-  'Aventure' : 12,
-  'Animation' : 16,
-  'Comédie' : 35,
-  'Crime' : 80,
   'Documentaire' : 99,
-  'Drama' : 18,
-  'Famille' : 10751,
-  'Fantaisie' : 14,
-  'Histoire' : 36,
-  'Horreur' : 27,
-  'Musique' : 10402,
-  'Mystère' : 9648,
-  'Romance' : 10749,
-  'Science fiction' : 878,
-  // 'TV_MOVIE' : 10770, // Pas sur
+  'Comédie' : 35,
   'Thriller' : 53,
+  'Action' : 28,
+  'Horreur' : 27,
+  'Romantique' : 10749,
+  'Drame' : 18,
+  'Animation' : 16,
+  'Science-fiction' : 878,
+  'Western' : 37,
   'Guerre' : 10752,
-  'Western' : 37
+  'Histoire' : 36,
+  'Autre genre' : 36
 };

@@ -14,11 +14,11 @@ WEIGHTS = {
     "popularity": 0.35
 }
 
-def comparer_genre_ids(films, mes_genre_ids):
+def comparer_genre_ids(films, movieGenres):
     films_correspondants = []
     for film in films:
         for genre_id in film['genre_ids']:
-            if genre_id in mes_genre_ids:
+            if genre_id in movieGenres:
                 films_correspondants.append(film['id'])
                 if len(films_correspondants) >= 5:
                     return films_correspondants
@@ -28,7 +28,10 @@ def comparer_genre_ids(films, mes_genre_ids):
 def recommendation_genre(account, movie: Movie):
     movie = Movie()
     popular = movie.popular({"language": "fr-FR", "page": 500})
-    films_correspondants = comparer_genre_ids(popular, account["preferences"]["moviesGenres"])
+    genres = account["preferences"]["moviesGenres"]
+    if len(genres) == 1:
+        genres = [genres]
+    films_correspondants = comparer_genre_ids(popular, genres)
     result = {}
     id_title_pairs = []
     result["recommendations"] = []

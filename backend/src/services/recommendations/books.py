@@ -23,16 +23,15 @@ def RecommandBooks(user: json) -> json:
     read_books = user["readBooks"]
     genres = user["preferences"]["booksGenres"]
     result = { "recommendations": [] }
-    # print("READ BOOKS / GENRE :")
-    # print(read_books)
-    # print(genres)
 
+    if len(genres) == 1:
+        genres = [genres]
     ids_titres_livres = []  # Liste de tuples (ID, titre)
 
     while len(ids_titres_livres) < 5:
         for genre in genres:
             # Appel à l'API Google Books pour récupérer les livres par genre
-            url = f"https://www.googleapis.com/books/v1/volumes?q=subject:{genre}&maxResults=20&orderBy=relevance"
+            url = f"https://www.googleapis.com/books/v1/volumes?q=subject:{genre}&maxResults=40&orderBy=relevance&langRestrict=fr"
             response = requests.get(url)
             data = response.json()
             items = data.get("items", [])

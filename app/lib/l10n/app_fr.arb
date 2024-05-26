@@ -65,7 +65,7 @@
 
   "homepage_title": "Bienvenue !",
   "homepage_subtitle": "La productivité à portée de main",
-  "you_saved": "Vous avez gagné",
+  "you_saved": "Vous avez économisé",
   "see_more": "voir plus >",
   "description": "Description",
   "summary": "Résumé",
@@ -166,6 +166,7 @@
   "notifications": "Notifications",
   "recommendations": "Recommandations",
 
+  "history": "Historique",
   "more": "Autre",
   "support": "Support"
 }

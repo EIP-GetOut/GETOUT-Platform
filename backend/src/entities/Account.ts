@@ -39,6 +39,15 @@ export class Account {
   @Column('timestamp', { nullable: true, default: null })
     passwordResetExpiration: Date | null = null
 
+  @Column('boolean', { default: false })
+    isVerified: boolean = false
+
+  @Column('integer', { nullable: true, default: null })
+    emailVerificationCode: number | null = null
+
+  @Column('timestamp', { nullable: true, default: null })
+    emailVerificationExpiration: Date | null = null
+
   @Column({ length: 32, nullable: true })
     firstName?: string
 

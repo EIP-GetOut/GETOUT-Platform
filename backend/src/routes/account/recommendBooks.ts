@@ -47,6 +47,7 @@ router.get('/account/:accountId/recommend-books', logApiRequest, (req: Request, 
     env: process.env
   }
 
+  console.log(JSON.stringify(req.session.account))
   logger.debug(`Missing ${(60000 - (Date.now() - new Date(req.session.account!.lastBookRecommandation!).getTime())) / 1000} seconds to generate new recommendations.`)
 
   if (req.session.account?.lastBookRecommandation != null &&
