@@ -29,8 +29,6 @@ def recommendation_genre(account, movie: Movie):
     movie = Movie()
     popular = movie.popular({"language": "fr-FR", "page": 500})
     genres = account["preferences"]["moviesGenres"]
-    if len(genres) == 1:
-        genres = [genres]
     films_correspondants = comparer_genre_ids(popular, genres)
     result = {}
     id_title_pairs = []

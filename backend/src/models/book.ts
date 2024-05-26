@@ -74,7 +74,7 @@ async function getBook (id: string): Promise<any> {
       backdrop_path: volumeInfo.imageLinks?.extraLarge ?? null,
       pageCount: volumeInfo.pageCount,
       authors: volumeInfo.authors,
-      authors_picture: await getPictures(volumeInfo.authors),
+      authors_picture: volumeInfo.authors == null ? null : await getPictures(volumeInfo.authors),
       category: volumeInfo?.categories ?? null,
       vote_average: volumeInfo.averageRating ?? null,
       release_date: volumeInfo.publishedDate ?? null,
