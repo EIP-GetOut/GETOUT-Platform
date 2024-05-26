@@ -5,6 +5,7 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
+import axios from 'axios'
 import { Router, type Request, type Response } from 'express'
 import { StatusCodes, getReasonPhrase } from 'http-status-codes'
 
@@ -23,8 +24,22 @@ const router: Router = Router()
  *         description: A welcoming message.
  */
 router.get('/', caching(24 * 60 * 60), logApiRequest, (req: Request, res: Response): void => {
-  logger.info('Welcome to  GetOut API !')
-  res.status(StatusCodes.OK).send(getReasonPhrase(StatusCodes.OK))
+  const owner = 'EIP-GetOut' // Replace with your GitHub username or organization name
+  const repo = 'GETOUT-Platform' // Replace with your GitHub repository name
+
+  axios.get(`https://api.github.com/repos/${owner}/${repo}/tags`)
+    .then((response) => {
+      const firstTag = response.data[0]?.name // Get the name of the first tag or undefined if no tags exist
+      if (firstTag !== null) {
+        res.status(StatusCodes.OK).json({ tag: firstTag })
+      } else {
+        res.status(StatusCodes.NOT_FOUND).json({ error: 'No tags found' })
+      }
+    })
+    .catch((error) => {
+      console.error(error)
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Internal Server Error' })
+    })
 })
 
 router.use((req: Request, res: Response) => {

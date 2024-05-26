@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.4](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.5.2...v0.5.4) (2024-05-26)
+
+
+### Features
+
+* **backend:** :sparkles: delete specific user by ID and return the backend version on the base route ([e8c2068](https://github.com/EIP-GetOut/GETOUT-Platform/commit/e8c2068cf88296a4a322da3489996fee6c3d14ad))
+
+
+### Bug Fixes
+
+* **backend:** :bug: authors pictures undefined ([d9e56ad](https://github.com/EIP-GetOut/GETOUT-Platform/commit/d9e56ad7df1366c8a318ceb8ac6d50c0811388e6))
+* **backend:** :bug: recommendations pool of movies fetched ([c6db164](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c6db1648c6f203b5366683bba3bee60c468cb2fb))
+
 ### [0.5.3](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.5.2...v0.5.3) (2024-05-26)
 
 

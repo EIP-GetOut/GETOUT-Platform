@@ -5,11 +5,15 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
-import { AppError } from '@services/utils/customErrors'
+import { type UUID } from 'node:crypto'
+
+import { AccountDoesNotExistError, AppError } from '@services/utils/customErrors'
 
 import { Account } from '@entities/Account'
 
 import { appDataSource } from '@config/dataSource'
+
+import { findEntity } from './getObjects'
 
 async function getAccountsCreatedPastWeek (): Promise<number> {
   const accountRepository = appDataSource.getRepository(Account)
@@ -40,4 +44,14 @@ async function getAccounts (page: number): Promise<any> {
   })
 }
 
-export { getAccounts }
+async function deleteAccountById (uuid: UUID): Promise<void> {
+  // logger.warn(JSON.stringify(uuid, null, 2))
+  const accountRepository = appDataSource.getRepository(Account)
+  await findEntity<Account>(Account, { id: uuid }).then(async (foundAccount: Account | null) => {
+    if (foundAccount == null) {
+      throw new AccountDoesNotExistError()
+    }
+    return await accountRepository.delete(uuid as string)
+  })
+}
+export { deleteAccountById, getAccounts }

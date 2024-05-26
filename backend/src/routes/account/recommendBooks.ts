@@ -58,7 +58,7 @@ router.get('/account/:accountId/recommend-books', logApiRequest, (req: Request, 
     }).catch(handleErrorOnRoute(res))
     return
   }
-
+  logger.warn(JSON.stringify(options, null, 2))
   PythonShell.run('books.py', options).then(async ([output]: any) => {
     const recommendations = output.recommendations
     const promisesArray: Array<Promise<any>> = []
