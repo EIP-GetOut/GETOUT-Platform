@@ -44,13 +44,9 @@ class AutoSizingText extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, size) {
-        return Container(
+        return SizedBox(
           height: height,
           width: widthSize,
-          margin: const EdgeInsets.all(15.0),
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.black)
-          ),
           child: FittedBox(
             fit: BoxFit.scaleDown,
             child: Text(

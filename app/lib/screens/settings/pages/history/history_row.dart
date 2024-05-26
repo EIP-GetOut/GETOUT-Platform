@@ -29,14 +29,17 @@ class HistoryRow extends StatelessWidget {
         child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  //SizedBox(),
-                  Text(value,
+                  SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.9,
+
+                  child: Text(value,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize:
                               (MediaQuery.of(context).size.width > 400)
                                   ? 20
                                   : 12,
-                          color: (!title) ? Colors.black87: Colors.white)),
+                          color: (!title) ? Colors.black87: Colors.white))),
                   //const Icon(Icons.arrow_forward_ios_rounded,
                   //    color: Colors.black54),
                 ]));

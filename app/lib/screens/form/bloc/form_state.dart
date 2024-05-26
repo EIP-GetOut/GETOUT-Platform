@@ -39,25 +39,43 @@ class FormStates extends Equatable {
       'Activité artistique' : false
     },*/
     this.literaryGenres = const {
-      'Polar' : false,
-      'Poésie' : false,
-      'Thriller' : false,
+      'Policier' : false,
+      'Science-fiction' : false,
       'Politique' : false,
-      'Comédie' : false
+      'Poesie' : false,
+      'Histoire' : false,
+      'Science' : false,
+      'Philosophie' : false,
+      'Biographie' : false,
+      'Contes et légendes' : false,
+      'Romance' : false,
+      'Autre genre' : false
     },
     this.filmGenres = const {
-      'Action' : false,
+      'Documentaire' : false,
+      'Comédie' : false,
       'Thriller' : false,
-      'Western' : false,
+      'Action' : false,
       'Horreur' : false,
-      'Comédie' : false
+      'Romantique' : false,
+      'Drame' : false,
+      'Animation' : false,
+      'Science-fiction' : false,
+      'Western' : false,
+      'Guerre' : false,
+      'Histoire' : false,
+      'Autre genre' : false
     },
     this.viewingPlatform = const {
+      'Cinéma' : false,
+      'DVD' : false,
+      'VOD' : false,
       'Netflix' : false,
       'Prime Video' : false,
-      'Disney +' : false,
-      'Cinema' : false,
-      'DVD' : false
+      'Disney+' : false,
+      'Apple TV+' : false,
+      'myCanal' : false,
+      'Autre sources' : false
     },
   });
   final FormStatus status;
