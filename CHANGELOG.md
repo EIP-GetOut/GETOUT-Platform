@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.2](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.5.1...v0.5.2) (2024-05-26)
+
+
+### Features
+
+* **app:** :construction: adding more choice for the form (problems images for streaming services) ([f9d7122](https://github.com/EIP-GetOut/GETOUT-Platform/commit/f9d712238f2c775711c26b8fb7429dedd1d30d35))
+* **app:** :construction: adding more choice for the form (problems images for streaming services) ([81d7663](https://github.com/EIP-GetOut/GETOUT-Platform/commit/81d7663a42c29098f4feddc8e52ea5d2e51a0585))
+* **app:** :sparkles: set repeat interval at every minutes for notifications system ([8a46257](https://github.com/EIP-GetOut/GETOUT-Platform/commit/8a46257663d62beb527159f6148a6da6364b09b6))
+
+
+### Bug Fixes
+
+* **app:** :art: removed unused import ([bab5675](https://github.com/EIP-GetOut/GETOUT-Platform/commit/bab5675df261a0d7605bf9884941a8a704fe11b9))
+* **app:** :art: removed unused import ([b7fcf56](https://github.com/EIP-GetOut/GETOUT-Platform/commit/b7fcf56ecd806290fb482d1064719633ca25eb3c))
+* **app:** :bug: clean flutter analysis. ([47619cf](https://github.com/EIP-GetOut/GETOUT-Platform/commit/47619cf4fc79d09988b8eb1f81ea417aca6ab32d))
+* **app:** :bug: image name in pubspec ([61b7a99](https://github.com/EIP-GetOut/GETOUT-Platform/commit/61b7a997fb5d59b76387645d3c04692562fffe29))
+* **app:** :lipstick: in the form, logos of streaming services are now same size, same radius and better quality ([ea97b46](https://github.com/EIP-GetOut/GETOUT-Platform/commit/ea97b46118c11288c98adf875f5b5670715cb1bc))
+* **app:** :lipstick: in the form, logos of streaming services are now same size, same radius and better quality ([5d14144](https://github.com/EIP-GetOut/GETOUT-Platform/commit/5d14144432913847b17abffdb1b4c769cb5537f8))
+
+
+### UI Updates
+
+* **app:** :lipstick: change some ui ([582d3a5](https://github.com/EIP-GetOut/GETOUT-Platform/commit/582d3a5957d464b37f5185f9187b1ef0eb51276e))
+
+
+### Refactors
+
+* **backend:** :recycle: books genres to google books genres mapping, fixed single genre recommendation bug ([54172a5](https://github.com/EIP-GetOut/GETOUT-Platform/commit/54172a5fda42b0b24a15501780e6d66fcd48f3d5))
+
 ### [0.5.1](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.5.0...v0.5.1) (2024-05-23)
 
 
