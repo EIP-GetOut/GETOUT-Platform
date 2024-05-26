@@ -21,11 +21,15 @@ class ViewingPlatform extends StatelessWidget {
   Widget build(BuildContext context)
   {
     List<String> imagesList = [
+      'assets/images/logo/cinema.png',
+      'assets/images/logo/DVD.png',
+      'assets/images/logo/VOD.png',
       'assets/images/logo/netflix.png',
       'assets/images/logo/prime_video.png',
       'assets/images/logo/disney+.png',
-      'assets/images/logo/cinema.png',
-      'assets/images/logo/DVD.png'
+      'assets/images/logo/apple_tv+.png',
+      'assets/images/logo/mycanal.png',
+      'assets/images/logo/autre_sources.png'
     ];
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
@@ -60,59 +64,63 @@ class ViewingPlatform extends StatelessWidget {
           ),
           SizedBox(height: Tools.heightFactor(context, 0.03)),
           Expanded(
-            child: ListView(
-                //padding: const EdgeInsets.all(16.0),
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: <Widget>[
-                  for (var checkbox
-                      in context.read<FormBloc>().state.viewingPlatform.entries)
-                    Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.red)
-                          ),
-                          width: Tools.widthFactor(context, 0.9),
-                          height: Tools.heightFactor(context, 0.08),
-                          child: CheckboxListTile(
-                            title: Row(
-                              children: [
-                                SizedBox(width: Tools.widthFactor(context, 0.12)),
-                                Image.asset(checkboxImages[checkbox.key]!,
-                                    width: 40, height: 40),
-                                SizedBox(width: Tools.widthFactor(context, 0.02)),
-                                AutoSizeText(checkbox.key,
-                                    maxLines: 1,
-                                    minFontSize: 16.0,
-                                    maxFontSize: 20.0,
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium),
-                              ],
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 65.0),
+              child: ListView(
+                  //padding: const EdgeInsets.all(16.0),
+                  shrinkWrap: true,
+                  children: <Widget>[
+                    for (var checkbox
+                        in context.read<FormBloc>().state.viewingPlatform.entries)
+                      Column(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2.0,
+                              ),
                             ),
-                            value: checkbox.value,
-                            onChanged: (value) {
-                              context
-                                  .read<FormBloc>()
-                                  .add(ViewingPlatformEvent(key: checkbox.key));
-                            },
-                            //contentPadding: EdgeInsets.zero,
-                            controlAffinity: ListTileControlAffinity.leading,
-                            tileColor: Colors.transparent,
-                            checkColor: Colors.transparent,
-                            activeColor: Theme.of(context).primaryColor,
-                            shape: const Border(
-                              bottom: BorderSide(color: Colors.black, width: 2.0),
-                              left: BorderSide(color: Colors.black, width: 2.0),
-                              right: BorderSide(color: Colors.black, width: 2.0),
-                              top: BorderSide(color: Colors.black, width: 2.0),
+                            width: Tools.widthFactor(context, 0.9),
+                            height: Tools.heightFactor(context, 0.08),
+                            child: CheckboxListTile(
+                              title: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(width: Tools.widthFactor(context, 0.10)),
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    child: Image.asset(checkboxImages[checkbox.key]!,
+                                        width: 50),
+                                  ),
+                                  SizedBox(width: Tools.widthFactor(context, 0.03)),
+                                  AutoSizeText(checkbox.key,
+                                      maxLines: 1,
+                                      minFontSize: 16.0,
+                                      maxFontSize: 20.0,
+                                      style:
+                                          Theme.of(context).textTheme.bodyMedium),
+                                ],
+                              ),
+                              value: checkbox.value,
+                              onChanged: (value) {
+                                context
+                                    .read<FormBloc>()
+                                    .add(ViewingPlatformEvent(key: checkbox.key));
+                              },
+                              //contentPadding: EdgeInsets.zero,
+                              controlAffinity: ListTileControlAffinity.leading,
+                              tileColor: Colors.transparent,
+                              checkColor: Colors.transparent,
+                              activeColor: Theme.of(context).primaryColor,
                             ),
                           ),
-                        ),
-                        SizedBox(height: Tools.heightFactor(context, 0.012)),
-                      ],
-                    ),
-                ]),
+                          SizedBox(height: Tools.heightFactor(context, 0.016)),
+                        ],
+                      ),
+                  ]),
+            ),
           )
         ],
       );
