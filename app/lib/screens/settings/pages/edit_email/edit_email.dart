@@ -43,23 +43,25 @@ class EditEmailPage extends StatelessWidget {
             children: [
               const SizedBox(height: 25),
               fieldTitle(appL10n(context)!.email.toUpperCase(), true),
+              const SizedBox(height: 20),
               const Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: 8, vertical: 8),
                   child: EmailField()),
-              const SizedBox(height: 15),
+              const SizedBox(height: 30),
               fieldTitle(appL10n(context)!.confirm_email.toUpperCase(), true),
+              const SizedBox(height: 20),
               const Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: 8, vertical: 8),
                   child: ConfirmEmailField()),
-              const SizedBox(height: 15),
+              const SizedBox(height: 30),
               fieldTitle(appL10n(context)!.password.toUpperCase(), true),
+              const SizedBox(height: 20),
               const Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: 8, vertical: 8),
                   child: PasswordField()),
-              const SizedBox(height: 15),
             ],
           ),
         ),
