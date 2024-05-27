@@ -11,13 +11,13 @@ import 'package:getout/constants/http_status.dart';
 import 'package:getout/constants/api_path.dart';
 import 'package:getout/global.dart' as globals;
 
-part 'edit_email_model.dart';
+part 'edit_password_model.dart';
 
-class EditEmailServices {
+class EditPasswordServices {
 
-  Future<EditEmailResponseModel> sendNewEmail(final EditEmailRequestModel request) async
+  Future<EditPasswordResponseModel> sendNewPassword(final EditPasswordRequestModel request) async
   {
-    EditEmailResponseModel response = const EditEmailResponseModel(statusCode: HttpStatus.APP_ERROR);
+    EditPasswordResponseModel response = const EditPasswordResponseModel(statusCode: HttpStatus.APP_ERROR);
     dynamic dioResponse; // dynamic because dio can return a DioError or a Response
 
     if (globals.cookieJar == null || globals.dio == null || globals.session == null) {
@@ -25,17 +25,17 @@ class EditEmailServices {
     }
     try {
       dioResponse = await globals.dio?.post(
-          '${ApiConstants.rootApiPath}${ApiConstants.changeEmailPath}',
+          '${ApiConstants.rootApiPath}${ApiConstants.changePasswordPath}',
           // data: preferences,
           options: Options(headers: {'Content-Type': 'application/json'}));
-      response = EditEmailResponseModel(statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
+      response = EditPasswordResponseModel(statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
     } on DioException catch (dioException) {
       if (dioException.response != null && dioException.response?.statusCode != null) {
-        response = EditEmailResponseModel(
+        response = EditPasswordResponseModel(
             statusCode: dioException.response?.statusCode ?? HttpStatus.APP_ERROR);
       }
     } catch (dioError) {
-      response = const EditEmailResponseModel(statusCode: HttpStatus.APP_ERROR);
+      response = const EditPasswordResponseModel(statusCode: HttpStatus.APP_ERROR);
     }
     return response;
   }

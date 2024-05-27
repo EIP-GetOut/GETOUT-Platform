@@ -9,23 +9,24 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:getout/screens/settings/bloc/edit_email/edit_email_bloc.dart';
+import 'package:getout/screens/settings/bloc/edit_password/edit_password_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
 
-class EmailField extends StatelessWidget {
-  const EmailField({super.key});
+class OldPasswordField extends StatelessWidget {
+  const OldPasswordField({super.key});
 
   @override
   Widget build(BuildContext context)
   {
-    return BlocBuilder<EditEmailBloc, EditEmailState>(
+    return BlocBuilder<EditPasswordBloc, EditPasswordState>(
       builder: (context, state) {
         return SizedBox(
           height: 50,
           child: TextFormField(
+            obscureText: true,
             style: const TextStyle(fontSize: 17, color: Colors.black),
             decoration: InputDecoration(
-              labelText: appL10n(context)!.email_hint,
+              labelText: 'Entrez votre mot de passe actuel',
               floatingLabelBehavior: FloatingLabelBehavior.never,
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(0.5),
@@ -35,10 +36,10 @@ class EmailField extends StatelessWidget {
               ),
             ),
             validator: (value) =>
-            state.isEmailGood ? null : appL10n(context)!.email_validator,
+            state.isOldPasswordEmpty ? null : 'Veuillez entrer votre mot de passe actuel',
             onChanged: (value) =>
-                context.read<EditEmailBloc>().add(
-                  EmailChanged(email: value),
+                context.read<EditPasswordBloc>().add(
+                  OldPasswordChanged(oldPassword: value),
                 ),
           ),
         );
@@ -47,52 +48,18 @@ class EmailField extends StatelessWidget {
   }
 }
 
-class ConfirmEmailField extends StatelessWidget {
-  const ConfirmEmailField({super.key});
+class NewPasswordField extends StatelessWidget {
+  const NewPasswordField({super.key});
 
   @override
   Widget build(BuildContext context)
   {
-    return BlocBuilder<EditEmailBloc, EditEmailState>(
+    return BlocBuilder<EditPasswordBloc, EditPasswordState>(
       builder: (context, state) {
         return SizedBox(
           height: 50,
           child: TextFormField(
-            style: const TextStyle(fontSize: 17, color: Colors.black),
-            decoration: InputDecoration(
-              labelText: appL10n(context)!.email_hint,
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(0.5),
-                  borderSide: const BorderSide(color: Colors.black)),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(0.5),
-              ),
-            ),
-            validator: (value) =>
-            state.isConfirmEmailGood ? null : appL10n(context)!.email_validator,
-            onChanged: (value) =>
-                context.read<EditEmailBloc>().add(
-                  ConfirmEmailChanged(confirmEmail: value),
-                ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class PasswordField extends StatelessWidget {
-  const PasswordField({super.key});
-
-  @override
-  Widget build(BuildContext context)
-  {
-    return BlocBuilder<EditEmailBloc, EditEmailState>(
-      builder: (context, state) {
-        return SizedBox(
-          height: 50,
-          child: TextFormField(
+            obscureText: true,
             style: const TextStyle(fontSize: 17, color: Colors.black),
             decoration: InputDecoration(
               labelText: appL10n(context)!.password_hint,
@@ -105,10 +72,46 @@ class PasswordField extends StatelessWidget {
               ),
             ),
             validator: (value) =>
-            state.isPasswordEmpty ? null : appL10n(context)!.password_validator,
+            state.isNewPasswordGood ? null : appL10n(context)!.password_validator,
             onChanged: (value) =>
-                context.read<EditEmailBloc>().add(
-                  PasswordChanged(password: value),
+                context.read<EditPasswordBloc>().add(
+                  NewPasswordChanged(newPassword: value),
+                ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class ConfirmPasswordField extends StatelessWidget {
+  const ConfirmPasswordField({super.key});
+
+  @override
+  Widget build(BuildContext context)
+  {
+    return BlocBuilder<EditPasswordBloc, EditPasswordState>(
+      builder: (context, state) {
+        return SizedBox(
+          height: 50,
+          child: TextFormField(
+            obscureText: true,
+            style: const TextStyle(fontSize: 17, color: Colors.black),
+            decoration: InputDecoration(
+              labelText: appL10n(context)!.confirm_password_hint,
+              floatingLabelBehavior: FloatingLabelBehavior.never,
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(0.5),
+                  borderSide: const BorderSide(color: Colors.black)),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(0.5),
+              ),
+            ),
+            validator: (value) =>
+            state.isConfirmPasswordGood ? null : 'Les mots de passe ne correspondent pas',
+            onChanged: (value) =>
+                context.read<EditPasswordBloc>().add(
+                  ConfirmPasswordChanged(confirmPassword: value),
                 ),
           ),
         );
