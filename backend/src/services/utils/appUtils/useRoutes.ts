@@ -29,6 +29,7 @@ import resetPassword from '@routes/account/resetPassword/resetPassword'
 import sendEmail from '@routes/account/resetPassword/sendEmail/sendEmail'
 import seenMovies from '@routes/account/seenMovies'
 import signup from '@routes/account/signup'
+import verifyEmail from '@routes/account/verifyEmail'
 import watchlist from '@routes/account/watchlist'
 import accounts from '@routes/accounts'
 import basicEndpoints from '@routes/basicEndpoints'
@@ -71,6 +72,7 @@ const useRoutes = (app: Application): Application => (
 
     .use(oauth)
     .use(preferences)
+    .use(verifyEmail)
     .use(changePassword)
     .use(logoutAll)
     .use(session)

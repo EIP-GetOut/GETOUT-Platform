@@ -78,6 +78,9 @@ function useSessionMappedToAccount (app: Application): void {
         delete sessAccount.salt
         delete sessAccount.passwordResetCode
         delete sessAccount.passwordResetExpiration
+        delete sessAccount.emailVerificationCode
+        delete sessAccount.emailVerificationExpiration
+        delete sessAccount.passwordResetExpiration
         sessAccount.spentMinutesReadingAndWatching = NaN
         req.session.account = sessAccount
 

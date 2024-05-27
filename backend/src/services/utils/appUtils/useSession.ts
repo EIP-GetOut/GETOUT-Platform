@@ -37,6 +37,9 @@ export interface SessionAccount {
   recommendedMoviesHistory: number []
   spentMinutesReadingAndWatching: number
   role: Role
+  isVerified: boolean
+  emailVerificationCode: number | null
+  emailVerificationExpiration: Date | null
 }
 
 declare module 'express-session' {

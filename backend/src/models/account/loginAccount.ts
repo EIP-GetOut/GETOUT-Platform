@@ -32,6 +32,9 @@ async function createSession (sess: Session & Partial<SessionData>, account: Acc
   delete sessAccount.salt
   delete sessAccount.passwordResetCode
   delete sessAccount.passwordResetExpiration
+  delete sessAccount.emailVerificationCode
+  delete sessAccount.emailVerificationExpiration
+  delete sessAccount.passwordResetExpiration
   sessAccount.spentMinutesReadingAndWatching = 0
   sess.account = sessAccount
 

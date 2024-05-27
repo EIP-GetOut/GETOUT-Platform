@@ -16,9 +16,9 @@ import { Account } from '@entities/Account'
 
 import { appDataSource } from '@config/dataSource'
 
-function getDateIn1Hour (): Date {
+function getDateIn1Day (): Date {
   const current = new Date()
-  const followingDay = new Date(current.getTime() + 3000000) // + 1 hour in ms
+  const followingDay = new Date(current.getTime() + (24 * 3000000)) // + 24 hour in ms
 
   return followingDay
 }
@@ -31,7 +31,7 @@ async function generateEmailVerificationCode (email: string): Promise<number> {
     account.emailVerificationCode = process.env.NODE_ENV === 'development'
       ? 123456
       : Math.floor(100000 + Math.random() * 900000)
-    account.emailVerificationExpiration = getDateIn1Hour()
+    account.emailVerificationExpiration = getDateIn1Day()
     return await appDataSource.getRepository<Account>('Account').save(account)
   }).then((account: Account) => {
     if (account?.emailVerificationCode == null) {
@@ -46,18 +46,21 @@ async function accountIsAllowedToVerifyEmail (accountId: UUID, code: number): Pr
     return (
       account != null &&
       code === account.emailVerificationCode &&
-      account.passwordResetExpiration != null &&
-      Date.now() < new Date(account.passwordResetExpiration).getTime()
+      account.emailVerificationExpiration != null &&
+      Date.now() < new Date(account.emailVerificationExpiration).getTime()
     )
   })
 }
 
 async function verifyEmail (accountId: UUID): Promise<void> {
+  const accountRepository = appDataSource.getRepository(Account)
+
   await findEntity<Account>(Account, { id: accountId }).then(async (account: Account | null) => {
     if (account == null) {
       throw new AccountDoesNotExistError(undefined, StatusCodes.NOT_FOUND)
     }
     account.isVerified = true
+    await accountRepository.save(account)
   })
 }
 
