@@ -62,6 +62,7 @@ class NewPasswordField extends StatelessWidget {
             obscureText: true,
             style: const TextStyle(fontSize: 17, color: Colors.black),
             decoration: InputDecoration(
+              errorMaxLines: 2,
               labelText: appL10n(context)!.password_hint,
               floatingLabelBehavior: FloatingLabelBehavior.never,
               enabledBorder: OutlineInputBorder(
@@ -76,10 +77,10 @@ class NewPasswordField extends StatelessWidget {
                 return 'Veuillez entrer un mot de passe';
               }
               if (!state.isNewPasswordValid) {
-                return 'Le mot de passe doit contenir au moins 8 caractères\nune majuscule, un chiffre et un caractère spécial';
+                return 'Le mot de passe doit contenir au moins 8 caractères une majuscule, un chiffre et un caractère spécial';
               }
               if (!state.isNewPasswordDifferent) {
-                return 'Le nouveau mot de passe doit être différent\nde l\'ancien';
+                return 'Le nouveau mot de passe doit être différent de l\'ancien';
               }
               return null;
             },

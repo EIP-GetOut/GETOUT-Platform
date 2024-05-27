@@ -183,6 +183,7 @@ class PasswordField extends StatelessWidget {
           obscureText: true,
           style: const TextStyle(fontSize: 17, color: Colors.black),
           decoration: InputDecoration(
+              errorMaxLines: 2,
               labelText: appL10n(context)!.password_hint,
               floatingLabelBehavior: FloatingLabelBehavior.never,
               enabledBorder: OutlineInputBorder(
@@ -192,7 +193,7 @@ class PasswordField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(0.5),
               )),
           validator: (value) =>
-            state.isPasswordValid ? null : 'Un mot de passe contenant au moins 8 caractères est requis, avec au moins une majuscule, une minuscule et un chiffre est requis',
+            state.isPasswordValid ? null : 'Le mot de passe doit contenir au moins 8 caractères une majuscule, un chiffre et un caractère spécial',
           onChanged: (value) => context.read<RegisterBloc>().add(
             RegisterPasswordChanged(password: value),
           ),
