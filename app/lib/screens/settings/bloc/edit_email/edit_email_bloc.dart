@@ -9,6 +9,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/tools/status.dart';
+import 'package:getout/global.dart' as globals;
 
 part 'edit_email_event.dart';
 part 'edit_email_state.dart';

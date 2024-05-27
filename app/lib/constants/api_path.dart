@@ -28,7 +28,7 @@ class ApiConstants {
   static const String resetPasswordNewPasswordPath = '/account/reset-password';
 
   static const String changeEmailPath = '/account/?';
-  static const String changePasswordPath = '/account/?';
+  static const String changePasswordPath = '/account/change-password';
 
   static const String preferencesApiPath = '/account/preferences';
 

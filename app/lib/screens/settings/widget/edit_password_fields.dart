@@ -71,8 +71,18 @@ class NewPasswordField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(0.5),
               ),
             ),
-            validator: (value) =>
-            state.isNewPasswordGood ? null : appL10n(context)!.password_validator,
+            validator: (value) {
+              if (!state.isNewPasswordEmpty) {
+                return 'Veuillez entrer un mot de passe';
+              }
+              if (!state.isNewPasswordValid) {
+                return 'Le mot de passe doit contenir au moins 8 caractères\nune majuscule, un chiffre et un caractère spécial';
+              }
+              if (!state.isNewPasswordDifferent) {
+                return 'Le nouveau mot de passe doit être différent\nde l\'ancien';
+              }
+              return null;
+            },
             onChanged: (value) =>
                 context.read<EditPasswordBloc>().add(
                   NewPasswordChanged(newPassword: value),

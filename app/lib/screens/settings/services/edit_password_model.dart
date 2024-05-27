@@ -20,7 +20,7 @@ class EditPasswordRequestModel {
 class EditPasswordResponseModel {
   final int statusCode;
   bool get isSuccessful =>
-      statusCode == HttpStatus.OK;
+      statusCode == HttpStatus.NO_CONTENT;
 
   const EditPasswordResponseModel({required this.statusCode});
 }

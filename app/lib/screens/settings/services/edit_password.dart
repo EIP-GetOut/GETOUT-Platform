@@ -26,7 +26,10 @@ class EditPasswordServices {
     try {
       dioResponse = await globals.dio?.post(
           '${ApiConstants.rootApiPath}${ApiConstants.changePasswordPath}',
-          // data: preferences,
+          data: {
+            'password': request.oldPassword,
+            'newPassword': request.newPassword
+          },
           options: Options(headers: {'Content-Type': 'application/json'}));
       response = EditPasswordResponseModel(statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
     } on DioException catch (dioException) {

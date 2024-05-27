@@ -34,8 +34,17 @@ class EmailField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(0.5),
               ),
             ),
-            validator: (value) =>
-            state.isEmailGood ? null : appL10n(context)!.email_validator,
+            validator: (value) {
+              if (!state.isEmailEmpty) {
+                return 'L\'email ne peut pas être vide';
+              } else if (!state.isEmailValid) {
+                return 'L\'email n\'est pas valide';
+              } else if (!state.isNewEmailDifferent) {
+                return 'L\'email doit être différent de l\'ancien email';
+              } else {
+                return null;
+              }
+            },
             onChanged: (value) =>
                 context.read<EditEmailBloc>().add(
                   EmailChanged(email: value),

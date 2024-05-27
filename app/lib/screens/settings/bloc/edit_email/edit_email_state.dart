@@ -15,7 +15,8 @@ class EditEmailState extends Equatable {
 
   bool get isEmailEmpty => email.isNotEmpty;
   bool get isEmailValid => RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+').hasMatch(email);
-  bool get isEmailGood => isEmailEmpty && isEmailValid;
+  bool get isNewEmailDifferent => email != globals.session?['email'];
+  bool get isEmailGood => isEmailEmpty && isEmailValid && isNewEmailDifferent;
   bool get isPasswordEmpty => password.isNotEmpty;
   bool get isConfirmEmailEmpty => confirmEmail.isNotEmpty;
   bool get isConfirmEmailValid => confirmEmail == email;

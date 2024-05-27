@@ -15,8 +15,9 @@ class EditPasswordState extends Equatable {
 
   bool get isOldPasswordEmpty => oldPassword.isNotEmpty;
   bool get isNewPasswordEmpty => newPassword.isNotEmpty;
-  bool get isPasswordValid => RegExp(r'(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$').hasMatch(newPassword);
-  bool get isNewPasswordGood => isNewPasswordEmpty && isPasswordValid;
+  bool get isNewPasswordDifferent => oldPassword != newPassword;
+  bool get isNewPasswordValid => RegExp(r'(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$').hasMatch(newPassword);
+  bool get isNewPasswordGood => isNewPasswordEmpty && isNewPasswordValid && isNewPasswordDifferent;
   bool get isConfirmPasswordEmpty => confirmPassword.isNotEmpty;
   bool get isConfirmPasswordValid => confirmPassword == newPassword;
   bool get isConfirmPasswordGood => isConfirmPasswordEmpty && isConfirmPasswordValid;
