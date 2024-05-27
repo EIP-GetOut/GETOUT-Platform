@@ -54,43 +54,46 @@ class NewPasswordField extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
-    return BlocBuilder<EditPasswordBloc, EditPasswordState>(
-      builder: (context, state) {
-        return SizedBox(
-          height: 50,
-          child: TextFormField(
-            obscureText: true,
-            style: const TextStyle(fontSize: 17, color: Colors.black),
-            decoration: InputDecoration(
-              errorMaxLines: 2,
-              labelText: appL10n(context)!.password_hint,
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              enabledBorder: OutlineInputBorder(
+    return Expanded(
+      child: BlocBuilder<EditPasswordBloc, EditPasswordState>(
+        builder: (context, state) {
+          return SizedBox(
+            height: 50,
+            child: TextFormField(
+              obscureText: true,
+              style: const TextStyle(fontSize: 17, color: Colors.black),
+              decoration: InputDecoration(
+                //counterText: ' ',
+                errorMaxLines: 2,
+                labelText: appL10n(context)!.password_hint,
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(0.5),
+                    borderSide: const BorderSide(color: Colors.black)),
+                focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(0.5),
-                  borderSide: const BorderSide(color: Colors.black)),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(0.5),
-              ),
-            ),
-            validator: (value) {
-              if (!state.isNewPasswordEmpty) {
-                return 'Veuillez entrer un mot de passe';
-              }
-              if (!state.isNewPasswordValid) {
-                return 'Le mot de passe doit contenir au moins 8 caractères une majuscule, un chiffre et un caractère spécial';
-              }
-              if (!state.isNewPasswordDifferent) {
-                return 'Le nouveau mot de passe doit être différent de l\'ancien';
-              }
-              return null;
-            },
-            onChanged: (value) =>
-                context.read<EditPasswordBloc>().add(
-                  NewPasswordChanged(newPassword: value),
                 ),
-          ),
-        );
-      },
+              ),
+              validator: (value) {
+                if (!state.isNewPasswordEmpty) {
+                  return 'Veuillez entrer un mot de passe';
+                }
+                if (!state.isNewPasswordValid) {
+                  return 'Le mot de passe doit contenir au moins 8 caractères une majuscule, un chiffre et un caractère spécial';
+                }
+                if (!state.isNewPasswordDifferent) {
+                  return 'Le nouveau mot de passe doit être différent de l\'ancien';
+                }
+                return null;
+              },
+              onChanged: (value) =>
+                  context.read<EditPasswordBloc>().add(
+                    NewPasswordChanged(newPassword: value),
+                  ),
+            ),
+          );
+        },
+      ),
     );
   }
 }

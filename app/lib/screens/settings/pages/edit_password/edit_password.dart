@@ -44,23 +44,25 @@ class EditPasswordPage extends StatelessWidget {
                 children: [
                   const SizedBox(height: 25),
                   fieldTitle('Mot de passe actuel'.toUpperCase(), true),
+                  const SizedBox(height: 20),
                   const Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 8, vertical: 8),
                       child: OldPasswordField()),
                   const SizedBox(height: 30),
                   fieldTitle('Nouveau mot de passe'.toUpperCase(), true),
+                  const SizedBox(height: 20),
                   const Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 8, vertical: 8),
                       child: NewPasswordField()),
                   const SizedBox(height: 30),
                   fieldTitle(appL10n(context)!.confirm_password.toUpperCase(), true),
+                  const SizedBox(height: 20),
                   const Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 8, vertical: 8),
                       child: ConfirmPasswordField()),
-                  const SizedBox(height: 15),
                 ],
               ),
             ),
