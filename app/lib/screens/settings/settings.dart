@@ -10,7 +10,7 @@ import 'package:getout/screens/settings/pages/disconnect/disconnect.dart';
 import 'package:getout/screens/settings/pages/delete_account/delete_account.dart';
 
 import 'package:getout/screens/form/pages/form.dart';
-import 'package:getout/screens/settings/pages/edit_email/edit_mail.dart';
+import 'package:getout/screens/settings/pages/edit_email/edit_email.dart';
 import 'package:getout/screens/settings/pages/edit_password/edit_password.dart';
 import 'package:getout/screens/settings/pages/history/history_provider.dart';
 import 'package:getout/screens/settings/pages/notifications/notifications_page.dart';
@@ -44,7 +44,7 @@ class SettingsPage extends StatelessWidget {
                 iconData: Icons.shield_outlined,
                 value: appL10n(context)!.edit_password),
             SettingRow(
-                page: const EditMailPage(),
+                page: const EditEmailPage(),
                 iconData: Icons.mail_outlined,
                 value: appL10n(context)!.edit_email),
 
