@@ -7,20 +7,24 @@
 
 import 'package:flutter/material.dart';
 
-Widget fieldTitle(final String title, bool mandatory) {
+Widget fieldTitle(final String title, bool isMandatory)
+{
   return Row(
     children: [
       const SizedBox(width: 10),
       Text(title,
           textAlign: TextAlign.left,
           style: const TextStyle(
-              fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black)),
-      (mandatory)
-          ? const Text('*',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red))
-          : const SizedBox(),
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black)),
+      if (isMandatory)
+        const Text('*',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.red)),
     ],
   );
 }

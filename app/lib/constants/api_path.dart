@@ -27,6 +27,8 @@ class ApiConstants {
   static const String resetPasswordEmailPath = '/account/reset-password/send-email';
   static const String resetPasswordNewPasswordPath = '/account/reset-password';
 
+  static const String resetEmailPath = '/account/?';
+
   static const String preferencesApiPath = '/account/preferences';
 
   // GENERATE THINGS API PATH
