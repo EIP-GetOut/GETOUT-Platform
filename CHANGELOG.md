@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.5.5](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.5.4...v0.5.5) (2024-05-27)
+
+
+### Features
+
+* **app:** :sparkles: adding more movie genre in the form ([c434dcc](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c434dcc76ecb0bdbdac04f872283927f391e7d57))
+* **backend:** :sparkles: verify email route without actually sending the email ([85138a6](https://github.com/EIP-GetOut/GETOUT-Platform/commit/85138a6113998df6709f65313c97a726790575e9))
+
 ### [0.5.4](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.5.2...v0.5.4) (2024-05-26)
 
 
