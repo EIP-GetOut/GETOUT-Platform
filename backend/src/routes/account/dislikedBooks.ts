@@ -118,7 +118,7 @@ const rulesPost = [
 
 router.post('/account/:accountId/dislikedBooks', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
-    handleErrorOnRoute(res)(new AuthenticationError())
+    handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
   addBookToDislikedBooks(req.params.accountId, req.body.bookId).then(async (updatedDislikedBooksList: string[]) => {
@@ -136,7 +136,7 @@ const rulesDelete = [
 
 router.delete('/account/:accountId/dislikedBooks/:bookId', rulesDelete, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
-    handleErrorOnRoute(res)(new AuthenticationError())
+    handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
   removeBookFromDislikedBooks(req.params.accountId, req.params.bookId).then(async (updatedDislikedBooksList: string[]) => {
@@ -153,7 +153,7 @@ const rulesGet = [
 
 router.get('/account/:accountId/dislikedBooks', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
-    handleErrorOnRoute(res)(new AuthenticationError())
+    handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
   findEntity<Account>(Account, { id: req.params.accountId }).then((account: Account | null) => {

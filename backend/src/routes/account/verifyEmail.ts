@@ -24,8 +24,8 @@ const rulesPost = [
 ]
 
 router.post('/account/verify-email/', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
-  if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
-    handleErrorOnRoute(res)(new AuthenticationError())
+  if (req.session.account?.id == null) {
+    handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
   accountIsAllowedToVerifyEmail(req.session.account?.id, req.body.code).then((isAllowed: boolean): void => {

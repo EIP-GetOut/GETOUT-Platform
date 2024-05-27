@@ -124,7 +124,7 @@ const rulesPost = [
 
 router.post('/account/:accountId/dislikedMovies', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
-    handleErrorOnRoute(res)(new AuthenticationError())
+    handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
   addMovieToDislikedMovies(req.params.accountId, parseInt(req.body.movieId), req.session).then(async (updatedDislikedMoviesList: number[]) => {
@@ -142,7 +142,7 @@ const rulesDelete = [
 
 router.delete('/account/:accountId/dislikedMovies/:movieId', rulesDelete, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
-    handleErrorOnRoute(res)(new AuthenticationError())
+    handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
   removeMovieFromDislikedMovies(req.params.accountId, parseInt(req.params.movieId)).then(async (updatedDislikedMoviesList: number[]) => {
@@ -159,7 +159,7 @@ const rulesGet = [
 
 router.get('/account/:accountId/dislikedMovies', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
-    handleErrorOnRoute(res)(new AuthenticationError())
+    handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
   findEntity<Account>(Account, { id: req.params.accountId }).then((account: Account | null) => {

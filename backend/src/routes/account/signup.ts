@@ -10,12 +10,13 @@ import { type Request, type Response, Router } from 'express'
 import { body } from 'express-validator'
 import { StatusCodes } from 'http-status-codes'
 
-import { logApiRequest } from '@services/middlewares/logging'
+import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
 import { AlreadyLoggedInError, ApiError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import registerAccount from '@models/account/registerAccount'
+import { generateEmailVerificationCode } from '@models/account/verifyEmail'
 
 import { type Account } from '@entities/Account'
 
@@ -84,15 +85,19 @@ router.post('/account/signup', rulesPost, validate, logApiRequest, (req: Request
     return
   }
   registerAccount(req.body).then(async (account: Account) => {
-    return await sendWelcomeEmail(account).then(() => {
-      return res.status(StatusCodes.CREATED).json({
-        id: account.id,
-        email: account.email,
-        firstName: account.firstName,
-        lastName: account.lastName,
-        bornDate: account.bornDate,
-        preferences: account.preferences,
-        createdDate: account.createdDate
+    return await generateEmailVerificationCode(account.email).then(async (code) => {
+      logger.debug(`Sending email verification code to email ${account.email} : ${code}.`)
+      // send verification email
+      return await sendWelcomeEmail(account).then(() => {
+        return res.status(StatusCodes.CREATED).json({
+          id: account.id,
+          email: account.email,
+          firstName: account.firstName,
+          lastName: account.lastName,
+          bornDate: account.bornDate,
+          preferences: account.preferences,
+          createdDate: account.createdDate
+        })
       })
     })
   }).catch(handleErrorOnRoute(res))

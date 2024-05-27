@@ -118,7 +118,7 @@ const rulesPost = [
 
 router.post('/account/:accountId/readingList', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
-    handleErrorOnRoute(res)(new AuthenticationError())
+    handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
   addBookToReadingList(req.params.accountId, req.body.bookId).then(async (updatedReadingList: string[]) => {
@@ -136,7 +136,7 @@ const rulesDelete = [
 
 router.delete('/account/:accountId/readingList/:bookId', rulesDelete, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
-    handleErrorOnRoute(res)(new AuthenticationError())
+    handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
   removeBookFromReadingList(req.params.accountId, req.params.bookId).then(async (updatedReadingList: string[]) => {
@@ -153,7 +153,7 @@ const rulesGet = [
 
 router.get('/account/:accountId/readingList', rulesGet, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null || req.session.account.id !== req.params.accountId) {
-    handleErrorOnRoute(res)(new AuthenticationError())
+    handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
   findEntity<Account>(Account, { id: req.params.accountId }).then((account: Account | null) => {
