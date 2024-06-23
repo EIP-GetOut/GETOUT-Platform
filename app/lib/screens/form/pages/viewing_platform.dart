@@ -71,7 +71,7 @@ class ViewingPlatform extends StatelessWidget {
               child: FormCheckbox(
                 checkboxList: viewingPlatform,
                 checkboxImages: checkboxImages,
-                event: const ViewingPlatformEvent(key: 'h'),
+                event: const ViewingPlatformEvent(key: ''),
               )
             ),
           )

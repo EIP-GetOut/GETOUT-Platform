@@ -51,7 +51,7 @@ class FilmGenres extends StatelessWidget {
               child: FormCheckbox(
                 checkboxList: context.read<FormBloc>().state.filmGenres,
                 checkboxImages: null,
-                event: const FilmGenresEvent(key: 'h'),
+                event: const FilmGenresEvent(key: ''),
               )
             ),
           )

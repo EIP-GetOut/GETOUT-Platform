@@ -26,58 +26,63 @@ class FormCheckbox extends StatelessWidget {
     return BlocBuilder<FormBloc, FormStates>(
       builder: (context, state) {
         return ListView(
-            padding: (checkboxImages == null) ? const EdgeInsets.all(16.0) : null,
+            padding: const EdgeInsets.all(16.0),
             shrinkWrap: true,
             children: <Widget>[
               for (var checkbox in checkboxList.entries)
                 Column(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2.0,
+                    GestureDetector(
+                      onTap: () {
+                        context
+                            .read<FormBloc>()
+                            .add(event.setKey(checkbox.key));
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 200),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          border: Border.all(
+                            color: checkbox.value ? Theme.of(context).primaryColor : Colors.white,
+                            width: checkbox.value ? 4.0 : 1.0,
+                          ),
+                              boxShadow: [
+                                if (!checkbox.value) BoxShadow(
+                                  blurStyle: BlurStyle.outer,
+                                    color: Colors.grey.shade600,
+                                    spreadRadius: 0.1,
+                                    blurRadius: 5
+                                )
+                              ],
                         ),
-                      ),
-                      width: (checkboxImages == null) ? null : Tools.widthFactor(context, 0.9),
-                      height: (checkboxImages == null) ? null : Tools.heightFactor(context, 0.08),
-                      child: CheckboxListTile(
-                        title: (checkboxImages == null) ?
-                        Text(checkbox.key,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.bodyMedium
-                        ) : Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(width: Tools.widthFactor(context, 0.10)),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10.0),
-                              child: Image.asset(checkboxImages![checkbox.key]!,
-                                  width: 50),
+                        width: Tools.widthFactor(context, 0.9),
+                        height: Tools.heightFactor(context, 0.075),
+                        child: (checkboxImages == null) ?
+                          Center(
+                            child: Text(checkbox.key,
+                                style: Theme.of(context).textTheme.bodyMedium
                             ),
-                            SizedBox(width: Tools.widthFactor(context, 0.03)),
-                            AutoSizeText(checkbox.key,
-                                maxLines: 1,
-                                minFontSize: 16.0,
-                                maxFontSize: 20.0,
-                                style:
-                                Theme.of(context).textTheme.bodyMedium),
-                          ],
+                          )
+                          : Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(width: Tools.widthFactor(context, 0.25)),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(10.0),
+                                child: Image.asset(checkboxImages![checkbox.key]!,
+                                    width: 50),
+                              ),
+                              const SizedBox(width: 22),
+                              AutoSizeText(checkbox.key,
+                                  maxLines: 1,
+                                  minFontSize: 16.0,
+                                  maxFontSize: 20.0,
+                                  style:
+                                  Theme.of(context).textTheme.bodyMedium),
+                            ],
+                          ),
                         ),
-                        value: checkbox.value,
-                        onChanged: (value) {
-                          context
-                              .read<FormBloc>()
-                              .add(event.setKey(checkbox.key));
-                        },
-                        contentPadding: (checkboxImages == null) ? EdgeInsets.zero : null,
-                        controlAffinity: ListTileControlAffinity.leading,
-                        tileColor: Colors.transparent,
-                        checkColor: Colors.transparent,
-                        activeColor: Theme.of(context).primaryColor,
                       ),
-                    ),
                     SizedBox(height: Tools.heightFactor(context, 0.016)),
                   ],
                 ),

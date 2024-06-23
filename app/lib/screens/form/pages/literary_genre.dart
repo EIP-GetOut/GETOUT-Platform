@@ -52,7 +52,7 @@ class LiteraryGenres extends StatelessWidget {
               child: FormCheckbox(
                 checkboxList: context.read<FormBloc>().state.literaryGenres,
                 checkboxImages: null,
-                event: const LiteraryGenresEvent(key: 'h'),
+                event: const LiteraryGenresEvent(key: ''),
               )
             ),
           )
