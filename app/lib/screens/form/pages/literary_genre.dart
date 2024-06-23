@@ -11,7 +11,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/form/widgets/checkbox.dart';
-import 'package:getout/screens/form/widgets/four_point.dart';
+import 'package:getout/screens/form/widgets/progress_bar.dart';
 import 'package:getout/screens/form/bloc/form_bloc.dart';
 import 'package:getout/tools/tools.dart';
 
@@ -30,7 +30,7 @@ class LiteraryGenres extends StatelessWidget {
           SizedBox(height: Tools.heightFactor(context, 0.10)),
           SizedBox(
             width: MediaQuery.of(context).size.width,
-              child: const PageIndicator(currentPage: 0, pageCount: 3)),
+              child: const ProgressBar(total: 3, current: 1)),
           SizedBox(height: Tools.heightFactor(context, 0.05)),
           Center(
             child: SizedBox(

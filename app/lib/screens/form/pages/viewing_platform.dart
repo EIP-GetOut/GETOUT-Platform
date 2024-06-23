@@ -11,7 +11,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/form/widgets/checkbox.dart';
-import 'package:getout/screens/form/widgets/four_point.dart';
+import 'package:getout/screens/form/widgets/progress_bar.dart';
 import 'package:getout/screens/form/bloc/form_bloc.dart';
 import 'package:getout/tools/tools.dart';
 
@@ -49,7 +49,7 @@ class ViewingPlatform extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(height: Tools.heightFactor(context, 0.10)),
-          const PageIndicator(currentPage: 2, pageCount: 3),
+          const ProgressBar(total: 3, current: 3),
           SizedBox(height: Tools.heightFactor(context, 0.05)),
           Center(
             child: SizedBox(
