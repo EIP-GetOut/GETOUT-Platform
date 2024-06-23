@@ -42,7 +42,7 @@ class FormStates extends Equatable {
       'Policier' : false,
       'Science-fiction' : false,
       'Politique' : false,
-      'Poesie' : false,
+      'Poésie' : false,
       'Histoire' : false,
       'Science' : false,
       'Philosophie' : false,

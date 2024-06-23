@@ -12,6 +12,10 @@ class FormEvent extends Equatable {
 
   @override
   List<Object?> get props => [];
+
+  FormEvent setKey(String key) {
+    throw UnimplementedError('setKey() should be overridden in subclasses.');
+  }
 }
 
 class EmitEvent extends FormEvent {
@@ -48,6 +52,11 @@ class LiteraryGenresEvent extends FormEvent {
 
   @override
   List<Object?> get props => [key];
+
+  @override
+  LiteraryGenresEvent setKey(String key) {
+    return LiteraryGenresEvent(key: key);
+  }
 }
 
 class FilmGenresEvent extends FormEvent {
@@ -57,6 +66,11 @@ class FilmGenresEvent extends FormEvent {
 
   @override
   List<Object?> get props => [key];
+
+  @override
+  FilmGenresEvent setKey(String key) {
+    return FilmGenresEvent(key: key);
+  }
 }
 
 class ViewingPlatformEvent extends FormEvent {
@@ -66,6 +80,11 @@ class ViewingPlatformEvent extends FormEvent {
 
   @override
   List<Object?> get props => [key];
+
+  @override
+  ViewingPlatformEvent setKey(String key) {
+    return ViewingPlatformEvent(key: key);
+  }
 }
 
 class EndFormEvent extends FormEvent {

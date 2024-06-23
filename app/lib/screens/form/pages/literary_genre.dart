@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:getout/screens/form/widgets/checkbox.dart';
 import 'package:getout/screens/form/widgets/four_point.dart';
 import 'package:getout/screens/form/bloc/form_bloc.dart';
 import 'package:getout/tools/tools.dart';
@@ -48,43 +49,11 @@ class LiteraryGenres extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(bottom: 65.0),
-              child: ListView(
-                  padding: const EdgeInsets.all(16.0),
-                  shrinkWrap: true,
-                  //physics: const NeverScrollableScrollPhysics(),
-                  children: <Widget>[
-                    for (var checkbox in context.read<FormBloc>().state.literaryGenres.entries)
-                      Column(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.0),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2.0,
-                              ),
-                            ),
-                            child: CheckboxListTile(
-                              title: Text(checkbox.key,
-                                  textAlign: TextAlign.center,
-                                  style: Theme.of(context).textTheme.bodyMedium
-                              ),
-                              value: checkbox.value,
-                              onChanged: (value) {
-                                context.read<FormBloc>().add(LiteraryGenresEvent(key: checkbox.key));
-                              },
-                              contentPadding: EdgeInsets.zero,
-                              controlAffinity: ListTileControlAffinity.leading,
-                              tileColor: Colors.transparent,
-                              checkColor: Colors.transparent,
-                              activeColor: Theme.of(context).primaryColor,
-
-                            ),
-                          ),
-                          SizedBox(height: Tools.heightFactor(context, 0.016)),
-                        ],
-                      ),
-                  ]),
+              child: FormCheckbox(
+                checkboxList: context.read<FormBloc>().state.literaryGenres,
+                checkboxImages: null,
+                event: const LiteraryGenresEvent(key: 'h'),
+              )
             ),
           )
         ],
