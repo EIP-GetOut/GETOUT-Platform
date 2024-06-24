@@ -7,12 +7,12 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/form/widgets/checkbox.dart';
 import 'package:getout/screens/form/widgets/progress_bar.dart';
 import 'package:getout/screens/form/bloc/form_bloc.dart';
+import 'package:getout/widgets/page_title.dart';
 import 'package:getout/tools/tools.dart';
 
 class FilmGenres extends StatelessWidget {
@@ -27,24 +27,16 @@ class FilmGenres extends StatelessWidget {
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: Tools.heightFactor(context, 0.10)),
-          const ProgressBar(total: 3, current: 2),
-          SizedBox(height: Tools.heightFactor(context, 0.05)),
-          Center(
-            child: SizedBox(
-              width: Tools.widthFactor(context, 0.75),
-              child: AutoSizeText(
-                'GENRES CINÉMATOGRAPHIQUES :',
-                maxLines: 2,
-                minFontSize: 18.0,
-                maxFontSize: 24.0,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleMedium,
-                wrapWords: true,
-              ),
-            ),
-          ),
           SizedBox(height: Tools.heightFactor(context, 0.03)),
+          const PageTitle(
+            title: 'Genres audiovisuel',
+            description: 'Ce formulaire nous permet de vous proposer une expérience personnalisée.',
+          ),
+          SizedBox(height: Tools.heightFactor(context, 0.06)),
+          SizedBox(
+              width: MediaQuery.of(context).size.width,
+              child: const ProgressBar(total: 3, current: 2)),
+          SizedBox(height: Tools.heightFactor(context, 0.05)),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(bottom: 65.0),

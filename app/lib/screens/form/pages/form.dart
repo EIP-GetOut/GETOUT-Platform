@@ -7,7 +7,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/form/services/form_services.dart';
@@ -35,9 +34,6 @@ class Forms extends StatelessWidget {
       create: (context) => FormBloc(),
       child: Scaffold(
         appBar: AppBar(
-            //title: const Text('VOS PRÉFÉRENCES'),
-            title: const AutoSizeText('VOS PRÉFÉRENCES',
-                maxLines: 1, minFontSize: 16.0, maxFontSize: 32.0),
             leading: Row(
               children: [
                 IconButton(
