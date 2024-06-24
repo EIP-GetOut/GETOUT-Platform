@@ -21,6 +21,7 @@ class FormBloc extends Bloc<FormEvent, FormStates> {
     on<FilmGenresEvent>(_filmGenresEvent);
     on<ViewingPlatformEvent>(_viewingPlatformEvent);
     on<EndFormEvent>((event, emit) => emit(state.copyWith()));
+    on<ErrorEvent>((event, emit) => emit(state.copyWith()));
   }
 
   /*void _interestChoices(InterestChoicesEvent interestChoices, Emitter<FormStates> emit) async

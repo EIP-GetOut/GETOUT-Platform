@@ -93,3 +93,10 @@ class EndFormEvent extends FormEvent {
   @override
   List<Object?> get props => [];
 }
+
+class ErrorEvent extends FormEvent {
+  const ErrorEvent();
+
+  @override
+  List<Object?> get props => [];
+}

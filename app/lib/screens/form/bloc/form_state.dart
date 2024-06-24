@@ -24,6 +24,7 @@ extension FormStatusX on FormStatus {
   bool get isFilmGenres => this == FormStatus.filmGenres;
   bool get isViewingPlatform => this == FormStatus.viewingPlatform;
   bool get isEndForm => this == FormStatus.endForm;
+  bool get isError => this == FormStatus.error;
 }
 
 // FormState already exists in Flutter so FormStates is used instead

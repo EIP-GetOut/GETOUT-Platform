@@ -34,19 +34,17 @@ class Forms extends StatelessWidget {
       create: (context) => FormBloc(),
       child: Scaffold(
         appBar: AppBar(
-            leading: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    pageController.previousPage(
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeInOut,
-                    );
-                  },
-                ),
-              ],
-            )),
+            leading: (pageController.hasClients && pageController.page != pageController.initialPage) ?
+            IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                pageController.previousPage(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                );
+              },
+            ) : null,
+        ),
         body: PageView(
           controller: pageController,
           physics: const NeverScrollableScrollPhysics(),
@@ -65,6 +63,17 @@ class Forms extends StatelessWidget {
     );
   }
 
+  String _getButtonLabel(final FormStatus status) {
+    switch (status) {
+      case FormStatus.viewingPlatform:
+        return 'Confirmer';
+      case FormStatus.endForm:
+        return 'Découvrir l\'application';
+      default:
+        return 'Suivant';
+    }
+  }
+
   Widget _nextButton(final PageController pageController) {
     bool isEdit = false;
     if (globals.session?['preferences'] != null) {
@@ -76,15 +85,7 @@ class Forms extends StatelessWidget {
         width: Tools.widthFactor(context, 0.9),
         height: 65,
         child: FloatingActionButton(
-          child: (context.read<FormBloc>().state.status ==
-              FormStatus.endForm) ?
-          Text('Découvrir l\'application',
-              style: Theme.of(context).textTheme.labelMedium)
-              : AutoSizingText('Suivant',
-              minSize: 70,
-              maxSize: 100,
-              sizeFactor: 0.12,
-              height: 40,
+          child: Text(_getButtonLabel(context.read<FormBloc>().state.status),
               style: Theme.of(context).textTheme.labelMedium),
           onPressed: () {
             if (
@@ -113,7 +114,7 @@ class Forms extends StatelessWidget {
                             .containsValue(true))) {
               showSnackBar(context, 'Veuillez sélectionner au moins une case');
             } else if (context.read<FormBloc>().state.status ==
-                FormStatus.endForm) {
+                FormStatus.viewingPlatform) {
               FormServices()
                   .sendPreferences(FormRequestModel.fillFormRequest(
                       filmGenres: context.read<FormBloc>().state.filmGenres,
@@ -123,15 +124,21 @@ class Forms extends StatelessWidget {
                           context.read<FormBloc>().state.viewingPlatform))
                   .then((final FormResponseModel value) {
                 if (!value.isSuccessful) {
-                  showSnackBar(context,
+                  return showSnackBar(context,
                       'Une erreur est survenue veuillez réessayer plus tard');
                 }
-                if (isEdit) {
-                  Navigator.pop(context);
-                }
-                context.read<SessionBloc>().add(const SessionRequest());
+                context.read<FormBloc>().add(const EmitEvent(status: FormStatus.endForm));
+                pageController.nextPage(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeInOut);
               });
-            } else {
+            } else if (context.read<FormBloc>().state.status ==
+                FormStatus.endForm) {
+              if (isEdit) {
+                Navigator.pop(context);
+              }
+              context.read<SessionBloc>().add(const SessionRequest());
+            }  else {
               pageController.nextPage(
                   duration: const Duration(milliseconds: 200),
                   curve: Curves.easeInOut);
