@@ -44,8 +44,9 @@ final getOutTheme = ThemeData(
   textTheme:  const TextTheme(
     /// Button
       labelMedium: TextStyle(
-          fontSize: 23,
-          fontWeight: FontWeight.w600,
+          fontSize: 22,
+          fontFamily: 'Urbanist',
+          fontWeight: FontWeight.bold,
           color: Colors.white),
       bodyLarge: TextStyle(
         fontSize: 20,

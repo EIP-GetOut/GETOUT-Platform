@@ -110,14 +110,13 @@ flutter:
   assets:
     - assets/
 #    Draw:
-    - assets/images/draw/welcome_image.png # not used yet
+    - assets/images/draw/form_finish.png
     - assets/images/draw/woman.png
 #    Icon:
     - assets/images/icon/books.png
     - assets/images/icon/fire.png
     - assets/images/icon/heart.png
     - assets/images/icon/party.png
-    - assets/images/icon/phone_check.png
     - assets/images/icon/popcorn.png
     - assets/images/icon/profile_picture.png
     - assets/images/icon/bookmark.svg

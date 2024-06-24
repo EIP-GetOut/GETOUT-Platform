@@ -76,7 +76,11 @@ class Forms extends StatelessWidget {
         width: Tools.widthFactor(context, 0.9),
         height: 65,
         child: FloatingActionButton(
-          child: AutoSizingText('Suivant',
+          child: (context.read<FormBloc>().state.status ==
+              FormStatus.endForm) ?
+          Text('Découvrir l\'application',
+              style: Theme.of(context).textTheme.labelMedium)
+              : AutoSizingText('Suivant',
               minSize: 70,
               maxSize: 100,
               sizeFactor: 0.12,
