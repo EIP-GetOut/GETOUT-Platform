@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:getout/screens/form/bloc/form_bloc.dart';
 import 'package:getout/widgets/page_title.dart';
@@ -33,7 +34,7 @@ class EndForm extends StatelessWidget {
                 maxLines: 2,
               ),
               SizedBox(height: Tools.heightFactor(context, 0.05)),
-              Image.asset('assets/images/draw/form_finish.png', scale: 0.8),
+              SvgPicture.asset('assets/images/draw/form_complete.svg', width: Tools.widthFactor(context, 1)),
             ],
           ),
         ),

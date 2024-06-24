@@ -26,44 +26,51 @@ import 'package:getout/global.dart' as globals;
 class Forms extends StatelessWidget {
   const Forms({super.key});
 
+  static const List<Widget> pages = [
+    // SocialMediaSpentTime(),
+    // InterestChoices(),
+    LiteraryGenres(),
+    FilmGenres(),
+    ViewingPlatform(),
+    EndForm(),
+  ];
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     final PageController pageController = PageController();
 
     return BlocProvider(
       create: (context) => FormBloc(),
-      child: Scaffold(
-        appBar: AppBar(
-            leading: (pageController.hasClients && pageController.page != pageController.initialPage) ?
-            IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                pageController.previousPage(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeInOut,
-                );
-              },
-            ) : null,
-        ),
-        body: PageView(
-          controller: pageController,
-          physics: const NeverScrollableScrollPhysics(),
-          children: const <Widget>[
-            // SocialMediaSpentTime(),
-            // InterestChoices(),
-            LiteraryGenres(),
-            FilmGenres(),
-            ViewingPlatform(),
-            EndForm(),
-          ],
-        ),
-        floatingActionButton: _nextButton(pageController),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      ),
+      child: BlocBuilder<FormBloc, FormStates>(builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+              leading: (context.read<FormBloc>().state.status !=
+                  FormStatus.endForm) ?
+              IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  pageController.previousPage(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeInOut,
+                  );
+                },
+              ) : null,
+          ),
+          body: PageView(
+            controller: pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: pages,
+          ),
+          floatingActionButton: _nextButton(pageController),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        );
+      }),
     );
   }
 
-  String _getButtonLabel(final FormStatus status) {
+  String _getButtonLabel(final FormStatus status)
+  {
     switch (status) {
       case FormStatus.viewingPlatform:
         return 'Confirmer';
@@ -74,11 +81,9 @@ class Forms extends StatelessWidget {
     }
   }
 
-  Widget _nextButton(final PageController pageController) {
-    bool isEdit = false;
-    if (globals.session?['preferences'] != null) {
-      isEdit = true;
-    }
+  Widget _nextButton(final PageController pageController)
+  {
+    final bool isEdit = (globals.session?['preferences'] != null);
 
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state) {
       return SizedBox(

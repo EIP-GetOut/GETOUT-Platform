@@ -110,7 +110,7 @@ flutter:
   assets:
     - assets/
 #    Draw:
-    - assets/images/draw/form_finish.png
+    - assets/images/draw/form_complete.svg
     - assets/images/draw/woman.png
 #    Icon:
     - assets/images/icon/books.png
