@@ -36,10 +36,10 @@ router.get('/account/:accountId/recommend-movies', logApiRequest, (req: Request,
   }
 
   const options: Options = {
-    mode: 'json',
+    mode: 'text',
     pythonPath: '/usr/bin/python3',
     pythonOptions: [],
-    scriptPath: 'src/services/recommendations/',
+    scriptPath: 'src/services/recommendations/movies/',
     args: [JSON.stringify(req.session.account)],
     env: process.env
   }
@@ -55,9 +55,9 @@ router.get('/account/:accountId/recommend-movies', logApiRequest, (req: Request,
     return
   }
 
-  PythonShell.run('movies.py', options).then(async ([output]: any) => {
-    const recommendations = output.recommendations
+  PythonShell.run('movies.py', options).then(async (output: any) => {
     const promisesArray: Array<Promise<any>> = []
+    const recommendations: any[] = JSON.parse(output[0]).slice(0, 5)
 
     recommendations.forEach((recommandation: any) => {
       promisesArray.push(getMovie(recommandation.id))
@@ -76,6 +76,7 @@ router.get('/account/:accountId/recommend-movies', logApiRequest, (req: Request,
   }).catch((err: any) => {
     if (req.session.account?.lastMovieRecommandation != null && !(err instanceof AppError)) {
       getRecommandationsFromHistory(req.session.account).then((resolvedPromises) => {
+        logger.warn(`Parameters of the triggered error: ${JSON.stringify(options)}`)
         logger.error(`${err.name}: ${err.message}`)
         logger.info('Unknown error detected, retrieved last 5 recommendations.')
         return res.status(StatusCodes.OK).json(resolvedPromises)

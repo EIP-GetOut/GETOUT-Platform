@@ -22,8 +22,8 @@ import { type Preferences } from '@models/account/preferences.intefaces'
 const router = Router()
 
 const rulesPut = [
-  body('moviesGenres').isArray(),
-  body('booksGenres').isArray(),
+  body('moviesGenres').isArray({ max: 3 }),
+  body('booksGenres').isArray({ max: 3 }),
   body('platforms').isArray()
 ]
 

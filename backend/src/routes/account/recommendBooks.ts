@@ -39,15 +39,14 @@ router.get('/account/:accountId/recommend-books', logApiRequest, (req: Request, 
   }
 
   const options: Options = {
-    mode: 'json',
+    mode: 'text',
     pythonPath: '/usr/bin/python3',
     pythonOptions: [],
-    scriptPath: 'src/services/recommendations/',
+    scriptPath: 'src/services/recommendations/books/',
     args: [JSON.stringify(req.session.account)],
     env: process.env
   }
 
-  console.log(JSON.stringify(req.session.account))
   logger.debug(`Missing ${(60000 - (Date.now() - new Date(req.session.account!.lastBookRecommandation!).getTime())) / 1000} seconds to generate new recommendations.`)
 
   if (req.session.account?.lastBookRecommandation != null &&
@@ -58,11 +57,10 @@ router.get('/account/:accountId/recommend-books', logApiRequest, (req: Request, 
     }).catch(handleErrorOnRoute(res))
     return
   }
-  logger.warn(JSON.stringify(options, null, 2))
-  PythonShell.run('books.py', options).then(async ([output]: any) => {
-    const recommendations = output.recommendations
+  PythonShell.run('books.py', options).then(async (output: any) => {
     const promisesArray: Array<Promise<any>> = []
 
+    const recommendations: any[] = JSON.parse(output[0]).slice(0, 5)
     recommendations.forEach((recommandation: any) => {
       promisesArray.push(getBook(recommandation.id))
     })
@@ -79,6 +77,7 @@ router.get('/account/:accountId/recommend-books', logApiRequest, (req: Request, 
   }).catch((err: any) => {
     if (req.session.account?.lastBookRecommandation != null && !(err instanceof AppError)) {
       getRecommandationsFromHistory(req.session.account).then((resolvedPromises) => {
+        logger.warn(`Parameters of the triggered error: ${JSON.stringify(options)}`)
         logger.error(`${err.name}: ${err.message}`)
         logger.info('Unknown error detected, retrieved last 5 recommendations.')
         return res.status(StatusCodes.OK).json(resolvedPromises)
