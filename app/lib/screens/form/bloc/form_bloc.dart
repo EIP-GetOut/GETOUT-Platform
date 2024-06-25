@@ -17,9 +17,6 @@ part 'form_state.dart';
 class FormBloc extends Bloc<FormEvent, FormStates> {
   FormBloc() : super(const FormStates())
   {
-    final List<String> filmGenre = filmCodesToGenres(globals.session?['preferences']['moviesGenres']);
-    final List<String> literaryGenre = literaryCodesToGenres(globals.session?['preferences']['booksGenres']);
-
     on<EmitEvent>((event, emit) => emit(state.copyWith(status: event.status)));
     // on<SocialMediaTimeEvent>((event, emit) => emit(state.copyWith(time: event.time)));
     // on<InterestChoicesEvent>(_interestChoices);
@@ -28,11 +25,15 @@ class FormBloc extends Bloc<FormEvent, FormStates> {
     on<ViewingPlatformEvent>(_viewingPlatformEvent);
     on<EndFormEvent>((event, emit) => emit(state.copyWith()));
     on<ErrorEvent>((event, emit) => emit(state.copyWith()));
-
-    for (String genre in filmGenre) {
+    if (globals.session == null || globals.session?['preferences'] == null) {
+      return;
+    }
+    // final List<String> filmGenre = filmCodesToGenres(globals.session?['preferences']['moviesGenres']);
+    // final List<String> literaryGenre = literaryCodesToGenres(globals.session?['preferences']['booksGenres']);
+    for (String genre in filmCodesToGenres(globals.session?['preferences']['moviesGenres'])) {
       add(FilmGenresEvent(key: genre));
     }
-    for (String genre in literaryGenre) {
+    for (String genre in literaryCodesToGenres(globals.session?['preferences']['booksGenres'])) {
       add(LiteraryGenresEvent(key: genre));
     }
     for (String platform in globals.session?['preferences']['platforms']) {
@@ -42,6 +43,7 @@ class FormBloc extends Bloc<FormEvent, FormStates> {
   // filmCodes is dynamic because session['preferences']['moviesGenres'] is a List<dynamic>
   static List<String> filmCodesToGenres(final List<dynamic> filmCodes)
   {
+    print('filmCodes');
     Map<int, String> genreByCode = FilmGenreList.map((key, value) => MapEntry(value, key));
 
     return filmCodes.map((code) => genreByCode[code] ?? 'Unknown').toList();
@@ -50,6 +52,7 @@ class FormBloc extends Bloc<FormEvent, FormStates> {
   // literaryCodes is dynamic because session['preferences']['literaryGenres'] is a List<dynamic>
   static List<String> literaryCodesToGenres(final List<dynamic> literaryCodes)
   {
+    print('bookCodes');
     Map<String, String> genreByCode = LiteraryGenreList.map((key, value) => MapEntry(value, key));
 
     return literaryCodes.map((code) => genreByCode[code] ?? 'Unknown').toList();
