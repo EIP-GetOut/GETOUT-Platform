@@ -43,7 +43,6 @@ class FormBloc extends Bloc<FormEvent, FormStates> {
   // filmCodes is dynamic because session['preferences']['moviesGenres'] is a List<dynamic>
   static List<String> filmCodesToGenres(final List<dynamic> filmCodes)
   {
-    print('filmCodes');
     Map<int, String> genreByCode = FilmGenreList.map((key, value) => MapEntry(value, key));
 
     return filmCodes.map((code) => genreByCode[code] ?? 'Unknown').toList();
@@ -52,7 +51,6 @@ class FormBloc extends Bloc<FormEvent, FormStates> {
   // literaryCodes is dynamic because session['preferences']['literaryGenres'] is a List<dynamic>
   static List<String> literaryCodesToGenres(final List<dynamic> literaryCodes)
   {
-    print('bookCodes');
     Map<String, String> genreByCode = LiteraryGenreList.map((key, value) => MapEntry(value, key));
 
     return literaryCodes.map((code) => genreByCode[code] ?? 'Unknown').toList();
