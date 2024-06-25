@@ -69,16 +69,16 @@ class Forms extends StatelessWidget {
     );
   }
 
-  String _getButtonLabel(final FormStatus status)
+  String _getButtonLabel(final FormStatus status, final bool isEdit)
   {
-    switch (status) {
-      case FormStatus.viewingPlatform:
-        return 'Confirmer';
-      case FormStatus.endForm:
-        return 'Découvrir l\'application';
-      default:
-        return 'Suivant';
+    if (status == FormStatus.endForm && isEdit) {
+      return 'Retour au paramètres';
+    } else if (status == FormStatus.endForm) {
+      return 'Découvrir l\'application';
+    } else if (status == FormStatus.viewingPlatform) {
+      return 'Confirmer';
     }
+    return 'Suivant';
   }
 
   Widget _nextButton(final PageController pageController)
@@ -90,7 +90,7 @@ class Forms extends StatelessWidget {
         width: Tools.widthFactor(context, 0.9),
         height: 65,
         child: FloatingActionButton(
-          child: Text(_getButtonLabel(context.read<FormBloc>().state.status),
+          child: Text(_getButtonLabel(context.read<FormBloc>().state.status, isEdit),
               style: Theme.of(context).textTheme.labelMedium),
           onPressed: () {
             if (
