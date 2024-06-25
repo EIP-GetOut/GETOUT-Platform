@@ -18,10 +18,10 @@ class FormRequestModel {
     required this.viewingPlatform,
   });
 
-  static List<int> filmGenresToCode(final List<String> filmGenres)
+  static List<int> filmGenresToCode(final List<String> selectedFilmGenres)
   {
     final List<int?> tempFilmCode =
-        filmGenres.map((genre) => MovieGenre[genre]).toList();
+    selectedFilmGenres.map((genre) => FilmGenreList[genre]).toList();
     List<int> filmCodes = [];
 
     for (int i = 0; i < tempFilmCode.length; i++) {

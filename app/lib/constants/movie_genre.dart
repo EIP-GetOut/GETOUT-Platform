@@ -5,7 +5,19 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
-const Map<String, int> MovieGenre = {
+/*{
+  platforms:[
+    Cinéma, DVD, VOD, Netflix, Prime Video, Disney+, Apple TV+, myCanal, Autre sources
+  ],
+  booksGenres: [
+    crime, fiction, political, null, history, science, philosophy, biography, tale, romance, TODO
+  ],
+  moviesGenres: [
+    28, 12, 16, 35, 80, 99, 18, 10751, 14, 36, 27, 10402, 9648, 10749, 878, 10770, 53, 10752, 37, 0
+  ]
+}*/
+
+const Map<String, int> FilmGenreList = {
   'Action' : 28,
   'Aventure' : 12,
   'Animation' : 16,
@@ -26,4 +38,18 @@ const Map<String, int> MovieGenre = {
   'Guerre' : 10752,
   'Western' : 37,
   'Autre genre' : 0
+};
+
+const Map<String, String> LiteraryGenreList = {
+  'Policier' : 'crime',
+  'Science-fiction' : 'fiction',
+  'Politique' : 'political',
+  'Poésie' : 'poetry',
+  'Histoire' : 'history',
+  'Science' : 'science',
+  'Philosophie' : 'philosophy',
+  'Biographie' : 'biography',
+  'Contes et légendes' : 'tale',
+  'Romance' : 'romance',
+  'Autre genre' : 'TODO'
 };
