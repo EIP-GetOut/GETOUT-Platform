@@ -8,7 +8,7 @@
 part of 'form_bloc.dart';
 
 class FormEvent extends Equatable {
-  const FormEvent();
+   const FormEvent();
 
   @override
   List<Object?> get props => [];
@@ -45,31 +45,31 @@ class EmitEvent extends FormEvent {
   List<Object?> get props => [key];
 }*/
 
-class LiteraryGenresEvent extends FormEvent {
+class BookGenresEvent extends FormEvent {
   final String key;
 
-  const LiteraryGenresEvent({required this.key});
+  const BookGenresEvent({required this.key});
 
   @override
   List<Object?> get props => [key];
 
   @override
-  LiteraryGenresEvent setKey(String key) {
-    return LiteraryGenresEvent(key: key);
+  BookGenresEvent setKey(String key) {
+    return BookGenresEvent(key: key);
   }
 }
 
-class FilmGenresEvent extends FormEvent {
+class MovieGenresEvent extends FormEvent {
   final String key;
 
-  const FilmGenresEvent({required this.key});
+  const MovieGenresEvent({required this.key});
 
   @override
   List<Object?> get props => [key];
 
   @override
-  FilmGenresEvent setKey(String key) {
-    return FilmGenresEvent(key: key);
+  MovieGenresEvent setKey(String key) {
+    return MovieGenresEvent(key: key);
   }
 }
 

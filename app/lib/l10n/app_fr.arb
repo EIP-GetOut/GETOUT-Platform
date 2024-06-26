@@ -172,8 +172,8 @@
 
   "@_FORM": {},
 
-  "literary_genre": "Genres littéraire",
-  "film_genres": "Genres audiovisuel",
+  "book_genre": "Genres littéraire",
+  "movie_genres": "Genres audiovisuel",
   "viewing_platform": "Supports de visionnage",
   "form_description": "Ce formulaire nous permet de vous proposer une expérience personnalisée",
 

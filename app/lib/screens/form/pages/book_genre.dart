@@ -16,21 +16,21 @@ import 'package:getout/widgets/page_title.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/tools.dart';
 
-class LiteraryGenres extends StatelessWidget {
-  const LiteraryGenres({super.key});
+class BookGenres extends StatelessWidget {
+  const BookGenres({super.key});
 
   @override
   Widget build(BuildContext context)
   {
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
-      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.literaryGenres));
+      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.bookGenres));
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(height: Tools.heightFactor(context, 0.03)),
           PageTitle(
-            title: appL10n(context)!.literary_genre,
+            title: appL10n(context)!.book_genre,
             description: appL10n(context)!.form_description,
           ),
           SizedBox(height: Tools.heightFactor(context, 0.06)),
@@ -42,9 +42,9 @@ class LiteraryGenres extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 65.0),
               child: FormCheckbox(
-                checkboxList: context.read<FormBloc>().state.literaryGenres,
+                checkboxList: context.read<FormBloc>().state.bookGenres,
                 checkboxImages: null,
-                event: const LiteraryGenresEvent(key: ''),
+                event: const BookGenresEvent(key: ''),
               )
             ),
           )

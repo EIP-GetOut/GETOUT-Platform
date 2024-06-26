@@ -13,8 +13,8 @@ import 'package:getout/screens/form/services/form_services.dart';
 import 'package:getout/screens/form/pages/viewing_platform.dart';
 // import 'package:getout/screens/form/pages/social_media_time.dart';
 // import 'package:getout/screens/form/pages/interest_choices.dart';
-import 'package:getout/screens/form/pages/literary_genre.dart';
-import 'package:getout/screens/form/pages/film_genres.dart';
+import 'package:getout/screens/form/pages/book_genre.dart';
+import 'package:getout/screens/form/pages/movie_genres.dart';
 import 'package:getout/screens/form/pages/end_form.dart';
 import 'package:getout/screens/form/bloc/form_bloc.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
@@ -30,8 +30,8 @@ class Forms extends StatelessWidget {
   static const List<Widget> pages = [
     // SocialMediaSpentTime(),
     // InterestChoices(),
-    LiteraryGenres(),
-    FilmGenres(),
+    BookGenres(),
+    MovieGenres(),
     ViewingPlatform(),
     EndForm(),
   ];
@@ -97,18 +97,18 @@ class Forms extends StatelessWidget {
                 /*(context.read<FormBloc>().state.status == FormStatus.interestChoices &&
                     !context.read<FormBloc>().state.interest.containsValue(true)) ||*/
                 (context.read<FormBloc>().state.status ==
-                            FormStatus.literaryGenres &&
+                            FormStatus.bookGenres &&
                         !context
                             .read<FormBloc>()
                             .state
-                            .literaryGenres
+                            .bookGenres
                             .containsValue(true)) ||
                     (context.read<FormBloc>().state.status ==
-                            FormStatus.filmGenres &&
+                            FormStatus.movieGenres &&
                         !context
                             .read<FormBloc>()
                             .state
-                            .filmGenres
+                            .movieGenres
                             .containsValue(true)) ||
                     (context.read<FormBloc>().state.status ==
                             FormStatus.viewingPlatform &&
@@ -122,9 +122,9 @@ class Forms extends StatelessWidget {
                 FormStatus.viewingPlatform) {
               FormServices()
                   .sendPreferences(FormRequestModel.fillFormRequest(
-                      filmGenres: context.read<FormBloc>().state.filmGenres,
-                      literaryGenres:
-                          context.read<FormBloc>().state.literaryGenres,
+                      movieGenres: context.read<FormBloc>().state.movieGenres,
+                      bookGenres:
+                          context.read<FormBloc>().state.bookGenres,
                       viewingPlatform:
                           context.read<FormBloc>().state.viewingPlatform))
                   .then((final FormResponseModel value) {

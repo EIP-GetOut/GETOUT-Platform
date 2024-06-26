@@ -17,7 +17,7 @@
   ]
 }*/
 
-const Map<String, int> FilmGenreList = {
+const Map<String, int> MovieGenreList = {
   'Action' : 28,
   'Aventure' : 12,
   'Animation' : 16,
@@ -40,7 +40,7 @@ const Map<String, int> FilmGenreList = {
   'Autre genre' : 0
 };
 
-const Map<String, String> LiteraryGenreList = {
+const Map<String, String> bookGenreList = {
   'Policier' : 'crime',
   'Science-fiction' : 'fiction',
   'Politique' : 'political',

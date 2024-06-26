@@ -8,36 +8,36 @@
 part of 'form_services.dart';
 
 class FormRequestModel {
-  final List<int> filmGenres;
-  final List<String> literaryGenres;
+  final List<int> movieGenres;
+  final List<String> bookGenres;
   final List<String> viewingPlatform;
 
   const FormRequestModel({
-    required this.filmGenres,
-    required this.literaryGenres,
+    required this.movieGenres,
+    required this.bookGenres,
     required this.viewingPlatform,
   });
 
-  static List<int> filmGenresToCode(final List<String> selectedFilmGenres)
+  static List<int> movieGenresToCode(final List<String> selectedMovieGenres)
   {
-    final List<int?> tempFilmCode =
-    selectedFilmGenres.map((genre) => FilmGenreList[genre]).toList();
-    List<int> filmCodes = [];
+    final List<int?> tempMovieCode =
+    selectedMovieGenres.map((genre) => MovieGenreList[genre]).toList();
+    List<int> movieCodes = [];
 
-    for (int i = 0; i < tempFilmCode.length; i++) {
-      if (tempFilmCode[i] != null) {
-        filmCodes.add(tempFilmCode[i] ?? 0);
+    for (int i = 0; i < tempMovieCode.length; i++) {
+      if (tempMovieCode[i] != null) {
+        movieCodes.add(tempMovieCode[i] ?? 0);
       }
     }
-    return filmCodes;
+    return movieCodes;
   }
 
   static FormRequestModel fillFormRequest(
-      {required final Map<String, bool> filmGenres,
-      required final Map<String, bool> literaryGenres,
+      {required final Map<String, bool> movieGenres,
+      required final Map<String, bool> bookGenres,
       required final Map<String, bool> viewingPlatform})
   {
-    final List<String> chosenLiteraryGenres = literaryGenres.entries
+    final List<String> chosenBookGenres = bookGenres.entries
         .where((entry) => entry.value == true)
         .map((entry) => entry.key)
         .toList();
@@ -45,15 +45,15 @@ class FormRequestModel {
         .where((entry) => entry.value == true)
         .map((entry) => entry.key)
         .toList();
-    final List<String> chosenFilmGenres = filmGenres.entries
+    final List<String> chosenMovieGenres = movieGenres.entries
         .where((entry) => entry.value == true)
         .map((entry) => entry.key)
         .toList();
-    final List<int> filmCodes = filmGenresToCode(chosenFilmGenres);
+    final List<int> movieCodes = movieGenresToCode(chosenMovieGenres);
 
     return FormRequestModel(
-      filmGenres: filmCodes,
-      literaryGenres: chosenLiteraryGenres,
+      movieGenres: movieCodes,
+      bookGenres: chosenBookGenres,
       viewingPlatform: chosenViewingPlatform,
     );
   }

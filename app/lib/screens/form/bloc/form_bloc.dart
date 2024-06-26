@@ -20,40 +20,44 @@ class FormBloc extends Bloc<FormEvent, FormStates> {
     on<EmitEvent>((event, emit) => emit(state.copyWith(status: event.status)));
     // on<SocialMediaTimeEvent>((event, emit) => emit(state.copyWith(time: event.time)));
     // on<InterestChoicesEvent>(_interestChoices);
-    on<LiteraryGenresEvent>(_literaryGenresEvent);
-    on<FilmGenresEvent>(_filmGenresEvent);
+    on<BookGenresEvent>(_bookGenresEvent);
+    on<MovieGenresEvent>(_movieGenresEvent);
     on<ViewingPlatformEvent>(_viewingPlatformEvent);
     on<EndFormEvent>((event, emit) => emit(state.copyWith()));
     on<ErrorEvent>((event, emit) => emit(state.copyWith()));
     if (globals.session == null || globals.session?['preferences'] == null) {
       return;
     }
-    // final List<String> filmGenre = filmCodesToGenres(globals.session?['preferences']['moviesGenres']);
-    // final List<String> literaryGenre = literaryCodesToGenres(globals.session?['preferences']['booksGenres']);
-    for (String genre in filmCodesToGenres(globals.session?['preferences']['moviesGenres'])) {
-      add(FilmGenresEvent(key: genre));
+    for (String genre in movieCodesToGenres(globals.session?['preferences']['moviesGenres'])) {
+      add(MovieGenresEvent(key: genre));
     }
-    for (String genre in literaryCodesToGenres(globals.session?['preferences']['booksGenres'])) {
-      add(LiteraryGenresEvent(key: genre));
+    for (String genre in bookCodesToGenres(globals.session?['preferences']['booksGenres'])) {
+      add(BookGenresEvent(key: genre));
     }
     for (String platform in globals.session?['preferences']['platforms']) {
       add(ViewingPlatformEvent(key: platform));
     }
   }
-  // filmCodes is dynamic because session['preferences']['moviesGenres'] is a List<dynamic>
-  static List<String> filmCodesToGenres(final List<dynamic> filmCodes)
-  {
-    Map<int, String> genreByCode = FilmGenreList.map((key, value) => MapEntry(value, key));
 
-    return filmCodes.map((code) => genreByCode[code] ?? 'Unknown').toList();
+ /* void emitEvent(FormStatus status)
+  {
+    add(EmitEvent(status: status));
+  }*/
+
+  // movieCodes is dynamic because session['preferences']['moviesGenres'] is a List<dynamic>
+  static List<String> movieCodesToGenres(final List<dynamic> movieCodes)
+  {
+    Map<int, String> genreByCode = MovieGenreList.map((key, value) => MapEntry(value, key));
+
+    return movieCodes.map((code) => genreByCode[code] ?? 'Unknown').toList();
   }
 
-  // literaryCodes is dynamic because session['preferences']['literaryGenres'] is a List<dynamic>
-  static List<String> literaryCodesToGenres(final List<dynamic> literaryCodes)
+  // bookCodes is dynamic because session['preferences']['literaryGenres'] is a List<dynamic>
+  static List<String> bookCodesToGenres(final List<dynamic> bookCodes)
   {
-    Map<String, String> genreByCode = LiteraryGenreList.map((key, value) => MapEntry(value, key));
+    Map<String, String> genreByCode = bookGenreList.map((key, value) => MapEntry(value, key));
 
-    return literaryCodes.map((code) => genreByCode[code] ?? 'Unknown').toList();
+    return bookCodes.map((code) => genreByCode[code] ?? 'Unknown').toList();
   }
 
   /*void _interestChoices(InterestChoicesEvent interestChoices, Emitter<FormStates> emit) async
@@ -63,18 +67,18 @@ class FormBloc extends Bloc<FormEvent, FormStates> {
     emit(state.copyWith(interest: interestList));
   }*/
 
-  void _literaryGenresEvent(LiteraryGenresEvent literaryGenresEvent, Emitter<FormStates> emit) async
+  void _bookGenresEvent(BookGenresEvent bookGenresEvent, Emitter<FormStates> emit) async
   {
-    Map<String, bool> listGenres = Map.from(state.literaryGenres);
-    listGenres[literaryGenresEvent.key] = !listGenres[literaryGenresEvent.key]!;
-    emit(state.copyWith(literaryGenres: listGenres));
+    Map<String, bool> listGenres = Map.from(state.bookGenres);
+    listGenres[bookGenresEvent.key] = !listGenres[bookGenresEvent.key]!;
+    emit(state.copyWith(bookGenres: listGenres));
   }
 
-  void _filmGenresEvent(FilmGenresEvent filmGenresEvent, Emitter<FormStates> emit) async
+  void _movieGenresEvent(MovieGenresEvent movieGenresEvent, Emitter<FormStates> emit) async
   {
-    Map<String, bool> filmList = Map.from(state.filmGenres);
-    filmList[filmGenresEvent.key] = !filmList[filmGenresEvent.key]!;
-    emit(state.copyWith(filmGenres: filmList));
+    Map<String, bool> movieList = Map.from(state.movieGenres);
+    movieList[movieGenresEvent.key] = !movieList[movieGenresEvent.key]!;
+    emit(state.copyWith(movieGenres: movieList));
   }
 
   void _viewingPlatformEvent(ViewingPlatformEvent viewingPlatformEvent, Emitter<FormStates> emit) async
