@@ -20,6 +20,7 @@ import 'package:getout/screens/form/bloc/form_bloc.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/session/session_event.dart';
+import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/tools.dart';
 import 'package:getout/global.dart' as globals;
 
@@ -69,18 +70,17 @@ class Forms extends StatelessWidget {
     );
   }
 
-  String _getButtonLabel(final FormStatus status, final bool isEdit)
+  String _getButtonLabel(final FormStatus status, final bool isEdit, BuildContext context)
   {
     if (status == FormStatus.endForm && isEdit) {
-      return 'Retour au paramètres';
+      return appL10n(context)!.back_to_settings;
     } else if (status == FormStatus.endForm) {
-      return 'Découvrir l\'application';
+      return appL10n(context)!.discover_app;
     } else if (status == FormStatus.viewingPlatform) {
-      return 'Confirmer';
+      return appL10n(context)!.confirm;
     }
-    return 'Suivant';
+    return appL10n(context)!.next;
   }
-
   Widget _nextButton(final PageController pageController)
   {
     final bool isEdit = (globals.session?['preferences'] != null);
@@ -90,7 +90,7 @@ class Forms extends StatelessWidget {
         width: Tools.widthFactor(context, 0.9),
         height: 65,
         child: FloatingActionButton(
-          child: Text(_getButtonLabel(context.read<FormBloc>().state.status, isEdit),
+          child: Text(_getButtonLabel(context.read<FormBloc>().state.status, isEdit, context),
               style: Theme.of(context).textTheme.labelMedium),
           onPressed: () {
             if (
@@ -117,7 +117,7 @@ class Forms extends StatelessWidget {
                             .state
                             .viewingPlatform
                             .containsValue(true))) {
-              showSnackBar(context, 'Veuillez sélectionner au moins une case');
+              showSnackBar(context, appL10n(context)!.form_validator);
             } else if (context.read<FormBloc>().state.status ==
                 FormStatus.viewingPlatform) {
               FormServices()
@@ -129,8 +129,7 @@ class Forms extends StatelessWidget {
                           context.read<FormBloc>().state.viewingPlatform))
                   .then((final FormResponseModel value) {
                 if (!value.isSuccessful) {
-                  return showSnackBar(context,
-                      'Une erreur est survenue veuillez réessayer plus tard');
+                  return showSnackBar(context, appL10n(context)!.error_unknow);
                 }
                 context.read<FormBloc>().add(const EmitEvent(status: FormStatus.endForm));
                 pageController.nextPage(

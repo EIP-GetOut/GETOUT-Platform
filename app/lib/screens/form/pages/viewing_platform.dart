@@ -13,6 +13,7 @@ import 'package:getout/screens/form/widgets/checkbox.dart';
 import 'package:getout/screens/form/widgets/progress_bar.dart';
 import 'package:getout/screens/form/bloc/form_bloc.dart';
 import 'package:getout/widgets/page_title.dart';
+import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/tools.dart';
 
 class ViewingPlatform extends StatelessWidget {
@@ -49,9 +50,9 @@ class ViewingPlatform extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(height: Tools.heightFactor(context, 0.03)),
-          const PageTitle(
-            title: 'Service de streaming',
-            description: 'Ce formulaire nous permet de vous proposer une expérience personnalisée.',
+          PageTitle(
+            title: appL10n(context)!.viewing_platform,
+            description: appL10n(context)!.form_description,
           ),
           SizedBox(height: Tools.heightFactor(context, 0.06)),
           SizedBox(

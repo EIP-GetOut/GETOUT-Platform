@@ -168,5 +168,18 @@
 
   "history": "Historique",
   "more": "Autre",
-  "support": "Support"
+  "support": "Support",
+
+  "@_FORM": {},
+
+  "literary_genre": "Genres littéraire",
+  "film_genres": "Genres audiovisuel",
+  "viewing_platform": "Supports de visionnage",
+  "form_description": "Ce formulaire nous permet de vous proposer une expérience personnalisée",
+
+  "back_to_settings": "Retour au paramètres",
+  "discover_app": "Découvrir l'application",
+  "confirm": "Confirmer",
+
+  "form_validator": "Veuillez sélectionner au moins une case"
 }
