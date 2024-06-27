@@ -13,8 +13,9 @@ import { type UUID } from 'node:crypto'
 import { logApiRequest } from '@services/middlewares/logging'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
-import { deleteAccountById, getAccounts } from '@models/accounts'
 import { modifyAccount } from '@models/account'
+import { deleteAccountById, getAccounts } from '@models/accounts'
+
 import { body } from 'express-validator'
 
 const router = Router()
@@ -22,7 +23,7 @@ const router = Router()
 const rulesPatch = [
   body('email').optional().isEmail(),
   body('firstName').optional().isString(),
-  body('lastName').optional().isString(),
+  body('lastName').optional().isString()
 ]
 
 router.get('/accounts/:page', logApiRequest, (req: Request, res: Response) => {
@@ -37,7 +38,7 @@ router.delete('/accounts/:id', logApiRequest, (req: Request, res: Response) => {
   }).catch(handleErrorOnRoute(res))
 })
 
-router.patch('/accounts/:id', logApiRequest, (req: Request, res: Response) => {
+router.patch('/accounts/:id', rulesPatch, logApiRequest, (req: Request, res: Response) => {
   modifyAccount(req.params.id as UUID, req.body).then(() => {
     return res.status(StatusCodes.OK).send(getReasonPhrase(StatusCodes.OK))
   }).catch(handleErrorOnRoute(res))
