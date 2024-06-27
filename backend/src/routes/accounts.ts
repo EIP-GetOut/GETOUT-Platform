@@ -7,6 +7,7 @@
 
 import { Router } from 'express'
 import { type Request, type Response } from 'express'
+import { body } from 'express-validator'
 import { StatusCodes, getReasonPhrase } from 'http-status-codes'
 import { type UUID } from 'node:crypto'
 
@@ -15,8 +16,6 @@ import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { modifyAccount } from '@models/account'
 import { deleteAccountById, getAccounts } from '@models/accounts'
-
-import { body } from 'express-validator'
 
 const router = Router()
 
