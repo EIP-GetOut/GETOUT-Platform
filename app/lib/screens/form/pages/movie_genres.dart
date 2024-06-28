@@ -16,56 +16,35 @@ import 'package:getout/widgets/page_title.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/tools.dart';
 
-class ViewingPlatform extends StatelessWidget {
-  const ViewingPlatform({super.key});
-
-  static const List<String> _imagesList = [
-    'assets/images/logo/cinema.png',
-    'assets/images/logo/DVD.png',
-    'assets/images/logo/VOD.png',
-    'assets/images/logo/netflix.png',
-    'assets/images/logo/prime_video.png',
-    'assets/images/logo/disney+.png',
-    'assets/images/logo/apple_tv+.png',
-    'assets/images/logo/mycanal.png',
-    'assets/images/logo/autre_sources.png'
-  ];
+class MovieGenres extends StatelessWidget {
+  const MovieGenres({super.key});
 
   @override
   Widget build(BuildContext context)
   {
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
     {
-      final Map<String, bool> viewingPlatform =
-          context.read<FormBloc>().state.viewingPlatform;
-      // When I create this variable,
-      // only god and I knew how it worked. Now, only god knows it
-      final Map<String, String> checkboxImages = Map.fromEntries(
-          viewingPlatform.entries.map((entry) => MapEntry(
-              entry.key,
-              _imagesList[viewingPlatform.keys.toList().indexOf(entry.key)])));
-
-      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.viewingPlatform));
+      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.movieGenres));
       return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(height: Tools.heightFactor(context, 0.03)),
           PageTitle(
-            title: appL10n(context)!.viewing_platform,
+            title: appL10n(context)!.movie_genres,
             description: appL10n(context)!.form_description,
           ),
           SizedBox(height: Tools.heightFactor(context, 0.06)),
           SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: const ProgressBar(total: 3, current: 3)),
+              child: const ProgressBar(total: 3, current: 2)),
           SizedBox(height: Tools.heightFactor(context, 0.05)),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(bottom: 65.0),
               child: FormCheckbox(
-                checkboxList: viewingPlatform,
-                checkboxImages: checkboxImages,
-                event: const ViewingPlatformEvent(key: ''),
+                checkboxList: context.read<FormBloc>().state.movieGenres,
+                checkboxImages: null,
+                event: const MovieGenresEvent(key: ''),
               )
             ),
           )

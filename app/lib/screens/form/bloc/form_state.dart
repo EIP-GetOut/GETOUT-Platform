@@ -10,8 +10,8 @@ part of 'form_bloc.dart';
 enum FormStatus {
   // socialMediaTime,
   // interestChoices,
-  literaryGenres,
-  filmGenres,
+  bookGenres,
+  movieGenres,
   viewingPlatform,
   endForm,
   error
@@ -20,16 +20,17 @@ enum FormStatus {
 extension FormStatusX on FormStatus {
   // bool get isSocialMediaTime => this == FormStatus.socialMediaTime;
   // bool get isInterestChoices => this == FormStatus.interestChoices;
-  bool get isLiteraryGenres => this == FormStatus.literaryGenres;
-  bool get isFilmGenres => this == FormStatus.filmGenres;
+  bool get isBookGenres => this == FormStatus.bookGenres;
+  bool get isMovieGenres => this == FormStatus.movieGenres;
   bool get isViewingPlatform => this == FormStatus.viewingPlatform;
   bool get isEndForm => this == FormStatus.endForm;
+  bool get isError => this == FormStatus.error;
 }
 
 // FormState already exists in Flutter so FormStates is used instead
 class FormStates extends Equatable {
   const FormStates({
-    this.status = FormStatus.literaryGenres,
+    this.status = FormStatus.bookGenres,
     // this.time = 0.0,
     /*this.interest = const {
       'Technologie' : false,
@@ -38,11 +39,11 @@ class FormStates extends Equatable {
       'Voyage' : false,
       'Activité artistique' : false
     },*/
-    this.literaryGenres = const {
+    this.bookGenres = const {
       'Policier' : false,
       'Science-fiction' : false,
       'Politique' : false,
-      'Poesie' : false,
+      'Poésie' : false,
       'Histoire' : false,
       'Science' : false,
       'Philosophie' : false,
@@ -51,7 +52,7 @@ class FormStates extends Equatable {
       'Romance' : false,
       'Autre genre' : false
     },
-    this.filmGenres = const {
+    this.movieGenres = const {
       'Action' : false,
       'Aventure' : false,
       'Animation' : false,
@@ -89,27 +90,27 @@ class FormStates extends Equatable {
   // final double time;
 
   // final Map<String, bool> interest;
-  final Map<String, bool> literaryGenres;
-  final Map<String, bool> filmGenres;
+  final Map<String, bool> bookGenres;
+  final Map<String, bool> movieGenres;
   final Map<String, bool> viewingPlatform;
 
   @override
-  List<Object?> get props => [status, literaryGenres, filmGenres, viewingPlatform]; // time, interest
+  List<Object?> get props => [status, bookGenres, movieGenres, viewingPlatform]; // time, interest
 
   FormStates copyWith({
     FormStatus? status,
     // double? time,
     // Map<String, bool>? interest,
-    Map<String, bool>? literaryGenres,
-    Map<String, bool>? filmGenres,
+    Map<String, bool>? bookGenres,
+    Map<String, bool>? movieGenres,
     Map<String, bool>? viewingPlatform,
   }) {
     return FormStates(
       status: status ?? this.status,
       // time: time ?? this.time,
       // interest: interest ?? this.interest,
-      literaryGenres: literaryGenres ?? this.literaryGenres,
-      filmGenres: filmGenres ?? this.filmGenres,
+      bookGenres: bookGenres ?? this.bookGenres,
+      movieGenres: movieGenres ?? this.movieGenres,
       viewingPlatform: viewingPlatform ?? this.viewingPlatform,
     );
   }
