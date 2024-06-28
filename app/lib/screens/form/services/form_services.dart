@@ -20,8 +20,8 @@ class FormServices {
   {
     FormResponseModel response = const FormResponseModel(statusCode: HttpStatus.APP_ERROR);
     final Map<String, List<Object>> preferences = {
-      'moviesGenres': request.filmGenres,
-      'booksGenres': request.literaryGenres,
+      'moviesGenres': request.movieGenres,
+      'booksGenres': request.bookGenres,
       'platforms': request.viewingPlatform
     };
     dynamic dioResponse; // dynamic because dio can return a DioError or a Response
