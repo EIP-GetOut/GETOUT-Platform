@@ -16,7 +16,7 @@ import { Account } from '@entities/Account'
 
 import { appDataSource } from '@config/dataSource'
 
-import { type Preferences } from './preferences.intefaces'
+import { type Preferences } from './preferences.interface'
 
 async function addPreferences (accountId: UUID, preferencesToAdd: Preferences, preferences: keyof Account): Promise<Preferences> {
   return await findEntity<Account>(Account, { id: accountId }).then(async (account) => {

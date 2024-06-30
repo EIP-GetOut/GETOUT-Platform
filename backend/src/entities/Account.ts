@@ -15,7 +15,7 @@ import {
   ManyToOne
 } from 'typeorm'
 
-import { Preferences } from '@models/account/preferences.intefaces'
+import { Preferences } from '@models/account/preferences.interface'
 
 import { Role } from './Role'
 

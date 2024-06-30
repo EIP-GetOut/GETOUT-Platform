@@ -8,7 +8,6 @@
 import { type UUID } from 'crypto'
 import { type Session, type SessionData } from 'express-session'
 
-import logger from '@services/middlewares/logging'
 import { AccountDoesNotExistError, DbError, NotLoggedInError, SessionDestroyError } from '@services/utils/customErrors'
 
 import { Account } from '@entities/Account'

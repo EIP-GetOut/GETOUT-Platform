@@ -53,11 +53,6 @@ const morganConf = {
   }
 }
 
-// function createMorganToken () {
-//   morgan.token('email', (req: Request, res: Response) => req.session?.account?.email ?? '-')
-// }
-
-// TODO: change type
-const logApiRequest: any = morgan(morganConf.format, morganConf.options)
+const logApiRequest = morgan(morganConf.format, morganConf.options)
 
 export { logger as default, logApiRequest }

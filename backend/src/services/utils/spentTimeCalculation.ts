@@ -8,9 +8,9 @@
 import { getBook } from '@models/book'
 import { getMovie } from '@models/movie'
 
-import { type SessionAccount } from './appUtils/useSession'
+import { type Account } from '@entities/Account'
 
-async function calculateSpentMinutesReadingAndWatching (account: SessionAccount): Promise<number> {
+async function calculateSpentMinutesReadingAndWatching (account: Account): Promise<number> {
   const promisesArray: Array<Promise<any>> = []
   let spentMinutes: number = 0
 

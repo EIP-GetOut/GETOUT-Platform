@@ -127,7 +127,7 @@ router.post('/account/:accountId/likedMovies', rulesPost, validate, logApiReques
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
-  addMovieToLikedMovies(req.params.accountId, parseInt(req.body.movieId), req.session).then(async (updatedLikedMoviesList: number[]) => {
+  addMovieToLikedMovies(req.params.accountId, parseInt(req.body.movieId)).then(async (updatedLikedMoviesList: number[]) => {
     return await modifyAccount(req.session.account!.id, { likedMovies: updatedLikedMoviesList }).then(() => {
       logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s liked movies.`)
       return res.status(StatusCodes.CREATED).json(updatedLikedMoviesList)

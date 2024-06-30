@@ -11,7 +11,7 @@ import { type Application } from 'express'
 import session, { type SessionOptions } from 'express-session'
 import { type RedisClientType, createClient } from 'redis'
 
-import { type Preferences } from '@models/account/preferences.intefaces'
+import { type Preferences } from '@models/account/preferences.interface'
 
 import { type Role } from '@entities/Role'
 
@@ -23,23 +23,11 @@ export interface SessionAccount {
   bornDate?: Date
   createdDate: Date
   preferences?: Preferences
-  watchlist: number []
-  readingList: string []
-  likedMovies: number []
-  likedBooks: string []
-  dislikedMovies: number []
-  dislikedBooks: string []
-  seenMovies: number []
-  readBooks: string []
-  lastMovieRecommandation?: Date
-  lastBookRecommandation?: Date
-  recommendedBooksHistory: string []
-  recommendedMoviesHistory: number []
+  lastMovieRecommandation: Date | null
+  lastBookRecommandation: Date | null
   spentMinutesReadingAndWatching: number
   role: Role
   isVerified: boolean
-  emailVerificationCode: number | null
-  emailVerificationExpiration: Date | null
 }
 
 declare module 'express-session' {

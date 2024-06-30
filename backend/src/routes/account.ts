@@ -9,10 +9,11 @@ import { type Request, type Response, Router } from 'express'
 import { body } from 'express-validator'
 import { StatusCodes, getReasonPhrase } from 'http-status-codes'
 
-import logger, { logApiRequest } from '@services/middlewares/logging'
+import { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
 import { NotLoggedInError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
+import { mapAccountToSession } from '@services/utils/mapAccountToSession'
 
 import { deleteAccount, modifyAccount } from '@models/account'
 
@@ -42,11 +43,11 @@ router.patch('/account', rulesPatch, validate, logApiRequest, (req: Request, res
     handleErrorOnRoute(res)(new NotLoggedInError())
     return
   }
-  modifyAccount(req.session.account.id, req.body as Partial<Account>).then(() => {
+  modifyAccount(req.session.account.id, req.body as Partial<Account>).then(async () => {
+    await mapAccountToSession(req)
+  }).then(() => {
     return res.status(StatusCodes.OK).json(req.body)
-  }).catch((err: any) => {
-    handleErrorOnRoute(err)
-  })
+  }).catch(handleErrorOnRoute)
 })
 
 export default router

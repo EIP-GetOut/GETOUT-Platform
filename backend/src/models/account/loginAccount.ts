@@ -6,7 +6,7 @@
 */
 
 import bcrypt from 'bcrypt'
-import { type Session, type SessionData } from 'express-session'
+import { type Request } from 'express'
 import { StatusCodes } from 'http-status-codes'
 
 import { authentifyWithGoogle } from '@services/authentification'
@@ -21,31 +21,29 @@ import { type oauthAccount } from '@routes/account/oauth/oauthAccount'
 
 import { type accountRepositoryRequest } from './account'
 
-async function createSession (sess: Session & Partial<SessionData>, account: Account): Promise<void> {
-  const week = 3600000 * 24 * 7
-
-  sess.cookie.expires = new Date(Date.now() + week)
-  sess.cookie.maxAge = week
-
-  const sessAccount: any = { ...account }
-  delete sessAccount.password
-  delete sessAccount.salt
-  delete sessAccount.passwordResetCode
-  delete sessAccount.passwordResetExpiration
-  delete sessAccount.emailVerificationCode
-  delete sessAccount.emailVerificationExpiration
-  delete sessAccount.passwordResetExpiration
-  sessAccount.spentMinutesReadingAndWatching = 0
-  sess.account = sessAccount
-
-  await calculateSpentMinutesReadingAndWatching(sess.account!).then((spentMinutes: number) => {
-    sess.account!.spentMinutesReadingAndWatching = spentMinutes
+async function createSession (req: Request, account: Account): Promise<void> {
+  req.session.account = {
+    id: account.id,
+    createdDate: account.createdDate,
+    email: account.email,
+    firstName: account.firstName,
+    lastName: account.lastName,
+    bornDate: account.bornDate,
+    isVerified: account.isVerified,
+    lastBookRecommandation: account.lastBookRecommandation,
+    lastMovieRecommandation: account.lastMovieRecommandation,
+    preferences: account.preferences,
+    spentMinutesReadingAndWatching: NaN,
+    role: account.role
+  }
+  await calculateSpentMinutesReadingAndWatching(account).then((spentMinutes: number) => {
+    req.session.account!.spentMinutesReadingAndWatching = spentMinutes
   }).catch((err: Error) => {
     throw new ApiError(`Failed calculating spent time reading and watching (${err.name}: ${err.message}).`)
   })
 }
 
-async function loginWithGoogle (account: oauthAccount, sess: Session): Promise<StatusCodes> {
+async function loginWithGoogle (account: oauthAccount): Promise<StatusCodes> {
   return await authentifyWithGoogle(account).then(([isOk]) => {
     if (isOk) {
     //   createSession(sess, account)
@@ -57,7 +55,7 @@ async function loginWithGoogle (account: oauthAccount, sess: Session): Promise<S
   })
 }
 
-async function loginAccount (accountToLogin: accountRepositoryRequest, sess: Session): Promise<void> {
+async function loginAccount (req: Request, accountToLogin: accountRepositoryRequest): Promise<void> {
   await findEntity<Account>(Account, { email: accountToLogin.email }).then(async (foundAccount: Account | null) => {
     if (foundAccount == null) {
       throw new AccountDoesNotExistError()
@@ -66,7 +64,7 @@ async function loginAccount (accountToLogin: accountRepositoryRequest, sess: Ses
       if (!comparison) {
         throw new IncorrectEmailOrPasswordError(`Account's email or password is incorrect: ${accountToLogin.email}`)
       }
-      await createSession(sess, foundAccount)
+      await createSession(req, foundAccount)
     }).catch((err: AppError | Error) => {
       if (err instanceof AppError) {
         throw err

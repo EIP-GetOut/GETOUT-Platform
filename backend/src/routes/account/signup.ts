@@ -27,7 +27,8 @@ const rulesPost = [
   body('firstName').isString(),
   body('lastName').isString(),
   body('bornDate').isDate({ format: 'DD/MM/YYYY' }),
-  body('password').isString()
+  body('password').isString(),
+  body('isAdmin').isBoolean().default(false).optional()
 ]
 
 /**
@@ -85,6 +86,9 @@ router.post('/account/signup', rulesPost, validate, logApiRequest, (req: Request
     return
   }
   registerAccount(req.body).then(async (account: Account) => {
+    if (req.body.isAdmin === true) {
+      // send invitation à la beta avec compte
+    }
     return await generateEmailVerificationCode(account.email).then(async (code) => {
       logger.debug(`Sending email verification code to email ${account.email} : ${code}.`)
       // send verification email
