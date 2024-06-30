@@ -20,7 +20,7 @@ let app: Application
 let redisClient: RedisClientType
 
 const bodySignup = {
-  email: 'supertester@tester.test',
+  email: 'supertester@test.com',
   firstName: 'Super',
   lastName: 'Tester',
   bornDate: '07/06/2001',
@@ -28,7 +28,7 @@ const bodySignup = {
 }
 
 const loginBody = {
-  email: 'supertester@tester.test',
+  email: 'supertester@test.com',
   password: 'toto'
 }
 
@@ -49,9 +49,9 @@ beforeAll(async () => {
   })
 })
 
-afterAll(async () => {
-  await appDataSource.destroy()
-  await redisClient.quit()
+afterAll(() => {
+  void appDataSource.destroy()
+  void redisClient.quit()
 })
 
 export { app }

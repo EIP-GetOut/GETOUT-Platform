@@ -15,7 +15,7 @@ import { app } from '@config/jestSetup'
 import { extractConnectSidCookie } from '../../setupUtils'
 
 const loginBody = {
-  email: 'supertester@tester.test',
+  email: 'supertester@test.com',
   password: 'toto'
 }
 

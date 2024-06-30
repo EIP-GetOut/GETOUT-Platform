@@ -14,7 +14,7 @@ import { app } from '@config/jestSetup'
 import { extractConnectSidCookie } from '../setupUtils'
 
 const loginBody = {
-  email: 'supertester@tester.test',
+  email: 'supertester@test.com',
   password: 'toto'
 }
 
@@ -30,7 +30,7 @@ void describe('Session route', () => {
       expect(response.status).toBe(200)
       expect(response.body).toHaveProperty('cookie')
       expect(response.body).toHaveProperty('account')
-      expect(response.body.account.email).toStrictEqual('supertester@tester.test')
+      expect(response.body.account.email).toStrictEqual(loginBody.email)
     })
   })
 
