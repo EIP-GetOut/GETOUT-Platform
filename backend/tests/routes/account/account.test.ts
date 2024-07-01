@@ -7,18 +7,15 @@
 
 import { beforeAll, expect, it } from '@jest/globals'
 import { StatusCodes } from 'http-status-codes'
-import { type UUID } from 'node:crypto'
 import { describe } from 'node:test'
 import request from 'supertest'
-
-import { type Preferences } from '@models/account/preferences.interface'
 
 import { app } from '@config/jestSetup'
 
 import { extractConnectSidCookie } from '../../setupUtils'
 
 const bodySignup = {
-  email: 'recommendedMoviesHistory@test.com',
+  email: 'account@test.com',
   firstName: 'Super',
   lastName: 'Tester',
   bornDate: '07/06/2001',
@@ -26,44 +23,39 @@ const bodySignup = {
 }
 
 const loginBody = {
-  email: 'recommendedMoviesHistory@test.com',
+  email: 'account@test.com',
   password: 'toto'
 }
-
-const preferences: Preferences = {
-  moviesGenres: [27, 36],
-  booksGenres: ['Politique'],
-  platforms: ['PrimeVideo']
+const patchBody = {
+  firstName: 'Patched',
+  lastName: 'User'
 }
 
-void describe('Recommended Movies History Route', async () => {
-  let accountId: UUID
+void describe('Account Routes', () => {
   let cookie: string
 
   beforeAll(async () => {
     await request(app).post('/account/signup').send(bodySignup).then(async (response) => {
       if (response.statusCode !== StatusCodes.CREATED) {
-        throw Error(`Failed creating account: ${response.statusCode}`)
+        throw Error('Failed creating account')
       }
       await request(app).post('/account/login').send(loginBody).then(async (res) => {
         const optionalCookie = extractConnectSidCookie(res.headers['set-cookie'][0])
         if (optionalCookie === null) { throw Error('Failed extracting cookie') }
         cookie = optionalCookie
-        return await request(app).get('/session').set('Cookie', cookie)
-      }).then((res) => {
-        accountId = res.body.account.id
       })
     })
   })
 
-  it('should respond with 200 OK and the recommended movies history for GET /account/:accountId/recommendedMoviesHistory', async () => {
-    await request(app).post('/account/preferences').send(preferences).set('Cookie', cookie).then(async () => {
-      return await request(app).get(`/account/${accountId}/recommend-movies`).set('Cookie', cookie)
-    }).then(async () => {
-      return await request(app).get(`/account/${accountId}/recommendedMoviesHistory`).set('Cookie', cookie)
-    }).then((response) => {
+  it('should respond with 200 OK for PATCH /account and then 204 NO CONTENT for DELETE /account', async () => {
+    await request(app).patch('/account').set('Cookie', cookie).send(patchBody).then((response) => {
       expect(response.status).toBe(StatusCodes.OK)
-      expect(response.body).toHaveLength(5)
+      expect(response.body.firstName).toBe(patchBody.firstName)
+      expect(response.body.lastName).toBe(patchBody.lastName)
     })
-  }, 10000)
+
+    await request(app).delete('/account').set('Cookie', cookie).then((response) => {
+      expect(response.status).toBe(StatusCodes.NO_CONTENT)
+    })
+  })
 })
