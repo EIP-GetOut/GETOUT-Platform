@@ -28,7 +28,7 @@ async function generateEmailVerificationCode (email: string): Promise<number> {
     if (account == null) {
       throw new AccountDoesNotExistError()
     }
-    account.emailVerificationCode = process.env.NODE_ENV === 'development'
+    account.emailVerificationCode = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'
       ? 123456
       : Math.floor(100000 + Math.random() * 900000)
     account.emailVerificationExpiration = getDateIn1Day()

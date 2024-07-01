@@ -60,7 +60,7 @@ export class Account {
   @Column('jsonb', { nullable: true, default: null })
     preferences?: Preferences
 
-  @Column('jsonb', { array: true, default: [] })
+  @Column('text', { array: true, default: [] })
     readBooks: string [] = []
 
   @Column('integer', { array: true, default: [] })

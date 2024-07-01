@@ -43,10 +43,19 @@ router.patch('/account', rulesPatch, validate, logApiRequest, (req: Request, res
     handleErrorOnRoute(res)(new NotLoggedInError())
     return
   }
-  modifyAccount(req.session.account.id, req.body as Partial<Account>).then(async () => {
-    await mapAccountToSession(req)
-  }).then(() => {
-    return res.status(StatusCodes.OK).json(req.body)
+  modifyAccount(req.session.account.id, req.body as Partial<Account>).then(async (account: Account) => {
+    return await mapAccountToSession(req).then(() => {
+      return res.status(StatusCodes.OK).json({
+        id: account.id,
+        email: account.email,
+        firstName: account.firstName,
+        lastName: account.lastName,
+        bornDate: account.bornDate,
+        isVerified: account.isVerified,
+        preferences: account.preferences,
+        createdDate: account.createdDate
+      })
+    })
   }).catch(handleErrorOnRoute)
 })
 

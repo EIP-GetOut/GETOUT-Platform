@@ -35,18 +35,18 @@ async function deleteAccount (sess: Session & Partial<SessionData>): Promise<voi
   })
 }
 
-async function modifyAccount (accountId: UUID, propertiesToChange: Partial<Account>): Promise<void> {
+async function modifyAccount (accountId: UUID, propertiesToChange: Partial<Account>): Promise<Account> {
   const accountRepository = appDataSource.getRepository(Account)
-  await findEntity<Account>(Account, { id: accountId }).then(async (foundAccount: Account | null) => {
+  return await findEntity<Account>(Account, { id: accountId }).then(async (foundAccount: Account | null) => {
     if (foundAccount == null) {
       throw new AccountDoesNotExistError()
     }
     for (const propertyToModify in propertiesToChange) {
       (foundAccount as any)[propertyToModify] = (propertiesToChange as any)[propertyToModify]
     }
-    await accountRepository.save(foundAccount).catch((err) => {
-      throw new DbError(`Failed patching account in DB (${err}).`)
-    })
+    return await accountRepository.save(foundAccount)
+  }).catch((err) => {
+    throw new DbError(`Failed patching account in DB (${err}).`)
   })
 }
 
