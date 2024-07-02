@@ -22,6 +22,7 @@ String? confirmPasswordValidator(
     BuildContext context, String? newPassword, String? confirmPassword) {
   String? result = newPasswordValidator(context, confirmPassword);
 
+  print('confirmValidator "$newPassword", "$confirmPassword"');
   if (result != null) {
     return result;
   }

@@ -7,36 +7,49 @@
 
 part of 'service.dart';
 
-class SignService extends ServiceTemplate {
-  SignService();
+///Models
+class LoginRequestModel {
+  const LoginRequestModel({required this.email, required this.password});
 
-  Future<void> login(final LoginRequestModel request) async {
-    if (globals.cookieJar == null || globals.dio == null) {
-      return;
-    }
+  final String email;
+  final String password;
+}
+
+class RegisterRequestModel {
+  const RegisterRequestModel({required this.email, required this.password, required this.firstName, required this.lastName, required this.birthDate});
+
+  final String email;
+  final String password;
+  final String firstName;
+  final String lastName;
+  final String birthDate;
+}
+
+///Services
+class SignService extends ServiceTemplate {
+  final Dio dio;
+
+  SignService(this.dio);
+
+  Future<Response> login(LoginRequestModel request) async {
     try {
-      await globals.dio
-          ?.post('${ApiConstants.rootApiPath}${ApiConstants.loginPath}',
+      return await dio.post('${ApiConstants.rootApiPath}${ApiConstants.loginPath}',
               data: {
                 'email': request.email,
                 'password': request.password,
-              },
-              options: Options(headers: {'Content-Type': 'application/json'}));
+              }
+              );
     } on DioException {
-      // add "catch (dioError)" for debugging
+      print('what ?');
       rethrow;
-    } catch (dioError) {
-      //todo
-      if (kDebugMode) {
-        print(dioError);
-      }
+    } catch (error) {
       rethrow;
     }
   }
 
-  Future<void> register(final RegisterRequestModel request) async {
+  Future<Response> register(final RegisterRequestModel request) async {
     try {
-      await globals.dio?.post('${ApiConstants.rootApiPath}${ApiConstants.registerPath}',
+      return await dio.post('${ApiConstants.rootApiPath}${ApiConstants.registerPath}',
           data: {
             'email': request.email,
             'password': request.password,
@@ -47,9 +60,11 @@ class SignService extends ServiceTemplate {
           },
           options: Options(headers: {'Content-Type': 'application/json'}));
     } on DioException {
+      print('ERRBBRBBRRBBBB');
       // add "catch (dioError)" for debugging
       rethrow;
     } catch (error) {
+      print('ERRAARARRRRRRRRRR');
       rethrow;
     }
   }

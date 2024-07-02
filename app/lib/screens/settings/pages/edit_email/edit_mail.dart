@@ -17,15 +17,16 @@ import 'package:getout/widgets/fields/password_field.dart';
 import 'package:getout/widgets/button/floating_button.dart';
 
 class EditMailPage extends StatelessWidget {
-  const EditMailPage({super.key});
+  final SettingService service;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController password = TextEditingController();
+  final TextEditingController newEmail = TextEditingController();
+  final TextEditingController confirmEmail = TextEditingController();
+
+  EditMailPage({super.key, required this.service});
 
   @override
   Widget build(BuildContext context) {
-    final SettingService service = SettingService();
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    String password = '';
-    String newEmail = '';
-    String confirmEmail = '';
 
     return Scaffold(
         appBar: AppBar(
@@ -42,14 +43,14 @@ class EditMailPage extends StatelessWidget {
 //              mainAxisAlignment: MainAxisAlignment.center, todo remove scroll or set height.
               children: [
                 PasswordField(
-                    onChanged: (String value) => password = value,
-                    validator: (_) => mandatoryValidator(context, password)),
+                    controller: password,
+                    validator: (_) => mandatoryValidator(context, password.text)),
                 NewEmailField(
-                    onChanged: (String value) => newEmail = value,
-                    validator: (_) => emailValidator(context, newEmail)),
+                    controller: newEmail,
+                    validator: (_) => emailValidator(context, newEmail.text)),
                 ConfirmEmailField(
-                    onChanged: (value) => confirmEmail = value,
-                    validator: (_) => confirmEmailValidator(context, newEmail, confirmEmail)),
+                    controller: confirmEmail,
+                    validator: (_) => confirmEmailValidator(context, newEmail.text, confirmEmail.text)),
                 const SizedBox(height: 32),
               ],
             ),
@@ -63,7 +64,7 @@ class EditMailPage extends StatelessWidget {
             if (formKey.currentState!.validate()) {
               try {
                 StatusResponse response =
-                    await service.changeEmail(password, newEmail);
+                    await service.changeEmail(password.text, newEmail.text);
                 if (response.status == HttpStatus.OK) {
 
                 }

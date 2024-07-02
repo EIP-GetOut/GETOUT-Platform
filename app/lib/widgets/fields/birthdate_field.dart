@@ -9,25 +9,24 @@
 import 'package:flutter/material.dart';
 import 'package:getout/widgets/fields/widgets/default_field.dart';
 
-class CodeField extends StatelessWidget {
+class BirthdateField extends StatelessWidget {
   final Function(String) onChanged;
   final String? Function(String?)? validator;
   final TextEditingController controller;
 
-  const CodeField({
-    super.key,
+  const BirthdateField({super.key,
     this.validator,
     required this.onChanged,
     required this.controller});
 
-
   @override
   Widget build(BuildContext context) {
     return DefaultField(
-        title: 'CODE',
+        title: 'Date de naissance',
         mandatory: true,
-        controller: controller,
-        label: 'Entrez le code reçu par email',
-        validator: validator);
+        label: 'Entrez votre date de naissance',
+        validator: validator,
+        controller: controller);
   }
+
 }

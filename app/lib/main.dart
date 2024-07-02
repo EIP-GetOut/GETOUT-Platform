@@ -5,6 +5,8 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>, Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,23 +14,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:getout/bloc/user/user_bloc.dart';
+import 'package:getout/screens/connection/login/pages/login.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'package:getout/screens/connection/bloc/connection_provider.dart';
 import 'package:getout/screens/connection/services/service.dart';
 import 'package:getout/screens/home/bloc/home_provider.dart';
 import 'package:getout/screens/form/pages/form.dart';
 import 'package:getout/widgets/object_loading_error_widget.dart';
 import 'package:getout/bloc/session/session_service.dart';
-import 'package:getout/bloc/session/session_event.dart';
-import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/observer.dart';
 import 'package:getout/bloc/theme/bloc.dart';
 import 'package:getout/widgets/loading.dart';
-import 'package:getout/tools/status.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +38,8 @@ Future<void> main() async {
           : await getApplicationDocumentsDirectory());
   Bloc.observer = const AppBlocObserver(); // BLoC MiddleWare.
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  //CookiePath
+
   runApp(const MainProvider());
 }
 
@@ -48,7 +50,6 @@ class MainProvider extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
         providers: [
-          RepositoryProvider(create: (context) => ConnectionService()),
           RepositoryProvider(create: (context) => SessionService()),
         ],
         child: MultiBlocProvider(
@@ -56,11 +57,12 @@ class MainProvider extends StatelessWidget {
             //Data
             BlocProvider(create: (_) => LocaleBloc(context)),
             BlocProvider(create: (_) => ThemeBloc()),
-            BlocProvider<SessionBloc>(
+            BlocProvider(create: (_) => UserBloc()..add(const SetupRequest())),
+            /*BlocProvider<SessionBloc>(
                 create: (context) => SessionBloc(
                   sessionService: context.read<SessionService>(),
-                )..add(const SessionRequest())
-            ),
+                )..add(const session.SessionRequest())
+            ),*/
           ],
           child: const MainPage(),
         ));
@@ -78,7 +80,7 @@ class MainPage extends StatelessWidget {
 
       return MaterialApp(
           title: 'Get Out',
-          supportedLocales: const [Locale('en'), Locale('fr')],
+          supportedLocales: const [Locale('fr'), /*Locale('en')*/],
           locale: locale,
           localizationsDelegates: const [
             AppLocalizations.delegate,
@@ -88,23 +90,24 @@ class MainPage extends StatelessWidget {
           ],
           //supportedLocales: AppLocalizations.supportedLocales,
           theme: themeData,
-          home: BlocBuilder<SessionBloc, SessionState>(
+          home: BlocBuilder<UserBloc, UserState>(
             builder: (context, state) {
-              if (state.status.isFound) {
+              if (state.isCookieSet == true) {
                 return const HomeProvider();
-              } else if (state.status.isFoundWithoutPreferences) {
+              } else if (state.isCookieSet && (state.account?.moviesGenres == null || state.account?.booksGenres == null || state.account?.platforms == null)) {
                 return const Forms();
-              } else if (state.status.isLoading) {
+              } else if (state.isCookieSet) {
                   return const ColoredBox(
                       color: Colors.white,
                       child: Center(child: LoadingPage()));
-              } else if (state.status.isError) {
+              } else if (state.isCookieSet == false) {
+                return LoginPage(service: ConnectionService(context.watch<UserBloc>().state.cookiePath!));
+
+              } else if (state.isServerDown) {
                 /// TODO : Add a retry button
                 return ColoredBox(
-                        color: Colors.white,
-                        child: ObjectLoadingErrorWidget(object: appL10n(context)!.your_account));
-              } else if (state.status.isNotFound) {
-                return const ConnectionProvider();
+                    color: Colors.white,
+                    child: ObjectLoadingErrorWidget(object: appL10n(context)!.your_account));
               } else {
                 return ColoredBox(
                     color: Colors.red,

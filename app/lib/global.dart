@@ -22,4 +22,5 @@ Dio? dio;
 // Using dynamic type because data can be a string, a list, a map, etc
 Map<String, dynamic>? session;
 
+//todo-> tu fais des provider et tu fais ça apres..
 SessionService sessionManager = SessionService();

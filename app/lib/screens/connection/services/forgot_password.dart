@@ -8,7 +8,9 @@
 part of 'service.dart';
 
 class ForgotPasswordService extends ServiceTemplate {
-  ForgotPasswordService();
+  final Dio dio;
+
+  ForgotPasswordService(this.dio);
 
   Future<void> checkEmail(final CheckEmailRequestModel request) async
   {

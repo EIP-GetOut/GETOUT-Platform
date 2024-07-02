@@ -13,6 +13,8 @@ import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_p
 import 'package:getout/screens/connection/forgot_password/pages/forgot_password_page.dart';
 import 'package:getout/screens/connection/services/service.dart';
 
+import 'package:getout/bloc/user/user_bloc.dart';
+
 class ForgotPasswordProvider extends StatelessWidget {
   const ForgotPasswordProvider({super.key});
 
@@ -21,10 +23,10 @@ class ForgotPasswordProvider extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: RepositoryProvider(
-        create: (context) => ConnectionService(),
+        create: (context) => ConnectionService(context.watch<UserBloc>().state.cookiePath!),
         child: BlocProvider<ForgotPasswordPageBloc>(
           create: (context) => ForgotPasswordPageBloc(),
-          child: ForgotPasswordPage(),
+          child: const SizedBox(width: 1, height: 1)//ForgotPasswordPage(service: service),
         ),
       ),
     );

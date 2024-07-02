@@ -14,6 +14,7 @@ import 'package:getout/screens/settings/pages/edit_email/edit_mail.dart';
 import 'package:getout/screens/settings/pages/edit_password/edit_password.dart';
 import 'package:getout/screens/settings/pages/history/history_provider.dart';
 import 'package:getout/screens/settings/pages/notifications/notifications_page.dart';
+import 'package:getout/screens/settings/services/service.dart';
 import 'package:getout/screens/settings/widget/account_info.dart';
 import 'package:getout/screens/settings/widget/setting_row.dart';
 import 'package:getout/screens/settings/widget/title.dart';
@@ -40,11 +41,11 @@ class SettingsPage extends StatelessWidget {
             const AccountInfo(),
             TitleRow(value: appL10n(context)!.account),
             SettingRow(
-                page: const EditPasswordPage(),
+                page: EditPasswordPage(service: SettingService()), //todo retrieve provider with SettingService(dio)
                 iconData: Icons.shield_outlined,
                 value: appL10n(context)!.edit_password),
             SettingRow(
-                page: const EditMailPage(),
+                page: EditMailPage(service: SettingService()), //todo retrieve provider with SettingService(dio)
                 iconData: Icons.mail_outlined,
                 value: appL10n(context)!.edit_email),
 

@@ -35,7 +35,7 @@ class RecommendedMoviesSuccessWidget extends StatelessWidget {
             child: ListView(
                 controller: movieController,
                 scrollDirection: Axis.horizontal,
-                children: List.generate(5, (index) {
+                children: List.generate(movies.length, (index) {
                   return InkWell(
                       onTap: () {
                         Navigator.push(

@@ -5,18 +5,16 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+
 
 import 'package:getout/constants/api_path.dart';
 
-/**
- * login:
- */
+/// login
 import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
-import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
-import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 
 import 'package:getout/global.dart' as globals;
 
@@ -27,13 +25,19 @@ part 'sign.dart';
 part 'forgot_password.dart';
 
 class ConnectionService extends _ConnectionService<SignService, ForgotPasswordService> {
-  ConnectionService() {
-    t = SignService();
-    g = ForgotPasswordService();
+  final Dio dio = Dio();
+
+  ConnectionService(String cookiePath) {
+    dio.interceptors.add(CookieManager(PersistCookieJar(
+        ignoreExpires: true,
+        storage: FileStorage(cookiePath))));
+    dio.options.headers = ({'Content-Type': 'application/json'});
+    t = SignService(dio);
+    g = ForgotPasswordService(dio);
   }
   //Dashboard
-  Future<void> login(LoginRequestModel request) => t.login(request);
-  Future<void> register(RegisterRequestModel request) => t.register(request);
+  Future<Response> login(LoginRequestModel request) => t.login(request);
+  Future<Response> register(RegisterRequestModel request) => t.register(request);
   Future<void> checkEmail(CheckEmailRequestModel request) => g.checkEmail(request);
   Future<void> newPassword(NewPasswordRequestModel request) => g.sendNewPassword(request);
 }

@@ -10,10 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:getout/widgets/fields/widgets/default_field.dart';
 
 class EmailField extends StatelessWidget {
-  final Function(String) onChanged;
   final String? Function(String?)? validator;
+  final TextEditingController controller;
 
-  const EmailField({super.key, this.validator, required this.onChanged});
+  const EmailField({
+    super.key,
+    this.validator,
+    required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +24,20 @@ class EmailField extends StatelessWidget {
         title: 'ADRESSE EMAIL',
         mandatory: true,
         label: 'Entrez votre adresse email',
-        validator: validator,
-        onChanged: onChanged);
+        controller: controller,
+        validator: validator);
   }
 }
 
 class NewEmailField extends StatelessWidget {
-  final Function(String) onChanged;
   final String? Function(String?)? validator;
+  final TextEditingController controller;
 
-  const NewEmailField({super.key, this.validator, required this.onChanged});
+
+  const NewEmailField({
+    super.key,
+    this.validator,
+    required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +45,20 @@ class NewEmailField extends StatelessWidget {
         title: 'NOUVELLE ADRESSE EMAIL',
         mandatory: true,
         label: 'Entrer votre nouvelle adresse email',
-        validator: validator,
-        onChanged: onChanged);
+        controller: controller,
+        validator: validator);
   }
 }
 
 class ConfirmEmailField extends StatelessWidget {
-  final Function(String) onChanged;
   final String? Function(String?)? validator;
+  final TextEditingController controller;
 
-  const ConfirmEmailField(
-      {super.key, this.validator, required this.onChanged});
+  const ConfirmEmailField({
+    super.key,
+    this.validator,
+    required this.controller
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +66,7 @@ class ConfirmEmailField extends StatelessWidget {
         title: 'CONFIRMATION D\'ADRESSE EMAIL',
         mandatory: true,
         label: 'Confirmer votre adresse email',
-        validator: validator,
-        onChanged: onChanged);
+        controller: controller,
+        validator: validator);
   }
 }

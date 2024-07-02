@@ -5,35 +5,39 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_page_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/children/check_email/pages/check_email_page.dart';
 import 'package:getout/screens/connection/forgot_password/children/new_password/pages/new_password_page.dart';
+import 'package:getout/screens/connection/services/service.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
-  ForgotPasswordPage({super.key});
+  final ConnectionService service;
+  final TextEditingController email = TextEditingController();
+  final TextEditingController code = TextEditingController();
+  final TextEditingController password = TextEditingController();
+  final TextEditingController confirmPassword = TextEditingController();
+
+  ForgotPasswordPage({super.key, required this.service});
 
   final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ForgotPasswordPageBloc, ForgotPasswordPageState>(builder: (context, state) {
       return Scaffold(
           body: PageView(
             physics: const NeverScrollableScrollPhysics(),
             controller: _pageController,
-            onPageChanged: (index) {
-              context.read<ForgotPasswordPageBloc>().add(ForgotPasswordPageToIdx(index));
-            },
+/*            onPageChanged: (index) {
+//              context.read<ForgotPasswordPageBloc>().add(ForgotPasswordPageToIdx(index));
+            },*/
             children: <Widget>[
-              CheckEmailPage(pageController: _pageController),
-              NewPasswordPage(pageController: _pageController)
+              CheckEmailPage(pageController: _pageController, email: email),
+              NewPasswordPage(pageController: _pageController, password: password, confirmPassword: confirmPassword)
             ],
           ),
       );
-    });
   }
 }

@@ -16,15 +16,16 @@ import 'package:getout/widgets/fields/password_field.dart';
 import 'package:getout/widgets/button/floating_button.dart';
 
 class EditPasswordPage extends StatelessWidget {
-  const EditPasswordPage({super.key});
+  final SettingService service;
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController password = TextEditingController();
+  final TextEditingController newPassword = TextEditingController();
+  final TextEditingController confirmPassword = TextEditingController();
+
+  EditPasswordPage({super.key, required this.service});
 
   @override
   Widget build(BuildContext context) {
-    final SettingService service = SettingService();
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-    String password = '';
-    String newPassword = '';
-    String confirmPassword = '';
 
     return Scaffold(
       appBar: AppBar(
@@ -41,14 +42,12 @@ class EditPasswordPage extends StatelessWidget {
 //              mainAxisAlignment: MainAxisAlignment.center, todo remove scroll or set height.
               children: [
                 PasswordField(
-                    onChanged: (value) => password = value,
-                    validator: (value) => mandatoryValidator(context, password)),
-                NewPasswordField(
-                    onChanged: (value) => newPassword = value,
-                    validator: (value) => newPasswordValidator(context, newPassword)),
-                ConfirmPasswordField(
-                    onChanged: (value) => confirmPassword = value,
-                    validator: (value) => confirmPasswordValidator(context, newPassword, confirmPassword)),
+                    controller: password,
+                    validator: (value) => mandatoryValidator(context, password.text)),
+                NewPasswordField(controller: newPassword, validator: (value) =>
+                    newPasswordValidator(context, newPassword.text)),
+                ConfirmPasswordField(controller: confirmPassword,
+                    validator: (value) => confirmPasswordValidator(context, newPassword.text, confirmPassword.text)),
                 const SizedBox(height: 32),
               ],
             ),
@@ -61,7 +60,7 @@ class EditPasswordPage extends StatelessWidget {
             if (formKey.currentState!.validate()) {
               try {
                 StatusResponse response =
-                    await service.changePassword(password, newPassword);
+                    await service.changePassword(password.text, newPassword.text);
                 if (response.status == HttpStatus.OK) {}
                 //handle response
               } catch (e) {

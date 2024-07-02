@@ -41,7 +41,7 @@
 
   "@_SIGN_UP": {},
 
-  "first_connection": "Première connexion ? ",
+  "first_connection": "Première connexion",
   "create_account": "Créer un compte",
   "account_created": "Votre compte a bien été créé, vous pouvez maintenant vous connecter",
   "your_profile": "Votre profil",

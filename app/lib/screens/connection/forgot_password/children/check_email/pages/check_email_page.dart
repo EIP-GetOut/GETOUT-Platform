@@ -22,19 +22,46 @@ import 'package:getout/widgets/show_snack_bar.dart';
 class CheckEmailPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final PageController pageController;
+  final TextEditingController email;
 
-  CheckEmailPage({super.key, required this.pageController});
+
+  CheckEmailPage(
+      {super.key, required this.pageController, required this.email});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: AppBar(
-          title: AutoSizeText(' ${appL10n(context)!.forgot_password.toUpperCase()}'.padRight(21, String.fromCharCodes([0x00A0, 0x0020])),
-              maxLines: 1, minFontSize: 16.0, maxFontSize: 32.0),
-          leading: BackButton(onPressed: () => Navigator.pop(context)),
-        ),
-        body: BlocListener<CheckEmailBloc, CheckEmailState>(
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        title: AutoSizeText(
+            ' ${appL10n(context)!.forgot_password.toUpperCase()}'.padRight(
+                21, String.fromCharCodes([0x00A0, 0x0020])),
+            maxLines: 1, minFontSize: 16.0, maxFontSize: 32.0),
+        leading: const BackButton(),
+      ),
+      body: Column(children: [
+        const SizedBox(height: 40),
+        fieldTitle(appL10n(context)!.email),
+        Form(
+          key: _formKey,
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: EmailField(),
+          ),
+        )
+      ]),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: ForgotPasswordButton(
+          formKey: _formKey, onPressed: () {
+        if (_formKey.currentState!.validate()) {
+          pageController.jumpToPage(1);
+        }
+      }),
+    );
+  }
+}
+
+/*BlocListener<CheckEmailBloc, CheckEmailState>( todo error codes
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status.isError) {
@@ -55,35 +82,22 @@ class CheckEmailPage extends StatelessWidget {
           pageController.jumpToPage(1);
         }
       },
-      child: Column(children: [
-            const SizedBox(height: 40),
-            fieldTitle(appL10n(context)!.email),
-            Form(
-              key: _formKey,
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                child: EmailField(),
-              ),
-            )
-          ]),
-    ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: ForgotPasswordButton(formKey: _formKey)
-    );
-  }
-}
+      child:
+}*/
 
 class ForgotPasswordButton extends StatelessWidget {
-  const ForgotPasswordButton({super.key, required this.formKey});
 
   final GlobalKey<FormState> formKey;
+  final Function()? onPressed;
+
+  ForgotPasswordButton({super.key, required this.formKey, this.onPressed});
 
   @override
   Widget build(BuildContext context)
   {
     final double phoneWidth = MediaQuery.of(context).size.width;
 
-    return BlocBuilder<CheckEmailBloc, CheckEmailState>(
+    return BlocBuilder<CheckEmailBloc, CheckEmailState>( //todo https://stackoverflow.com/questions/58243997/manually-setting-flutter-validation-error
       builder: (context, state) {
         return state.status.isLoading
             ? const CircularProgressIndicator()
@@ -93,11 +107,7 @@ class ForgotPasswordButton extends StatelessWidget {
                 child: FloatingActionButton(
                   shape: Theme.of(context).floatingActionButtonTheme.shape,
                   backgroundColor: Theme.of(context).floatingActionButtonTheme.backgroundColor,
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      context.read<CheckEmailBloc>().add(CheckEmailSubmitted());
-                    }
-                  },
+                  onPressed: onPressed,
                   child: Text(appL10n(context)!.receive_code,
                       style: const TextStyle(
                           fontSize: 17.5,
