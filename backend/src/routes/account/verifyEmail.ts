@@ -16,7 +16,8 @@ import { AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 import { mapAccountToSession } from '@services/utils/mapAccountToSession'
 
-import { accountIsAllowedToVerifyEmail, verifyEmail } from '@models/account/verifyEmail'
+import { modifyAccount } from '@models/account'
+import { accountIsAllowedToVerifyEmail } from '@models/account/verifyEmail'
 
 const router = Router()
 
@@ -29,17 +30,17 @@ router.post('/account/verify-email/', rulesPost, validate, logApiRequest, (req: 
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
-  accountIsAllowedToVerifyEmail(req.session.account?.id, req.body.code).then(async (isAllowed: boolean) => {
+  accountIsAllowedToVerifyEmail(req.session.account.id, req.body.code).then(async (isAllowed: boolean) => {
     if (!isAllowed) {
       logger.error('Account is not allowed to verify email.')
       res.status(StatusCodes.FORBIDDEN).send(getReasonPhrase(StatusCodes.FORBIDDEN))
       return
     }
-    await verifyEmail(req.session.account!.id).then(async () => {
+    await modifyAccount(req.session.account!.id, { isVerified: true }).then(async () => {
       await mapAccountToSession(req)
     }).then(() => {
       res.status(StatusCodes.OK).send(getReasonPhrase(StatusCodes.OK))
-    })
+    }).catch((err) => { throw err })
   }).catch(handleErrorOnRoute(res))
 })
 

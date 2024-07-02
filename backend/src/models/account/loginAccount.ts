@@ -55,17 +55,19 @@ async function loginWithGoogle (account: oauthAccount): Promise<StatusCodes> {
   })
 }
 
-async function loginAccount (req: Request, accountToLogin: accountRepositoryRequest): Promise<void> {
-  await findEntity<Account>(Account, { email: accountToLogin.email }).then(async (foundAccount: Account | null) => {
+async function loginAccount (req: Request, accountToLogin: accountRepositoryRequest): Promise<Account> {
+  return await findEntity<Account>(Account, { email: accountToLogin.email }).then(async (foundAccount: Account | null) => {
     if (foundAccount == null) {
       throw new AccountDoesNotExistError()
     }
-    await bcrypt.compare(accountToLogin.password + foundAccount.salt, foundAccount.password).then(async (comparison: boolean) => {
+    return await bcrypt.compare(accountToLogin.password + foundAccount.salt, foundAccount.password).then(async (comparison: boolean): Promise<void> => {
       if (!comparison) {
         throw new IncorrectEmailOrPasswordError(`Account's email or password is incorrect: ${accountToLogin.email}`)
       }
       await createSession(req, foundAccount)
-    }).catch((err: AppError | Error) => {
+    }).then((() => {
+      return foundAccount
+    })).catch((err: AppError | Error) => {
       if (err instanceof AppError) {
         throw err
       } else {

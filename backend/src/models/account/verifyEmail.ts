@@ -6,7 +6,6 @@
 */
 
 import { type UUID } from 'crypto'
-import { StatusCodes } from 'http-status-codes'
 
 import { AccountDoesNotExistError, DbError } from '@services/utils/customErrors'
 
@@ -52,20 +51,7 @@ async function accountIsAllowedToVerifyEmail (accountId: UUID, code: number): Pr
   })
 }
 
-async function verifyEmail (accountId: UUID): Promise<void> {
-  const accountRepository = appDataSource.getRepository(Account)
-
-  await findEntity<Account>(Account, { id: accountId }).then(async (account: Account | null) => {
-    if (account == null) {
-      throw new AccountDoesNotExistError(undefined, StatusCodes.NOT_FOUND)
-    }
-    account.isVerified = true
-    await accountRepository.save(account)
-  })
-}
-
 export {
   accountIsAllowedToVerifyEmail,
-  generateEmailVerificationCode,
-  verifyEmail
+  generateEmailVerificationCode
 }

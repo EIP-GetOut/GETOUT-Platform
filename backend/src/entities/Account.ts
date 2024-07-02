@@ -105,6 +105,9 @@ export class Account {
   @ManyToOne(() => Role, role => role.owners)
     role!: Role
 
+  @Column('boolean', { default: false })
+    welcomeEmailSent: boolean = false
+
   @CreateDateColumn()
     createdDate!: Date
 
