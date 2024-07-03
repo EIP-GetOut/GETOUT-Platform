@@ -14,8 +14,7 @@ import 'package:dio/dio.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
-import 'package:getout/screens/connection/widgets/fields_title.dart';
-import 'package:getout/screens/connection/forgot_password/widgets/fields.dart';
+import 'package:getout/widgets/fields/email_field.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 
@@ -71,26 +70,21 @@ class NewPasswordPage extends StatelessWidget {
           },
           child: Form(
             key: _formKey,
-            child: Column(children: [
-              const SizedBox(height: 30),
-              fieldTitle(appL10n(context)!.code.toUpperCase()),
-              const Padding(
+            child: const Column(children: [
+              SizedBox(height: 30),
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                child: CodeField(),
+                child: ForgotPasswordCodeField(),
               ),
-              const SizedBox(height: 15),
-              fieldTitle(appL10n(context)!.password.toUpperCase()),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                child: PasswordField(),
+                child: ForgotPasswordField(),
               ),
-              const SizedBox(height: 15),
-              fieldTitle(appL10n(context)!.confirm_password_hint.toUpperCase()),
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                child: ConfirmPasswordField(),
+                child: ForgotPasswordConfirmField(),
               ),
-              const SizedBox(
+              SizedBox(
                 height: 70,
               ),
             ]),
