@@ -19,6 +19,7 @@ import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/register/pages/register.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/widgets/fields/email_field.dart';
+import 'package:getout/widgets/fields/password_field.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/tools/app_l10n.dart';

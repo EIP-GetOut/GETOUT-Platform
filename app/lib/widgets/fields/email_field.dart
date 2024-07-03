@@ -34,27 +34,6 @@ class LoginEmailField extends StatelessWidget {
   }
 }
 
-class LoginPasswordField extends StatelessWidget {
-  const LoginPasswordField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
-      return DefaultField(
-        title: 'MOT DE PASSE',
-        mandatory: true,
-        isPassword: true,
-        label: 'Entrez votre mot de passe',
-        validator: (value) =>
-            state.isPasswordEmpty ? null : appL10n(context)!.password_validator,
-        onChanged: (value) => context
-            .read<LoginBloc>()
-            .add(LoginPasswordChanged(password: value)),
-      );
-    });
-  }
-}
-
 class ForgotPasswordEmailField extends StatelessWidget {
   const ForgotPasswordEmailField({super.key});
 
@@ -72,48 +51,6 @@ class ForgotPasswordEmailField extends StatelessWidget {
               ForgotPasswordEmailChanged(email: value),
             ),
       );
-    });
-  }
-}
-
-class ForgotPasswordCodeField extends StatelessWidget {
-  const ForgotPasswordCodeField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<NewPasswordBloc, NewPasswordState>(
-        builder: (context, state) {
-      return DefaultField(
-        title: 'CODE',
-        mandatory: true,
-        label: 'Entrez le code reçu par mail',
-        validator: (value) =>
-            state.isCodeValid ? null : appL10n(context)!.code_validator,
-        onChanged: (value) => context.read<NewPasswordBloc>().add(
-              ForgotPasswordCodeChanged(code: value),
-            ),
-      );
-    });
-  }
-}
-
-class ForgotPasswordField extends StatelessWidget {
-  const ForgotPasswordField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<NewPasswordBloc, NewPasswordState>(
-        builder: (context, state) {
-      return DefaultField(
-          title: 'MOT DE PASSE',
-          mandatory: true,
-          label: 'Entrez votre mot de passe',
-          validator: (value) => state.isPasswordValid
-              ? null
-              : appL10n(context)!.password_validator,
-          onChanged: (value) => context.read<NewPasswordBloc>().add(
-                ForgotPasswordPasswordChanged(password: value),
-              ));
     });
   }
 }
@@ -139,65 +76,6 @@ class ForgotPasswordConfirmField extends StatelessWidget {
   }
 }
 
-class RegisterLastNameField extends StatelessWidget {
-  const RegisterLastNameField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<RegisterBloc, RegisterState>(builder: (context, state) {
-      return DefaultField(
-          title: 'NOM',
-          mandatory: true,
-          label: 'Entrez votre nom',
-          validator: (value) => state.isLastNameEmpty
-              ? null
-              : appL10n(context)!.lastname_validator,
-          onChanged: (value) => context.read<RegisterBloc>().add(
-                RegisterLastNameChanged(lastName: value),
-              ));
-    });
-  }
-}
-
-class RegisterFirstNameField extends StatelessWidget {
-  const RegisterFirstNameField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<RegisterBloc, RegisterState>(builder: (context, state) {
-      return DefaultField(
-          title: 'PRÉNOM',
-          mandatory: true,
-          label: 'Entrez votre prénom',
-          validator: (value) => state.isFirstNameEmpty
-              ? null
-              : appL10n(context)!.firstname_validator,
-          onChanged: (value) => context.read<RegisterBloc>().add(
-                RegisterFirstNameChanged(firstName: value),
-              ));
-    });
-  }
-}
-
-// class RegisterBirthDateField extends StatelessWidget {
-//   const RegisterBirthDateField({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<RegisterBloc, RegisterState>(builder: (context, state) {
-//       return DefaultField(
-//         title: 'DATE DE NAISSANCE',
-//         mandatory: true,
-//         label: 'Entrez votre date de naissance',
-//           validator: (value) =>
-//           state.isFirstNameEmpty ? null : appL10n(context)!.firstname_validator,
-//           onChanged: (value) => context.read<RegisterBloc>().add(
-//             RegisterFirstNameChanged(firstName: value),
-//           ));
-//     });
-//   }
-// }
-
 class RegisterEmailField extends StatelessWidget {
   const RegisterEmailField({super.key});
 
@@ -209,53 +87,9 @@ class RegisterEmailField extends StatelessWidget {
         mandatory: true,
         label: 'Entrez votre adresse mail',
         validator: (value) =>
-            state.isEmailValid ? null : appL10n(context)!.email_validator,
+        state.isEmailValid ? null : appL10n(context)!.email_validator,
         onChanged: (value) => context.read<RegisterBloc>().add(
               RegisterEmailChanged(email: value),
-            ),
-      );
-    });
-  }
-}
-
-class RegisterPasswordField extends StatelessWidget {
-  const RegisterPasswordField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<RegisterBloc, RegisterState>(builder: (context, state) {
-      return DefaultField(
-        isPassword: true,
-        title: 'MOT DE PASSE',
-        mandatory: true,
-        label: 'Entrez votre mot de passe',
-        validator: (value) => state.isPasswordValid
-            ? null
-            : 'Un mot de passe contenant au moins 8 caractères est requis, avec au moins une majuscule, une minuscule et un chiffre est requis',
-        onChanged: (value) => context.read<RegisterBloc>().add(
-              RegisterPasswordChanged(password: value),
-            ),
-      );
-    });
-  }
-}
-
-class RegisterConfirmPasswordField extends StatelessWidget {
-  const RegisterConfirmPasswordField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<RegisterBloc, RegisterState>(builder: (context, state) {
-      return DefaultField(
-        isPassword: true,
-        title: 'CONFIRMATION DE MOT DE PASSE',
-        mandatory: true,
-        label: 'Entrez votre mot de passe',
-        validator: (value) => state.isConfirmPasswordValid
-            ? null
-            : appL10n(context)!.password_matching,
-        onChanged: (value) => context.read<RegisterBloc>().add(
-              RegisterConfirmPasswordChanged(confirmPassword: value),
             ),
       );
     });

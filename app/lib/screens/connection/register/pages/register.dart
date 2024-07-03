@@ -13,11 +13,12 @@ import 'package:dio/dio.dart';
 import 'package:getout/screens/connection/register/widgets/fields.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/widgets/fields/email_field.dart';
+import 'package:getout/widgets/fields/password_field.dart';
+import 'package:getout/widgets/fields/name_field.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/tools/status.dart';
-
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});
