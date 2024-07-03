@@ -169,7 +169,7 @@ class EditConfirmEmailField extends StatelessWidget {
     return BlocBuilder<EditEmailBloc, EditEmailState>(
         builder: (context, state) {
       return DefaultField(
-        title: 'ADRESSE EMAIL',
+        title: 'CONFIRMER VOTRE ADRESSE EMAIL',
         mandatory: true,
         label: 'Entrez votre nouvelle adresse email',
         validator: (value) =>
@@ -190,9 +190,9 @@ class EditPasswordField extends StatelessWidget {
     return BlocBuilder<EditEmailBloc, EditEmailState>(
         builder: (context, state) {
       return DefaultField(
-        title: 'ADRESSE EMAIL',
+        title: 'MOT DE PASSE',
         mandatory: true,
-        label: 'Entrez votre nouvelle adresse email',
+        label: 'Entrez votre mot de passe',
         validator: (value) => state.isPasswordEmpty
             ? null
             : 'Le mot de passe ne peut pas être vide',
