@@ -42,11 +42,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(state.copyWith(status: Status.loading));
 
       try {
-        print(state.email);
-        print(state.password);
-        print(state.birthDate);
-        print(state.firstName);
-        print(state.lastName);
         await service?.register(RegisterRequestModel(
           email: state.email,
           password: state.password,
@@ -56,8 +51,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         ));
         emit(state.copyWith(status: Status.success));
       } catch (e) {
-        print("error :");
-        print(e);
         emit(state.copyWith(status: Status.error));
       }
     }

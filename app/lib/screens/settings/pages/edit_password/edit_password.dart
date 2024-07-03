@@ -10,11 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/settings/bloc/edit_password/edit_password_bloc.dart';
 import 'package:getout/screens/settings/services/edit_password.dart';
-import 'package:getout/widgets/fields/widgets/title_field.dart';
-import 'package:getout/screens/settings/widget/edit_password_fields.dart';
+import 'package:getout/widgets/fields/password_field.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/constants/http_status.dart';
-import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/tools/tools.dart';
 
@@ -38,31 +36,24 @@ class EditPasswordPage extends StatelessWidget {
             ),
             body: Form(
               key: formKey,
-              child: Column(
+              child: const Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 25),
-                  fieldTitle('Mot de passe actuel'.toUpperCase(), true),
-                  const SizedBox(height: 20),
-                  const Padding(
+                  SizedBox(height: 30),
+                  Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 8, vertical: 8),
-                      child: OldPasswordField()),
-                  const SizedBox(height: 30),
-                  fieldTitle('Nouveau mot de passe'.toUpperCase(), true),
-                  const SizedBox(height: 20),
-                  const Padding(
+                      child: EditOldPasswordField()
+                      ),
+                  Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 8, vertical: 8),
-                      child: NewPasswordField()),
-                  const SizedBox(height: 30),
-                  fieldTitle(appL10n(context)!.confirm_password.toUpperCase(), true),
-                  const SizedBox(height: 20),
-                  const Padding(
+                      child: EditNewPasswordField()),
+                  Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 8, vertical: 8),
-                      child: ConfirmPasswordField()),
+                      child: EditConfirmPasswordField()),
                 ],
               ),
             ),

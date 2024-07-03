@@ -14,12 +14,6 @@ import 'package:getout/global.dart' as globals;
 
 class RegisterService {
   Future<void> register(final RegisterRequestModel request) async {
-    print("dans le register");
-    print(request.email);
-    print(request.password);
-    print(request.firstName);
-    print(request.lastName);
-    print(request.birthDate);
     try {
       await globals.dio
           ?.post('${ApiConstants.rootApiPath}${ApiConstants.registerPath}',

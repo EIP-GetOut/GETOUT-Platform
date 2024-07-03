@@ -12,8 +12,10 @@ import 'package:getout/widgets/fields/widgets/default_field.dart';
 import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
+import 'package:getout/screens/settings/bloc/edit_password/edit_password_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
+import 'package:getout/screens/settings/bloc/edit_email/edit_email_bloc.dart';
 
 class PasswordField extends StatelessWidget {
   final Function(String) onChanged;
@@ -93,16 +95,18 @@ class ForgotPasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NewPasswordBloc, NewPasswordState>(builder: (context, state) {
+    return BlocBuilder<NewPasswordBloc, NewPasswordState>(
+        builder: (context, state) {
       return DefaultField(
-        title: 'MOT DE PASSE',
-        mandatory: true,
-        label: 'Entrez votre mot de passe',
-          validator: (value) =>
-          state.isPasswordValid ? null : appL10n(context)!.password_validator,
+          title: 'MOT DE PASSE',
+          mandatory: true,
+          label: 'Entrez votre mot de passe',
+          validator: (value) => state.isPasswordValid
+              ? null
+              : appL10n(context)!.password_validator,
           onChanged: (value) => context.read<NewPasswordBloc>().add(
-            ForgotPasswordPasswordChanged(password: value),
-          ));
+                ForgotPasswordPasswordChanged(password: value),
+              ));
     });
   }
 }
@@ -112,19 +116,19 @@ class RegisterPasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RegisterBloc, RegisterState>(
-      builder: (context, state) {
+    return BlocBuilder<RegisterBloc, RegisterState>(builder: (context, state) {
       return DefaultField(
         isPassword: true,
         title: 'MOT DE PASSE',
         mandatory: true,
         label: 'Entrez votre mot de passe',
-          validator: (value) =>
-            state.isPasswordValid ? null : 'Un mot de passe contenant au moins 8 caractères est requis, avec au moins une majuscule, une minuscule et un chiffre est requis',
-          onChanged: (value) => context.read<RegisterBloc>().add(
-            RegisterPasswordChanged(password: value),
-          ),
-        );
+        validator: (value) => state.isPasswordValid
+            ? null
+            : 'Un mot de passe contenant au moins 8 caractères est requis, avec au moins une majuscule, une minuscule et un chiffre est requis',
+        onChanged: (value) => context.read<RegisterBloc>().add(
+              RegisterPasswordChanged(password: value),
+            ),
+      );
     });
   }
 }
@@ -134,19 +138,129 @@ class RegisterConfirmPasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RegisterBloc, RegisterState>(
-      builder: (context, state) {
+    return BlocBuilder<RegisterBloc, RegisterState>(builder: (context, state) {
       return DefaultField(
         isPassword: true,
         title: 'CONFIRMATION DE MOT DE PASSE',
         mandatory: true,
         label: 'Entrez votre mot de passe',
-          validator: (value) =>
-          state.isConfirmPasswordValid ? null : appL10n(context)!.password_matching,
-          onChanged: (value) => context.read<RegisterBloc>().add(
-            RegisterConfirmPasswordChanged(confirmPassword: value),
-          ),
-        );
+        validator: (value) => state.isConfirmPasswordValid
+            ? null
+            : appL10n(context)!.password_matching,
+        onChanged: (value) => context.read<RegisterBloc>().add(
+              RegisterConfirmPasswordChanged(confirmPassword: value),
+            ),
+      );
+    });
+  }
+}
+
+class EditOldPasswordField extends StatelessWidget {
+  const EditOldPasswordField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<EditPasswordBloc, EditPasswordState>(
+        builder: (context, state) {
+      return DefaultField(
+        isPassword: true,
+        title: 'MOT DE PASSE ACTUEL',
+        mandatory: true,
+        label: 'Entrez votre mot de passe actuel',
+        validator: (value) => state.isOldPasswordEmpty
+            ? null
+            : 'Veuillez entrer votre mot de passe actuel',
+        onChanged: (value) => context.read<EditPasswordBloc>().add(
+              OldPasswordChanged(oldPassword: value),
+            ),
+      );
+    });
+  }
+}
+
+class EditNewPasswordField extends StatelessWidget {
+  const EditNewPasswordField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<EditPasswordBloc, EditPasswordState>(
+        builder: (context, state) {
+      return DefaultField(
+        isPassword: true,
+        title: 'NOUVEAU MOT DE PASSE',
+        mandatory: true,
+        label: 'Entrez votre nouveau mot de passe',
+        validator: (value) {
+          if (!state.isNewPasswordEmpty) {
+            return 'Veuillez entrer un mot de passe';
+          }
+          if (!state.isNewPasswordValid) {
+            return 'Le mot de passe doit contenir au moins 8 caractères une majuscule, un chiffre et un caractère spécial';
+          }
+          if (!state.isNewPasswordDifferent) {
+            return 'Le nouveau mot de passe doit être différent de l\'ancien';
+          }
+          return null;
+        },
+        onChanged: (value) => context.read<EditPasswordBloc>().add(
+              NewPasswordChanged(newPassword: value),
+            ),
+      );
+    });
+  }
+}
+
+class EditConfirmPasswordField extends StatelessWidget {
+  const EditConfirmPasswordField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<EditPasswordBloc, EditPasswordState>(
+        builder: (context, state) {
+      return DefaultField(
+        isPassword: true,
+        title: 'CONFIRMER LE MOT DE PASSE',
+        mandatory: true,
+        label: 'Entrez votre nouveau mot de passe',
+        validator: (value) => state.isConfirmPasswordGood
+            ? null
+            : 'Les mots de passe ne correspondent pas',
+        onChanged: (value) => context.read<EditPasswordBloc>().add(
+              ConfirmPasswordChanged(confirmPassword: value),
+            ),
+      );
+    });
+  }
+}
+
+class EditEmailField extends StatelessWidget {
+  const EditEmailField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<EditEmailBloc, EditEmailState>(
+      builder: (context, state) {
+      return DefaultField(
+        isPassword: true,
+        title: 'ADRESSE MAIL',
+        mandatory: true,
+        label: 'Entrez votre nouveau mail',
+        validator: (value) {
+              if (!state.isEmailEmpty) {
+                return 'L\'email ne peut pas être vide';
+              } else if (!state.isEmailValid) {
+                return 'L\'email n\'est pas valide';
+              } else if (!state.isNewEmailDifferent) {
+                return 'L\'email doit être différent de l\'ancien email';
+              } else {
+                return null;
+              }
+            },
+            onChanged: (value) =>
+                context.read<EditEmailBloc>().add(
+                  EmailChanged(email: value),
+                ),
+      );
     });
   }
 }

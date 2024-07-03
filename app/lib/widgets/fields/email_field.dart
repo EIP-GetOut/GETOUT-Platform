@@ -13,6 +13,8 @@ import 'package:getout/screens/connection/forgot_password/children/check_email/b
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
+import 'package:getout/screens/settings/bloc/edit_email/edit_email_bloc.dart';
+
 import 'package:getout/tools/app_l10n.dart';
 
 class LoginEmailField extends StatelessWidget {
@@ -87,7 +89,7 @@ class RegisterEmailField extends StatelessWidget {
         mandatory: true,
         label: 'Entrez votre adresse mail',
         validator: (value) =>
-        state.isEmailValid ? null : appL10n(context)!.email_validator,
+            state.isEmailValid ? null : appL10n(context)!.email_validator,
         onChanged: (value) => context.read<RegisterBloc>().add(
               RegisterEmailChanged(email: value),
             ),
@@ -126,5 +128,78 @@ class ConfirmEmailField extends StatelessWidget {
         label: 'Confirmer votre adresse email',
         validator: validator,
         onChanged: onChanged);
+  }
+}
+
+class EditEmailField extends StatelessWidget {
+  const EditEmailField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<EditEmailBloc, EditEmailState>(
+        builder: (context, state) {
+      return DefaultField(
+        title: 'ADRESSE EMAIL',
+        mandatory: true,
+        label: 'Entrez votre nouvelle adresse email',
+        validator: (value) {
+          if (!state.isEmailEmpty) {
+            return 'L\'email ne peut pas être vide';
+          } else if (!state.isEmailValid) {
+            return 'L\'email n\'est pas valide';
+          } else if (!state.isNewEmailDifferent) {
+            return 'L\'email doit être différent de l\'ancien email';
+          } else {
+            return null;
+          }
+        },
+        onChanged: (value) => context.read<EditEmailBloc>().add(
+              EmailChanged(email: value),
+            ),
+      );
+    });
+  }
+}
+
+class EditConfirmEmailField extends StatelessWidget {
+  const EditConfirmEmailField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<EditEmailBloc, EditEmailState>(
+        builder: (context, state) {
+      return DefaultField(
+        title: 'ADRESSE EMAIL',
+        mandatory: true,
+        label: 'Entrez votre nouvelle adresse email',
+        validator: (value) =>
+            state.isConfirmEmailGood ? null : 'Les emails ne correspondent pas',
+        onChanged: (value) => context.read<EditEmailBloc>().add(
+              ConfirmEmailChanged(confirmEmail: value),
+            ),
+      );
+    });
+  }
+}
+
+class EditPasswordField extends StatelessWidget {
+  const EditPasswordField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<EditEmailBloc, EditEmailState>(
+        builder: (context, state) {
+      return DefaultField(
+        title: 'ADRESSE EMAIL',
+        mandatory: true,
+        label: 'Entrez votre nouvelle adresse email',
+        validator: (value) => state.isPasswordEmpty
+            ? null
+            : 'Le mot de passe ne peut pas être vide',
+        onChanged: (value) => context.read<EditEmailBloc>().add(
+              PasswordChanged(password: value),
+            ),
+      );
+    });
   }
 }
