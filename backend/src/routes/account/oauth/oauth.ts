@@ -52,7 +52,7 @@ const rulesPost = [
  *         description: Internal server error.
  */
 router.post('/account/oauth', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
-  loginWithGoogle(req.body, req.session).then(async (code: StatusCodes) => {
+  loginWithGoogle(req.body).then(async (code: StatusCodes) => {
     if (code === StatusCodes.OK) {
       logger.info(`Account successfully logged in${req.body.email != null ? `: ${req.body.email}` : ' !'}`)
     } else {

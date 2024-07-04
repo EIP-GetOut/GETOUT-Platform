@@ -13,7 +13,9 @@ repos:
         name: flutter-linter
         entry: bash -c 'flutter analyze'
         language: system
+        files: ^frontend/
       - id: back-linter
         name: back-linter
         entry: bash -c 'cd ./backend/ && npx eslint . --ext .ts'
         language: system
+        files: ^backend/

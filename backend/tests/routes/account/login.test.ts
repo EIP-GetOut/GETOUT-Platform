@@ -12,7 +12,7 @@ import request from 'supertest'
 import { app } from '@config/jestSetup'
 
 const loginBody = {
-  email: 'supertester@tester.test',
+  email: 'supertester@test.com',
   password: 'toto'
 }
 

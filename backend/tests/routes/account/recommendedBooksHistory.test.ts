@@ -11,7 +11,7 @@ import { type UUID } from 'node:crypto'
 import { describe } from 'node:test'
 import request from 'supertest'
 
-import { type Preferences } from '@models/account/preferences.intefaces'
+import { type Preferences } from '@models/account/preferences.interface'
 
 import { app } from '@config/jestSetup'
 
@@ -31,12 +31,12 @@ const loginBody = {
 }
 
 const preferences: Preferences = {
-  moviesGenres: [115, 59],
-  booksGenres: ['Aventure'],
+  moviesGenres: [27, 36],
+  booksGenres: ['Philosophie'],
   platforms: ['PrimeVideo']
 }
 
-void describe('Reading List Route', async () => {
+void describe('Recommended Books History Route', async () => {
   let accountId: UUID
   let cookie: string
 
@@ -57,16 +57,13 @@ void describe('Reading List Route', async () => {
   })
 
   it('should respond with 200 OK and the recommended books history for GET /account/:accountId/recommendedBooksHistory', async () => {
-    await request(app).post('/account/preferences').send(preferences).set('Cookie', cookie)
-      .then(async () => {
-        return await request(app).get(`/account/${accountId}/recommend-books`).set('Cookie', cookie)
-      }).then(async () => {
-        setTimeout(() => {
-          request(app).get(`/account/${accountId}/recommendedBooksHistory`).set('Cookie', cookie).then((response) => {
-            expect(response.status).toBe(StatusCodes.OK)
-            expect(response.body).toHaveLength(5)
-          }).catch(console.error)
-        }, 2000)
-      })
+    await request(app).post('/account/preferences').send(preferences).set('Cookie', cookie).then(async () => {
+      return await request(app).get(`/account/${accountId}/recommend-books`).set('Cookie', cookie)
+    }).then(async (response) => {
+      return await request(app).get(`/account/${accountId}/recommendedBooksHistory`).set('Cookie', cookie)
+    }).then((response) => {
+      expect(response.status).toBe(StatusCodes.OK)
+      expect(response.body).toHaveLength(5)
+    })
   }, 15000)
 })

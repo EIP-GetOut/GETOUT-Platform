@@ -49,7 +49,6 @@ const rules = [
  */
 
 router.get('/permission/:permissionName', rules, validate, logApiRequest, (req: Request, res: Response) => {
-  console.log('PARAMS:', req.params)
   if (req.session.account != null) {
     accoutHasPermission(req.session.account.role.permissions, req.params.permissionName).then((hasPermission) => {
       return res.status(StatusCodes.OK).send(hasPermission)

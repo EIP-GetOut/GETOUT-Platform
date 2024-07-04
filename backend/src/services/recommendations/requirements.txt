@@ -1,4 +1,3 @@
 google-api-python-client
-# google-books-api-wrapper
 pynytimes
 tmdbv3api

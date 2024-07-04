@@ -5,16 +5,17 @@
 ** Wrote by Julien Letoux <julien.letoux@epitech.eu>
 */
 
-import { SendSmtpEmail, TransactionalEmailsApi } from '@getbrevo/brevo'
 import { type Request, type Response, Router } from 'express'
 import { body } from 'express-validator'
 import { StatusCodes } from 'http-status-codes'
 
+import { sendBetaInvitationEmail, sendEmailVerificationEmail } from '@services/brevo/emails'
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
-import { AlreadyLoggedInError, ApiError } from '@services/utils/customErrors'
+import { AlreadyLoggedInError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
+import { modifyAccount } from '@models/account'
 import registerAccount from '@models/account/registerAccount'
 import { generateEmailVerificationCode } from '@models/account/verifyEmail'
 
@@ -27,7 +28,8 @@ const rulesPost = [
   body('firstName').isString(),
   body('lastName').isString(),
   body('bornDate').isDate({ format: 'DD/MM/YYYY' }),
-  body('password').isString()
+  body('password').isString(),
+  body('isForBeta').isBoolean().default(false).optional()
 ]
 
 /**
@@ -65,40 +67,35 @@ const rulesPost = [
  *         description: Internal server error.
  */
 
-async function sendWelcomeEmail (account: Account): Promise<ReturnType<TransactionalEmailsApi['sendTransacEmail']>> {
-  const apiInstance = new TransactionalEmailsApi()
-  apiInstance.setApiKey(0, process.env.BREVO_API_KEY)
-  const sendSmtpEmail = new SendSmtpEmail()
-
-  sendSmtpEmail.templateId = 5
-  sendSmtpEmail.to = [{ email: account.email }]
-  sendSmtpEmail.params = { fullName: `${account.firstName} ${account.lastName}` }
-
-  return await apiInstance.sendTransacEmail(sendSmtpEmail).catch((err: Error) => {
-    throw new ApiError(`Error while sending reset password email to ${account.email}: ${err.message}.`)
-  })
-}
-
 router.post('/account/signup', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session?.account?.id != null) {
     handleErrorOnRoute(res)(new AlreadyLoggedInError())
     return
   }
   registerAccount(req.body).then(async (account: Account) => {
+    const response: Partial<Account> = {
+      id: account.id,
+      email: account.email,
+      firstName: account.firstName,
+      lastName: account.lastName,
+      bornDate: account.bornDate,
+      preferences: account.preferences,
+      createdDate: account.createdDate
+    }
+
+    if (req.body.isForBeta === true) {
+      return await sendBetaInvitationEmail(account, req.body.password).then(async (resp) => {
+        console.log('RESP:', resp)
+        return await modifyAccount(account.id, { isVerified: true })
+      }).then(() => {
+        return res.status(StatusCodes.CREATED).json(response)
+      })
+    }
     return await generateEmailVerificationCode(account.email).then(async (code) => {
       logger.debug(`Sending email verification code to email ${account.email} : ${code}.`)
-      // send verification email
-      return await sendWelcomeEmail(account).then(() => {
-        return res.status(StatusCodes.CREATED).json({
-          id: account.id,
-          email: account.email,
-          firstName: account.firstName,
-          lastName: account.lastName,
-          bornDate: account.bornDate,
-          preferences: account.preferences,
-          createdDate: account.createdDate
-        })
-      })
+      return await sendEmailVerificationEmail(account, code)
+    }).then(() => {
+      return res.status(StatusCodes.CREATED).json(response)
     })
   }).catch(handleErrorOnRoute(res))
 })

@@ -35,7 +35,7 @@ const config = {
   // An array of regexp pattern strings used to skip coverage collection
   coveragePathIgnorePatterns: [
     '.interface.ts',
-    '.dto.ts',
+    '<rootDir>/src/services/middlewares/dtoValidator.ts',
     '.d.ts',
     '<rootDir>/src/app.ts',
     '<rootDir>/src/generateSwagger.ts',

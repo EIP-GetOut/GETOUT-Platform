@@ -6,7 +6,6 @@
 */
 
 import { type UUID } from 'crypto'
-import { StatusCodes } from 'http-status-codes'
 
 import { AccountDoesNotExistError, DbError } from '@services/utils/customErrors'
 
@@ -28,7 +27,7 @@ async function generateEmailVerificationCode (email: string): Promise<number> {
     if (account == null) {
       throw new AccountDoesNotExistError()
     }
-    account.emailVerificationCode = process.env.NODE_ENV === 'development'
+    account.emailVerificationCode = process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test'
       ? 123456
       : Math.floor(100000 + Math.random() * 900000)
     account.emailVerificationExpiration = getDateIn1Day()
@@ -52,20 +51,7 @@ async function accountIsAllowedToVerifyEmail (accountId: UUID, code: number): Pr
   })
 }
 
-async function verifyEmail (accountId: UUID): Promise<void> {
-  const accountRepository = appDataSource.getRepository(Account)
-
-  await findEntity<Account>(Account, { id: accountId }).then(async (account: Account | null) => {
-    if (account == null) {
-      throw new AccountDoesNotExistError(undefined, StatusCodes.NOT_FOUND)
-    }
-    account.isVerified = true
-    await accountRepository.save(account)
-  })
-}
-
 export {
   accountIsAllowedToVerifyEmail,
-  generateEmailVerificationCode,
-  verifyEmail
+  generateEmailVerificationCode
 }

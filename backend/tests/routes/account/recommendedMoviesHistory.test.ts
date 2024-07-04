@@ -11,7 +11,7 @@ import { type UUID } from 'node:crypto'
 import { describe } from 'node:test'
 import request from 'supertest'
 
-import { type Preferences } from '@models/account/preferences.intefaces'
+import { type Preferences } from '@models/account/preferences.interface'
 
 import { app } from '@config/jestSetup'
 
@@ -31,19 +31,19 @@ const loginBody = {
 }
 
 const preferences: Preferences = {
-  moviesGenres: [115, 59],
-  booksGenres: ['Aventure'],
+  moviesGenres: [27, 36],
+  booksGenres: ['Politique'],
   platforms: ['PrimeVideo']
 }
 
-void describe('Reading List Route', async () => {
+void describe('Recommended Movies History Route', async () => {
   let accountId: UUID
   let cookie: string
 
   beforeAll(async () => {
     await request(app).post('/account/signup').send(bodySignup).then(async (response) => {
       if (response.statusCode !== StatusCodes.CREATED) {
-        throw Error('Failed creating account')
+        throw Error(`Failed creating account: ${response.statusCode}`)
       }
       await request(app).post('/account/login').send(loginBody).then(async (res) => {
         const optionalCookie = extractConnectSidCookie(res.headers['set-cookie'][0])
@@ -57,16 +57,13 @@ void describe('Reading List Route', async () => {
   })
 
   it('should respond with 200 OK and the recommended movies history for GET /account/:accountId/recommendedMoviesHistory', async () => {
-    await request(app).post('/account/preferences').send(preferences).set('Cookie', cookie)
-      .then(async () => {
-        return await request(app).get(`/account/${accountId}/recommend-movies`).set('Cookie', cookie)
-      }).then(async () => {
-        setTimeout(() => {
-          request(app).get(`/account/${accountId}/recommendedMoviesHistory`).set('Cookie', cookie).then((response) => {
-            expect(response.status).toBe(StatusCodes.OK)
-            expect(response.body).toHaveLength(5)
-          }).catch(console.error)
-        }, 2000)
-      })
+    await request(app).post('/account/preferences').send(preferences).set('Cookie', cookie).then(async () => {
+      return await request(app).get(`/account/${accountId}/recommend-movies`).set('Cookie', cookie)
+    }).then(async () => {
+      return await request(app).get(`/account/${accountId}/recommendedMoviesHistory`).set('Cookie', cookie)
+    }).then((response) => {
+      expect(response.status).toBe(StatusCodes.OK)
+      expect(response.body).toHaveLength(5)
+    })
   }, 10000)
 })

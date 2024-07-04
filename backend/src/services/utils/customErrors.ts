@@ -102,6 +102,12 @@ class SamePasswordError extends AppError {
   }
 }
 
+class SessionMappingError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Failed mapping account to session.', status)
+  }
+}
+
 class SessionDestroyError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
     super(message ?? 'Failed destroying session.', status)
@@ -127,5 +133,6 @@ export {
   PreferencesDoesNotExistError,
   RecommendationsDetailsError,
   SamePasswordError,
-  SessionDestroyError
+  SessionDestroyError,
+  SessionMappingError
 }

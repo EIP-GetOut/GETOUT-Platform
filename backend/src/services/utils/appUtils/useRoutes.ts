@@ -35,6 +35,7 @@ import accounts from '@routes/accounts'
 import basicEndpoints from '@routes/basicEndpoints'
 import book from '@routes/book'
 import movie from '@routes/movie'
+import news from '@routes/news'
 import permissions from '@routes/permissions'
 import recommendationsTmdb from '@routes/recommendationsTmdb'
 import session from '@routes/session'
@@ -68,6 +69,7 @@ const useRoutes = (app: Application): Application => (
     .use(accounts)
     .use(movie)
     .use(book)
+    .use(news)
     .use(recommendationsTmdb)
 
     .use(oauth)

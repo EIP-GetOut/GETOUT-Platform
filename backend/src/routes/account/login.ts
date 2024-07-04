@@ -6,15 +6,21 @@
 */
 
 import { type Request, type Response, Router } from 'express'
+import { type Session, type SessionData } from 'express-session'
 import { body } from 'express-validator'
 import { StatusCodes } from 'http-status-codes'
 
+import { sendWelcomeEmail } from '@services/brevo/emails'
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
 import { AlreadyLoggedInError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
+import { mapAccountToSession } from '@services/utils/mapAccountToSession'
 
+import { modifyAccount } from '@models/account'
 import { loginAccount } from '@models/account/loginAccount'
+
+import { type Account } from '@entities/Account'
 
 const router = Router()
 
@@ -60,7 +66,16 @@ router.post('/account/login', rulesPost, validate, logApiRequest, (req: Request,
     handleErrorOnRoute(res)(new AlreadyLoggedInError())
     return
   }
-  loginAccount(req.body, req.session).then(() => {
+  loginAccount(req, req.body).then(async (account: Account): Promise<Session & Partial<SessionData>> => {
+    if (account.isVerified && !account.welcomeEmailSent) {
+      sendWelcomeEmail(account).then(async () => {
+        return await modifyAccount(account.id, { welcomeEmailSent: true })
+      }).then(async () => {
+        return await mapAccountToSession(req)
+      }).catch((err) => { throw err })
+    }
+    return await mapAccountToSession(req)
+  }).then(() => {
     logger.info(`Account successfully logged in${req.body.email != null ? `: ${req.body.email}` : ' !'}`)
     return res.status(StatusCodes.OK).json(req.session)
   }).catch(handleErrorOnRoute(res))

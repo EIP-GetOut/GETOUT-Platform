@@ -15,7 +15,7 @@ import {
   ManyToOne
 } from 'typeorm'
 
-import { Preferences } from '@models/account/preferences.intefaces'
+import { Preferences } from '@models/account/preferences.interface'
 
 import { Role } from './Role'
 
@@ -60,7 +60,7 @@ export class Account {
   @Column('jsonb', { nullable: true, default: null })
     preferences?: Preferences
 
-  @Column('jsonb', { array: true, default: [] })
+  @Column('text', { array: true, default: [] })
     readBooks: string [] = []
 
   @Column('integer', { array: true, default: [] })
@@ -104,6 +104,9 @@ export class Account {
 
   @ManyToOne(() => Role, role => role.owners)
     role!: Role
+
+  @Column('boolean', { default: false })
+    welcomeEmailSent: boolean = false
 
   @CreateDateColumn()
     createdDate!: Date
