@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.6.0](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.5.5...v0.6.0) (2024-07-04)
+
+
+### Features
+
+* **backend:** :sparkles: all emails, beta signup, brevo service ([c9ee857](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c9ee85745435cb32cedc311547f93fc663ec5bd9))
+* **backend:** :sparkles: patch account ([1277c6c](https://github.com/EIP-GetOut/GETOUT-Platform/commit/1277c6ceecf96937492c6e42074ef6fb13df3d8a))
+* **backend:** :sparkles: patch account by ids ([eb65bf8](https://github.com/EIP-GetOut/GETOUT-Platform/commit/eb65bf828550889dba3764325047dcbfd1bfd38a))
+* **backend:** :sparkles: patch news for the panel admin ([fda0ade](https://github.com/EIP-GetOut/GETOUT-Platform/commit/fda0ade27c5de4c8eb5c59e2081ada6c32fc6e9e))
+
+
+### Bug Fixes
+
+* **backend:** :bug: readBooks in Account entity and response of a PATCH /account ([ea39298](https://github.com/EIP-GetOut/GETOUT-Platform/commit/ea39298ae1a80bad34b0be690aebb7dd12a73585))
+* **backend:** :rotating_light: linting error ([bf88b5d](https://github.com/EIP-GetOut/GETOUT-Platform/commit/bf88b5d1bae5aa635bcb674347f4032767dea0fe))
+
+
+### UI Updates
+
+* **backend:** :rotating_light: linting unordered import ([a20f0ec](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a20f0ec97f33644b3b1fb48afe8b13383af1ca8a))
+
+
+### Refactors
+
+* **backend:** :recycle: recommendations algorithms books and movies ([5ed8a6c](https://github.com/EIP-GetOut/GETOUT-Platform/commit/5ed8a6cef86feff3082b4c8757f709eeff745de8))
+* **backend:** :recycle: session object and account mapping to session ([900e898](https://github.com/EIP-GetOut/GETOUT-Platform/commit/900e89868f67b3df5e4be3e3e5c0373dcce4b615))
+
 ### [0.5.5](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.5.4...v0.5.5) (2024-05-27)
 
 
