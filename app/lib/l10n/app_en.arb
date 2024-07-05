@@ -123,11 +123,16 @@
   "password_hint": "Enter your password",
   "new_password": "New password",
   "new_password_hint": "Enter your new password",
+  "password_actual": "Current password",
+  "password_actual_hint": "Enter your current password",
   "confirm_password": "Password confirmation",
   "confirm_password_hint": "Confirm your new password",
   "edit_password": "Edit your password",
   "password_validator": "The password must contains 8 or more characters, with uppercase, lowercase and numbers",
   "password_matching": "New passwords written don't match",
+  "password_actual_empty": "Please enter your current password",
+  "password_empty": "Please enter your password",
+  "password_old": "The new password must be different from the old one",
 
   "@_EMAIL": {},
 
@@ -140,6 +145,9 @@
   "edit_email": "Edit your email address",
   "email_validator": "Enter a valid email",
   "email_matching": "New emails addresses written don't match",
+  "email_empty": "Email can't be empty",
+  "email_old": "The email must be different from the old email",
+
 
   "@_CODE": {},
 

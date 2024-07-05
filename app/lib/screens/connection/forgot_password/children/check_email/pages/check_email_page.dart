@@ -14,8 +14,7 @@ import 'package:dio/dio.dart';
 import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
-import 'package:getout/screens/connection/forgot_password/widgets/fields.dart';
-import 'package:getout/screens/connection/widgets/fields_title.dart';
+import 'package:getout/widgets/fields/email_field.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 
@@ -56,13 +55,11 @@ class CheckEmailPage extends StatelessWidget {
         }
       },
       child: Column(children: [
-            const SizedBox(height: 40),
-            fieldTitle(appL10n(context)!.email),
             Form(
               key: _formKey,
               child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                child: EmailField(),
+                child: ForgotPasswordEmailField(),
               ),
             )
           ]),

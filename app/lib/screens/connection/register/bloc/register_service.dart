@@ -13,20 +13,20 @@ import 'package:getout/constants/api_path.dart';
 import 'package:getout/global.dart' as globals;
 
 class RegisterService {
-  Future<void> register(final RegisterRequestModel request) async
-  {
+  Future<void> register(final RegisterRequestModel request) async {
     try {
-      await globals.dio?.post(
-          '${ApiConstants.rootApiPath}${ApiConstants.registerPath}',
-          data: {
-            'email': request.email,
-            'password': request.password,
-            'firstName': request.firstName,
-            'lastName': request.lastName,
-            'bornDate': request.birthDate,
-          },
-          options: Options(headers: {'Content-Type': 'application/json'}));
-    } on DioException { // add "catch (dioError)" for debugging
+      await globals.dio
+          ?.post('${ApiConstants.rootApiPath}${ApiConstants.registerPath}',
+              data: {
+                'email': request.email,
+                'password': request.password,
+                'firstName': request.firstName,
+                'lastName': request.lastName,
+                'bornDate': request.birthDate,
+              },
+              options: Options(headers: {'Content-Type': 'application/json'}));
+    } on DioException {
+      // add "catch (dioError)" for debugging
       rethrow;
     } catch (error) {
       rethrow;
