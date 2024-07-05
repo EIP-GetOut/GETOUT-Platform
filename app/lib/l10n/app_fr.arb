@@ -127,7 +127,7 @@
   "confirm_password_hint": "Confirmer votre mot de passe",
   "edit_password": "Changer de mot de passe",
   "password_validator": "Le mot de passe dois contenir au minimum 8 caractères, dont une majuscule, une minuscule et un chiffre",
-  "password_matching": "'Les nouveaux mots de passe saisies ne correspondent pas.'",
+  "password_matching": "Les nouveaux mots de passe saisies ne correspondent pas.",
 
   "@_EMAIL": {},
 

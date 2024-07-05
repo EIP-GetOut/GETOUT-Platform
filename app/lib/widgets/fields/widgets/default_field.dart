@@ -9,7 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:getout/widgets/fields/widgets/title_field.dart';
 
-class DefaultField extends StatefulWidget {
+class DefaultField extends StatelessWidget {
   final String? Function(String?)? validator;
   final Function(String) onChanged;
   final String? title;
@@ -17,7 +17,7 @@ class DefaultField extends StatefulWidget {
   final bool isPassword;
   final String label;
 
-  const DefaultField({
+  DefaultField({
     super.key,
     this.title,
     this.mandatory = true,
@@ -27,62 +27,77 @@ class DefaultField extends StatefulWidget {
     required this.onChanged,
   });
 
-  @override
-  State<DefaultField> createState() => _DefaultFieldState();
-}
-
-class _DefaultFieldState extends State<DefaultField> {
-  bool passwordVisible = false;
+  final ValueNotifier<bool> passwordVisible = ValueNotifier<bool>(false);
+  final ValueNotifier<String?> errorMessage = ValueNotifier<String?>(null);
 
   @override
   Widget build(BuildContext context) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      //title
-      if (widget.title != null)
-        fieldTitle(widget.title ?? '', widget.mandatory),
-      //field
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-        child: SizedBox(
-          height: 64,
-          child: TextFormField(
-            obscureText: widget.isPassword && !passwordVisible,
-            style: const TextStyle(fontSize: 17, color: Colors.black),
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: const Color(0xffeaeaea),
-              labelText: widget.label,
-              labelStyle: TextStyle(color: Colors.black.withOpacity(0.25)),
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: Color(0xffeaeaea)),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(color: Color(0xffeaeaea)),
-              ),
-              suffixIcon: widget.isPassword
-                  ? IconButton(
-                      icon: Icon(
-                        passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: Colors.black,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (title != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: fieldTitle(title ?? '', mandatory),
+          ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ValueListenableBuilder<bool>(
+                valueListenable: passwordVisible,
+                builder: (context, isVisible, child) {
+                  return TextFormField(
+                    obscureText: isPassword && !isVisible,
+                    style: const TextStyle(fontSize: 17, color: Colors.black),
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: const Color(0xffeaeaea),
+                      labelText: label,
+                      labelStyle: TextStyle(color: Colors.black.withOpacity(0.25)),
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: Color(0xffeaeaea)),
                       ),
-                      onPressed: () {
-                        setState(() {
-                          passwordVisible = !passwordVisible;
-                        });
-                      },
-                    )
-                  : const SizedBox.shrink(),
-            ),
-            validator: widget.validator,
-            onChanged: (value) => widget.onChanged(value),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: Color(0xffeaeaea)),
+                      ),
+                      errorMaxLines: 4,
+                      errorStyle: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.red,
+                        height: 1.5,
+                      ),
+                      suffixIcon: isPassword
+                          ? IconButton(
+                              icon: Icon(
+                                isVisible ? Icons.visibility : Icons.visibility_off,
+                                color: Colors.black,
+                              ),
+                              onPressed: () {
+                                passwordVisible.value = !passwordVisible.value;
+                              },
+                            )
+                          : const SizedBox(height: 0),
+                    ),
+                    validator: (value) {
+                      errorMessage.value = validator?.call(value);
+                      return errorMessage.value;
+                    },
+                    onChanged: (value) {
+                      errorMessage.value = validator?.call(value);
+                      onChanged(value);
+                    },
+                  );
+                },
+              ),
+            ],
           ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 }

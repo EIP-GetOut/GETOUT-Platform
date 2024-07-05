@@ -47,7 +47,7 @@ class LoginPage extends StatelessWidget {
                   HttpStatus.FORBIDDEN) {
             showSnackBar(context, appL10n(context)!.error_password_email);
           } else {
-            showSnackBar(context, 'Vos identifiants sont incorrects');
+            showSnackBar(context, appL10n(context)!.error_unknow);
           }
         }
         if (state.status.isSuccess) {

@@ -35,22 +35,27 @@ class BirthDateField extends StatelessWidget {
                     controller: controller,
                     style: const TextStyle(fontSize: 17, color: Colors.black),
                     decoration: InputDecoration(
-                        filled: true,
-                        fillColor: const Color(0xffeaeaea),
-                        labelText: 'Entrez votre date',
-                        labelStyle:
-                            TextStyle(color: Colors.black.withOpacity(0.25)),
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide:
-                              const BorderSide(color: Color(0xffeaeaea)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide:
-                              const BorderSide(color: Color(0xffeaeaea)),
-                        )),
+                      filled: true,
+                      fillColor: const Color(0xffeaeaea),
+                      labelText: appL10n(context)!.birthday_hint,
+                      labelStyle:
+                          TextStyle(color: Colors.black.withOpacity(0.25)),
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: Color(0xffeaeaea)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: Color(0xffeaeaea)),
+                      ),
+                      errorMaxLines: 4,
+                      errorStyle: const TextStyle(
+                        fontSize: 14,
+                        color: Colors.red,
+                        height: 1.5,
+                      ),
+                    ),
                     readOnly: true,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -134,7 +139,6 @@ class PasswordField extends StatelessWidget {
           obscureText: true,
           style: const TextStyle(fontSize: 17, color: Colors.black),
           decoration: InputDecoration(
-              errorMaxLines: 2,
               labelText: appL10n(context)!.password_hint,
               floatingLabelBehavior: FloatingLabelBehavior.never,
               enabledBorder: OutlineInputBorder(
