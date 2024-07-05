@@ -10,10 +10,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/settings/bloc/edit_email/edit_email_bloc.dart';
 import 'package:getout/screens/settings/services/edit_email.dart';
-import 'package:getout/widgets/fields/widgets/title_field.dart';
-import 'package:getout/screens/settings/widget/edit_email_fields.dart';
+import 'package:getout/widgets/fields/email_field.dart';
+import 'package:getout/widgets/fields/password_field.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
-import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/tools/tools.dart';
 
@@ -37,31 +36,23 @@ class EditEmailPage extends StatelessWidget {
         ),
         body: Form(
           key: formKey,
-          child: Column(
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 25),
-              fieldTitle(appL10n(context)!.email.toUpperCase(), true),
-              const SizedBox(height: 20),
-              const Padding(
+              SizedBox(height: 30),
+              Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: 8, vertical: 8),
-                  child: EmailField()),
-              const SizedBox(height: 30),
-              fieldTitle(appL10n(context)!.confirm_email.toUpperCase(), true),
-              const SizedBox(height: 20),
-              const Padding(
+                  child: EditEmailField()),
+              Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: 8, vertical: 8),
-                  child: ConfirmEmailField()),
-              const SizedBox(height: 30),
-              fieldTitle(appL10n(context)!.password.toUpperCase(), true),
-              const SizedBox(height: 20),
-              const Padding(
+                  child: EditConfirmEmailField()),
+              Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: 8, vertical: 8),
-                  child: PasswordField()),
+                  child: EditPasswordField()),
             ],
           ),
         ),

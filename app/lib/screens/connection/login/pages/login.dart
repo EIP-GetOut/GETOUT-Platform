@@ -18,8 +18,8 @@ import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_p
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/register/pages/register.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
-import 'package:getout/screens/connection/login/widgets/fields.dart';
-import 'package:getout/screens/connection/widgets/fields_title.dart';
+import 'package:getout/widgets/fields/email_field.dart';
+import 'package:getout/widgets/fields/password_field.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/tools/app_l10n.dart';
@@ -37,7 +37,7 @@ class LoginPage extends StatelessWidget {
     /// StoreR
     ///
     return Scaffold(
-      body: BlocListener<LoginBloc, LoginState>(
+        body: BlocListener<LoginBloc, LoginState>(
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status.isError) {
@@ -69,31 +69,12 @@ class LoginPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-               Row(
-                children: [
-                  const SizedBox(width: 10),
-                  Text(appL10n(context)!.email.toUpperCase(),
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black)),
-                  const Text('*',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red)),
-                ],
-              ),
               const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                  child: EmailField()),
-              const SizedBox(height: 20),
-              fieldTitle(appL10n(context)!.password.toUpperCase()),
+                  child: LoginEmailField()),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                child: PasswordField(),
+                child: LoginPasswordField(),
               ),
               const SizedBox(height: 30),
               Align(
@@ -181,8 +162,7 @@ class LoginButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
       builder: (context, state) {
         return (state.status.isLoading)

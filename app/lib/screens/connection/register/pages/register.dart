@@ -10,14 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 
-import 'package:getout/screens/connection/widgets/fields_title.dart';
 import 'package:getout/screens/connection/register/widgets/fields.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
+import 'package:getout/widgets/fields/email_field.dart';
+import 'package:getout/widgets/fields/password_field.dart';
+import 'package:getout/widgets/fields/name_field.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/tools/status.dart';
-
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});
@@ -58,44 +59,33 @@ class RegisterPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 25),
-                          fieldTitle(appL10n(context)!.lastname.toUpperCase()),
+                          const SizedBox(height: 30),
                           const Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 8),
-                              child: LastNameField()),
-                          const SizedBox(height: 15),
-                          fieldTitle(appL10n(context)!.firstname.toUpperCase()),
+                              child: RegisterLastNameField()),
                           const Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 8),
-                              child: FirstNameField()),
-                          const SizedBox(height: 15),
-                          fieldTitle(appL10n(context)!.birthday.toUpperCase()),
+                              child: RegisterFirstNameField()),
                           Padding(
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 8, vertical: 8),
                               child: BirthDateField()),
-                          const SizedBox(height: 15),
-                          fieldTitle(appL10n(context)!.email.toUpperCase()),
                           const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 8),
-                            child: EmailField(),
+                            child: RegisterEmailField(),
                           ),
-                          const SizedBox(height: 15),
-                          fieldTitle(appL10n(context)!.password.toUpperCase()),
                           const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 8),
-                            child: PasswordField(),
+                            child: RegisterPasswordField(),
                           ),
-                          const SizedBox(height: 15),
-                          fieldTitle(appL10n(context)!.confirm_password.toUpperCase()),
                           const Padding(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 8),
-                            child: ConfirmPasswordField(),
+                            child: RegisterConfirmPasswordField(),
                           ),
                           const SizedBox(height: 50),
                           Align(
