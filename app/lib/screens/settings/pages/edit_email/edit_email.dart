@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/screens/settings/bloc/edit_email/edit_email_bloc.dart';
 import 'package:getout/screens/settings/services/edit_email.dart';
 import 'package:getout/widgets/fields/email_field.dart';
+import 'package:getout/widgets/fields/password_field.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/tools/tools.dart';

@@ -120,14 +120,19 @@
 
   "password": "Mot de passe",
   "forgot_password": "Mot de passe oublié",
-  "password_hint": "Entrer votre mot de passe",
+  "password_hint": "Entrez votre mot de passe",
+  "password_actual": "Mot de passe actuel",
+  "password_actual_hint": "Entrez votre mot de passe actuel",
   "new_password": "Nouveau mot de passe",
-  "new_password_hint": "Entrer votre nouveau mot de passe",
+  "new_password_hint": "Entrez votre nouveau mot de passe",
   "confirm_password": "Confirmation de mot de passe",
   "confirm_password_hint": "Confirmer votre mot de passe",
   "edit_password": "Changer de mot de passe",
   "password_validator": "Le mot de passe dois contenir au minimum 8 caractères, dont une majuscule, une minuscule et un chiffre",
-  "password_matching": "Les nouveaux mots de passe saisies ne correspondent pas.",
+  "password_matching": "Les nouveaux mots de passe saisies ne correspondent pas",
+  "password_actual_empty": "Veuillez entrer votre mot de passe actuel",
+  "password_empty": "Veuillez entrer votre mot de passe",
+  "password_old": "Le nouveau mot de passe doit être différent de l'ancien",
 
   "@_EMAIL": {},
 
@@ -135,11 +140,13 @@
   "email_hint": "Entrer votre adresse email",
   "new_email": "Nouvelle adresse email",
   "new_email_hint": "Entrer votre nouvelle adresse email",
-  "confirm_email": "confirmation d'adresse email",
+  "confirm_email": "Confirmation d'adresse email",
   "confirm_email_hint": "Confirmer votre adresse email",
   "edit_email": "Changer d'adressse email",
-  "email_validator": "Entrer un email valide",
+  "email_validator": "Entrez un email valide",
   "email_matching": "Les nouvelles adresses email saisies ne correspondent pas",
+  "email_empty": "L'email ne peut pas être vide",
+  "email_old": "L'email doit être différent de l'ancien email",
 
   "@_CODE": {},
 

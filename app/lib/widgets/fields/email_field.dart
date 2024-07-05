@@ -12,7 +12,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
-import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
 import 'package:getout/screens/settings/bloc/edit_email/edit_email_bloc.dart';
 
 import 'package:getout/tools/app_l10n.dart';
@@ -24,9 +23,9 @@ class LoginEmailField extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
       return DefaultField(
-        title: 'ADRESSE EMAIL',
+        title: appL10n(context)!.email.toUpperCase(),
         mandatory: true,
-        label: 'Entrez votre adresse email',
+        label: appL10n(context)!.email_hint,
         validator: (value) =>
             state.isEmailEmpty ? null : appL10n(context)!.email_validator,
         onChanged: (value) =>
@@ -44,36 +43,15 @@ class ForgotPasswordEmailField extends StatelessWidget {
     return BlocBuilder<CheckEmailBloc, CheckEmailState>(
         builder: (context, state) {
       return DefaultField(
-        title: 'ADRESSE EMAIL',
+        title: appL10n(context)!.email.toUpperCase(),
         mandatory: true,
-        label: 'Entrez votre adresse email',
+        label: appL10n(context)!.email_hint,
         validator: (value) =>
             state.isEmailEmpty ? null : appL10n(context)!.email_validator,
         onChanged: (value) => context.read<CheckEmailBloc>().add(
               ForgotPasswordEmailChanged(email: value),
             ),
       );
-    });
-  }
-}
-
-class ForgotPasswordConfirmField extends StatelessWidget {
-  const ForgotPasswordConfirmField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<NewPasswordBloc, NewPasswordState>(
-        builder: (context, state) {
-      return DefaultField(
-          title: 'MOT DE PASSE',
-          mandatory: true,
-          label: 'Entrez votre mot de passe',
-          validator: (value) => state.isConfirmPasswordValid
-              ? null
-              : appL10n(context)!.password_matching,
-          onChanged: (value) => context.read<NewPasswordBloc>().add(
-                ForgotPasswordConfirmPasswordChanged(confirmPassword: value),
-              ));
     });
   }
 }
@@ -85,9 +63,9 @@ class RegisterEmailField extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<RegisterBloc, RegisterState>(builder: (context, state) {
       return DefaultField(
-        title: 'ADRESSE MAIL',
+        title: appL10n(context)!.email.toUpperCase(),
         mandatory: true,
-        label: 'Entrez votre adresse mail',
+        label: appL10n(context)!.email_hint,
         validator: (value) =>
             state.isEmailValid ? null : appL10n(context)!.email_validator,
         onChanged: (value) => context.read<RegisterBloc>().add(
@@ -106,9 +84,9 @@ class NewEmailField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultField(
-        title: 'NOUVELLE ADRESSE EMAIL',
+        title: appL10n(context)!.new_email.toUpperCase(),
         mandatory: true,
-        label: 'Entrer votre nouvelle adresse email',
+        label: appL10n(context)!.new_email_hint,
         validator: validator,
         onChanged: onChanged);
   }
@@ -123,9 +101,9 @@ class ConfirmEmailField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultField(
-        title: 'CONFIRMATION D\'ADRESSE EMAIL',
+        title: appL10n(context)!.confirm_email.toUpperCase(),
         mandatory: true,
-        label: 'Confirmer votre adresse email',
+        label: appL10n(context)!.confirm_email_hint,
         validator: validator,
         onChanged: onChanged);
   }
@@ -139,16 +117,16 @@ class EditEmailField extends StatelessWidget {
     return BlocBuilder<EditEmailBloc, EditEmailState>(
         builder: (context, state) {
       return DefaultField(
-        title: 'ADRESSE EMAIL',
+        title: appL10n(context)!.new_email.toUpperCase(),
         mandatory: true,
-        label: 'Entrez votre nouvelle adresse email',
+        label: appL10n(context)!.new_email_hint,
         validator: (value) {
           if (!state.isEmailEmpty) {
-            return 'L\'email ne peut pas être vide';
+            return appL10n(context)!.email_empty;
           } else if (!state.isEmailValid) {
-            return 'L\'email n\'est pas valide';
+            return appL10n(context)!.email_validator;
           } else if (!state.isNewEmailDifferent) {
-            return 'L\'email doit être différent de l\'ancien email';
+            return appL10n(context)!.email_old;
           } else {
             return null;
           }
@@ -169,35 +147,13 @@ class EditConfirmEmailField extends StatelessWidget {
     return BlocBuilder<EditEmailBloc, EditEmailState>(
         builder: (context, state) {
       return DefaultField(
-        title: 'CONFIRMER VOTRE ADRESSE EMAIL',
+        title: appL10n(context)!.confirm_email.toUpperCase(),
         mandatory: true,
-        label: 'Entrez votre nouvelle adresse email',
+        label: appL10n(context)!.new_email_hint,
         validator: (value) =>
-            state.isConfirmEmailGood ? null : 'Les emails ne correspondent pas',
+            state.isConfirmEmailGood ? null : appL10n(context)!.email_matching,
         onChanged: (value) => context.read<EditEmailBloc>().add(
               ConfirmEmailChanged(confirmEmail: value),
-            ),
-      );
-    });
-  }
-}
-
-class EditPasswordField extends StatelessWidget {
-  const EditPasswordField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<EditEmailBloc, EditEmailState>(
-        builder: (context, state) {
-      return DefaultField(
-        title: 'MOT DE PASSE',
-        mandatory: true,
-        label: 'Entrez votre mot de passe',
-        validator: (value) => state.isPasswordEmpty
-            ? null
-            : 'Le mot de passe ne peut pas être vide',
-        onChanged: (value) => context.read<EditEmailBloc>().add(
-              PasswordChanged(password: value),
             ),
       );
     });

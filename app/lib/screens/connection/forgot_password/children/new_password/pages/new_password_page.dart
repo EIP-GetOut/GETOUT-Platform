@@ -14,7 +14,6 @@ import 'package:dio/dio.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
-import 'package:getout/widgets/fields/email_field.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/widgets/fields/password_field.dart';
