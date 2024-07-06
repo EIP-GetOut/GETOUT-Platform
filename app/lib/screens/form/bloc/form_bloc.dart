@@ -8,7 +8,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:getout/constants/movie_genre.dart';
+import 'package:getout/constants/genre_list.dart';
 import 'package:getout/global.dart' as globals;
 
 part 'form_event.dart';
@@ -55,7 +55,7 @@ class FormBloc extends Bloc<FormEvent, FormStates> {
   // bookCodes is dynamic because session['preferences']['literaryGenres'] is a List<dynamic>
   static List<String> bookCodesToGenres(final List<dynamic> bookCodes)
   {
-    Map<String, String> genreByCode = bookGenreList.map((key, value) => MapEntry(value, key));
+    Map<String, String> genreByCode = BookGenreList.map((key, value) => MapEntry(value, key));
 
     return bookCodes.map((code) => genreByCode[code] ?? 'Unknown').toList();
   }

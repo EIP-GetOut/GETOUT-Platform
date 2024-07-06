@@ -129,7 +129,7 @@ class Forms extends StatelessWidget {
                           context.read<FormBloc>().state.viewingPlatform))
                   .then((final FormResponseModel value) {
                 if (!value.isSuccessful) {
-                  return showSnackBar(context, appL10n(context)!.error_unknow);
+                  return showSnackBar(context, appL10n(context)!.error_unknown);
                 }
                 context.read<FormBloc>().add(const EmitEvent(status: FormStatus.endForm));
                 pageController.nextPage(

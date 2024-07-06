@@ -31,7 +31,7 @@ class MoviePreviewWidget extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(7.0),
               child: Image.network(
-                '${ExternalConstants.BookImagePreviewPath}$posterPath',
+                '${ExternalConstants.MovieImagePreviewPath}$posterPath',
                 fit: BoxFit.cover,
               ),
             ),
