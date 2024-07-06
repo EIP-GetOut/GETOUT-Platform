@@ -6,7 +6,7 @@
 
   "@_ERROR":{},
 
-  "error_unknow": "Une erreur s'est produite, veuillez réessayer plus tard",
+  "error_unknown": "Une erreur s'est produite, veuillez réessayer plus tard",
   "error_internet": "Vérifier votre connexion et recommencer",
   "error_server": "Surprenant ! Attendez un peu, ou contactez le support",
   "error_unauthorized": "Vérifier les informations et recommencer",
@@ -185,7 +185,7 @@
   "recommendations": "Recommandations",
 
   "history": "Historique",
-  "more": "Autre",
+  "other": "Autre",
   "support": "Support",
 
   "@_FORM": {},

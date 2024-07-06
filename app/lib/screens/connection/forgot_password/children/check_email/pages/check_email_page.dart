@@ -45,7 +45,7 @@ class CheckEmailPage extends StatelessWidget {
                 break;
             }
           } else {
-            showSnackBar(context, appL10n(context)!.error_unknow);
+            showSnackBar(context, appL10n(context)!.error_unknown);
           }
         }
         if (state.status.isSuccess) {
