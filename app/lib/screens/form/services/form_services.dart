@@ -7,7 +7,7 @@
 
 import 'package:dio/dio.dart';
 
-import 'package:getout/constants/movie_genre.dart';
+import 'package:getout/constants/genre_list.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/constants/api_path.dart';
 import 'package:getout/global.dart' as globals;
