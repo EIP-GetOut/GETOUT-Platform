@@ -7,17 +7,18 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 
+import 'package:getout/constants/http_status.dart';
+import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
-import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
-import 'package:getout/constants/http_status.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/widgets/fields/password_field.dart';
 import 'package:getout/widgets/fields/code_field.dart';
+import 'package:getout/widgets/page_title.dart';
+
 
 class NewPasswordPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -31,8 +32,6 @@ class NewPasswordPage extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: AutoSizeText(' ${appL10n(context)!.forgot_password.toUpperCase()}'.padRight(21, String.fromCharCodes([0x00A0, 0x0020])),
-            maxLines: 1, minFontSize: 16.0, maxFontSize: 32.0),
         leading: BackButton(onPressed: () => pageController.jumpToPage(0)),
       ),
         body: BlocListener<NewPasswordBloc, NewPasswordState>(
@@ -71,21 +70,22 @@ class NewPasswordPage extends StatelessWidget {
           },
           child: Form(
             key: _formKey,
-            child: const Column(children: [
-              SizedBox(height: 30),
-              Padding(
+            child: Column(children: [
+              PageTitle(title: appL10n(context)!.forgot_password, description: appL10n(context)!.forgot_password_label_next),
+              const SizedBox(height: 30),
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 child: ForgotPasswordCodeField(),
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 child: ForgotPasswordField(),
               ),
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 child: ForgotPasswordConfirmField(),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 70,
               ),
             ]),

@@ -7,15 +7,15 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:getout/widgets/fields/widgets/default_field.dart';
 import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/settings/bloc/edit_password/edit_password_bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/screens/settings/bloc/edit_email/edit_email_bloc.dart';
+import 'package:getout/widgets/fields/widgets/default_field.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class PasswordField extends StatelessWidget {
   final Function(String) onChanged;
@@ -81,7 +81,7 @@ class LoginPasswordField extends StatelessWidget {
         isPassword: true,
         label: appL10n(context)!.password_hint,
         validator: (value) =>
-            state.isPasswordEmpty ? null : appL10n(context)!.password_validator,
+            state.isPasswordEmpty ? null : appL10n(context)!.password_empty,
         onChanged: (value) => context
             .read<LoginBloc>()
             .add(LoginPasswordChanged(password: value)),
@@ -99,6 +99,7 @@ class ForgotPasswordField extends StatelessWidget {
         builder: (context, state) {
       return DefaultField(
           title: appL10n(context)!.password.toUpperCase(),
+          isPassword: true,
           mandatory: true,
           label: appL10n(context)!.password_hint,
           validator: (value) => state.isPasswordValid
@@ -242,6 +243,7 @@ class ForgotPasswordConfirmField extends StatelessWidget {
         builder: (context, state) {
       return DefaultField(
           title: appL10n(context)!.password.toUpperCase(),
+          isPassword: true,
           mandatory: true,
           label: appL10n(context)!.password_hint,
           validator: (value) => state.isConfirmPasswordValid

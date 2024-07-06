@@ -30,6 +30,8 @@
   "@_LOGIN": {},
   "sign_in": "Sign in",
   "sign_in_with": "Login with {Service}",
+  "login_title": "Connectez-vous",
+  "login_label": "Connectez-vous dès maintenant, pour accéder à notre service.",
   "@sign_in_with": {
     "placeholders": {
       "Service": {
@@ -56,6 +58,8 @@
   "birthday_validator": "Birthday is required",
   "too_young": "You should be older than 13years old",
   "next": "Next",
+  "register_title": "Créer un compte",
+  "register_label": "Créez un compte pour profiter de notre service gratuitement et en illimité.",
 
   "@_FORGOT_PASSWORD": {},
 
@@ -119,7 +123,11 @@
   "@_PASSWORD": {},
 
   "password": "Password",
-  "forgot_password": "Mot de passe oublié",
+  "change_password": "Change password",
+  "change_password_label": "Set your new password",
+  "forgot_password": "Password forgotten",
+  "forgot_password_label": "Enter your email address and we'll send you a code",
+  "forgot_password_label_next": "We have sent you a code by email",
   "password_hint": "Enter your password",
   "new_password": "New password",
   "new_password_hint": "Enter your new password",
@@ -138,6 +146,8 @@
 
   "email": "Email address",
   "email_hint": "Enter your email address",
+  "change_email": "Change your email",
+  "change_email_label": "Define your new email address",
   "new_email": "New email address",
   "new_email_hint": "Enter your new email address",
   "confirm_email": "Email address confirmation",
@@ -160,6 +170,7 @@
   "@_SETTING": {},
 
   "settings": "Parameters",
+  "settings_label": "Configurez vos options",
   "account": "Account",
   "your_account": "Your account",
   "disconnect": "Logout",
