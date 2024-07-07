@@ -18,13 +18,14 @@ import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_p
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/register/pages/register.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
+import 'package:getout/widgets/page_title.dart';
 import 'package:getout/widgets/fields/email_field.dart';
 import 'package:getout/widgets/fields/password_field.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
-import 'package:getout/constants/http_status.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/tools/tools.dart';
+import 'package:getout/constants/http_status.dart';
 
 class LoginPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -55,13 +56,7 @@ class LoginPage extends StatelessWidget {
         }
       },
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Image.asset(
-            'assets/images/logo/full_getout.png',
-            fit: BoxFit.contain,
-          ),
-        ),
+        PageTitle(title: appL10n(context)!.login_title, description: appL10n(context)!.login_label),
         const SizedBox(height: 30),
         Form(
           key: _formKey,
