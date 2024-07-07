@@ -15,10 +15,11 @@ import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/widgets/fields/email_field.dart';
 import 'package:getout/widgets/fields/password_field.dart';
 import 'package:getout/widgets/fields/name_field.dart';
-import 'package:getout/constants/http_status.dart';
-import 'package:getout/tools/app_l10n.dart';
+import 'package:getout/widgets/page_title.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
+import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
+import 'package:getout/constants/http_status.dart';
 
 class RegisterPage extends StatelessWidget {
   RegisterPage({super.key});
@@ -49,16 +50,17 @@ class RegisterPage extends StatelessWidget {
             child: Scaffold(
               resizeToAvoidBottomInset: true,
               appBar: AppBar(
-                title: Text(appL10n(context)!.your_profile),
+                // title: Text(appL10n(context)!.your_profile),
                 leading: const BackButton(),
               ),
               body: SingleChildScrollView(
                   child: Form(
                     key: _formKey,
                     child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          PageTitle(title: appL10n(context)!.register_title, description: appL10n(context)!.register_label),
                           const SizedBox(height: 30),
                           const Padding(
                               padding: EdgeInsets.symmetric(

@@ -7,16 +7,16 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 
+import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/widgets/fields/email_field.dart';
-import 'package:getout/constants/http_status.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
+import 'package:getout/widgets/page_title.dart';
 
 class CheckEmailPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -29,8 +29,6 @@ class CheckEmailPage extends StatelessWidget {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
-          title: AutoSizeText(' ${appL10n(context)!.forgot_password.toUpperCase()}'.padRight(21, String.fromCharCodes([0x00A0, 0x0020])),
-              maxLines: 1, minFontSize: 16.0, maxFontSize: 32.0),
           leading: BackButton(onPressed: () => Navigator.pop(context)),
         ),
         body: BlocListener<CheckEmailBloc, CheckEmailState>(
@@ -55,6 +53,8 @@ class CheckEmailPage extends StatelessWidget {
         }
       },
       child: Column(children: [
+        PageTitle(title: appL10n(context)!.forgot_password, description: appL10n(context)!.forgot_password_label),
+        const SizedBox(height: 30),
             Form(
               key: _formKey,
               child: const Padding(

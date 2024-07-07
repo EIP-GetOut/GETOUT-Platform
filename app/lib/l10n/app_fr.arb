@@ -30,6 +30,8 @@
   "@_LOGIN": {},
   "sign_in": "Se connecter",
   "sign_in_with": "Se connecter avec {service}",
+  "login_title": "Connectez-vous",
+  "login_label": "Connectez-vous dès maintenant, pour accéder à notre service.",
   "@sign_in_with": {
     "placeholders": {
       "service": {
@@ -56,6 +58,8 @@
   "birthday_validator": "Une date de naissance est requise",
   "too_young": "Vous devez avoir plus de 13ans",
   "next": "Suivant",
+  "register_title": "Créer un compte",
+  "register_label": "Créez un compte pour profiter de notre service gratuitement et en illimité.",
 
   "@_FORGOT_PASSWORD": {},
 
@@ -119,7 +123,11 @@
   "@_PASSWORD": {},
 
   "password": "Mot de passe",
+  "change_password": "Changez le mot de passe",
+  "change_password_label": "Définissez votre nouveau mot de passe",
   "forgot_password": "Mot de passe oublié",
+  "forgot_password_label": "Entrez votre adresse email et nous vous enverrons un code",
+  "forgot_password_label_next": "Nous vous avons envoyé un code par email",
   "password_hint": "Entrez votre mot de passe",
   "password_actual": "Mot de passe actuel",
   "password_actual_hint": "Entrez votre mot de passe actuel",
@@ -129,7 +137,7 @@
   "confirm_password_hint": "Confirmer votre mot de passe",
   "edit_password": "Changer de mot de passe",
   "password_validator": "Le mot de passe dois contenir au minimum 8 caractères, dont une majuscule, une minuscule et un chiffre",
-  "password_matching": "Les nouveaux mots de passe saisies ne correspondent pas",
+  "password_matching": "Les mots de passe saisies ne correspondent pas",
   "password_actual_empty": "Veuillez entrer votre mot de passe actuel",
   "password_empty": "Veuillez entrer votre mot de passe",
   "password_old": "Le nouveau mot de passe doit être différent de l'ancien",
@@ -138,6 +146,8 @@
 
   "email": "Adresse email",
   "email_hint": "Entrer votre adresse email",
+  "change_email": "Changez votre email",
+  "change_email_label": "Définissez votre nouvelle adresse mail",
   "new_email": "Nouvelle adresse email",
   "new_email_hint": "Entrer votre nouvelle adresse email",
   "confirm_email": "Confirmation d'adresse email",
@@ -152,13 +162,14 @@
 
   "code": "Code",
   "code_hint": "Entrer le code",
-  "code_validator": "le code est requis",
+  "code_validator": "Le code est requis",
   "receive_code": "Recevoir un code",
   "@_code_hint": "Entrer le code reçu par mail",
 
   "@_SETTING": {},
 
-  "settings": "Paramètres",
+  "settings": "Vos paramètres",
+  "settings_label": "Configurez vos options",
   "account": "Compte",
   "your_account": "Votre compte",
   "disconnect": "Se déconnecter",
