@@ -98,10 +98,10 @@ class ForgotPasswordField extends StatelessWidget {
     return BlocBuilder<NewPasswordBloc, NewPasswordState>(
         builder: (context, state) {
       return DefaultField(
-          title: appL10n(context)!.password.toUpperCase(),
+          title: appL10n(context)!.new_password.toUpperCase(),
           isPassword: true,
           mandatory: true,
-          label: appL10n(context)!.password_hint,
+          label: appL10n(context)!.new_password_hint,
           validator: (value) => state.isPasswordValid
               ? null
               : appL10n(context)!.password_validator,
@@ -242,10 +242,10 @@ class ForgotPasswordConfirmField extends StatelessWidget {
     return BlocBuilder<NewPasswordBloc, NewPasswordState>(
         builder: (context, state) {
       return DefaultField(
-          title: appL10n(context)!.password.toUpperCase(),
+          title: appL10n(context)!.confirm_password.toUpperCase(),
           isPassword: true,
           mandatory: true,
-          label: appL10n(context)!.password_hint,
+          label: appL10n(context)!.confirm_password_hint,
           validator: (value) => state.isConfirmPasswordValid
               ? null
               : appL10n(context)!.password_matching,

@@ -30,8 +30,8 @@
   "@_LOGIN": {},
   "sign_in": "Sign in",
   "sign_in_with": "Login with {Service}",
-  "login_title": "Connectez-vous",
-  "login_label": "Connectez-vous dès maintenant, pour accéder à notre service.",
+  "login_title": "Login",
+  "login_label": "Login now to access our service.",
   "@sign_in_with": {
     "placeholders": {
       "Service": {
@@ -58,8 +58,8 @@
   "birthday_validator": "Birthday is required",
   "too_young": "You should be older than 13years old",
   "next": "Next",
-  "register_title": "Créer un compte",
-  "register_label": "Créez un compte pour profiter de notre service gratuitement et en illimité.",
+  "register_title": "Create an account",
+  "register_label": "Create an account to take advantage of our free, unlimited service.",
 
   "@_FORGOT_PASSWORD": {},
 
