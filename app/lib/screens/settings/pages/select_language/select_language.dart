@@ -7,9 +7,9 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/settings/services/service.dart';
-import 'package:getout/widgets/button/floating_button.dart';
+import 'package:getout/widgets/fields/widgets/default_button.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class SelectLanguagePage extends StatelessWidget {
   const SelectLanguagePage({super.key});
@@ -39,18 +39,18 @@ class SelectLanguagePage extends StatelessWidget {
             ),
           )),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingButton(
-          title: 'changer le mot de passe',
+      floatingActionButton: DefaultButton(
+          title: appL10n(context)!.edit_password,
           onPressed: () async {
-            //todo setup request & error handling
             if (formKey.currentState!.validate()) {
               try {
-                StatusResponse response = await service.setLanguage(lang);
-                if (response.status == HttpStatus.OK) {
+                service.setLanguage(lang);
+                // if (response.status == HttpStatus.OK) {
 
-                }
+                // }
                 //handle response
-              } catch (e) {
+              }
+              catch (e) {
                 //handle error
               }
             }

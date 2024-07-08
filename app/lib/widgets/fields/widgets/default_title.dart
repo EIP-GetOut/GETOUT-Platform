@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 
-Widget fieldTitle(final String title)
+Widget defaultTitle(final String title, bool isMandatory)
 {
   return Row(
     children: [
@@ -18,12 +18,13 @@ Widget fieldTitle(final String title)
               fontSize: 16,
               fontWeight: FontWeight.bold,
               color: Colors.black)),
-      const Text('*',
-          textAlign: TextAlign.left,
-          style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.red)),
+      if (isMandatory)
+        const Text('*',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.red)),
     ],
   );
 }

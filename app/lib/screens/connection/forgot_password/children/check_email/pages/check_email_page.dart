@@ -15,6 +15,7 @@ import 'package:getout/screens/connection/forgot_password/children/check_email/b
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/widgets/fields/email_field.dart';
+import 'package:getout/widgets/fields/widgets/default_button.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/widgets/page_title.dart';
 
@@ -32,29 +33,33 @@ class CheckEmailPage extends StatelessWidget {
           leading: BackButton(onPressed: () => Navigator.pop(context)),
         ),
         body: BlocListener<CheckEmailBloc, CheckEmailState>(
-      listenWhen: (previous, current) => previous.status != current.status,
-      listener: (context, state) {
-        if (state.status.isError) {
-          if (state.exception is DioException && (state.exception as DioException).response != null) {
-            switch((state.exception as DioException).response!.statusCode) {
-              case HttpStatus.INTERNAL_SERVER_ERROR:
-                showSnackBar(context, appL10n(context)!.email_validator);
-                break;
-              case HttpStatus.UNPROCESSABLE_ENTITY:
-                showSnackBar(context, appL10n(context)!.email_validator);
-                break;
+          listenWhen: (previous, current) => previous.status != current.status,
+          listener: (context, state) {
+            if (state.status.isError) {
+              if (state.exception is DioException &&
+                  (state.exception as DioException).response != null) {
+                switch (
+                    (state.exception as DioException).response!.statusCode) {
+                  case HttpStatus.INTERNAL_SERVER_ERROR:
+                    showSnackBar(context, appL10n(context)!.email_validator);
+                    break;
+                  case HttpStatus.UNPROCESSABLE_ENTITY:
+                    showSnackBar(context, appL10n(context)!.email_validator);
+                    break;
+                }
+              } else {
+                showSnackBar(context, appL10n(context)!.error_unknown);
+              }
             }
-          } else {
-            showSnackBar(context, appL10n(context)!.error_unknown);
-          }
-        }
-        if (state.status.isSuccess) {
-          pageController.jumpToPage(1);
-        }
-      },
-      child: Column(children: [
-        PageTitle(title: appL10n(context)!.forgot_password, description: appL10n(context)!.forgot_password_label),
-        const SizedBox(height: 30),
+            if (state.status.isSuccess) {
+              pageController.jumpToPage(1);
+            }
+          },
+          child: Column(children: [
+            PageTitle(
+                title: appL10n(context)!.forgot_password,
+                description: appL10n(context)!.forgot_password_label),
+            const SizedBox(height: 30),
             Form(
               key: _formKey,
               child: const Padding(
@@ -63,10 +68,9 @@ class CheckEmailPage extends StatelessWidget {
               ),
             )
           ]),
-    ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: ForgotPasswordButton(formKey: _formKey)
-    );
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: ForgotPasswordButton(formKey: _formKey));
   }
 }
 
@@ -76,31 +80,20 @@ class ForgotPasswordButton extends StatelessWidget {
   final GlobalKey<FormState> formKey;
 
   @override
-  Widget build(BuildContext context)
-  {
-    final double phoneWidth = MediaQuery.of(context).size.width;
+  Widget build(BuildContext context) {
 
     return BlocBuilder<CheckEmailBloc, CheckEmailState>(
       builder: (context, state) {
         return state.status.isLoading
             ? const CircularProgressIndicator()
-            : SizedBox(
-                width: 90 * phoneWidth / 100,
-                height: 65,
-                child: FloatingActionButton(
-                  shape: Theme.of(context).floatingActionButtonTheme.shape,
-                  backgroundColor: Theme.of(context).floatingActionButtonTheme.backgroundColor,
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      context.read<CheckEmailBloc>().add(CheckEmailSubmitted());
-                    }
-                  },
-                  child: Text(appL10n(context)!.receive_code,
-                      style: const TextStyle(
-                          fontSize: 17.5,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white)),
-                ));
+            : DefaultButton(
+                title: appL10n(context)!.receive_code,
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    context.read<CheckEmailBloc>().add(CheckEmailSubmitted());
+                  }
+                },
+              );
       },
     );
   }

@@ -2,17 +2,21 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
-** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
 import 'package:flutter/material.dart';
+// import 'package:getout/tools/app_l10n.dart';
 
-class FloatingButton extends StatelessWidget {
+class DefaultButton extends StatelessWidget {
+  final Function() onPressed;
   final String title;
-  final void Function()? onPressed;
 
-  const FloatingButton({super.key, required this.title, required this.onPressed});
+  const DefaultButton({
+    super.key,
+    required this.title,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +24,9 @@ class FloatingButton extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.9,
         height: 64,
         child: FloatingActionButton(
-          onPressed: onPressed,
-          child: Text(title,
-              style: Theme.of(context).textTheme.labelMedium),
-        ));
+      child: Text(title,
+          style: Theme.of(context).textTheme.labelMedium),
+      onPressed: () => onPressed(),
+    ));
   }
 }

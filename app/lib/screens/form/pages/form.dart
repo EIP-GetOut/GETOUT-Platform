@@ -18,10 +18,10 @@ import 'package:getout/screens/form/pages/movie_genres.dart';
 import 'package:getout/screens/form/pages/end_form.dart';
 import 'package:getout/screens/form/bloc/form_bloc.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
+import 'package:getout/widgets/fields/widgets/default_button.dart';
 import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/session/session_event.dart';
 import 'package:getout/tools/app_l10n.dart';
-import 'package:getout/tools/tools.dart';
 import 'package:getout/global.dart' as globals;
 
 class Forms extends StatelessWidget {
@@ -37,8 +37,7 @@ class Forms extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext context)
-  {
+  Widget build(BuildContext context) {
     final PageController pageController = PageController();
 
     return BlocProvider(
@@ -46,17 +45,18 @@ class Forms extends StatelessWidget {
       child: BlocBuilder<FormBloc, FormStates>(builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-              leading: (context.read<FormBloc>().state.status !=
-                  FormStatus.endForm) ?
-              IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  pageController.previousPage(
-                    duration: const Duration(milliseconds: 200),
-                    curve: Curves.easeInOut,
-                  );
-                },
-              ) : null,
+            leading:
+                (context.read<FormBloc>().state.status != FormStatus.endForm)
+                    ? IconButton(
+                        icon: const Icon(Icons.arrow_back),
+                        onPressed: () {
+                          pageController.previousPage(
+                            duration: const Duration(milliseconds: 200),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                      )
+                    : null,
           ),
           body: PageView(
             controller: pageController,
@@ -64,14 +64,15 @@ class Forms extends StatelessWidget {
             children: pages,
           ),
           floatingActionButton: _nextButton(pageController),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
         );
       }),
     );
   }
 
-  String _getButtonLabel(final FormStatus status, final bool isEdit, BuildContext context)
-  {
+  String _getButtonLabel(
+      final FormStatus status, final bool isEdit, BuildContext context) {
     if (status == FormStatus.endForm && isEdit) {
       return appL10n(context)!.back_to_settings;
     } else if (status == FormStatus.endForm) {
@@ -81,17 +82,14 @@ class Forms extends StatelessWidget {
     }
     return appL10n(context)!.next;
   }
-  Widget _nextButton(final PageController pageController)
-  {
+
+  Widget _nextButton(final PageController pageController) {
     final bool isEdit = (globals.session?['preferences'] != null);
 
     return BlocBuilder<FormBloc, FormStates>(builder: (context, state) {
-      return SizedBox(
-        width: Tools.widthFactor(context, 0.9),
-        height: 65,
-        child: FloatingActionButton(
-          child: Text(_getButtonLabel(context.read<FormBloc>().state.status, isEdit, context),
-              style: Theme.of(context).textTheme.labelMedium),
+      return DefaultButton(
+          title: _getButtonLabel(
+              context.read<FormBloc>().state.status, isEdit, context),
           onPressed: () {
             if (
                 /*(context.read<FormBloc>().state.status == FormStatus.interestChoices &&
@@ -123,15 +121,16 @@ class Forms extends StatelessWidget {
               FormServices()
                   .sendPreferences(FormRequestModel.fillFormRequest(
                       movieGenres: context.read<FormBloc>().state.movieGenres,
-                      bookGenres:
-                          context.read<FormBloc>().state.bookGenres,
+                      bookGenres: context.read<FormBloc>().state.bookGenres,
                       viewingPlatform:
                           context.read<FormBloc>().state.viewingPlatform))
                   .then((final FormResponseModel value) {
                 if (!value.isSuccessful) {
                   return showSnackBar(context, appL10n(context)!.error_unknown);
                 }
-                context.read<FormBloc>().add(const EmitEvent(status: FormStatus.endForm));
+                context
+                    .read<FormBloc>()
+                    .add(const EmitEvent(status: FormStatus.endForm));
                 pageController.nextPage(
                     duration: const Duration(milliseconds: 200),
                     curve: Curves.easeInOut);
@@ -142,14 +141,12 @@ class Forms extends StatelessWidget {
                 Navigator.pop(context);
               }
               context.read<SessionBloc>().add(const SessionRequest());
-            }  else {
+            } else {
               pageController.nextPage(
                   duration: const Duration(milliseconds: 200),
                   curve: Curves.easeInOut);
             }
-          },
-        ),
-      );
+          });
     });
   }
 }

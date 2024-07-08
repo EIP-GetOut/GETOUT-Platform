@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
-import 'package:getout/widgets/fields/widgets/title_field.dart';
+import 'package:getout/widgets/fields/widgets/default_title.dart';
 
 import 'package:getout/tools/app_l10n.dart';
 
@@ -26,7 +26,7 @@ class BirthDateField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //title
-          fieldTitle(appL10n(context)!.birthday.toUpperCase(), true),
+          defaultTitle(appL10n(context)!.birthday.toUpperCase(), true),
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: SizedBox(
@@ -149,7 +149,7 @@ class PasswordField extends StatelessWidget {
               )),
           validator: (value) => state.isPasswordValid
               ? null
-              : 'Le mot de passe doit contenir au moins 8 caractères une majuscule, un chiffre et un caractère spécial',
+              : appL10n(context)!.password_validator,
           onChanged: (value) => context.read<RegisterBloc>().add(
                 RegisterPasswordChanged(password: value),
               ),
