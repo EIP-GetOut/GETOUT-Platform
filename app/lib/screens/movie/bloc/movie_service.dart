@@ -68,10 +68,10 @@ class MovieService {
           cast: parseCast(data['movie']['cast']),
           director: parseDirector(data['movie']['director']),
           statusCode: response?.statusCode ?? 500,
-          liked: globals.session?['likedMovies'].contains(request.id),
-          disliked: globals.session?['dislikedMovies'].contains(request.id),
-          wishlisted: globals.session?['watchlist'].contains(request.id),
-          seen: globals.session?['seenMovies'].contains(request.id),
+          liked: globals.session?['likedMovies'].toString().contains(request.id.toString()),
+          disliked: globals.session?['dislikedMovies'].toString().contains(request.id.toString()),
+          wishlisted: globals.session?['watchlist'].toString().contains(request.id.toString()),
+          seen: globals.session?['seenMovies'].toString().contains(request.id.toString()),
           id: request.id);
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||
@@ -198,7 +198,7 @@ class MovieService {
     }
   }
 
-  Future<AddMovieResponse> addWishlistedMovie(AddMovieRequest request) async {
+  Future<AddMovieResponse> addWishListedMovie(AddMovieRequest request) async {
     AddMovieResponse result =
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
@@ -226,7 +226,7 @@ class MovieService {
     }
   }
 
-  Future<AddMovieResponse> removeWishlistedMovie(
+  Future<AddMovieResponse> removeWishListedMovie(
       AddMovieRequest request) async {
     AddMovieResponse result =
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
