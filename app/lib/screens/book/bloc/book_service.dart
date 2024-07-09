@@ -58,10 +58,10 @@ class BookService {
           pageCount: response?.data['book']['pageCount'] ?? 0,
           bookLink: response?.data['book']['book_link'],
           authorsPicture: parseAuthor(data['book']['authors_picture']),
-          liked: globals.session?['likedBooks'].contains(request.id),
-          disliked: globals.session?['dislikedBooks'].contains(request.id),
-          wishlisted: globals.session?['readingList'].contains(request.id),
-          read: globals.session?['readBooks'].contains(request.id),
+          liked: globals.session?['likedBooks'].toString().contains(request.id.toString()),
+          disliked: globals.session?['dislikedBooks'].toString().contains(request.id.toString()),
+          wishlisted: globals.session?['readingList'].toString().contains(request.id.toString()),
+          read: globals.session?['readBooks'].toString().contains(request.id.toString()),
           id: response?.data['book']['id'],
           statusCode: response?.statusCode ?? 500);
       return result;
@@ -188,7 +188,7 @@ class BookService {
     }
   }
 
-  Future<AddBookResponse> addWishlistedBook(AddBookRequest request) async {
+  Future<AddBookResponse> addWishListedBook(AddBookRequest request) async {
     AddBookResponse result =
         const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
 
@@ -216,7 +216,7 @@ class BookService {
     }
   }
 
-  Future<AddBookResponse> removeWishlistedBook(AddBookRequest request) async {
+  Future<AddBookResponse> removeWishListedBook(AddBookRequest request) async {
     AddBookResponse result =
         const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
 
