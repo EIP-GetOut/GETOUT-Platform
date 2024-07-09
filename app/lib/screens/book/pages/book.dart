@@ -171,12 +171,12 @@ class BookSuccessWidget extends StatelessWidget {
                   await context
                       .read<BookBloc>()
                       .bookService
-                      .removeWishlistedBook(AddBookRequest(id: book.id ?? ''));
+                      .removeWishListedBook(AddBookRequest(id: book.id ?? ''));
                 } else {
                   await context
                       .read<BookBloc>()
                       .bookService
-                      .addWishlistedBook(AddBookRequest(id: book.id ?? ''));
+                      .addWishListedBook(AddBookRequest(id: book.id ?? ''));
                 }
                 if (!context.mounted) return;
                 context
