@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/screens/settings/bloc/edit_password/edit_password_bloc.dart';
 import 'package:getout/screens/settings/services/edit_password.dart';
 import 'package:getout/widgets/fields/password_field.dart';
+import 'package:getout/widgets/fields/widgets/default_button.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/widgets/page_title.dart';
 import 'package:getout/tools/status.dart';
@@ -72,14 +73,9 @@ class SendNewNewButton extends StatelessWidget {
             : SizedBox(
                 width: Tools.widthFactor(context, 0.90),
                 height: 65,
-                child: FloatingActionButton(
-                  child: AutoSizingText('Changer de mot de passe',
-                      minSize: 70,
-                      maxSize: 300,
-                      sizeFactor: 0.65,
-                      height: 40,
-                      style: Theme.of(context).textTheme.labelMedium),
-                  onPressed: () {
+                child: DefaultButton(
+                title: appL10n(context)!.edit_password,
+                onPressed:  () {
                     if (!formKey.currentState!.validate()) {
                       return;
                     }
@@ -92,18 +88,17 @@ class SendNewNewButton extends StatelessWidget {
                             oldPassword: oldPassword, newPassword: newPassword))
                         .then((final EditPasswordResponseModel value) {
                       if (value.statusCode == HttpStatus.UNAUTHORIZED) {
-                        showSnackBar(context, 'Mot de passe actuel incorrect');
+                        showSnackBar(context, appL10n(context)!.password_actual_error);
                       } else if (!value.isSuccessful) {
                         showSnackBar(context,
-                            'Une erreur est survenue veuillez réessayer plus tard');
+                            appL10n(context)!.error_unknown);
                       } else {
                         showSnackBar(
-                            context, 'Votre mot de passe a bien été modifié',
+                            context, appL10n(context)!.password_edit_success,
                             color: Colors.green);
                       }
                     });
-                  },
-                ));
+                  }));
       },
     );
   }

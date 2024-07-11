@@ -7,7 +7,7 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/widgets/fields/widgets/title_field.dart';
+import 'package:getout/widgets/fields/widgets/default_title.dart';
 
 class DefaultField extends StatelessWidget {
   final String? Function(String?)? validator;
@@ -38,7 +38,7 @@ class DefaultField extends StatelessWidget {
         if (title != null)
           Padding(
             padding: const EdgeInsets.only(bottom: 8.0),
-            child: fieldTitle(title ?? '', mandatory),
+            child: defaultTitle(title ?? '', mandatory),
           ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),

@@ -141,6 +141,9 @@
   "password_actual_empty": "Please enter your current password",
   "password_empty": "Please enter your password",
   "password_old": "The new password must be different from the old one",
+  "password_edit_success": "Your password has been changed",
+  "password_actual_error": "Incorrect current password",
+  "password_tries": "You've entered the wrong code too many times, please try again later.",
 
   "@_EMAIL": {},
 
@@ -164,8 +167,9 @@
   "code": "Code",
   "code_hint": "Enter the code",
   "code_validator": "code is a mandatory",
-  "receive_code": "Get a code",
+  "receive_code": "Recevoir un code",
   "@_code_hint": "Enter the code you received by email",
+  "code_incorect": "The code is incorrect",
 
   "@_SETTING": {},
 
