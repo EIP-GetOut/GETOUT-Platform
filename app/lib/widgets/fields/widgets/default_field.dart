@@ -47,7 +47,6 @@ class DefaultField extends StatelessWidget {
                 child: ValueListenableBuilder<bool>(
                 valueListenable: isPasswordVisible,
                 builder: (context, value, child) {
-                  print('def $errorString');
                   return TextFormField(
                     controller: controller,
                     obscureText: isPasswordVisible.value,

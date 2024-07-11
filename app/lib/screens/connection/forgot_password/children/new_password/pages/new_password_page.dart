@@ -8,26 +8,31 @@
 import 'package:flutter/material.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dio/dio.dart';
+import 'package:getout/screens/connection/services/service.dart';
 
 import 'package:getout/tools/app_l10n.dart';
-import 'package:getout/tools/status.dart';
-import 'package:getout/screens/connection/widgets/fields_title.dart';
-import 'package:getout/screens/connection/forgot_password/widgets/fields.dart';
+import 'package:getout/widgets/fields/code_field.dart';
+import 'package:getout/widgets/fields/password_field.dart';
+
 
 class NewPasswordPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final PageController pageController;
+  final TextEditingController email;
+  final TextEditingController code;
   final TextEditingController password;
   final TextEditingController confirmPassword;
+  final ConnectionService service;
   static int tries = 0;
 
   NewPasswordPage(
       {super.key,
       required this.pageController,
+      required this.email,
+      required this.code,
       required this.password,
-      required this.confirmPassword});
+      required this.confirmPassword,
+      required this.service});
 
   @override
   Widget build(BuildContext context) {
@@ -41,35 +46,30 @@ class NewPasswordPage extends StatelessWidget {
                 minFontSize: 16.0,
                 maxFontSize: 32.0),
             leading: BackButton(onPressed: () => pageController.jumpToPage(0))),
-        body: Form(
-          key: _formKey,
-          child: Column(children: [
-            const SizedBox(height: 30),
-
-            fieldTitle(appL10n(context)!.code.toUpperCase()),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              child: CodeField(),
-            ),
-            const SizedBox(height: 15),
-            fieldTitle(appL10n(context)!.password.toUpperCase()),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              child: PasswordField(),
-            ),
-            const SizedBox(height: 15),
-            fieldTitle(appL10n(context)!.confirm_password_hint.toUpperCase()),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              child: ConfirmPasswordField(),
-            ),
-            const SizedBox(
-              height: 70,
-            ),
-          ]),
-        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+            child: Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+              const SizedBox(height: 30),
+              Form(
+              key: _formKey,
+                child: Column(children: [
+                  CodeField(controller: code,
+                      validator: (_) => null, errorString: null),
+                  PasswordField(controller: password,
+                      validator: (_) => null, errorString: null),
+                  ConfirmPasswordField(controller: confirmPassword,
+                      validator: (_) => null, errorString: null),
+                ]),
+              ),
+        const SizedBox(height: 30),
+        ]))),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: ForgotPasswordButton(formKey: _formKey));
+        floatingActionButton: ForgotPasswordButton(formKey: _formKey)
+    );
     /*BlocListener<NewPasswordBloc, NewPasswordState>(
           listenWhen: (previous, current) => previous.status != current.status,
           listener: (context, state) {

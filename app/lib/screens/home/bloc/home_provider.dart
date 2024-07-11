@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/bloc/user/user_bloc.dart';
 
 ///home
 import 'package:getout/screens/home/services/service.dart';
@@ -31,16 +32,14 @@ class HomeProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
+    String cookiePath = context.watch<UserBloc>().state.cookiePath;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: RepositoryProvider(create: (context) => HomeService(),
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider<HomePageBloc>(
-              create: (context) => HomePageBloc(),
-            ),
+      body: RepositoryProvider(create: (context) => HomeService(cookiePath),
+        child: //MultiBlocProvider(
+          //providers: [
             ///Movies
-            BlocProvider<RecommendedMoviesHydratedBloc>(
+            /*BlocProvider<RecommendedMoviesHydratedBloc>(
               create: (context) => RecommendedMoviesHydratedBloc(
                 homeService: context.read<HomeService>(),
               )..add(
@@ -82,10 +81,11 @@ class HomeProvider extends StatelessWidget {
               )..add(
                 const GenerateBooksRequest(),
               ),
-            ),
-          ],
-          child: const HomePage(),
-        ),
+            ),*/
+          //],
+          //child:
+         const HomePage(),
+        //),
       ),
     );
   }

@@ -16,7 +16,9 @@ class LoadingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
-    return Column(
+    return ColoredBox(
+        color: Colors.white,
+        child: Column(
       children: [
         SizedBox(height: Tools.heightFactor(context, 0.3)),
         Row(children: [
@@ -40,6 +42,6 @@ class LoadingPage extends StatelessWidget {
           ),
         )
       ],
-    );
+    ));
   }
 }

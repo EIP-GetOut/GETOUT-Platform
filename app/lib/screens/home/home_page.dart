@@ -31,15 +31,15 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PageController pageController = PageController();
+    final ValueNotifier<int> index = ValueNotifier(0);
 
     globals.notificationsServices.askForActiveNotifications();
-    return BlocBuilder<HomePageBloc, HomePageState>(builder: (context, state) {
-      return Scaffold(
+    return Scaffold(
           appBar: HomeAppBarWidget(context: context),
           body: PageView(
             controller: pageController,
-            onPageChanged: (index) {
-              context.read<HomePageBloc>().add(HomePageToIdx(index));
+            onPageChanged: (value) {
+              index.value = value;
             },
             children: <Widget>[
               ListView(children: const [
@@ -50,17 +50,14 @@ class HomePage extends StatelessWidget {
               ]),
               ListView(children: const [
                 SizedBox(height: 900, child: YourBooksPage())
-              ]),
-              //todo implement activities
-              /*const SizedBox(
-                  width: 1000,
-                  height: 2000,
-                  child: ColoredBox(
-                      color: Colors.white, child: ObjectLoadingErrorWidget(object: 'Les Activités')))*/
+              ])
             ],
           ),
-          bottomNavigationBar: HomeNavBarWidget(
-              pageController: pageController, idx: state.idx));
-    });
+          bottomNavigationBar: ValueListenableBuilder<int>(
+    valueListenable: index,
+    builder: (context, value, child) {
+      return HomeNavBarWidget(
+              pageController: pageController, idx: index);
+    }));
   }
 }

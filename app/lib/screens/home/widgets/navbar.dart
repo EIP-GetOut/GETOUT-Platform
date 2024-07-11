@@ -18,7 +18,7 @@ class HomeNavBarWidget extends StatelessWidget {
   const HomeNavBarWidget({super.key, required this.pageController, required this.idx});
 
   final PageController pageController;
-  final int idx;
+  final ValueNotifier<int> idx;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +71,7 @@ class HomeNavBarWidget extends StatelessWidget {
           ],
           elevation: 20,
           onTap: (int value) => {
-            context.read<HomePageBloc>().add(HomePageToIdx(value)),
+            idx.value = value,
             pageController.animateToPage(value,
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.easeIn),
@@ -83,7 +83,7 @@ class HomeNavBarWidget extends StatelessWidget {
           const TextStyle(fontFamily: 'Urbanist', fontSize: 12),
           unselectedItemColor: Colors.black26,
           selectedItemColor: Colors.red,
-          currentIndex: idx,
+          currentIndex: idx.value,
         ));
   }
 }

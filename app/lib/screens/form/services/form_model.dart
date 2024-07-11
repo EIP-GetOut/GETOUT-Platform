@@ -5,17 +5,17 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
-part of 'form_services.dart';
+part of 'form_service.dart';
 
 class FormRequestModel {
-  final List<int> filmGenres;
-  final List<String> literaryGenres;
-  final List<String> viewingPlatform;
+  final List<int> movieGenres;
+  final List<String> bookGenres;
+  final List<String> platforms;
 
   const FormRequestModel({
-    required this.filmGenres,
-    required this.literaryGenres,
-    required this.viewingPlatform,
+    required this.movieGenres,
+    required this.bookGenres,
+    required this.platforms,
   });
 
   static List<int> filmGenresToCode(final List<String> filmGenres)
@@ -37,24 +37,23 @@ class FormRequestModel {
       required final Map<String, bool> literaryGenres,
       required final Map<String, bool> viewingPlatform})
   {
-    final List<String> chosenLiteraryGenres = literaryGenres.entries
+    final List<int> chosenMovieGenres = filmGenresToCode(
+        filmGenres.entries.where((entry) => (entry.value == true))
+            .map((entry) => entry.key)
+            .toList());
+    final List<String> chosenBookGenres = literaryGenres.entries
         .where((entry) => entry.value == true)
         .map((entry) => entry.key)
         .toList();
-    final List<String> chosenViewingPlatform = viewingPlatform.entries
+    final List<String> chosenPlatforms = viewingPlatform.entries
         .where((entry) => entry.value == true)
         .map((entry) => entry.key)
         .toList();
-    final List<String> chosenFilmGenres = filmGenres.entries
-        .where((entry) => entry.value == true)
-        .map((entry) => entry.key)
-        .toList();
-    final List<int> filmCodes = filmGenresToCode(chosenFilmGenres);
 
     return FormRequestModel(
-      filmGenres: filmCodes,
-      literaryGenres: chosenLiteraryGenres,
-      viewingPlatform: chosenViewingPlatform,
+      movieGenres: chosenMovieGenres,
+      bookGenres: chosenBookGenres,
+      platforms: chosenPlatforms,
     );
   }
 }

@@ -5,7 +5,9 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 
 import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
@@ -18,7 +20,14 @@ part 'books.dart';
 part 'movies.dart';
 
 class HomeService extends _HomeService<BooksService, MoviesService> {
-  HomeService() {
+  final Dio dio = Dio();
+
+  HomeService(String cookiePath) {
+    dio.interceptors.add(CookieManager(PersistCookieJar(
+        ignoreExpires: true,
+        storage: FileStorage(cookiePath))));
+    dio.options.headers = ({'Content-Type': 'application/json'});
+
     t = BooksService();
     g = MoviesService();
   }

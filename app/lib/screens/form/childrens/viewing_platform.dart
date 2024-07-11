@@ -12,34 +12,26 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/form/widgets/four_point.dart';
 import 'package:getout/screens/form/bloc/form_bloc.dart';
+import 'package:getout/tools/map_controller.dart';
 import 'package:getout/tools/tools.dart';
 
 class ViewingPlatform extends StatelessWidget {
-  const ViewingPlatform({super.key});
+  final MapController<String, bool> platforms;
+
+  const ViewingPlatform({super.key, required this.platforms});
 
   @override
   Widget build(BuildContext context)
   {
-    List<String> imagesList = [
-      'assets/images/logo/netflix.png',
-      'assets/images/logo/prime_video.png',
-      'assets/images/logo/disney+.png',
-      'assets/images/logo/cinema.png',
-      'assets/images/logo/DVD.png'
-    ];
-    return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
-    {
-      final Map<String, bool> viewingPlatform =
-          context.read<FormBloc>().state.viewingPlatform;
-      // When I create this variable,
-      // only god and I knew how it worked. Now, only god knows it
-      final Map<String, String> checkboxImages = Map.fromEntries(
-          viewingPlatform.entries.map((entry) => MapEntry(
-              entry.key,
-              imagesList[viewingPlatform.keys.toList().indexOf(entry.key)])));
+    const Map<String, String> images = {
+      'Netflix': 'assets/images/logo/netflix.png',
+      'Prime Video': 'assets/images/logo/prime_video.png',
+      'Disney +': 'assets/images/logo/disney+.png',
+      'Cinema': 'assets/images/logo/cinema.png',
+      'DVD': 'assets/images/logo/DVD.png'
+    };
 
-      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.viewingPlatform));
-      return Column(
+    return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           SizedBox(height: Tools.heightFactor(context, 0.10)),
@@ -60,13 +52,15 @@ class ViewingPlatform extends StatelessWidget {
           ),
           SizedBox(height: Tools.heightFactor(context, 0.03)),
           Expanded(
-            child: ListView(
+            child: ValueListenableBuilder(
+  valueListenable: platforms,
+  builder: (context, _, __) {
+  return ListView(
                 //padding: const EdgeInsets.all(16.0),
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 children: <Widget>[
-                  for (var checkbox
-                      in context.read<FormBloc>().state.viewingPlatform.entries)
+                  for (var checkbox in platforms.entries)
                     Column(
                       children: [
                         Container(
@@ -79,7 +73,7 @@ class ViewingPlatform extends StatelessWidget {
                             title: Row(
                               children: [
                                 SizedBox(width: Tools.widthFactor(context, 0.12)),
-                                Image.asset(checkboxImages[checkbox.key]!,
+                                Image.asset(images[checkbox.key]!,
                                     width: 40, height: 40),
                                 SizedBox(width: Tools.widthFactor(context, 0.02)),
                                 AutoSizeText(checkbox.key,
@@ -92,9 +86,7 @@ class ViewingPlatform extends StatelessWidget {
                             ),
                             value: checkbox.value,
                             onChanged: (value) {
-                              context
-                                  .read<FormBloc>()
-                                  .add(ViewingPlatformEvent(key: checkbox.key));
+                              platforms[checkbox.key] = !platforms[checkbox.key]!;
                             },
                             //contentPadding: EdgeInsets.zero,
                             controlAffinity: ListTileControlAffinity.leading,
@@ -112,10 +104,9 @@ class ViewingPlatform extends StatelessWidget {
                         SizedBox(height: Tools.heightFactor(context, 0.012)),
                       ],
                     ),
-                ]),
+                ]);},
           )
-        ],
-      );
-    });
+      )]
+    );
   }
 }

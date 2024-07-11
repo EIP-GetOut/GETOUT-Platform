@@ -8,9 +8,10 @@
 part of 'user_bloc.dart';
 
 enum Status {
-  Fail,
-  Success,
-  Loading
+  Logout,
+  Login,
+  LoginWithPrefs,
+//  Loading,
 }
 
 class Account extends Equatable {
@@ -28,9 +29,8 @@ class Account extends Equatable {
   final int pagesRead; //todo
   //pref
   final List<String> platforms;
-  final List<int> booksGenres;
-  final List<String> moviesGenres;
-
+  final List<String> booksGenres;
+  final List<int> moviesGenres;
 
   const Account({
     required this.isVerified,
@@ -50,6 +50,35 @@ class Account extends Equatable {
     required this.moviesGenres,
   });
 
+  Account copyWith({
+    bool? isVerified,
+    String? email,
+    String? firstName,
+    String? lastName,
+    String? bornDate,
+    String? createdDate,
+    int? spentMinutesReadinAndWatching,
+    int? minutesWatch,
+    int? pagesRead,
+    List<String>? platforms,
+    List<String>? booksGenres,
+    List<int>? moviesGenres,
+  }) {
+    return Account(
+        isVerified: isVerified ?? this.isVerified,
+        email: email ?? this.email,
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
+        bornDate: bornDate ?? this.bornDate,
+        createdDate: createdDate ?? this.createdDate,
+        spentMinutesReadinAndWatching: spentMinutesReadinAndWatching ?? this.spentMinutesReadinAndWatching,
+        minutesWatch: minutesWatch ?? this.minutesWatch,
+        pagesRead: pagesRead ?? this.pagesRead,
+        platforms: platforms ?? this.platforms,
+        booksGenres: booksGenres ?? this.booksGenres,
+        moviesGenres: moviesGenres ?? this.moviesGenres);
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'isVerified': isVerified,
@@ -60,7 +89,7 @@ class Account extends Equatable {
       'bornDate': bornDate,
       'createdDate': createdDate,
 
-      'spentMinutesReadinAndWatching': spentMinutesReadinAndWatching,
+      'spentMinutesReadingAndWatching': spentMinutesReadinAndWatching,
       'minutesWatch': minutesWatch,
       'pagesRead': pagesRead,
 
@@ -80,10 +109,9 @@ class Account extends Equatable {
         bornDate: json['bornDate'],
         createdDate: json['createdDate'],
 
-        spentMinutesReadinAndWatching: json['spentMinutesReadinAndWatching'],
+        spentMinutesReadinAndWatching: json['spentMinutesReadingAndWatching'],
         minutesWatch: json['minutesWatch'],
         pagesRead: json['pagesRead'],
-
         platforms: json['platforms'],
         booksGenres: json['booksGenres'],
         moviesGenres: json['moviesGenres']
@@ -99,30 +127,25 @@ class Account extends Equatable {
 
 class UserState extends Equatable {
   //cookie
-  final String? cookiePath;
+  final String cookiePath;
   final bool isCookieSet;
 
   //Account
   final Account? account;
 
-  //other relative to phone/server accessibility
-  final bool isOffline;
-  final bool isServerDown;
+  final Status status;
 
   const UserState({
-    this.cookiePath,
+    required this.cookiePath,
     bool? isCookieSet,
 
     this.account,
 
-    bool? isOffline,
-    bool? isServerDown,
-  }) : isOffline = isOffline ?? true,
-        isServerDown = isServerDown ?? false,
-        isCookieSet = isCookieSet ?? false;
+    this.status = Status.Logout,
+  }) : isCookieSet = isCookieSet ?? false;
 
   @override
-  List<Object?> get props => [cookiePath, isCookieSet, account, isOffline, isServerDown];
+  List<Object?> get props => [cookiePath, isCookieSet, account, status];
 
   UserState copyWith({
     String? cookiePath,
@@ -130,8 +153,7 @@ class UserState extends Equatable {
 
     Account? account,
 
-    bool? isOffline,
-    bool? isServerDown,}) {
+    Status? status}) {
 
     return UserState(
         cookiePath: cookiePath ?? this.cookiePath,
@@ -139,29 +161,27 @@ class UserState extends Equatable {
 
         account: account ?? this.account,
 
-        isOffline: isOffline ?? this.isOffline,
-        isServerDown: isServerDown ?? this.isServerDown);
+        status: status ?? this.status);
   }
 
   // Convert UserState to JSON
   Map<String, dynamic> toJson() {
+    print('> $status, ${status.index}');
     return {
-      'cookie_path': cookiePath,
-      'is_cookie_set': isCookieSet,
-
+      'cookiePath': cookiePath,
+      'isCookieSet': isCookieSet,
       'account': account?.toJson(),
-
-      'is_offline': isOffline,
-      'is_server_down': isServerDown,
+      'status': status.index,
     };
   }
 
   // Convert JSON to UserState
   factory UserState.fromJson(Map<String, dynamic> json) {
+    print('< ${json['status']}, ${Status.values[json['status']]}');
     return UserState(
-        cookiePath: json['cookie_path'],
-        isCookieSet: json['is_cookie_set'],
-        isOffline: json['is_offline'],
-        isServerDown: json['is_server_down']);
+        cookiePath: json['cookiePath'],
+        isCookieSet: json['isCookieSet'],
+        account: Account.fromJson(json['account']),
+        status: Status.values[json['status']]);
   }
 }

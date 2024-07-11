@@ -12,12 +12,6 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 
 import 'package:getout/constants/api_path.dart';
 
-/// login
-import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
-import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
-
-import 'package:getout/global.dart' as globals;
-
 /**
  * parts:
  */
@@ -38,8 +32,8 @@ class ConnectionService extends _ConnectionService<SignService, ForgotPasswordSe
   //Dashboard
   Future<Response> login(LoginRequestModel request) => t.login(request);
   Future<Response> register(RegisterRequestModel request) => t.register(request);
-  Future<void> checkEmail(CheckEmailRequestModel request) => g.checkEmail(request);
-  Future<void> newPassword(NewPasswordRequestModel request) => g.sendNewPassword(request);
+  Future<Response> checkEmail(CheckEmailRequestModel request) => g.checkEmail(request);
+  Future<Response> newPassword(NewPasswordRequestModel request) => g.sendNewPassword(request);
 }
 
 abstract class ServiceTemplate {}

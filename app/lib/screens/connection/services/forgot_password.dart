@@ -7,20 +7,32 @@
 
 part of 'service.dart';
 
+class CheckEmailRequestModel {
+  const CheckEmailRequestModel({required this.email});
+
+  final String email;
+}
+
+class NewPasswordRequestModel {
+  const NewPasswordRequestModel({required this.code, required this.password,  required this.confirmPassword});
+
+  final String code;
+  final String password;
+  final String confirmPassword;
+}
+
 class ForgotPasswordService extends ServiceTemplate {
   final Dio dio;
 
   ForgotPasswordService(this.dio);
 
-  Future<void> checkEmail(final CheckEmailRequestModel request) async
-  {
+  Future<Response> checkEmail(final CheckEmailRequestModel request) async {
     try {
-      await globals.dio?.post(
+      return await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.resetPasswordEmailPath}',
           data: {
             'email': request.email,
-          },
-          options: Options(headers: {'Content-Type': 'application/json'}));
+          });
     } on DioException { // add "catch (dioError)" for debugging
       rethrow;
     } catch (error) {
@@ -28,10 +40,9 @@ class ForgotPasswordService extends ServiceTemplate {
     }
   }
 
-  Future<void> sendNewPassword(final NewPasswordRequestModel request) async
-  {
+  Future<Response> sendNewPassword(final NewPasswordRequestModel request) async {
     try {
-      await globals.dio?.post(
+      return await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.resetPasswordNewPasswordPath}',
           data: {
             'newPassword' : request.password,

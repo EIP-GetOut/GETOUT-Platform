@@ -10,25 +10,32 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:getout/bloc/user/user_bloc.dart';
-import 'package:getout/screens/connection/login/pages/login.dart';
-import 'package:getout/tools/app_l10n.dart';
+import 'package:getout/screens/form/childrens/end_form.dart';
+import 'package:getout/widgets/loading.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
+///screen
 import 'package:getout/screens/connection/services/service.dart';
 import 'package:getout/screens/home/bloc/home_provider.dart';
 import 'package:getout/screens/form/pages/form.dart';
-import 'package:getout/widgets/object_loading_error_widget.dart';
-import 'package:getout/bloc/session/session_service.dart';
-import 'package:getout/bloc/locale/bloc.dart';
+import 'package:getout/screens/connection/login/pages/login.dart';
+
+///bloc
+//import 'package:getout/bloc/session/session_service.dart';
 import 'package:getout/bloc/observer.dart';
+import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/theme/bloc.dart';
-import 'package:getout/widgets/loading.dart';
+import 'package:getout/bloc/user/user_bloc.dart';
+
+///other
+import 'package:getout/tools/app_l10n.dart';
+import 'package:getout/widgets/object_loading_error_widget.dart';
+//import 'package:getout/widgets/loading.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,34 +45,27 @@ Future<void> main() async {
           : await getApplicationDocumentsDirectory());
   Bloc.observer = const AppBlocObserver(); // BLoC MiddleWare.
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  //CookiePath
-
-  runApp(const MainProvider());
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+  print(appDocDir.path);
+  runApp(MainProvider(appDocDir.path));
 }
 
 class MainProvider extends StatelessWidget {
-  const MainProvider({super.key});
+  final String dirPath;
+
+  const MainProvider(this.dirPath, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
-        providers: [
-          RepositoryProvider(create: (context) => SessionService()),
-        ],
-        child: MultiBlocProvider(
+    return MultiBlocProvider(
           providers: [
             //Data
             BlocProvider(create: (_) => LocaleBloc(context)),
             BlocProvider(create: (_) => ThemeBloc()),
-            BlocProvider(create: (_) => UserBloc()..add(const SetupRequest())),
-            /*BlocProvider<SessionBloc>(
-                create: (context) => SessionBloc(
-                  sessionService: context.read<SessionService>(),
-                )..add(const session.SessionRequest())
-            ),*/
+            BlocProvider(create: (_) => UserBloc()..add(SetupEvent(dirPath: dirPath))),
           ],
           child: const MainPage(),
-        ));
+        );
   }
 }
 
@@ -92,19 +92,17 @@ class MainPage extends StatelessWidget {
           theme: themeData,
           home: BlocBuilder<UserBloc, UserState>(
             builder: (context, state) {
-              if (state.isCookieSet == true) {
-                return const HomeProvider();
-              } else if (state.isCookieSet && (state.account?.moviesGenres == null || state.account?.booksGenres == null || state.account?.platforms == null)) {
-                return const Forms();
-              } else if (state.isCookieSet) {
-                  return const ColoredBox(
-                      color: Colors.white,
-                      child: Center(child: LoadingPage()));
-              } else if (state.isCookieSet == false) {
-                return LoginPage(service: ConnectionService(context.watch<UserBloc>().state.cookiePath!));
-
-              } else if (state.isServerDown) {
-                /// TODO : Add a retry button
+              switch (state.status) {
+                case Status.Logout:
+                  return LoginPage(service: ConnectionService(state.cookiePath));
+                case Status.Login:
+                  return const Forms();
+                case Status.LoginWithPrefs:
+                  return const HomeProvider();//SizedBox(child: Text('homeProvider, ${state.account}')); //HomeProvider();
+                //case Status.Loading:
+                //test  return const LoadingPage();
+              }
+              /*if (state.isServerDown) {
                 return ColoredBox(
                     color: Colors.white,
                     child: ObjectLoadingErrorWidget(object: appL10n(context)!.your_account));
@@ -112,7 +110,7 @@ class MainPage extends StatelessWidget {
                 return ColoredBox(
                     color: Colors.red,
                     child: ObjectLoadingErrorWidget(object: appL10n(context)!.your_account));
-              }
+              }*/
             },
           ),
       );

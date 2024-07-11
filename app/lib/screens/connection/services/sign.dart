@@ -40,7 +40,6 @@ class SignService extends ServiceTemplate {
               }
               );
     } on DioException {
-      print('what ?');
       rethrow;
     } catch (error) {
       rethrow;
@@ -60,11 +59,9 @@ class SignService extends ServiceTemplate {
           },
           options: Options(headers: {'Content-Type': 'application/json'}));
     } on DioException {
-      print('ERRBBRBBRRBBBB');
       // add "catch (dioError)" for debugging
       rethrow;
     } catch (error) {
-      print('ERRAARARRRRRRRRRR');
       rethrow;
     }
   }

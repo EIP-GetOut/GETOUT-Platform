@@ -14,21 +14,32 @@ class UserEvent extends Equatable {
   const UserEvent();
 }
 
-class SetupRequest extends UserEvent {
-  const SetupRequest();
+class SetupEvent extends UserEvent {
+  final String dirPath;
+  const SetupEvent({required this.dirPath});
 }
 
-class LoginRequest extends UserEvent {
-  final String email;
-  final String password;
-
-  const LoginRequest(this.email, this.password);
+class LoginEvent extends UserEvent {
+  const LoginEvent();
 }
 
-class SessionRequest extends UserEvent {
-  const SessionRequest();
+class SessionEvent extends UserEvent {
+  const SessionEvent();
 }
 
-class DisconnectRequest extends UserEvent {
-  const DisconnectRequest();
+class PreferenceEvent extends UserEvent {
+  final List<int> movieGenres;
+  final List<String> bookGenres;
+  final List<String> platforms;
+
+  const PreferenceEvent({required this.movieGenres, required this.bookGenres, required this.platforms});
 }
+
+class DisconnectEvent extends UserEvent {
+  const DisconnectEvent();
+}
+
+class LoadingEvent extends UserEvent {
+  const LoadingEvent();
+}
+

@@ -7,6 +7,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/pages/forgot_password_page.dart';
 
 import 'package:getout/screens/connection/register/pages/register.dart';
@@ -19,6 +20,8 @@ import 'package:getout/tools/validator/field.dart';
 import 'package:getout/tools/validator/email.dart';
 import 'package:getout/widgets/fields/email_field.dart';
 import 'package:getout/widgets/fields/password_field.dart';
+
+import 'package:getout/bloc/user/user_bloc.dart';
 
 class LoginPage extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -88,11 +91,14 @@ class LoginPage extends StatelessWidget {
                                     //login
                                     try {
                                       loadingRequest.value = true;
+                                      //context.read<UserBloc>().add(const LoadingEvent());
                                       Response response = await service.login(
                                           LoginRequestModel(
                                               email: email.text,
                                               password: password.text));
-                                      if (response.statusCode != 200) {
+                                      if (response.statusCode == 200) {
+                                        context.read<UserBloc>().add(const LoginEvent());
+                                        //context.read<UserBloc>().add(const SessionEvent());
                                         //todo update UserCookie isSet
                                       }
                                     } catch (e) {
@@ -101,9 +107,9 @@ class LoginPage extends StatelessWidget {
                                           e.response!.statusCode != null) {
                                         switch (e.response?.statusCode) {
                                           case 400:
-                                            errorMessage.value =
-                                                'Il semblerait que le téléphone soit déja connecter';
-                                            break; //todo  retirer cette erreur.
+                                            //errorMessage.value = 'Il semblerait que le téléphone soit déja connecter';
+                                            context.read<UserBloc>().add(const LoginEvent());
+                                            break;
                                           case 401:
                                             errorMessage.value =
                                                 'L\'email et le mot de passe ne corespondent pas';
@@ -114,7 +120,7 @@ class LoginPage extends StatelessWidget {
                                             break;
                                           default:
                                             errorMessage.value =
-                                                'Une erreur est survenu';
+                                                'L\'email ou le mot de passe est incorrect';
                                         }
                                       } else {
                                         errorMessage.value =

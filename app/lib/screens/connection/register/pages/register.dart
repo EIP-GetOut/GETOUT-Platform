@@ -74,7 +74,8 @@ class RegisterPage extends StatelessWidget {
                     //BirthdateField(
                     //    onChanged: (String value) => birthDate = value != '' ? value : birthDate,
                     //    validator: (_) => mandatoryValidator(context, birthDate)),
-                    Column(//todo make this a widget
+                    Column(
+                        //todo make this a widget
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           fieldTitle('BirthDate', true),
@@ -110,7 +111,10 @@ class RegisterPage extends StatelessWidget {
                                     DateTime? pickedDate = await showDatePicker(
                                         context: context,
                                         locale: const Locale('fr', 'FR'),
-                                        initialDate: DateTime.now(),
+                                        initialDate: (birthdate.text != '')
+                                            ? DateFormat('dd/MM/yyyy')
+                                                .parse(birthdate.text)
+                                            : DateTime.now(),
                                         firstDate: DateTime.now().subtract(
                                             const Duration(days: 365 * 150)),
                                         lastDate: DateTime.now());
@@ -141,56 +145,67 @@ class RegisterPage extends StatelessWidget {
                   ])),
           const SizedBox(height: 50),
           ValueListenableBuilder<bool>(
-          valueListenable: loadingRequest,
-          builder: (_, value, child) {
-            return Align(
-              alignment: Alignment.center,
-              child: (value)
-                ? const CircularProgressIndicator()
-                : SizedBox(
-                  width: 90 * phoneWidth / 100,
-                  height: 65,
-                  child: FloatingActionButton(
-                    child: Text(appL10n(context)!.create_account,
-                        style: Theme.of(context).textTheme.labelMedium),
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        loadingRequest.value = true;
-                        print('register: email=${email.text}, first=${firstName.text}, last=${lastName.text}, birth=${birthdate.text}, pass=${password.text}, confirmPass:${confirmPassword.text}.');
-                        try {
-                          Response response = await service.register(RegisterRequestModel(
-                            email: email.text,
-                            password: password.text,
-                            firstName: firstName.text,
-                            lastName: lastName.text,
-                            birthDate: birthdate.text,
-                          ));
-                          if (response.statusCode == 201) { //succes
-                            //todo createAccount & maybePop()
-                            errorMessage.value = null;
-                            Navigator.maybePop(context); //todo https://stackoverflow.com/questions/68871880/do-not-use-buildcontexts-across-async-gaps
-                          }
-                        } catch (e) {
-                          if (e is DioException && e.response != null && e.response!.statusCode != null) {
-                            switch (e.response?.statusCode) {
-                              case 400:
-                                errorMessage.value = 'Les valeurs entrées sont invalide';
-                                break;
-                              case 500:
-                                errorMessage.value = 'Le serveur n\'a pas réussi à traiter la demande';
-                                break;
-                              default:
-                                errorMessage.value = 'Une erreur est survenu';
-                            }
-                          } else {
-                            errorMessage.value = 'Une erreur est survenu';
-                          }
-                        }
-                        loadingRequest.value = false;
-                      }
-                    },
-                  )));
-          })
+              valueListenable: loadingRequest,
+              builder: (_, value, child) {
+                return Align(
+                    alignment: Alignment.center,
+                    child: (value)
+                        ? const CircularProgressIndicator()
+                        : SizedBox(
+                            width: 90 * phoneWidth / 100,
+                            height: 65,
+                            child: FloatingActionButton(
+                              child: Text(appL10n(context)!.create_account,
+                                  style:
+                                      Theme.of(context).textTheme.labelMedium),
+                              onPressed: () async {
+                                if (_formKey.currentState!.validate()) {
+                                  loadingRequest.value = true;
+                                  print(
+                                      'register: email=${email.text}, first=${firstName.text}, last=${lastName.text}, birth=${birthdate.text}, pass=${password.text}, confirmPass:${confirmPassword.text}.');
+                                  try {
+                                    Response response = await service
+                                        .register(RegisterRequestModel(
+                                      email: email.text,
+                                      password: password.text,
+                                      firstName: firstName.text,
+                                      lastName: lastName.text,
+                                      birthDate: birthdate.text,
+                                    ));
+                                    if (response.statusCode == 201) {
+                                      //succes
+                                      //todo createAccount & maybePop()
+                                      errorMessage.value = null;
+                                      Navigator.maybePop(
+                                          context); //todo https://stackoverflow.com/questions/68871880/do-not-use-buildcontexts-across-async-gaps
+                                    }
+                                  } catch (e) {
+                                    if (e is DioException &&
+                                        e.response != null &&
+                                        e.response!.statusCode != null) {
+                                      switch (e.response?.statusCode) {
+                                        case 400:
+                                          errorMessage.value =
+                                              'Les valeurs entrées sont invalide';
+                                          break;
+                                        case 500:
+                                          errorMessage.value =
+                                              'Le serveur n\'a pas réussi à traiter la demande';
+                                          break;
+                                        default:
+                                          errorMessage.value =
+                                              'Une erreur est survenu';
+                                      }
+                                    } else {
+                                      errorMessage.value =
+                                          'Une erreur est survenu';
+                                    }
+                                  }
+                                  loadingRequest.value = false;
+                                }
+                              },
+                            )));
+              })
         ]),
       )),
     ));

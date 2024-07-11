@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 
-class FourPointsWidget extends StatelessWidget {
+/*class FourPointsWidget extends StatelessWidget {
   const FourPointsWidget({super.key});
 
 
@@ -54,7 +54,7 @@ class FourPointsWidget extends StatelessWidget {
       ],
     );
   }
-}
+}*/
 
 class PageIndicator extends StatelessWidget {
   final int currentPage;

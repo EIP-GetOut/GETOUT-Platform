@@ -7,9 +7,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:getout/screens/form/bloc/form_bloc.dart';
 import 'package:getout/tools/tools.dart';
 
 class EndForm extends StatelessWidget {
@@ -18,11 +15,7 @@ class EndForm extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
-    return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
-    {
-      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.endForm));
-      return Scaffold(
-        body: Column(
+    return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget> [
             SizedBox(height: Tools.heightFactor(context, 0.17)),
@@ -43,9 +36,6 @@ class EndForm extends StatelessWidget {
               ),
             ),
           ],
-        ),
       );
-    },
-    );
   }
 }

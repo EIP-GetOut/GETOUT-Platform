@@ -10,16 +10,15 @@ import 'package:flutter/material.dart';
 import 'package:getout/widgets/fields/widgets/default_field.dart';
 
 class CodeField extends StatelessWidget {
-  final Function(String) onChanged;
   final String? Function(String?)? validator;
   final TextEditingController controller;
+  final String? errorString;
 
   const CodeField({
     super.key,
     this.validator,
-    required this.onChanged,
-    required this.controller});
-
+    required this.controller,
+    this.errorString});
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +26,7 @@ class CodeField extends StatelessWidget {
         title: 'CODE',
         mandatory: true,
         controller: controller,
+        errorString: errorString,
         label: 'Entrez le code reçu par email',
         validator: validator);
   }

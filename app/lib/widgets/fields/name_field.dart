@@ -24,10 +24,10 @@ class LastNameField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultField(
-        title: appL10n(context)!.lastname,
+        title: appL10n(context)!.firstname,
         mandatory: true,
         controller: controller,
-        label: appL10n(context)!.lastname_hint,
+        label: appL10n(context)!.firstname_hint,
         validator: validator);
   }
 }

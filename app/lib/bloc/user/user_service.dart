@@ -4,26 +4,17 @@
 ** Proprietary and confidential
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
-//aa
-import 'dart:developer';
-//aa
-import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:getout/bloc/user/user_bloc.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/session/session_event.dart';
 import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/global.dart' as globals;
-
-import '../../tools/status.dart';
 
 class UserService {
   final Dio dio = Dio();
@@ -36,22 +27,25 @@ class UserService {
 
   Future<Account?> getSession() async {
     try {
-      final response = await globals.dio
-          ?.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
-      if (response?.statusCode == HttpStatus.OK) {
-        if (response?.data['account'] != null) {
-          final account = response?.data['account'];
-          return Account(
+      final response = await dio.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
+      if (response.statusCode == HttpStatus.OK) {
+        if (response.data['account'] != null) {
+          final account = response.data['account'];
+          final preferences = account['preferences'];
+          print('0.1');
+          Account acc = Account(
               isVerified: account['isVerified'],
               email: account['email'],
               firstName: account['firstName'],
               lastName: account['lastName'],
-              bornDate: account[''],
-              createdDate: account[''],
+              bornDate: account['bornDate'],
+              createdDate: account['createdDate'],
               spentMinutesReadinAndWatching: account['spentMinutesReadingAndWatching'],
-              platforms: account['prefrences']['platforms'],
-              booksGenres: account['prefrences']['booksGenres'],
-              moviesGenres: account['prefrences']['moviesGenres']);
+              platforms: (preferences != null) ? List<String>.from(preferences['platforms']): [],
+              booksGenres: (preferences != null) ? List<String>.from(preferences['booksGenres']): [],
+              moviesGenres: (preferences != null) ? List<int>.from(preferences['moviesGenres']): []);
+          print('0.2');
+          return acc;
         }
       }
     } on DioException {
@@ -60,65 +54,5 @@ class UserService {
       rethrow;
     }
     return null;
-  }
-
-  Future<SessionStatusResponse> getSessions() async {
-    if (globals.cookieJar == null && globals.dio == null) {
-//      await setCookies();
-    }
-      try {
-        final response = await globals.dio
-            ?.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
-        if (response?.statusCode == HttpStatus.OK) {
-          if (response?.data['account'] != null) {
-            globals.session = response?.data['account'];
-            //isVerified bool,
-            //readBooks List<string>,
-            //watchlist List<int>,
-            //readingList List<String>,
-            //likedMovies List<int>,
-            //likedBooks List<String>,
-            //dislikedMovies List<int>,
-            //dislikedBooks List<String>,
-            //seenMovies List<int>,
-            //lastMovieRecommandation List<int>,
-            //lastBookRecommandation List<String>,
-            //recommendedBooksHistory List<String>
-            //recommendedMoviesHistory List<int>,
-            //id String,
-            //email String,
-            //firstName String,
-            //lastName String,
-            //bornDate String,
-            //createdDate String,
-            //modifiedDate,
-            //spentMinutesReadingAndWatching int,
-            //preferences Object:
-            //    platforms List<String>
-            //    booksGenres -> List<int>
-            //    moviesGenres -> List<String>
-
-            //print(response?.data['account'].toString().substring(000));
-            //print(response?.headers);
-            if (response?.data['account']['preferences'] != null) {
-              return SessionStatusResponse(
-                  statusCode: SessionStatus.found.index);
-            } else {
-              return SessionStatusResponse(
-                  statusCode: SessionStatus.foundWithoutPreferences.index);
-            }
-          } else {
-            globals.session = null;
-            return SessionStatusResponse(
-                statusCode: SessionStatus.notFound.index);
-          }
-        }
-      } on DioException {
-        // add "catch (dioError)" for debugging
-        rethrow;
-      } catch (dioError) {
-        rethrow;
-      }
-    return SessionStatusResponse(statusCode: SessionStatus.error.index);
   }
 }

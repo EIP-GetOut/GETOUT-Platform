@@ -7,6 +7,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/bloc/user/user_bloc.dart';
 
 import 'package:getout/screens/settings/settings.dart';
 
@@ -62,7 +64,7 @@ class HomeAppBarWidget extends AppBar {
                   style: Theme.of(context).textTheme.displayMedium),
               Text(
                   durationFormat(appL10n(context)!.you_saved,
-                      globals.session?['spentMinutesReadingAndWatching']),
+                      context.watch<UserBloc>().state.account!.spentMinutesReadinAndWatching),
                   style: Theme.of(context).textTheme.bodySmall)
             ],
           ),
