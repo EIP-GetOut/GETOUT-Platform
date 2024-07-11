@@ -12,10 +12,10 @@ import 'package:getout/screens/settings/bloc/edit_email/edit_email_bloc.dart';
 import 'package:getout/screens/settings/services/edit_email.dart';
 import 'package:getout/widgets/fields/email_field.dart';
 import 'package:getout/widgets/fields/password_field.dart';
+import 'package:getout/widgets/fields/widgets/default_button.dart';
 import 'package:getout/widgets/page_title.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/tools/status.dart';
-import 'package:getout/tools/tools.dart';
 import 'package:getout/tools/app_l10n.dart';
 
 class EditEmailPage extends StatelessWidget {
@@ -30,7 +30,6 @@ class EditEmailPage extends StatelessWidget {
         child: Builder(builder: (context) {
           return Scaffold(
             appBar: AppBar(
-              // title: const Text('ADRESSE EMAIL'),
               leading: const BackButton(),
             ),
             body: Form(
@@ -70,17 +69,9 @@ class SendNewEmailButton extends StatelessWidget {
       builder: (context, state) {
         return (state.status == Status.loading)
             ? const CircularProgressIndicator()
-            : SizedBox(
-                width: Tools.widthFactor(context, 0.90),
-                height: 65,
-                child: FloatingActionButton(
-                  child: AutoSizingText('Changer d\'adresse email',
-                      minSize: 70,
-                      maxSize: 300,
-                      sizeFactor: 0.65,
-                      height: 40,
-                      style: Theme.of(context).textTheme.labelMedium),
-                  onPressed: () {
+            : DefaultButton(
+                title: appL10n(context)!.edit_email,
+                onPressed: () {
                     if (!formKey.currentState!.validate()) {
                       return;
                     }
@@ -93,11 +84,10 @@ class SendNewEmailButton extends StatelessWidget {
                         .then((final EditEmailResponseModel value) {
                       if (!value.isSuccessful) {
                         showSnackBar(context,
-                            'Une erreur est survenue veuillez réessayer plus tard');
+                            appL10n(context)!.error_unknown);
                       }
                     });
-                  },
-                ));
+                  },);
       },
     );
   }

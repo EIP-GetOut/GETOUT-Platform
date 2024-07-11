@@ -141,6 +141,9 @@
   "password_actual_empty": "Veuillez entrer votre mot de passe actuel",
   "password_empty": "Veuillez entrer votre mot de passe",
   "password_old": "Le nouveau mot de passe doit être différent de l'ancien",
+  "password_edit_success": "Votre mot de passe a bien été modifié",
+  "password_actual_error": "Mot de passe actuel incorrect",
+  "password_tries": "Vous entrez le mauvais code trop de fois, veuillez réesayer plus tard",
 
   "@_EMAIL": {},
 
@@ -165,6 +168,7 @@
   "code_validator": "Le code est requis",
   "receive_code": "Recevoir un code",
   "@_code_hint": "Entrer le code reçu par mail",
+  "code_incorect": "Le code est incorrect",
 
   "@_SETTING": {},
 

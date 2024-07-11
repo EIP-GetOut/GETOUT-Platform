@@ -19,12 +19,12 @@ import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/register/pages/register.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/widgets/page_title.dart';
+import 'package:getout/widgets/fields/widgets/default_button.dart';
 import 'package:getout/widgets/fields/email_field.dart';
 import 'package:getout/widgets/fields/password_field.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
-import 'package:getout/tools/tools.dart';
 import 'package:getout/constants/http_status.dart';
 
 class LoginPage extends StatelessWidget {
@@ -56,7 +56,9 @@ class LoginPage extends StatelessWidget {
         }
       },
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        PageTitle(title: appL10n(context)!.login_title, description: appL10n(context)!.login_label),
+        PageTitle(
+            title: appL10n(context)!.login_title,
+            description: appL10n(context)!.login_label),
         const SizedBox(height: 30),
         Form(
           key: _formKey,
@@ -162,18 +164,13 @@ class LoginButton extends StatelessWidget {
       builder: (context, state) {
         return (state.status.isLoading)
             ? const CircularProgressIndicator()
-            : SizedBox(
-                width: Tools.widthFactor(context, 0.90),
-                height: 65,
-                child: FloatingActionButton(
-                  child: Text(appL10n(context)!.sign_in,
-                      style: Theme.of(context).textTheme.labelMedium),
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      context.read<LoginBloc>().add(LoginSubmitted());
-                    }
-                  },
-                ));
+            : DefaultButton(
+                title: appL10n(context)!.sign_in,
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    context.read<LoginBloc>().add(LoginSubmitted());
+                  }
+                });
       },
     );
   }

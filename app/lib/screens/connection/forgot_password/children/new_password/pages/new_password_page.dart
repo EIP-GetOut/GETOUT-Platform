@@ -18,7 +18,7 @@ import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/widgets/fields/password_field.dart';
 import 'package:getout/widgets/fields/code_field.dart';
 import 'package:getout/widgets/page_title.dart';
-
+import 'package:getout/widgets/fields/widgets/default_button.dart';
 
 class NewPasswordPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -46,25 +46,25 @@ class NewPasswordPage extends StatelessWidget {
                 if (tries >= 3) {
                   Navigator.pop(context);
                   tries = 0;
-                  showSnackBar(context, 'Vous entrez le mauvais code trop de fois, veuillez réesayer plus tard');
+                  showSnackBar(context, appL10n(context)!.password_tries);
                 } else {
-                  showSnackBar(context, 'Le code est incorrect');
+                  showSnackBar(context, appL10n(context)!.code_incorect);
                 }
               } else if (state.exception is DioException &&
                   (state.exception as DioException).response != null &&
                   (state.exception as DioException).response!.statusCode ==
                       HttpStatus.BAD_REQUEST) {
                 showSnackBar(context,
-                    'Le nouveau mot de passe doit être différent de l\'ancien');
+                    appL10n(context)!.password_old);
               } else {
                 showSnackBar(context,
-                    'Une erreur s\'est produite, veuillez reesayer plus tard');
+                    appL10n(context)!.error_unknown);
               }
             }
             if (state.status.isSuccess) {
               Navigator.pop(context);
               showSnackBar(
-                  context, 'Votre mot de passe a été modifié avec succès',
+                  context, appL10n(context)!.password_edit_success,
                   color: Colors.green);
             }
           },
@@ -103,33 +103,20 @@ class ForgotPasswordButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double phoneWidth = MediaQuery.of(context).size.width;
-
     return BlocBuilder<NewPasswordBloc, NewPasswordState>(
       builder: (context, state) {
         return state.status.isLoading
             ? const CircularProgressIndicator()
-            : SizedBox(
-                width: 90 * phoneWidth / 100,
-                height: 65,
-                child: FloatingActionButton(
-                  shape: Theme.of(context).floatingActionButtonTheme.shape,
-                  backgroundColor: Theme.of(context)
-                      .floatingActionButtonTheme
-                      .backgroundColor,
-                  onPressed: () {
+            : DefaultButton(
+                title: appL10n(context)!.edit_password,
+                onPressed: () {
                     if (formKey.currentState!.validate()) {
                       context
                           .read<NewPasswordBloc>()
                           .add(ForgotPasswordSubmitted());
                     }
                   },
-                  child: Text(appL10n(context)!.edit_password,
-                      style: const TextStyle(
-                          fontSize: 17.5,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white)),
-                ));
+              );
       },
     );
   }
