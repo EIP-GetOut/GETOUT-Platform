@@ -7,10 +7,10 @@
   "@_ERROR":{},
 
   "error_unknown": "Une erreur s'est produite, veuillez réessayer plus tard",
-  "error_internet": "Vérifier votre connexion et recommencer",
+  "error_internet": "Vérifiez votre connexion et recommencez",
   "error_server": "Surprenant ! Attendez un peu, ou contactez le support",
-  "error_unauthorized": "Vérifier les informations et recommencer",
-  "error_expired": "Il semblerait que vos authorisation est expiré",
+  "error_unauthorized": "Vérifiez les informations et recommencez",
+  "error_expired": "Il semblerait que vos autorisations est expirées",
   "error_loading": "Impossible de charger {object}",
   "@error_loading": {
     "placeholders": {
@@ -56,14 +56,15 @@
   "birthday": "Date de naissance",
   "birthday_hint": "Sélectionnez votre date de naissance",
   "birthday_validator": "Une date de naissance est requise",
-  "too_young": "Vous devez avoir plus de 13ans",
+  "too_young": "Vous devez avoir plus de 13 ans",
   "next": "Suivant",
   "register_title": "Créer un compte",
   "register_label": "Créez un compte pour profiter de notre service gratuitement et en illimité.",
+  "email_already_exists": "Un compte avec cette adresse email existe déjà",
 
   "@_FORGOT_PASSWORD": {},
 
-  "change_it": "Changez le",
+  "change_it": "Changez-le",
 
   "@_HOMEPAGE": {},
 
@@ -79,46 +80,46 @@
   "dashboard": "Principale",
   "movie_recommendations": "Les films que vous allez aimer",
   "book_recommendations": "Les livres qui vous passionneront",
-  "any_recommendations": "Nos recommandation pour vous",
+  "any_recommendations": "Nos recommandations pour vous",
 
   "@_MOVIES": {},
 
-  "movie" : "Film",
-  "movies" : "les films",
+  "movie": "Film",
+  "movies": "les films",
   "the_movie": "Le film",
-  "your_movies" : "Vos films",
+  "your_movies": "Vos films",
 
-  "recommended_movies" : "les films recommandés",
-  "liked_movies" : "les films aimés",
-  "saved_movies" : "les films enregistrés",
+  "recommended_movies": "les films recommandés",
+  "liked_movies": "les films aimés",
+  "saved_movies": "les films enregistrés",
 
-  "your_movies_description" : "Toutes vos films sont ici.",
-  "like_movies_title": "Vos coups de coeur",
-  "view_movies_title": "vos film vu",
+  "your_movies_description": "Tous vos films sont ici.",
+  "like_movies_title": "Vos coups de cœur",
+  "view_movies_title": "vos film vus",
   "wishlist_movies_title": "ce que vous comptez voir",
   "director": "réalisateur(s)",
   "casting": "Distribution",
 
   "@_BOOKS": {},
 
-  "book" : "Livre",
-  "books" : "les livres",
+  "book": "Livre",
+  "books": "les livres",
   "the_book": "Le livre",
-  "your_books" : "Vos livres",
+  "your_books": "Vos livres",
 
-  "recommended_books" : "les livres recommandés",
-  "liked_books" : "les livres aimés",
-  "saved_books" : "les livres enregistrés",
+  "recommended_books": "les livres recommandés",
+  "liked_books": "les livres aimés",
+  "saved_books": "les livres enregistrés",
 
-  "your_books_description" : "Toutes vos lectures sont ici.",
-  "like_books_title": "Vos coups de coeur",
-  "view_books_title": "Vos livres lu",
+  "your_books_description": "Toutes vos lectures sont ici.",
+  "like_books_title": "Vos coups de cœur",
+  "view_books_title": "Vos livres lus",
   "wishlist_books_title": "Ce que vous comptez lire",
   "author": "Auteur(s)",
 
   "@_FIELD": {},
 
-  "mandatory_validator": "Ce champs ne peut pas etre vide",
+  "mandatory_validator": "Ce champ ne peut pas être vide",
 
   "@_PASSWORD": {},
 
@@ -129,32 +130,32 @@
   "forgot_password_label": "Entrez votre adresse email et nous vous enverrons un code",
   "forgot_password_label_next": "Nous vous avons envoyé un code par email",
   "password_hint": "Entrez votre mot de passe",
-  "password_actual": "Mot de passe actuel",
-  "password_actual_hint": "Entrez votre mot de passe actuel",
+  "password_current": "Mot de passe actuel",
+  "password_current_hint": "Entrez votre mot de passe actuel",
   "new_password": "Nouveau mot de passe",
   "new_password_hint": "Entrez votre nouveau mot de passe",
   "confirm_password": "Confirmation de mot de passe",
-  "confirm_password_hint": "Confirmer votre mot de passe",
+  "confirm_password_hint": "Confirmez votre mot de passe",
   "edit_password": "Changer de mot de passe",
-  "password_validator": "Le mot de passe dois contenir au minimum 8 caractères, dont une majuscule, une minuscule et un chiffre",
-  "password_matching": "Les mots de passe saisies ne correspondent pas",
+  "password_validator": "Le mot de passe doit contenir au minimum 8 caractères, dont une majuscule, une minuscule et un chiffre",
+  "password_matching": "Les mots de passe saisis ne correspondent pas",
   "password_actual_empty": "Veuillez entrer votre mot de passe actuel",
   "password_empty": "Veuillez entrer votre mot de passe",
   "password_old": "Le nouveau mot de passe doit être différent de l'ancien",
   "password_edit_success": "Votre mot de passe a bien été modifié",
   "password_actual_error": "Mot de passe actuel incorrect",
-  "password_tries": "Vous entrez le mauvais code trop de fois, veuillez réesayer plus tard",
+  "password_tries": "Vous avez entré(e) le mauvais code trop de fois, veuillez réessayer plus tard",
 
   "@_EMAIL": {},
 
   "email": "Adresse email",
-  "email_hint": "Entrer votre adresse email",
+  "email_hint": "Entrez votre adresse email",
   "change_email": "Changez votre email",
   "change_email_label": "Définissez votre nouvelle adresse mail",
   "new_email": "Nouvelle adresse email",
-  "new_email_hint": "Entrer votre nouvelle adresse email",
+  "new_email_hint": "Entrez votre nouvelle adresse email",
   "confirm_email": "Confirmation d'adresse email",
-  "confirm_email_hint": "Confirmer votre adresse email",
+  "confirm_email_hint": "Confirmez votre adresse email",
   "edit_email": "Changer d'adressse email",
   "email_validator": "Entrez un email valide",
   "email_matching": "Les nouvelles adresses email saisies ne correspondent pas",
@@ -164,11 +165,11 @@
   "@_CODE": {},
 
   "code": "Code",
-  "code_hint": "Entrer le code",
+  "code_hint": "Entrez le code",
   "code_validator": "Le code est requis",
   "receive_code": "Recevoir un code",
-  "@_code_hint": "Entrer le code reçu par mail",
-  "code_incorect": "Le code est incorrect",
+  "@_code_hint": "Entrez le code reçu par mail",
+  "code_incorrect": "Le code est incorrect",
 
   "@_SETTING": {},
 
@@ -183,8 +184,8 @@
   "select_language": "Choisir la langue",
   "select_theme": "Mode sombre",
 
-  "preference": "Preference",
-  "select_preferences": "Choisir les preferences",
+  "preference": "Préférences",
+  "select_preferences": "Choisir les préférences",
   "notifications": "Notifications",
   "recommendations": "Recommandations",
 
@@ -194,12 +195,12 @@
 
   "@_FORM": {},
 
-  "book_genre": "Genres littéraire",
-  "movie_genres": "Genres audiovisuel",
+  "book_genre": "Genres littéraires",
+  "movie_genres": "Genres audiovisuels",
   "viewing_platform": "Supports de visionnage",
   "form_description": "Ce formulaire nous permet de vous proposer une expérience personnalisée",
 
-  "back_to_settings": "Retour au paramètres",
+  "back_to_settings": "Retour aux paramètres",
   "discover_app": "Découvrir l'application",
   "confirm": "Confirmer",
 

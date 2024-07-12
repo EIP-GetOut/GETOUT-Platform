@@ -48,7 +48,7 @@ class NewPasswordPage extends StatelessWidget {
                   tries = 0;
                   showSnackBar(context, appL10n(context)!.password_tries);
                 } else {
-                  showSnackBar(context, appL10n(context)!.code_incorect);
+                  showSnackBar(context, appL10n(context)!.code_incorrect);
                 }
               } else if (state.exception is DioException &&
                   (state.exception as DioException).response != null &&

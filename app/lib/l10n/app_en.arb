@@ -60,6 +60,7 @@
   "next": "Next",
   "register_title": "Create an account",
   "register_label": "Create an account to take advantage of our free, unlimited service.",
+  "email_already_exists": "This email address is already used",
 
   "@_FORGOT_PASSWORD": {},
 
@@ -131,18 +132,18 @@
   "password_hint": "Enter your password",
   "new_password": "New password",
   "new_password_hint": "Enter your new password",
-  "password_actual": "Current password",
-  "password_actual_hint": "Enter your current password",
+  "password_current": "Current password",
+  "password_current_hint": "Enter your current password",
   "confirm_password": "Password confirmation",
   "confirm_password_hint": "Confirm your new password",
   "edit_password": "Edit your password",
   "password_validator": "The password must contains 8 or more characters, with uppercase, lowercase and numbers",
   "password_matching": "New passwords written don't match",
-  "password_actual_empty": "Please enter your current password",
+  "password_current_empty": "Please enter your current password",
   "password_empty": "Please enter your password",
   "password_old": "The new password must be different from the old one",
   "password_edit_success": "Your password has been changed",
-  "password_actual_error": "Incorrect current password",
+  "password_current_error": "Incorrect current password",
   "password_tries": "You've entered the wrong code too many times, please try again later.",
 
   "@_EMAIL": {},
@@ -167,9 +168,9 @@
   "code": "Code",
   "code_hint": "Enter the code",
   "code_validator": "code is a mandatory",
-  "receive_code": "Recevoir un code",
+  "receive_code": "Get a code",
   "@_code_hint": "Enter the code you received by email",
-  "code_incorect": "The code is incorrect",
+  "code_incorrect": "The code is incorrect",
 
   "@_SETTING": {},
 
