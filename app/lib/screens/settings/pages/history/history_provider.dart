@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/bloc/user/user_bloc.dart';
 
 import 'package:getout/screens/settings/bloc/history/history_bloc.dart';
 import 'package:getout/screens/settings/services/service.dart';
@@ -17,8 +18,10 @@ class HistoryProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserState userState = context.watch<UserBloc>().state;
+
     return RepositoryProvider(
-        create: (context) => SettingService(),
+        create: (context) => SettingService(userState.cookiePath, userState.account!.id),
         child: MultiBlocProvider(
             providers: [
               BlocProvider(lazy: false, create: (context) => HistoryBloc(

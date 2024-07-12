@@ -6,6 +6,8 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/bloc/user/user_bloc.dart';
 import 'package:getout/screens/settings/pages/disconnect/disconnect.dart';
 import 'package:getout/screens/settings/pages/delete_account/delete_account.dart';
 
@@ -25,6 +27,8 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserState userState = context.watch<UserBloc>().state;
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -41,11 +45,11 @@ class SettingsPage extends StatelessWidget {
             const AccountInfo(),
             TitleRow(value: appL10n(context)!.account),
             SettingRow(
-                page: EditPasswordPage(service: SettingService()), //todo retrieve provider with SettingService(dio)
+                page: EditPasswordPage(service: SettingService(userState.cookiePath, userState.account!.id)), //todo retrieve provider with SettingService(dio)
                 iconData: Icons.shield_outlined,
                 value: appL10n(context)!.edit_password),
             SettingRow(
-                page: EditMailPage(service: SettingService()), //todo retrieve provider with SettingService(dio)
+                page: EditMailPage(service: SettingService(userState.cookiePath, userState.account!.id)), //todo retrieve provider with SettingService(dio)
                 iconData: Icons.mail_outlined,
                 value: appL10n(context)!.edit_email),
 

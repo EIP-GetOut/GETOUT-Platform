@@ -114,7 +114,7 @@ class NextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     FormService formService =
-        FormService(context.watch<UserBloc>().state.cookiePath!);
+        FormService(context.watch<UserBloc>().state.cookiePath);
     // TODO: implement build
     return SizedBox(
       width: Tools.widthFactor(context, 0.9),

@@ -98,9 +98,7 @@ class MainPage extends StatelessWidget {
                 case Status.Login:
                   return const Forms();
                 case Status.LoginWithPrefs:
-                  return const HomeProvider();//SizedBox(child: Text('homeProvider, ${state.account}')); //HomeProvider();
-                //case Status.Loading:
-                //test  return const LoadingPage();
+                  return const HomeProvider();//SizedBox(child: Text('homeProvider, ${state.account}'));
               }
               /*if (state.isServerDown) {
                 return ColoredBox(

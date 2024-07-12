@@ -8,22 +8,22 @@
 part of 'service.dart';
 
 class HistoryService extends ServiceTemplate {
-  final String _id = (globals.session != null) ? globals.session!['id'].toString() : '';
-  HistoryService();
+  final Dio dio;
 
-  Future<HistoryBooksResponse> getHistoryBooks() async {
+  //todo get userid
+  HistoryService(this.dio);
+
+  Future<HistoryBooksResponse> getHistoryBooks(String accountId) async {
     HistoryBooksResponse result = [];
     try { /// TODO we need to do something prettier
-      final response = await globals.dio?.get(
-          '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedBooksHistoryPath}',
-          options: Options(headers: {'Content-Type': 'application/json'}));
-      if (response?.statusCode != HttpStatus.OK) {
+      final response = await dio.get(
+          '${ApiConstants.rootApiPath}/account/$accountId${ApiConstants.recommendedBooksHistoryPath}');
+      if (response.statusCode != HttpStatus.OK) {
         return Future.error(Exception(
-          'Error ${response?.statusCode} while fetching books: ${response?.statusMessage}',
+          'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
         ));
       }
-
-      response?.data.forEach((elem) {
+      response.data.forEach((elem) {
         result.add(BookPreview(
             id: elem['id'],
             title: elem['title'],
@@ -47,19 +47,18 @@ class HistoryService extends ServiceTemplate {
   }
 
 
-  Future<HistoryMoviesResponse> getHistoryMovies() async {
+  Future<HistoryMoviesResponse> getHistoryMovies(String accountId) async {
     HistoryMoviesResponse result = [];
 
     try { /// TODO we need to do something prettier
-      final response = await globals.dio?.get(
-          '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedMoviesHistoryPath}',
-          options: Options(headers: {'Content-Type': 'application/json'}));
-      if (response?.statusCode != HttpStatus.OK) {
+      final Response response = await dio.get(
+          '${ApiConstants.rootApiPath}/account/$accountId${ApiConstants.recommendedMoviesHistoryPath}');
+      if (response.statusCode != HttpStatus.OK) {
         return Future.error(Exception(
-          'Error ${response?.statusCode} while fetching books: ${response?.statusMessage}',
+          'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
         ));
       }
-      response?.data.forEach((elem) {
+      response.data.forEach((elem) {
         result.add(MoviePreview(
             id: elem['id'],
             title: elem['title'],

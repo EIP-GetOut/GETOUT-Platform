@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/bloc/user/user_bloc.dart';
 
 import 'package:getout/screens/book/bloc/book_bloc.dart';
 import 'package:getout/screens/book/bloc/book_service.dart';
@@ -20,10 +21,12 @@ class Book extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserState userState = context.watch<UserBloc>().state;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: RepositoryProvider(
-        create: (context) => BookService(),
+        create: (context) => BookService(userState.cookiePath, userState.account!.id),
         child: MultiBlocProvider(
           providers: [
             BlocProvider<BookBloc>(

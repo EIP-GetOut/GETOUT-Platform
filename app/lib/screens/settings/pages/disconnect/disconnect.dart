@@ -7,14 +7,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getout/bloc/session/session_bloc.dart';
-import 'package:getout/bloc/session/session_event.dart';
+import 'package:getout/bloc/user/user_bloc.dart';
 
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/screens/settings/services/service.dart';
 
 void showAlertDialog(BuildContext context) {
-  final SettingService service = SettingService();
+  final UserState userState = context.watch<UserBloc>().state;
+  final SettingService service = SettingService(userState.cookiePath, userState.account!.id);
 
   Widget cancelButton = TextButton(
     child: const Text('Annuler'),
@@ -28,7 +28,7 @@ void showAlertDialog(BuildContext context) {
         try {
           await service.disconnect();
           if (context.mounted) {
-            context.read<SessionBloc>().add(const DisconnectRequest());
+            context.read<UserBloc>().add(const DisconnectEvent());
             Navigator.pop(context);
             Navigator.pop(context);
           }

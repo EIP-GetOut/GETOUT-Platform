@@ -62,10 +62,10 @@ class HomeAppBarWidget extends AppBar {
                   style: Theme.of(context).textTheme.titleLarge),
               Text(appL10n(context)!.homepage_subtitle,
                   style: Theme.of(context).textTheme.displayMedium),
-              Text(
+              /*Text( //hold info
                   durationFormat(appL10n(context)!.you_saved,
                       context.watch<UserBloc>().state.account!.spentMinutesReadinAndWatching),
-                  style: Theme.of(context).textTheme.bodySmall)
+                  style: Theme.of(context).textTheme.bodySmall)*/
             ],
           ),
           actions: [

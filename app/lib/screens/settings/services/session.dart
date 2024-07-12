@@ -8,21 +8,20 @@
 part of 'service.dart';
 
 class SessionService extends ServiceTemplate {
-//  final String _id = (globals.session != null) ? globals.session!['id'].toString() : '';
+  final Dio dio;
 
-  SessionService();
+  SessionService(this.dio);
 
   Future<StatusResponse> changeEmail(String password, String newEmail) async {
     try {
       /// TODO we need to do something prettier
       ///
-      final response = await globals.dio?.delete(
-          '${ApiConstants.rootApiPath}/account',
-          options: Options(headers: {'Content-Type': 'application/json'}));
+      final Response response = await dio.delete(
+          '${ApiConstants.rootApiPath}/account');
 
-      if (response?.statusCode != HttpStatus.OK) {
+      if (response.statusCode != HttpStatus.OK) {
         return Future.error(Exception(
-          'Error ${response?.statusCode} while editing account email: ${response?.statusMessage}',
+          'Error ${response.statusCode} while editing account email: ${response.statusMessage}',
         ));
       }
     } on DioException catch (dioException) {
@@ -49,18 +48,15 @@ class SessionService extends ServiceTemplate {
 
   Future<StatusResponse> disconnect() async {
     try {
-      final response = await globals.dio?.post(
-        '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/logout',
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-        ),
-      );
-      if (response?.statusCode != HttpStatus.NO_CONTENT) {
+      final Response response = await dio.post(
+        '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/logout');
+
+      if (response.statusCode != HttpStatus.NO_CONTENT) {
         return Future.error(Exception(
-          'Error ${response?.statusCode} while editing account email: ${response?.statusMessage}',
+          'Error ${response.statusCode} while editing account email: ${response.statusMessage}',
         ));
       }
-      await globals.sessionManager.getSession();
+      //todo -> getSessionRemovingData
       return const StatusResponse(status: 200);
     } on DioException {
       // add "catch (dioError)" for debugging
@@ -72,18 +68,15 @@ class SessionService extends ServiceTemplate {
 
   Future<StatusResponse> deleteAccount() async {
     try {
-      final response = await globals.dio?.delete(
-        '${ApiConstants.rootApiPath}/account',
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-        ),
-      );
-      if (response?.statusCode != HttpStatus.NO_CONTENT) {
+      final Response response = await dio.delete(
+        '${ApiConstants.rootApiPath}/account');
+      if (response.statusCode != HttpStatus.NO_CONTENT) {
         return Future.error(Exception(
-          'Error ${response?.statusCode} while deleting account : ${response?.statusMessage}',
+          'Error ${response.statusCode} while deleting account : ${response.statusMessage}',
         ));
       }
-      await globals.sessionManager.getSession();
+      //todo fix this.
+      //await globals.sessionManager.getSession();
       return const StatusResponse(status: 204);
     } on DioException {
       // add "catch (dioError)" for debugging

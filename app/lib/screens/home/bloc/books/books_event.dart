@@ -17,7 +17,9 @@ class BooksEvent extends Equatable {
 }
 
 class GenerateBooksRequest extends BooksEvent {
-  const GenerateBooksRequest();
+  final String accountId;
+
+  const GenerateBooksRequest(this.accountId);
 }
 
 class BookStatusResponse extends BooksEvent {

@@ -16,6 +16,7 @@ enum Status {
 
 class Account extends Equatable {
   //email
+  final String id;
   final bool isVerified;
   final String email;
   //info
@@ -33,6 +34,7 @@ class Account extends Equatable {
   final List<int> moviesGenres;
 
   const Account({
+    required this.id,
     required this.isVerified,
     required this.email,
 
@@ -51,6 +53,7 @@ class Account extends Equatable {
   });
 
   Account copyWith({
+    String? id,
     bool? isVerified,
     String? email,
     String? firstName,
@@ -65,6 +68,7 @@ class Account extends Equatable {
     List<int>? moviesGenres,
   }) {
     return Account(
+        id: id ?? this.id,
         isVerified: isVerified ?? this.isVerified,
         email: email ?? this.email,
         firstName: firstName ?? this.firstName,
@@ -81,6 +85,7 @@ class Account extends Equatable {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'isVerified': isVerified,
       'email': email,
 
@@ -101,6 +106,7 @@ class Account extends Equatable {
 
   factory Account.fromJson(Map<String, dynamic> json) {
     return Account(
+        id: json['id'],
         isVerified: json['isVerified'],
         email: json['email'],
 

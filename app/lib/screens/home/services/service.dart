@@ -28,8 +28,8 @@ class HomeService extends _HomeService<BooksService, MoviesService> {
         storage: FileStorage(cookiePath))));
     dio.options.headers = ({'Content-Type': 'application/json'});
 
-    t = BooksService();
-    g = MoviesService();
+    t = BooksService(dio);
+    g = MoviesService(dio);
   }
 
   ///Books

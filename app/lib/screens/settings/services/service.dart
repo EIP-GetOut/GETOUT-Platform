@@ -5,7 +5,9 @@
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/global.dart' as globals;
@@ -23,10 +25,17 @@ class StatusResponse {
 }
 
 class SettingService extends _SettingService<SessionService, HistoryService> {
+  final Dio dio = Dio();
+  final String accountId;
 
-  SettingService() {
-    t = SessionService();
-    g = HistoryService();
+  SettingService(String cookiePath, this.accountId) {
+    dio.interceptors.add(CookieManager(PersistCookieJar(
+        ignoreExpires: true,
+        storage: FileStorage(cookiePath))));
+    dio.options.headers = ({'Content-Type': 'application/json'});
+
+    t = SessionService(dio);
+    g = HistoryService(dio);
   }
 
   Future<StatusResponse> changeEmail(String password, String email) async =>
@@ -45,8 +54,8 @@ class SettingService extends _SettingService<SessionService, HistoryService> {
 
   Future<StatusResponse> setTheme(String theme) async => t.setTheme(theme);
 
-  Future<HistoryBooksResponse> getHistoryBooks() async => g.getHistoryBooks();
-  Future<HistoryMoviesResponse> getHistoryMovies() async => g.getHistoryMovies();
+  Future<HistoryBooksResponse> getHistoryBooks() async => g.getHistoryBooks(accountId);
+  Future<HistoryMoviesResponse> getHistoryMovies() async => g.getHistoryMovies(accountId);
 }
 
 abstract class ServiceTemplate {}

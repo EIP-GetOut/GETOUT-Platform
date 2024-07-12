@@ -5,13 +5,8 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-import 'dart:ffi';
-import 'dart:io';
-
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:getout/bloc/user/user_service.dart';
-import 'package:getout/screens/connection/services/service.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 part 'user_state.dart';

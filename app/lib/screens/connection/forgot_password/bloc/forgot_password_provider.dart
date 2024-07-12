@@ -22,7 +22,7 @@ class ForgotPasswordProvider extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: RepositoryProvider(
-        create: (context) => ConnectionService(context.watch<UserBloc>().state.cookiePath!),
+        create: (context) => ConnectionService(context.watch<UserBloc>().state.cookiePath),
         child: BlocProvider<ForgotPasswordPageBloc>(
           create: (context) => ForgotPasswordPageBloc(),
           child: const SizedBox(width: 1, height: 1)//ForgotPasswordPage(service: service),

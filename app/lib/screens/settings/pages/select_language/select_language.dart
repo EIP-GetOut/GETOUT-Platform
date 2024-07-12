@@ -6,6 +6,8 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/bloc/user/user_bloc.dart';
 
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/settings/services/service.dart';
@@ -16,7 +18,9 @@ class SelectLanguagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SettingService service = SettingService();
+    final UserState userState = context.watch<UserBloc>().state;
+    final SettingService service = SettingService(userState.cookiePath, userState.account!.id);
+
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     String lang = ''; //(retrieve bloc)
 

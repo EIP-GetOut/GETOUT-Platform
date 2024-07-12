@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/bloc/user/user_bloc.dart';
 
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
 import 'package:getout/screens/movie/bloc/movie_service.dart';
@@ -20,10 +21,12 @@ class Movie extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserState userState = context.watch<UserBloc>().state;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: RepositoryProvider(
-        create: (context) => MovieService(),
+        create: (context) => MovieService(userState.cookiePath, userState.account!.id),
         child: MultiBlocProvider(
           providers: [
             BlocProvider<MovieBloc>(

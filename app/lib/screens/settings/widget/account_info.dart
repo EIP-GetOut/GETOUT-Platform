@@ -6,6 +6,8 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/bloc/user/user_bloc.dart';
 import 'package:getout/global.dart' as globals;
 
 class AccountInfo extends StatelessWidget {
@@ -13,6 +15,7 @@ class AccountInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Account? account = context.watch<UserBloc>().state.account;
     return Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         height: MediaQuery.of(context).size.height * 0.15,
@@ -25,14 +28,14 @@ class AccountInfo extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('${globals.session?['firstName']} ${globals.session?['lastName']}'.toLowerCase(),
+                  Text('${account?.firstName} ${account?.lastName}'.toLowerCase(),
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: (MediaQuery.of(context).size.width > 400)
                               ? 30
                               : 16,
                           color: Colors.black87)),
-                  Text(globals.session?['email'],
+                  Text('${account?.email}',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: (MediaQuery.of(context).size.width > 400)

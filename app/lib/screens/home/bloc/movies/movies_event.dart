@@ -17,7 +17,8 @@ class MoviesEvent extends Equatable {
 }
 
 class GenerateMoviesRequest extends MoviesEvent {
-  const GenerateMoviesRequest();
+  final String accountId;
+  const GenerateMoviesRequest(this.accountId);
 }
 
 class MovieStatusResponse extends MoviesEvent {
