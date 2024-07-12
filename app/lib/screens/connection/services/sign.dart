@@ -53,4 +53,19 @@ class SignService extends ServiceTemplate {
       rethrow;
     }
   }
+
+    Future<void> emailVerified(final EmailVerifiedRequestModel request) async {
+    try {
+      await globals.dio?.post('${ApiConstants.rootApiPath}${ApiConstants.verifyEmailPath}',
+          data: {
+            'code': request.code,
+          },
+          options: Options(headers: {'Content-Type': 'application/json'}));
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (error) {
+      rethrow;
+    }
+  }
 }

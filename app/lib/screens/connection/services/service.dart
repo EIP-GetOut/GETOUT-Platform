@@ -17,6 +17,7 @@ import 'package:getout/screens/connection/forgot_password/children/new_password/
 import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
+import 'package:getout/screens/connection/email_verified/bloc/email_verified_bloc.dart';
 
 import 'package:getout/global.dart' as globals;
 
@@ -36,6 +37,7 @@ class ConnectionService extends _ConnectionService<SignService, ForgotPasswordSe
   Future<void> register(RegisterRequestModel request) => t.register(request);
   Future<void> checkEmail(CheckEmailRequestModel request) => g.checkEmail(request);
   Future<void> newPassword(NewPasswordRequestModel request) => g.sendNewPassword(request);
+  Future<void> emailVerified(EmailVerifiedRequestModel request) => t.emailVerified(request);
 }
 
 abstract class ServiceTemplate {}

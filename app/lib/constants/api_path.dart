@@ -22,6 +22,7 @@ class ApiConstants {
   static const String loginPath = '/account/login';
   static const String logoutPath = '/account/logout';
   static const String registerPath = '/account/signup';
+  static const String verifyEmailPath = '/account/verify-email';
   static const String accountPath = '/account';
 
   static const String resetPasswordEmailPath = '/account/reset-password/send-email';
