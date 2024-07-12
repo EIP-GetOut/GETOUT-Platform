@@ -34,31 +34,34 @@ class SessionService {
     if (globals.cookieJar == null && globals.dio == null) {
       await setCookies();
     }
-      try {
-        final response = await globals.dio
-            ?.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
-        if (response?.statusCode == HttpStatus.OK) {
-          if (response?.data['account'] != null) {
-            globals.session = response?.data['account'];
-            if (response?.data['account']['preferences'] != null) {
-              return SessionStatusResponse(
-                  statusCode: SessionStatus.found.index);
-            } else {
-              return SessionStatusResponse(
-                  statusCode: SessionStatus.foundWithoutPreferences.index);
-            }
+    try {
+      final response = await globals.dio
+          ?.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
+      if (response?.statusCode == HttpStatus.OK) {
+        print("response = ");
+        print(response?.data);
+        if (response?.data['account'] != null) {
+          globals.session = response?.data['account'];
+          if (response?.data['isVerified'] != true) {
+            return SessionStatusResponse(statusCode: SessionStatus.emailNotVerified.index);
+          } else if (response?.data['account']['preferences'] != null) {
+            return SessionStatusResponse(statusCode: SessionStatus.found.index);
           } else {
-            globals.session = null;
             return SessionStatusResponse(
-                statusCode: SessionStatus.notFound.index);
+                statusCode: SessionStatus.foundWithoutPreferences.index);
           }
+        } else {
+          globals.session = null;
+          return SessionStatusResponse(
+              statusCode: SessionStatus.notFound.index);
         }
-      } on DioException {
-        // add "catch (dioError)" for debugging
-        rethrow;
-      } catch (dioError) {
-        rethrow;
       }
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
+    }
     return SessionStatusResponse(statusCode: SessionStatus.error.index);
   }
 }

@@ -21,9 +21,9 @@ class CodeField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultField(
-        title: 'CODE',
+        title: appL10n(context)!.code.toUpperCase(),
         mandatory: true,
-        label: 'Entrez le code reçu par email',
+        label: appL10n(context)!.code_mail_hint,
         validator: validator,
         onChanged: onChanged);
   }
@@ -36,9 +36,9 @@ class ForgotPasswordCodeField extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<NewPasswordBloc, NewPasswordState>(builder: (context, state) {
       return DefaultField(
-        title: 'CODE',
+        title: appL10n(context)!.code.toUpperCase(),
         mandatory: true,
-        label: 'Entrez le code reçu par email',
+        label: appL10n(context)!.code_mail_hint,
           validator: (value) =>
           state.isCodeValid ? null : appL10n(context)!.code_validator,
           onChanged: (value) => context.read<NewPasswordBloc>().add(
@@ -46,5 +46,27 @@ class ForgotPasswordCodeField extends StatelessWidget {
           ),
         );
     });
+  }
+}
+
+class EmailVerifiedCodeField extends StatelessWidget {
+  const EmailVerifiedCodeField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // return BlocBuilder<NewPasswordBloc, NewPasswordState>(builder: (context, state) {
+      return DefaultField(
+        title: appL10n(context)!.code.toUpperCase(),
+        mandatory: true,
+        label: appL10n(context)!.code_mail_hint,
+          validator: (value) => (null),
+          // state.isCodeValid ? null : appL10n(context)!.code_validator,
+          onChanged: (value) => (null),
+          // context.read<NewPasswordBloc>().add(
+          //   ForgotPasswordCodeChanged(code: value),
+          // ),
+        );
+    // }
+    // );
   }
 }

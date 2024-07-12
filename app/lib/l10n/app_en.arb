@@ -160,6 +160,7 @@
   "email_matching": "New emails addresses written don't match",
   "email_empty": "Email can't be empty",
   "email_old": "The email must be different from the old email",
+  "email_verification_hint": "Enter the confirmation code received by e-mail",
 
 
   "@_CODE": {},
@@ -168,7 +169,7 @@
   "code_hint": "Enter the code",
   "code_validator": "code is a mandatory",
   "receive_code": "Recevoir un code",
-  "@_code_hint": "Enter the code you received by email",
+  "code_mail_hint": "Enter the code you received by email",
   "code_incorect": "The code is incorrect",
 
   "@_SETTING": {},
