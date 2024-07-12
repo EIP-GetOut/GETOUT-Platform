@@ -40,7 +40,7 @@ class RegisterPage extends StatelessWidget {
                     (state.exception as DioException).response!.statusCode ==
                         HttpStatus.CONFLICT) {
                   showSnackBar(context,
-                      'Un compte avec cette adresse email existe déjà');
+                      appL10n(context)!.email_already_exists);
                 } else {
                   showSnackBar(context, appL10n(context)!.error_unknown);
                 }

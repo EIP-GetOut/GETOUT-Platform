@@ -12,8 +12,8 @@ import 'package:dio/dio.dart';
 
 import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/session/session_event.dart';
-import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
-import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
+import 'package:getout/screens/connection/forgot_password/pages/new_password/bloc/new_password_bloc.dart';
+import 'package:getout/screens/connection/forgot_password/pages/check_email/bloc/check_email_bloc.dart';
 import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_provider.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/register/pages/register.dart';

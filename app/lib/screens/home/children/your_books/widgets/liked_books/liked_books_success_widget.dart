@@ -11,6 +11,7 @@ import 'package:getout/screens/book/bloc/book_provider.dart';
 import 'package:getout/screens/home/bloc/books/books_event.dart';
 import 'package:getout/screens/home/widgets/common/book_preview_widget.dart';
 import 'package:getout/screens/home/widgets/common/title_widget.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class LikedBooksSuccessWidget extends StatelessWidget {
   final List<BookPreview> books;
@@ -28,8 +29,8 @@ class LikedBooksSuccessWidget extends StatelessWidget {
     return Expanded(
         child: Column(
       children: [
-        const TitleWidget(
-            asset: 'heart', title: 'Vos coup de coeurs'),
+        TitleWidget(
+            asset: 'heart', title: appL10n(context)!.like_books_title),
         Expanded(
             child: ListView(
                 controller: bookController,

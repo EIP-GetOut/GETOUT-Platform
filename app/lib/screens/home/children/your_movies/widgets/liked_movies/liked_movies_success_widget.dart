@@ -6,11 +6,12 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:getout/screens/home/widgets/common/movie_preview_widget.dart';
 
+import 'package:getout/screens/home/widgets/common/movie_preview_widget.dart';
 import 'package:getout/screens/movie/bloc/movie_provider.dart';
 import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 import 'package:getout/screens/home/widgets/common/title_widget.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 class LikedMoviesSuccessWidget extends StatelessWidget {
   const LikedMoviesSuccessWidget({
@@ -28,8 +29,8 @@ class LikedMoviesSuccessWidget extends StatelessWidget {
     return Expanded(
         child: Column(
       children: [
-        const TitleWidget(
-            asset: 'heart', title: 'Vos coup de coeurs'),
+        TitleWidget(
+            asset: 'heart', title: appL10n(context)!.like_movies_title),
         Expanded(
             child: ListView(
                 controller: movieController,

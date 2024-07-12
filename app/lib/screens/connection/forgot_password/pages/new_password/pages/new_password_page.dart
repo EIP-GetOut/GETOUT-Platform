@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio/dio.dart';
 
 import 'package:getout/constants/http_status.dart';
-import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
+import 'package:getout/screens/connection/forgot_password/pages/new_password/bloc/new_password_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/widgets/show_snack_bar.dart';

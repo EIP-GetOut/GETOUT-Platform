@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/connection/forgot_password/bloc/forgot_password_page_bloc.dart';
-import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
-import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
+import 'package:getout/screens/connection/forgot_password/pages/check_email/bloc/check_email_bloc.dart';
+import 'package:getout/screens/connection/forgot_password/pages/new_password/bloc/new_password_bloc.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/connection/login/pages/login.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';

@@ -8,7 +8,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:getout/widgets/fields/widgets/default_field.dart';
-import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
+import 'package:getout/screens/connection/forgot_password/pages/new_password/bloc/new_password_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

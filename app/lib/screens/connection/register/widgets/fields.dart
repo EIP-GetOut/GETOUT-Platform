@@ -12,7 +12,6 @@ import 'package:intl/intl.dart';
 
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/widgets/fields/widgets/default_title.dart';
-
 import 'package:getout/tools/app_l10n.dart';
 
 class BirthDateField extends StatelessWidget {
@@ -25,7 +24,6 @@ class BirthDateField extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //title
           defaultTitle(appL10n(context)!.birthday.toUpperCase(), true),
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -89,103 +87,6 @@ class BirthDateField extends StatelessWidget {
                     }),
               )),
         ],
-      );
-    });
-  }
-}
-
-class EmailField extends StatelessWidget {
-  const EmailField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<RegisterBloc, RegisterState>(
-      builder: (context, state) {
-        return SizedBox(
-          height: 50,
-          child: TextFormField(
-            style: const TextStyle(fontSize: 17, color: Colors.black),
-            decoration: InputDecoration(
-              labelText: appL10n(context)!.email_hint,
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(0.5),
-                  borderSide: const BorderSide(color: Colors.black)),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(0.5),
-              ),
-            ),
-            validator: (value) =>
-                state.isEmailValid ? null : appL10n(context)!.email_validator,
-            onChanged: (value) => context.read<RegisterBloc>().add(
-                  RegisterEmailChanged(email: value),
-                ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class PasswordField extends StatelessWidget {
-  const PasswordField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<RegisterBloc, RegisterState>(builder: (context, state) {
-      return SizedBox(
-        height: 50,
-        child: TextFormField(
-          obscureText: true,
-          style: const TextStyle(fontSize: 17, color: Colors.black),
-          decoration: InputDecoration(
-              labelText: appL10n(context)!.password_hint,
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(0.5),
-                  borderSide: const BorderSide(color: Colors.black)),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(0.5),
-              )),
-          validator: (value) => state.isPasswordValid
-              ? null
-              : appL10n(context)!.password_validator,
-          onChanged: (value) => context.read<RegisterBloc>().add(
-                RegisterPasswordChanged(password: value),
-              ),
-        ),
-      );
-    });
-  }
-}
-
-class ConfirmPasswordField extends StatelessWidget {
-  const ConfirmPasswordField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<RegisterBloc, RegisterState>(builder: (context, state) {
-      return SizedBox(
-        height: 50,
-        child: TextFormField(
-          obscureText: true,
-          style: const TextStyle(fontSize: 17, color: Colors.black),
-          decoration: InputDecoration(
-              labelText: appL10n(context)!.confirm_password_hint,
-              floatingLabelBehavior: FloatingLabelBehavior.never,
-              enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(0.5),
-                  borderSide: const BorderSide(color: Colors.black)),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(0.5),
-              )),
-          validator: (value) => state.isConfirmPasswordValid
-              ? null
-              : appL10n(context)!.password_matching,
-          onChanged: (value) => context.read<RegisterBloc>().add(
-                RegisterConfirmPasswordChanged(confirmPassword: value),
-              ),
-        ),
       );
     });
   }

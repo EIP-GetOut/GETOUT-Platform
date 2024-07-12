@@ -88,7 +88,7 @@ class SendNewNewButton extends StatelessWidget {
                             oldPassword: oldPassword, newPassword: newPassword))
                         .then((final EditPasswordResponseModel value) {
                       if (value.statusCode == HttpStatus.UNAUTHORIZED) {
-                        showSnackBar(context, appL10n(context)!.password_actual_error);
+                        showSnackBar(context, appL10n(context)!.password_current_error);
                       } else if (!value.isSuccessful) {
                         showSnackBar(context,
                             appL10n(context)!.error_unknown);

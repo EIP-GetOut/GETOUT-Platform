@@ -9,7 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
+import 'package:getout/screens/connection/forgot_password/pages/new_password/bloc/new_password_bloc.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/settings/bloc/edit_password/edit_password_bloc.dart';
@@ -165,12 +165,12 @@ class EditOldPasswordField extends StatelessWidget {
         builder: (context, state) {
       return DefaultField(
         isPassword: true,
-        title: appL10n(context)!.password_actual.toUpperCase(),
+        title: appL10n(context)!.password_current.toUpperCase(),
         mandatory: true,
-        label: appL10n(context)!.password_actual_hint,
+        label: appL10n(context)!.password_current_hint,
         validator: (value) => state.isOldPasswordEmpty
             ? null
-            : appL10n(context)!.password_actual_empty,
+            : appL10n(context)!.password_current_empty,
         onChanged: (value) => context.read<EditPasswordBloc>().add(
               OldPasswordChanged(oldPassword: value),
             ),
@@ -222,7 +222,7 @@ class EditConfirmPasswordField extends StatelessWidget {
         isPassword: true,
         title: appL10n(context)!.confirm_password.toUpperCase(),
         mandatory: true,
-        label: appL10n(context)!.new_password_hint,
+        label: appL10n(context)!.confirm_password_hint,
         validator: (value) => state.isConfirmPasswordGood
             ? null
             : appL10n(context)!.password_matching,
@@ -264,6 +264,7 @@ class EditPasswordField extends StatelessWidget {
     return BlocBuilder<EditEmailBloc, EditEmailState>(
         builder: (context, state) {
       return DefaultField(
+        isPassword: true,
         title: appL10n(context)!.password.toUpperCase(),
         mandatory: true,
         label: appL10n(context)!.password_hint,

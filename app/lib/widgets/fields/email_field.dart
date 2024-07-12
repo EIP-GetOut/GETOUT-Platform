@@ -9,7 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:getout/widgets/fields/widgets/default_field.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getout/screens/connection/forgot_password/children/check_email/bloc/check_email_bloc.dart';
+import 'package:getout/screens/connection/forgot_password/pages/check_email/bloc/check_email_bloc.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/settings/bloc/edit_email/edit_email_bloc.dart';
@@ -149,7 +149,7 @@ class EditConfirmEmailField extends StatelessWidget {
       return DefaultField(
         title: appL10n(context)!.confirm_email.toUpperCase(),
         mandatory: true,
-        label: appL10n(context)!.new_email_hint,
+        label: appL10n(context)!.confirm_email_hint,
         validator: (value) =>
             state.isConfirmEmailGood ? null : appL10n(context)!.email_matching,
         onChanged: (value) => context.read<EditEmailBloc>().add(
