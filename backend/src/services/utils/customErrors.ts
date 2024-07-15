@@ -29,9 +29,15 @@ class AccountDoesNotExistError extends AppError {
   }
 }
 
+class AccountIsAlreadyVerifiedError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Account is already verified.', status ?? StatusCodes.FORBIDDEN)
+  }
+}
+
 class AlreadyLoggedInError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
-    super(message ?? 'User is already logged in.', status ?? StatusCodes.BAD_REQUEST)
+    super(message ?? 'Account is already logged in.', status ?? StatusCodes.BAD_REQUEST)
   }
 }
 class ApiError extends AppError {}
@@ -68,7 +74,7 @@ class MovieNotInListError extends AppError {
 
 class NotLoggedInError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
-    super(message ?? 'User is not logged in.', status ?? StatusCodes.BAD_REQUEST)
+    super(message ?? 'Account is not logged in.', status ?? StatusCodes.BAD_REQUEST)
   }
 }
 
@@ -117,6 +123,7 @@ class SessionDestroyError extends AppError {
 export {
   AccountAlreadyExistError,
   AccountDoesNotExistError,
+  AccountIsAlreadyVerifiedError,
   AlreadyLoggedInError,
   ApiError,
   AppError,

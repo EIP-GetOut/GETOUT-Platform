@@ -16,7 +16,7 @@ import { type Account } from '@entities/Account'
 
 import { SessionMappingError } from './customErrors'
 
-async function mapAccountToSession (req: Request): Promise<Session & Partial<SessionData>> {
+async function mapAccountToSession (req: Request, isTemporary: boolean = false): Promise<Session & Partial<SessionData>> {
   if (req.session?.account == null) {
     return await Promise.resolve(req.session)
   }
@@ -41,8 +41,9 @@ async function mapAccountToSession (req: Request): Promise<Session & Partial<Ses
     }
 
     const week = 3600000 * 24 * 7
-    req.session.cookie.expires = new Date(Date.now() + week)
-    req.session.cookie.maxAge = week
+    const hour = 3600000
+    req.session.cookie.expires = new Date(Date.now() + (isTemporary ? hour : week))
+    req.session.cookie.maxAge = (isTemporary ? hour : week)
 
     return await new Promise<Session & Partial<SessionData>>((resolve, _reject) => {
       return req.session.save((err: any) => {

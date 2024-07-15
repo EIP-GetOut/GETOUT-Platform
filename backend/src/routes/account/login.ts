@@ -10,7 +10,7 @@ import { type Session, type SessionData } from 'express-session'
 import { body } from 'express-validator'
 import { StatusCodes } from 'http-status-codes'
 
-import { sendWelcomeEmail } from '@services/brevo/emails'
+import { sendEmailVerificationEmail, sendWelcomeEmail } from '@services/brevo/emails'
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
 import { AlreadyLoggedInError } from '@services/utils/customErrors'
@@ -19,6 +19,7 @@ import { mapAccountToSession } from '@services/utils/mapAccountToSession'
 
 import { modifyAccount } from '@models/account'
 import { loginAccount } from '@models/account/loginAccount'
+import { generateEmailVerificationCode } from '@models/account/verifyEmail'
 
 import { type Account } from '@entities/Account'
 
@@ -68,15 +69,23 @@ router.post('/account/login', rulesPost, validate, logApiRequest, (req: Request,
   }
   loginAccount(req, req.body).then(async (account: Account): Promise<Session & Partial<SessionData>> => {
     if (account.isVerified && !account.welcomeEmailSent) {
-      sendWelcomeEmail(account).then(async () => {
+      return await sendWelcomeEmail(account).then(async () => {
         return await modifyAccount(account.id, { welcomeEmailSent: true })
       }).then(async () => {
         return await mapAccountToSession(req)
       }).catch((err) => { throw err })
+    } else if (!account.isVerified) {
+      return await generateEmailVerificationCode(account.email).then(async (code) => {
+        logger.debug(`Sending email verification code to email ${account.email} : ${code}.`)
+        return await sendEmailVerificationEmail(account, code)
+      }).then(async () => {
+        return await mapAccountToSession(req, true)
+      }).catch((err) => { throw err })
+    } else {
+      return await mapAccountToSession(req)
     }
-    return await mapAccountToSession(req)
   }).then(() => {
-    logger.info(`Account successfully logged in${req.body.email != null ? `: ${req.body.email}` : ' !'}`)
+    logger.info(`Account successfully logged in: ${req.body.email ?? ''} !`)
     return res.status(StatusCodes.OK).json(req.session)
   }).catch(handleErrorOnRoute(res))
 })
