@@ -8,17 +8,15 @@
 import 'package:flutter/material.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/form/widgets/four_point.dart';
-import 'package:getout/screens/form/bloc/form_bloc.dart';
 import 'package:getout/tools/map_controller.dart';
 import 'package:getout/tools/tools.dart';
 
-class FilmGenres extends StatelessWidget {
+class MovieGenres extends StatelessWidget {
   final MapController<String, bool> movieGenres;
 
-  const FilmGenres({super.key, required this.movieGenres});
+  const MovieGenres({super.key, required this.movieGenres});
 
   @override
   Widget build(BuildContext context) {

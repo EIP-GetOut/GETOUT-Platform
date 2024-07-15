@@ -18,34 +18,42 @@ class FormRequestModel {
     required this.platforms,
   });
 
-  static List<int> filmGenresToCode(final List<String> filmGenres)
+  static List<int> movieGenresToCode(final List<String> filmGenres)
   {
-    final List<int?> tempFilmCode =
+    final List<int?> tempMovieCode =
         filmGenres.map((genre) => MovieGenre[genre]).toList();
     List<int> filmCodes = [];
 
-    for (int i = 0; i < tempFilmCode.length; i++) {
-      if (tempFilmCode[i] != null) {
-        filmCodes.add(tempFilmCode[i] ?? 0);
+    for (int i = 0; i < tempMovieCode.length; i++) {
+      if (tempMovieCode[i] != null) {
+        filmCodes.add(tempMovieCode[i] ?? 0);
       }
     }
     return filmCodes;
   }
 
-  static FormRequestModel fillFormRequest(
-      {required final Map<String, bool> filmGenres,
-      required final Map<String, bool> literaryGenres,
-      required final Map<String, bool> viewingPlatform})
+  static List<String> bookGenresToCode(final List<String> bookGenres)
   {
-    final List<int> chosenMovieGenres = filmGenresToCode(
-        filmGenres.entries.where((entry) => (entry.value == true))
+    final List<String?> tempBookCode =
+    bookGenres.map((genre) => BookGenre[genre]).toList();
+    tempBookCode.removeWhere((element) => element == null);
+    return List<String>.from(tempBookCode);
+  }
+
+  static FormRequestModel fillFormRequest(
+      {required final Map<String, bool> movieGenres,
+      required final Map<String, bool> bookGenres,
+      required final Map<String, bool> platforms})
+  {
+    final List<int> chosenMovieGenres = movieGenresToCode(
+        movieGenres.entries.where((entry) => entry.value == true)
             .map((entry) => entry.key)
             .toList());
-    final List<String> chosenBookGenres = literaryGenres.entries
-        .where((entry) => entry.value == true)
+    final List<String> chosenBookGenres = bookGenresToCode(
+        bookGenres.entries.where((entry) => entry.value == true)
         .map((entry) => entry.key)
-        .toList();
-    final List<String> chosenPlatforms = viewingPlatform.entries
+        .toList());
+    final List<String> chosenPlatforms = platforms.entries
         .where((entry) => entry.value == true)
         .map((entry) => entry.key)
         .toList();

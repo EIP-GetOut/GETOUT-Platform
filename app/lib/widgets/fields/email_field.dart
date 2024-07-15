@@ -12,11 +12,13 @@ import 'package:getout/widgets/fields/widgets/default_field.dart';
 class EmailField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextEditingController controller;
+  final String? errorString;
 
   const EmailField({
     super.key,
     this.validator,
-    required this.controller});
+    required this.controller,
+    this.errorString});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,8 @@ class EmailField extends StatelessWidget {
         mandatory: true,
         label: 'Entrez votre adresse email',
         controller: controller,
-        validator: validator);
+        validator: validator,
+        errorString: errorString);
   }
 }
 

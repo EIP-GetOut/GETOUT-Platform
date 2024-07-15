@@ -8,6 +8,7 @@
 class RegularExpression {
   const RegularExpression();
 
+  static const String code = r'^\d{6}$';
   static const String email = r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$';
   static const String password = r'(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$';
 }

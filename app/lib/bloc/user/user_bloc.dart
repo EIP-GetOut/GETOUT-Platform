@@ -44,24 +44,22 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
 
   Future login(LoginEvent event, Emitter<UserState> emit) async {
     try {
-      print('0');
+      print('a');
       Account? account = await UserService(state.cookiePath).getSession();
-      print('1');
+      print('b');
       if (account!.booksGenres.isEmpty ||
           account.moviesGenres.isEmpty ||
           account.platforms.isEmpty) {
-        print('2.1');
         emit(state.copyWith(isCookieSet: true,
             account: account,
             status: Status.Login));
       } else {
-        print('2.2');
         emit(state.copyWith(isCookieSet: true,
             account: account,
             status: Status.LoginWithPrefs));
       }
     } catch (e) {
-      print('UserBloc<on>Login_catch $e');
+      print('error');
       emit(state.copyWith(status: Status.Logout));
     }
 

@@ -26,3 +26,16 @@ const Map<String, int> MovieGenre = {
   'Guerre' : 10752,
   'Western' : 37
 };
+
+const Map<String, String> BookGenre = {
+  'Polar':'Policier',
+  'Thriller':'Science-fiction',
+  'Politique':'Politique',
+  'Poésie':'Poesie',
+  'Comédie':'Histoire',
+  '?': 'science',
+  '??': 'philosophy',
+  '???': 'biography',
+  '????': 'tale',
+  '?????': 'romance',
+};

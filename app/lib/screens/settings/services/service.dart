@@ -9,10 +9,9 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 
-import 'package:getout/constants/http_status.dart';
-import 'package:getout/global.dart' as globals;
-import 'package:getout/constants/api_path.dart';
 import 'package:getout/screens/settings/bloc/history/history_bloc.dart';
+import 'package:getout/constants/http_status.dart';
+import 'package:getout/constants/api_path.dart';
 
 part 'session.dart';
 part 'history.dart';

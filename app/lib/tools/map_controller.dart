@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 class MapController<K, V> extends ChangeNotifier implements ValueListenable<Map<K, V>> {
   final Map<K, V> _map;

@@ -11,7 +11,6 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 
 import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
-import 'package:getout/global.dart' as globals;
 import 'package:getout/screens/home/bloc/books/books_event.dart';
 import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 
@@ -36,11 +35,13 @@ class HomeService extends _HomeService<BooksService, MoviesService> {
   Future<GenerateBooksResponse> getRecommendedBooks(GenerateBooksRequest request) => t.getRecommendedBooks(request);
   Future<GenerateBooksResponse> getSavedBooks(GenerateBooksRequest request) => t.getSavedBooks(request);
   Future<GenerateBooksResponse> getLikedBooks(GenerateBooksRequest request) => t.getLikedBooks(request);
+  Future<GenerateBooksResponse> getViewedBooks(GenerateBooksRequest request) => t.getViewedBooks(request);
 
   ///Movies
   Future<GenerateMoviesResponse> getRecommendedMovies(GenerateMoviesRequest request) => g.getRecommendedMovies(request);
   Future<GenerateMoviesResponse> getSavedMovies(GenerateMoviesRequest request) => g.getSavedMovies(request);
   Future<GenerateMoviesResponse> getLikedMovies(GenerateMoviesRequest request) => g.getLikedMovies(request);
+  Future<GenerateMoviesResponse> getViewedMovies(GenerateMoviesRequest request) => g.getViewedMovies(request);
 }
 
 abstract class ServiceTemplate {}

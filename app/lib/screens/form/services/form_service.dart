@@ -12,7 +12,6 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:getout/constants/movie_genre.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/constants/api_path.dart';
-import 'package:getout/global.dart' as globals;
 
 part 'form_model.dart';
 

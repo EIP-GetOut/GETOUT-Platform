@@ -19,7 +19,7 @@ class BooksService extends ServiceTemplate {
 
     try { /// TODO we need to do something prettier
       final response = await dio.get(
-          '${ApiConstants.rootApiPath}/account/${request.accountId}{ApiConstants.recommendedBooksPath}');
+          '${ApiConstants.rootApiPath}/account/${request.accountId}${ApiConstants.recommendedBooksPath}');
 
       if (response.statusCode != HttpStatus.OK) {
         return Future.error(Exception(
@@ -75,7 +75,7 @@ class BooksService extends ServiceTemplate {
     final Response response = await dio.get('${ApiConstants.rootApiPath}/account/${request.accountId}/likedBooks');
     if (response.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
-        'Error ${response.statusCode} while fetching books: ${response?.statusMessage}',
+        'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
       ));
     }
     return response.data;
@@ -100,19 +100,46 @@ class BooksService extends ServiceTemplate {
     return result;
   }
 
-  Future<Response> getSavedBooksId(GenerateBooksRequest request) async {
-    dynamic data;
-
+  Future<dynamic> getSavedBooksId(GenerateBooksRequest request) async {
     final response = await dio.get('${ApiConstants.rootApiPath}/account/${request.accountId}/readinglist');
+
+    if (response.statusCode != HttpStatus.OK) {
+      return Future.error(Exception(
+        'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
+      ));
+    }
+    return response.data;
+  }
+
+  /// VIEWED
+  Future<GenerateBooksResponse> getViewedBooks(GenerateBooksRequest request) async {
+    final GenerateBooksResponse result = [];
+
+    final dynamic data = await getViewedBooksId(request);
+
+    for (String book in data) {
+      BookStatusResponse item = await getBookById(book);
+      if (item.statusCode == HttpStatus.OK) {
+        result.add(BookPreview(
+            id: item.id!,
+            title: item.title!,
+            posterPath: item.posterPath,
+            overview: item.overview));
+      }
+    }
+    return result;
+  }
+
+  Future<dynamic> getViewedBooksId(GenerateBooksRequest request) async {
+    final response = await dio.get('${ApiConstants.rootApiPath}/account/${request.accountId}/readBooks');
+
     if (response.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
         'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
       ));
     }
 
-    data = response.data;
-
-    return data;
+    return response.data;
   }
 
   //Info

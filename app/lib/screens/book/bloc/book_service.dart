@@ -13,8 +13,6 @@ import 'package:getout/screens/book/bloc/book_bloc.dart';
 import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
 
-import 'package:getout/global.dart' as globals;
-
 import 'package:html/parser.dart'; // pour utiliser parseFragment()
 
 class BookService {
@@ -269,12 +267,12 @@ class BookService {
     try {
       final response = await dio.delete(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$accountId${ApiConstants.readBooksPath}/${request.id}');
-      if (response?.statusCode != AddBookResponse.success) {
-        return AddBookResponse(statusCode: response?.statusCode ?? 500);
+      if (response.statusCode != AddBookResponse.success) {
+        return AddBookResponse(statusCode: response.statusCode ?? 500);
       }
 
       result = AddBookResponse(
-        statusCode: response?.statusCode ?? 500,
+        statusCode: response.statusCode ?? 500,
       );
       //todo fix this
       //await globals.sessionManager.getSession();

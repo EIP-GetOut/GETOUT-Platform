@@ -8,11 +8,10 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:getout/bloc/user/user_bloc.dart';
 
+import 'package:getout/bloc/user/user_bloc.dart';
 import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
-import 'package:getout/global.dart' as globals;
 
 class UserService {
   final Dio dio = Dio();
@@ -30,6 +29,18 @@ class UserService {
         if (response.data['account'] != null) {
           final account = response.data['account'];
           final preferences = account['preferences'];
+          ///preferences check null:
+          final List<dynamic> platforms = (preferences != null)
+              ? preferences['platforms']: [];
+          print(preferences['booksGenres']);
+          platforms.removeWhere((element) => element is! String);
+          final List<dynamic> booksGenres = (preferences != null)
+              ? preferences['booksGenres']: [];
+          booksGenres.removeWhere((element) => element is! String);
+          final List<dynamic> moviesGenres = (preferences != null)
+              ? preferences['moviesGenres']: [];
+          moviesGenres.removeWhere((element) => element is! int);
+          ///account:
           Account acc = Account(
               id: account['id'],
               isVerified: account['isVerified'],
@@ -39,15 +50,14 @@ class UserService {
               bornDate: account['bornDate'],
               createdDate: account['createdDate'],
               spentMinutesReadinAndWatching: account['spentMinutesReadingAndWatching'],
-              platforms: (preferences != null) ? List<String>.from(preferences['platforms']): [],
-              booksGenres: (preferences != null) ? List<String>.from(preferences['booksGenres']): [],
-              moviesGenres: (preferences != null) ? List<int>.from(preferences['moviesGenres']): []);
+              platforms: List<String>.from(platforms),
+              booksGenres: List<String>.from(booksGenres),
+              moviesGenres: List<int>.from(moviesGenres));
           return acc;
         }
       }
-    } on DioException {
-      rethrow;
-    } catch (dioError) {
+    } catch (e) {
+      print(e);
       rethrow;
     }
     return null;

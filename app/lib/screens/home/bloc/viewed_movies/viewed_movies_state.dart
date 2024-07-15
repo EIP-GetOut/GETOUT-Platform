@@ -5,55 +5,55 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-part of 'saved_movies_bloc.dart';
+part of 'viewed_movies_bloc.dart';
 
-class SavedMoviesState extends Equatable {
-  const SavedMoviesState({
+class ViewedMoviesState extends Equatable {
+  const ViewedMoviesState({
     this.status = Status.initial,
-    List<MoviePreview>? savedMovies,
-  }) : savedMovies = savedMovies ?? const [];
+    List<MoviePreview>? viewedMovies,
+  }) : viewedMovies = viewedMovies ?? const [];
 
-  final List<MoviePreview> savedMovies;
+  final List<MoviePreview> viewedMovies;
   final Status status;
 
   @override
-  List<Object?> get props => [status, savedMovies];
+  List<Object?> get props => [status, viewedMovies];
 
-  SavedMoviesState copyWith({
-    List<MoviePreview>? savedMovies,
+  ViewedMoviesState copyWith({
+    List<MoviePreview>? viewedMovies,
     Status? status,
   }) {
-    return SavedMoviesState(
-      savedMovies: savedMovies ?? this.savedMovies,
+    return ViewedMoviesState(
+      viewedMovies: viewedMovies ?? this.viewedMovies,
       status: status ?? this.status,
     );
   }
 
-  factory SavedMoviesState.fromMap(Map<String, dynamic> map) {
+  factory ViewedMoviesState.fromMap(Map<String, dynamic> map) {
     List<MoviePreview> books = [];
 
-    map['saved_movies']!.forEach((element) => {
+    map['viewed_movies']!.forEach((element) => {
       books.add(MoviePreview(
           id: element['id'],
           title: element['title'],
           posterPath: element['posterPath'],
           overview: element['overview']))
     });
-    return SavedMoviesState(
-        savedMovies: books,
-        status: stringToStatus[map['saved_movies_status']] ?? Status.error);
+    return ViewedMoviesState(
+        viewedMovies: books,
+        status: stringToStatus[map['viewed_movies_status']] ?? Status.error);
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'saved_movies': savedMovies
+      'viewed_movies': viewedMovies
           .map((book) => {
         'id': book.id,
         'title': book.title,
         'posterPath': book.posterPath,
         'overview': book.overview,
       }).toList(),
-      'saved_movies_status': statusToString[status],
+      'viewed_movies_status': statusToString[status],
     };
   }
 }

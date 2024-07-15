@@ -172,7 +172,6 @@ class UserState extends Equatable {
 
   // Convert UserState to JSON
   Map<String, dynamic> toJson() {
-    print('> $status, ${status.index}');
     return {
       'cookiePath': cookiePath,
       'isCookieSet': isCookieSet,
@@ -183,7 +182,6 @@ class UserState extends Equatable {
 
   // Convert JSON to UserState
   factory UserState.fromJson(Map<String, dynamic> json) {
-    print('< ${json['status']}, ${Status.values[json['status']]}');
     return UserState(
         cookiePath: json['cookiePath'],
         isCookieSet: json['isCookieSet'],

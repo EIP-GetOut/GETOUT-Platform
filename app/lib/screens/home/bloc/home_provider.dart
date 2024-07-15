@@ -15,7 +15,6 @@ import 'package:getout/screens/home/services/service.dart';
 
 ///home_page
 import 'package:getout/screens/home/home_page.dart';
-import 'package:getout/screens/home/bloc/home_page/home_page_bloc.dart';
 
 ///movies
 import 'package:getout/screens/home/bloc/movies/movies_event.dart';

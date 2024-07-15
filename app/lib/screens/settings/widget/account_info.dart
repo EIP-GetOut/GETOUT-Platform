@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/bloc/user/user_bloc.dart';
-import 'package:getout/global.dart' as globals;
 
 class AccountInfo extends StatelessWidget {
   const AccountInfo({super.key});

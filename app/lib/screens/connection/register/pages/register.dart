@@ -161,8 +161,7 @@ class RegisterPage extends StatelessWidget {
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
                                   loadingRequest.value = true;
-                                  print(
-                                      'register: email=${email.text}, first=${firstName.text}, last=${lastName.text}, birth=${birthdate.text}, pass=${password.text}, confirmPass:${confirmPassword.text}.');
+                                  //print('register: email=${email.text}, first=${firstName.text}, last=${lastName.text}, birth=${birthdate.text}, pass=${password.text}, confirmPass:${confirmPassword.text}.');
                                   try {
                                     Response response = await service
                                         .register(RegisterRequestModel(
@@ -176,8 +175,7 @@ class RegisterPage extends StatelessWidget {
                                       //succes
                                       //todo createAccount & maybePop()
                                       errorMessage.value = null;
-                                      Navigator.maybePop(
-                                          context); //todo https://stackoverflow.com/questions/68871880/do-not-use-buildcontexts-across-async-gaps
+                                      Navigator.maybePop(context); //todo https://stackoverflow.com/questions/68871880/do-not-use-buildcontexts-across-async-gaps
                                     }
                                   } catch (e) {
                                     if (e is DioException &&

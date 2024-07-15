@@ -35,6 +35,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ValueNotifier<String?> errorMessage = ValueNotifier<String?>(null);
     final ValueNotifier<bool> loadingRequest = ValueNotifier<bool>(false);
+    final UserBloc userBloc = context.read<UserBloc>();
 
     return Scaffold(
       body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -73,6 +74,7 @@ class LoginPage extends StatelessWidget {
             ValueListenableBuilder<bool>(
                 valueListenable: loadingRequest,
                 builder: (context, value, child) {
+                  print('> ${userBloc.state.status}');
                   return Align(
                       alignment: Alignment.center,
                       child: (value)
@@ -86,29 +88,29 @@ class LoginPage extends StatelessWidget {
                                         .textTheme
                                         .labelMedium),
                                 onPressed: () async {
+                                  print(1);
+                                  print(2);
                                   errorMessage.value = null;
                                   if (formKey.currentState!.validate()) {
                                     //login
                                     try {
                                       loadingRequest.value = true;
-                                      //context.read<UserBloc>().add(const LoadingEvent());
                                       Response response = await service.login(
                                           LoginRequestModel(
                                               email: email.text,
                                               password: password.text));
                                       if (response.statusCode == 200) {
-                                        context.read<UserBloc>().add(const LoginEvent());
-                                        //context.read<UserBloc>().add(const SessionEvent());
-                                        //todo update UserCookie isSet
+                                        userBloc.add(const LoginEvent());
                                       }
                                     } catch (e) {
+                                      print(e);
                                       if (e is DioException &&
                                           e.response != null &&
                                           e.response!.statusCode != null) {
                                         switch (e.response?.statusCode) {
                                           case 400:
                                             //errorMessage.value = 'Il semblerait que le téléphone soit déja connecter';
-                                            context.read<UserBloc>().add(const LoginEvent());
+                                            userBloc.add(const LoginEvent());
                                             break;
                                           case 401:
                                             errorMessage.value =

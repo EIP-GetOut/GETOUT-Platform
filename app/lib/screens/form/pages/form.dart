@@ -10,19 +10,16 @@ import 'package:flutter/material.dart';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/constants/movie_genre.dart';
 
 import 'package:getout/screens/form/childrens/viewing_platform.dart';
-// import 'package:getout/screens/form/pages/social_media_time.dart';
-// import 'package:getout/screens/form/pages/interest_choices.dart';
 import 'package:getout/screens/form/childrens/book_genre.dart';
-import 'package:getout/screens/form/childrens/film_genres.dart';
+import 'package:getout/screens/form/childrens/movie_genres.dart';
 import 'package:getout/screens/form/childrens/end_form.dart';
 
-import 'package:getout/screens/form/bloc/form_bloc.dart';
 import 'package:getout/bloc/user/user_bloc.dart';
 import 'package:getout/screens/form/services/form_service.dart';
 import 'package:getout/tools/app_l10n.dart';
-//import 'package:getout/bloc/user/user_event.dart';
 
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/tools/tools.dart';
@@ -36,27 +33,29 @@ class Forms extends StatelessWidget {
   Widget build(BuildContext context) {
     final PageController pageController = PageController();
     final Account? account = context.read<UserBloc>().state.account;
-    print('Forms> $account');
+     account?.moviesGenres;
+     account?.booksGenres;
+     account?.platforms;
     final MapController<String, bool> bookGenres = MapController({
-      'Polar': false,
-      'Poésie': false,
-      'Thriller': false,
-      'Politique': false,
-      'Comédie': false
+      'Polar': account?.booksGenres.contains('Polar') ?? false,
+      'Poésie': account?.booksGenres.contains('Poésie') ?? false,
+      'Thriller': account?.booksGenres.contains('Thriller') ?? false,
+      'Politique': account?.booksGenres.contains('Politique') ?? false,
+      'Comédie': account?.booksGenres.contains('Comédie') ?? false
     });
     final MapController<String, bool> movieGenres = MapController({
-      'Action': false,
-      'Thriller': false,
-      'Western': false,
-      'Horreur': false,
-      'Comédie': false
+      'Action': account?.moviesGenres.contains(MovieGenre['Action']) ?? false,
+      'Thriller': account?.moviesGenres.contains(MovieGenre['Thriller']) ?? false,
+      'Western': account?.moviesGenres.contains(MovieGenre['Western']) ?? false,
+      'Horreur': account?.moviesGenres.contains(MovieGenre['Horreur']) ?? false,
+      'Comédie': account?.moviesGenres.contains(MovieGenre['Comédie']) ?? false
     });
     final MapController<String, bool> platforms = MapController({
-      'Netflix': false,
-      'Prime Video': false,
-      'Disney +': false,
-      'Cinema': false,
-      'DVD': false
+      'Netflix': account?.platforms.contains('Netflix') ?? false,
+      'Prime Video': account?.platforms.contains('Prime Video') ?? false,
+      'Disney +': account?.platforms.contains('Disney +') ?? false,
+      'Cinema': account?.platforms.contains('Cinema') ?? false,
+      'DVD': account?.platforms.contains('DVD') ?? false
     });
 
     return Scaffold(
@@ -82,7 +81,7 @@ class Forms extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         children: [
           BookGenres(bookGenres: bookGenres),
-          FilmGenres(movieGenres: movieGenres),
+          MovieGenres(movieGenres: movieGenres),
           ViewingPlatform(platforms: platforms),
           const EndForm(),
         ],
@@ -128,32 +127,26 @@ class NextButton extends StatelessWidget {
             style: Theme.of(context).textTheme.labelMedium),
         onPressed: () async {
           if (pageController.page == 3) {
-            FormRequestModel formRequestModel =
-            FormRequestModel.fillFormRequest(
-                filmGenres: movieGenres.unmodifiable,
-                literaryGenres: bookGenres.unmodifiable,
-                viewingPlatform: platforms.unmodifiable);
-
-            context.read<UserBloc>().add(PreferenceEvent(
-                movieGenres: formRequestModel.movieGenres,
-                bookGenres: formRequestModel.bookGenres,
-                platforms: formRequestModel.platforms));
           } else if (pageController.page == 2 &&
               platforms.containsValue(true)) {
             //todo request
             try {
+              print('t');
               FormRequestModel formRequestModel =
               FormRequestModel.fillFormRequest(
-                  filmGenres: movieGenres.unmodifiable,
-                  literaryGenres: bookGenres.unmodifiable,
-                  viewingPlatform: platforms.unmodifiable);
+                  movieGenres: movieGenres.unmodifiable,
+                  bookGenres: bookGenres.unmodifiable,
+                  platforms: platforms.unmodifiable);
+              print('g');
               Response response =
                   await formService.sendPreferences(formRequestModel, /*isFirstTime: true*/);
+              print('v');
               if (response.statusCode == 200) {
                 context.read<UserBloc>().add(PreferenceEvent(
                     movieGenres: formRequestModel.movieGenres,
                     bookGenres: formRequestModel.bookGenres,
                     platforms: formRequestModel.platforms));
+                print('y');
                 pageController.nextPage(
                     duration: const Duration(milliseconds: 200),
                     curve: Curves.easeInOut);

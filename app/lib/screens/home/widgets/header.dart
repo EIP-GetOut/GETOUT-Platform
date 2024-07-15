@@ -7,15 +7,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getout/bloc/user/user_bloc.dart';
 
 import 'package:getout/screens/settings/settings.dart';
-
-import 'package:getout/global.dart' as globals;
 import 'package:getout/tools/app_l10n.dart';
-
-import 'package:getout/tools/duration_format.dart';
 
 class HomeAppBarWidget extends AppBar {
   HomeAppBarWidget({super.key, required BuildContext context})

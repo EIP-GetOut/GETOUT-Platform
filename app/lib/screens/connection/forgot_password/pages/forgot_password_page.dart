@@ -7,8 +7,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:getout/screens/connection/forgot_password/children/check_email/pages/check_email_page.dart';
-import 'package:getout/screens/connection/forgot_password/children/new_password/pages/new_password_page.dart';
+import 'package:getout/screens/connection/forgot_password/children/check_email_page.dart';
+import 'package:getout/screens/connection/forgot_password/children/new_password_page.dart';
 import 'package:getout/screens/connection/services/service.dart';
 
 class ForgotPasswordPage extends StatelessWidget {

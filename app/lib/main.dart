@@ -14,8 +14,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:getout/screens/form/childrens/end_form.dart';
-import 'package:getout/widgets/loading.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -26,16 +24,10 @@ import 'package:getout/screens/form/pages/form.dart';
 import 'package:getout/screens/connection/login/pages/login.dart';
 
 ///bloc
-//import 'package:getout/bloc/session/session_service.dart';
 import 'package:getout/bloc/observer.dart';
 import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/theme/bloc.dart';
 import 'package:getout/bloc/user/user_bloc.dart';
-
-///other
-import 'package:getout/tools/app_l10n.dart';
-import 'package:getout/widgets/object_loading_error_widget.dart';
-//import 'package:getout/widgets/loading.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,7 +38,6 @@ Future<void> main() async {
   Bloc.observer = const AppBlocObserver(); // BLoC MiddleWare.
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   Directory appDocDir = await getApplicationDocumentsDirectory();
-  print(appDocDir.path);
   runApp(MainProvider(appDocDir.path));
 }
 

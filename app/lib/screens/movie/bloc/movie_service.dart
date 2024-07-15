@@ -13,8 +13,6 @@ import 'package:getout/screens/movie/bloc/movie_bloc.dart';
 import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
 
-import 'package:getout/global.dart' as globals;
-
 class MovieService {
   final Dio dio = Dio();
   final String accountId;
@@ -101,12 +99,12 @@ class MovieService {
       final response = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$accountId${ApiConstants.addLikedMoviePath}',
           data: {'movieId': request.id});
-      if (response?.statusCode != HttpStatus.CREATED) {
-        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response.statusCode != HttpStatus.CREATED) {
+        return AddMovieResponse(statusCode: response.statusCode ?? 500);
       }
 
       result = AddMovieResponse(
-        statusCode: response?.statusCode ?? 500,
+        statusCode: response.statusCode ?? 500,
       );
       //todo fix this.
       //await globals.sessionManager.getSession();
@@ -126,12 +124,12 @@ class MovieService {
     try {
       final response = await dio.delete(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$accountId${ApiConstants.addLikedMoviePath}/${request.id}');
-      if (response?.statusCode != HttpStatus.OK) {
-        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response.statusCode != HttpStatus.OK) {
+        return AddMovieResponse(statusCode: response.statusCode ?? 500);
       }
 
       result = AddMovieResponse(
-        statusCode: response?.statusCode ?? 500,
+        statusCode: response.statusCode ?? 500,
       );
       //todo fix this.
       //await globals.sessionManager.getSession();
@@ -185,12 +183,12 @@ class MovieService {
           ),
           data: {'movieId': request.id});
 
-      if (response?.statusCode != HttpStatus.CREATED) {
-        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response.statusCode != HttpStatus.CREATED) {
+        return AddMovieResponse(statusCode: response.statusCode ?? 500);
       }
 
       result = AddMovieResponse(
-        statusCode: response?.statusCode ?? 500,
+        statusCode: response.statusCode ?? 500,
       );
       //todo fix this.
       //await globals.sessionManager.getSession();
@@ -210,12 +208,12 @@ class MovieService {
       final response = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$accountId${ApiConstants.watchlistPath}',
           data: {'movieId': request.id});
-      if (response?.statusCode != HttpStatus.CREATED) {
-        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response.statusCode != HttpStatus.CREATED) {
+        return AddMovieResponse(statusCode: response.statusCode ?? 500);
       }
 
       result = AddMovieResponse(
-        statusCode: response?.statusCode ?? 500,
+        statusCode: response.statusCode ?? 500,
       );
       //todo fix this.
       //await globals.sessionManager.getSession();
@@ -236,12 +234,12 @@ class MovieService {
     try {
       final response = await dio.delete(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$accountId${ApiConstants.watchlistPath}/${request.id}');
-      if (response?.statusCode != HttpStatus.OK) {
-        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response.statusCode != HttpStatus.OK) {
+        return AddMovieResponse(statusCode: response.statusCode ?? 500);
       }
 
       result = AddMovieResponse(
-        statusCode: response?.statusCode ?? 500,
+        statusCode: response.statusCode ?? 500,
       );
       //todo fix this.
       //await globals.sessionManager.getSession();
@@ -259,15 +257,15 @@ class MovieService {
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      final response = await dio?.post(
+      final response = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$accountId${ApiConstants.seenMoviesPath}',
           data: {'movieId': request.id});
-      if (response?.statusCode != HttpStatus.CREATED) {
-        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response.statusCode != HttpStatus.CREATED) {
+        return AddMovieResponse(statusCode: response.statusCode ?? 500);
       }
 
       result = AddMovieResponse(
-        statusCode: response?.statusCode ?? 500,
+        statusCode: response.statusCode ?? 500,
       );
       //todo fix this.
       //await globals.sessionManager.getSession();

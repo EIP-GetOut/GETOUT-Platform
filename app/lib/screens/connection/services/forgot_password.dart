@@ -14,11 +14,11 @@ class CheckEmailRequestModel {
 }
 
 class NewPasswordRequestModel {
-  const NewPasswordRequestModel({required this.code, required this.password,  required this.confirmPassword});
+  const NewPasswordRequestModel({required this.email, required this.code, required this.password});
 
+  final String email;
   final String code;
   final String password;
-  final String confirmPassword;
 }
 
 class ForgotPasswordService extends ServiceTemplate {
@@ -33,8 +33,6 @@ class ForgotPasswordService extends ServiceTemplate {
           data: {
             'email': request.email,
           });
-    } on DioException { // add "catch (dioError)" for debugging
-      rethrow;
     } catch (error) {
       rethrow;
     }
@@ -47,12 +45,8 @@ class ForgotPasswordService extends ServiceTemplate {
           data: {
             'newPassword' : request.password,
             'code': int.parse(request.code)
-            // ,
-            // 'password' : 'Charles',
           },
           options: Options(headers: {'Content-Type': 'application/json'}));
-    } on DioException { // add "catch (dioError)" for debugging
-      rethrow;
     } catch (error) {
       rethrow;
     }
