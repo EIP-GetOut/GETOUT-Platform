@@ -7,7 +7,6 @@
 ** example uses to do this: https://bloclibrary.dev/#/flutterlogintutorial
 */
 
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -21,23 +20,29 @@ part 'email_verified_state.dart';
 class EmailVerifiedBloc extends Bloc<EmailVerifiedEvent, EmailVerifiedState> {
   final ConnectionService? service;
 
-  EmailVerifiedBloc({required this.service}) : super(const EmailVerifiedState()) {
+  EmailVerifiedBloc({required this.service})
+      : super(const EmailVerifiedState()) {
     on<EmailVerifiedEvent>((event, emit) async {
       await mapEventToState(event, emit);
     });
   }
 
-  Future mapEventToState(EmailVerifiedEvent event, Emitter<EmailVerifiedState> emit) async {
+  Future mapEventToState(
+      EmailVerifiedEvent event, Emitter<EmailVerifiedState> emit) async {
     if (event is EmailVerifiedCodeChanged) {
       emit(state.copyWith(code: event.code));
+    } else if (event is EmailVerifiedResend) {
+      try {
+        await service?.emailVerifiedResend();
+      } catch (e) {
+        emit(state.copyWith(status: Status.error, exception: e));
+      }
     } else if (event is EmailVerifiedSubmitted) {
       emit(state.copyWith(status: Status.loading));
 
       try {
-        await service?.emailVerified(
-          EmailVerifiedRequestModel(
-            code: state.code)
-            );
+        await service
+            ?.emailVerified(EmailVerifiedRequestModel(code: state.code));
         emit(state.copyWith(status: Status.success));
       } catch (e) {
         emit(state.copyWith(status: Status.error, exception: e));

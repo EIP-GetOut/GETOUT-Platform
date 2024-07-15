@@ -7,6 +7,7 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:getout/screens/connection/email_verified/bloc/email_verified_bloc.dart';
 import 'package:getout/widgets/fields/widgets/default_field.dart';
 import 'package:getout/screens/connection/forgot_password/children/new_password/bloc/new_password_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
@@ -54,19 +55,19 @@ class EmailVerifiedCodeField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return BlocBuilder<NewPasswordBloc, NewPasswordState>(builder: (context, state) {
+    return BlocBuilder<EmailVerifiedBloc, EmailVerifiedState>(builder: (context, state) {
       return DefaultField(
         title: appL10n(context)!.code.toUpperCase(),
         mandatory: true,
         label: appL10n(context)!.code_mail_hint,
-          validator: (value) => (null),
-          // state.isCodeValid ? null : appL10n(context)!.code_validator,
-          onChanged: (value) => (null),
-          // context.read<NewPasswordBloc>().add(
-          //   ForgotPasswordCodeChanged(code: value),
-          // ),
+          validator: (value) =>
+          state.isCodeValid ? null : appL10n(context)!.code_validator,
+          onChanged: (value) =>
+          context.read<EmailVerifiedBloc>().add(
+            EmailVerifiedCodeChanged(code: value),
+          ),
         );
-    // }
-    // );
+    }
+    );
   }
 }

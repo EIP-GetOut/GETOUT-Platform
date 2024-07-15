@@ -161,6 +161,12 @@
   "email_empty": "L'email ne peut pas être vide",
   "email_old": "L'email doit être différent de l'ancien email",
   "email_verification_hint": "Entrez le code de confirmation reçue par mail",
+  "email_verification_resend_hint": "Vous n'avez rien reçue ? ",
+  "email_verification_resend": "Renvoyez l'email",
+  "email_verification_success": "Votre adresse mail a bien été confirmé",
+  "email_verification_success_desc": "Votre adresse mail a été confirmé, vous pouvez maintenant remplir le formulaire de préférences",
+  "email_verification_success_button": "Accèder au formulaire",
+  "email_verification_resend_info": "Un email contenant un code vous a été renvoyé, si vous ne l'avez pas reçu, vous pourrez réesayer dans 10 secondes",
 
   "@_CODE": {},
 

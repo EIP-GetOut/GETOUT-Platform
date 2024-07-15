@@ -54,7 +54,6 @@ class RegisterPage extends StatelessWidget {
             child: Scaffold(
               resizeToAvoidBottomInset: true,
               appBar: AppBar(
-                // title: Text(appL10n(context)!.your_profile),
                 leading: const BackButton(),
               ),
               body: SingleChildScrollView(

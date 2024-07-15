@@ -20,7 +20,7 @@ import 'package:getout/screens/connection/bloc/connection_provider.dart';
 import 'package:getout/screens/connection/services/service.dart';
 import 'package:getout/screens/home/bloc/home_provider.dart';
 import 'package:getout/screens/form/pages/form.dart';
-import 'package:getout/screens/connection/email_verified/pages/email_verified_page.dart';
+import 'package:getout/screens/connection/email_verified/bloc/email_verified_provider.dart';
 import 'package:getout/widgets/object_loading_error_widget.dart';
 import 'package:getout/bloc/session/session_service.dart';
 import 'package:getout/bloc/session/session_event.dart';
@@ -92,7 +92,7 @@ class MainPage extends StatelessWidget {
           home: BlocBuilder<SessionBloc, SessionState>(
             builder: (context, state) {
               if (state.status.emailNotVerified) {
-                return EmailVerifiedPage();
+                return const EmailVerifiedProvider();
               } else if (state.status.isFound) {
                 return const HomeProvider();
               } else if (state.status.isFoundWithoutPreferences) {

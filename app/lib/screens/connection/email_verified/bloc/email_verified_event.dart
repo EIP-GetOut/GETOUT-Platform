@@ -35,3 +35,8 @@ class EmailVerifiedSubmitted extends EmailVerifiedEvent {
   @override
   List<Object?> get props => [];
 }
+
+class EmailVerifiedResend extends EmailVerifiedEvent {
+  @override
+  List<Object?> get props => [];
+}

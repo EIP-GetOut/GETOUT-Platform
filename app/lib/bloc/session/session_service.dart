@@ -38,8 +38,6 @@ class SessionService {
       final response = await globals.dio
           ?.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
       if (response?.statusCode == HttpStatus.OK) {
-        print("response = ");
-        print(response?.data);
         if (response?.data['account'] != null) {
           globals.session = response?.data['account'];
           if (response?.data['isVerified'] != true) {

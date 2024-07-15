@@ -38,6 +38,7 @@ class ConnectionService extends _ConnectionService<SignService, ForgotPasswordSe
   Future<void> checkEmail(CheckEmailRequestModel request) => g.checkEmail(request);
   Future<void> newPassword(NewPasswordRequestModel request) => g.sendNewPassword(request);
   Future<void> emailVerified(EmailVerifiedRequestModel request) => t.emailVerified(request);
+  Future<void> emailVerifiedResend() => t.emailVerifiedResend();
 }
 
 abstract class ServiceTemplate {}

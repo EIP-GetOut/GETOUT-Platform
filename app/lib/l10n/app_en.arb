@@ -161,6 +161,12 @@
   "email_empty": "Email can't be empty",
   "email_old": "The email must be different from the old email",
   "email_verification_hint": "Enter the confirmation code received by e-mail",
+  "email_verification_resend_hint": "Didn't you get anything ? ",
+  "email_verification_resend": "Resend email",
+  "email_verification_success": "Your e-mail address has been confirmed",
+  "email_verification_success_desc": "Your e-mail address has been confirmed, you can now fill in the preferences form",
+  "email_verification_success_button": "Access the form",
+  "email_verification_resend_info": "An email containing a code has been sent back to you. If you haven't received it, you can try again in 10 seconds.",
 
 
   "@_CODE": {},
