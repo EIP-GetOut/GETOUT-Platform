@@ -14,8 +14,9 @@ enum Status {
   isNotFound,
   isFound,
   isFoundWithoutPreferences,
-  emailNotVerified
+  emailNotVerified,
 }
+
 final Map<Status, String> statusToString = {
   Status.initial: 'initial',
   Status.success: 'success',

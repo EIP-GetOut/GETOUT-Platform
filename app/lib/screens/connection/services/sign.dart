@@ -75,9 +75,6 @@ class SignService extends ServiceTemplate {
     try {
       await globals.dio?.post(
           '${ApiConstants.rootApiPath}${ApiConstants.verifyEmailResendPath}',
-          // data: {
-          //   'code': int.parse(request.code),
-          // },
           options: Options(headers: {'Content-Type': 'application/json'}));
     } on DioException {
       // add "catch (dioError)" for debugging

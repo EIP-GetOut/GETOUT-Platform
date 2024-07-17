@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:dio/dio.dart';
 
 import 'package:getout/screens/connection/email_verified/bloc/email_verified_bloc.dart';
 import 'package:getout/screens/connection/email_verified/pages/email_verified_success_page.dart';
@@ -11,6 +12,8 @@ import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/widgets/page_title.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
+import 'package:getout/constants/http_status.dart';
+
 
 class EmailVerifiedPage extends StatelessWidget {
   EmailVerifiedPage({super.key});
@@ -25,9 +28,14 @@ class EmailVerifiedPage extends StatelessWidget {
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status.isError) {
-          showSnackBar(context, appL10n(context)!.error_unknown);
-        }
-        if (state.status.isSuccess) {
+          if (state.exception is DioException &&
+              (state.exception as DioException).response!.statusCode ==
+                  HttpStatus.FORBIDDEN) {
+            showSnackBar(context, appL10n(context)!.code_incorrect);
+          } else {
+            showSnackBar(context, appL10n(context)!.error_unknown);
+          }
+        } else if (state.status.isSuccess) {
           Navigator.push(
               context,
               MaterialPageRoute(
