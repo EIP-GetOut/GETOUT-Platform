@@ -46,10 +46,11 @@ class UserBloc extends HydratedBloc<UserEvent, UserState> {
     try {
       print('a');
       Account? account = await UserService(state.cookiePath).getSession();
-      print('b');
-      if (account!.booksGenres.isEmpty ||
-          account.moviesGenres.isEmpty ||
-          account.platforms.isEmpty) {
+      print(2);
+      if (account!.preferences == null ||
+          account.preferences!.booksGenres.isEmpty ||
+          account.preferences!.moviesGenres.isEmpty ||
+          account.preferences!.platforms.isEmpty) {
         emit(state.copyWith(isCookieSet: true,
             account: account,
             status: Status.Login));

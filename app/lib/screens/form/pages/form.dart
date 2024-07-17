@@ -33,29 +33,27 @@ class Forms extends StatelessWidget {
   Widget build(BuildContext context) {
     final PageController pageController = PageController();
     final Account? account = context.read<UserBloc>().state.account;
-     account?.moviesGenres;
-     account?.booksGenres;
-     account?.platforms;
+
     final MapController<String, bool> bookGenres = MapController({
-      'Polar': account?.booksGenres.contains('Polar') ?? false,
-      'Poésie': account?.booksGenres.contains('Poésie') ?? false,
-      'Thriller': account?.booksGenres.contains('Thriller') ?? false,
-      'Politique': account?.booksGenres.contains('Politique') ?? false,
-      'Comédie': account?.booksGenres.contains('Comédie') ?? false
+      'Polar': account?.preferences?.booksGenres.contains('Polar') ?? false,
+      'Poésie': account?.preferences?.booksGenres.contains('Poésie') ?? false,
+      'Thriller': account?.preferences?.booksGenres.contains('Thriller') ?? false,
+      'Politique': account?.preferences?.booksGenres.contains('political') ?? false,
+      'Comédie': account?.preferences?.booksGenres.contains('Comédie') ?? false
     });
     final MapController<String, bool> movieGenres = MapController({
-      'Action': account?.moviesGenres.contains(MovieGenre['Action']) ?? false,
-      'Thriller': account?.moviesGenres.contains(MovieGenre['Thriller']) ?? false,
-      'Western': account?.moviesGenres.contains(MovieGenre['Western']) ?? false,
-      'Horreur': account?.moviesGenres.contains(MovieGenre['Horreur']) ?? false,
-      'Comédie': account?.moviesGenres.contains(MovieGenre['Comédie']) ?? false
+      'Action': account?.preferences?.moviesGenres.contains(MovieGenre['Action']) ?? false,
+      'Thriller': account?.preferences?.moviesGenres.contains(MovieGenre['Thriller']) ?? false,
+      'Western': account?.preferences?.moviesGenres.contains(MovieGenre['Western']) ?? false,
+      'Horreur': account?.preferences?.moviesGenres.contains(MovieGenre['Horreur']) ?? false,
+      'Comédie': account?.preferences?.moviesGenres.contains(MovieGenre['Comédie']) ?? false
     });
     final MapController<String, bool> platforms = MapController({
-      'Netflix': account?.platforms.contains('Netflix') ?? false,
-      'Prime Video': account?.platforms.contains('Prime Video') ?? false,
-      'Disney +': account?.platforms.contains('Disney +') ?? false,
-      'Cinema': account?.platforms.contains('Cinema') ?? false,
-      'DVD': account?.platforms.contains('DVD') ?? false
+      'Netflix': account?.preferences?.platforms.contains('Netflix') ?? false,
+      'Prime Video': account?.preferences?.platforms.contains('Prime Video') ?? false,
+      'Disney +': account?.preferences?.platforms.contains('Disney +') ?? false,
+      'Cinema': account?.preferences?.platforms.contains('Cinema') ?? false,
+      'DVD': account?.preferences?.platforms.contains('DVD') ?? false
     });
 
     return Scaffold(
@@ -66,8 +64,12 @@ class Forms extends StatelessWidget {
           leading: Row(
             children: [
               IconButton(
+                //todo handle on firstTime or onEdit
                 icon: const Icon(Icons.arrow_back),
                 onPressed: () {
+                  if (pageController.page == 0) {
+                    Navigator.maybePop(context);
+                  }
                   pageController.previousPage(
                     duration: const Duration(milliseconds: 200),
                     curve: Curves.easeInOut,
@@ -127,8 +129,10 @@ class NextButton extends StatelessWidget {
             style: Theme.of(context).textTheme.labelMedium),
         onPressed: () async {
           if (pageController.page == 3) {
+
           } else if (pageController.page == 2 &&
               platforms.containsValue(true)) {
+            Navigator.maybePop(context);
             //todo request
             try {
               print('t');

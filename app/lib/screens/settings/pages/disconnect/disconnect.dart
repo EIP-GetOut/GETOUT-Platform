@@ -13,7 +13,9 @@ import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/screens/settings/services/service.dart';
 
 void showAlertDialog(BuildContext context) {
-  final UserState userState = context.watch<UserBloc>().state;
+  print('>a');
+  final UserState userState = context.read<UserBloc>().state;
+  print('b');
   final SettingService service = SettingService(userState.cookiePath, userState.account!.id);
 
   Widget cancelButton = TextButton(
@@ -65,6 +67,7 @@ class DisconnectPage extends StatelessWidget {
         color: const Color.fromRGBO(255, 82, 65, 0.4),
         child: InkWell(
             onTap: () {
+              print('a');
               return showAlertDialog(context);
             },
             child: Row(

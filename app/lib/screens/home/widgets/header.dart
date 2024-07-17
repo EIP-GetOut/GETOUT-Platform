@@ -7,6 +7,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/bloc/user/user_bloc.dart';
 
 import 'package:getout/screens/settings/settings.dart';
 import 'package:getout/tools/app_l10n.dart';
@@ -40,7 +42,10 @@ class HomeAppBarWidget extends AppBar {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const SettingsPage()));
+                      builder: (context) => BlocProvider.value(
+                          value: BlocProvider.of<UserBloc>(context),
+                          child: const SettingsPage()))
+              );
             },
             child: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 0),

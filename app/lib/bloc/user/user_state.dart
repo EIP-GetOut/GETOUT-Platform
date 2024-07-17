@@ -14,6 +14,52 @@ enum Status {
 //  Loading,
 }
 
+class Preferences extends Equatable {
+  final List<String> platforms;
+  final List<String> booksGenres;
+  final List<int> moviesGenres;
+
+
+  const Preferences({
+    required this.platforms,
+    required this.booksGenres,
+    required this.moviesGenres,
+  });
+
+  Preferences copyWith({
+    List<String>? platforms,
+    List<String>? booksGenres,
+    List<int>? moviesGenres,
+  }) {
+    return Preferences(
+        platforms: platforms ?? this.platforms,
+        booksGenres: booksGenres ?? this.booksGenres,
+        moviesGenres: moviesGenres ?? this.moviesGenres);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'platforms': platforms,
+      'booksGenres': booksGenres,
+      'moviesGenres': moviesGenres
+    };
+  }
+
+  factory Preferences.fromJson(Map<String, dynamic> json) {
+
+    return Preferences(
+        platforms: json['platforms'],
+        booksGenres: json['booksGenres'],
+        moviesGenres: json['moviesGenres']
+    );
+  }
+
+  @override
+  // TODO: implement props
+  List<Object?> get props => [platforms, booksGenres, moviesGenres];
+
+}
+
 class Account extends Equatable {
   //email
   final String id;
@@ -28,10 +74,7 @@ class Account extends Equatable {
   final int spentMinutesReadinAndWatching;
   final int minutesWatch; //todo
   final int pagesRead; //todo
-  //pref
-  final List<String> platforms;
-  final List<String> booksGenres;
-  final List<int> moviesGenres;
+  final Preferences? preferences;
 
   const Account({
     required this.id,
@@ -47,9 +90,7 @@ class Account extends Equatable {
     this.minutesWatch = 0,
     this.pagesRead = 0,
 
-    required this.platforms,
-    required this.booksGenres,
-    required this.moviesGenres,
+    this.preferences,
   });
 
   Account copyWith({
@@ -66,6 +107,7 @@ class Account extends Equatable {
     List<String>? platforms,
     List<String>? booksGenres,
     List<int>? moviesGenres,
+    Preferences? preferences,
   }) {
     return Account(
         id: id ?? this.id,
@@ -78,9 +120,7 @@ class Account extends Equatable {
         spentMinutesReadinAndWatching: spentMinutesReadinAndWatching ?? this.spentMinutesReadinAndWatching,
         minutesWatch: minutesWatch ?? this.minutesWatch,
         pagesRead: pagesRead ?? this.pagesRead,
-        platforms: platforms ?? this.platforms,
-        booksGenres: booksGenres ?? this.booksGenres,
-        moviesGenres: moviesGenres ?? this.moviesGenres);
+        preferences: preferences ?? this.preferences);
   }
 
   Map<String, dynamic> toJson() {
@@ -97,10 +137,7 @@ class Account extends Equatable {
       'spentMinutesReadingAndWatching': spentMinutesReadinAndWatching,
       'minutesWatch': minutesWatch,
       'pagesRead': pagesRead,
-
-      'platforms': platforms,
-      'booksGenres': booksGenres,
-      'moviesGenres': moviesGenres
+      'preferences': preferences?.toJson(),
     };
   }
 
@@ -118,17 +155,14 @@ class Account extends Equatable {
         spentMinutesReadinAndWatching: json['spentMinutesReadingAndWatching'],
         minutesWatch: json['minutesWatch'],
         pagesRead: json['pagesRead'],
-        platforms: json['platforms'],
-        booksGenres: json['booksGenres'],
-        moviesGenres: json['moviesGenres']
+        preferences: Preferences.fromJson(json['preferences'])
     );
   }
 
   @override
   // TODO: implement props
   List<Object?> get props => [isVerified, email, firstName, lastName,
-    bornDate, createdDate, spentMinutesReadinAndWatching,
-    platforms, booksGenres, moviesGenres];
+    bornDate, createdDate, spentMinutesReadinAndWatching];
 }
 
 class UserState extends Equatable {

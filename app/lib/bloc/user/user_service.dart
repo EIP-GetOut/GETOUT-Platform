@@ -17,30 +17,43 @@ class UserService {
   final Dio dio = Dio();
 
   UserService(String cookiePath) {
-        dio.interceptors.add(CookieManager(PersistCookieJar(
-                ignoreExpires: true,
-                storage: FileStorage(cookiePath))));
+    dio.interceptors.add(CookieManager(PersistCookieJar(
+        ignoreExpires: true, storage: FileStorage(cookiePath))));
   }
 
   Future<Account?> getSession() async {
     try {
-      final Response response = await dio.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
+      final Response response =
+          await dio.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
       if (response.statusCode == HttpStatus.OK) {
         if (response.data['account'] != null) {
           final account = response.data['account'];
           final preferences = account['preferences'];
+
           ///preferences check null:
-          final List<dynamic> platforms = (preferences != null)
-              ? preferences['platforms']: [];
-          print(preferences['booksGenres']);
-          platforms.removeWhere((element) => element is! String);
-          final List<dynamic> booksGenres = (preferences != null)
-              ? preferences['booksGenres']: [];
-          booksGenres.removeWhere((element) => element is! String);
-          final List<dynamic> moviesGenres = (preferences != null)
-              ? preferences['moviesGenres']: [];
-          moviesGenres.removeWhere((element) => element is! int);
+          final List<String> platforms;
+          final List<String> booksGenres;
+          final List<int> moviesGenres;
+          if (preferences != null) {
+            print(preferences);
+            print('x');
+            platforms = List<String>.from(preferences['platforms']);
+            //platforms.removeWhere((element) => element is! String);
+            print('y');
+            booksGenres = List<String>.from(preferences['booksGenres']);
+            //booksGenres.removeWhere((element) => element is! String);
+            print('z');
+            moviesGenres = List<int>.from(preferences['moviesGenres']);
+            print('w');
+            //moviesGenres.removeWhere((element) => element is! int);
+          } else {
+            platforms = [];
+            booksGenres = [];
+            moviesGenres = [];
+          }
+
           ///account:
+          print('>>');
           Account acc = Account(
               id: account['id'],
               isVerified: account['isVerified'],
@@ -49,10 +62,15 @@ class UserService {
               lastName: account['lastName'],
               bornDate: account['bornDate'],
               createdDate: account['createdDate'],
-              spentMinutesReadinAndWatching: account['spentMinutesReadingAndWatching'],
-              platforms: List<String>.from(platforms),
-              booksGenres: List<String>.from(booksGenres),
-              moviesGenres: List<int>.from(moviesGenres));
+              spentMinutesReadinAndWatching:
+                  account['spentMinutesReadingAndWatching'],
+              preferences: (preferences != null)
+                  ? Preferences(
+                      platforms: platforms,
+                      booksGenres: booksGenres,
+                      moviesGenres: moviesGenres)
+                  : null);
+          print('<<');
           return acc;
         }
       }

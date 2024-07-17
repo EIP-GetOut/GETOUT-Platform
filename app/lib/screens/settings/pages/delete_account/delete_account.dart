@@ -14,7 +14,7 @@ import 'package:getout/tools/app_l10n.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void showAlertDialog(BuildContext context) {
-  final UserState userState = context.watch<UserBloc>().state;
+  final UserState userState = context.read<UserBloc>().state;
   final SettingService service = SettingService(userState.cookiePath, userState.account!.id);
 
 
@@ -29,6 +29,7 @@ void showAlertDialog(BuildContext context) {
       onPressed: () async {
         try {
           await service.deleteAccount();
+          //todo errors
           if (context.mounted) {
             //todo verify this and check success..
             service.disconnect();

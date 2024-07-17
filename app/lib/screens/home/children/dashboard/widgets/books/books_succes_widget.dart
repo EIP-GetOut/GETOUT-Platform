@@ -38,7 +38,7 @@ class BooksSuccessWidget extends StatelessWidget {
                     child: ListView(
                         controller: bookController,
                         scrollDirection: Axis.horizontal,
-                        children: List.generate(5, (index) {
+                        children: List.generate(books.length, (index) {
                           return InkWell(
                               onTap: () {
                                 Navigator.push(

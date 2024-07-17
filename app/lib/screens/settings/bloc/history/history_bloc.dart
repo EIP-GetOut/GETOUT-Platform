@@ -8,8 +8,8 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:getout/constants/http_status.dart';
 
+import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/settings/services/service.dart';
 import 'package:getout/tools/status.dart';
 
