@@ -40,8 +40,9 @@ class SessionService {
       if (response?.statusCode == HttpStatus.OK) {
         if (response?.data['account'] != null) {
           globals.session = response?.data['account'];
-          if (response?.data['isVerified'] != true) {
-            return SessionStatusResponse(statusCode: SessionStatus.emailNotVerified.index);
+          if (response?.data['account']['isVerified'] != true) {
+            return SessionStatusResponse(
+                statusCode: SessionStatus.emailNotVerified.index);
           } else if (response?.data['account']['preferences'] != null) {
             return SessionStatusResponse(statusCode: SessionStatus.found.index);
           } else {
