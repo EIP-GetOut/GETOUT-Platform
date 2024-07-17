@@ -18,6 +18,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:getout/screens/connection/bloc/connection_provider.dart';
 import 'package:getout/screens/connection/services/service.dart';
+import 'package:getout/screens/connection/email_verified/bloc/email_verified_provider.dart';
 import 'package:getout/screens/home/bloc/home_provider.dart';
 import 'package:getout/screens/form/pages/form.dart';
 import 'package:getout/widgets/object_loading_error_widget.dart';
@@ -58,9 +59,8 @@ class MainProvider extends StatelessWidget {
             BlocProvider(create: (_) => ThemeBloc()),
             BlocProvider<SessionBloc>(
                 create: (context) => SessionBloc(
-                  sessionService: context.read<SessionService>(),
-                )..add(const SessionRequest())
-            ),
+                      sessionService: context.read<SessionService>(),
+                    )..add(const SessionRequest())),
           ],
           child: const MainPage(),
         ));
@@ -77,41 +77,44 @@ class MainPage extends StatelessWidget {
       final themeData = context.watch<ThemeBloc>().state;
 
       return MaterialApp(
-          title: 'Get Out',
-          supportedLocales: const [Locale('en'), Locale('fr')],
-          locale: locale,
-          localizationsDelegates: const [
-            AppLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalMaterialLocalizations.delegate
-          ],
-          //supportedLocales: AppLocalizations.supportedLocales,
-          theme: themeData,
-          home: BlocBuilder<SessionBloc, SessionState>(
-            builder: (context, state) {
-              if (state.status.isFound) {
-                return const HomeProvider();
-              } else if (state.status.isFoundWithoutPreferences) {
-                return const Forms();
-              } else if (state.status.isLoading) {
-                  return const ColoredBox(
-                      color: Colors.white,
-                      child: Center(child: LoadingPage()));
-              } else if (state.status.isError) {
-                /// TODO : Add a retry button
-                return ColoredBox(
-                        color: Colors.white,
-                        child: ObjectLoadingErrorWidget(object: appL10n(context)!.your_account));
-              } else if (state.status.isNotFound) {
-                return const ConnectionProvider();
-              } else {
-                return ColoredBox(
-                    color: Colors.red,
-                    child: ObjectLoadingErrorWidget(object: appL10n(context)!.your_account));
-              }
-            },
-          ),
+        title: 'Get Out',
+        supportedLocales: const [Locale('en'), Locale('fr')],
+        locale: locale,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate
+        ],
+        //supportedLocales: AppLocalizations.supportedLocales,
+        theme: themeData,
+        home: BlocBuilder<SessionBloc, SessionState>(
+          builder: (context, state) {
+            if (state.status.emailNotVerified) {
+              return const EmailVerifiedProvider();
+            } else if (state.status.isFound) {
+              return const HomeProvider();
+            } else if (state.status.isFoundWithoutPreferences) {
+              return const Forms();
+            } else if (state.status.isLoading) {
+              return const ColoredBox(
+                  color: Colors.white, child: Center(child: LoadingPage()));
+            } else if (state.status.isError) {
+              /// TODO : Add a retry button
+              return ColoredBox(
+                  color: Colors.white,
+                  child: ObjectLoadingErrorWidget(
+                      object: appL10n(context)!.your_account));
+            } else if (state.status.isNotFound) {
+              return const ConnectionProvider();
+            } else {
+              return ColoredBox(
+                  color: Colors.red,
+                  child: ObjectLoadingErrorWidget(
+                      object: appL10n(context)!.your_account));
+            }
+          },
+        ),
       );
     });
   }
