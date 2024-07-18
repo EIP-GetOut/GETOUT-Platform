@@ -44,7 +44,6 @@ class SignService extends ServiceTemplate {
                 'firstName': request.firstName,
                 'lastName': request.lastName,
                 'bornDate': request.birthDate,
-                'salt': 'sdjqshjodijaoz'
               },
               options: Options(headers: {'Content-Type': 'application/json'}));
     } on DioException {

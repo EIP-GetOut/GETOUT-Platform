@@ -178,10 +178,8 @@
   "code_hint": "Enter the code",
   "code_validator": "code is a mandatory",
   "receive_code": "Get a code",
-  "@_code_hint": "Enter the code you received by email",
   "code_incorrect": "The code is incorrect",
   "code_mail_hint": "Enter the code you received by email",
-  "code_incorect": "The code is incorrect", 
 
   "@_SETTING": {},
 
