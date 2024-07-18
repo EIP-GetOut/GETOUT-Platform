@@ -11,7 +11,7 @@ class EmailVerifiedState extends Equatable {
   final String code;
   final Status status;
   final Object? exception;
-  bool get isCodeValid => code.isNotEmpty && true;// code.length == 6;
+  bool get isCodeValid => code.isNotEmpty;
 
   const EmailVerifiedState({
     this.code = '',

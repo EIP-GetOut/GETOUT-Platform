@@ -20,12 +20,14 @@ class EmailVerifiedResponseModel {
   final int statusCode;
 }
 
-abstract class EmailVerifiedEvent extends Equatable {}
+abstract class EmailVerifiedEvent extends Equatable {
+  const EmailVerifiedEvent();
+}
 
 class EmailVerifiedCodeChanged extends EmailVerifiedEvent {
   final String? code;
 
-  EmailVerifiedCodeChanged({this.code});
+  const EmailVerifiedCodeChanged({this.code});
 
   @override
   List<Object?> get props => [code];
