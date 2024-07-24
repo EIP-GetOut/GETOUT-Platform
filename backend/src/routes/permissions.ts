@@ -36,18 +36,17 @@ const rules = [
  *         required: true
  *         type: string
  *     responses:
- *       '200':
+ *       200:
  *         description: Success. Returns true if the user has the permission, false otherwise.
  *         schema:
- *            type: boolean
- *       '400':
+ *           type: boolean
+ *       400:
  *         description: Bad request. Invalid input data.
- *       '401':
+ *       401:
  *         description: Unauthorized. User not authenticated.
- *       '500':
+ *       500:
  *         description: Internal server error.
  */
-
 router.get('/permission/:permissionName', rules, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null) {
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
