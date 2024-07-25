@@ -112,6 +112,7 @@ flutter:
 #    Draw:
     - assets/images/draw/form_complete.svg
     - assets/images/draw/woman.png
+    - assets/images/draw/email_verified_complete.svg
 #    Icon:
     - assets/images/icon/books.png
     - assets/images/icon/fire.png

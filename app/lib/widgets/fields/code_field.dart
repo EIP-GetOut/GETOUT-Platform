@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:getout/widgets/fields/widgets/default_field.dart';
 import 'package:getout/screens/connection/forgot_password/pages/new_password/bloc/new_password_bloc.dart';
+import 'package:getout/screens/connection/email_verified/bloc/email_verified_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,9 +22,9 @@ class CodeField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultField(
-        title: 'CODE',
+        title: appL10n(context)!.code.toUpperCase(),
         mandatory: true,
-        label: 'Entrez le code reçu par email',
+        label: appL10n(context)!.code_mail_hint,
         validator: validator,
         onChanged: onChanged);
   }
@@ -36,9 +37,9 @@ class ForgotPasswordCodeField extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<NewPasswordBloc, NewPasswordState>(builder: (context, state) {
       return DefaultField(
-        title: 'CODE',
+        title: appL10n(context)!.code.toUpperCase(),
         mandatory: true,
-        label: 'Entrez le code reçu par email',
+        label: appL10n(context)!.code_mail_hint,
           validator: (value) =>
           state.isCodeValid ? null : appL10n(context)!.code_validator,
           onChanged: (value) => context.read<NewPasswordBloc>().add(
@@ -46,5 +47,27 @@ class ForgotPasswordCodeField extends StatelessWidget {
           ),
         );
     });
+  }
+}
+
+class EmailVerifiedCodeField extends StatelessWidget {
+  const EmailVerifiedCodeField({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<EmailVerifiedBloc, EmailVerifiedState>(builder: (context, state) {
+      return DefaultField(
+        title: appL10n(context)!.code.toUpperCase(),
+        mandatory: true,
+        label: appL10n(context)!.code_mail_hint,
+          validator: (value) =>
+          state.isCodeValid ? null : appL10n(context)!.code_validator,
+          onChanged: (value) =>
+          context.read<EmailVerifiedBloc>().add(
+            EmailVerifiedCodeChanged(code: value),
+          ),
+        );
+    }
+    );
   }
 }

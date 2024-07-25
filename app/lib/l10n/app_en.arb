@@ -134,16 +134,16 @@
   "new_password_hint": "Enter your new password",
   "password_current": "Current password",
   "password_current_hint": "Enter your current password",
+  "password_current_error": "Incorrect current password",
+  "password_current_empty": "Please enter your current password",
   "confirm_password": "Password confirmation",
   "confirm_password_hint": "Confirm your new password",
   "edit_password": "Edit your password",
   "password_validator": "The password must contains 8 or more characters, with uppercase, lowercase and numbers",
   "password_matching": "New passwords written don't match",
-  "password_current_empty": "Please enter your current password",
   "password_empty": "Please enter your password",
   "password_old": "The new password must be different from the old one",
   "password_edit_success": "Your password has been changed",
-  "password_current_error": "Incorrect current password",
   "password_tries": "You've entered the wrong code too many times, please try again later.",
 
   "@_EMAIL": {},
@@ -161,6 +161,13 @@
   "email_matching": "New emails addresses written don't match",
   "email_empty": "Email can't be empty",
   "email_old": "The email must be different from the old email",
+  "email_verification_hint": "Enter the confirmation code received by e-mail",
+  "email_verification_resend_hint": "Didn't you get anything ? ",
+  "email_verification_resend": "Resend email",
+  "email_verification_success": "Your e-mail address has been confirmed",
+  "email_verification_success_desc": "Your e-mail address has been confirmed, you can now fill in the preferences form",
+  "email_verification_success_button": "Access the form",
+  "email_verification_resend_info": "An email containing a code has been sent back to you. If you haven't received it, you can try again in 10 seconds.",
 
 
   "@_CODE": {},
@@ -169,8 +176,8 @@
   "code_hint": "Enter the code",
   "code_validator": "code is a mandatory",
   "receive_code": "Get a code",
-  "@_code_hint": "Enter the code you received by email",
   "code_incorrect": "The code is incorrect",
+  "code_mail_hint": "Enter the code you received by email",
 
   "@_SETTING": {},
 

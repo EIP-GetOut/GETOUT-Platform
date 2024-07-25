@@ -23,13 +23,15 @@ class NewPasswordResponseModel {
 }
 
 
-abstract class NewPasswordEvent extends Equatable {}
+abstract class NewPasswordEvent extends Equatable {
+  const NewPasswordEvent();
+}
 
 
 class ForgotPasswordCodeChanged extends NewPasswordEvent {
   final String? code;
 
-  ForgotPasswordCodeChanged({this.code});
+  const ForgotPasswordCodeChanged({this.code});
 
   @override
   List<Object?> get props => [code];
@@ -38,7 +40,7 @@ class ForgotPasswordCodeChanged extends NewPasswordEvent {
 class ForgotPasswordPasswordChanged extends NewPasswordEvent {
   final String? password;
 
-  ForgotPasswordPasswordChanged({this.password});
+  const ForgotPasswordPasswordChanged({this.password});
 
   @override
   List<Object?> get props => [password];
@@ -47,7 +49,7 @@ class ForgotPasswordPasswordChanged extends NewPasswordEvent {
 class ForgotPasswordConfirmPasswordChanged extends NewPasswordEvent {
   final String? confirmPassword;
 
-  ForgotPasswordConfirmPasswordChanged({this.confirmPassword});
+  const ForgotPasswordConfirmPasswordChanged({this.confirmPassword});
 
   @override
   List<Object?> get props => [confirmPassword];

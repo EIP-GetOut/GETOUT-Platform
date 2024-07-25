@@ -19,7 +19,7 @@ class NewPasswordState extends Equatable {
   bool get isPasswordGood => RegExp(r"(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$").hasMatch(password);
   bool get isPasswordValid => isPasswordEmpty && isPasswordLength && isPasswordGood;
   bool get isConfirmPasswordValid => password.isNotEmpty && (password == confirmPassword);
-  bool get isCodeValid => code.isNotEmpty && true;// code.length == 6;
+  bool get isCodeValid => code.isNotEmpty;
 
   const NewPasswordState({
     this.code = '',
