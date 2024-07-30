@@ -12,13 +12,16 @@ import { StatusCodes } from 'http-status-codes'
 
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
-import { NotLoggedInError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError, AuthenticationError, NotLoggedInError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 import { mapAccountToSession } from '@services/utils/mapAccountToSession'
 
 import { modifyAccount } from '@models/account'
 import { addPreferences, postPreferences } from '@models/account/preferences'
 import { type Preferences } from '@models/account/preferences.interface'
+import { findEntity } from '@models/getObjects'
+
+import { Account } from '@entities/Account'
 
 const router = Router()
 
@@ -41,6 +44,19 @@ const BOOKS_GENRES_TO_GOOGLE_BOOKS_GENRES: Record<string, string> = {
   Romance: 'romance',
   'Autre genre': 'TODO'
 }
+
+router.get('/account/preferences', logApiRequest, (req: Request, res: Response) => {
+  if (req.session.account?.id == null) {
+    handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
+    return
+  }
+  findEntity<Account>(Account, { id: req.session.account.id }).then((account: Account | null) => {
+    if (account === null) {
+      throw new AccountDoesNotExistError(undefined, StatusCodes.INTERNAL_SERVER_ERROR)
+    }
+    return res.status(StatusCodes.OK).json(account.preferences)
+  }).catch(handleErrorOnRoute(res))
+})
 
 router.put('/account/preferences', rulesPut, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session?.account?.id == null) {
