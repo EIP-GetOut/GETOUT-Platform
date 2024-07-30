@@ -31,15 +31,12 @@ const rules = [
  *         in: path
  *         description: Name of the permission to check
  *         required: true
- *         schema:
- *           type: string
+ *         type: string
  *     responses:
  *       '200':
  *         description: Success. Returns true if the user has the permission, false otherwise.
- *         content:
- *           application/json:
- *             schema:
- *               type: boolean
+ *         schema:
+ *            type: boolean
  *       '400':
  *         description: Bad request. Invalid input data.
  *       '401':
