@@ -45,6 +45,54 @@ const BOOKS_GENRES_TO_GOOGLE_BOOKS_GENRES: Record<string, string> = {
   'Autre genre': 'TODO'
 }
 
+/**
+ * @swagger
+ * /account/preferences:
+ *   get:
+ *     summary: Get account preferences
+ *     description: Retrieve the preferences for the currently authenticated account.
+ *     responses:
+ *       200:
+ *         description: Account preferences retrieved successfully
+ *         schema:
+ *               type: object
+ *               properties:
+ *                 platforms:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: List of platforms
+ *                   example: ["PrimeVideo"]
+ *                 booksGenres:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: List of favorite book genres
+ *                   example: ["philosophy", "romance"]
+ *                 moviesGenres:
+ *                   type: array
+ *                   items:
+ *                     type: integer
+ *                   description: List of favorite movie genres (represented by IDs)
+ *                   example: [28, 12, 16]
+ *       401:
+ *         description: Unauthorized - User must be connected
+ *         schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: User must be connected.
+ *       500:
+ *         description: Internal server error
+ *         schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Account does not exist.
+ */
+
 router.get('/account/preferences', logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null) {
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
