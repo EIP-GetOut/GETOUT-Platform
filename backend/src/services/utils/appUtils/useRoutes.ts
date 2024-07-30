@@ -41,6 +41,7 @@ import permissions from '@routes/permissions'
 import recommendationsTmdb from '@routes/recommendationsTmdb'
 import session from '@routes/session'
 import sessions from '@routes/sessions'
+import accountsStats from '@routes/stats/accounts'
 
 const useRoutes = (app: Application): Application => (
   app
@@ -68,6 +69,7 @@ const useRoutes = (app: Application): Application => (
 
     .use(sessions)
     .use(accounts)
+    .use(accountsStats)
     .use(movie)
     .use(book)
     .use(news)
