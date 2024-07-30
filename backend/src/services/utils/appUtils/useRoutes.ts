@@ -42,6 +42,7 @@ import recommendationsTmdb from '@routes/recommendationsTmdb'
 import session from '@routes/session'
 import sessions from '@routes/sessions'
 import accountsStats from '@routes/stats/accounts'
+import recommendationsStats from '@routes/stats/recommendations'
 
 const useRoutes = (app: Application): Application => (
   app
@@ -70,6 +71,7 @@ const useRoutes = (app: Application): Application => (
     .use(sessions)
     .use(accounts)
     .use(accountsStats)
+    .use(recommendationsStats)
     .use(movie)
     .use(book)
     .use(news)
