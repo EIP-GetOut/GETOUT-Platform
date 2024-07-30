@@ -61,4 +61,15 @@ void describe('Preferences List Route', async () => {
       expect(response.body.platforms).toContain('PrimeVideo')
     })
   })
+
+  it('should respond with 201 CREATED and the watchlist for GET /account/preferences', async () => {
+    await request(app).get('/account/preferences').set('Cookie', cookie)
+      .then((response) => {
+        expect(response.status).toBe(StatusCodes.OK)
+        expect(response.body.moviesGenres).toContain(115)
+        expect(response.body.moviesGenres).toContain(59)
+        expect(response.body.booksGenres).toContain('philosophy')
+        expect(response.body.platforms).toContain('PrimeVideo')
+      })
+  })
 })
