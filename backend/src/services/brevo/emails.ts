@@ -47,7 +47,7 @@ async function sendResetPasswordEmail (email: string, passwordResetCode: number)
       code: passwordResetCode
     }
 
-    return await sendEmailWithBrevo(9, account.email, params)
+    return await sendEmailWithBrevo(17, account.email, params)
   }).catch((err: Error) => {
     throw new ApiError(`Error while sending reset password email to ${email}: ${err.message}.`)
   })
@@ -56,7 +56,7 @@ async function sendResetPasswordEmail (email: string, passwordResetCode: number)
 async function sendWelcomeEmail (account: Account): ReturnType<TransactionalEmailsApi['sendTransacEmail']> {
   const params = { fullName: `${account.firstName} ${account.lastName}` }
 
-  return await sendEmailWithBrevo(5, account.email, params).catch((err: Error) => {
+  return await sendEmailWithBrevo(18, account.email, params).catch((err: Error) => {
     throw new ApiError(`Error while sending welcome email to ${account.email}: ${err.message}.`)
   })
 }
@@ -66,7 +66,7 @@ async function sendEmailVerificationEmail (account: Account, code: number): Retu
     fullName: `${account.firstName} ${account.lastName}`,
     code: code.toString()
   }
-  return await sendEmailWithBrevo(13, account.email, params).catch((err: Error) => {
+  return await sendEmailWithBrevo(12, account.email, params).catch((err: Error) => {
     throw new ApiError(`Error while sending email verification email to ${account.email}: ${err.message}.`)
   })
 }
