@@ -7,10 +7,13 @@
 
 import { type Request, type Response, Router } from 'express'
 import { param } from 'express-validator'
-import { getReasonPhrase, StatusCodes } from 'http-status-codes'
+import { StatusCodes } from 'http-status-codes'
 
-import logger, { logApiRequest } from '@middlewares/logging'
 import validate from '@middlewares/validator'
+
+import { logApiRequest } from '@services/middlewares/logging'
+import { AuthenticationError } from '@services/utils/customErrors'
+import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { accoutHasPermission } from '@models/permissions'
 
@@ -46,16 +49,13 @@ const rules = [
  */
 
 router.get('/permission/:permissionName', rules, validate, logApiRequest, (req: Request, res: Response) => {
-  if (req.session.account != null) {
-    accoutHasPermission(req.session.account.role.permissions, req.params.permissionName).then((hasPermission) => {
-      return res.status(StatusCodes.OK).send(hasPermission)
-    }).catch((err) => {
-      logger.error(err.toString())
-      return res.status(StatusCodes.BAD_REQUEST)
-        .send(getReasonPhrase(StatusCodes.BAD_REQUEST))
-    })
+  if (req.session.account?.id == null) {
+    handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
+    return
   }
-  return res.status(StatusCodes.OK).send(false)
+  accoutHasPermission(req.session.account.role.permissions, req.params.permissionName).then((hasPermission) => {
+    return res.status(StatusCodes.OK).send(hasPermission)
+  }).catch(handleErrorOnRoute(res))
 })
 
 export default router

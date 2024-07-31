@@ -20,7 +20,7 @@ async function mapAccountToSession (req: Request, isTemporary: boolean = false):
   if (req.session?.account == null) {
     return await Promise.resolve(req.session)
   }
-  return await findEntity<Account>('Account', { id: req.session.account.id }).then(async (account: Account | null) => {
+  return await findEntity<Account>('Account', { id: req.session.account.id }, { role: true }).then(async (account: Account | null) => {
     if (account == null) {
       logger.error('Failed remaping session.')
       throw new SessionMappingError()
