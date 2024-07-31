@@ -59,7 +59,7 @@ const router = Router()
  */
 
 router.get('/book/:id', validate, logApiRequest, (req: Request, res: Response) => {
-  getBook(req.params.id).then(async (book: any) => {
+  getBook(req.params.id, true).then(async (book: any) => {
     logger.info(`Successfully retreived book ${req.params.id}: ${JSON.stringify(book, null, 2)}`)
     return res.status(StatusCodes.OK).json({ ...book })
   }).catch(handleErrorOnRoute(res))

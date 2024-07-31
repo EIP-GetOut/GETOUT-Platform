@@ -32,7 +32,12 @@ async function getRecommandationsFromHistory (id: UUID): Promise<any> {
     if (account?.recommendedBooksHistory == null) {
       throw new DbError('Recommended books history not found.')
     }
-    return await Promise.all(account.recommendedBooksHistory.slice(-5).map(getBook)).catch(() => {
+    const promisesArray: Array<Promise<any>> = []
+    account.recommendedBooksHistory.slice(-5).forEach((id: string) => {
+      promisesArray.push(getBook(id, false))
+    })
+
+    return await Promise.all(promisesArray).catch(() => {
       throw new RecommendationsDetailsError()
     })
   })
@@ -75,7 +80,7 @@ router.get('/account/:accountId/recommend-books', logApiRequest, (req: Request, 
 
       const recommendations: any[] = JSON.parse(output[0]).slice(0, 5)
       recommendations.forEach((recommandation: any) => {
-        promisesArray.push(getBook(recommandation.id))
+        promisesArray.push(getBook(recommandation.id, false))
       })
       return await addRecommendedBooksToHistory(recommendations, req.session.account!.id).then(async (): Promise<any []> => {
         return await Promise.all(promisesArray)

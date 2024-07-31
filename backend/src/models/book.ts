@@ -61,25 +61,36 @@ async function getBookDetails (id: string): Promise<books_v1.Schema$Volume> {
   })
 }
 
-async function getBook (id: string): Promise<any> {
+async function getBook (id: string, withDetails: boolean = false): Promise<any> {
   return await getBookDetails(id).then(async (book: books_v1.Schema$Volume) => {
     const volumeInfo = book.volumeInfo!
     const saleInfo = book.saleInfo!
 
-    return ({
-      id,
-      title: volumeInfo.title,
-      overview: volumeInfo.description,
-      poster_path: volumeInfo.imageLinks?.thumbnail ?? null,
-      backdrop_path: volumeInfo.imageLinks?.extraLarge ?? null,
-      pageCount: volumeInfo.pageCount,
-      authors: volumeInfo.authors,
-      authors_picture: volumeInfo.authors == null ? null : await getPictures(volumeInfo.authors),
-      category: volumeInfo?.categories ?? null,
-      vote_average: volumeInfo.averageRating ?? null,
-      release_date: volumeInfo.publishedDate ?? null,
-      book_link: volumeInfo.infoLink ?? saleInfo?.buyLink ?? null
-    })
+    if (withDetails) {
+      return ({
+        title: volumeInfo.title,
+        vote_average: volumeInfo.averageRating ?? null,
+        release_date: volumeInfo.publishedDate ?? null,
+        category: volumeInfo?.categories ?? null,
+        poster_path: volumeInfo.imageLinks?.thumbnail ?? null,
+        backdrop_path: volumeInfo.imageLinks?.extraLarge ?? null,
+        pageCount: volumeInfo.pageCount,
+        overview: volumeInfo.description,
+        authors: volumeInfo.authors,
+        authors_picture: volumeInfo.authors == null ? null : await getPictures(volumeInfo.authors),
+        book_link: volumeInfo.infoLink ?? saleInfo?.buyLink ?? null
+      })
+    } else {
+      return ({
+        id,
+        title: volumeInfo.title,
+        vote_average: volumeInfo.averageRating ?? null,
+        release_date: volumeInfo.publishedDate ?? null,
+        category: volumeInfo?.categories ?? null,
+        poster_path: volumeInfo.imageLinks?.thumbnail ?? null,
+        backdrop_path: volumeInfo.imageLinks?.extraLarge ?? null
+      })
+    }
   }).catch((error: any) => {
     throw error
   })
