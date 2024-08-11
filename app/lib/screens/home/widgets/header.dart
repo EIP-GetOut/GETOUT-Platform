@@ -18,14 +18,8 @@ import 'package:getout/tools/duration_format.dart';
 class HomeAppBarWidget extends AppBar {
   HomeAppBarWidget({super.key, required BuildContext context})
       : super(
-          /**
-           * appBarSettings
-           */
           systemOverlayStyle: const SystemUiOverlayStyle(
-            // Status bar color
             statusBarColor: Colors.transparent,
-
-            // Status bar brightness (optional)
             statusBarIconBrightness:
                 Brightness.dark, // For Android (dark icons)
             statusBarBrightness: Brightness.light, // For iOS (dark icons)
@@ -33,26 +27,6 @@ class HomeAppBarWidget extends AppBar {
           toolbarHeight: 100,
           titleSpacing: 5,
           backgroundColor: Colors.white,
-          /**
-           * leading | title | actions
-           * -------------------------
-           *  Profil | Title |  Quit
-           * -------------------------
-           */
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const SettingsPage()));
-            },
-            child: Padding(
-                padding: const EdgeInsets.only(left: 10, right: 0),
-                child: Image.asset(
-                  'assets/images/icon/profile_picture.png',
-                  width: 60,
-                )),
-          ),
           title: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -60,19 +34,20 @@ class HomeAppBarWidget extends AppBar {
                   style: Theme.of(context).textTheme.titleLarge),
               Text(appL10n(context)!.homepage_subtitle,
                   style: Theme.of(context).textTheme.displayMedium),
-              Text(
-                  durationFormat(appL10n(context)!.you_saved,
-                      globals.session?['spentMinutesReadingAndWatching']),
-                  style: Theme.of(context).textTheme.bodySmall)
             ],
           ),
           actions: [
             Padding(
-                padding: const EdgeInsets.all(10),
-                child: Image.asset(
-                  'assets/images/logo/getout.png',
-                  width: 40,
-                )),
+                padding: const EdgeInsets.all(1),
+                child: IconButton(
+                    icon: const Icon(Icons.settings),
+                    color: Colors.black,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SettingsPage()));
+                    })),
           ],
         );
 }
