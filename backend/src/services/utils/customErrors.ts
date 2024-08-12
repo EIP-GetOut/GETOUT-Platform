@@ -58,6 +58,12 @@ class BookNotInListError extends AppError {
 
 class DbError extends AppError {}
 
+class EmailSendError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'There was an error while sending email.')
+  }
+}
+
 class GoogleBookError extends AppError {}
 
 class IncorrectEmailOrPasswordError extends AppError {
@@ -131,6 +137,7 @@ export {
   BcryptError,
   BookNotInListError,
   DbError,
+  EmailSendError,
   GoogleBookError,
   IncorrectEmailOrPasswordError,
   MovieNotInListError,
