@@ -6,41 +6,48 @@ class NewsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Card(
-        shape: RoundedRectangleBorder(
-        side: BorderSide(color: Theme.of(context).primaryColor , width: 2),
-        borderRadius: BorderRadius.circular(25),),
-        child: Stack(
-          children: <Widget>[
-            // Image en arrière-plan
-            Image.network(
-              "https://media.ouest-france.fr/v1/pictures/MjAyNDA1MTE3NGE5YWUzMjVmYzRjM2I3YzNmODBlMmU0YWI0Yzc?width=1260&focuspoint=50%2C25&cropresize=1&client_id=bpeditorial&sign=eee2fc2d863daae83cce5bfed30764d2db552be1832f38238548bc53ab643268",
+        child: Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25),
+      ),
+      child: Stack(children: <Widget>[
+        ClipRRect(
+            borderRadius: BorderRadius.circular(25),
+            child: Image.network(
+              'https://media.ouest-france.fr/v1/pictures/MjAyNDA1MTE3NGE5YWUzMjVmYzRjM2I3YzNmODBlMmU0YWI0Yzc?width=1260&focuspoint=50%2C25&cropresize=1&client_id=bpeditorial&sign=eee2fc2d863daae83cce5bfed30764d2db552be1832f38238548bc53ab643268',
               fit: BoxFit.cover,
-              height: 150,
-              width: 100,
+              height: 400,
+              width: 500,
               color: const Color.fromRGBO(150, 150, 150, 255).withOpacity(1),
-                colorBlendMode: BlendMode.modulate,
-
-            ),
-
-            // Texte superposé à l'image
-            Positioned(
-              bottom: 10, // Ajuste la position verticale du texte
-              left: 10, // Ajuste la position horizontale du texte
-              right: 10, // Ajuste la position horizontale du texte
+              colorBlendMode: BlendMode.modulate,
+            )),
+        const Positioned(
+            bottom: 10,
+            left: 10,
+            right: 10,
+            child: Padding(
+              padding: EdgeInsets.all(10),
               child: Text(
                 "TikTok, Instagram, X...Les Français s'inquiètent des réseaux sociaux et demandent plus de régulation",
                 style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  // backgroundColor: Colors.black54, // Fond semi-transparent pour améliorer la lisibilité
-                ),
-                textAlign: TextAlign.center,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20),
+                textAlign: TextAlign.left,
               ),
-            ),
-          ]
-        ),
-      )
-      );
+            )),
+        Positioned(
+            bottom: 200,
+            left: 10,
+            right: 10,
+            child: Image.network(
+              'https://www.lachance.media/wp-content/uploads/2018/09/ouestfrance-e1599137740364.png',
+              fit: BoxFit.fill,
+              height: 100,
+              width: 100,
+              colorBlendMode: BlendMode.modulate,
+            ))
+      ]),
+    ));
   }
 }

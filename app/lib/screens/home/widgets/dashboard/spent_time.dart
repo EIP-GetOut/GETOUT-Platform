@@ -18,11 +18,11 @@ class SpentTimeCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           side: BorderSide(
               color: Theme.of(context).primaryColor,
-              width: 2), // Couleur et épaisseur de la bordure
-          borderRadius: BorderRadius.circular(25), // Rayon des coins
+              width: 2),
+          borderRadius: BorderRadius.circular(25),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(10), child:
+          padding: const EdgeInsets.all(20), child:
           Column(children: [
             Text(title, style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.w500)),
             Icon(icon, color:  Theme.of(context).primaryColor, size: 30),
