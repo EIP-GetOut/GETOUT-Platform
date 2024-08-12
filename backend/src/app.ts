@@ -7,7 +7,6 @@
 
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 
-import cors from 'cors'
 import express, { type Application } from 'express'
 import { generateSwaggerDoc } from 'generateSwagger'
 

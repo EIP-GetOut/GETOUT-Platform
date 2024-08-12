@@ -9,11 +9,13 @@ import RedisStore from 'connect-redis'
 import { type UUID } from 'crypto'
 import { type Application } from 'express'
 import session, { type SessionOptions } from 'express-session'
-import { type RedisClientType, createClient } from 'redis'
+import { type RedisClientType } from 'redis'
 
 import { type Preferences } from '@models/account/preferences.interface'
 
 import { type Role } from '@entities/Role'
+
+import { getRedisClient } from '../redisClient'
 
 export interface SessionAccount {
   id: UUID
@@ -39,8 +41,7 @@ declare module 'express-session' {
 function useSession (app: Application): RedisClientType {
   const week = 3600000 * 24 * 7
 
-  const redisClient: RedisClientType = createClient({ url: `redis://${process.env.NODE_ENV === 'test' ? 'localhost' : 'redis'}:6379` })
-  redisClient.connect().catch(console.error)
+  const redisClient = getRedisClient()
   const redisStore = new RedisStore({ client: redisClient })
   const sess: SessionOptions = {
     store: redisStore,
