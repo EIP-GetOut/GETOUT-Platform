@@ -27,7 +27,10 @@ export interface SessionAccount {
   preferences?: Preferences
   lastMovieRecommandation: Date | null
   lastBookRecommandation: Date | null
-  spentMinutesReadingAndWatching: number
+  spentMinutesWatching: number
+  totalPagesRead: number
+  secondsBeforeNextMovieRecommendation: number | null
+  secondsBeforeNextBookRecommendation: number | null
   role: Role
   isVerified: boolean
 }

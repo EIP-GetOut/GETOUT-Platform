@@ -98,7 +98,8 @@ async function getMovie (id: number): Promise<MovieResponse> {
         throw new ApiError(`Value of property ${key} is missing in TMDB response.`)
       }
     }
-    return movieResponse as MovieResponse
+    const res = (movieResponse as MovieResponse)
+    return res satisfies MovieResponse
   }).catch((err: Error | AppError) => {
     if (err instanceof AppError) {
       throw err

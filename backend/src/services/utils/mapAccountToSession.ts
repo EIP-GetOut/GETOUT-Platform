@@ -9,6 +9,7 @@ import { type Request } from 'express'
 import { type Session, type SessionData } from 'express-session'
 
 import logger from '@services/middlewares/logging'
+import { getMissingTimeBeforeNextRecommendation } from '@services/utils/timeCalculations'
 
 import { findEntity } from '@models/getObjects'
 
@@ -36,7 +37,14 @@ async function mapAccountToSession (req: Request, isTemporary: boolean = false):
       lastBookRecommandation: account.lastBookRecommandation,
       lastMovieRecommandation: account.lastMovieRecommandation,
       preferences: account.preferences,
-      spentMinutesReadingAndWatching: NaN,
+      spentMinutesWatching: NaN,
+      totalPagesRead: NaN,
+      secondsBeforeNextMovieRecommendation: account.lastMovieRecommandation != null
+        ? getMissingTimeBeforeNextRecommendation(account.lastMovieRecommandation)
+        : null,
+      secondsBeforeNextBookRecommendation: account.lastBookRecommandation != null
+        ? getMissingTimeBeforeNextRecommendation(account.lastBookRecommandation)
+        : null,
       role: account.role
     }
 
