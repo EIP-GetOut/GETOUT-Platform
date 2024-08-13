@@ -11,6 +11,7 @@ import { StatusCodes } from 'http-status-codes'
 
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
+import { preloadNextRecommendations } from '@services/recommendationsCaching/books'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
@@ -121,10 +122,17 @@ router.post('/account/:accountId/readBooks', rulesPost, validate, logApiRequest,
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
+  const accountId = req.params.accountId
   addBookToReadBooks(req.params.accountId, req.body.bookId).then(async (updatedReadBooks: string[]) => {
-    return await modifyAccount(req.session.account!.id, { readBooks: updatedReadBooks }).then(() => {
+    await modifyAccount(req.session.account!.id, { readBooks: updatedReadBooks }).then(() => {
       logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s read books.`)
       return res.status(StatusCodes.CREATED).json(updatedReadBooks)
+    }).then(async () => {
+      if (process.env.NODE_ENV !== 'test') {
+        await preloadNextRecommendations(accountId).catch((err: Error) => {
+          logger.error(`${err.name}: ${err.message}`)
+        })
+      }
     })
   }).catch(handleErrorOnRoute(res))
 })
@@ -139,10 +147,17 @@ router.delete('/account/:accountId/readBooks/:bookId', rulesDelete, validate, lo
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
+  const accountId = req.params.accountId
   removeBookFromReadBooks(req.params.accountId, req.params.bookId).then(async (updatedReadBooks: string[]) => {
-    return await modifyAccount(req.session.account!.id, { readBooks: updatedReadBooks }).then(() => {
+    await modifyAccount(req.session.account!.id, { readBooks: updatedReadBooks }).then(() => {
       logger.info(`Successfully removed ${req.params.bookId} of ${req.session.account?.email}'s read books.`)
       return res.status(StatusCodes.OK).json(updatedReadBooks)
+    }).then(async () => {
+      if (process.env.NODE_ENV !== 'test') {
+        await preloadNextRecommendations(accountId).catch((err: Error) => {
+          logger.error(`${err.name}: ${err.message}`)
+        })
+      }
     })
   }).catch(handleErrorOnRoute(res))
 })

@@ -10,7 +10,7 @@ import { StatusCodes } from 'http-status-codes'
 
 import logger from '@middlewares/logging'
 
-import { getBook } from '@services/googlebooks/getBooks'
+import { getBook } from '@services/googlebooks/getBook'
 import { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'

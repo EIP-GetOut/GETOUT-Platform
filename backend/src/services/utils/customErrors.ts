@@ -56,6 +56,8 @@ class BookNotInListError extends AppError {
   }
 }
 
+class CacheError extends AppError {}
+
 class DbError extends AppError {}
 
 class EmailSendError extends AppError {
@@ -136,6 +138,7 @@ export {
   AuthenticationError,
   BcryptError,
   BookNotInListError,
+  CacheError,
   DbError,
   EmailSendError,
   GoogleBookError,

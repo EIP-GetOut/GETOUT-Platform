@@ -19,16 +19,16 @@ interface Author {
 
 export interface BookResponse {
   id?: string
-  title: string | undefined
-  vote_average: number | undefined
-  release_date: string | undefined // formated 'YYYY'
-  category: string [] | undefined
-  poster_path: string | undefined
-  backdrop_path: string | undefined
-  pageCount: number | undefined
-  overview: string | undefined
-  authors: Author [] | undefined
-  book_link: string | undefined
+  title: string
+  averageRating: number | null
+  releaseDate: string // formated 'YYYY'
+  categories: string [] | null
+  posterPath: string
+  backdropPath: string | null
+  pageCount: number | null
+  description: string | null
+  authors: Author [] | null
+  link: string
 }
 
 const booksApi = books('v1')
@@ -54,7 +54,7 @@ async function fetchAuthorInfo (author: string): Promise<Author> {
       imageLink
     }
   }).catch((error: AppError) => {
-    logger.error(`Error fetching data for ${author}: ${error.message}`)
+    logger.error(`Error fetching author picture for ${author}: ${error.message}`)
     return {
       name: author,
       imageLink: null
@@ -78,7 +78,7 @@ async function getBookDetails (id: string): Promise<books_v1.Schema$Volume> {
   })
 }
 
-async function getBook (id: string, withDetails: boolean = false): Promise<BookResponse | Partial<BookResponse>> {
+async function getBook (id: string, withDetails: boolean = false): Promise<BookResponse> {
   return await getBookDetails(id).then(async (book: books_v1.Schema$Volume) => {
     const volumeInfo = book.volumeInfo!
     const saleInfo = book.saleInfo!
@@ -87,39 +87,38 @@ async function getBook (id: string, withDetails: boolean = false): Promise<BookR
       return ({
         id,
         title: volumeInfo.title,
-        vote_average: volumeInfo.averageRating,
-        release_date: volumeInfo.publishedDate,
-        category: volumeInfo?.categories,
-        poster_path: volumeInfo.imageLinks?.thumbnail,
-        backdrop_path: volumeInfo.imageLinks?.extraLarge,
-        pageCount: volumeInfo.pageCount,
-        overview: volumeInfo.description,
-        authors: volumeInfo.authors === undefined ? undefined : await getPictures(volumeInfo.authors),
-        book_link: volumeInfo.infoLink ?? saleInfo?.buyLink
-      }) satisfies BookResponse
-    } else {
-      return ({
-        id,
-        title: volumeInfo.title,
-        vote_average: volumeInfo.averageRating ?? undefined,
-        release_date: volumeInfo.publishedDate ?? undefined,
-        category: volumeInfo?.categories ?? undefined,
-        poster_path: volumeInfo.imageLinks?.thumbnail ?? undefined,
-        backdrop_path: volumeInfo.imageLinks?.extraLarge ?? undefined
+        averageRating: volumeInfo.averageRating ?? null,
+        releaseDate: volumeInfo.publishedDate,
+        categories: volumeInfo?.categories ?? null,
+        posterPath: volumeInfo.imageLinks?.thumbnail,
+        backdropPath: volumeInfo.imageLinks?.extraLarge,
+        pageCount: volumeInfo.pageCount ?? null,
+        description: volumeInfo.description ?? null,
+        authors: volumeInfo.authors != null ? await getPictures(volumeInfo.authors) : null,
+        link: volumeInfo.infoLink ?? saleInfo?.buyLink
       }) satisfies Partial<BookResponse>
     }
-  }).then((bookDetails: BookResponse | Partial<BookResponse>) => {
+    return ({
+      id,
+      title: volumeInfo.title,
+      averageRating: volumeInfo.averageRating ?? null,
+      releaseDate: volumeInfo.publishedDate,
+      categories: volumeInfo?.categories ?? null,
+      posterPath: volumeInfo.imageLinks?.thumbnail,
+      backdropPath: volumeInfo.imageLinks?.extraLarge ?? null
+    }) satisfies Partial<BookResponse>
+  }).then((bookDetails: Partial<BookResponse>): BookResponse => {
     for (const [key, value] of Object.entries(bookDetails)) {
       if (value === undefined) {
-        throw new ApiError(`${key} is undefined`)
+        throw new ApiError(`Value of property ${key} is missing in Google Book response (${JSON.stringify(bookDetails, undefined, 2)}).`)
       }
     }
-    return (bookDetails)
+    return (bookDetails as BookResponse)
   }).catch((err: Error | AppError) => {
     if (err instanceof AppError) {
       throw err
     }
-    throw new ApiError('Error while getting the book details')
+    throw new ApiError(`Error while getting the book details (${err.name}: ${err.message}).`)
   })
 }
 

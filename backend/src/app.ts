@@ -22,6 +22,7 @@ function checkRequiredEnvironmentVariables (): void {
     'NODE_ENV',
     'PORT',
     'ORIGIN_PATTERN',
+    'RECOMMENDATIONS_INTERVAL_SECONDS',
     'LOG_FILENAME',
     'SESSION_SECRET',
     'TYPEORM_PORT',

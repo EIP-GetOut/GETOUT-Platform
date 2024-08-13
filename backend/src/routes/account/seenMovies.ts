@@ -11,6 +11,7 @@ import { StatusCodes } from 'http-status-codes'
 
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
+import { preloadNextRecommendations } from '@services/recommendationsCaching/movies'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
@@ -127,10 +128,17 @@ router.post('/account/:accountId/seenMovies', rulesPost, validate, logApiRequest
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
-  addMovieToSeenMovies(req.params.accountId, parseInt(req.body.movieId)).then(async (updatedSeenMovies: number[]) => {
-    return await modifyAccount(req.session.account!.id, { seenMovies: updatedSeenMovies }).then(() => {
+  const accountId = req.params.accountId
+  addMovieToSeenMovies(accountId, parseInt(req.body.movieId)).then(async (updatedSeenMovies: number[]) => {
+    await modifyAccount(accountId, { seenMovies: updatedSeenMovies }).then(() => {
       logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s seen movies.`)
       return res.status(StatusCodes.CREATED).json(updatedSeenMovies)
+    }).then(async () => {
+      if (process.env.NODE_ENV !== 'test') {
+        await preloadNextRecommendations(accountId).catch((err: Error) => {
+          logger.error(`${err.name}: ${err.message}`)
+        })
+      }
     })
   }).catch(handleErrorOnRoute(res))
 })
@@ -145,10 +153,17 @@ router.delete('/account/:accountId/seenMovies/:movieId', rulesDelete, validate, 
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
-  removeMovieFromSeenMovies(req.params.accountId, parseInt(req.params.movieId)).then(async (updatedSeenMovies: number[]) => {
-    return await modifyAccount(req.session.account!.id, { seenMovies: updatedSeenMovies }).then(() => {
+  const accountId = req.params.accountId
+  removeMovieFromSeenMovies(accountId, parseInt(req.params.movieId)).then(async (updatedSeenMovies: number[]) => {
+    await modifyAccount(accountId, { seenMovies: updatedSeenMovies }).then(() => {
       logger.info(`Successfully removed ${req.params.movieId} of ${req.session.account?.email}'s seen movies.`)
       return res.status(StatusCodes.OK).json(updatedSeenMovies)
+    }).then(async () => {
+      if (process.env.NODE_ENV !== 'test') {
+        await preloadNextRecommendations(accountId).catch((err: Error) => {
+          logger.error(`${err.name}: ${err.message}`)
+        })
+      }
     })
   }).catch(handleErrorOnRoute(res))
 })

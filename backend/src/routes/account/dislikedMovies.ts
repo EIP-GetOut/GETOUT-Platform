@@ -11,6 +11,7 @@ import { StatusCodes } from 'http-status-codes'
 
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
+import { preloadNextRecommendations } from '@services/recommendationsCaching/movies'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
@@ -127,10 +128,17 @@ router.post('/account/:accountId/dislikedMovies', rulesPost, validate, logApiReq
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
+  const accountId = req.params.accountId
   addMovieToDislikedMovies(req.params.accountId, parseInt(req.body.movieId)).then(async (updatedDislikedMoviesList: number[]) => {
-    return await modifyAccount(req.session.account!.id, { dislikedMovies: updatedDislikedMoviesList }).then(() => {
+    await modifyAccount(accountId, { dislikedMovies: updatedDislikedMoviesList }).then(() => {
       logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s disliked movies.`)
       return res.status(StatusCodes.CREATED).json(updatedDislikedMoviesList)
+    }).then(async () => {
+      if (process.env.NODE_ENV !== 'test') {
+        await preloadNextRecommendations(accountId).catch((err: Error) => {
+          logger.error(`${err.name}: ${err.message}`)
+        })
+      }
     })
   }).catch(handleErrorOnRoute(res))
 })
@@ -145,10 +153,17 @@ router.delete('/account/:accountId/dislikedMovies/:movieId', rulesDelete, valida
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
-  removeMovieFromDislikedMovies(req.params.accountId, parseInt(req.params.movieId)).then(async (updatedDislikedMoviesList: number[]) => {
-    return await modifyAccount(req.session.account!.id, { dislikedMovies: updatedDislikedMoviesList }).then(() => {
+  const accountId = req.params.accountId
+  removeMovieFromDislikedMovies(accountId, parseInt(req.params.movieId)).then(async (updatedDislikedMoviesList: number[]) => {
+    await modifyAccount(accountId, { dislikedMovies: updatedDislikedMoviesList }).then(() => {
       logger.info(`Successfully removed ${req.body.movieId} of ${req.session.account?.email}'s disliked movies.`)
       return res.status(StatusCodes.OK).json(updatedDislikedMoviesList)
+    }).then(async () => {
+      if (process.env.NODE_ENV !== 'test') {
+        await preloadNextRecommendations(accountId).catch((err: Error) => {
+          logger.error(`${err.name}: ${err.message}`)
+        })
+      }
     })
   }).catch(handleErrorOnRoute(res))
 })

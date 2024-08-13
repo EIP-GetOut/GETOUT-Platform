@@ -6,13 +6,18 @@
 */
 
 import { type UUID } from 'crypto'
+import { type Request, type Response } from 'express'
 import { type Options, PythonShell } from 'python-shell'
 
 import logger from '@services/middlewares/logging'
-import { AccountDoesNotExistError, DbError, RecommendationsDetailsError } from '@services/utils/customErrors'
+import { setCurrentRecommendations } from '@services/recommendationsCaching/movies'
+import { type MovieResponse, getMovie } from '@services/tmdb/getMovie'
+import { AccountDoesNotExistError, AppError, DbError, RecommendationsDetailsError } from '@services/utils/customErrors'
+import { mapAccountToSession } from '@services/utils/mapAccountToSession'
 
+import { modifyAccount } from '@models/account'
+import { addRecommendedMoviesToHistory } from '@models/account/recommendationsHistory'
 import { findEntity } from '@models/getObjects'
-import { getMovie } from '@models/movie'
 
 import { Account } from '@entities/Account'
 
@@ -44,25 +49,56 @@ async function generateMoviesRecommendations (userId: UUID): Promise<MovieRecomm
   })
 }
 
-async function retreiveFullRecommendationsFromIds (ids: number []): Promise<any []> {
-  return await Promise.all(ids.map(getMovie)).catch(() => {
-    throw new RecommendationsDetailsError()
+async function retreiveFullRecommendationsFromIds (ids: number []): Promise<MovieResponse []> {
+  return await Promise.all(ids.map(getMovie)).then((movieResponse: MovieResponse []) => {
+    return movieResponse
+  }).catch((err: Error | AppError) => {
+    if (err instanceof AppError) {
+      throw err
+    }
+    throw new RecommendationsDetailsError(`Failed fetching recommendationsDetails (${err.name}: ${err.message})`)
   })
 }
 
-async function getRecommandationsFromHistory (accountId: UUID): Promise<any> {
+async function getRecommandationsFromHistory (accountId: UUID): Promise<MovieResponse []> {
   return await findEntity<Account>('Account', { id: accountId }).then(async (account: Account | null) => {
     if (account?.recommendedMoviesHistory == null) {
       throw new DbError('Recommended movies history not found.')
     }
-    return await Promise.all(account?.recommendedMoviesHistory.slice(-5).map(getMovie)).catch(() => {
-      throw new RecommendationsDetailsError()
+    return await Promise.all(account?.recommendedMoviesHistory.slice(-5).map(getMovie)).catch((err: Error | AppError) => {
+      if (err instanceof AppError) {
+        throw err
+      }
+      throw new RecommendationsDetailsError(`Failed fetching recommendationsDetails (${err.name}: ${err.message})`)
     })
+  })
+}
+
+async function generateRecommendationsFromScratch (req: Request, res: Response, userId: UUID): Promise<MovieResponse[]> {
+  let recommendations: MovieRecommandationAlgorithmResonse []
+  let fullRecommendations: MovieResponse []
+
+  return await generateMoviesRecommendations(userId).then(async (res) => {
+    recommendations = res
+    await addRecommendedMoviesToHistory(recommendations, userId)
+  }).then(async () => {
+    return await retreiveFullRecommendationsFromIds(recommendations.map((recommendation) => recommendation.id))
+  }).then(async (res) => {
+    fullRecommendations = res
+    await setCurrentRecommendations(userId, fullRecommendations)
+  }).then(async () => {
+    await modifyAccount(userId, { lastMovieRecommandation: new Date() })
+  }).then(async () => {
+    logger.info(`Successfully retrieved movie recommendations: ${JSON.stringify(recommendations, null, 2)}`)
+    await mapAccountToSession(req)
+  }).then(() => {
+    return fullRecommendations
   })
 }
 
 export {
   generateMoviesRecommendations,
+  generateRecommendationsFromScratch,
   getRecommandationsFromHistory,
   retreiveFullRecommendationsFromIds
 }

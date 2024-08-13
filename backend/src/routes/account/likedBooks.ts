@@ -11,6 +11,7 @@ import { StatusCodes } from 'http-status-codes'
 
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
+import { preloadNextRecommendations } from '@services/recommendationsCaching/books'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
@@ -121,10 +122,17 @@ router.post('/account/:accountId/likedBooks', rulesPost, validate, logApiRequest
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
-  addBookToLikedBooks(req.params.accountId, req.body.bookId).then(async (updatedLikedBooksList: string[]) => {
-    return await modifyAccount(req.session.account!.id, { likedBooks: updatedLikedBooksList }).then(() => {
+  const accountId = req.params.accountId
+  addBookToLikedBooks(accountId, req.body.bookId).then(async (updatedLikedBooksList: string[]) => {
+    await modifyAccount(accountId, { likedBooks: updatedLikedBooksList }).then(() => {
       logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s liked books`)
       return res.status(StatusCodes.CREATED).json(updatedLikedBooksList)
+    }).then(async () => {
+      if (process.env.NODE_ENV !== 'test') {
+        await preloadNextRecommendations(accountId).catch((err: Error) => {
+          logger.error(`${err.name}: ${err.message}`)
+        })
+      }
     })
   }).catch(handleErrorOnRoute(res))
 })
@@ -139,10 +147,17 @@ router.delete('/account/:accountId/likedBooks/:bookId', rulesDelete, validate, l
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
-  removeBookFromLikedBooks(req.params.accountId, req.params.bookId).then(async (updatedLikedBooksList: string[]) => {
-    return await modifyAccount(req.session.account!.id, { likedBooks: updatedLikedBooksList }).then(() => {
+  const accountId = req.params.accountId
+  removeBookFromLikedBooks(accountId, req.params.bookId).then(async (updatedLikedBooksList: string[]) => {
+    await modifyAccount(accountId, { likedBooks: updatedLikedBooksList }).then(() => {
       logger.info(`Successfully removed ${req.body.bookId} of ${req.session.account?.email}'s liked books.`)
       return res.status(StatusCodes.OK).json(updatedLikedBooksList)
+    }).then(async () => {
+      if (process.env.NODE_ENV !== 'test') {
+        await preloadNextRecommendations(accountId).catch((err: Error) => {
+          logger.error(`${err.name}: ${err.message}`)
+        })
+      }
     })
   }).catch(handleErrorOnRoute(res))
 })

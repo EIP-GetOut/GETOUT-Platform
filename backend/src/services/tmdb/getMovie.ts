@@ -22,12 +22,12 @@ interface Cast {
 
 export interface MovieResponse {
   id: number
-  title: string | undefined
-  overview: string | undefined
-  poster_path: string | undefined
-  backdrop_path: string | undefined
-  release_date: string | undefined // formatted YYYY-MM-DD
-  vote_average: number
+  title: string
+  synopsis: string
+  posterPath: string
+  backdropPath: string
+  releaseDate: string // formatted YYYY-MM-DD
+  averageRating: number
   cast: Cast[]
   director: Cast
   duration: number
@@ -77,28 +77,28 @@ async function getMovieDetails (id: number): Promise<TMDBMovieResponse> {
 async function getMovie (id: number): Promise<MovieResponse> {
   return await getMovieDetails(id).then(async (movieObtained: TMDBMovieResponse) => {
     return await fetchMovieCredits(id).then(async (cast: Cast []) => {
-      return await getDirector(id).then((director: any) => {
+      return await getDirector(id).then((director: Cast) => {
         return ({
           id,
           title: movieObtained.title,
-          overview: movieObtained.overview,
-          poster_path: movieObtained.poster_path,
-          backdrop_path: movieObtained.backdrop_path,
-          release_date: movieObtained.release_date,
-          vote_average: Number(movieObtained.vote_average) / 2,
+          synopsis: movieObtained.overview,
+          posterPath: movieObtained.poster_path,
+          backdropPath: movieObtained.backdrop_path,
+          releaseDate: movieObtained.release_date,
+          averageRating: Number(movieObtained.vote_average) / 2,
           cast,
           director,
-          duration: movieObtained.runtime ?? NaN
-        }) satisfies MovieResponse
+          duration: movieObtained.runtime
+        }) satisfies Partial<MovieResponse>
       })
     })
-  }).then((movieDetails: MovieResponse) => {
-    for (const [key, value] of Object.entries(movieDetails)) {
-      if (value === undefined) {
-        throw new ApiError(`${key} is undefined`)
+  }).then((movieResponse: Partial<MovieResponse>) => {
+    for (const [key, value] of Object.entries(movieResponse)) {
+      if (value == null) {
+        throw new ApiError(`Value of property ${key} is missing in TMDB response.`)
       }
     }
-    return (movieDetails)
+    return movieResponse as MovieResponse
   }).catch((err: Error | AppError) => {
     if (err instanceof AppError) {
       throw err

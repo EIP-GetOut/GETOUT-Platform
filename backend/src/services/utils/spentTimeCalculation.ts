@@ -5,8 +5,8 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
-import { getBook } from '@models/book'
-import { getMovie } from '@models/movie'
+import { getBook } from '@services/googlebooks/getBook'
+import { getMovie } from '@services/tmdb/getMovie'
 
 import { type Account } from '@entities/Account'
 
