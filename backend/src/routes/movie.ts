@@ -10,9 +10,8 @@ import { StatusCodes } from 'http-status-codes'
 
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
+import { getMovie } from '@services/tmdb/getMovie'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
-
-import { getMovie } from '@models/movie'
 
 const router = Router()
 
