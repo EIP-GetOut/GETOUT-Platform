@@ -163,8 +163,10 @@ router.put('/account/preferences', rulesPut, validate, logApiRequest, (req: Requ
     }).then(() => {
       return res.status(StatusCodes.OK).json(preferencesAdded)
     }).then(async () => {
-      await preloadNextMoviesRecommendations(accountId)
-      await preloadNextBooksRecommendations(accountId)
+      await Promise.all([
+        preloadNextMoviesRecommendations(accountId),
+        preloadNextBooksRecommendations(accountId)
+      ])
     })
   }).catch(handleErrorOnRoute(res))
 })
@@ -186,8 +188,10 @@ router.post('/account/preferences', rulesPut, validate, logApiRequest, (req: Req
   }).then(async () => {
     logger.info(`Preferences created: ${JSON.stringify(req.body, null, 0)}`)
   }).then(async () => {
-    await generateMovieRecommendationsFromScratch(req, res, accountId)
-    await generateBookRecommendationsFromScratch(req, res, accountId)
+    await Promise.all([
+      generateMovieRecommendationsFromScratch(req, res, accountId),
+      generateBookRecommendationsFromScratch(req, res, accountId)
+    ])
   }).then(async () => {
     return await modifyAccount(accountId, { preferences: preferencesAdded })
   }).then(() => {

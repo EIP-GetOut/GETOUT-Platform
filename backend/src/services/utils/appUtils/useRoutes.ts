@@ -35,6 +35,7 @@ import watchlist from '@routes/account/watchlist'
 import accounts from '@routes/accounts'
 import basicEndpoints from '@routes/basicEndpoints'
 import book from '@routes/book'
+import dailyInfo from '@routes/dailyInfo'
 import movie from '@routes/movie'
 import news from '@routes/news'
 import permissions from '@routes/permissions'
@@ -71,6 +72,7 @@ const useRoutes = (app: Application): Application => (
     .use(accounts)
     .use(accountsStats)
     .use(recommendationsStats)
+    .use(dailyInfo)
     .use(movie)
     .use(book)
     .use(news)
