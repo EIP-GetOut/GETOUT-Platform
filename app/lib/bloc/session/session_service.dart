@@ -5,12 +5,9 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-import 'dart:io';
-
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/session/session_event.dart';
@@ -18,32 +15,26 @@ import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/global.dart' as globals;
 
+import '../../global.dart';
+
 class SessionService {
-  Future<void> setCookies() async {
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    String appDocPath = appDocDir.path;
-
-    globals.cookieJar = PersistCookieJar(
-        ignoreExpires: true, storage: FileStorage('$appDocPath/.cookies/'));
-
-    globals.dio = Dio();
-    globals.dio?.interceptors.add(CookieManager(globals.cookieJar!));
-  }
 
   Future<SessionStatusResponse> getSession() async {
-    if (globals.cookieJar == null && globals.dio == null) {
-      await setCookies();
-    }
+    Dio dio = Dio();
+    dio.interceptors.add(CookieManager(PersistCookieJar(
+        ignoreExpires: true,
+        storage: FileStorage(cookiePath))));
+    dio.options.headers = ({'Content-Type': 'application/json'});
+
     try {
-      final response = await globals.dio
-          ?.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
-      if (response?.statusCode == HttpStatus.OK) {
-        if (response?.data['account'] != null) {
-          globals.session = response?.data['account'];
-          if (response?.data['account']['isVerified'] != true) {
+      final response = await dio.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
+      if (response.statusCode == HttpStatus.OK) {
+        if (response.data['account'] != null) {
+          globals.session = response.data['account'];
+          if (response.data['account']['isVerified'] != true) {
             return SessionStatusResponse(
                 statusCode: SessionStatus.emailNotVerified.index);
-          } else if (response?.data['account']['preferences'] != null) {
+          } else if (response.data['account']['preferences'] != null) {
             return SessionStatusResponse(statusCode: SessionStatus.found.index);
           } else {
             return SessionStatusResponse(

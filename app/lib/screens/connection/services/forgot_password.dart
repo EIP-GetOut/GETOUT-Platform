@@ -8,12 +8,19 @@
 part of 'service.dart';
 
 class ForgotPasswordService extends ServiceTemplate {
-  ForgotPasswordService();
+  final Dio dio = Dio();
+
+  ForgotPasswordService() {
+    dio.interceptors.add(CookieManager(PersistCookieJar(
+        ignoreExpires: true,
+        storage: FileStorage(globals.cookiePath))));
+    dio.options.headers = ({'Content-Type': 'application/json'});
+  }
 
   Future<void> checkEmail(final CheckEmailRequestModel request) async
   {
     try {
-      await globals.dio?.post(
+      await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.resetPasswordEmailPath}',
           data: {
             'email': request.email,
@@ -29,7 +36,7 @@ class ForgotPasswordService extends ServiceTemplate {
   Future<void> sendNewPassword(final NewPasswordRequestModel request) async
   {
     try {
-      await globals.dio?.post(
+      await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.resetPasswordNewPasswordPath}',
           data: {
             'newPassword' : request.password,
