@@ -23,17 +23,11 @@ class MoviesService extends ServiceTemplate {
           options: Options(headers: {'Content-Type': 'application/json'}));
 
       if (response?.statusCode != HttpStatus.OK) {
-        print("ERRORRRR");
         return Future.error(Exception(
           'Error ${response?.statusCode} while fetching movies: ${response?.statusMessage}',
         ));
       }
-      print(response?.statusCode);
-      print("DANS RECOMMENDED BOOKS");
-      print(response?.statusMessage);
-      print(response?.data);
       response?.data.forEach((elem) {
-      print(elem['title']);
         result.add(MoviePreview(
             id: elem['id'],
             title: elem['title'],
@@ -41,8 +35,6 @@ class MoviesService extends ServiceTemplate {
             overview: elem['description']));
       });
     } on DioException catch (dioException) {
-      print("dioexception");
-      print(dioException);
       if (dioException.response != null &&
           dioException.response?.statusCode != null) {
         return Future.error(Exception(
@@ -167,14 +159,13 @@ class MoviesService extends ServiceTemplate {
           const StoryNewsResponse(statusCode: HttpStatus.APP_ERROR);
       final response = await globals.dio
           ?.get('${ApiConstants.rootApiPath}${ApiConstants.dailyInfo}');
-      // print(response?.data);
       if (response?.statusCode == HttpStatus.OK) {
         result = StoryNewsResponse(
           statusCode: response?.statusCode ?? 500,
           quote: response?.data['quote'] ?? '',
-          author: response?.data['author'] ?? 'Auteur inconnu',
+          author: response?.data['author'] ?? 'Auteur inconnue',
           sourceStr: response?.data['sourceStr'] ?? '',
-          sourceUrl: response?.data['sourceUrl'] ?? 'Source inconnu',
+          sourceUrl: response?.data['sourceUrl'] ?? 'Source inconnue',
         );
       }
       return result;
@@ -188,13 +179,11 @@ class MoviesService extends ServiceTemplate {
 
   Future<NewsResponse> getInfoNews() async {
     try {
-      // print("DANS LA FONCTION GET INFO NEWWWWWWWWWWS");
       NewsResponse result =
           const NewsResponse(statusCode: HttpStatus.APP_ERROR);
       final response = await globals.dio
           ?.get('${ApiConstants.rootApiPath}${ApiConstants.dailyNews}');
       if (response?.statusCode == HttpStatus.OK) {
-        print(response?.data);
         result = NewsResponse(
           statusCode: response?.statusCode ?? 500,
           title: response?.data['title'] ?? '',
