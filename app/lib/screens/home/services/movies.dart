@@ -23,19 +23,26 @@ class MoviesService extends ServiceTemplate {
           options: Options(headers: {'Content-Type': 'application/json'}));
 
       if (response?.statusCode != HttpStatus.OK) {
+        print("ERRORRRR");
         return Future.error(Exception(
           'Error ${response?.statusCode} while fetching movies: ${response?.statusMessage}',
         ));
       }
-
+      print(response?.statusCode);
+      print("DANS RECOMMENDED BOOKS");
+      print(response?.statusMessage);
+      print(response?.data);
       response?.data.forEach((elem) {
+      print(elem['title']);
         result.add(MoviePreview(
             id: elem['id'],
             title: elem['title'],
-            posterPath: elem['poster_path'],
-            overview: elem['overview']));
+            posterPath: elem['posterPath'],
+            overview: elem['description']));
       });
     } on DioException catch (dioException) {
+      print("dioexception");
+      print(dioException);
       if (dioException.response != null &&
           dioException.response?.statusCode != null) {
         return Future.error(Exception(
@@ -181,7 +188,7 @@ class MoviesService extends ServiceTemplate {
 
   Future<NewsResponse> getInfoNews() async {
     try {
-      print("DANS LA FONCTION GET INFO NEWWWWWWWWWWS");
+      // print("DANS LA FONCTION GET INFO NEWWWWWWWWWWS");
       NewsResponse result =
           const NewsResponse(statusCode: HttpStatus.APP_ERROR);
       final response = await globals.dio

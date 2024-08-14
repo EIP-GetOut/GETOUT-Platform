@@ -27,13 +27,12 @@ class BooksService extends ServiceTemplate {
           'Error ${response?.statusCode} while fetching books: ${response?.statusMessage}',
         ));
       }
-
       response?.data.forEach((elem) {
         result.add(BookPreview(
             id: elem['id'],
             title: elem['title'],
-            posterPath: elem['poster_path'],
-            overview: elem['overview']));
+            posterPath: elem['posterPath'],
+            overview: elem['description']));
       });
     } on DioException catch (dioException) {
       if (dioException.response != null && dioException.response?.statusCode != null) {
