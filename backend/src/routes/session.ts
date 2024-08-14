@@ -35,8 +35,9 @@ const router = Router()
  *           type: object
  */
 router.get('/session', validate, logApiRequest, (req: Request, res: Response) => {
-  if (req.session.account?.id == null) {
+  if (req.session?.account?.id == null) {
     res.status(StatusCodes.OK).json(req.session)
+    return
   }
 
   let account: Account
