@@ -24,7 +24,8 @@ void describe('Daily Info route', () => {
       expect(response.status).toBe(200)
       expect(response.body).toHaveProperty('quote')
       expect(response.body).toHaveProperty('author')
-      expect(response.body).toHaveProperty('source')
+      expect(response.body).toHaveProperty('sourceUrl')
+      expect(response.body).toHaveProperty('sourceStr')
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
       expect(response.body.author && response.body.source).toBeNull()
     })
