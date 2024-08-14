@@ -25,6 +25,9 @@ import 'package:getout/screens/home/bloc/recommended_books/recommended_books_blo
 import 'package:getout/screens/home/bloc/saved_books/saved_books_bloc.dart';
 import 'package:getout/screens/home/bloc/liked_books/liked_books_bloc.dart';
 
+import 'package:getout/screens/home/widgets/dashboard/story_news/story_news_bloc.dart';
+import 'package:getout/screens/home/widgets/dashboard/news/news_bloc.dart';
+
 class HomeProvider extends StatelessWidget {
   const HomeProvider({super.key});
 
@@ -81,6 +84,20 @@ class HomeProvider extends StatelessWidget {
                 homeService: context.read<HomeService>(),
               )..add(
                 const GenerateBooksRequest(),
+              ),
+            ),
+            BlocProvider<StoryNewsBloc>(
+              create: (context) => StoryNewsBloc(
+                homeService: context.read<HomeService>(),
+              )..add(
+                const StoryNewsRequest(),
+              ),
+            ),
+                        BlocProvider<NewsBloc>(
+              create: (context) => NewsBloc(
+                homeService: context.read<HomeService>(),
+              )..add(
+                const NewsRequest(),
               ),
             ),
           ],

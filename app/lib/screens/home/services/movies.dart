@@ -153,4 +153,55 @@ class MoviesService extends ServiceTemplate {
     }
     return result;
   }
+
+  Future<StoryNewsResponse> getInfoStoryNews() async {
+    try {
+      StoryNewsResponse result =
+          const StoryNewsResponse(statusCode: HttpStatus.APP_ERROR);
+      final response = await globals.dio
+          ?.get('${ApiConstants.rootApiPath}${ApiConstants.dailyInfo}');
+      // print(response?.data);
+      if (response?.statusCode == HttpStatus.OK) {
+        result = StoryNewsResponse(
+          statusCode: response?.statusCode ?? 500,
+          quote: response?.data['quote'] ?? '',
+          author: response?.data['author'] ?? 'Auteur inconnu',
+          sourceStr: response?.data['sourceStr'] ?? '',
+          sourceUrl: response?.data['sourceUrl'] ?? 'Source inconnu',
+        );
+      }
+      return result;
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
+    }
+  }
+
+  Future<NewsResponse> getInfoNews() async {
+    try {
+      print("DANS LA FONCTION GET INFO NEWWWWWWWWWWS");
+      NewsResponse result =
+          const NewsResponse(statusCode: HttpStatus.APP_ERROR);
+      final response = await globals.dio
+          ?.get('${ApiConstants.rootApiPath}${ApiConstants.dailyNews}');
+      if (response?.statusCode == HttpStatus.OK) {
+        print(response?.data);
+        result = NewsResponse(
+          statusCode: response?.statusCode ?? 500,
+          title: response?.data['title'] ?? '',
+          picture: response?.data['picture'] ?? '',
+          url: response?.data['url'] ?? '',
+          sourceLogo: response?.data['sourceLogo'] ?? '',
+        );
+      }
+      return result;
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
+    }
+  }
 }
