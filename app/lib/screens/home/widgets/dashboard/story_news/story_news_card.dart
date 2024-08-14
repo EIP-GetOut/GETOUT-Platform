@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-final Uri _url = Uri.parse('https://comarketing-news.fr/');
+import 'package:getout/screens/home/widgets/dashboard/story_news/story_news_bloc.dart';
+import 'package:getout/tools/launch_webview.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StoryNewsCard extends StatelessWidget {
   const StoryNewsCard({super.key});
 
+  // final StoryNewsResponse news;
+
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<StoryNewsBloc, StoryNewsState>(builder: (context, state) {
     return Center(
         child: GestureDetector(
-      onTap: () => launchUrl2(),
+      onTap: () => launchWebView(state.storyNews.sourceUrl),
       child: Card(
         shape: RoundedRectangleBorder(
           side: BorderSide(
@@ -36,18 +39,18 @@ class StoryNewsCard extends StatelessWidget {
                   fit: BoxFit.contain,
                 ),
               ),
-              const Text(
-                  ' Les réseaux sociaux sont perçus par les Français comme un danger plutôt qu’un bénéfice pour les enfants et adolescents (81%), la vie privée (78%) et la qualité de l’information (62%).',
-                  style: TextStyle(
+              Text(
+                  '${state.storyNews.quote}',
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                     fontSize: 15,
                   ),
                   textAlign: TextAlign.center),
-              const Padding(
-                padding: EdgeInsets.all(10),
-                child: Text('https://comarketing-news.fr/',
-                    style: TextStyle(
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Text('${state.storyNews.sourceStr}',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
                       fontSize: 15,
@@ -61,12 +64,6 @@ class StoryNewsCard extends StatelessWidget {
         ),
       ),
     ));
+  });
   }
-}
-
-Future<void> launchUrl2() async {
-  // if (!await launchUrl(_url, mode: LaunchMode.inAppWebView)) {
-  //   throw Exception('Could not launch url");
-  // }
-  await launchUrl(_url, mode: LaunchMode.inAppWebView);
 }
