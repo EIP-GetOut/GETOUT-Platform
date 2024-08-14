@@ -26,6 +26,7 @@ async function mapAccountToSession (req: Request, isTemporary: boolean = false):
       logger.error('Failed remaping session.')
       throw new SessionMappingError()
     }
+    console.log(account)
     req.session.account = {
       id: account.id,
       createdDate: account.createdDate,
@@ -45,7 +46,18 @@ async function mapAccountToSession (req: Request, isTemporary: boolean = false):
       secondsBeforeNextBookRecommendation: account.lastBookRecommandation != null
         ? getMissingTimeBeforeNextRecommendation(account.lastBookRecommandation)
         : null,
-      role: account.role
+      role: account.role,
+      /* This will be deleted when not necessary for the frontend anymore */
+      watchlist: account.watchlist,
+      readingList: account.readingList,
+      likedMovies: account.likedMovies,
+      likedBooks: account.likedBooks,
+      dislikedMovies: account.dislikedMovies,
+      dislikedBooks: account.dislikedBooks,
+      seenMovies: account.seenMovies,
+      readBooks: account.readBooks,
+      recommendedBooksHistory: account.recommendedBooksHistory,
+      recommendedMoviesHistory: account.recommendedMoviesHistory
     }
 
     const week = 3600000 * 24 * 7

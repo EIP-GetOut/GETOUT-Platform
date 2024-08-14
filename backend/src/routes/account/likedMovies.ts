@@ -14,6 +14,7 @@ import validate from '@services/middlewares/validator'
 import { preloadNextRecommendations } from '@services/recommendationsCaching/movies'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
+import { mapAccountToSession } from '@services/utils/mapAccountToSession'
 
 import { modifyAccount } from '@models/account'
 import { findEntity } from '@models/getObjects'
@@ -130,7 +131,10 @@ router.post('/account/:accountId/likedMovies', rulesPost, validate, logApiReques
   }
   const accountId = req.params.accountId
   addMovieToLikedMovies(accountId, parseInt(req.body.movieId)).then(async (updatedLikedMoviesList: number[]) => {
-    await modifyAccount(accountId, { likedMovies: updatedLikedMoviesList }).then(() => {
+    await modifyAccount(accountId, { likedMovies: updatedLikedMoviesList }).then(async () => {
+      /* This will be deleted when not necessary for the frontend anymore and not in the session */
+      return await mapAccountToSession(req, true)
+    }).then(() => {
       logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s liked movies.`)
       return res.status(StatusCodes.CREATED).json(updatedLikedMoviesList)
     }).then(async () => {
@@ -155,7 +159,10 @@ router.delete('/account/:accountId/likedMovies/:movieId', rulesDelete, validate,
   }
   const accountId = req.params.accountId
   removeMovieFromLikedMovies(accountId, parseInt(req.params.movieId)).then(async (updatedLikedMoviesList: number[]) => {
-    await modifyAccount(accountId, { likedMovies: updatedLikedMoviesList }).then(() => {
+    await modifyAccount(accountId, { likedMovies: updatedLikedMoviesList }).then(async () => {
+      /* This will be deleted when not necessary for the frontend anymore and not in the session */
+      return await mapAccountToSession(req, true)
+    }).then(() => {
       logger.info(`Successfully removed ${req.params.movieId} of ${req.session.account?.email}'s liked movies.`)
       return res.status(StatusCodes.OK).json(updatedLikedMoviesList)
     }).then(async () => {

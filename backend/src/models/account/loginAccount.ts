@@ -45,7 +45,18 @@ async function createSession (req: Request, account: Account): Promise<void> {
     secondsBeforeNextBookRecommendation: account.lastBookRecommandation != null
       ? getMissingTimeBeforeNextRecommendation(account.lastBookRecommandation)
       : null,
-    role: account.role
+    role: account.role,
+    /* This will be deleted when not necessary for the frontend anymore */
+    watchlist: account.watchlist,
+    readingList: account.readingList,
+    likedMovies: account.likedMovies,
+    likedBooks: account.likedBooks,
+    dislikedMovies: account.dislikedMovies,
+    dislikedBooks: account.dislikedBooks,
+    seenMovies: account.seenMovies,
+    readBooks: account.readBooks,
+    recommendedBooksHistory: account.recommendedBooksHistory,
+    recommendedMoviesHistory: account.recommendedMoviesHistory
   }
   await Promise.all([
     calculateSpentMinutesWatching(account), calculateTotalPagesRead(account)

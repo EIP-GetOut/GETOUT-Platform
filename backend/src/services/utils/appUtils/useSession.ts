@@ -33,6 +33,17 @@ export interface SessionAccount {
   secondsBeforeNextBookRecommendation: number | null
   role: Role
   isVerified: boolean
+  /* This will be deleted when not necessary for the frontend anymore */
+  watchlist: number []
+  readingList: string []
+  likedMovies: number []
+  likedBooks: string []
+  dislikedMovies: number []
+  dislikedBooks: string []
+  seenMovies: number []
+  readBooks: string []
+  recommendedBooksHistory: string []
+  recommendedMoviesHistory: number []
 }
 
 declare module 'express-session' {

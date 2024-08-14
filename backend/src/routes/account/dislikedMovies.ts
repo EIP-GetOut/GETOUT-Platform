@@ -14,6 +14,7 @@ import validate from '@services/middlewares/validator'
 import { preloadNextRecommendations } from '@services/recommendationsCaching/movies'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
+import { mapAccountToSession } from '@services/utils/mapAccountToSession'
 
 import { modifyAccount } from '@models/account'
 import { findEntity } from '@models/getObjects'
@@ -130,7 +131,10 @@ router.post('/account/:accountId/dislikedMovies', rulesPost, validate, logApiReq
   }
   const accountId = req.params.accountId
   addMovieToDislikedMovies(req.params.accountId, parseInt(req.body.movieId)).then(async (updatedDislikedMoviesList: number[]) => {
-    await modifyAccount(accountId, { dislikedMovies: updatedDislikedMoviesList }).then(() => {
+    await modifyAccount(accountId, { dislikedMovies: updatedDislikedMoviesList }).then(async () => {
+      /* This will be deleted when not necessary for the frontend anymore and not in the session */
+      return await mapAccountToSession(req, true)
+    }).then(() => {
       logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s disliked movies.`)
       return res.status(StatusCodes.CREATED).json(updatedDislikedMoviesList)
     }).then(async () => {
@@ -155,7 +159,10 @@ router.delete('/account/:accountId/dislikedMovies/:movieId', rulesDelete, valida
   }
   const accountId = req.params.accountId
   removeMovieFromDislikedMovies(accountId, parseInt(req.params.movieId)).then(async (updatedDislikedMoviesList: number[]) => {
-    await modifyAccount(accountId, { dislikedMovies: updatedDislikedMoviesList }).then(() => {
+    await modifyAccount(accountId, { dislikedMovies: updatedDislikedMoviesList }).then(async () => {
+      /* This will be deleted when not necessary for the frontend anymore and not in the session */
+      return await mapAccountToSession(req, true)
+    }).then(() => {
       logger.info(`Successfully removed ${req.body.movieId} of ${req.session.account?.email}'s disliked movies.`)
       return res.status(StatusCodes.OK).json(updatedDislikedMoviesList)
     }).then(async () => {

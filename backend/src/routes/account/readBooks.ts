@@ -14,6 +14,7 @@ import validate from '@services/middlewares/validator'
 import { preloadNextRecommendations } from '@services/recommendationsCaching/books'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
+import { mapAccountToSession } from '@services/utils/mapAccountToSession'
 
 import { modifyAccount } from '@models/account'
 import { addBookToReadBooks, removeBookFromReadBooks } from '@models/book'
@@ -124,7 +125,10 @@ router.post('/account/:accountId/readBooks', rulesPost, validate, logApiRequest,
   }
   const accountId = req.params.accountId
   addBookToReadBooks(req.params.accountId, req.body.bookId).then(async (updatedReadBooks: string[]) => {
-    await modifyAccount(req.session.account!.id, { readBooks: updatedReadBooks }).then(() => {
+    await modifyAccount(req.session.account!.id, { readBooks: updatedReadBooks }).then(async () => {
+      /* This will be deleted when not necessary for the frontend anymore and not in the session */
+      return await mapAccountToSession(req, true)
+    }).then(() => {
       logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s read books.`)
       return res.status(StatusCodes.CREATED).json(updatedReadBooks)
     }).then(async () => {
@@ -149,7 +153,10 @@ router.delete('/account/:accountId/readBooks/:bookId', rulesDelete, validate, lo
   }
   const accountId = req.params.accountId
   removeBookFromReadBooks(req.params.accountId, req.params.bookId).then(async (updatedReadBooks: string[]) => {
-    await modifyAccount(req.session.account!.id, { readBooks: updatedReadBooks }).then(() => {
+    await modifyAccount(req.session.account!.id, { readBooks: updatedReadBooks }).then(async () => {
+      /* This will be deleted when not necessary for the frontend anymore and not in the session */
+      return await mapAccountToSession(req, true)
+    }).then(() => {
       logger.info(`Successfully removed ${req.params.bookId} of ${req.session.account?.email}'s read books.`)
       return res.status(StatusCodes.OK).json(updatedReadBooks)
     }).then(async () => {

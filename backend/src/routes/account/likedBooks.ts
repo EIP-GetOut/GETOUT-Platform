@@ -14,6 +14,7 @@ import validate from '@services/middlewares/validator'
 import { preloadNextRecommendations } from '@services/recommendationsCaching/books'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
+import { mapAccountToSession } from '@services/utils/mapAccountToSession'
 
 import { modifyAccount } from '@models/account'
 import { addBookToLikedBooks, removeBookFromLikedBooks } from '@models/book'
@@ -124,7 +125,10 @@ router.post('/account/:accountId/likedBooks', rulesPost, validate, logApiRequest
   }
   const accountId = req.params.accountId
   addBookToLikedBooks(accountId, req.body.bookId).then(async (updatedLikedBooksList: string[]) => {
-    await modifyAccount(accountId, { likedBooks: updatedLikedBooksList }).then(() => {
+    await modifyAccount(accountId, { likedBooks: updatedLikedBooksList }).then(async () => {
+      /* This will be deleted when not necessary for the frontend anymore and not in the session */
+      return await mapAccountToSession(req, true)
+    }).then(() => {
       logger.info(`Successfully added ${req.body.bookId} to ${req.session.account?.email}'s liked books`)
       return res.status(StatusCodes.CREATED).json(updatedLikedBooksList)
     }).then(async () => {
@@ -149,7 +153,10 @@ router.delete('/account/:accountId/likedBooks/:bookId', rulesDelete, validate, l
   }
   const accountId = req.params.accountId
   removeBookFromLikedBooks(accountId, req.params.bookId).then(async (updatedLikedBooksList: string[]) => {
-    await modifyAccount(accountId, { likedBooks: updatedLikedBooksList }).then(() => {
+    await modifyAccount(accountId, { likedBooks: updatedLikedBooksList }).then(async () => {
+      /* This will be deleted when not necessary for the frontend anymore and not in the session */
+      return await mapAccountToSession(req, true)
+    }).then(() => {
       logger.info(`Successfully removed ${req.body.bookId} of ${req.session.account?.email}'s liked books.`)
       return res.status(StatusCodes.OK).json(updatedLikedBooksList)
     }).then(async () => {
