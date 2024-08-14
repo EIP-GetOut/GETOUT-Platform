@@ -37,10 +37,10 @@ class SessionService {
     try {
       final response = await globals.dio
           ?.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
-      print(response?.data);
       if (response?.statusCode == HttpStatus.OK) {
         if (response?.data['account'] != null) {
           globals.session = response?.data['account'];
+          print(globals.session);
           if (response?.data['account']['isVerified'] != true) {
             return SessionStatusResponse(
                 statusCode: SessionStatus.emailNotVerified.index);

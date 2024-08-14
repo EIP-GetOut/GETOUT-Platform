@@ -19,9 +19,7 @@ class BookService {
   final String userId = globals.session?['id'].toString() ?? '';
 
   PersonList parseAuthor(final castData) {
-    print("dans parseAuhtors");
     PersonList castList = [];
-    print(castData);
     for (final author in castData) {
       String? name = author ?? '';
       String picture = 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg';
@@ -29,17 +27,14 @@ class BookService {
       if (name != null) {
         castList.add(Person(name: name, picture: picture));
       }
-      print(castList);
     }
 
-    print(castList);
     return castList;
   }
 
   Future<InfoBookResponse> getInfoBook(CreateInfoBookRequest request) async {
     InfoBookResponse result =
         const InfoBookResponse(statusCode: HttpStatus.APP_ERROR);
-print("dans get info book");
     final response = await globals.dio?.get(
         '${ApiConstants.rootApiPath}${ApiConstants.getInfoBookPath}/${request.id}',
         options: Options(headers: {'Content-Type': 'application/json'}));
@@ -49,8 +44,6 @@ print("dans get info book");
       }
 
       final dynamic data = response?.data;
-      // print('DATA ====== ');
-      // print(data);
       result = InfoBookResponse(
           title: data['title'] ?? 'Aucun titre',
           overview: data['description'] != null ? parseFragment(data['description']).text :
@@ -73,8 +66,6 @@ print("dans get info book");
       // add "catch (dioError)" for debugging
       rethrow;
     } catch (dioError) {
-      print('dioError');
-      print(dioError);
       rethrow;
     }
   }

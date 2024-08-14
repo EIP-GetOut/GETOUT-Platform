@@ -26,7 +26,7 @@ class RefreshTimeCard extends StatelessWidget {
                 size: 30,
               ),
               title: Text(
-                  durationFormat('Rafraichissement de vos recommandations dans ', min(globals.session?['secondsBeforeNextMovieRecommendation'], globals.session?['secondsBeforeNextBookRecommendation'])),
+                  durationFormatSeconds('Rafraichissement de vos recommandations dans ', min(globals.session?['secondsBeforeNextMovieRecommendation'], globals.session?['secondsBeforeNextBookRecommendation'])),
                   style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w500,

@@ -18,8 +18,8 @@ class NewsCard extends StatelessWidget {
                 ),
                 child: Stack(children: <Widget>[
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: /* state.news.picture != ''
+                      borderRadius: BorderRadius.circular(25),
+                      child: /* state.news.picture != ''
                         ? Image.network(
                             '${state.news.picture}',
                             fit: BoxFit.cover,
@@ -29,39 +29,50 @@ class NewsCard extends StatelessWidget {
                                 .withOpacity(1),
                             colorBlendMode: BlendMode.modulate,
                           )
-                        :*/ Container(
+                        :Container(
                             height: 400,
                             width: 500,
                             color: Color.fromARGB(255, 21, 21, 21),
                           ),
-                  ),
-                  Positioned(
+                  ),*/
+                          Image.network(
+                        'https://media.ouest-france.fr/v1/pictures/MjAyNDA1MTE3NGE5YWUzMjVmYzRjM2I3YzNmODBlMmU0YWI0Yzc?width=1260&focuspoint=50%2C25&cropresize=1&client_id=bpeditorial&sign=eee2fc2d863daae83cce5bfed30764d2db552be1832f38238548bc53ab643268',
+                        fit: BoxFit.cover,
+                        height: 400,
+                        width: 500,
+                        color: const Color.fromRGBO(150, 150, 150, 255)
+                            .withOpacity(1),
+                        colorBlendMode: BlendMode.modulate,
+                      )),
+                  const Positioned(
                       bottom: 10,
                       left: 10,
                       right: 10,
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: Text(
-                          '${state.news.title}',
-                          style: const TextStyle(
+                          // '${state.news.title}',
+                          "TikTok, Instagram, X...Les Français s'inquiètent des réseaux sociaux et demandent plus de régulation",
+                          style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
                               fontSize: 20),
                           textAlign: TextAlign.left,
                         ),
                       )),
-                  // Positioned(
-                  //     bottom: 200,
-                  //     left: 10,
-                  //     right: 10,
-                  //     child: Image.network(
-                  //       '${state.news.sourceLogo}',
-                  //       fit: BoxFit.fill,
-                  //       height: 100,
-                  //       width: 100,
-                  //       colorBlendMode: BlendMode.modulate,
-                  //     ))
-              ]),
+                  Positioned(
+                      bottom: 200,
+                      left: 10,
+                      right: 10,
+                      child: Image.network(
+                        // '${state.news.sourceLogo}',
+                        'https://www.lachance.media/wp-content/uploads/2018/09/ouestfrance-e1599137740364.png',
+                        fit: BoxFit.fill,
+                        height: 100,
+                        width: 100,
+                        colorBlendMode: BlendMode.modulate,
+                      ))
+                ]),
               )));
     });
   }
