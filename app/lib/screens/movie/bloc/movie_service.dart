@@ -20,9 +20,9 @@ class MovieService {
     PersonList castList = [];
 
         for (final actor in castData) {
-          String? name = actor['name'];
+          String? name = actor['name'] ?? 'Acteur inconnue';
           String picture = actor['picture'] ??
-              'https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg';
+              'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg';
 
           if (name != null) {
             castList.add(Person(name: name, picture: picture));
@@ -34,9 +34,9 @@ class MovieService {
 
   Person parseDirector(final directorData) {
 
-    String name = directorData['name'];
+    String name = directorData['name'] ?? 'Réalisateur inconnue';
     String picture = directorData['picture'] ??
-        'https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg';
+        'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg';
 
     return Person(name: name, picture: picture);
   }
@@ -55,23 +55,23 @@ class MovieService {
       final dynamic data = response?.data;
 
       result = InfoMovieResponse(
-          title: data['movie']['title'],
+          title: data['title'] ?? 'Titre inconnue',
           overview:
-              data['movie']['overview'] ?? 'Pas de description disponible',
-          posterPath: data['movie']['poster_path'],
-          backdropPath: data['movie']['backdrop_path'],
-          releaseDate: data['movie']['release_date'],
-          voteAverage: data['movie']['vote_average'],
-          duration: (data['movie']['duration'].toString() == '0')
+              data['synopsis'] ?? 'Pas de description disponible',
+          posterPath: data['posterPath'] ?? 'https://media.comicbook.com/files/img/default-movie.png',
+          backdropPath: data['backdropPath'] ?? 'https://media.comicbook.com/files/img/default-movie.png',
+          releaseDate: data['releaseDate'],
+          voteAverage: data['averageRating'],
+          duration: (data['duration'].toString() == '0')
               ? 'N/A'
-              : data['movie']['duration'],
-          cast: parseCast(data['movie']['cast']),
-          director: parseDirector(data['movie']['director']),
+              : data['duration'],
+          cast: parseCast(data['cast']),
+          director: parseDirector(data['director']),
           statusCode: response?.statusCode ?? 500,
-          liked: globals.session?['likedMovies'].contains(request.id),
-          disliked: globals.session?['dislikedMovies'].contains(request.id),
-          wishlisted: globals.session?['watchlist'].contains(request.id),
-          seen: globals.session?['seenMovies'].contains(request.id),
+          liked: globals.session?['likedMovies'].toString().contains(request.id.toString()),
+          disliked: globals.session?['dislikedMovies'].toString().contains(request.id.toString()),
+          wishlisted: globals.session?['watchlist'].toString().contains(request.id.toString()),
+          seen: globals.session?['seenMovies'].toString().contains(request.id.toString()),
           id: request.id);
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||
@@ -198,7 +198,7 @@ class MovieService {
     }
   }
 
-  Future<AddMovieResponse> addWishlistedMovie(AddMovieRequest request) async {
+  Future<AddMovieResponse> addWishListedMovie(AddMovieRequest request) async {
     AddMovieResponse result =
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
@@ -226,7 +226,7 @@ class MovieService {
     }
   }
 
-  Future<AddMovieResponse> removeWishlistedMovie(
+  Future<AddMovieResponse> removeWishListedMovie(
       AddMovieRequest request) async {
     AddMovieResponse result =
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);

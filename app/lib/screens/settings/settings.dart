@@ -10,13 +10,14 @@ import 'package:getout/screens/settings/pages/disconnect/disconnect.dart';
 import 'package:getout/screens/settings/pages/delete_account/delete_account.dart';
 
 import 'package:getout/screens/form/pages/form.dart';
-import 'package:getout/screens/settings/pages/edit_email/edit_mail.dart';
+import 'package:getout/screens/settings/pages/edit_email/edit_email.dart';
 import 'package:getout/screens/settings/pages/edit_password/edit_password.dart';
 import 'package:getout/screens/settings/pages/history/history_provider.dart';
 import 'package:getout/screens/settings/pages/notifications/notifications_page.dart';
 import 'package:getout/screens/settings/widget/account_info.dart';
 import 'package:getout/screens/settings/widget/setting_row.dart';
 import 'package:getout/screens/settings/widget/title.dart';
+import 'package:getout/widgets/page_title.dart';
 import 'package:getout/tools/app_l10n.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -27,7 +28,6 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        title: Text(appL10n(context)!.settings.toString().toUpperCase()),
         leading: const BackButton(),
       ),
       body: SingleChildScrollView(
@@ -35,8 +35,8 @@ class SettingsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(height: 40),
-//            Divider(height: 20, thickness: 1),
+        PageTitle(title: appL10n(context)!.settings, description: appL10n(context)!.settings_label),
+            const SizedBox(height: 30),
             const AccountInfo(),
             TitleRow(value: appL10n(context)!.account),
             SettingRow(
@@ -44,7 +44,7 @@ class SettingsPage extends StatelessWidget {
                 iconData: Icons.shield_outlined,
                 value: appL10n(context)!.edit_password),
             SettingRow(
-                page: const EditMailPage(),
+                page: const EditEmailPage(),
                 iconData: Icons.mail_outlined,
                 value: appL10n(context)!.edit_email),
 

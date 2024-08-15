@@ -6,7 +6,7 @@
 
   "@_ERROR":{},
 
-  "error_unknow": "Something went wrong, retry later",
+  "error_unknown": "Something went wrong, retry later",
   "error_internet": "Check your internet connection and restart",
   "error_server": "What ! Wait a minute, or contact the support",
   "error_unauthorized": "Check your information and restart",
@@ -30,6 +30,8 @@
   "@_LOGIN": {},
   "sign_in": "Sign in",
   "sign_in_with": "Login with {Service}",
+  "login_title": "Login",
+  "login_label": "Login now to access our service.",
   "@sign_in_with": {
     "placeholders": {
       "Service": {
@@ -43,7 +45,7 @@
 
   "first_connection": "First connection ?",
   "create_account": "Create an account",
-  "account_created": "Your account was succesfully created, you can now sign in.",
+  "account_created": "Your account was successfully created, you can now sign in.",
   "your_profile": "Your profile",
   "lastname": "Lastname",
   "lastname_hint": "Enter your lastname",
@@ -54,8 +56,11 @@
   "birthday": "Birthday",
   "birthday_hint": "Select your birthday",
   "birthday_validator": "Birthday is required",
-  "too_young": "You should be older than 13years old",
+  "too_young": "You should be older than 13 years old",
   "next": "Next",
+  "register_title": "Create an account",
+  "register_label": "Create an account to take advantage of our free, unlimited service.",
+  "email_already_exists": "This email address is already used",
 
   "@_FORGOT_PASSWORD": {},
 
@@ -63,12 +68,13 @@
 
   "@_HOMEPAGE": {},
 
-  "homepage_title": "Welcome !",
+  "homepage_title": "Welcome!",
   "homepage_subtitle": "The productivity within reach",
   "you_saved": "You saved",
   "see_more": "see more >",
   "description": "Description",
   "summary": "Summary",
+  "refresh": "Refresh your recommendations in ",
 
   "@_DASHBOARD": {},
 
@@ -76,6 +82,9 @@
   "movie_recommendations": "The movie you will love",
   "book_recommendations": "Books that will fascinate you",
   "any_recommendations": "Our recommendation for you",
+  "story_news": "Did you know ?",
+  "total_movie": "Movie total",
+  "total_book": "Book total",
 
   "@_MOVIES": {},
 
@@ -119,20 +128,34 @@
   "@_PASSWORD": {},
 
   "password": "Password",
-  "forgot_password": "Mot de passe oublié",
+  "change_password": "Change password",
+  "change_password_label": "Set your new password",
+  "forgot_password": "Password forgotten",
+  "forgot_password_label": "Enter your email address and we'll send you a code",
+  "forgot_password_label_next": "We have sent you a code by email",
   "password_hint": "Enter your password",
   "new_password": "New password",
   "new_password_hint": "Enter your new password",
+  "password_current": "Current password",
+  "password_current_hint": "Enter your current password",
+  "password_current_error": "Incorrect current password",
+  "password_current_empty": "Please enter your current password",
   "confirm_password": "Password confirmation",
   "confirm_password_hint": "Confirm your new password",
   "edit_password": "Edit your password",
   "password_validator": "The password must contains 8 or more characters, with uppercase, lowercase and numbers",
   "password_matching": "New passwords written don't match",
+  "password_empty": "Please enter your password",
+  "password_old": "The new password must be different from the old one",
+  "password_edit_success": "Your password has been changed",
+  "password_tries": "You've entered the wrong code too many times, please try again later.",
 
   "@_EMAIL": {},
 
   "email": "Email address",
   "email_hint": "Enter your email address",
+  "change_email": "Change your email",
+  "change_email_label": "Define your new email address",
   "new_email": "New email address",
   "new_email_hint": "Enter your new email address",
   "confirm_email": "Email address confirmation",
@@ -140,18 +163,30 @@
   "edit_email": "Edit your email address",
   "email_validator": "Enter a valid email",
   "email_matching": "New emails addresses written don't match",
+  "email_empty": "Email can't be empty",
+  "email_old": "The email must be different from the old email",
+  "email_verification_hint": "Enter the confirmation code received by e-mail",
+  "email_verification_resend_hint": "Didn't you get anything ? ",
+  "email_verification_resend": "Resend email",
+  "email_verification_success": "Your e-mail address has been confirmed",
+  "email_verification_success_desc": "Your e-mail address has been confirmed, you can now fill in the preferences form",
+  "email_verification_success_button": "Access the form",
+  "email_verification_resend_info": "An email containing a code has been sent back to you. If you haven't received it, you can try again in 10 seconds.",
+
 
   "@_CODE": {},
 
   "code": "Code",
   "code_hint": "Enter the code",
   "code_validator": "code is a mandatory",
-  "receive_code": "Recevoir un code",
-  "@_code_hint": "Enter the code received by email",
+  "receive_code": "Get a code",
+  "code_incorrect": "The code is incorrect",
+  "code_mail_hint": "Enter the code you received by email",
 
   "@_SETTING": {},
 
-  "settings": "Parameters",
+  "settings": "Settings",
+  "settings_label": "Set up your options",
   "account": "Account",
   "your_account": "Your account",
   "disconnect": "Logout",
@@ -162,11 +197,24 @@
   "select_theme": "Dark theme",
 
   "preference": "Preference",
-  "select_preferences": "Choose your preferences",
+  "select_preferences": "Select your movie preferences",
   "notifications": "Notifications",
   "recommendations": "Recommendations",
 
   "history": "History",
-  "more": "Other",
-  "support": "Support"
+  "other": "Other",
+  "support": "Support",
+
+  "@_FORM": {},
+
+  "book_genre": "Literary genres",
+  "movie_genres": "Movie genres",
+  "viewing_platform": "Viewing platforms",
+  "form_description": "This form allows us to offer you a personalized experience",
+
+  "back_to_settings": "Back to settings",
+  "discover_app": "Discover the app",
+  "confirm": "Confirm",
+
+  "form_validator": "Please select at least one box"
 }

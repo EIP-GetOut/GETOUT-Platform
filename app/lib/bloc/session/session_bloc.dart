@@ -20,6 +20,7 @@ enum SessionStatus {
   found,
   foundWithoutPreferences,
   error,
+  emailNotVerified
 }
 
 extension SessionStatusX on SessionStatus {
@@ -27,6 +28,7 @@ extension SessionStatusX on SessionStatus {
   bool get notFound => this == SessionStatus.notFound;
   bool get found => this == SessionStatus.found;
   bool get foundWithoutPreferences => this == SessionStatus.foundWithoutPreferences;
+  bool get emailNotVerified => this == SessionStatus.emailNotVerified;
 }
 
 class SessionBloc extends Bloc<SessionEvent, SessionState> {
@@ -53,6 +55,8 @@ class SessionBloc extends Bloc<SessionEvent, SessionState> {
         emit(state.copyWith(status: Status.isNotFound));
       } else if (sessionResponse.statusCode == SessionStatus.foundWithoutPreferences.index) {
         emit(state.copyWith(status: Status.isFoundWithoutPreferences));
+      } else if (sessionResponse.statusCode == SessionStatus.emailNotVerified.index) {
+        emit(state.copyWith(status: Status.emailNotVerified));
       } else {
         emit(state.copyWith(status: Status.isNotFound));
       }

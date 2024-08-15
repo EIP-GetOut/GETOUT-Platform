@@ -15,7 +15,7 @@ def filterBooksPool(parameters: json, booksPool: list) -> list:
         title = book["title"]
         if title in exploredBooksTitles:
             booksPool.remove(book)
-        exploredBooksTitles.append(title)
-        if id in parameters["history"] or id in parameters["readBooks"]:
+        elif id in parameters["history"] or id in parameters["readBooks"]:
             booksPool.remove(book)
+        exploredBooksTitles.append(title)
     return booksPool

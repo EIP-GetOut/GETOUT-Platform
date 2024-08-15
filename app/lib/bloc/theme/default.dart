@@ -44,8 +44,9 @@ final getOutTheme = ThemeData(
   textTheme:  const TextTheme(
     /// Button
       labelMedium: TextStyle(
-          fontSize: 23,
-          fontWeight: FontWeight.w600,
+          fontSize: 22,
+          fontFamily: 'Urbanist',
+          fontWeight: FontWeight.bold,
           color: Colors.white),
       bodyLarge: TextStyle(
         fontSize: 20,
@@ -53,12 +54,19 @@ final getOutTheme = ThemeData(
         color: Colors.white,
         fontFamily: 'Poppins',
       ),
-      /// Title of each page of the preferences
+      /// Title of each page
       titleMedium: TextStyle(
         color: Colors.black,
         fontSize: 24,
         fontFamily: 'Poppins',
         fontWeight: FontWeight.bold,
+      ),
+      /// Description below the title of each page
+      headlineSmall: TextStyle(
+        color: Color.fromRGBO(0, 0, 0, 0.5),
+        fontSize: 16,
+        fontFamily: 'Poppins',
+        fontWeight: FontWeight.normal,
       ),
       /// text of each checkbox of the preferences
       bodyMedium: TextStyle(
@@ -73,13 +81,6 @@ final getOutTheme = ThemeData(
         fontSize: 13,
         fontFamily: 'Urbanist',
         decorationColor: Colors.black,
-        fontWeight: FontWeight.bold,
-      ),
-      /// description of book/movie in the home page
-      headlineSmall: TextStyle(
-        color: Color.fromRGBO(0, 0, 0, 0.5),
-        fontSize: 15,
-        fontFamily: 'Urbanist',
         fontWeight: FontWeight.bold,
       ),
       /// description of book/movie in the description page
@@ -114,7 +115,7 @@ final getOutTheme = ThemeData(
       displayMedium: TextStyle(
         fontFamily: 'Urbanist',
         color: Colors.black,
-        fontSize: 15,
+        fontSize: 18,
       )
   ),
   appBarTheme: const AppBarTheme(

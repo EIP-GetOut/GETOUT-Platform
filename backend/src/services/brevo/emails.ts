@@ -7,7 +7,7 @@
 
 import { type SendSmtpEmail, TransactionalEmailsApi } from '@getbrevo/brevo'
 
-import { AccountDoesNotExistError, ApiError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError, EmailSendError } from '@services/utils/customErrors'
 
 import { findEntity } from '@models/getObjects'
 
@@ -37,6 +37,14 @@ async function sendEmailWithBrevo (templateId: number, to: string, params: objec
   return await apiInstance.sendTransacEmail(sendSmtpEmail)
 }
 
+async function sendInactivityEmail (account: Account): Promise<ReturnType<TransactionalEmailsApi['sendTransacEmail']>> {
+  const params = { fullName: `${account.firstName} ${account.lastName}` }
+
+  return await sendEmailWithBrevo(15, account.email, params).catch((err: Error) => {
+    throw new EmailSendError(`Error while sending inactivity email to ${account.email}: ${err.message}.`)
+  })
+}
+
 async function sendResetPasswordEmail (email: string, passwordResetCode: number): ReturnType<TransactionalEmailsApi['sendTransacEmail']> {
   return await findEntity<Account>(Account, { email }).then(async (account: Account | null) => {
     if (account == null) {
@@ -47,17 +55,17 @@ async function sendResetPasswordEmail (email: string, passwordResetCode: number)
       code: passwordResetCode
     }
 
-    return await sendEmailWithBrevo(9, account.email, params)
+    return await sendEmailWithBrevo(17, account.email, params)
   }).catch((err: Error) => {
-    throw new ApiError(`Error while sending reset password email to ${email}: ${err.message}.`)
+    throw new EmailSendError(`Error while sending reset password email to ${email}: ${err.message}.`)
   })
 }
 
 async function sendWelcomeEmail (account: Account): ReturnType<TransactionalEmailsApi['sendTransacEmail']> {
   const params = { fullName: `${account.firstName} ${account.lastName}` }
 
-  return await sendEmailWithBrevo(5, account.email, params).catch((err: Error) => {
-    throw new ApiError(`Error while sending welcome email to ${account.email}: ${err.message}.`)
+  return await sendEmailWithBrevo(18, account.email, params).catch((err: Error) => {
+    throw new EmailSendError(`Error while sending welcome email to ${account.email}: ${err.message}.`)
   })
 }
 
@@ -66,8 +74,8 @@ async function sendEmailVerificationEmail (account: Account, code: number): Retu
     fullName: `${account.firstName} ${account.lastName}`,
     code: code.toString()
   }
-  return await sendEmailWithBrevo(13, account.email, params).catch((err: Error) => {
-    throw new ApiError(`Error while sending email verification email to ${account.email}: ${err.message}.`)
+  return await sendEmailWithBrevo(12, account.email, params).catch((err: Error) => {
+    throw new EmailSendError(`Error while sending email verification email to ${account.email}: ${err.message}.`)
   })
 }
 
@@ -78,13 +86,14 @@ async function sendBetaInvitationEmail (account: Account, password: string): Ret
     password
   }
   return await sendEmailWithBrevo(10, account.email, params).catch((err: Error) => {
-    throw new ApiError(`Error while sending beta invitation email to ${account.email}: ${err.message}.`)
+    throw new EmailSendError(`Error while sending beta invitation email to ${account.email}: ${err.message}.`)
   })
 }
 
 export {
   sendBetaInvitationEmail,
   sendEmailVerificationEmail,
+  sendInactivityEmail,
   sendResetPasswordEmail,
   sendWelcomeEmail
 }

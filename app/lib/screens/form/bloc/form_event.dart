@@ -8,10 +8,14 @@
 part of 'form_bloc.dart';
 
 class FormEvent extends Equatable {
-  const FormEvent();
+   const FormEvent();
 
   @override
   List<Object?> get props => [];
+
+  FormEvent setKey(String key) {
+    throw UnimplementedError('setKey() should be overridden in subclasses.');
+  }
 }
 
 class EmitEvent extends FormEvent {
@@ -41,22 +45,32 @@ class EmitEvent extends FormEvent {
   List<Object?> get props => [key];
 }*/
 
-class LiteraryGenresEvent extends FormEvent {
+class BookGenresEvent extends FormEvent {
   final String key;
 
-  const LiteraryGenresEvent({required this.key});
+  const BookGenresEvent({required this.key});
 
   @override
   List<Object?> get props => [key];
+
+  @override
+  BookGenresEvent setKey(String key) {
+    return BookGenresEvent(key: key);
+  }
 }
 
-class FilmGenresEvent extends FormEvent {
+class MovieGenresEvent extends FormEvent {
   final String key;
 
-  const FilmGenresEvent({required this.key});
+  const MovieGenresEvent({required this.key});
 
   @override
   List<Object?> get props => [key];
+
+  @override
+  MovieGenresEvent setKey(String key) {
+    return MovieGenresEvent(key: key);
+  }
 }
 
 class ViewingPlatformEvent extends FormEvent {
@@ -66,10 +80,22 @@ class ViewingPlatformEvent extends FormEvent {
 
   @override
   List<Object?> get props => [key];
+
+  @override
+  ViewingPlatformEvent setKey(String key) {
+    return ViewingPlatformEvent(key: key);
+  }
 }
 
 class EndFormEvent extends FormEvent {
   const EndFormEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class ErrorEvent extends FormEvent {
+  const ErrorEvent();
 
   @override
   List<Object?> get props => [];

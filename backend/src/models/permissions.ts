@@ -12,7 +12,7 @@ import { Permission } from '@entities/Permissions'
 import { findEntity } from './getObjects'
 const accoutHasPermission = async (accoutPermissions: bigint, permissionName: string): Promise<boolean> => {
   return await findEntity<Permission>(Permission, { name: permissionName }).then((permission: any) => {
-    if (permission != null) {
+    if (permission === null) {
       return (false)
     }
     return (Boolean(accoutPermissions & permission.bit))

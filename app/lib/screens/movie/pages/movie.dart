@@ -154,13 +154,13 @@ class MovieSuccessWidget extends StatelessWidget {
                       await context
                           .read<MovieBloc>()
                           .movieService
-                          .removeWishlistedMovie(
+                          .removeWishListedMovie(
                               AddMovieRequest(id: movie.id!));
                     } else {
                       await context
                           .read<MovieBloc>()
                           .movieService
-                          .addWishlistedMovie(
+                          .addWishListedMovie(
                               AddMovieRequest(id: movie.id!));
                     }
                     if (!context.mounted) return;

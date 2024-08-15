@@ -9,7 +9,7 @@ import { type Request, type Response, Router } from 'express'
 import { body } from 'express-validator'
 import { StatusCodes } from 'http-status-codes'
 
-import { sendBetaInvitationEmail, sendEmailVerificationEmail } from '@services/brevo/emails'
+import { sendBetaInvitationEmail } from '@services/brevo/emails'
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
 import { AlreadyLoggedInError } from '@services/utils/customErrors'
@@ -17,7 +17,6 @@ import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { modifyAccount } from '@models/account'
 import registerAccount from '@models/account/registerAccount'
-import { generateEmailVerificationCode } from '@models/account/verifyEmail'
 
 import { type Account } from '@entities/Account'
 
@@ -85,18 +84,14 @@ router.post('/account/signup', rulesPost, validate, logApiRequest, (req: Request
 
     if (req.body.isForBeta === true) {
       return await sendBetaInvitationEmail(account, req.body.password).then(async (resp) => {
-        console.log('RESP:', resp)
         return await modifyAccount(account.id, { isVerified: true })
       }).then(() => {
+        logger.info(`Successfully regitered beta user ${account.firstName} ${account.lastName}`)
         return res.status(StatusCodes.CREATED).json(response)
       })
     }
-    return await generateEmailVerificationCode(account.email).then(async (code) => {
-      logger.debug(`Sending email verification code to email ${account.email} : ${code}.`)
-      return await sendEmailVerificationEmail(account, code)
-    }).then(() => {
-      return res.status(StatusCodes.CREATED).json(response)
-    })
+    logger.info(`Successfully regitered user ${account.firstName} ${account.lastName}`)
+    return res.status(StatusCodes.CREATED).json(response)
   }).catch(handleErrorOnRoute(res))
 })
 

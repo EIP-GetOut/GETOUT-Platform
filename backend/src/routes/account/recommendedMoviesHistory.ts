@@ -11,11 +11,11 @@ import { StatusCodes } from 'http-status-codes'
 
 import { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
+import { getMovie } from '@services/tmdb/getMovie'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 import { findEntity } from '@models/getObjects'
-import { getMovie } from '@models/movie'
 
 import { Account } from '@entities/Account'
 

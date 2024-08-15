@@ -12,6 +12,7 @@ declare global {
       PORT: number
       ORIGIN_PATTERN: string
       LOG_FILENAME: string
+      RECOMMENDATIONS_INTERVAL_SECONDS: number
       SESSION_SECRET: string
 
       TYPEORM_PORT: number

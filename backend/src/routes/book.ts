@@ -10,11 +10,10 @@ import { StatusCodes } from 'http-status-codes'
 
 import logger from '@middlewares/logging'
 
+import { getBook } from '@services/googlebooks/getBook'
 import { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
-
-import { getBook } from '@models/book'
 
 const router = Router()
 
@@ -36,35 +35,32 @@ const router = Router()
  *         schema:
  *           type: object
  *           properties:
- *             book:
- *               type: object
- *               properties:
- *                 title:
- *                   type: string
- *                 overview:
- *                   type: string
- *                 poster_path:
- *                   type: string
- *                 duration:
- *                   type: string
- *                 authors:
- *                   type: array
- *                   items:
- *                     type: string
- *                 authorsPicture:
- *                   type: array
- *                   items:
- *                     type: string
- *                 category:
+ *             title:
+ *               type: string
+ *             overview:
+ *               type: string
+ *             poster_path:
+ *               type: string
+ *             duration:
+ *               type: string
+ *             authors:
+ *               type: array
+ *               items:
+ *                 type: string
+ *             authorsPicture:
+ *               type: array
+ *               items:
+ *                 type: string
+ *             category:
  *                   type: string
  *       '500':
  *         description: Internal server error.
  */
 
 router.get('/book/:id', validate, logApiRequest, (req: Request, res: Response) => {
-  getBook(req.params.id).then(async (book: any) => {
+  getBook(req.params.id, true).then(async (book: any) => {
     logger.info(`Successfully retreived book ${req.params.id}: ${JSON.stringify(book, null, 2)}`)
-    return res.status(StatusCodes.OK).json({ book })
+    return res.status(StatusCodes.OK).json({ ...book })
   }).catch(handleErrorOnRoute(res))
 })
 

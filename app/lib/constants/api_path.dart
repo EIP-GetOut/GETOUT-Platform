@@ -22,10 +22,15 @@ class ApiConstants {
   static const String loginPath = '/account/login';
   static const String logoutPath = '/account/logout';
   static const String registerPath = '/account/signup';
+  static const String verifyEmailPath = '/account/verify-email';
+  static const String verifyEmailResendPath = '/account/verify-email/resend';
   static const String accountPath = '/account';
 
   static const String resetPasswordEmailPath = '/account/reset-password/send-email';
   static const String resetPasswordNewPasswordPath = '/account/reset-password';
+
+  static const String changeEmailPath = '/account/?';
+  static const String changePasswordPath = '/account/change-password';
 
   static const String preferencesApiPath = '/account/preferences';
 
@@ -49,4 +54,8 @@ class ApiConstants {
   static const String addDislikedBookPath = '/dislikedBooks';
   static const String readingPath = '/readingList';
   static const String readBooksPath = '/readBooks';
+
+  // DASHBOARD
+  static const String dailyInfo = '/daily-info';
+  static const String dailyNews = '/news';
 }

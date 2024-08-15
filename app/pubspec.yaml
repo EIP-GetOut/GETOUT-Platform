@@ -60,6 +60,7 @@ dependencies:
 
 ### UI
   auto_size_text: ^3.0.0
+  url_launcher: ^6.3.0
 
 #  flutter_json: ^0.0.2
 
@@ -110,14 +111,15 @@ flutter:
   assets:
     - assets/
 #    Draw:
-    - assets/images/draw/welcome_image.png # not used yet
+    - assets/images/draw/form_complete.svg
     - assets/images/draw/woman.png
+    - assets/images/draw/email_verified_complete.svg
+    - assets/images/draw/question.png
 #    Icon:
     - assets/images/icon/books.png
     - assets/images/icon/fire.png
     - assets/images/icon/heart.png
     - assets/images/icon/party.png
-    - assets/images/icon/phone_check.png
     - assets/images/icon/popcorn.png
     - assets/images/icon/profile_picture.png
     - assets/images/icon/bookmark.svg

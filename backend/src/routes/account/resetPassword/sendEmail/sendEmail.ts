@@ -28,7 +28,7 @@ router.post('/account/reset-password/send-email', rulesPost, validate, logApiReq
     return await sendResetPasswordEmail(req.body.email, passwordResetCode).then((sendEmailRes) => {
       return res.status(StatusCodes.OK).send(getReasonPhrase(StatusCodes.OK))
     })
-  }).catch(handleErrorOnRoute)
+  }).catch(handleErrorOnRoute(res))
 })
 
 export default router

@@ -36,15 +36,44 @@ class SignService extends ServiceTemplate {
 
   Future<void> register(final RegisterRequestModel request) async {
     try {
-      await globals.dio?.post('${ApiConstants.rootApiPath}${ApiConstants.registerPath}',
-          data: {
-            'email': request.email,
-            'password': request.password,
-            'firstName': request.firstName,
-            'lastName': request.lastName,
-            'bornDate': request.birthDate,
-            'salt': 'sdjqshjodijaoz'
-          },
+      await globals.dio
+          ?.post('${ApiConstants.rootApiPath}${ApiConstants.registerPath}',
+              data: {
+                'email': request.email,
+                'password': request.password,
+                'firstName': request.firstName,
+                'lastName': request.lastName,
+                'bornDate': request.birthDate,
+              },
+              options: Options(headers: {'Content-Type': 'application/json'}));
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<void> emailVerified(final EmailVerifiedRequestModel request) async {
+    try {
+      await globals.dio
+          ?.post('${ApiConstants.rootApiPath}${ApiConstants.verifyEmailPath}',
+              data: {
+                'code': int.parse(request.code),
+              },
+              options: Options(headers: {'Content-Type': 'application/json'}));
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<void> emailVerifiedResend() async {
+    try {
+      await globals.dio?.post(
+          '${ApiConstants.rootApiPath}${ApiConstants.verifyEmailResendPath}',
           options: Options(headers: {'Content-Type': 'application/json'}));
     } on DioException {
       // add "catch (dioError)" for debugging

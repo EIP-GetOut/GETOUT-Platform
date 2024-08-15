@@ -108,6 +108,9 @@ export class Account {
   @Column('boolean', { default: false })
     welcomeEmailSent: boolean = false
 
+  @Column('boolean', { default: false })
+    inactivityEmailSent: boolean = false
+
   @CreateDateColumn()
     createdDate!: Date
 

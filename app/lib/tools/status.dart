@@ -13,8 +13,10 @@ enum Status {
   selected,
   isNotFound,
   isFound,
-  isFoundWithoutPreferences
+  isFoundWithoutPreferences,
+  emailNotVerified,
 }
+
 final Map<Status, String> statusToString = {
   Status.initial: 'initial',
   Status.success: 'success',
@@ -24,6 +26,7 @@ final Map<Status, String> statusToString = {
   Status.isNotFound: 'isNotFound',
   Status.isFound: 'isFound',
   Status.isFoundWithoutPreferences: 'isFoundWithoutPreferences',
+  Status.emailNotVerified: 'emailNotVerified',
 };
 
 final Map<String, Status> stringToStatus = statusToString.map((key, value) => MapEntry(value, key));
@@ -37,4 +40,5 @@ extension StatusX on Status {
   bool get isNotFound => this == Status.isNotFound;
   bool get isFound => this == Status.isFound;
   bool get isFoundWithoutPreferences => this == Status.isFoundWithoutPreferences;
+  bool get emailNotVerified => this == Status.emailNotVerified;
 }
