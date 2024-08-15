@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.2](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.6.1...v0.6.2) (2024-08-15)
+
+
+### Features
+
+* **backend:** :sparkles: get news route and swagger doc without unit tests ([a98a907](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a98a907bfc48f20112326cd759821287aa0e02eb))
+
+
+### Bug Fixes
+
+* :bug: home page dasboard wrong height ([6f5db00](https://github.com/EIP-GetOut/GETOUT-Platform/commit/6f5db00d7d43e6aa05fe689a2e3bb0f60c9d6f22))
+
 ### [0.6.1](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.6.0...v0.6.1) (2024-08-15)
 
 
