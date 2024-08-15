@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.3](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.6.2...v0.6.3) (2024-08-15)
+
+
+### Bug Fixes
+
+* :bug: home page dasboard wrong height ([a0b4ab5](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a0b4ab5a980344d5adea35c8d911aad82662bf26))
+
 ### [0.6.2](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.6.1...v0.6.2) (2024-08-15)
 
 
