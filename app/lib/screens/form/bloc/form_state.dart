@@ -40,50 +40,50 @@ class FormStates extends Equatable {
       'Activité artistique' : false
     },*/
     this.bookGenres = const {
-      'Policier' : false,
-      'Science-fiction' : false,
-      'Politique' : false,
-      'Poésie' : false,
-      'Histoire' : false,
-      'Science' : false,
-      'Philosophie' : false,
-      'Biographie' : false,
-      'Contes et légendes' : false,
-      'Romance' : false,
-      'Autre genre' : false
+      'Policier': false,
+      'Science-fiction': false,
+      'Politique': false,
+      'Poésie': false,
+      'Histoire': false,
+      'Science': false,
+      'Philosophie': false,
+      'Biographie': false,
+      'Roman': false,
+      'Suspence': false,
+      'Autre genre': false
     },
     this.movieGenres = const {
-      'Action' : false,
-      'Aventure' : false,
-      'Animation' : false,
-      'Comédie' : false,
-      'Policier' : false,
-      'Documentaire' : false,
-      'Drame' : false,
-      'Famille' : false,
-      'Fantastique' : false,
-      'Histoire' : false,
-      'Horreur' : false,
-      'Musique' : false,
-      'Mystère' : false,
-      'Romance' : false,
-      'Science-fiction' : false,
-      'Téléfilm' : false,
-      'Thriller' : false,
-      'Guerre' : false,
-      'Western' : false,
-      'Autre genre' : false
+      'Action': false,
+      'Aventure': false,
+      'Animation': false,
+      'Comédie': false,
+      'Policier': false,
+      'Documentaire': false,
+      'Drame': false,
+      'Famille': false,
+      'Fantastique': false,
+      'Histoire': false,
+      'Horreur': false,
+      'Musique': false,
+      'Mystère': false,
+      'Romance': false,
+      'Science-fiction': false,
+      'Téléfilm': false,
+      'Thriller': false,
+      'Guerre': false,
+      'Western': false,
+      'Autre genre': false
     },
     this.viewingPlatform = const {
-      'Cinéma' : false,
-      'DVD' : false,
-      'VOD' : false,
-      'Netflix' : false,
-      'Prime Video' : false,
-      'Disney+' : false,
-      'Apple TV+' : false,
-      'myCanal' : false,
-      'Autre sources' : false
+      'Cinéma': false,
+      'DVD': false,
+      'VOD': false,
+      'Netflix': false,
+      'Prime Video': false,
+      'Disney+': false,
+      'Apple TV+': false,
+      'myCanal': false,
+      'Autre sources': false
     },
   });
   final FormStatus status;
@@ -95,7 +95,8 @@ class FormStates extends Equatable {
   final Map<String, bool> viewingPlatform;
 
   @override
-  List<Object?> get props => [status, bookGenres, movieGenres, viewingPlatform]; // time, interest
+  List<Object?> get props =>
+      [status, bookGenres, movieGenres, viewingPlatform]; // time, interest
 
   FormStates copyWith({
     FormStatus? status,
