@@ -46,7 +46,7 @@ class StoryNewsCard extends StatelessWidget {
                     textAlign: TextAlign.center),
                 Padding(
                   padding: const EdgeInsets.all(10),
-                  child: Text(state.storyNews.sourceStr != '' ? '${state.storyNews.sourceStr}' : '${state.storyNews.author}',
+                  child: Text(state.storyNews.sourceStr != 'Source inconnue' ? '${state.storyNews.sourceStr}' : '${state.storyNews.author}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w500,

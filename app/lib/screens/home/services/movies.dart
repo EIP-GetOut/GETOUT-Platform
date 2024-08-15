@@ -165,10 +165,12 @@ class MoviesService extends ServiceTemplate {
           statusCode: response?.statusCode ?? 500,
           quote: response?.data['quote'] ?? '',
           author: response?.data['author'] ?? 'Auteur inconnue',
-          sourceStr: response?.data['sourceStr'] ?? 'Source Inconnue',
+          sourceStr: response?.data['sourceStr'] ?? 'Source inconnue',
           sourceUrl: response?.data['sourceUrl'] ?? '',
         );
       }
+      print(result.sourceStr);
+      print(result.author);
       return result;
     } on DioException {
       // add "catch (dioError)" for debugging
