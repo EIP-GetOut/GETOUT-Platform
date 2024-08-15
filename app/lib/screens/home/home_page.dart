@@ -35,7 +35,7 @@ class HomePage extends StatelessWidget {
               },
               children: <Widget>[
                 ListView(children: const [
-                  SizedBox(height: 600, child: DashboardPage())
+                  SizedBox(height: 900, child: DashboardPage())
                 ]),
                 ListView(children: const [
                   SizedBox(height: 900, child: YourMoviesPage())
