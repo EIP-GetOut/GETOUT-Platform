@@ -49,7 +49,7 @@ class NewsCard extends StatelessWidget {
                       left: 10,
                       right: 10,
                       child: Padding(
-                        padding: const EdgeInsets.all(10),
+                        padding: EdgeInsets.all(10),
                         child: Text(
                           // '${state.news.title}',
                           "TikTok, Instagram, X...Les Français s'inquiètent des réseaux sociaux et demandent plus de régulation",

@@ -74,6 +74,7 @@
   "see_more": "see more >",
   "description": "Description",
   "summary": "Summary",
+  "refresh": "Refresh your recommendations in ",
 
   "@_DASHBOARD": {},
 
@@ -81,6 +82,9 @@
   "movie_recommendations": "The movie you will love",
   "book_recommendations": "Books that will fascinate you",
   "any_recommendations": "Our recommendation for you",
+  "story_news": "Did you know ?",
+  "total_movie": "Movie total",
+  "total_book": "Book total",
 
   "@_MOVIES": {},
 

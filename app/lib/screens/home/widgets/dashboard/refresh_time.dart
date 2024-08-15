@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:getout/global.dart' as globals;
 import 'package:getout/tools/duration_format.dart';
 
+import 'package:getout/tools/app_l10n.dart';
+
 import 'dart:math';
 
 class RefreshTimeCard extends StatelessWidget {
@@ -26,7 +28,7 @@ class RefreshTimeCard extends StatelessWidget {
                 size: 30,
               ),
               title: Text(
-                  durationFormatSeconds('Rafraichissement de vos recommandations dans ', min(globals.session?['secondsBeforeNextMovieRecommendation'], globals.session?['secondsBeforeNextBookRecommendation'])),
+                  durationFormatSeconds(appL10n(context)!.refresh, min(globals.session?['secondsBeforeNextMovieRecommendation'], globals.session?['secondsBeforeNextBookRecommendation'])),
                   style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.w500,

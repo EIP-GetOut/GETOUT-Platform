@@ -74,6 +74,10 @@
   "see_more": "voir plus >",
   "description": "Description",
   "summary": "Résumé",
+  "refresh": "Rafraichissement de vos recommandations dans ",
+  "story_news": "Le saviez-vous ?",
+  "total_movie": "Total Film",
+  "total_book": "Total Livre",
 
   "@_DASHBOARD": {},
 

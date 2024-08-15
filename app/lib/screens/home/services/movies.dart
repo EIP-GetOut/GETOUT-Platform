@@ -55,7 +55,6 @@ class MoviesService extends ServiceTemplate {
     GenerateMoviesResponse result = [];
 
     dynamic data = await getLikedMoviesId(request);
-
     for (int movie in data) {
       MovieStatusResponse item = await getMovieById(movie);
       if (item.statusCode == HttpStatus.OK) {
@@ -95,6 +94,7 @@ class MoviesService extends ServiceTemplate {
 
     for (int movie in data) {
       MovieStatusResponse item = await getMovieById(movie);
+
       if (item.statusCode == HttpStatus.OK) {
         result.add(MoviePreview(
             id: item.id!,
@@ -140,11 +140,12 @@ class MoviesService extends ServiceTemplate {
             statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
       }
       final dynamic data = response?.data;
+
       result = MovieStatusResponse(
-          title: data['movie']['title'],
+          title: data['title'],
           overview:
-              data['movie']['overview'] ?? 'Pas de description disponible',
-          posterPath: data['movie']['poster_path'],
+              data['synopsis'] ?? 'Pas de description disponible',
+          posterPath: data['posterPath'],
           id: movie,
           statusCode: response?.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR);
     } catch (error) {
@@ -164,8 +165,8 @@ class MoviesService extends ServiceTemplate {
           statusCode: response?.statusCode ?? 500,
           quote: response?.data['quote'] ?? '',
           author: response?.data['author'] ?? 'Auteur inconnue',
-          sourceStr: response?.data['sourceStr'] ?? '',
-          sourceUrl: response?.data['sourceUrl'] ?? 'Source inconnue',
+          sourceStr: response?.data['sourceStr'] ?? 'Source Inconnue',
+          sourceUrl: response?.data['sourceUrl'] ?? '',
         );
       }
       return result;

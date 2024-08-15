@@ -19,11 +19,11 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
   NewsBloc({
     required this.homeService,
   }) : super(const NewsState()) {
-    on<NewsRequest>(_mapGetStoryNewsEventToState);
+    on<NewsRequest>(_mapGetNewsEventToState);
   }
 
 
-  void _mapGetStoryNewsEventToState(
+  void _mapGetNewsEventToState(
       NewsRequest event, Emitter<NewsState> emit) async {
     emit(state.copyWith(status: NewsStatus.loading));
     try {
