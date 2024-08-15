@@ -26,7 +26,6 @@ async function mapAccountToSession (req: Request, isTemporary: boolean = false):
       logger.error('Failed remaping session.')
       throw new SessionMappingError()
     }
-    console.log(account)
     req.session.account = {
       id: account.id,
       createdDate: account.createdDate,

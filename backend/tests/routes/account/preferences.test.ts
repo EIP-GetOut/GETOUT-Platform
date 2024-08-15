@@ -38,7 +38,6 @@ void describe('Preferences List Route', async () => {
       platforms: ['netflix', 'disney']
     }).set('Cookie', cookie)
       .then((response) => {
-        console.log(response)
         expect(response.status).toBe(StatusCodes.CREATED)
         expect(response.body.moviesGenres).toContain(12)
         expect(response.body.booksGenres).toContain('novel')
