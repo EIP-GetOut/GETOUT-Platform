@@ -2,6 +2,64 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.1](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.6.0...v0.6.1) (2024-08-15)
+
+
+### Features
+
+* **app:** :sparkles: add a function to convert seconds in good duration format, also re add static informations for the news (temporary) ([8f37b1f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/8f37b1f5bc2df73aa177a8fa34e45ed2281d1e21))
+* **app:** :sparkles: add a snackbar to display a message when code is incorrect ([093321e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/093321e5373cf332e1be4d2a32212ed58416be61))
+* **app:** :sparkles: add email verification with code, with page sucess and redirection to dashboard or forms, add a button to resend email if needed with a cooldown ([1edd40e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/1edd40ecfe260416908282ad379c9d7ed5c8cfd4))
+* **app:** :sparkles: add generic input and display entire errors (on forms) ([cd86917](https://github.com/EIP-GetOut/GETOUT-Platform/commit/cd8691741908dc7249f417c9683769bdccde232f))
+* **app:** :sparkles: add some ui, clean code ([17fd1a0](https://github.com/EIP-GetOut/GETOUT-Platform/commit/17fd1a057b66741de090d2313958a5650cd5629f))
+* **app:** :sparkles: add ui of the new elements of the dashboard (refresh time, spend, time, news) ([73905df](https://github.com/EIP-GetOut/GETOUT-Platform/commit/73905df6649798872fd86c7f0c2b505e015e5fde))
+* **app:** :sparkles: adding edit email page (everything ready, just need the correct route) ([c6e98c0](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c6e98c0b0bfed267095eeaef3b005d7278bd4ca7))
+* **app:** :sparkles: adding edit password page (everything ready, just need the correct route) ([ed3ab34](https://github.com/EIP-GetOut/GETOUT-Platform/commit/ed3ab3419e98ae800bfe60ad9cfae53d11c8e906))
+* **app:** :sparkles: adding valid request for the change password feature ([27c9570](https://github.com/EIP-GetOut/GETOUT-Platform/commit/27c9570060a45c8bd481f1ff7f6241e74b732b5c))
+* **app:** :sparkles: applying l10n almost everywhere ([cbd1cd7](https://github.com/EIP-GetOut/GETOUT-Platform/commit/cbd1cd7a8ef6f40069332df5b8add17ce15b8b63))
+* **app:** :sparkles: connect back to new ui for dashboard ([e8d1121](https://github.com/EIP-GetOut/GETOUT-Platform/commit/e8d112112ddb3a74e53395f7cab3b69c4ae1203b))
+* **app:** :sparkles: create generic button widget, change all buttons by this widget ([45127af](https://github.com/EIP-GetOut/GETOUT-Platform/commit/45127afcc8a26b3b2f1ef89b2c36137dc58fbf11))
+* **app:** :sparkles: create generic title ([34efc38](https://github.com/EIP-GetOut/GETOUT-Platform/commit/34efc383133ee242d39c3f7fc83a23bbe95964de))
+* **backend:** :sparkles: caching of movie and book recommendations ([0914a2c](https://github.com/EIP-GetOut/GETOUT-Platform/commit/0914a2c443a5fbf5a8b72fb6256940e753b22c8c))
+* **backend:** :sparkles: cronjob for inactivity emails ([d1f24d3](https://github.com/EIP-GetOut/GETOUT-Platform/commit/d1f24d35b277eefa053d55fe4683c69753a35e6c))
+* **backend:** :sparkles: daily info route and tests ([3978614](https://github.com/EIP-GetOut/GETOUT-Platform/commit/3978614317d42780100bee0df2039b2474f67a08))
+* **backend:** :sparkles: get the preferences of an user ([b5a5e96](https://github.com/EIP-GetOut/GETOUT-Platform/commit/b5a5e9690bf12230bb05c9a3bc50631debf5a95b))
+* **backend:** :sparkles: getting the number of accounts created the week before ([9dcf4e8](https://github.com/EIP-GetOut/GETOUT-Platform/commit/9dcf4e8c76e62636c13b15735d20c719cee1915f))
+* **backend:** :sparkles: getting the number of recommendations generated for the week ([c5c62a6](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c5c62a6adf52979627d5b32c5513ef7ed938b0a8))
+* **backend:** :sparkles: new variables in session for time before recommandation and time spent watching / reading ([6bd658b](https://github.com/EIP-GetOut/GETOUT-Platform/commit/6bd658b1546ed3db2ab23b07728d08b9902202ab))
+* **backend:** :sparkles: resend email verification and email verification fixes ([937c63c](https://github.com/EIP-GetOut/GETOUT-Platform/commit/937c63c44be948d06b4fa485516e315add0d2971))
+* **backend:** :sparkles: service google books ([d617d05](https://github.com/EIP-GetOut/GETOUT-Platform/commit/d617d05677d25d461eaae19a210b5b7b32f3c9f0))
+* **backend:** :sparkles: tmdb service ([9c8b01c](https://github.com/EIP-GetOut/GETOUT-Platform/commit/9c8b01cceae50369666964135685f04fef88cc92))
+
+
+### Bug Fixes
+
+* **app:** :art: removing useless trues and adding const to some events ([3b76e44](https://github.com/EIP-GetOut/GETOUT-Platform/commit/3b76e44e1b3981e604f6f7fc3fdf6b917eae3d1c))
+* **app:** :bug: books display due to bad type ([ac310ce](https://github.com/EIP-GetOut/GETOUT-Platform/commit/ac310ced25f4005c455c7999c635f94182eb2d61))
+* **app:** :bug: fixing error handling of the login ([afa0cc7](https://github.com/EIP-GetOut/GETOUT-Platform/commit/afa0cc706f32d64fe9fa121a48eaf9954c9543c8))
+* **app:** :bug: fixing view problem of movie details and book details ([aea3d18](https://github.com/EIP-GetOut/GETOUT-Platform/commit/aea3d18b447d98d1537c68bc3e9fa7ddb6cef1f0))
+* **app:** :bug: movies and books (liked / saved) wasn't display to due to error (field change in request), clean code, add some error handling ([90c4bbc](https://github.com/EIP-GetOut/GETOUT-Platform/commit/90c4bbcb01267dd15467066a698498a8e63d9177))
+* **app:** :bug: Session refresh every 15 seconds, recommandation time at 0 seconds, and books genres ([896a072](https://github.com/EIP-GetOut/GETOUT-Platform/commit/896a072ee6821535f5f3beaa56ed643ee4f02a9b))
+* **app:** :bug: source author wasn't correctly display for story news due to bad condition ([3966b3f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/3966b3f36386e1657894f43923bb3fb732b9a898))
+* **app:** :bug: the text of the validator error was STILL too long ([f9e972f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/f9e972f872891408228dfa059bfe6e523126910f))
+* **app:** :bug: the text of the validator error was too long ([23ceb8e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/23ceb8ecdbeb9497b590541f8d98ee5d31226758))
+* **app:** :pencil2: typo on movie url variable name ([3fb8482](https://github.com/EIP-GetOut/GETOUT-Platform/commit/3fb848280740445b272d41045aafae7f41802b7c))
+* **backend:** :bug: email templates ids ([c0de95f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c0de95f68eee63f1c4abc25d5b5d7eaf9363c008))
+* **backend:** :bug: error catching reset password send email route ([8a6edb3](https://github.com/EIP-GetOut/GETOUT-Platform/commit/8a6edb3fdfa7a29815101d875e8f2e2bcc290022))
+* **backend:** :bug: missing return for session without connected account ([3ca29b4](https://github.com/EIP-GetOut/GETOUT-Platform/commit/3ca29b4edfcf9b9ab4908b51de7358d76c722e70))
+* **backend:** :bug: permission route ([7192ed3](https://github.com/EIP-GetOut/GETOUT-Platform/commit/7192ed37cdc3a025ca7c7258a2a7f65adbd51414))
+
+
+### Refactors
+
+* :recycle: removed unused console.logs ([82315bb](https://github.com/EIP-GetOut/GETOUT-Platform/commit/82315bb3a15fa0228f206b8a460900cf99acb89a))
+* **app:** :art: change some code to resolve some comments on pull request ([beeda75](https://github.com/EIP-GetOut/GETOUT-Platform/commit/beeda75e4fada78a4d0d9f079d708da915359145))
+* **backend:** :ambulance: readded all previous contents lists in the session for easier frontend integration ([adcd6cb](https://github.com/EIP-GetOut/GETOUT-Platform/commit/adcd6cb04f9486e1c84df3c8616478a3f34e831d))
+* **backend:** :recycle: change the response of book details and recommendations ([19abee9](https://github.com/EIP-GetOut/GETOUT-Platform/commit/19abee9d73ac3c0e5cab6365bc0a196f802525d7))
+* **backend:** :recycle: getBook and getMovie direct properties instead of "book" and "movie"'s keys in response ([1e575b1](https://github.com/EIP-GetOut/GETOUT-Platform/commit/1e575b1ad45ee73c69ea244b1641b9c11abd1cc0))
+* **backend:** :recycle: model funcs for recommend-movie and recommend-books route and redisClient singleton ([10a508a](https://github.com/EIP-GetOut/GETOUT-Platform/commit/10a508adb59d07ae0c23dcc937856dd922fc7501))
+* **backend:** :sparkles: source string for daily infos ([44715f2](https://github.com/EIP-GetOut/GETOUT-Platform/commit/44715f2032be305cc451264b0dbe09ce980e27ac))
+
 ## [0.6.0](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.5.5...v0.6.0) (2024-07-04)
 
 
