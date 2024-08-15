@@ -7,9 +7,9 @@
 
 import { type UUID } from 'crypto'
 import { StatusCodes } from 'http-status-codes'
-import { type CreditsResponse, MovieDb, type MovieResponse } from 'moviedb-promise'
+import { MovieDb } from 'moviedb-promise'
 
-import { AccountDoesNotExistError, ApiError, type AppError, DbError, MovieNotInListError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError, type AppError, DbError, MovieNotInListError } from '@services/utils/customErrors'
 
 import { Account } from '@entities/Account'
 
@@ -18,63 +18,6 @@ import { appDataSource } from '@config/dataSource'
 import { findEntity } from './getObjects'
 
 const moviedb = new MovieDb(process.env.MOVIE_DB_KEY)
-
-async function fetchMovieCredits (movieId: number): Promise<any> {
-  return await moviedb.movieCredits({ id: movieId }).then((credits: any) => {
-    const cast = credits.cast?.slice(0, 5).map((person: any) => ({
-      name: person.name,
-      picture: ((person.profile_path ?? '').length > 0)
-        ? `https://image.tmdb.org/t/p/w200${person.profile_path}`
-        : null
-    }))
-    return cast
-  }).catch((err: Error) => {
-    throw new ApiError(`Error whiled obtaining movie ${movieId}'s credits (${err.name}: ${err.message}).`)
-  })
-}
-
-async function getDirector (movieId: number): Promise<any> {
-  return await moviedb.movieCredits({ id: movieId }).then((credits: CreditsResponse) => {
-    const director = credits.crew?.find(member => member.job === 'Director')
-    return ({
-      name: director?.name,
-      picture: ((director?.profile_path ?? '').length > 0)
-        ? `https://image.tmdb.org/t/p/w200${director?.profile_path}`
-        : null
-    })
-  }).catch((err: Error) => {
-    throw new ApiError(`Error whiled obtaining movie ${movieId}'s director (${err.name}: ${err.message}).`)
-  })
-}
-
-async function getMovieDetail (id: number): Promise<MovieResponse> {
-  return await moviedb.movieInfo(id).then((value: MovieResponse) => {
-    return value
-  }).catch((err: Error) => {
-    throw new ApiError(`Error whiled obtaining movie ${id}'s infos (${err.name}: ${err.message}).`)
-  })
-}
-
-async function getMovie (id: number): Promise<any> {
-  return await getMovieDetail(id).then(async (movieObtained: MovieResponse) => {
-    return await fetchMovieCredits(id).then(async (cast: any) => {
-      return await getDirector(id).then((director: any) => {
-        return ({
-          id,
-          title: movieObtained.title,
-          overview: movieObtained.overview,
-          poster_path: movieObtained.poster_path,
-          backdrop_path: movieObtained.backdrop_path,
-          release_date: movieObtained.release_date,
-          vote_average: Number(movieObtained.vote_average) / 2,
-          cast,
-          director,
-          duration: movieObtained.runtime
-        })
-      })
-    })
-  })
-}
 
 async function addMovieToList (accountId: UUID, movieId: number, movieList: keyof Account): Promise<number[]> {
   return await findEntity<Account>(Account, { id: accountId }).then(async (account) => {
@@ -165,7 +108,6 @@ export {
   addMovieToLikedMovies,
   addMovieToSeenMovies,
   addMovieToWatchlist,
-  getMovie,
   getRecommendation,
   removeMovieFromDislikedMovies,
   removeMovieFromLikedMovies,

@@ -11,8 +11,10 @@ import { StatusCodes } from 'http-status-codes'
 
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
+import { preloadNextRecommendations } from '@services/recommendationsCaching/movies'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
+import { mapAccountToSession } from '@services/utils/mapAccountToSession'
 
 import { modifyAccount } from '@models/account'
 import { findEntity } from '@models/getObjects'
@@ -127,10 +129,20 @@ router.post('/account/:accountId/likedMovies', rulesPost, validate, logApiReques
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
-  addMovieToLikedMovies(req.params.accountId, parseInt(req.body.movieId)).then(async (updatedLikedMoviesList: number[]) => {
-    return await modifyAccount(req.session.account!.id, { likedMovies: updatedLikedMoviesList }).then(() => {
+  const accountId = req.params.accountId
+  addMovieToLikedMovies(accountId, parseInt(req.body.movieId)).then(async (updatedLikedMoviesList: number[]) => {
+    await modifyAccount(accountId, { likedMovies: updatedLikedMoviesList }).then(async () => {
+      /* This will be deleted when not necessary for the frontend anymore and not in the session */
+      return await mapAccountToSession(req, true)
+    }).then(() => {
       logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s liked movies.`)
       return res.status(StatusCodes.CREATED).json(updatedLikedMoviesList)
+    }).then(async () => {
+      if (process.env.NODE_ENV !== 'test') {
+        await preloadNextRecommendations(accountId).catch((err: Error) => {
+          logger.error(`${err.name}: ${err.message}`)
+        })
+      }
     })
   }).catch(handleErrorOnRoute(res))
 })
@@ -145,10 +157,20 @@ router.delete('/account/:accountId/likedMovies/:movieId', rulesDelete, validate,
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
-  removeMovieFromLikedMovies(req.params.accountId, parseInt(req.params.movieId)).then(async (updatedLikedMoviesList: number[]) => {
-    return await modifyAccount(req.session.account!.id, { likedMovies: updatedLikedMoviesList }).then(() => {
+  const accountId = req.params.accountId
+  removeMovieFromLikedMovies(accountId, parseInt(req.params.movieId)).then(async (updatedLikedMoviesList: number[]) => {
+    await modifyAccount(accountId, { likedMovies: updatedLikedMoviesList }).then(async () => {
+      /* This will be deleted when not necessary for the frontend anymore and not in the session */
+      return await mapAccountToSession(req, true)
+    }).then(() => {
       logger.info(`Successfully removed ${req.params.movieId} of ${req.session.account?.email}'s liked movies.`)
       return res.status(StatusCodes.OK).json(updatedLikedMoviesList)
+    }).then(async () => {
+      if (process.env.NODE_ENV !== 'test') {
+        await preloadNextRecommendations(accountId).catch((err: Error) => {
+          logger.error(`${err.name}: ${err.message}`)
+        })
+      }
     })
   }).catch(handleErrorOnRoute(res))
 })

@@ -12,7 +12,7 @@ import { StatusCodes, getReasonPhrase } from 'http-status-codes'
 import logger, { logApiRequest } from '@middlewares/logging'
 import validate from '@middlewares/validator'
 
-import { AuthenticationError } from '@services/utils/customErrors'
+import { AccountIsAlreadyVerifiedError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 import { mapAccountToSession } from '@services/utils/mapAccountToSession'
 
@@ -28,6 +28,10 @@ const rulesPost = [
 router.post('/account/verify-email/', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null) {
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
+    return
+  }
+  if (req.session.account.isVerified) {
+    handleErrorOnRoute(res)(new AccountIsAlreadyVerifiedError())
     return
   }
   accountIsAllowedToVerifyEmail(req.session.account.id, req.body.code).then(async (isAllowed: boolean) => {

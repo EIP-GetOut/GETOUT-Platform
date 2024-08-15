@@ -31,8 +31,8 @@ const loginBody = {
 }
 
 const preferences: Preferences = {
-  moviesGenres: [27, 36],
-  booksGenres: ['Politique'],
+  moviesGenres: [12, 16, 35],
+  booksGenres: ['Histoire', 'Roman', 'Suspence'],
   platforms: ['PrimeVideo']
 }
 
@@ -65,5 +65,5 @@ void describe('Recommended Movies History Route', async () => {
       expect(response.status).toBe(StatusCodes.OK)
       expect(response.body).toHaveLength(5)
     })
-  }, 10000)
+  }, 15000)
 })

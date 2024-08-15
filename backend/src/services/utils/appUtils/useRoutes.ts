@@ -29,17 +29,20 @@ import resetPassword from '@routes/account/resetPassword/resetPassword'
 import sendEmail from '@routes/account/resetPassword/sendEmail/sendEmail'
 import seenMovies from '@routes/account/seenMovies'
 import signup from '@routes/account/signup'
-import verifyEmail from '@routes/account/verifyEmail'
+import resend from '@routes/account/verifyEmail/resend'
+import verifyEmail from '@routes/account/verifyEmail/verifyEmail'
 import watchlist from '@routes/account/watchlist'
 import accounts from '@routes/accounts'
 import basicEndpoints from '@routes/basicEndpoints'
 import book from '@routes/book'
+import dailyInfo from '@routes/dailyInfo'
 import movie from '@routes/movie'
 import news from '@routes/news'
 import permissions from '@routes/permissions'
-import recommendationsTmdb from '@routes/recommendationsTmdb'
 import session from '@routes/session'
 import sessions from '@routes/sessions'
+import accountsStats from '@routes/stats/accounts'
+import recommendationsStats from '@routes/stats/recommendations'
 
 const useRoutes = (app: Application): Application => (
   app
@@ -67,14 +70,17 @@ const useRoutes = (app: Application): Application => (
 
     .use(sessions)
     .use(accounts)
+    .use(accountsStats)
+    .use(recommendationsStats)
+    .use(dailyInfo)
     .use(movie)
     .use(book)
     .use(news)
-    .use(recommendationsTmdb)
 
     .use(oauth)
     .use(preferences)
     .use(verifyEmail)
+    .use(resend)
     .use(changePassword)
     .use(logoutAll)
     .use(session)

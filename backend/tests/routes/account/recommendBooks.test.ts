@@ -31,8 +31,8 @@ const loginBody = {
 }
 
 const preferences: Preferences = {
-  moviesGenres: [27, 36],
-  booksGenres: ['Philosophie'],
+  moviesGenres: [12, 16, 35],
+  booksGenres: ['Histoire', 'Roman', 'Suspence'],
   platforms: ['PrimeVideo']
 }
 

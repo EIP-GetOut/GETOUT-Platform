@@ -11,7 +11,11 @@ import { StatusCodes } from 'http-status-codes'
 
 import { authentifyWithGoogle } from '@services/authentification'
 import { AccountDoesNotExistError, ApiError, AppError, BcryptError, IncorrectEmailOrPasswordError } from '@services/utils/customErrors'
-import calculateSpentMinutesReadingAndWatching from '@services/utils/spentTimeCalculation'
+import {
+  calculateSpentMinutesWatching,
+  calculateTotalPagesRead,
+  getMissingTimeBeforeNextRecommendation
+} from '@services/utils/timeCalculations'
 
 import { findEntity } from '@models/getObjects'
 
@@ -33,11 +37,32 @@ async function createSession (req: Request, account: Account): Promise<void> {
     lastBookRecommandation: account.lastBookRecommandation,
     lastMovieRecommandation: account.lastMovieRecommandation,
     preferences: account.preferences,
-    spentMinutesReadingAndWatching: NaN,
-    role: account.role
+    spentMinutesWatching: NaN,
+    totalPagesRead: NaN,
+    secondsBeforeNextMovieRecommendation: account.lastMovieRecommandation != null
+      ? getMissingTimeBeforeNextRecommendation(account.lastMovieRecommandation)
+      : null,
+    secondsBeforeNextBookRecommendation: account.lastBookRecommandation != null
+      ? getMissingTimeBeforeNextRecommendation(account.lastBookRecommandation)
+      : null,
+    role: account.role,
+    /* This will be deleted when not necessary for the frontend anymore */
+    watchlist: account.watchlist,
+    readingList: account.readingList,
+    likedMovies: account.likedMovies,
+    likedBooks: account.likedBooks,
+    dislikedMovies: account.dislikedMovies,
+    dislikedBooks: account.dislikedBooks,
+    seenMovies: account.seenMovies,
+    readBooks: account.readBooks,
+    recommendedBooksHistory: account.recommendedBooksHistory,
+    recommendedMoviesHistory: account.recommendedMoviesHistory
   }
-  await calculateSpentMinutesReadingAndWatching(account).then((spentMinutes: number) => {
-    req.session.account!.spentMinutesReadingAndWatching = spentMinutes
+  await Promise.all([
+    calculateSpentMinutesWatching(account), calculateTotalPagesRead(account)
+  ]).then(([spentMinutesWatching, totalPagesRead]) => {
+    req.session.account!.spentMinutesWatching = spentMinutesWatching
+    req.session.account!.totalPagesRead = totalPagesRead
   }).catch((err: Error) => {
     throw new ApiError(`Failed calculating spent time reading and watching (${err.name}: ${err.message}).`)
   })

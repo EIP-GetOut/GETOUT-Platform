@@ -11,10 +11,10 @@ import { StatusCodes } from 'http-status-codes'
 import { logApiRequest } from '@middlewares/logging'
 import validate from '@middlewares/validator'
 
-import { AccountDoesNotExistError, ApiError } from '@services/utils/customErrors'
+import { AccountDoesNotExistError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 import { mapAccountToSession } from '@services/utils/mapAccountToSession'
-import calculateSpentMinutesReadingAndWatching from '@services/utils/spentTimeCalculation'
+import { calculateSpentMinutesWatching, calculateTotalPagesRead } from '@services/utils/timeCalculations'
 
 import { findEntity } from '@models/getObjects'
 
@@ -35,23 +35,28 @@ const router = Router()
  *           type: object
  */
 router.get('/session', validate, logApiRequest, (req: Request, res: Response) => {
-  if (req.session.account?.id != null) {
-    findEntity<Account>(Account, { id: req.session.account?.id }).then(async (account: Account | null) => {
-      if (account == null) {
-        throw new AccountDoesNotExistError()
-      }
-      await mapAccountToSession(req).then(async (session) => {
-        await calculateSpentMinutesReadingAndWatching(account).then((spentMinutes: number) => {
-          session.account!.spentMinutesReadingAndWatching = spentMinutes
-          res.status(StatusCodes.OK).json(req.session)
-        }).catch((err: Error) => {
-          throw new ApiError(`Failed calculating spent time reading and watching (${err.name}: ${err.message}).`)
-        })
-      })
-    }).catch(handleErrorOnRoute)
-  } else {
+  if (req.session?.account?.id == null) {
     res.status(StatusCodes.OK).json(req.session)
+    return
   }
+
+  let account: Account
+
+  findEntity<Account>(Account, { id: req.session.account?.id }).then(async (res: Account | null) => {
+    if (res == null) {
+      throw new AccountDoesNotExistError()
+    }
+    account = res
+    return await mapAccountToSession(req)
+  }).then(async () => {
+    return await Promise.all([
+      calculateSpentMinutesWatching(account), calculateTotalPagesRead(account)
+    ])
+  }).then(([spentMinutesWatching, totalPagesRead]) => {
+    req.session.account!.spentMinutesWatching = spentMinutesWatching
+    req.session.account!.totalPagesRead = totalPagesRead
+    res.status(StatusCodes.OK).json(req.session)
+  }).catch(handleErrorOnRoute(res))
 })
 
 export default router
