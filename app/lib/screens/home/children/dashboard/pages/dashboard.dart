@@ -15,6 +15,9 @@ import 'package:getout/screens/home/widgets/dashboard/story_news/story_news_card
 import 'package:getout/screens/home/widgets/dashboard/spent_time.dart';
 import 'package:getout/screens/home/widgets/dashboard/news/news_card.dart';
 import 'package:getout/tools/duration_format.dart';
+
+import 'package:getout/tools/app_l10n.dart';
+
 import 'package:getout/global.dart' as globals;
 
 class DashboardPage extends StatelessWidget {
@@ -38,13 +41,13 @@ class DashboardPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SpentTimeCard(
-                              title: 'Total Livre',
+                              title: appL10n(context)!.total_book,
                               icon: Icons.book,
                               number:
                                   '${globals.session?['totalPagesRead']} pages'),
                           const SizedBox(width: 30),
                           SpentTimeCard(
-                              title: 'Total Film',
+                              title: appL10n(context)!.total_movie,
                               icon: Icons.movie,
                               number: durationFormat('',
                                   globals.session?['spentMinutesWatching'])),

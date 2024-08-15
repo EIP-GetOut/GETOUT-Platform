@@ -56,7 +56,6 @@ class BooksService extends ServiceTemplate {
     GenerateBooksResponse result = [];
 
     dynamic data = await getLikedBooksId(request);
-
     for (String book in data) {
       BookStatusResponse item = await getBookById(book);
       if (item.statusCode == HttpStatus.OK) {
@@ -140,9 +139,9 @@ class BooksService extends ServiceTemplate {
       }
       final dynamic data = response?.data;
       result = BookStatusResponse(
-          title: data['book']['title'],
-          overview: data['book']['overview'] ?? 'Pas de description disponible',
-          posterPath: data['book']['poster_path'],
+          title: data['title'] ?? 'Titre inconnue',
+          overview: data['description'] ?? 'Pas de description disponible',
+          posterPath: data['posterPath'] ?? 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fgijoe.fandom.com%2Fwiki%2FVoid_Rivals_TPB_02&psig=AOvVaw2skAKZpPM9bWFhXo9mQQOV&ust=1723799097653000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJCb5JjS9ocDFQAAAAAdAAAAABAE',
           id: book,
           statusCode: response?.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR);
     } catch (error) {

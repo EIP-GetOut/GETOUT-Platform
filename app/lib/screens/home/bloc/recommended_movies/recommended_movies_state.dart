@@ -37,7 +37,7 @@ class RecommendedMoviesState extends Equatable {
               id: element['id'],
               title: element['title'],
               posterPath: element['posterPath'],
-              overview: element['description']))
+              overview: element['synopsis']))
         });
     return RecommendedMoviesState(
         recommendedMovies: movies,
