@@ -143,8 +143,7 @@ class MoviesService extends ServiceTemplate {
 
       result = MovieStatusResponse(
           title: data['title'],
-          overview:
-              data['synopsis'] ?? 'Pas de description disponible',
+          overview: data['synopsis'] ?? 'Pas de description disponible',
           posterPath: data['posterPath'],
           id: movie,
           statusCode: response?.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR);
@@ -169,8 +168,6 @@ class MoviesService extends ServiceTemplate {
           sourceUrl: response?.data['sourceUrl'] ?? '',
         );
       }
-      print(result.sourceStr);
-      print(result.author);
       return result;
     } on DioException {
       // add "catch (dioError)" for debugging

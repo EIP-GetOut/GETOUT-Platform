@@ -11,7 +11,8 @@ class NewsCard extends StatelessWidget {
     return BlocBuilder<NewsBloc, NewsState>(builder: (context, state) {
       return Center(
           child: GestureDetector(
-              onTap: () => launchWebView(state.news.url),
+              onTap: () => launchWebView(
+                  'https://www.radiofrance.fr/franceinter/meta-tiktok-x-snapchat-les-reseaux-sociaux-accuses-de-malmener-la-sante-mentale-des-plus-jeunes-6968044'),
               child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
@@ -36,7 +37,7 @@ class NewsCard extends StatelessWidget {
                           ),
                   ),*/
                           Image.network(
-                        'https://media.ouest-france.fr/v1/pictures/MjAyNDA1MTE3NGE5YWUzMjVmYzRjM2I3YzNmODBlMmU0YWI0Yzc?width=1260&focuspoint=50%2C25&cropresize=1&client_id=bpeditorial&sign=eee2fc2d863daae83cce5bfed30764d2db552be1832f38238548bc53ab643268',
+                        'https://leseng.rosselcdn.net/sites/default/files/dpistyles_v2/ls_16_9_864w/2024/07/09/node_600692/31311605/public/2024/07/09/21232853.jpeg?itok=GZ_Dj6ws1720604025',
                         fit: BoxFit.cover,
                         height: 400,
                         width: 500,
@@ -52,7 +53,7 @@ class NewsCard extends StatelessWidget {
                         padding: EdgeInsets.all(10),
                         child: Text(
                           // '${state.news.title}',
-                          "TikTok, Instagram, X...Les Français s'inquiètent des réseaux sociaux et demandent plus de régulation",
+                          'Meta, TikTok, X, Snapchat... Les réseaux sociaux accusés de malmener la santé mentale des plus jeunes',
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
@@ -66,7 +67,7 @@ class NewsCard extends StatelessWidget {
                       right: 10,
                       child: Image.network(
                         // '${state.news.sourceLogo}',
-                        'https://www.lachance.media/wp-content/uploads/2018/09/ouestfrance-e1599137740364.png',
+                        'https://lh4.googleusercontent.com/proxy/btuZBXctiokcEue8M8c1jdMBTHjAA7RQd6XZdhmruPrv9SxfAYZldWZCqXtpSx1QTPczBLLvntJAxMl3g-V8U5-uQFsrJOPcal3rBV0XSOgg0EcIGp7H4QB9r2fTWQ',
                         fit: BoxFit.fill,
                         height: 100,
                         width: 100,

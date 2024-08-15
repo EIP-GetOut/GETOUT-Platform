@@ -5,9 +5,8 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-String durationFormat(final String text, final int minutes)
-{
-  final Duration d = Duration(minutes:minutes);
+String durationFormat(final String text, final int minutes) {
+  final Duration d = Duration(minutes: minutes);
   final List<String> parts = d.toString().split(':');
 
   // if (minutes <= 0) {
@@ -23,5 +22,8 @@ String durationFormatSeconds(final String text, final int seconds) {
   final String minutes = (d.inMinutes % 60).toString().padLeft(2, '0');
   final String secs = (d.inSeconds % 60).toString().padLeft(2, '0');
 
+  if (seconds == 0) {
+    return 'Nouvelles recommandations disponibles !';
+  }
   return '$text ${hours}h${minutes}m${secs}s';
 }
