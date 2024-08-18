@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/home/bloc/home_page/home_page_bloc.dart';
 import 'package:getout/screens/home/widgets/header.dart';
+// import 'package:getout/screens/home/children/dashboard/pages/dashboard_page.dart';
 import 'package:getout/screens/home/children/dashboard/pages/dashboard.dart';
 import 'package:getout/screens/home/children/your_books/pages/your_books.dart';
 import 'package:getout/screens/home/children/your_movies/pages/your_movies.dart';
@@ -35,7 +36,7 @@ class HomePage extends StatelessWidget {
               },
               children: <Widget>[
                 ListView(children: const [
-                  SizedBox(height: 600, child: DashboardPage())
+                  Dashboard()
                 ]),
                 ListView(children: const [
                   SizedBox(height: 900, child: YourMoviesPage())
