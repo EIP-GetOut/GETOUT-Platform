@@ -9,12 +9,12 @@ import { type Request, type Response, Router } from 'express'
 import { param } from 'express-validator'
 import { StatusCodes } from 'http-status-codes'
 
+import { getBook } from '@services/googlebooks/getBook'
 import { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
-import { getBook } from '@models/book'
 import { findEntity } from '@models/getObjects'
 
 import { Account } from '@entities/Account'

@@ -10,8 +10,11 @@ import cors from 'cors'
 import express, { type Application } from 'express'
 import rateLimit from 'express-rate-limit'
 import helmet from 'helmet'
+import cron from 'node-cron'
 
 import logger from '@middlewares/logging'
+
+import { sendInactivityEmails } from '@services/cronjobs/inactivityEmails'
 
 type StaticOrigin = boolean | string | RegExp | Array<boolean | string | RegExp>
 type CustomOrigin = (requestOrigin: string | undefined,
@@ -58,6 +61,15 @@ function useUncacheErrors (app: Application): void {
   })
 }
 
+function useInactivityEmails (app: Application): void {
+  cron.schedule('0 0 * * *', () => {
+    logger.info('Running daily inactivity check...')
+    sendInactivityEmails().catch((err: Error) => {
+      logger.error(`${err.name}: ${err.message}`)
+    })
+  }, { scheduled: true })
+}
+
 function useMiddlewares (app: Application): void {
   useCors(app)
   app.use(compression())
@@ -65,6 +77,7 @@ function useMiddlewares (app: Application): void {
   app.use(express.json())
   useRateLimit(app)
   useUncacheErrors(app)
+  useInactivityEmails(app)
 }
 
 export default useMiddlewares

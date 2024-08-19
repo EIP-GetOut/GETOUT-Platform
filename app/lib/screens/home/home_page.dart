@@ -10,21 +10,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/home/bloc/home_page/home_page_bloc.dart';
+import 'package:getout/screens/home/widgets/header.dart';
 import 'package:getout/screens/home/children/dashboard/pages/dashboard.dart';
 import 'package:getout/screens/home/children/your_books/pages/your_books.dart';
 import 'package:getout/screens/home/children/your_movies/pages/your_movies.dart';
-import 'package:getout/screens/home/widgets/header.dart';
 import 'package:getout/screens/home/widgets/navbar.dart';
 import 'package:getout/global.dart' as globals;
 
-/// UserPage
-///  - UserAppBar()
-///  - PageView
-///    - DashboardLayout
-///    - YourMovie
-///    - YourBooks
-///  - BottomNavBar
-///
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -37,30 +29,17 @@ class HomePage extends StatelessWidget {
       return Scaffold(
           appBar: HomeAppBarWidget(context: context),
           body: PageView(
-            controller: pageController,
-            onPageChanged: (index) {
-              context.read<HomePageBloc>().add(HomePageToIdx(index));
-            },
-            children: <Widget>[
-              ListView(children: const [
-                SizedBox(height: 600, child: DashboardPage())
+              controller: pageController,
+              onPageChanged: (index) {
+                context.read<HomePageBloc>().add(HomePageToIdx(index));
+              },
+              children: const <Widget>[
+                DashboardPage(),
+                YourMoviesPage(),
+                YourBooksPage(),
               ]),
-              ListView(children: const [
-                SizedBox(height: 900, child: YourMoviesPage())
-              ]),
-              ListView(children: const [
-                SizedBox(height: 900, child: YourBooksPage())
-              ]),
-              //todo implement activities
-              /*const SizedBox(
-                  width: 1000,
-                  height: 2000,
-                  child: ColoredBox(
-                      color: Colors.white, child: ObjectLoadingErrorWidget(object: 'Les Activités')))*/
-            ],
-          ),
-          bottomNavigationBar: HomeNavBarWidget(
-              pageController: pageController, idx: state.idx));
+          bottomNavigationBar:
+              HomeNavBarWidget(pageController: pageController, idx: state.idx));
     });
   }
 }

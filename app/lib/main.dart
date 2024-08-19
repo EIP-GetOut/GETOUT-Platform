@@ -34,6 +34,8 @@ import 'package:getout/widgets/loading.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/global.dart' as globals;
 
+import 'dart:async';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HydratedBloc.storage = await HydratedStorage.build(
@@ -44,11 +46,14 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   Directory appDocDir = await getApplicationDocumentsDirectory();
   globals.cookiePath = '${appDocDir.path}/.cookies/';
-  runApp(const MainProvider());
+  runApp(MainProvider());
 }
 
 class MainProvider extends StatelessWidget {
-  const MainProvider({super.key});
+  MainProvider({super.key});
+
+  final Timer? timer = Timer.periodic(const Duration(seconds: 15),
+      (Timer t) async => await globals.sessionManager.getSession());
 
   @override
   Widget build(BuildContext context) {

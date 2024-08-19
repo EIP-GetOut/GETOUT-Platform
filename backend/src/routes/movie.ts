@@ -10,9 +10,8 @@ import { StatusCodes } from 'http-status-codes'
 
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
+import { getMovie } from '@services/tmdb/getMovie'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
-
-import { getMovie } from '@models/movie'
 
 const router = Router()
 
@@ -34,27 +33,24 @@ const router = Router()
  *         schema:
  *           type: object
  *           properties:
- *             film:
- *               type: object
- *               properties:
- *                 title:
- *                   type: string
- *                 overview:
- *                   type: string
- *                 poster_path:
- *                   type: string
- *                 backdrop_path:
- *                   type: string
- *                 release_date:
- *                   type: string
- *                   format: date
- *                 cast:
- *                   type: array
- *                   items:
- *                     type: string
- *                 vote_average:
- *                   type: number
- *                 duration:
+ *             title:
+ *               type: string
+ *             overview:
+ *               type: string
+ *             poster_path:
+ *               type: string
+ *             backdrop_path:
+ *               type: string
+ *             release_date:
+ *               type: string
+ *               format: date
+ *             cast:
+ *               type: array
+ *               items:
+ *                 type: string
+ *             vote_average:
+ *               type: number
+ *             duration:
  *                   type: string
  *       '500':
  *         description: Internal server error.
@@ -63,7 +59,7 @@ const router = Router()
 router.get('/movie/:id', validate, logApiRequest, (req: Request, res: Response) => {
   getMovie(parseInt(req.params.id)).then((movie: any) => {
     logger.info(`Successfully retreived movie ${req.params.id}: ${JSON.stringify(movie, null, 2)}`)
-    res.status(StatusCodes.OK).json({ movie })
+    res.status(StatusCodes.OK).json({ ...movie })
   }).catch(handleErrorOnRoute(res))
 })
 

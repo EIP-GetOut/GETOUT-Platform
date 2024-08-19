@@ -19,14 +19,17 @@ const loginBody = {
   password: 'toto'
 }
 
-void describe('Verify Email Route', async () => {
+void describe('Verify Email Route With Resend', async () => {
   let cookie: string | null
 
   it('should respond with 204 NO_CONTENT for POST /account/verify-email/', async () => {
     await request(app).post('/account/login').send(loginBody).then((res) => {
       cookie = extractConnectSidCookie(res.headers['set-cookie'][0])
       if (cookie === null) { throw Error('Failed extracting cookie') }
-      return request(app).post('/account/verify-email/').set('Cookie', cookie).send({ code: 123456 })
+      return request(app).post('/account/verify-email/resend').set('Cookie', cookie)
+    }).then((response) => {
+      expect(response.status).toBe(StatusCodes.OK)
+      return request(app).post('/account/verify-email/').set('Cookie', cookie!).send({ code: 123456 })
     }).then((response) => {
       expect(response.status).toBe(StatusCodes.OK)
       return request(app).get('/session').set('Cookie', cookie!)

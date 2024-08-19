@@ -30,11 +30,9 @@ class BookService {
 
   PersonList parseAuthor(final castData) {
     PersonList castList = [];
-
     for (final author in castData) {
-      String? name = author['author'];
-      String picture = author['picture'] ??
-          'https://t3.ftcdn.net/jpg/05/03/24/40/360_F_503244059_fRjgerSXBfOYZqTpei4oqyEpQrhbpOML.jpg';
+      String? name = author ?? 'Auteur inconnu';
+      String picture = 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg';
 
       if (name != null) {
         castList.add(Person(name: name, picture: picture));
@@ -48,7 +46,6 @@ class BookService {
 
     InfoBookResponse result =
         const InfoBookResponse(statusCode: HttpStatus.APP_ERROR);
-
     final response = await dio.get(
         '${ApiConstants.rootApiPath}${ApiConstants.getInfoBookPath}/${request.id}',
         options: Options(headers: {'Content-Type': 'application/json'}));
@@ -59,21 +56,21 @@ class BookService {
 
       final dynamic data = response.data;
       result = InfoBookResponse(
-          title: response.data['book']['title'],
-          overview: parseFragment(response.data['book']['overview']).text ??
+          title: data['title'] ?? 'Aucun titre',
+          overview: data['description'] != null ? parseFragment(data['description']).text :
               'Pas de description disponible',
-          posterPath: response.data['book']['poster_path'],
-          backdropPath: response.data['book']['backdrop_path'],
-          releaseDate: response.data['book']['release_date'],
-          voteAverage: response.data['book']['vote_average'],
-          pageCount: response.data['book']['pageCount'] ?? 0,
-          bookLink: response.data['book']['book_link'],
-          authorsPicture: parseAuthor(data['book']['authors_picture']),
+          posterPath: data['posterPath'] ?? 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fgijoe.fandom.com%2Fwiki%2FVoid_Rivals_TPB_02&psig=AOvVaw3WPQ4SmYRlwda4umtwa8I0&ust=1723725563604000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJjmlaPA9IcDFQAAAAAdAAAAABAE',
+          backdropPath: data['backdropPath'] ?? 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fgijoe.fandom.com%2Fwiki%2FVoid_Rivals_TPB_02&psig=AOvVaw3WPQ4SmYRlwda4umtwa8I0&ust=1723725563604000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJjmlaPA9IcDFQAAAAAdAAAAABAE',
+          releaseDate: data['releaseDate'] ?? 'Pas de date',
+          voteAverage: data['averageRating'] ?? 0,
+          pageCount: data['pageCount'] ?? 0,
+          bookLink: data['link'] ?? '',
+          authorsPicture: parseAuthor(data['authors']),
           liked: globals.session?['likedBooks'].toString().contains(request.id.toString()),
           disliked: globals.session?['dislikedBooks'].toString().contains(request.id.toString()),
           wishlisted: globals.session?['readingList'].toString().contains(request.id.toString()),
           read: globals.session?['readBooks'].toString().contains(request.id.toString()),
-          id: response.data['book']['id'],
+          id: data['id'],
           statusCode: response.statusCode ?? 500);
       return result;
     } on DioException {

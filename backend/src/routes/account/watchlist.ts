@@ -11,8 +11,10 @@ import { StatusCodes } from 'http-status-codes'
 
 import logger, { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
+import { preloadNextRecommendations } from '@services/recommendationsCaching/movies'
 import { AccountDoesNotExistError, AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
+import { mapAccountToSession } from '@services/utils/mapAccountToSession'
 
 import { modifyAccount } from '@models/account'
 import { findEntity } from '@models/getObjects'
@@ -127,10 +129,20 @@ router.post('/account/:accountId/watchlist', rulesPost, validate, logApiRequest,
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
+  const accountId = req.params.accountId
   addMovieToWatchlist(req.params.accountId, parseInt(req.body.movieId)).then(async (updatedWatchlist: number[]) => {
-    return await modifyAccount(req.session.account!.id, { watchlist: updatedWatchlist }).then(() => {
+    await modifyAccount(req.session.account!.id, { watchlist: updatedWatchlist }).then(async () => {
+      /* This will be deleted when not necessary for the frontend anymore and not in the session */
+      return await mapAccountToSession(req, true)
+    }).then(() => {
       logger.info(`Successfully added ${req.body.movieId} to ${req.session.account?.email}'s watchlist`)
       return res.status(StatusCodes.CREATED).json(updatedWatchlist)
+    }).then(async () => {
+      if (process.env.NODE_ENV !== 'test') {
+        await preloadNextRecommendations(accountId).catch((err: Error) => {
+          logger.error(`${err.name}: ${err.message}`)
+        })
+      }
     })
   }).catch(handleErrorOnRoute(res))
 })
@@ -145,10 +157,20 @@ router.delete('/account/:accountId/watchlist/:movieId', rulesDelete, validate, l
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
-  removeMovieFromWatchlist(req.params.accountId, parseInt(req.params.movieId)).then(async (updatedWatchlist: number[]) => {
-    return await modifyAccount(req.session.account!.id, { watchlist: updatedWatchlist }).then(() => {
+  const accountId = req.params.accountId
+  removeMovieFromWatchlist(accountId, parseInt(req.params.movieId)).then(async (updatedWatchlist: number[]) => {
+    await modifyAccount(accountId, { watchlist: updatedWatchlist }).then(async () => {
+      /* This will be deleted when not necessary for the frontend anymore and not in the session */
+      return await mapAccountToSession(req, true)
+    }).then(() => {
       logger.info(`Successfully removed ${req.params.movieId} of ${req.session.account?.email}'s watchlist.`)
       return res.status(StatusCodes.OK).json(updatedWatchlist)
+    }).then(async () => {
+      if (process.env.NODE_ENV !== 'test') {
+        await preloadNextRecommendations(accountId).catch((err: Error) => {
+          logger.error(`${err.name}: ${err.message}`)
+        })
+      }
     })
   }).catch(handleErrorOnRoute(res))
 })

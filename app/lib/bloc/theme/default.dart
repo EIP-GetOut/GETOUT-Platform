@@ -115,7 +115,7 @@ final getOutTheme = ThemeData(
       displayMedium: TextStyle(
         fontFamily: 'Urbanist',
         color: Colors.black,
-        fontSize: 15,
+        fontSize: 18,
       )
   ),
   appBarTheme: const AppBarTheme(

@@ -29,9 +29,15 @@ class AccountDoesNotExistError extends AppError {
   }
 }
 
+class AccountIsAlreadyVerifiedError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'Account is already verified.', status ?? StatusCodes.FORBIDDEN)
+  }
+}
+
 class AlreadyLoggedInError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
-    super(message ?? 'User is already logged in.', status ?? StatusCodes.BAD_REQUEST)
+    super(message ?? 'Account is already logged in.', status ?? StatusCodes.BAD_REQUEST)
   }
 }
 class ApiError extends AppError {}
@@ -50,7 +56,15 @@ class BookNotInListError extends AppError {
   }
 }
 
+class CacheError extends AppError {}
+
 class DbError extends AppError {}
+
+class EmailSendError extends AppError {
+  constructor (message?: string, status?: StatusCodes) {
+    super(message ?? 'There was an error while sending email.')
+  }
+}
 
 class GoogleBookError extends AppError {}
 
@@ -68,7 +82,7 @@ class MovieNotInListError extends AppError {
 
 class NotLoggedInError extends AppError {
   constructor (message?: string, status?: StatusCodes) {
-    super(message ?? 'User is not logged in.', status ?? StatusCodes.BAD_REQUEST)
+    super(message ?? 'Account is not logged in.', status ?? StatusCodes.BAD_REQUEST)
   }
 }
 
@@ -117,13 +131,16 @@ class SessionDestroyError extends AppError {
 export {
   AccountAlreadyExistError,
   AccountDoesNotExistError,
+  AccountIsAlreadyVerifiedError,
   AlreadyLoggedInError,
   ApiError,
   AppError,
   AuthenticationError,
   BcryptError,
   BookNotInListError,
+  CacheError,
   DbError,
+  EmailSendError,
   GoogleBookError,
   IncorrectEmailOrPasswordError,
   MovieNotInListError,

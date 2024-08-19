@@ -56,7 +56,7 @@ router.patch('/account', rulesPatch, validate, logApiRequest, (req: Request, res
         createdDate: account.createdDate
       })
     })
-  }).catch(handleErrorOnRoute)
+  }).catch(handleErrorOnRoute(res))
 })
 
 export default router

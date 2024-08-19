@@ -14,6 +14,8 @@ import 'package:getout/constants/http_status.dart';
 import 'package:getout/global.dart' as globals;
 import 'package:getout/screens/home/bloc/books/books_event.dart';
 import 'package:getout/screens/home/bloc/movies/movies_event.dart';
+import 'package:getout/screens/home/widgets/dashboard/story_news/story_news_bloc.dart';
+import 'package:getout/screens/home/widgets/dashboard/news/news_bloc.dart';
 
 part 'dashboard.dart';
 part 'books.dart';
@@ -34,6 +36,10 @@ class HomeService extends _HomeService<BooksService, MoviesService> {
   Future<GenerateMoviesResponse> getRecommendedMovies(GenerateMoviesRequest request) => g.getRecommendedMovies(request);
   Future<GenerateMoviesResponse> getSavedMovies(GenerateMoviesRequest request) => g.getSavedMovies(request);
   Future<GenerateMoviesResponse> getLikedMovies(GenerateMoviesRequest request) => g.getLikedMovies(request);
+
+  //Home
+  Future<StoryNewsResponse> getInfoStoryNews() => g.getInfoStoryNews();
+  Future<NewsResponse> getInfoNews() => g.getInfoNews();
 }
 
 abstract class ServiceTemplate {}

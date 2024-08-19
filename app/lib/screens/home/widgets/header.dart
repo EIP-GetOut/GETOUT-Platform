@@ -10,69 +10,47 @@ import 'package:flutter/services.dart';
 
 import 'package:getout/screens/settings/settings.dart';
 
-import 'package:getout/global.dart' as globals;
 import 'package:getout/tools/app_l10n.dart';
-
-import 'package:getout/tools/duration_format.dart';
 
 class HomeAppBarWidget extends AppBar {
   HomeAppBarWidget({super.key, required BuildContext context})
       : super(
-          /**
-           * appBarSettings
-           */
           systemOverlayStyle: const SystemUiOverlayStyle(
-            // Status bar color
             statusBarColor: Colors.transparent,
-
-            // Status bar brightness (optional)
             statusBarIconBrightness:
-                Brightness.dark, // For Android (dark icons)
-            statusBarBrightness: Brightness.light, // For iOS (dark icons)
+                Brightness.dark,
+            statusBarBrightness: Brightness.light,
           ),
           toolbarHeight: 100,
           titleSpacing: 5,
           backgroundColor: Colors.white,
-          /**
-           * leading | title | actions
-           * -------------------------
-           *  Profil | Title |  Quit
-           * -------------------------
-           */
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const SettingsPage()));
-            },
-            child: Padding(
-                padding: const EdgeInsets.only(left: 10, right: 0),
-                child: Image.asset(
-                  'assets/images/icon/profile_picture.png',
-                  width: 60,
-                )),
-          ),
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(appL10n(context)!.homepage_title,
-                  style: Theme.of(context).textTheme.titleLarge),
-              Text(appL10n(context)!.homepage_subtitle,
-                  style: Theme.of(context).textTheme.displayMedium),
-              Text(
-                  durationFormat(appL10n(context)!.you_saved,
-                      globals.session?['spentMinutesReadingAndWatching']),
-                  style: Theme.of(context).textTheme.bodySmall)
+          title: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Text(appL10n(context)!.homepage_title,
+                          style: Theme.of(context).textTheme.titleLarge)),
+                  Padding(
+                      padding: const EdgeInsets.only(left: 20),
+                      child: Text(appL10n(context)!.homepage_subtitle,
+                          style: Theme.of(context).textTheme.displayMedium)),
+                ])
+              ],
+            ),
+            actions: [
+              Padding(
+                  padding: const EdgeInsets.only(right: 20),
+                  child: IconButton(
+                      icon: const Icon(Icons.settings, size: 40),
+                      color: Colors.black,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SettingsPage()));
+                      })),
             ],
-          ),
-          actions: [
-            Padding(
-                padding: const EdgeInsets.all(10),
-                child: Image.asset(
-                  'assets/images/logo/getout.png',
-                  width: 40,
-                )),
-          ],
         );
 }

@@ -33,13 +33,12 @@ class MoviesService extends ServiceTemplate {
           'Error ${response.statusCode} while fetching movies: ${response.statusMessage}',
         ));
       }
-
       response.data.forEach((elem) {
         result.add(MoviePreview(
             id: elem['id'],
             title: elem['title'],
-            posterPath: elem['poster_path'],
-            overview: elem['overview']));
+            posterPath: elem['posterPath'],
+            overview: elem['description']));
       });
     } on DioException catch (dioException) {
       if (dioException.response != null &&
@@ -62,7 +61,6 @@ class MoviesService extends ServiceTemplate {
     GenerateMoviesResponse result = [];
 
     dynamic data = await getLikedMoviesId(request);
-
     for (int movie in data) {
       MovieStatusResponse item = await getMovieById(movie);
       if (item.statusCode == HttpStatus.OK) {
@@ -101,6 +99,7 @@ class MoviesService extends ServiceTemplate {
 
     for (int movie in data) {
       MovieStatusResponse item = await getMovieById(movie);
+
       if (item.statusCode == HttpStatus.OK) {
         result.add(MoviePreview(
             id: item.id!,
@@ -145,16 +144,62 @@ class MoviesService extends ServiceTemplate {
             statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
       }
       final dynamic data = response.data;
+
       result = MovieStatusResponse(
-          title: data['movie']['title'],
-          overview:
-              data['movie']['overview'] ?? 'Pas de description disponible',
-          posterPath: data['movie']['poster_path'],
+          title: data['title'],
+          overview: data['synopsis'] ?? 'Pas de description disponible',
+          posterPath: data['posterPath'],
           id: movie,
           statusCode: response.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR);
     } catch (error) {
       return Future.error(Exception('Unknown error:  ${error.toString()}'));
     }
     return result;
+  }
+
+  Future<StoryNewsResponse> getInfoStoryNews() async {
+    try {
+      StoryNewsResponse result =
+          const StoryNewsResponse(statusCode: HttpStatus.APP_ERROR);
+      final response = await dio.get('${ApiConstants.rootApiPath}${ApiConstants.dailyInfo}');
+      if (response.statusCode == HttpStatus.OK) {
+        result = StoryNewsResponse(
+          statusCode: response.statusCode ?? 500,
+          quote: response.data['quote'] ?? '',
+          author: response.data['author'] ?? 'Auteur inconnue',
+          sourceStr: response.data['sourceStr'] ?? 'Source inconnue',
+          sourceUrl: response.data['sourceUrl'] ?? '',
+        );
+      }
+      return result;
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
+    }
+  }
+
+  Future<NewsResponse> getInfoNews() async {
+    try {
+      NewsResponse result =
+          const NewsResponse(statusCode: HttpStatus.APP_ERROR);
+      final response = await dio.get('${ApiConstants.rootApiPath}${ApiConstants.dailyNews}');
+      if (response.statusCode == HttpStatus.OK) {
+        result = NewsResponse(
+          statusCode: response.statusCode ?? 500,
+          title: response.data['title'] ?? '',
+          picture: response.data['picture'] ?? '',
+          url: response.data['url'] ?? '',
+          sourceLogo: response.data['sourceLogo'] ?? '',
+        );
+      }
+      return result;
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (dioError) {
+      rethrow;
+    }
   }
 }
