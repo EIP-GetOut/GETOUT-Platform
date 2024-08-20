@@ -19,6 +19,9 @@ export class News {
     url!: string
 
   @Column({ nullable: false })
+    sourceLogo!: string
+
+  @Column({ nullable: false })
     image!: string
 
   @CreateDateColumn()
