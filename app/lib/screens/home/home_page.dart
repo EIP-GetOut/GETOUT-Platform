@@ -11,7 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/home/bloc/home_page/home_page_bloc.dart';
 import 'package:getout/screens/home/widgets/header.dart';
-// import 'package:getout/screens/home/children/dashboard/pages/dashboard_page.dart';
 import 'package:getout/screens/home/children/dashboard/pages/dashboard.dart';
 import 'package:getout/screens/home/children/your_books/pages/your_books.dart';
 import 'package:getout/screens/home/children/your_movies/pages/your_movies.dart';
@@ -34,16 +33,10 @@ class HomePage extends StatelessWidget {
               onPageChanged: (index) {
                 context.read<HomePageBloc>().add(HomePageToIdx(index));
               },
-              children: <Widget>[
-                ListView(children: const [
-                  Dashboard()
-                ]),
-                ListView(children: const [
-                  SizedBox(height: 900, child: YourMoviesPage())
-                ]),
-                ListView(children: const [
-                  SizedBox(height: 900, child: YourBooksPage())
-                ]),
+              children: const <Widget>[
+                Dashboard(),
+                YourMoviesPage(),
+                YourBooksPage(),
               ]),
           bottomNavigationBar:
               HomeNavBarWidget(pageController: pageController, idx: state.idx));

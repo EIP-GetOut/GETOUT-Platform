@@ -18,7 +18,6 @@ class TransitionPage extends StatelessWidget {
   final String description;
   final String image;
   final String buttonText;
-  // final Widget? nextPage;
   final Function() nextPage;
 
   const TransitionPage({super.key,
@@ -49,15 +48,7 @@ class TransitionPage extends StatelessWidget {
             width: Tools.widthFactor(context, 0.9),
             height: 65,
             child: FloatingActionButton(
-              onPressed: () => nextPage(),/* {
-
-                // if (nextPage == null) {
-                //   Navigator.of(context).pop();
-                //   return Navigator.of(context).pop();
-                // }
-                // Navigator.of(context).push(MaterialPageRoute(builder: (context) => nextPage!));
-
-              },*/
+              onPressed: () => nextPage(),
               child: Text(buttonText,
                   style: Theme.of(context).textTheme.labelMedium),
             ),
