@@ -5,6 +5,8 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>, Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -31,7 +33,6 @@ import 'package:getout/bloc/observer.dart';
 import 'package:getout/bloc/theme/bloc.dart';
 import 'package:getout/widgets/loading.dart';
 import 'package:getout/tools/status.dart';
-
 import 'package:getout/global.dart' as globals;
 
 import 'dart:async';
@@ -44,7 +45,9 @@ Future<void> main() async {
           : await getApplicationDocumentsDirectory());
   Bloc.observer = const AppBlocObserver(); // BLoC MiddleWare.
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(Phoenix(child: MainProvider()));
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+  globals.cookiePath = '${appDocDir.path}/.cookies/';
+    runApp(Phoenix(child: MainProvider()));
 }
 
 class MainProvider extends StatelessWidget {

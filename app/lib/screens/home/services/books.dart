@@ -9,8 +9,15 @@ part of 'service.dart';
 
 class BooksService extends ServiceTemplate {
   final String _id = (globals.session != null) ? globals.session!['id'].toString() : '';
+  final Dio dio = Dio();
 
-  BooksService();
+  BooksService() {
+    dio.interceptors.add(CookieManager(PersistCookieJar(
+        ignoreExpires: true,
+        storage: FileStorage(globals.cookiePath))));
+    dio.options.headers = ({'Content-Type': 'application/json'});
+
+  }
 
   /// RECOMMEND
   Future<GenerateBooksResponse> getRecommendedBooks(
@@ -18,16 +25,16 @@ class BooksService extends ServiceTemplate {
     GenerateBooksResponse result = [];
 
     try { /// TODO we need to do something prettier
-      final response = await globals.dio?.get(
+      final response = await dio.get(
           '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedBooksPath}',
           options: Options(headers: {'Content-Type': 'application/json'}));
 
-      if (response?.statusCode != HttpStatus.OK) {
+      if (response.statusCode != HttpStatus.OK) {
         return Future.error(Exception(
-          'Error ${response?.statusCode} while fetching books: ${response?.statusMessage}',
+          'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
         ));
       }
-      response?.data.forEach((elem) {
+      response.data.forEach((elem) {
         result.add(BookPreview(
             id: elem['id'],
             title: elem['title'],
@@ -72,17 +79,16 @@ class BooksService extends ServiceTemplate {
   Future<dynamic> getLikedBooksId(GenerateBooksRequest request) async {
     final Response? response;
 
-    response = await globals.dio
-        ?.get('${ApiConstants.rootApiPath}/account/$_id/likedBooks',
+    response = await dio.get('${ApiConstants.rootApiPath}/account/$_id/likedBooks',
             options: Options(headers: {
               'Content-Type': 'application/json',
             }));
-    if (response?.statusCode != HttpStatus.OK) {
+    if (response.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
-        'Error ${response?.statusCode} while fetching books: ${response?.statusMessage}',
+        'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
       ));
     }
-    return response?.data;
+    return response.data;
   }
 
   /// SAVED
@@ -108,18 +114,18 @@ class BooksService extends ServiceTemplate {
   Future<dynamic> getSavedBooksId(GenerateBooksRequest request) async {
     dynamic data;
 
-    final response = await globals.dio
-        ?.get('${ApiConstants.rootApiPath}/account/$_id/readinglist',
+    final response = await dio
+        .get('${ApiConstants.rootApiPath}/account/$_id/readinglist',
             options: Options(headers: {
               'Content-Type': 'application/json',
             }));
-    if (response?.statusCode != HttpStatus.OK) {
+    if (response.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
-        'Error ${response?.statusCode} while fetching books: ${response?.statusMessage}',
+        'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
       ));
     }
 
-    data = response?.data;
+    data = response.data;
 
     return data;
   }
@@ -129,21 +135,21 @@ class BooksService extends ServiceTemplate {
     BookStatusResponse result =
         const BookStatusResponse(statusCode: HttpStatus.APP_ERROR);
 
-    final Response? response = await globals.dio?.get(
+    final Response response = await dio.get(
         '${ApiConstants.rootApiPath}${ApiConstants.getInfoBookPath}/$book',
         options: Options(headers: {'Content-Type': 'application/json'}));
     try {
-      if (response?.statusCode != MovieStatusResponse.success) {
+      if (response.statusCode != MovieStatusResponse.success) {
         return const BookStatusResponse(
             statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
       }
-      final dynamic data = response?.data;
+      final dynamic data = response.data;
       result = BookStatusResponse(
           title: data['title'] ?? 'Titre inconnue',
           overview: data['description'] ?? 'Pas de description disponible',
           posterPath: data['posterPath'] ?? 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fgijoe.fandom.com%2Fwiki%2FVoid_Rivals_TPB_02&psig=AOvVaw2skAKZpPM9bWFhXo9mQQOV&ust=1723799097653000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJCb5JjS9ocDFQAAAAAdAAAAABAE',
           id: book,
-          statusCode: response?.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR);
+          statusCode: response.statusCode ?? HttpStatus.INTERNAL_SERVER_ERROR);
     } catch (error) {
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() ==

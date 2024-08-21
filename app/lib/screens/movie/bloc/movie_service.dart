@@ -5,7 +5,9 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
 import 'package:getout/constants/api_path.dart';
@@ -15,6 +17,15 @@ import 'package:getout/global.dart' as globals;
 
 class MovieService {
   final String userId = globals.session?['id'].toString() ?? '';
+  final Dio dio = Dio();
+
+  MovieService() {
+    dio.interceptors.add(CookieManager(PersistCookieJar(
+        ignoreExpires: true,
+        storage: FileStorage(globals.cookiePath))));
+    dio.options.headers = ({'Content-Type': 'application/json'});
+  }
+
 
   PersonList parseCast(final castData) {
     PersonList castList = [];
@@ -45,14 +56,14 @@ class MovieService {
     InfoMovieResponse result =
         const InfoMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
-    final response = await globals.dio?.get(
+    final response = await dio.get(
         '${ApiConstants.rootApiPath}${ApiConstants.getInfoMoviePath}/${request.id}',
         options: Options(headers: {'Content-Type': 'application/json'}));
     try {
-      if (response?.statusCode != HttpStatus.OK) {
-        return InfoMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response.statusCode != HttpStatus.OK) {
+        return InfoMovieResponse(statusCode: response.statusCode ?? 500);
       }
-      final dynamic data = response?.data;
+      final dynamic data = response.data;
 
       result = InfoMovieResponse(
           title: data['title'] ?? 'Titre inconnue',
@@ -62,12 +73,10 @@ class MovieService {
           backdropPath: data['backdropPath'] ?? 'https://media.comicbook.com/files/img/default-movie.png',
           releaseDate: data['releaseDate'],
           voteAverage: data['averageRating'],
-          duration: (data['duration'].toString() == '0')
-              ? 'N/A'
-              : data['duration'],
+          duration: (data['duration'].toString() == '0') ? 'N/A' : data['duration'],
           cast: parseCast(data['cast']),
           director: parseDirector(data['director']),
-          statusCode: response?.statusCode ?? 500,
+          statusCode: response.statusCode ?? 500,
           liked: globals.session?['likedMovies'].toString().contains(request.id.toString()),
           disliked: globals.session?['dislikedMovies'].toString().contains(request.id.toString()),
           wishlisted: globals.session?['watchlist'].toString().contains(request.id.toString()),
@@ -89,18 +98,18 @@ class MovieService {
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      final response = await globals.dio?.post(
+      final response = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedMoviePath}',
           options: Options(
             headers: {'Content-Type': 'application/json'},
           ),
           data: {'movieId': request.id});
-      if (response?.statusCode != HttpStatus.CREATED) {
-        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response.statusCode != HttpStatus.CREATED) {
+        return AddMovieResponse(statusCode: response.statusCode ?? 500);
       }
 
       result = AddMovieResponse(
-        statusCode: response?.statusCode ?? 500,
+        statusCode: response.statusCode ?? 500,
       );
       await globals.sessionManager.getSession();
       return result;
@@ -117,18 +126,18 @@ class MovieService {
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      final response = await globals.dio?.delete(
+      final response = await dio.delete(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedMoviePath}/${request.id}',
         options: Options(
           headers: {'Content-Type': 'application/json'},
         ),
       );
-      if (response?.statusCode != HttpStatus.OK) {
-        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response.statusCode != HttpStatus.OK) {
+        return AddMovieResponse(statusCode: response.statusCode ?? 500);
       }
 
       result = AddMovieResponse(
-        statusCode: response?.statusCode ?? 500,
+        statusCode: response.statusCode ?? 500,
       );
       await globals.sessionManager.getSession();
       return result;
@@ -145,18 +154,18 @@ class MovieService {
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      final response = await globals.dio?.delete(
+      final response = await dio.delete(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addDislikedMoviePath}/${request.id}',
         options: Options(
           headers: {'Content-Type': 'application/json'},
         ),
       );
-      if (response?.statusCode != HttpStatus.OK) {
-        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response.statusCode != HttpStatus.OK) {
+        return AddMovieResponse(statusCode: response.statusCode ?? 500);
       }
 
       result = AddMovieResponse(
-        statusCode: response?.statusCode ?? 500,
+        statusCode: response.statusCode ?? 500,
       );
 
       await globals.sessionManager.getSession();
@@ -174,19 +183,19 @@ class MovieService {
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      final response = await globals.dio?.post(
+      final response = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addDislikedMoviePath}',
           options: Options(
             headers: {'Content-Type': 'application/json'},
           ),
           data: {'movieId': request.id});
 
-      if (response?.statusCode != HttpStatus.CREATED) {
-        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response.statusCode != HttpStatus.CREATED) {
+        return AddMovieResponse(statusCode: response.statusCode ?? 500);
       }
 
       result = AddMovieResponse(
-        statusCode: response?.statusCode ?? 500,
+        statusCode: response.statusCode ?? 500,
       );
 
       await globals.sessionManager.getSession();
@@ -203,18 +212,18 @@ class MovieService {
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      final response = await globals.dio?.post(
+      final response = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.watchlistPath}',
           options: Options(
             headers: {'Content-Type': 'application/json'},
           ),
           data: {'movieId': request.id});
-      if (response?.statusCode != HttpStatus.CREATED) {
-        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response.statusCode != HttpStatus.CREATED) {
+        return AddMovieResponse(statusCode: response.statusCode ?? 500);
       }
 
       result = AddMovieResponse(
-        statusCode: response?.statusCode ?? 500,
+        statusCode: response.statusCode ?? 500,
       );
       await globals.sessionManager.getSession();
       return result;
@@ -232,17 +241,17 @@ class MovieService {
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      final response = await globals.dio?.delete(
+      final response = await dio.delete(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.watchlistPath}/${request.id}',
           options: Options(
             headers: {'Content-Type': 'application/json'},
           ));
-      if (response?.statusCode != HttpStatus.OK) {
-        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response.statusCode != HttpStatus.OK) {
+        return AddMovieResponse(statusCode: response.statusCode ?? 500);
       }
 
       result = AddMovieResponse(
-        statusCode: response?.statusCode ?? 500,
+        statusCode: response.statusCode ?? 500,
       );
       await globals.sessionManager.getSession();
       return result;
@@ -259,18 +268,18 @@ class MovieService {
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      final response = await globals.dio?.post(
+      final response = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.seenMoviesPath}',
           options: Options(
             headers: {'Content-Type': 'application/json'},
           ),
           data: {'movieId': request.id});
-      if (response?.statusCode != HttpStatus.CREATED) {
-        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response.statusCode != HttpStatus.CREATED) {
+        return AddMovieResponse(statusCode: response.statusCode ?? 500);
       }
 
       result = AddMovieResponse(
-        statusCode: response?.statusCode ?? 500,
+        statusCode: response.statusCode ?? 500,
       );
       await globals.sessionManager.getSession();
       return result;
@@ -287,17 +296,17 @@ class MovieService {
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      final response = await globals.dio?.delete(
+      final response = await dio.delete(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.seenMoviesPath}/${request.id}',
           options: Options(
             headers: {'Content-Type': 'application/json'},
           ));
-      if (response?.statusCode != HttpStatus.OK) {
-        return AddMovieResponse(statusCode: response?.statusCode ?? 500);
+      if (response.statusCode != HttpStatus.OK) {
+        return AddMovieResponse(statusCode: response.statusCode ?? 500);
       }
 
       result = AddMovieResponse(
-        statusCode: response?.statusCode ?? 500,
+        statusCode: response.statusCode ?? 500,
       );
       await globals.sessionManager.getSession();
       return result;
