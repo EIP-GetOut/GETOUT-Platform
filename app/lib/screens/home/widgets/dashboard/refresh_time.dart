@@ -12,37 +12,130 @@ import 'package:getout/tools/duration_format.dart';
 
 import 'package:getout/tools/app_l10n.dart';
 
+import 'package:provider/provider.dart';
 import 'dart:math';
+import 'dart:async';
+
+// class RefreshTimeCard extends StatelessWidget {
+//   const RefreshTimeCard({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Center(
+//       child: Card.outlined(
+//         shape: RoundedRectangleBorder(
+//           side: BorderSide(color: Theme.of(context).primaryColor, width: 2),
+//           borderRadius: BorderRadius.circular(25),
+//         ),
+//         child: Column(
+//           mainAxisSize: MainAxisSize.min,
+//           children: <Widget>[
+//             ListTile(
+//               leading: Icon(
+//                 Icons.access_time_filled,
+//                 color: Theme.of(context).primaryColor,
+//                 size: 30,
+//               ),
+//               title: Text(
+//                   durationFormatSeconds(appL10n(context)!.refresh, min(globals.session?['secondsBeforeNextMovieRecommendation'], globals.session?['secondsBeforeNextBookRecommendation'])),
+//                   style: TextStyle(
+//                       color: Theme.of(context).primaryColor,
+//                       fontWeight: FontWeight.w500,
+//                       fontSize: 18)),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+class TimerNotifier extends ChangeNotifier {
+  late ValueNotifier<int> _timeNotifier;
+  late int _initialTime;
+  late Timer _timer;
+
+  TimerNotifier(int initialTime) {
+    _initialTime = initialTime;
+    _timeNotifier = ValueNotifier<int>(_initialTime);
+    _startTimer();
+  }
+
+  ValueNotifier<int> get timeNotifier => _timeNotifier;
+
+  void _startTimer() {
+    int elapsedTime = 0;
+
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      elapsedTime += 1;
+      final remainingTime = _initialTime - elapsedTime;
+
+      if (remainingTime <= 0) {
+        _timeNotifier.value = 0;
+        timer.cancel();
+      } else {
+        _timeNotifier.value = remainingTime;
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    _timeNotifier.dispose();
+    super.dispose();
+  }
+}
 
 class RefreshTimeCard extends StatelessWidget {
   const RefreshTimeCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Card.outlined(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: Theme.of(context).primaryColor, width: 2),
-          borderRadius: BorderRadius.circular(25),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ListTile(
-              leading: Icon(
-                Icons.access_time_filled,
-                color: Theme.of(context).primaryColor,
-                size: 30,
+    // Récupérer le temps initial depuis globals.session
+    final int initialTime = min(
+      globals.session?['secondsBeforeNextMovieRecommendation'] ?? 0,
+      globals.session?['secondsBeforeNextBookRecommendation'] ?? 0
+    );
+
+    return ChangeNotifierProvider(
+      create: (_) => TimerNotifier(initialTime),
+      child: Consumer<TimerNotifier>(
+        builder: (context, timerNotifier, child) {
+          return Center(
+            child: Card.outlined(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Theme.of(context).primaryColor, width: 2),
+                borderRadius: BorderRadius.circular(25),
               ),
-              title: Text(
-                  durationFormatSeconds(appL10n(context)!.refresh, min(globals.session?['secondsBeforeNextMovieRecommendation'], globals.session?['secondsBeforeNextBookRecommendation'])),
-                  style: TextStyle(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  ListTile(
+                    leading: Icon(
+                      Icons.access_time_filled,
                       color: Theme.of(context).primaryColor,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 18)),
+                      size: 30,
+                    ),
+                    title: ValueListenableBuilder<int>(
+                      valueListenable: timerNotifier.timeNotifier,
+                      builder: (context, remainingSeconds, child) {
+                        return Text(
+                          durationFormatSeconds(
+                              appL10n(context)!.refresh, remainingSeconds),
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 18),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

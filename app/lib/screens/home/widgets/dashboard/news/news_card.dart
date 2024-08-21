@@ -16,8 +16,6 @@ class NewsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NewsBloc, NewsState>(builder: (context, state) {
-          print("PICUTRE ===== ");
-          print(state.news.picture);
       return Center(
           child: GestureDetector(
               onTap: state.news.url != '' ? () => launchWebView(
@@ -35,34 +33,24 @@ class NewsCard extends StatelessWidget {
                             fit: BoxFit.cover,
                             height: 400,
                             width: 500,
-                            color: Color.fromARGB(21, 150, 150, 150)
+                            color: const Color.fromARGB(19, 56, 56, 56)
                                 .withOpacity(1),
                             colorBlendMode: BlendMode.modulate,
                           )
                         : Container(
                             height: 400,
                             width: 500,
-                            color: Color.fromARGB(255, 21, 21, 21),
+                            color: const Color.fromARGB(255, 21, 21, 21),
                           ),
-                  ),/*
-                          Image.network(
-                        'https://leseng.rosselcdn.net/sites/default/files/dpistyles_v2/ls_16_9_864w/2024/07/09/node_600692/31311605/public/2024/07/09/21232853.jpeg?itok=GZ_Dj6ws1720604025',
-                        fit: BoxFit.cover,
-                        height: 400,
-                        width: 500,
-                        color: const Color.fromRGBO(150, 150, 150, 255)
-                            .withOpacity(1),
-                        colorBlendMode: BlendMode.modulate,
-                      )),*/
+                  ),
                   Positioned(
                       bottom: 10,
                       left: 10,
                       right: 10,
                       child: Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: Text(
                           '${state.news.title}',
-                          // 'Meta, TikTok, X, Snapchat... Les réseaux sociaux accusés de malmener la santé mentale des plus jeunes',
                           style: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
@@ -76,11 +64,12 @@ class NewsCard extends StatelessWidget {
                       right: 10,
                       child: state.news.sourceLogo != '' ? Image.network(
                         '${state.news.sourceLogo}',
-                        // 'https://lh4.googleusercontent.com/proxy/btuZBXctiokcEue8M8c1jdMBTHjAA7RQd6XZdhmruPrv9SxfAYZldWZCqXtpSx1QTPczBLLvntJAxMl3g-V8U5-uQFsrJOPcal3rBV0XSOgg0EcIGp7H4QB9r2fTWQ',
                         fit: BoxFit.fill,
-                        height: 100,
-                        width: 100,
+                        // height: 60,
+                        // width: 100,
                         colorBlendMode: BlendMode.modulate,
+                        color: const Color.fromARGB(19, 255, 255, 255)
+                                .withOpacity(1),
                       ) : const SizedBox(height: 0,))
                 ]),
               )));

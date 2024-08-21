@@ -178,18 +178,23 @@ class MoviesService extends ServiceTemplate {
   }
 
   Future<NewsResponse> getInfoNews() async {
+    DateTime now = DateTime.now();
+    int dayOfYear = int.parse('${now.month}${now.day}');
+    int index = 0;
     try {
+
       NewsResponse result =
           const NewsResponse(statusCode: HttpStatus.APP_ERROR);
       final response = await globals.dio
           ?.get('${ApiConstants.rootApiPath}${ApiConstants.dailyNews}');
       if (response?.statusCode == HttpStatus.OK) {
+        index = dayOfYear % 5;
         result = NewsResponse(
           statusCode: response?.statusCode ?? 500,
-          title: response?.data['title'] ?? '',
-          picture: response?.data['picture'] ?? '',
-          url: response?.data['url'] ?? '',
-          sourceLogo: response?.data['sourceLogo'] ?? '',
+          title: response?.data[index]['title'] ?? '',
+          picture: response?.data[index]['image'] ?? '',
+          url: response?.data[index]['url'] ?? '',
+          sourceLogo: response?.data[index]['sourceLogo'] ?? '',
         );
       }
       return result;

@@ -3,7 +3,6 @@
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
-** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
 import 'package:flutter/material.dart';
@@ -32,8 +31,6 @@ class DashboardPage extends StatelessWidget {
               child: Column(
                 children: [
                   const RefreshTimeCard(),
-                  const Padding(
-                      padding: EdgeInsets.only(top: 10), child: NewsCard()),
                   Padding(
                       padding: const EdgeInsets.all(10),
                       child: Row(
@@ -53,6 +50,8 @@ class DashboardPage extends StatelessWidget {
                                   globals.session?['spentMinutesWatching'])),
                         ],
                       )),
+                  const Padding(
+                      padding: EdgeInsets.only(top: 10), child: NewsCard()),
                     const Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: StoryNewsCard())

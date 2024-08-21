@@ -28,6 +28,7 @@ dependencies:
     sdk: flutter
   shimmer: ^2.0.0
   flutter_switch: ^0.3.2
+  flutter_phoenix: ^1.0.0
 
   flutter_localizations:
     sdk: flutter
@@ -62,6 +63,7 @@ dependencies:
 ### UI
   auto_size_text: ^3.0.0
   url_launcher: ^6.3.0
+  provider: ^6.1.2
 
 #  flutter_json: ^0.0.2
 
@@ -116,6 +118,7 @@ flutter:
     - assets/images/draw/woman.png
     - assets/images/draw/email_verified_complete.svg
     - assets/images/draw/question.png
+    - assets/images/draw/error.svg
 #    Icon:
     - assets/images/icon/books.png
     - assets/images/icon/fire.png
