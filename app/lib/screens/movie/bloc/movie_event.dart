@@ -71,8 +71,6 @@ class AddMovieResponse extends MovieEvent {
   const AddMovieResponse (
     {required this.statusCode}
   );
-
-
 }
 
 class Person extends MovieEvent {

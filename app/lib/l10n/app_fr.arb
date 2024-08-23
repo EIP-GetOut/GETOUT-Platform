@@ -7,6 +7,9 @@
   "@_ERROR":{},
 
   "error_unknown": "Une erreur s'est produite, veuillez réessayer plus tard",
+  "error_unknown_short": "Une erreur est survenu",
+  "error_ok": "Compris",
+  "error_unknown_description": "Réessayez dans quelques minutes, si le problème persiste contactez le support.",
   "error_internet": "Vérifiez votre connexion et recommencez",
   "error_server": "Surprenant ! Attendez un peu, ou contactez le support",
   "error_unauthorized": "Vérifiez les informations et recommencez",

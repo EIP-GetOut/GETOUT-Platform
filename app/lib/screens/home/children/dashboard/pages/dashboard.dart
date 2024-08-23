@@ -3,61 +3,48 @@
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
-** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
-import 'package:getout/screens/home/widgets/dashboard/refresh_time.dart';
 import 'package:getout/screens/home/widgets/dashboard/story_news/story_news_bloc.dart';
-import 'package:getout/screens/home/widgets/dashboard/story_news/story_news_card.dart';
-import 'package:getout/screens/home/widgets/dashboard/spent_time.dart';
-import 'package:getout/screens/home/widgets/dashboard/news/news_card.dart';
-import 'package:getout/tools/duration_format.dart';
-
+import 'package:getout/screens/home/children/dashboard/pages/dashboard_shimmer.dart';
+import 'package:getout/screens/home/children/dashboard/pages/dashboard_page.dart';
+import 'package:getout/widgets/transition_page.dart';
 import 'package:getout/tools/app_l10n.dart';
 
-import 'package:getout/global.dart' as globals;
-
-class DashboardPage extends StatelessWidget {
-  const DashboardPage({super.key});
+class Dashboard extends StatelessWidget {
+  const Dashboard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<StoryNewsBloc, StoryNewsState>(builder: (context, state) {
-      return SingleChildScrollView(
-          child: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-              child: Column(
-                children: [
-                  const RefreshTimeCard(),
-                  const Padding(
-                      padding: EdgeInsets.only(top: 10), child: NewsCard()),
-                  Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SpentTimeCard(
-                              title: appL10n(context)!.total_book,
-                              icon: Icons.book,
-                              number:
-                                  '${globals.session?['totalPagesRead']} pages'),
-                          const SizedBox(width: 30),
-                          SpentTimeCard(
-                              title: appL10n(context)!.total_movie,
-                              icon: Icons.movie,
-                              number: durationFormat('',
-                                  globals.session?['spentMinutesWatching'])),
-                        ],
-                      )),
-                    const Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                      child: StoryNewsCard())
-                ],
-              )));
-    });
+    return BlocBuilder<StoryNewsBloc, StoryNewsState>(
+      builder: (context, state) {
+        if (state.status.isLoading) {
+          return const DashboardShimmer();
+        } else if (state.status.isError) {
+          Future.microtask(() {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TransitionPage(
+                    title: appL10n(context)!.error_unknown_short,
+                    description: appL10n(context)!.error_unknown_description,
+                    image: 'assets/images/draw/error.svg',
+                    buttonText: appL10n(context)!.error_ok,
+                    nextPage: () => {
+                          Phoenix.rebirth(context),
+                        }),
+              ),
+            );
+          });
+          return const SizedBox.shrink();
+        } else {
+          return const DashboardPage();
+        }
+      },
+    );
   }
 }

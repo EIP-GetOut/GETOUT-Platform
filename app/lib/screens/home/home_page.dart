@@ -34,7 +34,11 @@ class HomePage extends StatelessWidget {
                 context.read<HomePageBloc>().add(HomePageToIdx(index));
               },
               children: const <Widget>[
+<<<<<<< HEAD
+                Dashboard(),
+=======
                 DashboardPage(),
+>>>>>>> origin/app
                 YourMoviesPage(),
                 YourBooksPage(),
               ]),
