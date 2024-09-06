@@ -188,8 +188,7 @@ class MoviesService extends ServiceTemplate {
 
       NewsResponse result =
           const NewsResponse(statusCode: HttpStatus.APP_ERROR);
-      final response = await globals.dio
-          ?.get('${ApiConstants.rootApiPath}${ApiConstants.dailyNews}');
+      final response = await dio?.get('${ApiConstants.rootApiPath}${ApiConstants.dailyNews}');
       if (response?.statusCode == HttpStatus.OK) {
         index = dayOfYear % 5;
         result = NewsResponse(
