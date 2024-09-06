@@ -139,14 +139,14 @@ final getOutTheme = ThemeData(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
-      minimumSize: MaterialStateProperty.all<Size>(const Size(double.infinity, 60)),
-      backgroundColor: MaterialStateProperty.all<Color>(
+      minimumSize: WidgetStateProperty.all<Size>(const Size(double.infinity, 60)),
+      backgroundColor: WidgetStateProperty.all<Color>(
         const Color.fromRGBO(213, 86, 65, 1),
       ),
-      foregroundColor: MaterialStateProperty.all<Color>(
+      foregroundColor: WidgetStateProperty.all<Color>(
         const Color.fromARGB(255, 255, 255, 255),
       ),
-      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ),
