@@ -82,7 +82,7 @@ class SendNewEmailButton extends StatelessWidget {
                         .sendNewEmail(EditEmailRequestModel(
                             email: email, password: password))
                         .then((final EditEmailResponseModel value) {
-                      if (!value.isSuccessful) {
+                      if (!value.isSuccessful && context.mounted) {
                         showSnackBar(context,
                             appL10n(context)!.error_unknown);
                       }

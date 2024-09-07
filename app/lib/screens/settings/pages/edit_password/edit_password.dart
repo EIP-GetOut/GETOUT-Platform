@@ -87,15 +87,17 @@ class SendNewNewButton extends StatelessWidget {
                         .sendNewPassword(EditPasswordRequestModel(
                             oldPassword: oldPassword, newPassword: newPassword))
                         .then((final EditPasswordResponseModel value) {
-                      if (value.statusCode == HttpStatus.UNAUTHORIZED) {
+                      if (value.statusCode == HttpStatus.UNAUTHORIZED && context.mounted) {
                         showSnackBar(context, appL10n(context)!.password_current_error);
-                      } else if (!value.isSuccessful) {
+                      } else if (!value.isSuccessful && context.mounted) {
                         showSnackBar(context,
                             appL10n(context)!.error_unknown);
                       } else {
-                        showSnackBar(
-                            context, appL10n(context)!.password_edit_success,
-                            color: Colors.green);
+                        if (context.mounted) {
+                          showSnackBar(
+                              context, appL10n(context)!.password_edit_success,
+                              color: Colors.green);
+                        }
                       }
                     });
                   }));
