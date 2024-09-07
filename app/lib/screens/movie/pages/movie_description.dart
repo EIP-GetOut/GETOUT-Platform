@@ -82,27 +82,22 @@ class _MovieDescriptionPageState extends State<MovieDescriptionPage> {
                 DescriptionTitle(value: appL10n(context)!.casting),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: List.generate(
-                      widget.movie.cast?.length ?? 0,
-                      (index) => Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Column(
-                          children: [
-                            Image.network(
-                              widget.movie.cast![index].picture,
-                              height: 120,
-                              width: 120,
-                            ),
-                            Padding(
-                                padding: const EdgeInsets.only(bottom: 10, top: 10),
-                                child: Text(
-                                  widget.movie.cast![index].name,
-                                  style: const TextStyle(fontSize: 14),
-                                )),
-                          ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Column(
+                      children: [
+                        Image.network(
+                          widget.movie.director!.picture,
+                          height: 120,
+                          width: 120,
                         ),
-                      ),
+                        Padding(
+                            padding: const EdgeInsets.only(bottom: 10, top: 10),
+                            child: Text(
+                              widget.movie.director!.name,
+                              style: const TextStyle(fontSize: 14),
+                            )),
+                      ],
                     ),
                   ),
                 ),
