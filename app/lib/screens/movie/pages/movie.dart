@@ -72,14 +72,12 @@ class MovieSuccessWidget extends StatelessWidget {
                       await context
                           .read<MovieBloc>()
                           .movieService
-                          .removeSeenMovie(
-                              AddMovieRequest(id: movie.id!));
+                          .removeSeenMovie(AddMovieRequest(id: movie.id!));
                     } else {
                       await context
                           .read<MovieBloc>()
                           .movieService
-                          .addSeenMovie(
-                              AddMovieRequest(id: movie.id!));
+                          .addSeenMovie(AddMovieRequest(id: movie.id!));
                     }
                     if (!context.mounted) return;
                     context
@@ -99,14 +97,12 @@ class MovieSuccessWidget extends StatelessWidget {
                       await context
                           .read<MovieBloc>()
                           .movieService
-                          .removeLikedMovie(
-                              AddMovieRequest(id: movie.id!));
+                          .removeLikedMovie(AddMovieRequest(id: movie.id!));
                     } else {
                       await context
                           .read<MovieBloc>()
                           .movieService
-                          .addLikedMovie(
-                              AddMovieRequest(id: movie.id!));
+                          .addLikedMovie(AddMovieRequest(id: movie.id!));
                     }
                     if (!context.mounted) return;
                     context
@@ -126,14 +122,12 @@ class MovieSuccessWidget extends StatelessWidget {
                       await context
                           .read<MovieBloc>()
                           .movieService
-                          .removeDislikedMovie(
-                              AddMovieRequest(id: movie.id!));
+                          .removeDislikedMovie(AddMovieRequest(id: movie.id!));
                     } else {
                       await context
                           .read<MovieBloc>()
                           .movieService
-                          .addDislikedMovie(
-                              AddMovieRequest(id: movie.id!));
+                          .addDislikedMovie(AddMovieRequest(id: movie.id!));
                     }
                     if (!context.mounted) return;
                     context
@@ -160,8 +154,7 @@ class MovieSuccessWidget extends StatelessWidget {
                       await context
                           .read<MovieBloc>()
                           .movieService
-                          .addWishListedMovie(
-                              AddMovieRequest(id: movie.id!));
+                          .addWishListedMovie(AddMovieRequest(id: movie.id!));
                     }
                     if (!context.mounted) return;
                     context
@@ -211,45 +204,58 @@ class MovieSuccessWidget extends StatelessWidget {
         textAlign: TextAlign.center,
         style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
       ),
-      const Row(
-        mainAxisAlignment:
-            MainAxisAlignment.center, //Center Row contents horizontally,
-        crossAxisAlignment: CrossAxisAlignment
-            .center, //Center Row contents vertically,            children: [
-        children: [
-          Icon(
-            Boxicons.bx_movie,
-            size: 40,
-          ),
-          SizedBox(
-              height: 20,
-              child: VerticalDivider(
-                width: 30,
-                color: Colors.black,
-                thickness: 1,
-                // heigth : double.infinity,
-              )),
-          Icon(Boxicons.bx_time, size: 40),
-        ],
-      ),
+      // const Row(
+      //   mainAxisAlignment:
+      //       MainAxisAlignment.center, //Center Row contents horizontally,
+      //   crossAxisAlignment: CrossAxisAlignment
+      //       .center, //Center Row contents vertically,            children: [
+      //   children: [
+      //     Icon(
+      //       Boxicons.bx_movie,
+      //       size: 40,
+      //     ),
+      //     SizedBox(
+      //         height: 20,
+      //         child: VerticalDivider(
+      //           width: 30,
+      //           color: Colors.black,
+      //           thickness: 1,
+      //           // heigth : double.infinity,
+      //         )),
+      //     Icon(Boxicons.bx_time, size: 40),
+      //   ],
+      // ),
       Row(
-        mainAxisAlignment:
-            MainAxisAlignment.center, //Center Row contents horizontally,
-        crossAxisAlignment: CrossAxisAlignment
-            .center, //Center Row contents vertically,            children: [
-        children: [
-          Padding(padding: const EdgeInsets.only(left : 8),
-          child: Text('Film',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelSmall)),
-          const SizedBox(width: 15),
-          const SizedBox(height: 20,),
-          Text(durationFormat('', movie.duration ?? 0),
-              // widget.movie.duration,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelSmall),
-        ],
-      ),
+          mainAxisAlignment:
+              MainAxisAlignment.center, //Center Row contents horizontally,
+          crossAxisAlignment: CrossAxisAlignment
+              .center, //Center Row contents vertically,            children: [
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.star, // Icône d'étoile
+                ),
+                SizedBox(width: 5), // Espacement entre l'icône et le texte
+                Text(
+                  movie.voteAverage != null
+                      ? movie.voteAverage.toString()
+                      : 'N/A', // Le nombre à afficher à côté de l'étoile
+                  style: TextStyle(
+                    fontSize: 16, // Taille du texte
+                    fontWeight: FontWeight.bold, // Poids du texte
+                  ),
+                ),
+                // Text(movie.voteAverage),
+              ],
+            ),
+            Text(durationFormat('', movie.duration ?? 0),
+                // widget.movie.duration,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.labelSmall),
+            Text(movie.releaseDate ?? ''),
+          ]),
       Flexible(
         child: Padding(
           padding: const EdgeInsets.all(25.0),

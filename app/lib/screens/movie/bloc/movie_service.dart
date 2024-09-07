@@ -83,6 +83,7 @@ class MovieService {
           seen: globals.session?['seenMovies'].toString().contains(request.id.toString()),
           id: request.id);
     } catch (error) {
+      print(error);
       if (error.toString() == 'Connection reset by peer' ||
           error.toString() ==
               'Connection closed before full header was received') {
