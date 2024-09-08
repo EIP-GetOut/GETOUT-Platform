@@ -1,3 +1,10 @@
+/*
+** Copyright GETOUT SAS - All Rights Reserved
+** Unauthorized copying of this file, via any medium is strictly prohibited
+** Proprietary and confidential
+** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
+*/
+
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +20,9 @@ class ActionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Scaffold(
+    backgroundColor: Colors.transparent,
+    body:Padding(
       padding: const EdgeInsets.fromLTRB(40, 80, 40, 40),
       child: SizedBox(
         width: double.infinity,
@@ -46,7 +55,8 @@ class ActionsPage extends StatelessWidget {
                   size: 30,
                 ), // Icons.favorite_outlined
                 onPressed: () async {
-                  showSnackBar(context, '');
+                  print("icon pressed");
+                  showCustomSnackBar(context: context, color: Colors.green, message: 'Le film a bien été ajouté à la watchlist', icon: Icons.check_circle_rounded);
                 },
               ),
               Text(
@@ -105,6 +115,6 @@ class ActionsPage extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ));
   }
 }

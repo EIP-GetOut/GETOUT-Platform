@@ -11,7 +11,6 @@ import 'package:flutter/services.dart';
 import 'package:boxicons/boxicons.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:getout/screens/movie/pages/movie_description.dart';
 import 'package:getout/widgets/description_title.dart';
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
@@ -38,6 +37,10 @@ class MovieSuccessWidget extends StatelessWidget {
 
     String imageUrl =
         'https://image.tmdb.org/t/p/w600_and_h900_bestv2${movie.posterPath}';
+
+    List<Tag> tagList() {
+      return movie.genres!.map((tag) => Tag(text: tag)).toList();
+    }
 
     Widget buildCoverImage() => Container(
           decoration: const BoxDecoration(
@@ -89,7 +92,10 @@ class MovieSuccessWidget extends StatelessWidget {
                   onPressed: () async {
                     showModalBottomSheet(
                       context: context,
-                      builder: (ctx) => ActionsPage(movie: movie, context: context,),
+                      builder: (ctx) => ActionsPage(
+                        movie: movie,
+                        context: context,
+                      ),
                     );
                   },
                 ),
@@ -188,6 +194,14 @@ class MovieSuccessWidget extends StatelessWidget {
                         ),
                       ],
                     ),
+                    movie.genres!.isNotEmpty ? Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: Wrap(
+                      spacing: 8.0,
+                      runSpacing:
+                          4.0,
+                      children: tagList(),
+                    )) : const SizedBox.shrink(),
                     Padding(
                       padding: const EdgeInsets.all(25.0),
                       child: Column(

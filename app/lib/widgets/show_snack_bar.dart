@@ -15,3 +15,37 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showSnackBar(final Bui
           style: Theme.of(context).textTheme.displaySmall));
   return ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
+
+ScaffoldFeatureController<SnackBar, SnackBarClosedReason> showCustomSnackBar({
+  required BuildContext context,
+  required String message,
+  required IconData icon,
+  required Color color,
+  Color textColor = Colors.white,
+  Duration duration = const Duration(seconds: 3),
+}) {
+  final snackBar = SnackBar(
+    content: Row(
+      children: [
+        Icon(icon, color: textColor),
+        const SizedBox(width: 10),
+        Expanded(
+          child: Text(
+            message,
+            style: TextStyle(color: textColor, fontSize: 15, fontWeight: FontWeight.w400),
+          ),
+        ),
+      ],
+    ),
+    backgroundColor: color,
+    behavior: SnackBarBehavior.floating,
+    elevation: 10,
+    margin: const EdgeInsets.all(10),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
+    duration: duration,
+  );
+
+  return ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
