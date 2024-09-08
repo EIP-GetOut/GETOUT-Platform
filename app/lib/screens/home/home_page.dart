@@ -33,16 +33,10 @@ class HomePage extends StatelessWidget {
               onPageChanged: (index) {
                 context.read<HomePageBloc>().add(HomePageToIdx(index));
               },
-              children: <Widget>[
-                ListView(children: const [
-                  SizedBox(height: 700, child: DashboardPage())
-                ]),
-                ListView(children: const [
-                  SizedBox(height: 900, child: YourMoviesPage())
-                ]),
-                ListView(children: const [
-                  SizedBox(height: 900, child: YourBooksPage())
-                ]),
+              children: const <Widget>[
+                Dashboard(),
+                YourMoviesPage(),
+                YourBooksPage(),
               ]),
           bottomNavigationBar:
               HomeNavBarWidget(pageController: pageController, idx: state.idx));

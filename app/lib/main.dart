@@ -5,16 +5,20 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>, Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'package:getout/screens/connection/bloc/connection_provider.dart';
 import 'package:getout/screens/connection/services/service.dart';
@@ -30,20 +34,22 @@ import 'package:getout/bloc/observer.dart';
 import 'package:getout/bloc/theme/bloc.dart';
 import 'package:getout/widgets/loading.dart';
 import 'package:getout/tools/status.dart';
-
 import 'package:getout/global.dart' as globals;
 
 import 'dart:async';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Permission.storage.request();
   HydratedBloc.storage = await HydratedStorage.build(
       storageDirectory: kIsWeb
           ? HydratedStorage.webStorageDirectory
           : await getApplicationDocumentsDirectory());
   Bloc.observer = const AppBlocObserver(); // BLoC MiddleWare.
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(MainProvider());
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+  globals.cookiePath = '${appDocDir.path}/.cookies/';
+    runApp(Phoenix(child: MainProvider()));
 }
 
 class MainProvider extends StatelessWidget {

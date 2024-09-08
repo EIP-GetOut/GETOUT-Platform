@@ -9,21 +9,29 @@ part of 'service.dart';
 
 class HistoryService extends ServiceTemplate {
   final String _id = (globals.session != null) ? globals.session!['id'].toString() : '';
-  HistoryService();
+  final Dio dio = Dio();
+
+  HistoryService() {
+    dio.interceptors.add(CookieManager(PersistCookieJar(
+        ignoreExpires: true,
+        storage: FileStorage(globals.cookiePath))));
+    dio.options.headers = ({'Content-Type': 'application/json'});
+  }
+
 
   Future<HistoryBooksResponse> getHistoryBooks() async {
     HistoryBooksResponse result = [];
     try { /// TODO we need to do something prettier
-      final response = await globals.dio?.get(
+      final response = await dio.get(
           '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedBooksHistoryPath}',
           options: Options(headers: {'Content-Type': 'application/json'}));
-      if (response?.statusCode != HttpStatus.OK) {
+      if (response.statusCode != HttpStatus.OK) {
         return Future.error(Exception(
-          'Error ${response?.statusCode} while fetching books: ${response?.statusMessage}',
+          'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
         ));
       }
 
-      response?.data.forEach((elem) {
+      response.data.forEach((elem) {
         result.add(BookPreview(
             id: elem['id'],
             title: elem['title'],
@@ -51,15 +59,15 @@ class HistoryService extends ServiceTemplate {
     HistoryMoviesResponse result = [];
 
     try { /// TODO we need to do something prettier
-      final response = await globals.dio?.get(
+      final response = await dio.get(
           '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedMoviesHistoryPath}',
           options: Options(headers: {'Content-Type': 'application/json'}));
-      if (response?.statusCode != HttpStatus.OK) {
+      if (response.statusCode != HttpStatus.OK) {
         return Future.error(Exception(
-          'Error ${response?.statusCode} while fetching books: ${response?.statusMessage}',
+          'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
         ));
       }
-      response?.data.forEach((elem) {
+      response.data.forEach((elem) {
         result.add(MoviePreview(
             id: elem['id'],
             title: elem['title'],

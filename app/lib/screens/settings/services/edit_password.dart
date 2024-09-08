@@ -5,7 +5,9 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/constants/api_path.dart';
@@ -15,16 +17,26 @@ part 'edit_password_model.dart';
 
 class EditPasswordServices {
 
+  final Dio dio = Dio();
+
+  EditPasswordServices() {
+    dio.interceptors.add(CookieManager(PersistCookieJar(
+        ignoreExpires: true,
+        storage: FileStorage(globals.cookiePath))));
+    dio.options.headers = ({'Content-Type': 'application/json'});
+  }
+
+
   Future<EditPasswordResponseModel> sendNewPassword(final EditPasswordRequestModel request) async
   {
     EditPasswordResponseModel response = const EditPasswordResponseModel(statusCode: HttpStatus.APP_ERROR);
     dynamic dioResponse; // dynamic because dio can return a DioError or a Response
 
-    if (globals.cookieJar == null || globals.dio == null || globals.session == null) {
+    if (globals.session == null) {
       return response;
     }
     try {
-      dioResponse = await globals.dio?.post(
+      dioResponse = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.changePasswordPath}',
           data: {
             'password': request.oldPassword,

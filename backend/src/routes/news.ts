@@ -95,6 +95,7 @@ const rulesPatch = [
   body('*.id').isInt({ min: 1, max: 5 }).withMessage('id should be an integer between 1 and 5'),
   body('*.title').isString().withMessage('title should be a string'),
   body('*.url').isURL().withMessage('url should be a valid URL'),
+  body('*.sourceLogo').isURL().withMessage('sourceLogo should be a valid URL'),
   body('*.image').isURL().withMessage('image should be a valid URL')
 ]
 

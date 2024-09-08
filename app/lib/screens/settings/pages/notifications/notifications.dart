@@ -73,7 +73,7 @@ class NotificationsServices {
         "Hey, tu t'ennuies ? Viens découvrir de nouvelles activités !",
         // RepeatInterval.daily,
         // pour la demo il faut utiliser :
-        RepeatInterval.everyMinute,
+        RepeatInterval.daily,
         notificationDetails);
     isActive = true;
     saveIsActiveValueInCache();

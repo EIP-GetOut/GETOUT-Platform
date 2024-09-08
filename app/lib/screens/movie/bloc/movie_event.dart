@@ -36,6 +36,7 @@ class InfoMovieResponse extends MovieEvent {
       this.disliked,
       this.wishlisted,
       this.seen,
+      this.genres,
       this.id,
       required this.statusCode});
 
@@ -55,6 +56,7 @@ class InfoMovieResponse extends MovieEvent {
   final bool? seen;
   final int statusCode;
   final int? id;
+  final List<dynamic>? genres;
 }
 
 class AddMovieRequest extends MovieEvent {
@@ -71,8 +73,6 @@ class AddMovieResponse extends MovieEvent {
   const AddMovieResponse (
     {required this.statusCode}
   );
-
-
 }
 
 class Person extends MovieEvent {

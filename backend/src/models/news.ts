@@ -21,6 +21,7 @@ interface newsPatchingRequest {
   id: number
   title: string
   url: string
+  sourceLogo: string
   image: string
 }
 
@@ -36,6 +37,7 @@ async function modifyNews (newsToChange: newsPatchingRequest []): Promise<void> 
       }
       foundNews.title = news.title
       foundNews.url = news.url
+      foundNews.sourceLogo = news.sourceLogo
       foundNews.image = news.image
       promisesArray.push(newsRepository.save(foundNews))
     }).catch((err) => {

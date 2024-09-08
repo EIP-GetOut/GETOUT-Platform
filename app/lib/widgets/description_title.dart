@@ -14,7 +14,7 @@ class DescriptionTitle extends StatelessWidget {
           left: 10, top: 10), //apply padding to all four sides
       child: Text(
         value.toUpperCase(),
-        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       ),
     );
   }

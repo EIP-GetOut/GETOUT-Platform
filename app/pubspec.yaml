@@ -26,14 +26,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  shimmer: ^2.0.0
   flutter_switch: ^0.3.2
+  flutter_phoenix: ^1.0.0
+  share_plus: ^10.0.2
 
   flutter_localizations:
     sdk: flutter
 
   html: ^0.15.0
 ### Data
-  intl: ^0.18.1
+  intl: ^0.19.0
   flutter_bloc: ^8.1.4
   bloc: ^8.1.3
   hydrated_bloc: ^9.1.4
@@ -53,7 +56,7 @@ dependencies:
   flutter_svg: ^2.0.9
 
 ### Notifications
-  flutter_local_notifications: ^16.3.2
+  flutter_local_notifications: ^17.2.1
   permission_handler: ^11.3.0
   is_first_run: ^1.0.0
   timezone: ^0.9.2
@@ -61,6 +64,7 @@ dependencies:
 ### UI
   auto_size_text: ^3.0.0
   url_launcher: ^6.3.0
+  provider: ^6.1.2
 
 #  flutter_json: ^0.0.2
 
@@ -73,7 +77,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^3.0.1
+  flutter_lints: ^4.0.0
   flutter_launcher_icons: ^0.13.1
 
 flutter_icons:
@@ -115,6 +119,7 @@ flutter:
     - assets/images/draw/woman.png
     - assets/images/draw/email_verified_complete.svg
     - assets/images/draw/question.png
+    - assets/images/draw/error.svg
 #    Icon:
     - assets/images/icon/books.png
     - assets/images/icon/fire.png

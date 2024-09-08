@@ -40,7 +40,7 @@ const GENRES_TO_GOOGLE_BOOKS_GENRES: Record<string, string> = {
   Policier: 'crime',
   'Science-fiction': 'fiction',
   Politique: 'political',
-  Poésie: 'poesy',
+  Poésie: 'poetry',
   Histoire: 'history',
   Science: 'science',
   Philosophie: 'philosophy',

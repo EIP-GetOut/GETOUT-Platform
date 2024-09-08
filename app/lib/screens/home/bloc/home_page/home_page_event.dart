@@ -14,7 +14,6 @@ abstract class HomePageEvent extends Equatable {
   List<Object> get props => [];
 }
 
-
 class HomePageToIdx extends HomePageEvent {
   const HomePageToIdx(this.idx);
 
