@@ -15,8 +15,8 @@ class TitleRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      alignment: Alignment.center,
       width: MediaQuery.of(context).size.width,
-//      alignment: Alignment.center,
       margin: const EdgeInsets.all(12.0),
       padding: const EdgeInsets.all(8.0),
       decoration: const BoxDecoration(

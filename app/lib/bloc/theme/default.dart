@@ -63,10 +63,10 @@ final getOutTheme = ThemeData(
       ),
       /// Description below the title of each page
       headlineSmall: TextStyle(
-        color: Color.fromRGBO(0, 0, 0, 0.5),
+        color: Color.fromRGBO(0, 0, 0, 1),
         fontSize: 16,
         fontFamily: 'Poppins',
-        fontWeight: FontWeight.normal,
+        fontWeight: FontWeight.w500,
       ),
       /// text of each checkbox of the preferences
       bodyMedium: TextStyle(
