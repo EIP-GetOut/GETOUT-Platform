@@ -8,15 +8,17 @@
 part of 'service.dart';
 
 class SignService extends ServiceTemplate {
-  SignService();
+  final Dio dio = Dio();
+  SignService() {
+    dio.interceptors.add(CookieManager(PersistCookieJar(
+        ignoreExpires: true,
+        storage: FileStorage(globals.cookiePath))));
+    dio.options.headers = ({'Content-Type': 'application/json'});
+  }
 
   Future<void> login(final LoginRequestModel request) async {
-    if (globals.cookieJar == null || globals.dio == null) {
-      return;
-    }
     try {
-      await globals.dio
-          ?.post('${ApiConstants.rootApiPath}${ApiConstants.loginPath}',
+      await dio.post('${ApiConstants.rootApiPath}${ApiConstants.loginPath}',
               data: {
                 'email': request.email,
                 'password': request.password,
@@ -36,8 +38,8 @@ class SignService extends ServiceTemplate {
 
   Future<void> register(final RegisterRequestModel request) async {
     try {
-      await globals.dio
-          ?.post('${ApiConstants.rootApiPath}${ApiConstants.registerPath}',
+      await dio
+          .post('${ApiConstants.rootApiPath}${ApiConstants.registerPath}',
               data: {
                 'email': request.email,
                 'password': request.password,
@@ -56,8 +58,8 @@ class SignService extends ServiceTemplate {
 
   Future<void> emailVerified(final EmailVerifiedRequestModel request) async {
     try {
-      await globals.dio
-          ?.post('${ApiConstants.rootApiPath}${ApiConstants.verifyEmailPath}',
+      await dio
+          .post('${ApiConstants.rootApiPath}${ApiConstants.verifyEmailPath}',
               data: {
                 'code': int.parse(request.code),
               },
@@ -72,7 +74,7 @@ class SignService extends ServiceTemplate {
 
   Future<void> emailVerifiedResend() async {
     try {
-      await globals.dio?.post(
+      await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.verifyEmailResendPath}',
           options: Options(headers: {'Content-Type': 'application/json'}));
     } on DioException {

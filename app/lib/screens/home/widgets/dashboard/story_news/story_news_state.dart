@@ -4,6 +4,7 @@
 ** Proprietary and confidential
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
+
 part of 'story_news_bloc.dart';
 
 enum StoryNewsStatus { initial, success, error, loading }
