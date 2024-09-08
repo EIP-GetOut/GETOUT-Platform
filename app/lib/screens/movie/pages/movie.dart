@@ -6,10 +6,6 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-import 'package:boxicons/boxicons.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/widgets/description_title.dart';
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
@@ -19,8 +15,11 @@ import 'package:getout/tools/duration_format.dart';
 import 'package:getout/widgets/tag.dart';
 import 'package:getout/widgets/actions_page.dart';
 import 'package:getout/tools/launch_webview.dart';
-import 'dart:ui';
+
 import 'package:share_plus/share_plus.dart';
+
+import 'dart:ui';
+
 
 class MovieSuccessWidget extends StatelessWidget {
   MovieSuccessWidget({

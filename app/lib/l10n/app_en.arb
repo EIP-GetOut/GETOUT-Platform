@@ -107,6 +107,16 @@
   "director": "Director(s)",
   "casting": "Casting",
 
+  "add_seen": "Add to views",
+  "remove_seen": "Remove from views",
+  "like": "I like",
+  "dislike": "I don't like",
+  "add_watchlist": "Add to watchlist",
+  "remove_watchlist": "Remove from watchlist",
+  "interested": "Interested",
+  "not_interested": "Not interested",
+  "closed" : "Fermer" ,
+
   "@_BOOKS": {},
 
   "book" : "Book",

@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
 
-import 'package:getout/widgets/object_loading_error_widget.dart';
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
 import 'package:getout/screens/movie/pages/movie.dart';
 import 'package:getout/screens/movie/pages/movie_shimmer.dart';
 import 'package:getout/widgets/transition_page.dart';
-import 'package:getout/widgets/loading.dart';
 
 class MovieWidget extends StatelessWidget {
   const MovieWidget({super.key});

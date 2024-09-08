@@ -40,14 +40,7 @@ import 'dart:async';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (await Permission.storage.request().isGranted) {
-    print("IS GRANTEEEEEDDDD");
-    // Permission granted
-  } else {
-    print("IS NOT GRANTEEEEEDDDD");
-    await Permission.storage.request();
-    // Permission denied
-  }
+  await Permission.storage.request();
   HydratedBloc.storage = await HydratedStorage.build(
       storageDirectory: kIsWeb
           ? HydratedStorage.webStorageDirectory

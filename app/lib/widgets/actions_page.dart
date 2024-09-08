@@ -7,11 +7,9 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
-
+import 'package:getout/tools/app_l10n.dart';
 
 class ActionsPage extends StatelessWidget {
   const ActionsPage({super.key, required this.movie, required this.context});
@@ -40,8 +38,8 @@ class ActionsPage extends StatelessWidget {
               ),
               Text(
                   movie.seen != null && movie.seen!
-                      ? 'Ajouter aux vues'
-                      : 'Retirer des vues',
+                      ? appL10n(context)!.add_seen
+                      : appL10n(context)!.remove_seen,
                   style: const TextStyle(
                       fontSize: 25, fontWeight: FontWeight.w500))
             ]),
@@ -55,14 +53,13 @@ class ActionsPage extends StatelessWidget {
                   size: 30,
                 ), // Icons.favorite_outlined
                 onPressed: () async {
-                  print("icon pressed");
                   showCustomSnackBar(context: context, color: Colors.green, message: 'Le film a bien été ajouté à la watchlist', icon: Icons.check_circle_rounded);
                 },
               ),
               Text(
                   movie.liked != null && movie.liked!
-                      ? "J'aime"
-                      : "Je n'aime pas",
+                      ? appL10n(context)!.like
+                      : appL10n(context)!.dislike,
                   style: const TextStyle(
                       fontSize: 25, fontWeight: FontWeight.w500))
             ]),
@@ -77,8 +74,8 @@ class ActionsPage extends StatelessWidget {
               ),
               Text(
                   movie.wishlisted != null && movie.wishlisted!
-                      ? 'Ajouter à la watchlist'
-                      : 'Retirer de la watchlist',
+                      ? appL10n(context)!.add_watchlist
+                      : appL10n(context)!.remove_watchlist,
                   style: const TextStyle(
                       fontSize: 25, fontWeight: FontWeight.w500))
             ]),
@@ -95,8 +92,8 @@ class ActionsPage extends StatelessWidget {
               ),
               Text(
                   movie.disliked != null && movie.disliked!
-                      ? 'Pas intéréssé'
-                      : 'Intéréssé',
+                      ? appL10n(context)!.interested
+                      : appL10n(context)!.not_interested,
                   style: const TextStyle(
                       fontSize: 25, fontWeight: FontWeight.w500))
             ]),
@@ -105,11 +102,11 @@ class ActionsPage extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: const Center(
+              child: Center(
                   child: Text(
-                'Fermer',
+                appL10n(context)!.closed,
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
               )),
             )
           ],

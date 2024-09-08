@@ -107,6 +107,17 @@
   "director": "réalisateur(s)",
   "casting": "Distribution",
 
+  "add_seen": "Ajouter aux vues",
+  "remove_seen": "Retirer des vues",
+  "like": "J'aime",
+  "dislike": "Je n'aime pas",
+  "add_watchlist": "Ajouter à la watchlist",
+  "remove_watchlist": "Retirer de la watchlist",
+  "interested": "Intéressé",
+  "not_interested": "Pas intéressé",
+  "closed" : "Fermer" ,
+
+
   "@_BOOKS": {},
 
   "book": "Livre",
