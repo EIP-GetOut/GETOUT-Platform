@@ -25,7 +25,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(appL10n(context)!.notifications.toUpperCase()),
+          title: Text(appL10n(context)!.notifications_getout.toUpperCase()),
           leading: const BackButton(),
         ),
         body: Column(children: [
