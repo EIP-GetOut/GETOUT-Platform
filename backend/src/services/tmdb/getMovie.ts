@@ -88,7 +88,7 @@ async function getMovie (id: number): Promise<MovieResponse> {
           posterPath: movieObtained.poster_path,
           backdropPath: movieObtained.backdrop_path,
           releaseDate: movieObtained.release_date,
-          averageRating: Number(movieObtained.vote_average) / 2,
+          averageRating: Number((Number(movieObtained.vote_average) / 2).toFixed(2)),
           cast,
           director,
           duration: movieObtained.runtime
