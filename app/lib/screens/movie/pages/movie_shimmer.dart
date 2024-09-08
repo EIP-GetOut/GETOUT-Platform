@@ -4,7 +4,8 @@ import 'package:shimmer/shimmer.dart';
 class MovieSuccessShimmer extends StatelessWidget {
   const MovieSuccessShimmer({super.key});
 
-  Widget buildShimmerPlaceholder({double height = 100, double width = double.infinity}) {
+  Widget buildShimmerPlaceholder(
+      {double height = 100, double width = double.infinity}) {
     return Shimmer.fromColors(
       baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[100]!,
@@ -27,11 +28,11 @@ class MovieSuccessShimmer extends StatelessWidget {
             children: [
               Container(
                 margin: const EdgeInsets.only(bottom: 220),
-                child: buildShimmerPlaceholder(height: 200), // Placeholder for cover image
+                child: buildShimmerPlaceholder(height: 200),
               ),
               Positioned(
                 top: 100,
-                child: buildShimmerPlaceholder(height: 300, width: 200), // Placeholder for small image
+                child: buildShimmerPlaceholder(height: 300, width: 200),
               ),
               Align(
                 alignment: Alignment.topLeft,
@@ -55,31 +56,31 @@ class MovieSuccessShimmer extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                buildShimmerPlaceholder(height: 30), // Placeholder for title
+                buildShimmerPlaceholder(height: 30),
                 const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    buildShimmerPlaceholder(height: 20, width: 100), // Placeholder for rating and release date
+                    buildShimmerPlaceholder(height: 20, width: 100),
                     const SizedBox(width: 16),
-                    buildShimmerPlaceholder(height: 20, width: 100), // Placeholder for duration
+                    buildShimmerPlaceholder(height: 20, width: 100),
                   ],
                 ),
                 const SizedBox(height: 16),
-                buildShimmerPlaceholder(height: 150), // Placeholder for description
+                buildShimmerPlaceholder(height: 150),
                 const SizedBox(height: 16),
-                buildShimmerPlaceholder(height: 30), // Placeholder for director title
+                buildShimmerPlaceholder(height: 30),
                 const SizedBox(height: 16),
-                buildShimmerPlaceholder(height: 80, width: 80), // Placeholder for director image
+                buildShimmerPlaceholder(height: 80, width: 80),
                 const SizedBox(height: 16),
-                buildShimmerPlaceholder(height: 30), // Placeholder for casting title
+                buildShimmerPlaceholder(height: 30),
                 const SizedBox(height: 16),
                 Row(
                   children: List.generate(
-                    5, // Number of placeholder elements for casting images
+                    5,
                     (index) => Padding(
                       padding: const EdgeInsets.only(left: 10),
-                      child: buildShimmerPlaceholder(height: 80, width: 80), // Placeholder for each cast image
+                      child: buildShimmerPlaceholder(height: 80, width: 80),
                     ),
                   ),
                 ),
