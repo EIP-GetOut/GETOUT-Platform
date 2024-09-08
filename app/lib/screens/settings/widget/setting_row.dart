@@ -7,6 +7,8 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_svg/svg.dart';
+
 enum Important {
   simple,
   warning,
@@ -15,8 +17,7 @@ enum Important {
 
 class SettingRow extends StatelessWidget {
   final Widget page;
-  final Widget? icon;
-  final IconData? iconData;
+  final String? image;
   final String value;
   final Important? important;
 
@@ -24,8 +25,7 @@ class SettingRow extends StatelessWidget {
       {super.key,
       required this.page,
       required this.value,
-      this.icon,
-      this.iconData,
+      this.image,
       this.important = Important.simple});
 
   @override
@@ -44,7 +44,7 @@ class SettingRow extends StatelessWidget {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  icon ?? Icon(iconData),
+                  (image != null) ? SvgPicture.asset(image!) : const SizedBox(),
                   Text(value,
                       style: TextStyle(
                           fontSize:

@@ -6,12 +6,14 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getout/bloc/session/session_bloc.dart';
-import 'package:getout/bloc/session/session_event.dart';
 
-import 'package:getout/tools/app_l10n.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+
 import 'package:getout/screens/settings/services/service.dart';
+import 'package:getout/bloc/session/session_event.dart';
+import 'package:getout/bloc/session/session_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
 
 void showAlertDialog(BuildContext context) {
   final SettingService service = SettingService();
@@ -62,7 +64,7 @@ class DisconnectPage extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         height: MediaQuery.of(context).size.height * 0.06,
-        color: const Color.fromRGBO(255, 82, 65, 0.4),
+        //color: const Color.fromRGBO(255, 82, 65, 0.3),
         child: InkWell(
             onTap: () {
               return showAlertDialog(context);
@@ -70,13 +72,13 @@ class DisconnectPage extends StatelessWidget {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Icon(Icons.exit_to_app_outlined),
+                  SvgPicture.asset('assets/images/icon/disconnect.svg'),
                   Text(
                     appL10n(context)!.disconnect,
                     style: TextStyle(
                         fontSize:
                             (MediaQuery.of(context).size.width > 400) ? 20 : 12,
-                        color: Colors.black),
+                        color: const Color.fromRGBO(236, 0, 0, 1.0)),
                   ),
                   const Icon(Icons.arrow_forward_ios_rounded,
                       color: Colors.black54),

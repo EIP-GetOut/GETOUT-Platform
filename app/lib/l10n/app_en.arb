@@ -210,11 +210,12 @@
   "select_theme": "Dark theme",
 
   "preference": "Preference",
-  "select_preferences": "Select your movie preferences",
-  "notifications": "Notifications",
+  "select_preferences": "Change your preferences",
+  "notifications_getout": "Notifications GetOut",
+  "notifications_recommendations": "Notifications recommandations",
   "recommendations": "Recommendations",
 
-  "history": "History",
+  "history": "See history",
   "other": "Other",
   "support": "Support",
 

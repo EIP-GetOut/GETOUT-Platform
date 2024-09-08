@@ -142,7 +142,7 @@
   "@_PASSWORD": {},
 
   "password": "Mot de passe",
-  "change_password": "Changez le mot de passe",
+  "change_password": "Changer de mot de passe",
   "change_password_label": "Définissez votre nouveau mot de passe",
   "forgot_password": "Mot de passe oublié",
   "forgot_password_label": "Entrez votre adresse email et nous vous enverrons un code",
@@ -166,13 +166,13 @@
 
   "email": "Adresse email",
   "email_hint": "Entrez votre adresse email",
-  "change_email": "Changez votre email",
+  "change_email": "Changer d'adresse email",
   "change_email_label": "Définissez votre nouvelle adresse mail",
   "new_email": "Nouvelle adresse email",
   "new_email_hint": "Entrez votre nouvelle adresse email",
   "confirm_email": "Confirmation d'adresse email",
   "confirm_email_hint": "Confirmez votre adresse email",
-  "edit_email": "Changer d'adressse email",
+  "edit_email": "Changer d'adresse email",
   "email_validator": "Entrez un email valide",
   "email_matching": "Les nouvelles adresses email saisies ne correspondent pas",
   "email_empty": "L'email ne peut pas être vide",
@@ -208,11 +208,12 @@
   "select_theme": "Mode sombre",
 
   "preference": "Préférences",
-  "select_preferences": "Choisir les préférences",
-  "notifications": "Notifications",
+  "select_preferences": "Changer ses préférences",
+  "notifications_getout": "Notifications GetOut",
+  "notifications_recommendations": "Notifications recommandations",
   "recommendations": "Recommandations",
 
-  "history": "Historique",
+  "history": "Voir l'historique",
   "other": "Autre",
   "support": "Support",
 

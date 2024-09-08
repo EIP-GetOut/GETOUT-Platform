@@ -15,15 +15,12 @@ class AccountInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        height: MediaQuery.of(context).size.height * 0.15,
+        height: MediaQuery.of(context).size.height * 0.12,
         child:
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              //icons with color ?
-            Icon(Icons.face, size: MediaQuery.of(context).size.height * 0.12),
-            const SizedBox(width: 10),
+              // icons with color ?
             Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('${globals.session?['firstName']} ${globals.session?['lastName']}'.toLowerCase(),
                       overflow: TextOverflow.ellipsis,
@@ -31,10 +28,11 @@ class AccountInfo extends StatelessWidget {
                           fontSize: (MediaQuery.of(context).size.width > 400)
                               ? 30
                               : 16,
-                          color: Colors.black87)),
+                          color: Theme.of(context).primaryColor)),
                   Text(globals.session?['email'],
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
+                          fontWeight: FontWeight.w400,
                           fontSize: (MediaQuery.of(context).size.width > 400)
                               ? 20
                               : 12,

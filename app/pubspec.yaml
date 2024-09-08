@@ -121,16 +121,23 @@ flutter:
     - assets/images/draw/question.png
     - assets/images/draw/error.svg
 #    Icon:
+    - assets/images/icon/bell(notification).svg
+    - assets/images/icon/bookmark.svg
     - assets/images/icon/books.png
+    - assets/images/icon/disconnect.svg
+    - assets/images/icon/email.svg
     - assets/images/icon/fire.png
     - assets/images/icon/heart.png
-    - assets/images/icon/party.png
-    - assets/images/icon/popcorn.png
-    - assets/images/icon/profile_picture.png
-    - assets/images/icon/bookmark.svg
+    - assets/images/icon/history.svg
     - assets/images/icon/home.svg
     - assets/images/icon/location_pin.svg # not used yet
     - assets/images/icon/movie.svg
+    - assets/images/icon/padlock.svg
+    - assets/images/icon/party.png
+    - assets/images/icon/popcorn.png
+    - assets/images/icon/profile_picture.png
+    - assets/images/icon/setting.svg
+    - assets/images/icon/trash.svg
 #    Logo:
     - assets/images/logo/cinema.png
     - assets/images/logo/DVD.png
@@ -147,7 +154,6 @@ flutter:
 #    Other:
     - assets/images/other/split.png
     - assets/images/other/text_getout.png
-
 
   fonts:
   - family: Poppins
