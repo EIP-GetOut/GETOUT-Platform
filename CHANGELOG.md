@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.4](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.6.3...v0.6.4) (2024-09-08)
+
+
+### Features
+
+* **app:** :ambulance: update package and fix merge errors ([0492694](https://github.com/EIP-GetOut/GETOUT-Platform/commit/049269494db4dc60bbdd5e331ac81561dacaee29))
+* **app:** :construction_worker: :package: updating front end package and CI ([6a2b842](https://github.com/EIP-GetOut/GETOUT-Platform/commit/6a2b8423e2b65ff87939326e6759b01527bff432))
+* **app:** :sparkles: add new movie details page ([b5a57cb](https://github.com/EIP-GetOut/GETOUT-Platform/commit/b5a57cb57d3770b95c58b330acded59a51ad96c6))
+* **app:** :sparkles: add shimmer loading for dashboard page ([a950d00](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a950d00095ebff6a4464ebeb4d34fa1d5d8460ee))
+* **backend:** :sparkles: added genres in movie response ([a866f75](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a866f75d268e70e0c17e75078237d1714da867c7))
+* **backend:** :sparkles: added source logo in news ([66fcc51](https://github.com/EIP-GetOut/GETOUT-Platform/commit/66fcc51b2d7178e9c5a853b4b16c32aa990ecd64))
+
+
+### Bug Fixes
+
+* **app:** :sparkles: replace dio & persistentCookie from globals by a simple string instead. ([ed2bc01](https://github.com/EIP-GetOut/GETOUT-Platform/commit/ed2bc01a46606d89277a9bcfdfbf56fb9bab0acc))
+* **backend:** :bug: poetry book genre and movie rating now rounded to 2 digits precision ([072ff24](https://github.com/EIP-GetOut/GETOUT-Platform/commit/072ff24a2831e4c212cc7c20aa609dc51335fd31))
+
 ### [0.6.3](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.6.2...v0.6.3) (2024-08-15)
 
 
