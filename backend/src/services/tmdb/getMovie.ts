@@ -24,6 +24,7 @@ export interface MovieResponse {
   id: number
   title: string
   synopsis: string
+  genres: string []
   posterPath: string
   backdropPath: string
   releaseDate: string // formatted YYYY-MM-DD
@@ -82,6 +83,8 @@ async function getMovie (id: number): Promise<MovieResponse> {
           id,
           title: movieObtained.title,
           synopsis: movieObtained.overview,
+          genres: movieObtained.genres?.map(genre => genre.name)
+            .filter((name): name is string => name !== undefined) ?? undefined,
           posterPath: movieObtained.poster_path,
           backdropPath: movieObtained.backdrop_path,
           releaseDate: movieObtained.release_date,
