@@ -115,6 +115,7 @@ flutter:
   assets:
     - assets/
 #    Draw:
+    - assets/images/draw/astronaut.svg
     - assets/images/draw/form_complete.svg
     - assets/images/draw/woman.png
     - assets/images/draw/email_verified_complete.svg
