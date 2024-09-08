@@ -159,8 +159,9 @@
   "password_matching": "Les mots de passe saisis ne correspondent pas",
   "password_empty": "Veuillez entrer votre mot de passe",
   "password_old": "Le nouveau mot de passe doit être différent de l'ancien",
-  "password_edit_success": "Votre mot de passe a bien été modifié",
+  "password_edit_success": "Votre mot de passe à bien été changé",
   "password_tries": "Vous avez entré(e) le mauvais code trop de fois, veuillez réessayer plus tard",
+  "password_edit_success_description": "Votre mot de passe a été changé, vous pouvez désromais vous connecter",
 
   "@_EMAIL": {},
 
