@@ -20,7 +20,6 @@ import 'package:share_plus/share_plus.dart';
 
 import 'dart:ui';
 
-
 class MovieSuccessWidget extends StatelessWidget {
   MovieSuccessWidget({
     super.key,
@@ -70,7 +69,7 @@ class MovieSuccessWidget extends StatelessWidget {
                 ),
               )),
               Positioned(
-                top: 30,
+                top: 40,
                 right: 50,
                 child: IconButton(
                   icon: const Icon(Icons.share),
@@ -82,7 +81,7 @@ class MovieSuccessWidget extends StatelessWidget {
                 ),
               ),
               Positioned(
-                top: 30,
+                top: 40,
                 right: 0,
                 child: IconButton(
                   icon: const Icon(Icons.more_vert),
@@ -90,12 +89,14 @@ class MovieSuccessWidget extends StatelessWidget {
                   color: Colors.white,
                   onPressed: () async {
                     showModalBottomSheet(
-                      context: context,
-                      builder: (ctx) => ActionsPage(
-                        movie: movie,
                         context: context,
-                      ),
-                    );
+                        builder: (ctx) => FractionallySizedBox(
+                              heightFactor: 0.9,
+                              child: ActionsPage(
+                                movie: movie,
+                                context: context,
+                              ),
+                            ));
                   },
                 ),
               ),
@@ -193,14 +194,15 @@ class MovieSuccessWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    movie.genres!.isNotEmpty ? Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Wrap(
-                      spacing: 8.0,
-                      runSpacing:
-                          4.0,
-                      children: tagList(),
-                    )) : const SizedBox.shrink(),
+                    movie.genres!.isNotEmpty
+                        ? Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Wrap(
+                              spacing: 8.0,
+                              runSpacing: 4.0,
+                              children: tagList(),
+                            ))
+                        : const SizedBox.shrink(),
                     Padding(
                       padding: const EdgeInsets.all(25.0),
                       child: Column(
