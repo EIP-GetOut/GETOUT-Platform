@@ -73,6 +73,7 @@ class MovieService {
           backdropPath: data['backdropPath'] ?? 'https://media.comicbook.com/files/img/default-movie.png',
           releaseDate: data['releaseDate'],
           voteAverage: data['averageRating'],
+          genres: data['genres'],
           duration: (data['duration'].toString() == '0') ? 'N/A' : data['duration'],
           cast: parseCast(data['cast']),
           director: parseDirector(data['director']),

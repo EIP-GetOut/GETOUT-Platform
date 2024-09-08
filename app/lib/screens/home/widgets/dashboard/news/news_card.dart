@@ -58,19 +58,19 @@ class NewsCard extends StatelessWidget {
                           textAlign: TextAlign.left,
                         ),
                       )),
-                  Positioned(
-                      bottom: 200,
-                      left: 10,
-                      right: 10,
-                      child: state.news.sourceLogo != '' ? Image.network(
-                        '${state.news.sourceLogo}',
-                        fit: BoxFit.fill,
-                        // height: 60,
-                        // width: 100,
-                        colorBlendMode: BlendMode.modulate,
-                        color: const Color.fromARGB(19, 255, 255, 255)
-                                .withOpacity(1),
-                      ) : const SizedBox(height: 0,))
+                  // Positioned(
+                  //     bottom: 200,
+                  //     left: 10,
+                  //     right: 10,
+                  //     child: state.news.sourceLogo != '' ? Image.network(
+                  //       '${state.news.sourceLogo}',
+                  //       fit: BoxFit.fill,
+                  //       // height: 60,
+                  //       // width: 100,
+                  //       colorBlendMode: BlendMode.modulate,
+                  //       color: const Color.fromARGB(19, 255, 255, 255)
+                  //               .withOpacity(1),
+                  //     ) : const SizedBox(height: 0,))
                 ]),
               )));
     });

@@ -29,6 +29,7 @@ dependencies:
   shimmer: ^2.0.0
   flutter_switch: ^0.3.2
   flutter_phoenix: ^1.0.0
+  share_plus: ^10.0.2
 
   flutter_localizations:
     sdk: flutter
