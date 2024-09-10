@@ -31,7 +31,7 @@ class MoviesSuccessWidget extends StatelessWidget {
         child: Column(
       children: [
         TitleWidget(
-            asset: 'popcorn', title: appL10n(context)!.movie_recommendations),
+            asset: 'popcorn', title: appL10n(context)!.movie_recommendations, length: movies.length),
         const Padding(padding: EdgeInsets.only(top: 10)),
         Expanded(
             child: ListView(

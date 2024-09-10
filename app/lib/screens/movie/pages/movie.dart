@@ -8,6 +8,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:getout/widgets/description_title.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/screens/home/bloc/liked_movies/liked_movies_bloc.dart';
+import 'package:getout/screens/home/bloc/saved_movies/saved_movies_bloc.dart';
+
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
 
@@ -22,15 +26,15 @@ import 'dart:ui';
 
 class MovieSuccessWidget extends StatelessWidget {
   MovieSuccessWidget({
-    super.key,
-    required this.movie,
+    super.key
   });
 
-  final InfoMovieResponse movie;
+//  final InfoMovieResponse movie;
   final ValueNotifier<bool> isExpanded = ValueNotifier<bool>(false);
 
   @override
   Widget build(BuildContext context) {
+    final movie = context.read<MovieBloc>().state.movie;
     final String releaseDate = movie.releaseDate ?? '';
 
     String imageUrl =
@@ -90,14 +94,18 @@ class MovieSuccessWidget extends StatelessWidget {
                   onPressed: () async {
                     showModalBottomSheet(
                         context: context,
-                        builder: (ctx) => FractionallySizedBox(
+                        builder: (ctx) {
+                          return BlocProvider.value(
+                            value: BlocProvider.of<MovieBloc>(context),
+                            child: BlocProvider.value(
+                            value: BlocProvider.of<LikedMoviesHydratedBloc>(context),
+                            child: BlocProvider.value(
+                            value: BlocProvider.of<SavedMoviesHydratedBloc>(context),
+                            child: const FractionallySizedBox(
                               heightFactor: 0.9,
-                              child: ActionsPage(
-                                movie: movie,
-                                context: context,
-                              ),
-                            ));
-                  },
+                              child: ActionsPage(),
+                            ))));});
+                  }
                 ),
               ),
             ],
@@ -194,7 +202,7 @@ class MovieSuccessWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    movie.genres!.isNotEmpty
+                    movie.genres != null && movie.genres!.isNotEmpty
                         ? Padding(
                             padding: const EdgeInsets.all(15.0),
                             child: Wrap(
@@ -252,7 +260,7 @@ class MovieSuccessWidget extends StatelessWidget {
                     const SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.all(25),
-                      child: SingleChildScrollView(
+                      child: movie.director != null ? SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Column(
                           children: [
@@ -271,7 +279,7 @@ class MovieSuccessWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
+                      ): const SizedBox.shrink(),
                     ),
                     DescriptionTitle(value: appL10n(context)!.casting),
                     const SizedBox(height: 10),
