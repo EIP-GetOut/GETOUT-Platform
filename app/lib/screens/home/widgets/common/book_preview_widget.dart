@@ -25,13 +25,12 @@ class BookPreviewWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(10.0),
       width: 100,
-      height: 100,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(7.0),
           child: Image.network('$posterPath',
             fit: BoxFit.cover,
-            width: 200,
+            width: 100,
             height: 150,
           ),
         ),
