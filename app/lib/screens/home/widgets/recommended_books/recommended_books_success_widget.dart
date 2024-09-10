@@ -6,9 +6,12 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/book/bloc/book_provider.dart';
 import 'package:getout/screens/home/bloc/books/books_event.dart';
+import 'package:getout/screens/home/bloc/liked_books/liked_books_bloc.dart';
+import 'package:getout/screens/home/bloc/saved_books/saved_books_bloc.dart';
 import 'package:getout/screens/home/widgets/common/book_preview_widget.dart';
 import 'package:getout/screens/home/widgets/common/title_widget.dart';
 import 'package:getout/tools/app_l10n.dart';
@@ -30,7 +33,7 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
         child: Column(
       children: [
         TitleWidget(
-            asset: 'fire', title: appL10n(context)!.book_recommendations),
+            asset: 'fire', title: appL10n(context)!.book_recommendations, length: books.length),
             const Padding(padding: EdgeInsets.only(top: 10)),
         Expanded(
             child: ListView(
@@ -42,7 +45,11 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Book(books[index].id)));
+                                builder: (_) => BlocProvider.value(
+                            value: BlocProvider.of<LikedBooksHydratedBloc>(context),
+                            child: BlocProvider.value(
+                                value: BlocProvider.of<SavedBooksHydratedBloc>(context),
+                                child: Book(books[index].id)))));
                       },
                       child: BookPreviewWidget(
                            posterPath: books[index].posterPath,
