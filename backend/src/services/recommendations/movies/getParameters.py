@@ -138,10 +138,10 @@ def getParameters(account: json) -> json:
             "dislikedGenres": None,
             "leastFavouriteEpoch": None
         }
-        if parameters["likedMovies"] is not None:
-            parameters = getLikedMoviesParameters(parameters)
+        # if parameters["likedMovies"] is not None:
+        #     parameters = getLikedMoviesParameters(parameters)
         # if parameters["dislikedMovies"] is not None:
-            # parameters = getDislikedMoviesParameters(parameters)
+        #     parameters = getDislikedMoviesParameters(parameters)
         return parameters
     except KeyError as e:
         print(f"Missing key in account data: {e}")

@@ -45,11 +45,11 @@ const GENRES_TO_GOOGLE_BOOKS_GENRES: Record<string, string> = {
   Science: 'science',
   Philosophie: 'philosophy',
   Biographie: 'biography',
-  'Contes et légendes': 'tale',
+  'Contes et légendes': 'tales',
   Roman: 'novel',
   Romance: 'romance',
-  Suspence: 'suspence',
-  'Autre genre': 'TODO'
+  Suspence: 'suspense',
+  'Autre genre': 'OTHER_GENRE'
 }
 
 const booksGenresValidator: CustomValidator = (value: string[]) => {
