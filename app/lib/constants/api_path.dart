@@ -10,13 +10,12 @@ import 'package:flutter/foundation.dart';
 class ApiConstants {
   const ApiConstants();
 
-  static const String rootApiPath = (kDebugMode)
-    ? 'http://10.0.2.2:8080'
-    : 'https://api.eip-getout.me';
-  
+  static const String rootApiPath =
+      (kDebugMode) ? 'http://10.0.2.2:8080' : 'https://api.eipgetout.live';
+
 /*  static const String rootApiPath = (kDebugMode)
       ? 'http://127.0.0.1:8080'
-      : 'https://api.eip-getout.me';*/
+      : 'https://api.eipgetout.live';*/
 
   // ACCOUNT API PATH
   static const String loginPath = '/account/login';
@@ -26,7 +25,8 @@ class ApiConstants {
   static const String verifyEmailResendPath = '/account/verify-email/resend';
   static const String accountPath = '/account';
 
-  static const String resetPasswordEmailPath = '/account/reset-password/send-email';
+  static const String resetPasswordEmailPath =
+      '/account/reset-password/send-email';
   static const String resetPasswordNewPasswordPath = '/account/reset-password';
 
   static const String changeEmailPath = '/account/?';
@@ -36,7 +36,8 @@ class ApiConstants {
 
   // GENERATE THINGS API PATH
   static const String recommendedMoviesPath = '/recommend-movies';
-  static const String recommendedMoviesHistoryPath = '/recommendedMoviesHistory';
+  static const String recommendedMoviesHistoryPath =
+      '/recommendedMoviesHistory';
   static const String getInfoMoviePath = '/movie';
 
   static const String recommendedBooksPath = '/recommend-books';
