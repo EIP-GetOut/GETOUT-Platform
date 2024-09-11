@@ -1,8 +1,13 @@
-FROM node:16
+FROM node:18-bullseye
 
 ENV TERM=xterm
 
-RUN apt-get update || : && apt-get install python python3-pip -y
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    python3.9 \
+    python3.9-distutils \
+    python3-pip
 
 WORKDIR /app
 

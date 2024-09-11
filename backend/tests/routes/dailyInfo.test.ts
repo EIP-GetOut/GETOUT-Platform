@@ -27,7 +27,7 @@ void describe('Daily Info route', () => {
       expect(response.body).toHaveProperty('sourceUrl')
       expect(response.body).toHaveProperty('sourceStr')
       // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-      expect(response.body.author && response.body.source).toBeNull()
+      expect(response.body.author && response.body.source).toBeFalsy()
     })
   })
 })

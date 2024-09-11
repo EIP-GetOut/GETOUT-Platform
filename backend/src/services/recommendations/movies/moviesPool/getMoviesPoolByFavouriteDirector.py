@@ -5,9 +5,20 @@
 # Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 #
 
-from tmdbv3api import Movie
+from tmdbv3api import Movie, Discover, Person
+from .utils import formatMovieList
 
 
-def getMoviesPoolByFavouriteDirector(parameters: dict, movieApi: Movie) -> list:
-    # TODO: get movies by favourite realisators, add it to the final pool whatsoever
-    return []
+def getMoviesPoolByFavouriteDirector(parameters: dict) -> list:
+    personApi = Person()
+
+    moviesPool = []
+
+    for director in parameters["favouriteMovieDirector"]:
+        response = personApi.movie_credits(director)
+        moviesWithTheDirectorAsACrew = response['crew']
+
+        for movie in moviesWithTheDirectorAsACrew:
+            movie["director"] = director
+        moviesPool.extend(formatMovieList(moviesWithTheDirectorAsACrew))
+    return moviesPool

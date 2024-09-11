@@ -22,13 +22,12 @@ def fetchMovieDetails(movie_id):
 
     movie = movieApi.details(movie_id)
     director = next((member for member in movie['casts'].get('crew', []) if member.get('job') == 'Director'), None)
-
     filteredMovie = {
         "id": movie.get("id"),
         "title": movie.get("title"),
         "genres": [genre['id'] for genre in movie.get("genres", [])],
         "releaseDate": movie.get("release_date"),
-        "director": director['name']
+        "director": director['id']
     }
     return filteredMovie
 
@@ -57,7 +56,6 @@ def getLikedMoviesParameters(parameters: dict) -> dict:
             raise ValueError("Expected each item in data to be a dictionary")
     genre_ids = [genre['id'] for genre in genres if isinstance(genre, dict)]
     genre_counts = Counter(genres)
-    print("Genres : ", genres)
     filtered_genre_counts = {
         genre: count for genre, count in genre_counts.items()
         if genre not in parameters.get("genres", []) and count >= 2
@@ -106,7 +104,7 @@ def getLikedDirectorsParameters(parameters: dict) -> dict:
     for item in data:
         if isinstance(item, dict):
             director = item.get('director')
-            if isinstance(director, str):
+            if isinstance(director, int):
                 directors.append(director)
             else:
                 raise ValueError("Expected 'director' to be a string")
@@ -214,7 +212,6 @@ def getParameters(account: json) -> json:
                     liked_epochs.remove(epoch)
             parameters["favouriteEpoch"] = liked_epochs if liked_epochs else None
             parameters["leastFavouriteEpoch"] = disliked_epochs if disliked_epochs else None
-        print("parameters : ", parameters)
         return parameters
     except KeyError as e:
         print(f"Missing key in account data: {e}")

@@ -6,7 +6,6 @@
 #
 
 import os
-import json
 from tmdbv3api import TMDb, Movie
 
 from moviesPool.getMoviesPoolByLikedMovies import getMoviesPoolByLikedMovies
@@ -22,13 +21,13 @@ def getMoviesPool(parameters: dict) -> list:
     movieApi = Movie()
 
     moviePoolByGenres = getMoviesPoolByGenres(parameters)
-    # if len(parameters["likedMovies"]) >= 5:
-    #     moviesPoolByLikedMovies = getMoviesPoolByLikedMovies(parameters, movieApi)
-    # if parameters["favouriteMovieDirector"] is not None:
-    #     moviePoolByFavouriteDirector = getMoviesPoolByFavouriteDirector(parameters, movieApi)
-    # moviesPool = moviePoolByGenres + moviesPoolByLikedMovies + moviePoolByFavouriteDirector
-
-    # if len(moviesPool) < 200:
-    #     return getPopularMovies(parameters, movieApi, 200 - len(moviesPool))
-    return moviePoolByGenres
-    # return moviesPool TODO: return the full moviesPool
+    moviesPoolByLikedMovies = []
+    moviePoolByFavouriteDirector = []
+    if len(parameters["likedMovies"]) >= 5:
+        moviesPoolByLikedMovies = getMoviesPoolByLikedMovies(parameters, movieApi)
+    if parameters["favouriteMovieDirector"] is not None:
+        moviePoolByFavouriteDirector = getMoviesPoolByFavouriteDirector(parameters)
+    moviesPool = moviePoolByGenres + moviesPoolByLikedMovies + moviePoolByFavouriteDirector
+    if len(moviesPool) < 200:
+        return getPopularMovies(parameters, moviesPool, movieApi)
+    return moviesPool

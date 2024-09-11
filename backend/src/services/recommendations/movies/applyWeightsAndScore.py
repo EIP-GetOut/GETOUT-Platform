@@ -6,6 +6,7 @@
 #
 
 import json
+import random
 
 
 def calculate_movie_score(parameters: json, movie: json) -> float:
@@ -32,7 +33,7 @@ def applyWeightsAndScore(parameters: json, moviesPool: list) -> json:
         recommendations.append({
             "id": moviesPool[i]["id"],
             "title": moviesPool[i]["title"],
-            "score": 0
+            "score": random.randint(0, 100)
         })
 
     recommendations = sorted(recommendations, key=lambda k: k["score"], reverse=True)

@@ -6,13 +6,16 @@
 #
 
 from tmdbv3api import Movie
+from .utils import formatMovieList
+from .filterMoviesPool import filterMoviesPool
+from .constants import MOVIES_POOL_LENGTH
 
 
-def getPopularMovies(parameters: dict, movieApi: Movie, numberOfMoviesToGet: int) -> list:
-    moviesPool = []
-    iterations = 0
-    while len(moviesPool) < numberOfMoviesToGet and iterations < 20:
+def getPopularMovies(parameters: dict, moviesPool: list[int], movieApi: Movie) -> list:
+    iteration = 1
+    while len(moviesPool) < MOVIES_POOL_LENGTH and iteration < 20:
         movies = movieApi.popular('fr', page=iteration)
-        moviesPool.append(movies)
+        moviesPool.extend(formatMovieList(movies))
+        moviesPool = filterMoviesPool(parameters, moviesPool)
         iteration += 1
-    return moviesPool
+    return moviesPool[0: 200]
