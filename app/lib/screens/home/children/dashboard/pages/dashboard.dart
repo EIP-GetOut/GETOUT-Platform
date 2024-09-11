@@ -16,7 +16,7 @@ import 'package:getout/widgets/transition_page.dart';
 import 'package:getout/tools/app_l10n.dart';
 
 class Dashboard extends StatelessWidget {
-  const Dashboard({super.key});
+  const  Dashboard({super.key});
 
   @override
   Widget build(BuildContext context) {

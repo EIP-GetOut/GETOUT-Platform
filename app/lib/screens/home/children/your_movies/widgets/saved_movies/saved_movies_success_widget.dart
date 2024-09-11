@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/screens/home/bloc/liked_movies/liked_movies_bloc.dart';
 import 'package:getout/screens/home/bloc/saved_movies/saved_movies_bloc.dart';
+import 'package:getout/screens/home/bloc/watched_movies/watched_movies_bloc.dart';
 import 'package:getout/screens/home/widgets/common/movie_preview_widget.dart';
 
 import 'package:getout/screens/movie/bloc/movie_provider.dart';
@@ -27,7 +28,8 @@ class SavedMoviesSuccessWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final PageController movieController =
         PageController(viewportFraction: 0.1, initialPage: 0);
-    return Expanded(
+    return SizedBox(
+        height: 250,
         child: Column(
       children: [
         TitleWidget(asset: 'party', title: 'Vos films en cours', length: movies.length),
@@ -45,7 +47,9 @@ class SavedMoviesSuccessWidget extends StatelessWidget {
                                     value: BlocProvider.of<LikedMoviesHydratedBloc>(context),
                                     child: BlocProvider.value(
                                         value: BlocProvider.of<SavedMoviesHydratedBloc>(context),
-                                        child: Movie(movies[index].id)))));
+                                        child: BlocProvider.value(
+                                            value: BlocProvider.of<WatchedMoviesHydratedBloc>(context),
+                                            child: Movie(movies[index].id))))));
                       },
                       child: MoviePreviewWidget(
                           posterPath: movies[index].posterPath,

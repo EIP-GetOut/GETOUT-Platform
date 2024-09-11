@@ -31,11 +31,13 @@ class HomeService extends _HomeService<BooksService, MoviesService> {
   Future<GenerateBooksResponse> getRecommendedBooks(GenerateBooksRequest request) => t.getRecommendedBooks(request);
   Future<GenerateBooksResponse> getSavedBooks(GenerateBooksRequest request) => t.getSavedBooks(request);
   Future<GenerateBooksResponse> getLikedBooks(GenerateBooksRequest request) => t.getLikedBooks(request);
+  Future<GenerateBooksResponse> getWatchedBooks(GenerateBooksRequest request) => t.getWatchedBooks(request);
 
   ///Movies
   Future<GenerateMoviesResponse> getRecommendedMovies(GenerateMoviesRequest request) => g.getRecommendedMovies(request);
   Future<GenerateMoviesResponse> getSavedMovies(GenerateMoviesRequest request) => g.getSavedMovies(request);
   Future<GenerateMoviesResponse> getLikedMovies(GenerateMoviesRequest request) => g.getLikedMovies(request);
+  Future<GenerateMoviesResponse> getWatchedMovies(GenerateMoviesRequest request) => g.getWatchedMovies(request);
 
   //Home
   Future<StoryNewsResponse> getInfoStoryNews() => g.getInfoStoryNews();

@@ -17,8 +17,8 @@ import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 import 'package:getout/screens/home/widgets/common/title_widget.dart';
 import 'package:getout/tools/app_l10n.dart';
 
-class LikedMoviesSuccessWidget extends StatelessWidget {
-  const LikedMoviesSuccessWidget({
+class WatchedMoviesSuccessWidget extends StatelessWidget {
+  const WatchedMoviesSuccessWidget({
     super.key,
     required this.movies,
   });
@@ -35,7 +35,7 @@ class LikedMoviesSuccessWidget extends StatelessWidget {
         child: Column(
       children: [
         TitleWidget(
-            asset: 'heart', title: appL10n(context)!.like_movies_title, length: movies.length),
+            asset: 'heart', title: appL10n(context)!.watch_movies_title, length: movies.length),
         Expanded(
             child: ListView(
                 controller: movieController,
@@ -51,8 +51,8 @@ class LikedMoviesSuccessWidget extends StatelessWidget {
                                     child: BlocProvider.value(
                                         value: BlocProvider.of<SavedMoviesHydratedBloc>(context),
                                         child: BlocProvider.value(
-                                            value: BlocProvider.of<WatchedMoviesHydratedBloc>(context),
-                                            child: Movie(movies[index].id))))));
+                                        value: BlocProvider.of<WatchedMoviesHydratedBloc>(context),
+                                        child: Movie(movies[index].id))))));
                       },
                        child: MoviePreviewWidget(
                            posterPath: movies[index].posterPath,

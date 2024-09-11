@@ -35,28 +35,33 @@ class HomeNavBarWidget extends StatelessWidget {
           items: [
             BottomNavigationBarItem(
                 icon: SvgPicture.asset('assets/images/icon/home.svg',
+                    width: 40,
                     colorFilter: const ColorFilter.mode(
                         Colors.black26, BlendMode.srcIn)),
                 activeIcon: SvgPicture.asset('assets/images/icon/home.svg',
-                    colorFilter: const ColorFilter.mode(
-                        Colors.red, BlendMode.srcIn)),
+                    width: 40,
+                    colorFilter: ColorFilter.mode(
+                        Theme.of(context).primaryColor, BlendMode.srcIn)),
                 label: appL10n(context)!.dashboard),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset('assets/images/icon/movie.svg',
+                    width: 40,
                     colorFilter: const ColorFilter.mode(
                         Colors.black26, BlendMode.srcIn)),
                 activeIcon: SvgPicture.asset('assets/images/icon/movie.svg',
-                    colorFilter: const ColorFilter.mode(
-                        Colors.red, BlendMode.srcIn)),
+                    width: 40,
+                    colorFilter: ColorFilter.mode(
+                        Theme.of(context).primaryColor, BlendMode.srcIn)),
                 label: appL10n(context)!.movie),
             BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/images/icon/bookmark.svg',
+                icon: SvgPicture.asset('assets/images/icon/book.svg',
+                    width: 40,
                     colorFilter: const ColorFilter.mode(
                         Colors.black26, BlendMode.srcIn)),
-                activeIcon: SvgPicture.asset(
-                    'assets/images/icon/bookmark.svg',
-                    colorFilter: const ColorFilter.mode(
-                        Colors.red, BlendMode.srcIn)),
+                activeIcon: SvgPicture.asset('assets/images/icon/book.svg',
+                    width: 40,
+                    colorFilter: ColorFilter.mode(
+                        Theme.of(context).primaryColor, BlendMode.srcIn)),
                 label: appL10n(context)!.book),
             //todo implement activities
             /*BottomNavigationBarItem(
