@@ -81,6 +81,7 @@ def getMoviesPool(parameters: dict) -> list:
         else:
             moviesPool = getMoviesPoolByGenres(parameters)
         return moviesPool
+
     except json.JSONDecodeError as e:
         print(f"Error decoding JSON from input: {e}")
     except Exception as e:
