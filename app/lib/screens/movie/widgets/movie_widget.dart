@@ -16,7 +16,7 @@ class MovieWidget extends StatelessWidget {
     return BlocBuilder<MovieBloc, MovieState>(
       builder: (context, state) {
         if (state.status.isSuccess) {
-          return MovieSuccessWidget(movie: state.movie);
+          return MovieSuccessWidget();
         } else {
           if (state.status.isLoading) {
             return const MovieSuccessShimmer();

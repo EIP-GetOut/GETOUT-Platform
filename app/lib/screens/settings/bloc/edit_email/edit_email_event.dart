@@ -8,14 +8,14 @@
 part of 'edit_email_bloc.dart';
 
 class EditEmailEvent extends Equatable {
-  const EditEmailEvent();
+   const EditEmailEvent();
 
   @override
   List<Object?> get props => [];
 }
 
 class EmitEvent extends EditEmailEvent {
-  final Status status;
+  final EditEmailStatus status;
 
   const EmitEvent({required this.status});
 
@@ -23,29 +23,29 @@ class EmitEvent extends EditEmailEvent {
   List<Object?> get props => [status];
 }
 
-class EmailChanged extends EditEmailEvent {
-  final String? email;
+class NewEmailEvent extends EditEmailEvent {
+  final String newEmail;
+  final String confirmEmail;
+  final String password;
 
-  const EmailChanged({this.email});
+  const NewEmailEvent({required this.newEmail, required this.confirmEmail, required this.password});
 
   @override
-  List<Object?> get props => [email];
+  List<Object?> get props => [newEmail, confirmEmail, password];
 }
 
-class PasswordChanged extends EditEmailEvent {
-  final String? password;
+class VerificationEmailEvent extends EditEmailEvent {
+  final String code;
 
-  const PasswordChanged({this.password});
+  const VerificationEmailEvent({required this.code});
 
   @override
-  List<Object?> get props => [password];
+  List<Object?> get props => [code];
 }
 
-class ConfirmEmailChanged extends EditEmailEvent {
-  final String? confirmEmail;
-
-  const ConfirmEmailChanged({this.confirmEmail});
+class ErrorEvent extends EditEmailEvent {
+  const ErrorEvent();
 
   @override
-  List<Object?> get props => [confirmEmail];
+  List<Object?> get props => [];
 }

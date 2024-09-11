@@ -26,19 +26,24 @@ class Dashboard extends StatelessWidget {
           return const DashboardShimmer();
         } else if (state.status.isError) {
           Future.microtask(() {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TransitionPage(
-                    title: appL10n(context)!.error_unknown_short,
-                    description: appL10n(context)!.error_unknown_description,
-                    image: 'assets/images/draw/error.svg',
-                    buttonText: appL10n(context)!.error_ok,
-                    nextPage: () => {
-                          Phoenix.rebirth(context),
-                        }),
-              ),
-            );
+            if (context.mounted) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      TransitionPage(
+                          title: appL10n(context)!.error_unknown_short,
+                          description: appL10n(context)!
+                              .error_unknown_description,
+                          image: 'assets/images/draw/error.svg',
+                          buttonText: appL10n(context)!.error_ok,
+                          nextPage: () =>
+                          {
+                            Phoenix.rebirth(context),
+                          }),
+                ),
+              );
+            }
           });
           return const SizedBox.shrink();
         } else {

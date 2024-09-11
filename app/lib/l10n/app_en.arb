@@ -99,10 +99,11 @@
   "recommended_movies" : "recommended movies",
   "liked_movies" : "liked movies",
   "saved_movies" : "saved movies",
+  "watched_movies" : "saved movies",
 
   "your_movies_description" : "All your books are here.",
   "like_movies_title": "Your crush",
-  "view_movies_title": "Your books read",
+  "watch_movies_title": "Your books read",
   "wishlist_movies_title": "what you intend to read",
   "director": "Director(s)",
   "casting": "Casting",
@@ -126,11 +127,12 @@
 
   "recommended_books" : "recommended books",
   "liked_books" : "liked books",
-  "saved_books" : "liked books",
+  "saved_books" : "saved books",
+  "watched_books" : "watched books",
 
   "your_books_description" : "All your books are here.",
   "like_books_title": "Your crush",
-  "view_books_title": "Your books read",
+  "watch_books_title": "Your books read",
   "wishlist_books_title": "what you intend to read",
   "author": "Author(s)",
 
@@ -178,11 +180,11 @@
   "email_matching": "New emails addresses written don't match",
   "email_empty": "Email can't be empty",
   "email_old": "The email must be different from the old email",
-  "email_verification_hint": "Enter the confirmation code received by e-mail",
+  "email_verification_hint": "Enter the confirmation code received by email",
   "email_verification_resend_hint": "Didn't you get anything ? ",
   "email_verification_resend": "Resend email",
-  "email_verification_success": "Your e-mail address has been confirmed",
-  "email_verification_success_desc": "Your e-mail address has been confirmed, you can now fill in the preferences form",
+  "email_verification_success": "Your email address has been confirmed",
+  "email_verification_success_desc": "Your email address has been confirmed, you can now fill in the preferences form",
   "email_verification_success_button": "Access the form",
   "email_verification_resend_info": "An email containing a code has been sent back to you. If you haven't received it, you can try again in 10 seconds.",
 
@@ -210,11 +212,12 @@
   "select_theme": "Dark theme",
 
   "preference": "Preference",
-  "select_preferences": "Select your movie preferences",
-  "notifications": "Notifications",
+  "select_preferences": "Change your preferences",
+  "notifications_getout": "Notifications GetOut",
+  "notifications_recommendations": "Notifications recommandations",
   "recommendations": "Recommendations",
 
-  "history": "History",
+  "history": "See history",
   "other": "Other",
   "support": "Support",
 

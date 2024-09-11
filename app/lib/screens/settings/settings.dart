@@ -19,6 +19,7 @@ import 'package:getout/screens/settings/widget/setting_row.dart';
 import 'package:getout/screens/settings/widget/title.dart';
 import 'package:getout/widgets/page_title.dart';
 import 'package:getout/tools/app_l10n.dart';
+import 'package:getout/tools/tools.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -35,30 +36,30 @@ class SettingsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-        PageTitle(title: appL10n(context)!.settings, description: appL10n(context)!.settings_label),
-            const SizedBox(height: 30),
+            PageTitle(title: appL10n(context)!.settings, description: appL10n(context)!.settings_label),
+            SizedBox(height: Tools.heightFactor(context, 0.015)),
             const AccountInfo(),
             TitleRow(value: appL10n(context)!.account),
             SettingRow(
                 page: const EditPasswordPage(),
-                iconData: Icons.shield_outlined,
+                image: 'assets/images/icon/padlock.svg',
                 value: appL10n(context)!.edit_password),
             SettingRow(
-                page: const EditEmailPage(),
-                iconData: Icons.mail_outlined,
+                page: const EditEmail(),
+                image: 'assets/images/icon/email.svg',
                 value: appL10n(context)!.edit_email),
 
             const DisconnectPage(),
             const DeleteAccountPage(),
-            TitleRow(value: appL10n(context)!.appearance),
-            /*SettingRow(
+            /*TitleRow(value: appL10n(context)!.appearance),
+            SettingRow(
                 page: const SizedBox(),
                 iconData: Icons.public_outlined,
                 value: appL10n(context)!.select_language),*/
-            TitleRow(value: appL10n(context)!.preference),
-            SettingRow(page: const HistoryProvider(), iconData: Icons.history_outlined, value: appL10n(context)!.history),
-            SettingRow(page: const Forms(), iconData : Icons.settings_outlined, value: appL10n(context)!.select_preferences),
-            SettingRow(page: const NotificationsPage(), iconData: Icons.notifications_outlined, value: appL10n(context)!.notifications),
+            TitleRow(value: appL10n(context)!.other),
+            SettingRow(page: const Forms(), image : 'assets/images/icon/setting.svg', value: appL10n(context)!.select_preferences),
+            SettingRow(page: const HistoryProvider(), image: 'assets/images/icon/history.svg', value: appL10n(context)!.history),
+            SettingRow(page: const NotificationsPage(), image: 'assets/images/icon/bell(notification).svg', value: appL10n(context)!.notifications_getout),
             //TitleRow(value: appL10n(context)!.more),
             /*todo SettingRow(
                 page: const SizedBox(),

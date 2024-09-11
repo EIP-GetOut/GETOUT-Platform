@@ -18,7 +18,7 @@ class TransitionPage extends StatelessWidget {
   final String description;
   final String image;
   final String buttonText;
-  final Function() nextPage;
+  final Function()? nextPage;
 
   const TransitionPage({super.key,
     required this.title,
@@ -26,7 +26,7 @@ class TransitionPage extends StatelessWidget {
     this.description = '',
     this.image = '',
     required this.buttonText,
-    required this.nextPage,
+    this.nextPage,
   });
 
   @override
@@ -44,18 +44,25 @@ class TransitionPage extends StatelessWidget {
           if (image != '') SvgPicture.asset(image, width: Tools.widthFactor(context, 0.83)),
           if (image != '') SizedBox(height: Tools.heightFactor(context, 0.11)),
           if (image == '') SizedBox(height: Tools.heightFactor(context, 0.604)),
-          SizedBox(
-            width: Tools.widthFactor(context, 0.9),
-            height: 65,
-            child: FloatingActionButton(
-              onPressed: () => nextPage(),
-              child: Text(buttonText,
-                  style: Theme.of(context).textTheme.labelMedium),
-            ),
-          )
-
         ],
         ),
-      ));
+      ),
+    floatingActionButton: SizedBox(
+      width: Tools.widthFactor(context, 0.9),
+      height: 65,
+      child: FloatingActionButton(
+        onPressed: () {
+          if (nextPage != null) {
+            nextPage!();
+          } else {
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          }
+        },
+        child: Text(buttonText,
+            style: Theme.of(context).textTheme.labelMedium),
+      ),
+    )
+      ,);
   }
 }
