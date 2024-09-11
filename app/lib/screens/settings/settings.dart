@@ -45,7 +45,7 @@ class SettingsPage extends StatelessWidget {
                 image: 'assets/images/icon/padlock.svg',
                 value: appL10n(context)!.edit_password),
             SettingRow(
-                page: const EditEmailPage(),
+                page: const EditEmail(),
                 image: 'assets/images/icon/email.svg',
                 value: appL10n(context)!.edit_email),
 

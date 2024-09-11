@@ -170,7 +170,7 @@
   "email": "Adresse email",
   "email_hint": "Entrez votre adresse email",
   "change_email": "Changer d'adresse email",
-  "change_email_label": "Définissez votre nouvelle adresse mail",
+  "change_email_label": "Définissez votre nouvelle adresse email",
   "new_email": "Nouvelle adresse email",
   "new_email_hint": "Entrez votre nouvelle adresse email",
   "confirm_email": "Confirmation d'adresse email",
@@ -180,11 +180,11 @@
   "email_matching": "Les nouvelles adresses email saisies ne correspondent pas",
   "email_empty": "L'email ne peut pas être vide",
   "email_old": "L'email doit être différent de l'ancien email",
-  "email_verification_hint": "Entrez le code de confirmation reçue par mail",
+  "email_verification_hint": "Entrez le code de confirmation reçue par email",
   "email_verification_resend_hint": "Vous n'avez rien reçue ? ",
   "email_verification_resend": "Renvoyez un code",
   "email_verification_success": "Votre adresse email a bien été confirmé",
-  "email_verification_success_desc": "Votre adresse mail a été confirmé, vous pouvez maintenant remplir le formulaire de préférences",
+  "email_verification_success_desc": "Votre adresse email a été confirmé, vous pouvez maintenant remplir le formulaire de préférences",
   "email_verification_success_button": "Accèder au formulaire",
   "email_verification_resend_info": "Un email contenant un code vous a été renvoyé, si vous ne l'avez pas reçu, vous pourrez réesayer dans 10 secondes",
 
@@ -195,7 +195,7 @@
   "code_validator": "Le code est requis",
   "receive_code": "Recevoir un code",
   "code_incorrect": "Le code est incorrect",
-  "code_mail_hint": "Entrer le code reçu par mail",
+  "code_mail_hint": "Entrer le code reçu par email",
 
   "@_SETTING": {},
 

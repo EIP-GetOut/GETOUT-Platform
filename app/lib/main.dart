@@ -49,14 +49,15 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   Directory appDocDir = await getApplicationDocumentsDirectory();
   globals.cookiePath = '${appDocDir.path}/.cookies/';
-    runApp(Phoenix(child: MainProvider()));
+    runApp(Phoenix(child: const MainProvider()));
 }
 
 class MainProvider extends StatelessWidget {
-  MainProvider({super.key});
+  const MainProvider({super.key});
 
-  final Timer? timer = Timer.periodic(const Duration(seconds: 15),
-      (Timer t) async => await globals.sessionManager.getSession());
+  // block to refresh the session every 15 seconds
+  /*final Timer? timer = Timer.periodic(const Duration(seconds: 15),
+      (Timer t) async => await globals.sessionManager.getSession());*/
 
   @override
   Widget build(BuildContext context) {
