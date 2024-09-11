@@ -127,11 +127,12 @@
 
   "recommended_books" : "recommended books",
   "liked_books" : "liked books",
-  "saved_books" : "liked books",
+  "saved_books" : "saved books",
+  "watched_books" : "watched books",
 
   "your_books_description" : "All your books are here.",
   "like_books_title": "Your crush",
-  "view_books_title": "Your books read",
+  "watch_books_title": "Your books read",
   "wishlist_books_title": "what you intend to read",
   "author": "Author(s)",
 
