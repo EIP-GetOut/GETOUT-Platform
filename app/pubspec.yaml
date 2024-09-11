@@ -124,8 +124,7 @@ flutter:
     - assets/images/draw/error.svg
 #    Icon:
     - assets/images/icon/bell(notification).svg
-    - assets/images/icon/bookmark.svg
-    - assets/images/icon/books.png
+    - assets/images/icon/book.svg
     - assets/images/icon/disconnect.svg
     - assets/images/icon/email.svg
     - assets/images/icon/fire.png

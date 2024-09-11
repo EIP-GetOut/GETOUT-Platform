@@ -10,31 +10,29 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:getout/screens/home/widgets/recommended_movies/recommended_movies_success_widget.dart';
+import 'package:getout/screens/home/bloc/watched_books/watched_books_bloc.dart';
+import 'package:getout/screens/home/children/your_books/widgets/watched_books/watched_books_success_widget.dart';
+import 'package:getout/widgets/object_loading_error_widget.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
-import 'package:getout/widgets/object_loading_error_widget.dart';
-import 'package:getout/screens/home/bloc/recommended_movies/recommended_movies_bloc.dart';
 
-class RecommendedMoviesWidget extends StatelessWidget {
-  const RecommendedMoviesWidget({
+class WatchedBooksWidget extends StatelessWidget {
+  const WatchedBooksWidget({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RecommendedMoviesHydratedBloc, RecommendedMoviesState>(
+    return BlocBuilder<WatchedBooksHydratedBloc, WatchedBooksState>(
       builder: (context, state) {
         if (state.status.isSuccess) {
-          return RecommendedMoviesSuccessWidget(movies: state.recommendedMovies);
+          return WatchedBooksSuccessWidget(books: state.watchedBooks);
         } else {
           if (state.status.isLoading) {
-            return const Center(
-                child: Center(
-                    child: CircularProgressIndicator(
-                        backgroundColor: Color.fromARGB(0, 255, 5, 5))));
+            return const Center(child: Center(child: CircularProgressIndicator(backgroundColor: Color.fromARGB(0, 255, 5, 5))));
+
           } else if (state.status.isError) {
-            return ObjectLoadingErrorWidget(object: appL10n(context)!.recommended_movies);
+            return ObjectLoadingErrorWidget(object: appL10n(context)!.saved_books);
           } else {
             return const SizedBox();
           }

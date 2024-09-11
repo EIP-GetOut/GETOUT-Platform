@@ -55,7 +55,7 @@ class MoviesService extends ServiceTemplate {
     return result;
   }
 
-  // LIKED
+  /// LIKED
   Future<GenerateMoviesResponse> getLikedMovies(
       GenerateMoviesRequest request) async {
     GenerateMoviesResponse result = [];
@@ -89,7 +89,7 @@ class MoviesService extends ServiceTemplate {
     return response.data;
   }
 
-// SAVED
+  /// SAVED
 
   Future<GenerateMoviesResponse> getSavedMovies(
       GenerateMoviesRequest request) async {
@@ -118,6 +118,47 @@ class MoviesService extends ServiceTemplate {
             options: Options(headers: {
               'Content-Type': 'application/json',
             }));
+
+    if (response.statusCode != HttpStatus.OK) {
+      return Future.error(Exception(
+        'Error ${response.statusCode} while fetching movies: ${response.statusMessage}',
+      ));
+    }
+
+    data = response.data;
+
+    return data;
+  }
+
+  // WATCHED
+
+  Future<GenerateMoviesResponse> getWatchedMovies(
+      GenerateMoviesRequest request) async {
+    GenerateMoviesResponse result = [];
+
+    dynamic data = await getWatchedMoviesId(request);
+
+    for (int movie in data) {
+      MovieStatusResponse item = await getMovieById(movie);
+
+      if (item.statusCode == HttpStatus.OK) {
+        result.add(MoviePreview(
+            id: item.id!,
+            title: item.title!,
+            posterPath: item.posterPath!,
+            overview: item.overview!));
+      }
+    }
+    return result;
+  }
+
+  Future<dynamic> getWatchedMoviesId(GenerateMoviesRequest request) async {
+    dynamic data;
+
+    final response = await dio.get('${ApiConstants.rootApiPath}/account/$_id/seenMovies',
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+        }));
 
     if (response.statusCode != HttpStatus.OK) {
       return Future.error(Exception(

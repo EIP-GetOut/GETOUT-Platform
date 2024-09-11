@@ -2,7 +2,6 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 ** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
@@ -17,9 +16,10 @@ import 'package:getout/screens/home/widgets/common/movie_preview_widget.dart';
 import 'package:getout/screens/movie/bloc/movie_provider.dart';
 import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 import 'package:getout/screens/home/widgets/common/title_widget.dart';
+import 'package:getout/tools/app_l10n.dart';
 
-class SavedMoviesSuccessWidget extends StatelessWidget {
-  const SavedMoviesSuccessWidget({
+class WatchedMoviesSuccessWidget extends StatelessWidget {
+  const WatchedMoviesSuccessWidget({
     super.key,
     required this.movies,
   });
@@ -30,13 +30,14 @@ class SavedMoviesSuccessWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final PageController movieController =
         PageController(viewportFraction: 0.1, initialPage: 0);
+
     return SizedBox(
         height: 300,
         child: Column(
           children: [
             TitleWidget(
-                asset: 'party',
-                title: 'Vos films en cours',
+                asset: 'heart',
+                title: appL10n(context)!.watch_movies_title,
                 length: movies.length),
             Expanded(
                 child: ListView(

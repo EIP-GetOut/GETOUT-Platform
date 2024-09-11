@@ -99,10 +99,11 @@
   "recommended_movies": "les films recommandés",
   "liked_movies": "les films aimés",
   "saved_movies": "les films enregistrés",
+  "watched_movies": "les films vus",
 
   "your_movies_description": "Tous vos films sont ici.",
   "like_movies_title": "Vos coups de cœur",
-  "view_movies_title": "vos film vus",
+  "watch_movies_title": "Vos film vus",
   "wishlist_movies_title": "ce que vous comptez voir",
   "director": "réalisateur(s)",
   "casting": "Distribution",
@@ -128,10 +129,11 @@
   "recommended_books": "les livres recommandés",
   "liked_books": "les livres aimés",
   "saved_books": "les livres enregistrés",
+  "watched_books": "Les livres lus",
 
   "your_books_description": "Toutes vos lectures sont ici.",
   "like_books_title": "Vos coups de cœur",
-  "view_books_title": "Vos livres lus",
+  "watched_books_title": "Vos livres lus",
   "wishlist_books_title": "Ce que vous comptez lire",
   "author": "Auteur(s)",
 

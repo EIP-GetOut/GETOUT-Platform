@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import 'package:getout/screens/home/children/your_books/widgets/liked_books/liked_books_widget.dart';
 import 'package:getout/screens/home/children/your_books/widgets/saved_books/saved_books_widget.dart';
+import 'package:getout/screens/home/children/your_books/widgets/watched_books/watched_books_widget.dart';
 import 'package:getout/screens/home/widgets/recommended_books/recommended_books_widget.dart';
 
 class YourBooksPage extends StatelessWidget {
@@ -16,11 +17,12 @@ class YourBooksPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
+    return const SingleChildScrollView(
+        child: Padding(
         padding: EdgeInsets.only(top: 30.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [RecommendedBooksWidget(), SavedBooksWidget(), LikedBooksWidget()],
-        ));
+          children: [RecommendedBooksWidget(), SavedBooksWidget(), LikedBooksWidget(), WatchedBooksWidget()],
+        )));
   }
 }
