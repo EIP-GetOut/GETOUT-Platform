@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/screens/home/bloc/liked_movies/liked_movies_bloc.dart';
 import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 import 'package:getout/screens/home/bloc/saved_movies/saved_movies_bloc.dart';
+import 'package:getout/screens/home/bloc/watched_movies/watched_movies_bloc.dart';
 
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
@@ -48,6 +49,12 @@ class ActionsPage extends StatelessWidget {
                         }
                         if (!context.mounted) return;
                         context.read<MovieBloc>().add(CreateInfoMovieRequest(id: movie.id!));
+                        context.read<WatchedMoviesHydratedBloc>().add(const GenerateMoviesRequest());
+                        showCustomSnackBar(
+                            context: context,
+                            color: Colors.green,
+                            message: 'Le film a bien été ${movie.seen == false ?'ajouté à': 'retiré de'} vos films vus',
+                            icon: Icons.check_circle_rounded);
                         //watch
                         Navigator.pop(context);
                       },

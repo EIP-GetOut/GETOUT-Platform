@@ -6,6 +6,7 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:getout/screens/home/bloc/watched_movies/watched_movies_bloc.dart';
 
 import 'package:getout/widgets/description_title.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,9 +26,7 @@ import 'package:share_plus/share_plus.dart';
 import 'dart:ui';
 
 class MovieSuccessWidget extends StatelessWidget {
-  MovieSuccessWidget({
-    super.key
-  });
+  MovieSuccessWidget({super.key});
 
 //  final InfoMovieResponse movie;
   final ValueNotifier<bool> isExpanded = ValueNotifier<bool>(false);
@@ -93,23 +92,24 @@ class MovieSuccessWidget extends StatelessWidget {
                   color: Colors.white,
                   onPressed: () async {
                     showModalBottomSheet(
-                        context: context,
-                        builder: (ctx) {
-                          return BlocProvider.value(
-                            value: BlocProvider.of<MovieBloc>(context),
-                            child: BlocProvider.value(
-                            value: BlocProvider.of<LikedMoviesHydratedBloc>(context),
-                            child: BlocProvider.value(
-                            value: BlocProvider.of<SavedMoviesHydratedBloc>(context),
-                            child: const FractionallySizedBox(
-                              heightFactor: 0.9,
-                              child: ActionsPage(),
-                            ))));});
-                  }
-                ),
-              ),
-            ],
-          ),
+                      context: context,
+                      builder: (ctx) {
+                      return BlocProvider.value(
+                        value: BlocProvider.of<MovieBloc>(context),
+                        child: BlocProvider.value(
+                        value: BlocProvider.of<LikedMoviesHydratedBloc>(context),
+                        child: BlocProvider.value(
+                        value: BlocProvider.of<SavedMoviesHydratedBloc>(context),
+                        child: BlocProvider.value(
+                        value: BlocProvider.of<WatchedMoviesHydratedBloc>(context),
+                        child: const FractionallySizedBox(
+                          heightFactor: 0.9,
+                          child: ActionsPage())))));
+                      });
+                  })
+              )
+            ]
+          )
         );
 
     Widget buildLittleImage() => GestureDetector(
@@ -260,26 +260,28 @@ class MovieSuccessWidget extends StatelessWidget {
                     const SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.all(25),
-                      child: movie.director != null ? SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Column(
-                          children: [
-                            CircleAvatar(
-                              radius: 40,
-                              backgroundImage:
-                                  NetworkImage(movie.director!.picture),
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 10, top: 10),
-                              child: Text(
-                                movie.director!.name,
-                                style: const TextStyle(fontSize: 14),
+                      child: movie.director != null
+                          ? SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Column(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 40,
+                                    backgroundImage:
+                                        NetworkImage(movie.director!.picture),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 10, top: 10),
+                                    child: Text(
+                                      movie.director!.name,
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                      ): const SizedBox.shrink(),
+                            )
+                          : const SizedBox.shrink(),
                     ),
                     DescriptionTitle(value: appL10n(context)!.casting),
                     const SizedBox(height: 10),

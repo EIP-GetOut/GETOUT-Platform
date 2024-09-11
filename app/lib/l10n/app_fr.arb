@@ -99,10 +99,11 @@
   "recommended_movies": "les films recommandés",
   "liked_movies": "les films aimés",
   "saved_movies": "les films enregistrés",
+  "watched_movies": "les films vus",
 
   "your_movies_description": "Tous vos films sont ici.",
   "like_movies_title": "Vos coups de cœur",
-  "view_movies_title": "vos film vus",
+  "watch_movies_title": "vos film vus",
   "wishlist_movies_title": "ce que vous comptez voir",
   "director": "réalisateur(s)",
   "casting": "Distribution",
