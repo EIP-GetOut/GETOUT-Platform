@@ -3,6 +3,7 @@
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
 import 'package:flutter/material.dart';
