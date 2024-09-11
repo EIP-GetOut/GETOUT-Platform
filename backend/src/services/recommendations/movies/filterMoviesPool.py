@@ -5,14 +5,15 @@
 # Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 #
 
+import sys
+
 def filterMoviesPool(parameters: dict, moviesPool: list) -> list:
-    exploredMoviesTitles = set()
+    exploredMoviesIds = set()
     uniqueMoviesPool = []
 
     for movie in moviesPool:
         id = movie["id"]
-        title = movie["original_title"]
-        if title not in exploredMoviesTitles and id not in parameters["history"] and id not in parameters["seenMovies"]:
-            exploredMoviesTitles.add(title)
+        if id not in exploredMoviesIds and id not in parameters["history"] and id not in parameters["seenMovies"]:
+            exploredMoviesIds.add(id)
             uniqueMoviesPool.append(movie)
     return uniqueMoviesPool

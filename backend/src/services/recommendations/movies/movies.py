@@ -1,22 +1,17 @@
 import sys
 import json
+import traceback
 
 from getParameters import getParameters
 from getMoviesPool import getMoviesPool
 from applyWeightsAndScore import applyWeightsAndScore
-from filterMoviesPool import filterMoviesPool
 
 
 def recommendMovies(account: dict) -> list:
-    try:
-        parameters = getParameters(account)
-        moviesPool = getMoviesPool(parameters)
-        moviesPool = filterMoviesPool(parameters, moviesPool)
-        recommendations = applyWeightsAndScore(parameters, moviesPool)
-        return recommendations
-    except Exception as e:
-        print(f"An error occurred in recommendMovies: {e}")
-        raise
+    parameters = getParameters(account)
+    moviesPool = getMoviesPool(parameters)
+    recommendations = applyWeightsAndScore(parameters, moviesPool)
+    return recommendations
 
 
 def main():
@@ -31,6 +26,7 @@ def main():
         print(f"Error decoding JSON from input: {e}")
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
+        traceback.print_exc()
 
 
 if __name__ == "__main__":

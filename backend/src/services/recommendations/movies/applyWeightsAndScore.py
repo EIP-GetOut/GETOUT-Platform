@@ -7,6 +7,7 @@
 
 import json
 
+
 def calculate_movie_score(parameters: json, movie: json) -> float:
     score = 0
     if movie.genre in parameters.favorite_genres:
@@ -24,13 +25,14 @@ def calculate_movie_score(parameters: json, movie: json) -> float:
 
     return score
 
+
 def applyWeightsAndScore(parameters: json, moviesPool: list) -> json:
     recommendations = []
     for i in range(len(moviesPool)):
         recommendations.append({
             "id": moviesPool[i]["id"],
             "title": moviesPool[i]["title"],
-            "score": moviesPool[i]["score"]
+            "score": 0
         })
 
     recommendations = sorted(recommendations, key=lambda k: k["score"], reverse=True)
