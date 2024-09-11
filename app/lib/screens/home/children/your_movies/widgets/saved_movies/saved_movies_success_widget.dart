@@ -3,15 +3,17 @@
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:getout/screens/home/bloc/liked_movies/liked_movies_bloc.dart';
 import 'package:getout/screens/home/bloc/saved_movies/saved_movies_bloc.dart';
 import 'package:getout/screens/home/bloc/watched_movies/watched_movies_bloc.dart';
 import 'package:getout/screens/home/widgets/common/movie_preview_widget.dart';
-
 import 'package:getout/screens/movie/bloc/movie_provider.dart';
 import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 import 'package:getout/screens/home/widgets/common/title_widget.dart';
