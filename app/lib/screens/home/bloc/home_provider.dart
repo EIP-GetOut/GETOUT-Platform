@@ -8,6 +8,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/screens/home/bloc/watched_books/watched_books_bloc.dart';
+import 'package:getout/screens/home/bloc/watched_movies/watched_movies_bloc.dart';
 
 ///home
 import 'package:getout/screens/home/services/service.dart';
@@ -48,6 +50,7 @@ class HomeProvider extends StatelessWidget {
 
             ///Movies
             BlocProvider<RecommendedMoviesHydratedBloc>(
+              lazy: false,
               create: (context) => RecommendedMoviesHydratedBloc(
                 homeService: context.read<HomeService>(),
               )..add(
@@ -55,6 +58,7 @@ class HomeProvider extends StatelessWidget {
                 ),
             ),
             BlocProvider<LikedMoviesHydratedBloc>(
+              lazy: false,
               create: (context) => LikedMoviesHydratedBloc(
                 homeService: context.read<HomeService>(),
               )..add(
@@ -62,15 +66,25 @@ class HomeProvider extends StatelessWidget {
                 ),
             ),
             BlocProvider<SavedMoviesHydratedBloc>(
+              lazy: false,
               create: (context) => SavedMoviesHydratedBloc(
                 homeService: context.read<HomeService>(),
               )..add(
                   const GenerateMoviesRequest(),
                 ),
             ),
+            BlocProvider<WatchedMoviesHydratedBloc>(
+              lazy: false,
+              create: (context) => WatchedMoviesHydratedBloc(
+                homeService: context.read<HomeService>(),
+              )..add(
+                const GenerateMoviesRequest(),
+              ),
+            ),
 
             ///Books
             BlocProvider<RecommendedBooksHydratedBloc>(
+              lazy: false,
               create: (context) => RecommendedBooksHydratedBloc(
                 homeService: context.read<HomeService>(),
               )..add(
@@ -78,6 +92,7 @@ class HomeProvider extends StatelessWidget {
                 ),
             ),
             BlocProvider<LikedBooksHydratedBloc>(
+              lazy: false,
               create: (context) => LikedBooksHydratedBloc(
                 homeService: context.read<HomeService>(),
               )..add(
@@ -85,13 +100,24 @@ class HomeProvider extends StatelessWidget {
                 ),
             ),
             BlocProvider<SavedBooksHydratedBloc>(
+              lazy: false,
               create: (context) => SavedBooksHydratedBloc(
                 homeService: context.read<HomeService>(),
               )..add(
                   const GenerateBooksRequest(),
                 ),
             ),
+            BlocProvider<WatchedBooksHydratedBloc>(
+              lazy: false,
+              create: (context) => WatchedBooksHydratedBloc(
+                homeService: context.read<HomeService>(),
+              )..add(
+                const GenerateBooksRequest(),
+              ),
+            ),
+            ///Dashboard
             BlocProvider<StoryNewsBloc>(
+              lazy: false,
               create: (context) => StoryNewsBloc(
                 homeService: context.read<HomeService>(),
               )..add(
@@ -99,6 +125,7 @@ class HomeProvider extends StatelessWidget {
                 ),
             ),
             BlocProvider<NewsBloc>(
+              lazy: false,
               create: (context) => NewsBloc(
                 homeService: context.read<HomeService>(),
               )..add(

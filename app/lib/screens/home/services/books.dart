@@ -19,7 +19,7 @@ class BooksService extends ServiceTemplate {
 
   }
 
-  /// RECOMMEND
+  /// RECOMMENDED
   Future<GenerateBooksResponse> getRecommendedBooks(
       GenerateBooksRequest request) async {
     GenerateBooksResponse result = [];
@@ -119,6 +119,45 @@ class BooksService extends ServiceTemplate {
             options: Options(headers: {
               'Content-Type': 'application/json',
             }));
+    if (response.statusCode != HttpStatus.OK) {
+      return Future.error(Exception(
+        'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
+      ));
+    }
+
+    data = response.data;
+
+    return data;
+  }
+
+  /// WATCHED
+  Future<GenerateBooksResponse> getWatchedBooks(
+      GenerateBooksRequest request) async {
+    GenerateBooksResponse result = [];
+
+    dynamic data = await getWatchedBooksId(request);
+
+    for (String book in data) {
+      BookStatusResponse item = await getBookById(book);
+      if (item.statusCode == HttpStatus.OK) {
+        result.add(BookPreview(
+            id: item.id!,
+            title: item.title!,
+            posterPath: item.posterPath,
+            overview: item.overview));
+      }
+    }
+    return result;
+  }
+
+  Future<dynamic> getWatchedBooksId(GenerateBooksRequest request) async {
+    dynamic data;
+
+    final response = await dio
+        .get('${ApiConstants.rootApiPath}/account/$_id/readBooks',
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+        }));
     if (response.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
         'Error ${response.statusCode} while fetching books: ${response.statusMessage}',

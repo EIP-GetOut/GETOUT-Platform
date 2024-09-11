@@ -13,6 +13,10 @@ import 'package:boxicons/boxicons.dart';
 
 import 'package:getout/screens/book/pages/book_description.dart';
 import 'package:getout/screens/book/bloc/book_bloc.dart';
+import 'package:getout/screens/home/bloc/books/books_event.dart';
+import 'package:getout/screens/home/bloc/liked_books/liked_books_bloc.dart';
+import 'package:getout/screens/home/bloc/saved_books/saved_books_bloc.dart';
+import 'package:getout/screens/home/bloc/watched_books/watched_books_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
 
 class BookSuccessWidget extends StatelessWidget {
@@ -107,6 +111,8 @@ class BookSuccessWidget extends StatelessWidget {
                 context
                     .read<BookBloc>()
                     .add(CreateInfoBookRequest(id: book.id ?? ''));
+                context.read<WatchedBooksHydratedBloc>().add(const GenerateBooksRequest());
+                //todo watchlistBloc
               },
             ),
           ),
@@ -132,6 +138,7 @@ class BookSuccessWidget extends StatelessWidget {
                 context
                     .read<BookBloc>()
                     .add(CreateInfoBookRequest(id: book.id.toString()));
+                context.read<LikedBooksHydratedBloc>().add(const GenerateBooksRequest());
               },
             ),
           ),
@@ -157,6 +164,7 @@ class BookSuccessWidget extends StatelessWidget {
                 context
                     .read<BookBloc>()
                     .add(CreateInfoBookRequest(id: book.id.toString()));
+                context.read<LikedBooksHydratedBloc>().add(const GenerateBooksRequest());
               },
             ),
           ),
@@ -182,6 +190,7 @@ class BookSuccessWidget extends StatelessWidget {
                 context
                     .read<BookBloc>()
                     .add(CreateInfoBookRequest(id: book.id ?? ''));
+                context.read<SavedBooksHydratedBloc>().add(const GenerateBooksRequest());
               },
             ),
           ),

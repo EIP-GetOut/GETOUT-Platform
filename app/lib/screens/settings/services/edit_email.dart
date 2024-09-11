@@ -48,4 +48,40 @@ class EditEmailServices {
     }
     return response;
   }
+
+  Future<EmailVerificationResponseModel> emailVerified(final EmailVerificationRequestModel request) async {
+
+    EmailVerificationResponseModel response = const EmailVerificationResponseModel(statusCode: HttpStatus.APP_ERROR);
+
+    try {
+      Response dioResponse = await dio
+          .post('${ApiConstants.rootApiPath}${ApiConstants.verifyEmailPath}',
+          data: {
+            'code': int.parse(request.code),
+          },
+          options: Options(headers: {'Content-Type': 'application/json'}));
+      response = EmailVerificationResponseModel(statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
+    } on DioException catch (dioException) {
+      if (dioException.response != null && dioException.response?.statusCode != null) {
+        response = EmailVerificationResponseModel(
+            statusCode: dioException.response?.statusCode ?? HttpStatus.APP_ERROR);
+      }
+    } catch (error) {
+      return response;
+    }
+    return response;
+  }
+
+  Future<void> emailVerifiedResend() async {
+    try {
+      await dio.post(
+          '${ApiConstants.rootApiPath}${ApiConstants.verifyEmailResendPath}',
+          options: Options(headers: {'Content-Type': 'application/json'}));
+    } on DioException {
+      // add "catch (dioError)" for debugging
+      rethrow;
+    } catch (error) {
+      rethrow;
+    }
+  }
 }

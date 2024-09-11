@@ -10,13 +10,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/settings/bloc/edit_password/edit_password_bloc.dart';
 import 'package:getout/screens/settings/services/edit_password.dart';
-import 'package:getout/widgets/fields/password_field.dart';
 import 'package:getout/widgets/fields/widgets/default_button.dart';
+import 'package:getout/widgets/fields/password_field.dart';
+import 'package:getout/widgets/transition_page.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/widgets/page_title.dart';
+import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/tools/tools.dart';
-import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/constants/http_status.dart';
 
 class EditPasswordPage extends StatelessWidget {
@@ -74,7 +75,7 @@ class SendNewNewButton extends StatelessWidget {
                 width: Tools.widthFactor(context, 0.90),
                 height: 65,
                 child: DefaultButton(
-                title: appL10n(context)!.edit_password,
+                title: appL10n(context)!.confirm,
                 onPressed:  () {
                     if (!formKey.currentState!.validate()) {
                       return;
@@ -87,15 +88,21 @@ class SendNewNewButton extends StatelessWidget {
                         .sendNewPassword(EditPasswordRequestModel(
                             oldPassword: oldPassword, newPassword: newPassword))
                         .then((final EditPasswordResponseModel value) {
-                      if (value.statusCode == HttpStatus.UNAUTHORIZED) {
+                      if (value.statusCode == HttpStatus.UNAUTHORIZED && context.mounted) {
                         showSnackBar(context, appL10n(context)!.password_current_error);
-                      } else if (!value.isSuccessful) {
+                      } else if (!value.isSuccessful && context.mounted) {
                         showSnackBar(context,
                             appL10n(context)!.error_unknown);
                       } else {
-                        showSnackBar(
-                            context, appL10n(context)!.password_edit_success,
-                            color: Colors.green);
+                        if (context.mounted) {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => TransitionPage(
+                                  title: appL10n(context)!.password_edit_success,
+                                  maxLines: 2,
+                                  image: 'assets/images/draw/astronaut.svg',
+                                  buttonText: appL10n(context)!.back_to_settings)
+                          ));
+                        }
                       }
                     });
                   }));

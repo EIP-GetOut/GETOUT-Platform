@@ -261,7 +261,7 @@ class EditPasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<EditEmailBloc, EditEmailState>(
+    return BlocBuilder<EditEmailBloc, EditEmailStates>(
         builder: (context, state) {
       return DefaultField(
         isPassword: true,
@@ -272,7 +272,7 @@ class EditPasswordField extends StatelessWidget {
             ? null
             : appL10n(context)!.password_empty,
         onChanged: (value) => context.read<EditEmailBloc>().add(
-              PasswordChanged(password: value),
+          NewEmailEvent(newEmail: '', confirmEmail: '', password: value),
             ),
       );
     });

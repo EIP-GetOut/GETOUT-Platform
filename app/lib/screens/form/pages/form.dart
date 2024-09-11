@@ -125,15 +125,17 @@ class Forms extends StatelessWidget {
                       viewingPlatform:
                           context.read<FormBloc>().state.viewingPlatform))
                   .then((final FormResponseModel value) {
-                if (!value.isSuccessful) {
+                if (!value.isSuccessful && context.mounted) {
                   return showSnackBar(context, appL10n(context)!.error_unknown);
                 }
-                context
-                    .read<FormBloc>()
-                    .add(const EmitEvent(status: FormStatus.endForm));
-                pageController.nextPage(
-                    duration: const Duration(milliseconds: 200),
-                    curve: Curves.easeInOut);
+                if (context.mounted) {
+                  context
+                      .read<FormBloc>()
+                      .add(const EmitEvent(status: FormStatus.endForm));
+                  pageController.nextPage(
+                      duration: const Duration(milliseconds: 200),
+                      curve: Curves.easeInOut);
+                }
               });
             } else if (context.read<FormBloc>().state.status ==
                 FormStatus.endForm) {

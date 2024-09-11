@@ -7,42 +7,65 @@
 
 part of 'edit_email_bloc.dart';
 
-class EditEmailState extends Equatable {
-  final String email;
-  final String confirmEmail;
-  final String password;
-  final Status status;
+enum EditEmailStatus {
+  newEmail,
+  newEmailSending,
+  verificationEmail,
+  verificationEmailSending,
+  error
+}
 
-  bool get isEmailEmpty => email.isNotEmpty;
-  bool get isEmailValid => RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+').hasMatch(email);
-  bool get isNewEmailDifferent => email != globals.session?['email'];
+extension EditEmailStatusX on EditEmailStatus {
+  bool get isNewEmail => this == EditEmailStatus.newEmail;
+  bool get isNewEmailSending => this == EditEmailStatus.newEmailSending;
+  bool get isCheckEmail => this == EditEmailStatus.verificationEmail;
+  bool get isCheckEmailSending => this == EditEmailStatus.verificationEmailSending;
+  bool get isError => this == EditEmailStatus.error;
+}
+
+class EditEmailStates extends Equatable {
+
+  final EditEmailStatus status;
+  final String newEmail;
+  final String password;
+  final String confirmEmail;
+  final String code;
+  bool get isCodeValid => code.isNotEmpty;
+  bool get isEmailEmpty => newEmail.isNotEmpty;
+  bool get isEmailValid => RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+').hasMatch(newEmail);
+  bool get isNewEmailDifferent => newEmail != globals.session?['email'];
   bool get isEmailGood => isEmailEmpty && isEmailValid && isNewEmailDifferent;
   bool get isPasswordEmpty => password.isNotEmpty;
   bool get isConfirmEmailEmpty => confirmEmail.isNotEmpty;
-  bool get isConfirmEmailValid => confirmEmail == email;
+  bool get isConfirmEmailValid => confirmEmail == newEmail;
   bool get isConfirmEmailGood => isConfirmEmailEmpty && isConfirmEmailValid;
+  bool get isEverythingGood => isConfirmEmailGood && isPasswordEmpty && isEmailGood;
 
-  const EditEmailState({
-    this.email = '',
+  const EditEmailStates({
+    this.status = EditEmailStatus.newEmail,
+    this.newEmail = '',
     this.confirmEmail = '',
     this.password = '',
-    this.status = Status.initial,
+    this.code = '',
   });
 
   @override
-  List<Object?> get props => [email, confirmEmail, password, status];
+  List<Object?> get props =>
+      [status, newEmail, confirmEmail, password, code];
 
-  EditEmailState copyWith({
-    String? email,
+  EditEmailStates copyWith({
+    EditEmailStatus? status,
+    String? newEmail,
     String? confirmEmail,
     String? password,
-    Status? status,
+    String? code,
   }) {
-    return EditEmailState(
-      email: email ?? this.email,
+    return EditEmailStates(
+      status: status ?? this.status,
+      newEmail: newEmail ?? this.newEmail,
       confirmEmail: confirmEmail ?? this.confirmEmail,
       password: password ?? this.password,
-      status: status ?? this.status,
+      code: code ?? this.code,
     );
   }
 }
