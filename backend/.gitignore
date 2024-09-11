@@ -6,4 +6,4 @@
 /coverage
 /src/services/recommendations/books/__pycache__
 /src/services/recommendations/movies/__pycache__
-/src/services/recommendations/movies/moviesPool/__pycache__
+/src/services/recommendations/movies/moviesPool/__pycache__ 
