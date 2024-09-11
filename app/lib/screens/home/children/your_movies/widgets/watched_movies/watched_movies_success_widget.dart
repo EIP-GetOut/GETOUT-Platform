@@ -28,37 +28,39 @@ class WatchedMoviesSuccessWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PageController movieController =
-    PageController(viewportFraction: 0.1, initialPage: 0);
+        PageController(viewportFraction: 0.1, initialPage: 0);
 
     return SizedBox(
-        height: 250,
+        height: 300,
         child: Column(
-      children: [
-        TitleWidget(
-            asset: 'heart', title: appL10n(context)!.watch_movies_title, length: movies.length),
-        Expanded(
-            child: ListView(
-                controller: movieController,
-                scrollDirection: Axis.horizontal,
-                children: List.generate(movies.length, (index) {
-                  return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => BlocProvider.value(
-                                    value: BlocProvider.of<LikedMoviesHydratedBloc>(context),
-                                    child: BlocProvider.value(
+          children: [
+            TitleWidget(
+                asset: 'heart',
+                title: appL10n(context)!.watch_movies_title,
+                length: movies.length),
+            Expanded(
+                child: ListView(
+                    controller: movieController,
+                    scrollDirection: Axis.horizontal,
+                    children: List.generate(movies.length, (index) {
+                      return InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => BlocProvider.value(
+                                        value: BlocProvider.of<LikedMoviesHydratedBloc>(context),
+                                        child: BlocProvider.value(
                                         value: BlocProvider.of<SavedMoviesHydratedBloc>(context),
                                         child: BlocProvider.value(
                                         value: BlocProvider.of<WatchedMoviesHydratedBloc>(context),
                                         child: Movie(movies[index].id))))));
-                      },
-                       child: MoviePreviewWidget(
-                           posterPath: movies[index].posterPath,
-                           title: movies[index].title));
-                }))),
-      ],
-    ));
+                          },
+                          child: MoviePreviewWidget(
+                              posterPath: movies[index].posterPath,
+                              title: movies[index].title));
+                    }))),
+          ],
+        ));
   }
 }
