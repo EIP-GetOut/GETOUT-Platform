@@ -24,3 +24,17 @@ class EditEmailResponseModel {
 
   const EditEmailResponseModel({required this.statusCode});
 }
+
+class EmailVerificationRequestModel {
+  const EmailVerificationRequestModel({required this.code});
+
+  final String code;
+}
+
+class EmailVerificationResponseModel {
+  const EmailVerificationResponseModel({required this.statusCode});
+
+  bool get isSuccessful =>
+      statusCode == HttpStatus.OK;
+  final int statusCode;
+}

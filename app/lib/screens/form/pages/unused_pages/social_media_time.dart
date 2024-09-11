@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/form/widgets/progress_bar.dart';
-import 'package:getout/screens/form/bloc/form_bloc.dart';
+import 'package:getout/screens/form/bloc/edit_email_bloc.dart';
 
 class SocialMediaSpentTime extends StatelessWidget {
   const SocialMediaSpentTime({super.key});

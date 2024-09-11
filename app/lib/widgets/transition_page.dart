@@ -56,7 +56,7 @@ class TransitionPage extends StatelessWidget {
             nextPage!();
           } else {
             Navigator.of(context).pop();
-            return Navigator.of(context).pop();
+            Navigator.of(context).pop();
           }
         },
         child: Text(buttonText,
