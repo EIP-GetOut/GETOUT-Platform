@@ -8,7 +8,7 @@
 import json
 
 
-def filterBooksPool(parameters: json, booksPool: list) -> list:
+def filterBooksPool(parameters: dict, booksPool: list) -> list:
     exploredBooksTitles = []
     for book in booksPool:
         id = book["id"]

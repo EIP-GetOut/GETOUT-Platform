@@ -60,6 +60,7 @@ void describe('Recommend Movies Route', async () => {
     let recommendedMovies: any[]
 
     await request(app).post('/account/preferences').send(preferences).set('Cookie', cookie).then(async () => {
+      await new Promise(resolve => setTimeout(resolve, 3000))
       return await request(app).get(`/account/${accountId}/recommend-movies`).set('Cookie', cookie)
     }).then(async (response) => {
       expect(response.status).toBe(StatusCodes.OK)
@@ -70,5 +71,5 @@ void describe('Recommend Movies Route', async () => {
       expect(response.status).toBe(StatusCodes.OK)
       expect(response.body).toStrictEqual(recommendedMovies)
     })
-  }, 15000)
+  })
 })

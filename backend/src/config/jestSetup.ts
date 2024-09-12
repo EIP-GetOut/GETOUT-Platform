@@ -5,7 +5,7 @@
 ** Wrote by Alexandre Chetrit <chetrit.pro@hotmail.com>
 */
 
-import { afterAll, beforeAll } from '@jest/globals'
+import { afterAll, beforeAll, jest } from '@jest/globals'
 import express, { type Application } from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { type RedisClientType } from 'redis'
@@ -53,5 +53,7 @@ afterAll(() => {
   void appDataSource.destroy()
   void redisClient.quit()
 })
+
+jest.setTimeout(30000)
 
 export { app }

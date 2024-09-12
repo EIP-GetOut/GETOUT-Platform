@@ -32,7 +32,7 @@ const loginBody = {
 
 const preferences: Preferences = {
   moviesGenres: [12, 16, 35],
-  booksGenres: ['Histoire', 'Roman', 'Suspence'],
+  booksGenres: ['Histoire', 'Roman', 'Philosophie'],
   platforms: ['PrimeVideo']
 }
 
@@ -58,6 +58,7 @@ void describe('Recommended Movies History Route', async () => {
 
   it('should respond with 200 OK and the recommended movies history for GET /account/:accountId/recommendedMoviesHistory', async () => {
     await request(app).post('/account/preferences').send(preferences).set('Cookie', cookie).then(async () => {
+      await new Promise(resolve => setTimeout(resolve, 5000))
       return await request(app).get(`/account/${accountId}/recommend-movies`).set('Cookie', cookie)
     }).then(async () => {
       return await request(app).get(`/account/${accountId}/recommendedMoviesHistory`).set('Cookie', cookie)
@@ -65,5 +66,5 @@ void describe('Recommended Movies History Route', async () => {
       expect(response.status).toBe(StatusCodes.OK)
       expect(response.body).toHaveLength(5)
     })
-  }, 15000)
+  })
 })

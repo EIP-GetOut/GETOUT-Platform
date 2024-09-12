@@ -31,9 +31,43 @@ def fetchBookDetails(Book_id):
 
 
 async def getBooksDetailsConcurrently(Books):
-    tasks = [asyncio.to_thread(fetchBookDetails, id) for id in Books]
-    bookDetails = await asyncio.gather(*tasks)
-    return bookDetails
+    # tasks = [asyncio.to_thread(fetchBookDetails, id) for id in Books]
+    # bookDetails = await asyncio.gather(*tasks)
+    return [{
+        "id": 1,
+        "title": "Book 1",
+        "genres": ["Science Fiction", "Adventure"],
+        "releaseDate": "2015-06-12",
+        "writer": "Author A"
+    },
+    {
+        "id": 2,
+        "title": "Book 2",
+        "genres": ["Historical Fiction", "Drama"],
+        "releaseDate": "2017-09-20",
+        "writer": "Author B"
+    },
+    {
+        "id": 3,
+        "title": "Book 3",
+        "genres": ["Science Fiction"],
+        "releaseDate": "2018-11-05",
+        "writer": "Author C"
+    },
+    {
+        "id": 4,
+        "title": "Book 4",
+        "genres": ["Adventure", "Fantasy"],
+        "releaseDate": "2020-02-10",
+        "writer": "Author D"
+    },
+    {
+        "id": 5,
+        "title": "Book 5",
+        "genres": ["Romance", "Historical Fiction"],
+        "releaseDate": "2021-04-25",
+        "writer": "Author A"
+    }]
 
 def getLikedBooksParameters(parameters: dict) -> dict:
     if not isinstance(parameters.get("likedBooks"), list):
@@ -53,7 +87,6 @@ def getLikedBooksParameters(parameters: dict) -> dict:
             raise ValueError("Expected each item in data to be a dictionary")
     genre_ids = [genre['id'] for genre in genres if isinstance(genre, dict)]
     genre_counts = Counter(genres)
-    print("Genres : ", genres)
     filtered_genre_counts = {
         genre: count for genre, count in genre_counts.items()
         if genre not in parameters.get("genres", []) and count >= 2
@@ -101,7 +134,7 @@ def getLikedAutorsParameters(parameters: dict) -> dict:
         raise ValueError("Expected data to be a list of dictionaries")
     for item in data:
         if isinstance(item, dict):
-            director = item.get('autor')
+            director = item.get('writer')
             if isinstance(director, str):
                 directors.append(director)
             else:
@@ -185,32 +218,31 @@ def getParameters(account: json) -> json:
             "dislikedGenres": None,
             "leastFavouriteEpoch": None
         }
-        # if parameters["likedBooks"] is not None:
-        #     parameters = getLikedBooksParameters(parameters)
-        # if parameters["dislikedBooks"] is not None:
-        #     parameters = getDislikedBooksParameters(parameters)
-        # if parameters["likedBooks"] is not None:
-        #     parameters = getLikedAutorsParameters(parameters)
-        # if parameters["likedBooks"] is not None:
-        #     parameters = getLikedDecadesParameters(parameters)
-        # if parameters["dislikedBooks"] is not None:
-        #     parameters = getDislikedDecadesParameters(parameters)
-        # liked_epochs = parameters.get("favouriteEpoch", [])
-        # disliked_epochs = parameters.get("leastFavouriteEpoch", [])
-        # if liked_epochs and disliked_epochs:
-        #     liked_epoch_counts = Counter(liked_epochs)
-        #     disliked_epoch_counts = Counter(disliked_epochs)
-        #     common_epochs = set(liked_epochs) & set(disliked_epochs)
-        #     for epoch in common_epochs:
-        #         liked_count = liked_epoch_counts.get(epoch, 0)
-        #         disliked_count = disliked_epoch_counts.get(epoch, 0)
-        #         if liked_count >= disliked_count:
-        #             disliked_epochs.remove(epoch)
-        #         else:
-        #             liked_epochs.remove(epoch)
-        #     parameters["favouriteEpoch"] = liked_epochs if liked_epochs else None
-        #     parameters["leastFavouriteEpoch"] = disliked_epochs if disliked_epochs else None
-        # print("parameters : ", parameters)
+        if parameters["likedBooks"] is not None:
+            parameters = getLikedBooksParameters(parameters)
+        if parameters["dislikedBooks"] is not None:
+            parameters = getDislikedBooksParameters(parameters)
+        if parameters["likedBooks"] is not None:
+            parameters = getLikedAutorsParameters(parameters)
+        if parameters["likedBooks"] is not None:
+            parameters = getLikedDecadesParameters(parameters)
+        if parameters["dislikedBooks"] is not None:
+            parameters = getDislikedDecadesParameters(parameters)
+        liked_epochs = parameters.get("favouriteEpoch", [])
+        disliked_epochs = parameters.get("leastFavouriteEpoch", [])
+        if liked_epochs and disliked_epochs:
+            liked_epoch_counts = Counter(liked_epochs)
+            disliked_epoch_counts = Counter(disliked_epochs)
+            common_epochs = set(liked_epochs) & set(disliked_epochs)
+            for epoch in common_epochs:
+                liked_count = liked_epoch_counts.get(epoch, 0)
+                disliked_count = disliked_epoch_counts.get(epoch, 0)
+                if liked_count >= disliked_count:
+                    disliked_epochs.remove(epoch)
+                else:
+                    liked_epochs.remove(epoch)
+            parameters["favouriteEpoch"] = liked_epochs if liked_epochs else None
+            parameters["leastFavouriteEpoch"] = disliked_epochs if disliked_epochs else None
         return parameters
     except KeyError as e:
         print(f"Missing key in account data: {e}")

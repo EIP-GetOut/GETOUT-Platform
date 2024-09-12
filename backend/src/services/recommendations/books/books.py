@@ -17,7 +17,6 @@ from filterBooksPool import filterBooksPool
 def recommendBooks(account: dict) -> list:
     parameters = getParameters(account)
     booksPool = getBooksPool(parameters)
-    booksPool = filterBooksPool(parameters, booksPool)
     recommendations = applyWeightsAndScore(parameters, booksPool)
     return recommendations
 
