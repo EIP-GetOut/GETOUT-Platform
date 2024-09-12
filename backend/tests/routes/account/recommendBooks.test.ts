@@ -60,6 +60,7 @@ void describe('Recommend Books Route', async () => {
     let recommendedBooks: any[]
 
     await request(app).post('/account/preferences').send(preferences).set('Cookie', cookie).then(async () => {
+      await new Promise(resolve => setTimeout(resolve, 3000))
       return await request(app).get(`/account/${accountId}/recommend-books`).set('Cookie', cookie)
     }).then(async (response) => {
       expect(response.status).toBe(StatusCodes.OK)
@@ -79,5 +80,5 @@ void describe('Recommend Books Route', async () => {
       expect(response.body[4].kind).toBe(recommendedBooks[4].kind)
       expect(response.body[4].id).toBe(recommendedBooks[4].id)
     })
-  }, 15000)
+  })
 })

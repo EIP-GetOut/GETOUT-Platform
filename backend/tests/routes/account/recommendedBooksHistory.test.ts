@@ -58,6 +58,7 @@ void describe('Recommended Books History Route', async () => {
 
   it('should respond with 200 OK and the recommended books history for GET /account/:accountId/recommendedBooksHistory', async () => {
     await request(app).post('/account/preferences').send(preferences).set('Cookie', cookie).then(async () => {
+      await new Promise(resolve => setTimeout(resolve, 3000))
       return await request(app).get(`/account/${accountId}/recommend-books`).set('Cookie', cookie)
     }).then(async (response) => {
       return await request(app).get(`/account/${accountId}/recommendedBooksHistory`).set('Cookie', cookie)
@@ -65,5 +66,5 @@ void describe('Recommended Books History Route', async () => {
       expect(response.status).toBe(StatusCodes.OK)
       expect(response.body).toHaveLength(5)
     })
-  }, 15000)
+  })
 })
