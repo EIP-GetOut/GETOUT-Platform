@@ -6,58 +6,69 @@
 #
 
 import json
-import random
 
-WEIGHTS = {
-    "genres": 0.3,
-    "critics": 0.35,
-    "popularity": 0.35
-}
+def recommend_books_with_parameters(parameters, books):
+    history = parameters["history"]
+    read_books = parameters["readBooks"]
+    excluded_books = set(history + read_books)
+    liked_genres = parameters.get("likedGenres", [])
+    disliked_genres = parameters.get("dislikedGenres", [])
+    favourite_epoch = parameters.get("favouriteEpoch")
+    least_favourite_epoch = parameters.get("leastFavouriteEpoch")
+    favourite_author = parameters.get("favouriteWriters", [])
+    if not isinstance(favourite_author, list):
+           favourite_author = [favourite_author]
+    if not isinstance(liked_genres, list):
+           liked_genres = [liked_genres]
+    if not isinstance(disliked_genres, list):
+            disliked_genres = [disliked_genres]
 
-# def calculate_genre_score(book, user):
-#     score = 0
-#     google_books_api = build("books", "v1", developerKey=os.getenv("GOOGLE_BOOKS_API_KEY"))
-#     response = google_books_api.volumes().list(q="isbn:" + book["primary_isbn13"]).execute()
-#     if "items" in response:
-#         for g in response["items"][0]["volumeInfo"]["categories"]:
-#             if g in user["preferences"]["booksGenres"]:
-#                 score += (WEIGHTS["genres"] * 100) / len(response["items"][0]["volumeInfo"]["categories"])
-#     print("genre score: " + str(score))
-#     return score
+    def is_in_decade(year, decade_str):
+        try:
+            decade_start = int(decade_str[:4])
+            return decade_start <= year < decade_start + 10
+        except (ValueError, TypeError):
+            return False
 
-# def calculate_critics_score(book, user):
-#     score = 0
-#     google_books_api = build("books", "v1", developerKey=os.getenv("GOOGLE_BOOKS_API_KEY"))
-#     response = google_books_api.volumes().list(q="isbn:" + book["primary_isbn13"]).execute()
-#     if "items" in response:
-#         try:
-#             score = (response["items"][0]["volumeInfo"]["averageRating"] * 20) * WEIGHTS["critics"]
-#         except:
-#             print("no rating")
-#     print("critics score: " + str(score))
-#     return score
+    def extract_year_from_date(date_str):
+        try:
+            return int(date_str[:4])
+        except (ValueError, TypeError):
+            return None
 
-# def calculate_popularity_score(book, user):
-#     score = 0
-#     google_books_api = build("books", "v1", developerKey=os.getenv("GOOGLE_BOOKS_API_KEY"))
-#     response = google_books_api.volumes().list(q="isbn:" + book["primary_isbn13"]).execute()
-#     if "items" in response:
-#         try:
-#             score = (response["items"][0]["volumeInfo"]["ratingsCount"] / 100000) * WEIGHTS["popularity"]
-#         except:
-#             print("no rating")
-#     print("popularity score: " + str(score))
-#     return score
+    def calculate_book_score(book):
+        score = 0
+        if book["genres"][0] in parameters["genres"]:
+            score += 1.0
+        if liked_genres[0] and book["genres"][0] in parameters["likedGenres"]:
+            score += 0.5
+        if disliked_genres[0] and book["genres"][0] in parameters["dislikedGenres"]:
+            score -= 0.5
+        book_year = extract_year_from_date(book["date"])
+        if book_year is not None:
+            if favourite_epoch and is_in_decade(book_year, favourite_epoch):
+                score += 0.3
+            elif least_favourite_epoch and is_in_decade(book_year, least_favourite_epoch):
+                score -= 0.3
+        if favourite_author[0] and book["author"] in parameters["favouriteWriters"]:
+            score += 0.4
+        return score
+
+    scored_books = []
+    for book in books:
+        if book["title"] not in excluded_books:
+            score = calculate_book_score(book)
+            scored_books.append({
+                "id": book["id"],
+                "title": book["title"],
+                "score": score
+            })
+
+    scored_books.sort(key=lambda x: x["score"], reverse=True)
+    return scored_books[:5]
 
 
 def applyWeightsAndScore(parameters: json, booksPool: list) -> json:
-    recommendations = []
-    for i in range(len(booksPool)):
-        recommendations.append({
-            "title": booksPool[i]["title"],
-            "score": random.randint(1, 100),
-            "id": booksPool[i]["id"]
-        })
-
+    recommendations = recommend_books_with_parameters(parameters, booksPool)
     recommendations = sorted(recommendations, key=lambda k: k["score"], reverse=True)
     return recommendations

@@ -45,8 +45,6 @@ def getBooksByGenres(bookread: list, genres: list) -> list:
         except requests.exceptions.RequestException as e:
             print(f"Error fetching books for genre '{genre}': {e}")
     pretty_pool = json.dumps(full_pool, indent=2)
-    # print("full_pool : ", pretty_pool)
-    # print(len(full_pool))
     booksPoolByGenres = []
     return full_pool
 

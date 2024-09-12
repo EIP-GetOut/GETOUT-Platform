@@ -244,7 +244,6 @@ def getParameters(account: json) -> json:
                     liked_epochs.remove(epoch)
             parameters["favouriteEpoch"] = liked_epochs if liked_epochs else None
             parameters["leastFavouriteEpoch"] = disliked_epochs if disliked_epochs else None
-        print("parameters : ", parameters)
         return parameters
     except KeyError as e:
         print(f"Missing key in account data: {e}")
