@@ -37,14 +37,24 @@ def recommend_movies_with_parameters(parameters, movies):
             return int(date_str[:4])
         except (ValueError, TypeError):
             return None
+
+    def normalize_score(x, min_val=-0.8, max_val=2.2):
+        return ((x - min_val) / (max_val - min_val)) * 100
+
     def calculate_movie_score(movie):
         score = 0
-        if movie["genres"] in parameters["genres"]:
-            score += 1.0
-        if liked_genres[0] and movie["genres"] in parameters["likedGenres"]:
-            score += 0.5
-        if disliked_genres[0] and movie["genres"] in parameters["dislikedGenres"]:
-            score -= 0.5
+        print("movie genre", movie["genres"])
+        print("params genre : ", parameters["genres"])
+        for i in range(len(movie["genres"])):
+            if movie["genres"][i] in parameters["genres"]:
+                score += 1.0
+        for i in range(len(movie["genres"])):
+            if liked_genres[0] and movie["genres"][i] in parameters["likedGenres"]:
+                print("test genre liké")
+                score += 0.5
+        for i in range(len(movie["genres"])):
+            if disliked_genres[0] and movie["genres"][i] in parameters["dislikedGenres"]:
+                score -= 0.5
         movie_year = extract_year_from_date(movie["releaseDate"])
         if movie_year is not None:
             if favourite_epoch and is_in_decade(movie_year, favourite_epoch):
@@ -52,6 +62,7 @@ def recommend_movies_with_parameters(parameters, movies):
             elif least_favourite_epoch and is_in_decade(movie_year, least_favourite_epoch):
                 score -= 0.3
         if favourite_director[0] and movie["director"] in parameters["favouriteMovieDirector"]:
+            print("test director")
             score += 0.4
         return score
     scored_movies = []
@@ -61,7 +72,7 @@ def recommend_movies_with_parameters(parameters, movies):
             scored_movies.append({
                 "id": movie["id"],
                 "title": movie["title"],
-                "score": score
+                "score": normalize_score(score)
             })
 
     scored_movies.sort(key=lambda x: x["score"], reverse=True)

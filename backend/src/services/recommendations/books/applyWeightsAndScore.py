@@ -36,14 +36,20 @@ def recommend_books_with_parameters(parameters, books):
         except (ValueError, TypeError):
             return None
 
+    def normalize_score(x, min_val=-0.8, max_val=2.2):
+        return ((x - min_val) / (max_val - min_val)) * 100
+
     def calculate_book_score(book):
         score = 0
-        if book["genres"][0] in parameters["genres"]:
-            score += 1.0
-        if liked_genres[0] and book["genres"][0] in parameters["likedGenres"]:
-            score += 0.5
-        if disliked_genres[0] and book["genres"][0] in parameters["dislikedGenres"]:
-            score -= 0.5
+        for i in range(len(book["genres"])):
+            if book["genres"][i] in parameters["genres"]:
+                score += 1.0
+        for i in range(len(book["genres"])):
+            if liked_genres[0] and book["genres"][i] in parameters["likedGenres"]:
+                score += 0.5
+        for i in range(len(book["genres"])):
+            if disliked_genres[0] and book["genres"][i] in parameters["dislikedGenres"]:
+                score -= 0.5
         book_year = extract_year_from_date(book["date"])
         if book_year is not None:
             if favourite_epoch and is_in_decade(book_year, favourite_epoch):
@@ -54,6 +60,8 @@ def recommend_books_with_parameters(parameters, books):
             score += 0.4
         return score
 
+
+
     scored_books = []
     for book in books:
         if book["title"] not in excluded_books:
@@ -61,7 +69,7 @@ def recommend_books_with_parameters(parameters, books):
             scored_books.append({
                 "id": book["id"],
                 "title": book["title"],
-                "score": score
+                "score": normalize_score(score)
             })
 
     scored_books.sort(key=lambda x: x["score"], reverse=True)
