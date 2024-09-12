@@ -71,12 +71,5 @@ def recommend_movies_with_parameters(parameters, movies):
 
 def applyWeightsAndScore(parameters: json, moviesPool: list) -> json:
     recommendations = recommend_movies_with_parameters(parameters, moviesPool)
-    for i in range(len(moviesPool)):
-        recommendations.append({
-            "id": moviesPool[i]["id"],
-            "title": moviesPool[i]["title"],
-            "score": random.randint(0, 100)
-        })
-
     recommendations = sorted(recommendations, key=lambda k: k["score"], reverse=True)
     return recommendations
