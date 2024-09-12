@@ -11,14 +11,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getout/constants/extern_url.dart';
 
 import 'package:getout/screens/book/bloc/book_provider.dart';
 import 'package:getout/screens/home/bloc/books/books_event.dart';
 import 'package:getout/screens/home/bloc/liked_books/liked_books_bloc.dart';
 import 'package:getout/screens/home/bloc/saved_books/saved_books_bloc.dart';
 import 'package:getout/screens/home/bloc/watched_books/watched_books_bloc.dart';
-import 'package:getout/screens/home/widgets/common/book_preview_widget.dart';
 import 'package:getout/screens/home/widgets/common/title_widget.dart';
 import 'package:getout/tools/app_l10n.dart';
 
@@ -32,8 +30,8 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PageController bookController =
-        PageController(viewportFraction: 0.1, initialPage: 0);
+    //final PageController bookController =
+    //    PageController(viewportFraction: 0.1, initialPage: 0);
 
     return SizedBox(
         child: Column(
