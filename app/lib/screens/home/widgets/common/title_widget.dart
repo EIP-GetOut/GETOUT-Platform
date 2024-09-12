@@ -12,12 +12,12 @@ class TitleWidget extends StatelessWidget {
     super.key,
     required this.title,
     required this.asset,
-    required this.length,
+    this.length,
   });
 
   final String title;
   final String asset;
-  final int length;
+  final int? length;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class TitleWidget extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   )),
             ),
-            Text('$length  ',
+            if (length != null) Text('$length  ',
             style: const TextStyle(
               color: Color(0xFF565656),
               fontSize: 22,
