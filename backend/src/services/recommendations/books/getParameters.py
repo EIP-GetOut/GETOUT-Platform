@@ -87,7 +87,6 @@ def getLikedBooksParameters(parameters: dict) -> dict:
             raise ValueError("Expected each item in data to be a dictionary")
     genre_ids = [genre['id'] for genre in genres if isinstance(genre, dict)]
     genre_counts = Counter(genres)
-    # print("Genres : ", genres)
     filtered_genre_counts = {
         genre: count for genre, count in genre_counts.items()
         if genre not in parameters.get("genres", []) and count >= 2
