@@ -9,26 +9,68 @@ import json
 import random
 
 
-def calculate_movie_score(parameters: json, movie: json) -> float:
-    score = 0
-    if movie.genre in parameters.favorite_genres:
-        score += 0.4
-    elif movie.genre in [m.genre for m in parameters.disliked_movies]:
-        score -= 0.2
-    if movie.director in [m.director for m in parameters.liked_movies]:
-        score += 0.2
-    elif movie.director in [m.director for m in parameters.disliked_movies]:
-        score -= 0.2
-    if movie.era in parameters.favorite_eras:
-        score += 0.2
-    elif movie.era in [m.era for m in parameters.disliked_movies]:
-        score -= 0.1
+def recommend_movies_with_parameters(parameters, movies):
+    history = parameters["history"]
+    seen_movies = parameters["seenMovies"]
+    excluded_movies = set(history + seen_movies)
+    liked_genres = parameters.get("likedGenres", [])
+    disliked_genres = parameters.get("dislikedGenres", [])
+    favourite_epoch = parameters.get("favouriteEpoch")
+    least_favourite_epoch = parameters.get("leastFavouriteEpoch")
+    favourite_director = parameters.get("favouriteMovieDirector", [])
+    if not isinstance(favourite_director, list):
+           favourite_director = [favourite_director]
+    if not isinstance(liked_genres, list):
+           liked_genres = [liked_genres]
+    if not isinstance(disliked_genres, list):
+            disliked_genres = [disliked_genres]
 
-    return score
+    def is_in_decade(year, decade_str):
+        try:
+            decade_start = int(decade_str[:4])
+            return decade_start <= year < decade_start + 10
+        except (ValueError, TypeError):
+            return False
+
+    def extract_year_from_date(date_str):
+        try:
+            return int(date_str[:4])
+        except (ValueError, TypeError):
+            return None
+    def calculate_movie_score(movie):
+        score = 0
+        if movie["genres"] in parameters["genres"]:
+            score += 1.0
+        if liked_genres[0] and movie["genres"] in parameters["likedGenres"]:
+            score += 0.5
+        if disliked_genres[0] and movie["genres"] in parameters["dislikedGenres"]:
+            score -= 0.5
+        movie_year = extract_year_from_date(movie["releaseDate"])
+        if movie_year is not None:
+            if favourite_epoch and is_in_decade(movie_year, favourite_epoch):
+                score += 0.3
+            elif least_favourite_epoch and is_in_decade(movie_year, least_favourite_epoch):
+                score -= 0.3
+        if favourite_director[0] and movie["director"] in parameters["favouriteMovieDirector"]:
+            score += 0.4
+        return score
+    scored_movies = []
+    for movie in movies:
+        if movie["title"] not in excluded_movies:
+            score = calculate_movie_score(movie)
+            scored_movies.append({
+                "id": movie["id"],
+                "title": movie["title"],
+                "score": score
+            })
+
+    scored_movies.sort(key=lambda x: x["score"], reverse=True)
+    return scored_movies[:5]
+
 
 
 def applyWeightsAndScore(parameters: json, moviesPool: list) -> json:
-    recommendations = []
+    recommendations = recommend_movies_with_parameters(parameters, moviesPool)
     for i in range(len(moviesPool)):
         recommendations.append({
             "id": moviesPool[i]["id"],
