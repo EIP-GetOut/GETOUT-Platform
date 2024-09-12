@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.6.5](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.6.4...v0.6.5) (2024-09-11)
+
+
+### Features
+
+* **app:** :arrow_up: upgrading dependencies ([7e80b2d](https://github.com/EIP-GetOut/GETOUT-Platform/commit/7e80b2d991f1be38cfb97fa87c1b81807b55630d))
+* **app:** :lipstick: adding transition page for edit password ([49fc00f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/49fc00f4cda5b8479154add2332f1f2667ca6a73))
+* **app:** :lipstick: UI of the settings page is update ([abe9ef5](https://github.com/EIP-GetOut/GETOUT-Platform/commit/abe9ef53ec96f8d7c7c98a2aaa51fdd87a3b891e))
+* **app:** :sparkles: email verification when email changed ([001cc6b](https://github.com/EIP-GetOut/GETOUT-Platform/commit/001cc6bba92b4f307c5cec4547100a75b5625fd4))
+* **app:** :sparkles: watch_books. ([9570ac3](https://github.com/EIP-GetOut/GETOUT-Platform/commit/9570ac3bf2cf6ee360421b6f800a817d00b614de))
+* **app:** :sparkles: watched_movie ui+logic, edit some navBar icons ([27f5d2f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/27f5d2f294a7b2774063db6099d5cb4f3dbf6f03))
+* **backend:** :construction: concurrent get movies details function in movie recommendation algorithm ([1296119](https://github.com/EIP-GetOut/GETOUT-Platform/commit/12961196775c2acf58fdcd3fd15fea66cbda811b))
+* **backend:** :sparkles: Add the favorite director / epoch and least favorite epoch for the pool of films ([90ac622](https://github.com/EIP-GetOut/GETOUT-Platform/commit/90ac622da65fd1e119e47aace7fba507f25eada2))
+* **backend:** :sparkles: Add the favorite writer / epoch and least favorite epoch for the pool of books generated ([77a8d44](https://github.com/EIP-GetOut/GETOUT-Platform/commit/77a8d4412669f9e59f65dbbf76e51bd09518f36a))
+* **backend:** :sparkles: Add the getDirectors to the parameters of the pool of films ([099b99d](https://github.com/EIP-GetOut/GETOUT-Platform/commit/099b99d4c11946d99b19fc2a5864e2de1d82f3c1))
+* **backend:** :sparkles: fully working movie recommendation algorithm without scoring ([f968386](https://github.com/EIP-GetOut/GETOUT-Platform/commit/f968386c72743e3e84f3a47da08494f6c5980718))
+* **backend:** :sparkles: getDislikedMoviesParameters, getLikedMoviesParameters funcs in movie recommendations ([aa87a18](https://github.com/EIP-GetOut/GETOUT-Platform/commit/aa87a18432440162fcc157fc7d0f443e3ef91b4d))
+* **backend:** :sparkles: getMoviesPool basic func in movies recommendations algorithm ([0ff9c54](https://github.com/EIP-GetOut/GETOUT-Platform/commit/0ff9c5441f45e8c6352c84dc5d98be320a6ebcec))
+* merge branch 'dev' of github.com:EIP-GetOut/GETOUT-Platform into feature/recommendations ([9beae05](https://github.com/EIP-GetOut/GETOUT-Platform/commit/9beae058e6047f9ee39723bd3cc2abc15618a205))
+
+
+### Bug Fixes
+
+* **app:** :art: typo. ([3b0a6df](https://github.com/EIP-GetOut/GETOUT-Platform/commit/3b0a6dfebc7e44c5036476863eda408aa0628543))
+* **app:** :recycle: updated api path with new domain name ([46f89a4](https://github.com/EIP-GetOut/GETOUT-Platform/commit/46f89a4fa2bbeed326ca03e48589e46a0067066a))
+* **app:** :rotating_light: fixing linter error ([12b274e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/12b274e9b109e7e2d336e07d7a9976fdac3f3762))
+
+
+### Refactors
+
+* **backend:** changed books genres and getParameters ([95549f3](https://github.com/EIP-GetOut/GETOUT-Platform/commit/95549f3d0c8335abb8c93f48c4138d3c254cdf24))
+* **backend:** pseudo code of new getMoviesParameters in movies recommendations ([d968a51](https://github.com/EIP-GetOut/GETOUT-Platform/commit/d968a51539330a05655ff63ecf43653974abe980))
+
 ### [0.6.4](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.6.3...v0.6.4) (2024-09-08)
 
 
