@@ -69,7 +69,7 @@ def recommend_books_with_parameters(parameters, books):
             scored_books.append({
                 "id": book["id"],
                 "title": book["title"],
-                "score": normalize_score(score)
+                "score": int(normalize_score(score))
             })
 
     scored_books.sort(key=lambda x: x["score"], reverse=True)

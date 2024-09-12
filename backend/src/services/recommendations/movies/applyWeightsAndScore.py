@@ -43,14 +43,11 @@ def recommend_movies_with_parameters(parameters, movies):
 
     def calculate_movie_score(movie):
         score = 0
-        print("movie genre", movie["genres"])
-        print("params genre : ", parameters["genres"])
         for i in range(len(movie["genres"])):
             if movie["genres"][i] in parameters["genres"]:
                 score += 1.0
         for i in range(len(movie["genres"])):
             if liked_genres[0] and movie["genres"][i] in parameters["likedGenres"]:
-                print("test genre liké")
                 score += 0.5
         for i in range(len(movie["genres"])):
             if disliked_genres[0] and movie["genres"][i] in parameters["dislikedGenres"]:
@@ -62,7 +59,6 @@ def recommend_movies_with_parameters(parameters, movies):
             elif least_favourite_epoch and is_in_decade(movie_year, least_favourite_epoch):
                 score -= 0.3
         if favourite_director[0] and movie["director"] in parameters["favouriteMovieDirector"]:
-            print("test director")
             score += 0.4
         return score
     scored_movies = []
@@ -72,7 +68,7 @@ def recommend_movies_with_parameters(parameters, movies):
             scored_movies.append({
                 "id": movie["id"],
                 "title": movie["title"],
-                "score": normalize_score(score)
+                "score": int(normalize_score(score))
             })
 
     scored_movies.sort(key=lambda x: x["score"], reverse=True)

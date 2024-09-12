@@ -3,7 +3,7 @@ import random
 from utils import formated_print
 from langdetect import detect
 
-NB_BOOKS = 200
+NB_BOOKS = 100
 BOOKS_BY_GENRES_WEIGHT = 0.45
 BOOKS_BY_GENRES_LIKED_WEIGHT = 0.45
 BOOKS_BY_AUTHORS_WEIGHT = 0.1
@@ -24,8 +24,12 @@ def extractBookInfo(book: dict, existing_book_ids: set, bookread: list) -> dict:
     book_info = book.get('volumeInfo', {})
     book_id = book.get('id', 'Unknown ID')
     book_title = book_info.get('title', 'Unknown Title')
+    imageLinks = book_info.get('imageLinks', None)
+    book_poster_path = None
+    if imageLinks is not None:
+        book_poster_path = imageLinks.get('thumbnail', None)
 
-    if detect(book_title) == 'fr' and book_title not in bookread and book_id not in existing_book_ids:
+    if detect(book_title) == 'fr' and book_title not in bookread and book_id not in existing_book_ids and book_poster_path is not None:
         book_authors = book_info.get('authors', ['Unknown Author'])
         book_genres = book_info.get('categories', ['Unknown Genre'])
         published_date = book_info.get('publishedDate', 'Unknown Date')
