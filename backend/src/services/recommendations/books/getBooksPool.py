@@ -14,11 +14,10 @@ NB_BOOKS=200
 BOOKS_BY_GENRES_WEIGHT=0.45
 BOOKS_BY_GENRES_LIKED_WEIGHT=0.45
 BOOKS_BY_AUTHORS_WEIGHT=0.1
+API_URL = "https://www.googleapis.com/books/v1/volumes"
 
 def getBooksByGenres(bookread: list, genres: list, booksPool: list, weight: int) -> list:
-    api_url = "https://www.googleapis.com/books/v1/volumes"
     booksPoolByGenres = []
-    nb_books_by_genre = int(NB_BOOKS * weight)
 
     existing_book_ids = {book['id'] for book in booksPool}
 
@@ -34,7 +33,7 @@ def getBooksByGenres(bookread: list, genres: list, booksPool: list, weight: int)
                 'printType': 'books'
             }
             try:
-                response = requests.get(api_url, params=params)
+                response = requests.get(API_URL, params=params)
                 response.raise_for_status()
                 books = response.json().get('items', [])
                 if not books:
@@ -55,8 +54,7 @@ def getBooksByGenres(bookread: list, genres: list, booksPool: list, weight: int)
                             'date': published_date
                         })
                         existing_book_ids.add(book_id)
-
-                    if len(genre_books) >= nb_books_by_genre:
+                    if len(genre_books) >= NB_BOOKS:
                         break
                 start_index += 40
             except requests.exceptions.RequestException as e:
@@ -64,12 +62,58 @@ def getBooksByGenres(bookread: list, genres: list, booksPool: list, weight: int)
                 break
         booksPoolByGenres.extend(genre_books)
         random.shuffle(booksPoolByGenres)
-        if len(booksPoolByGenres) > nb_books_by_genre:
-            booksPoolByGenres = booksPoolByGenres[:nb_books_by_genre]
+        if len(booksPoolByGenres) > int(NB_BOOKS * weight):
+            booksPoolByGenres = booksPoolByGenres[:int(NB_BOOKS * weight)]
     return booksPoolByGenres
 
-def getBooksByAuthors() -> list:
+def getBooksByAuthors(bookread: list, authors: list, booksPool: list) -> list:
     booksPoolByAuthors = []
+    existing_book_ids = {book['id'] for book in booksPool}
+
+    for author in authors:
+        author_books = []
+        start_index = 0
+        while len(author_books) < NB_BOOKS:
+            params = {
+                'q': f'inauthor:{author}',
+                'maxResults': 40,
+                'startIndex': start_index,
+                'langRestrict': 'fr',
+                'printType': 'books'
+            }
+            try:
+                response = requests.get(API_URL, params=params)
+                response.raise_for_status()
+                books = response.json().get('items', [])
+                if not books:
+                    break
+                for book in books:
+                    book_info = book.get('volumeInfo', {})
+                    book_id = book.get('id', 'Unknown ID')
+                    book_title = book_info.get('title', 'Unknown Title')
+                    if detect(book_title) == 'fr' and book_title not in bookread and book_id not in existing_book_ids:
+                        book_authors = book_info.get('authors', ['Unknown Author'])
+                        book_genres = book_info.get('categories', ['Unknown Genre'])
+                        published_date = book_info.get('publishedDate', 'Unknown Date')
+                        author_books.append({
+                            'id': book_id,
+                            'title': book_title,
+                            'genres': book_genres,
+                            'author': book_authors,
+                            'date': published_date
+                        })
+                        existing_book_ids.add(book_id)
+
+                    if len(author_books) >= NB_BOOKS:
+                        break
+                start_index += 40
+            except requests.exceptions.RequestException as e:
+                print(f"Error fetching books for genre '{author}': {e}")
+                break
+        booksPoolByAuthors.extend(author_books)
+        random.shuffle(booksPoolByAuthors)
+        if len(booksPoolByAuthors) > int(NB_BOOKS * BOOKS_BY_AUTHORS_WEIGHT):
+            booksPoolByAuthors = booksPoolByAuthors[:int(NB_BOOKS * BOOKS_BY_AUTHORS_WEIGHT)]
     return booksPoolByAuthors
 
 def getBooksRandom() -> list:
@@ -110,7 +154,7 @@ def getBooksPool(parameters: dict) -> list:
     booksPool = []
     booksPool.extend(getBooksByGenres(parameters["readBooks"], parameters["genres"], booksPool, BOOKS_BY_GENRES_WEIGHT))
     booksPool.extend(getBooksByGenres(parameters["readBooks"], parameters["likedGenres"], booksPool, BOOKS_BY_GENRES_LIKED_WEIGHT))
-    # booksPool.extend(getBooksByAuthors())
+    booksPool.extend(getBooksByAuthors(parameters["readBooks"], parameters["favouriteWriters"], booksPool))
     # if len(booksPool) < NB_BOOKS:
     #     booksPool.extend(getBooksRandom())
     return booksPool
