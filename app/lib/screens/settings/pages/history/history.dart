@@ -35,13 +35,13 @@ class HistoryPage extends StatelessWidget {
                   const HistoryRow(value: 'Books', background: true, title: true),
                   ...List.generate(
                       state.recommendedBooks.length,
-                      (index) => HistoryRow(
+                          (index) => HistoryRow(
                           value: state.recommendedBooks[index].title,
                           background: index.isOdd)),
                   const HistoryRow(value: 'Movies', background: true, title: true),
                   ...List.generate(
                       state.recommendedMovies.length,
-                      (index) => HistoryRow(
+                          (index) => HistoryRow(
                           value: state.recommendedMovies[index].title,
                           background: index.isOdd))
                 ]),
