@@ -232,5 +232,6 @@
   "discover_app": "Discover the app",
   "confirm": "Confirm",
 
-  "form_validator": "Please select at least one box"
+  "form_empty": "Please select at least one box",
+  "form_too_much": "Please select less than 3 boxes"
 }
