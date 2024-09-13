@@ -23,8 +23,6 @@ class FormCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context)
   {
-    return BlocBuilder<FormBloc, FormStates>(
-      builder: (context, state) {
         return ListView(
             padding: const EdgeInsets.all(16.0),
             shrinkWrap: true,
@@ -87,7 +85,5 @@ class FormCheckbox extends StatelessWidget {
                   ],
                 ),
             ]);
-      },
-    );
   }
 }

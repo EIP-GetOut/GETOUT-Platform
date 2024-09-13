@@ -15,31 +15,32 @@ import 'package:getout/widgets/page_title.dart';
 import 'package:getout/tools/tools.dart';
 
 class EndForm extends StatelessWidget {
-  const EndForm({super.key});
+  final BuildContext formContext;
+
+  const EndForm({required this.formContext, super.key});
 
   @override
-  Widget build(BuildContext context)
-  {
-    return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
-    {
-      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.endForm));
-      return Scaffold(
-        body: Center(
-          child: Column(
-            children: <Widget> [
-              SizedBox(height: Tools.heightFactor(context, 0.07)),
-              const PageTitle(
-                title: 'Vos réponses ont bien été enregistrées',
-                description: 'Ce formulaire nous permet de vous proposer une expérience personnalisée.',
-                maxLines: 2,
-              ),
-              SizedBox(height: Tools.heightFactor(context, 0.05)),
-              SvgPicture.asset('assets/images/draw/form_complete.svg', width: Tools.widthFactor(context, 1)),
-            ],
-          ),
+  Widget build(BuildContext context) {
+    formContext
+        .read<FormBloc>()
+        .add(const EmitEvent(status: FormStatus.endForm));
+    return Scaffold(
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: Tools.heightFactor(context, 0.07)),
+            const PageTitle(
+              title: 'Vos réponses ont bien été enregistrées',
+              description:
+                  'Ce formulaire nous permet de vous proposer une expérience personnalisée.',
+              maxLines: 2,
+            ),
+            SizedBox(height: Tools.heightFactor(context, 0.05)),
+            SvgPicture.asset('assets/images/draw/form_complete.svg',
+                width: Tools.widthFactor(context, 1)),
+          ],
         ),
-      );
-    },
+      ),
     );
   }
 }
