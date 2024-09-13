@@ -7,14 +7,16 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
 import 'package:getout/global.dart' as globals;
-import 'package:getout/screens/settings/widget/title.dart';
-import 'package:getout/tools/app_l10n.dart';
+import 'package:getout/tools/tools.dart';
+// import 'package:getout/tools/app_l10n.dart';
 
 class NotificationsPage extends StatefulWidget {
-  const NotificationsPage({super.key});
+  final String value;
+  const NotificationsPage({required this.value, super.key});
 
   @override
   State<NotificationsPage> createState() => _NotificationsPageState();
@@ -23,22 +25,18 @@ class NotificationsPage extends StatefulWidget {
 class _NotificationsPageState extends State<NotificationsPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(appL10n(context)!.notifications_getout.toUpperCase()),
-          leading: const BackButton(),
-        ),
-        body: Column(children: [
-          const SizedBox(height: 50),
-          const TitleRow(value: 'Global notification'),
+    return Column(children: [
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
               child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(appL10n(context)!.recommendations,
+                    SvgPicture.asset('assets/images/icon/bell(notification).svg'),
+                    SizedBox(width: Tools.widthFactor(context, 0.065)),
+                    Text(widget.value,
                         style:
                             TextStyle(fontSize: 20, color: Colors.grey[800])),
+                    const Expanded(child: SizedBox()),
                     FlutterSwitch(
                       height: 35.0,
                       width: 65.0,
@@ -60,6 +58,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
                       },
                     ),
                   ]))
-        ]));
+        ]);
   }
 }
