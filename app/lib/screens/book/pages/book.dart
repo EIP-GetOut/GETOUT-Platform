@@ -2,267 +2,313 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
+import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
+import 'package:share_plus/share_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:boxicons/boxicons.dart';
 
-import 'package:getout/screens/book/pages/book_description.dart';
-import 'package:getout/screens/book/bloc/book_bloc.dart';
-import 'package:getout/screens/home/bloc/books/books_event.dart';
+import 'package:getout/screens/home/bloc/watched_books/watched_books_bloc.dart';
 import 'package:getout/screens/home/bloc/liked_books/liked_books_bloc.dart';
 import 'package:getout/screens/home/bloc/saved_books/saved_books_bloc.dart';
-import 'package:getout/screens/home/bloc/watched_books/watched_books_bloc.dart';
+import 'package:getout/screens/book/bloc/book_bloc.dart';
+import 'package:getout/widgets/description_title.dart';
+import 'package:getout/screens/book/widgets/action_page.dart';
+import 'package:getout/tools/launch_webview.dart';
 import 'package:getout/tools/app_l10n.dart';
+import 'package:getout/widgets/tag.dart';
 
 class BookSuccessWidget extends StatelessWidget {
-  const BookSuccessWidget({
-    super.key,
-    required this.book,
-  });
-
-  final InfoBookResponse book;
+  const BookSuccessWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ValueNotifier<bool> isExpanded = ValueNotifier<bool>(false);
+    final book = context.read<BookBloc>().state.book;
+    final String releaseDate = book.releaseDate ?? '';
+
     String imageUrl = book.posterPath ?? '';
+
+   List<Tag> tagList() {
+      return book.genres!.map((tag) => Tag(text: tag.split('/')[0])).toList();
+    }
+
+
     Widget buildCoverImage() => Container(
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Color.fromRGBO(213, 86, 65, 0.992),
-                width: 10.0,
+        decoration: const BoxDecoration(
+          border: Border(
+          ),
+        ),
+        child: Stack(
+            alignment: Alignment.center,
+            children: [
+              Image.network(
+                imageUrl,
+                // color: const Color.fromRGBO(150, 150, 150, 255).withOpacity(1),
+                colorBlendMode: BlendMode.modulate,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                height: 200,
               ),
-            ),
-          ),
-          child: Image.network(
-            imageUrl,
-            color: const Color.fromRGBO(150, 150, 150, 255).withOpacity(1),
-            colorBlendMode: BlendMode.modulate,
-            width: double.infinity,
-            fit: BoxFit.cover,
-            height: 200,
-          ),
-        );
-
-    Widget buildLittleImage() => ClipRRect(
-        borderRadius: BorderRadius.circular(20),
-        child: Image.network(imageUrl, height: 250));
-
-    return Column(children: [
-      Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.center,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(bottom: 150),
-            child: buildCoverImage(),
-          ),
-          Positioned(
-            top: 100,
-            child: buildLittleImage(),
-          ),
-          Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                  padding: const EdgeInsets.only(bottom: 250, right: 340),
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.arrow_back,
-                      color: Color.fromARGB(255, 255, 255, 255),
+              Positioned.fill(
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                    child: Container(
+                      color: Colors.black.withOpacity(
+                          0.5), // Couleur transparente pour que le flou soit visible
                     ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ))),
-          Positioned(
-              top: 30,
-              right: 140,
-              child: IconButton(
+                  )),
+              Positioned(
+                top: 40,
+                right: 50,
+                child: IconButton(
                   icon: const Icon(Icons.share),
                   color: Colors.white,
                   onPressed: () async {
-                    await Clipboard.setData(
-                        ClipboardData(text: '${book.bookLink}'));
-                  })),//todo head
-          Positioned(
-            top: 30,
-            right: 80,
-            child: IconButton(
-              icon: const Icon(Icons.remove_red_eye),
-              color: (book.read ?? false) ? Colors.green : Colors.white,
-              onPressed: () async {
-                if (book.read == true) {
-                  await context
-                      .read<BookBloc>()
-                      .bookService
-                      .removeReadBook(AddBookRequest(id: book.id ?? ''));
-                } else {
-                  await context
-                      .read<BookBloc>()
-                      .bookService
-                      .addReadBook(AddBookRequest(id: book.id ?? ''));
-                }
-                if (!context.mounted) return;
-                context
-                    .read<BookBloc>()
-                    .add(CreateInfoBookRequest(id: book.id ?? ''));
-                context.read<WatchedBooksHydratedBloc>().add(const GenerateBooksRequest());
-                //todo watchlistBloc
-              },
-            ),
-          ),
-          Positioned(
-            top: 30,
-            right: 20,
-            child: IconButton(
-              icon: const Icon(Icons.thumb_up_alt_sharp),
-              color: (book.liked ?? false) ? Colors.green : Colors.white,
-              onPressed: () async {
-                if (book.liked == true) {
-                  await context
-                      .read<BookBloc>()
-                      .bookService
-                      .removeLikedBook(AddBookRequest(id: book.id ?? ''));
-                } else {
-                  await context
-                      .read<BookBloc>()
-                      .bookService
-                      .addLikedBook(AddBookRequest(id: book.id ?? ''));
-                }
-                if (!context.mounted) return;
-                context
-                    .read<BookBloc>()
-                    .add(CreateInfoBookRequest(id: book.id.toString()));
-                context.read<LikedBooksHydratedBloc>().add(const GenerateBooksRequest());
-              },
-            ),
-          ),
-          Positioned(
-            top: 80,
-            right: 20,
-            child: IconButton(
-              icon: const Icon(Icons.thumb_down),
-              color: (book.disliked ?? false) ? Colors.red : Colors.white,
-              onPressed: () async {
-                if (book.disliked == true) {
-                  await context
-                      .read<BookBloc>()
-                      .bookService
-                      .removeDislikedBook(AddBookRequest(id: book.id ?? ''));
-                } else {
-                  await context
-                      .read<BookBloc>()
-                      .bookService
-                      .addDislikedBook(AddBookRequest(id: book.id ?? ''));
-                }
-                if (!context.mounted) return;
-                context
-                    .read<BookBloc>()
-                    .add(CreateInfoBookRequest(id: book.id.toString()));
-                context.read<LikedBooksHydratedBloc>().add(const GenerateBooksRequest());
-              },
-            ),
-          ),
-          Positioned(
-            top: 130,
-            right: 20,
-            child: IconButton(
-              icon: const Icon(Icons.add_circle_outlined),
-              color: (book.wishlisted ?? false) ? Colors.green : Colors.white,
-              onPressed: () async {
-                if (book.wishlisted == true) {
-                  await context
-                      .read<BookBloc>()
-                      .bookService
-                      .removeWishListedBook(AddBookRequest(id: book.id ?? ''));
-                } else {
-                  await context
-                      .read<BookBloc>()
-                      .bookService
-                      .addWishListedBook(AddBookRequest(id: book.id ?? ''));
-                }
-                if (!context.mounted) return;
-                context
-                    .read<BookBloc>()
-                    .add(CreateInfoBookRequest(id: book.id ?? ''));
-                context.read<SavedBooksHydratedBloc>().add(const GenerateBooksRequest());
-              },
-            ),
-          ),
-        ],
-      ),
-      Text(
-        book.title ?? appL10n(context)!.not_applicable,
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-      ),
-      const Row(
-        mainAxisAlignment:
-            MainAxisAlignment.center, //Center Row contents horizontally,
-        crossAxisAlignment: CrossAxisAlignment
-            .center, //Center Row contents vertically,            children: [
-        children: [
-          Icon(
-            Boxicons.bx_book,
-            size: 40,
-          ),
-          SizedBox(
-              height: 20,
-              child: VerticalDivider(
-                width: 30,
-                color: Colors.black,
-                thickness: 1,
-                // heigth : double.infinity,
-              )
+                    Share.share(
+                        "Regarde ce livre que j'ai trouvé grâce à Getout ! ${book.bookLink}");
+                  },
+                ),
               ),
-          Icon(Boxicons.bx_receipt, size: 40),
-        ],
-      ),
-      Row(
-        mainAxisAlignment:
-            MainAxisAlignment.center, //Center Row contents horizontally,
-        crossAxisAlignment: CrossAxisAlignment
-            .center, //Center Row contents vertically,            children: [
-        children: [
-          Text(appL10n(context)!.book,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelSmall),
-          const SizedBox(width: 25),
-          const SizedBox(
-              height: 10,),
-          Text(book.pageCount.toString(),
-              // widget.book.duration,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.labelSmall),
-        ],
-      ),
-      Flexible(
-        child: Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Text(book.overview ?? appL10n(context)!.no_description,
-              textAlign: TextAlign.justify,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 11,
-              style: Theme.of(context).textTheme.bodySmall),
-        ),
-      ),
-      GestureDetector(
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => BookDescriptionPage(book: book)));
-        },
-        child: Text(
-          appL10n(context)!.see_more,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
-      )
-    ]);
+              Positioned(
+                  top: 40,
+                  right: 0,
+                  child: IconButton(
+                      icon: const Icon(Icons.more_vert),
+                      iconSize: 30,
+                      color: Colors.white,
+                      onPressed: () async {
+                        showModalBottomSheet(
+                            context: context,
+                            builder: (ctx) {
+                              return BlocProvider.value(
+                                  value: BlocProvider.of<BookBloc>(context),
+                                  child: BlocProvider.value(
+                                      value: BlocProvider.of<LikedBooksHydratedBloc>(context),
+                                      child: BlocProvider.value(
+                                          value: BlocProvider.of<SavedBooksHydratedBloc>(context),
+                                          child: BlocProvider.value(
+                                              value: BlocProvider.of<WatchedBooksHydratedBloc>(context),
+                                              child: const FractionallySizedBox(
+                                                  heightFactor: 0.9,
+                                                  child: ActionsPageBook())))));
+                            });
+                      })
+              )
+            ]
+        )
+    );
+
+    Widget buildLittleImage() => GestureDetector(
+        onTap: () =>
+            launchWebView('https://play.google.com/store/books/details?id=${book.id}&source=gbs_api'),
+        child: ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: Image.network(imageUrl, height: 300)));
+
+    return Center(
+        child: ValueListenableBuilder<bool>(
+            valueListenable: isExpanded,
+            builder: (context, value, child) {
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Stack(
+                      clipBehavior: Clip.none,
+                      alignment: Alignment.center,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(bottom: 220),
+                          child: buildCoverImage(),
+                        ),
+                        Positioned(
+                          top: 100,
+                          child: buildLittleImage(),
+                        ),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Padding(
+                            padding:
+                            const EdgeInsets.only(bottom: 300, right: 340),
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.arrow_back,
+                                color: Color.fromARGB(255, 255, 255, 255),
+                                size: 30,
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      book.title ?? 'N/A',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          fontSize: 22, fontWeight: FontWeight.bold),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.star),
+                            const SizedBox(width: 2),
+                            Text(
+                              book.voteAverage != null
+                                  ? book.voteAverage.toString()
+                                  : 'N/A',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          releaseDate != '' ? releaseDate.split('-')[0] : '',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text('${book.pageCount} pages',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                    book.genres != null && book.genres!.isNotEmpty
+                        ? Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Wrap(
+                          spacing: 8.0,
+                          runSpacing: 4.0,
+                          children: [tagList()[0]],
+
+                        ))
+                        : const SizedBox.shrink(),
+                    Padding(
+                      padding: const EdgeInsets.all(25.0),
+                      child: Column(
+                        children: [
+                          ValueListenableBuilder<bool>(
+                            valueListenable: isExpanded,
+                            builder: (context, isExpandedValue, child) {
+                              return Column(
+                                children: [
+                                  Text(
+                                    book.overview ??
+                                        appL10n(context)!.no_description,
+                                    textAlign: TextAlign.justify,
+                                    overflow: isExpandedValue
+                                        ? TextOverflow.visible
+                                        : TextOverflow.ellipsis,
+                                    maxLines: isExpandedValue ? null : 8,
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      isExpanded.value = !isExpanded.value;
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                            isExpandedValue
+                                                ? Icons.keyboard_arrow_up
+                                                : Icons.keyboard_arrow_down,
+                                            size: 40.0),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    DescriptionTitle(value: appL10n(context)!.author),
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.all(25),
+                      child: book.authorsPicture != null
+                          ? SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Column(
+                          children: [
+                            CircleAvatar(
+                              radius: 40,
+                              backgroundImage:
+                              NetworkImage(book.authorsPicture![0].picture),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: 10, top: 10),
+                              child: Text(
+                                book.authorsPicture![0].name, /// TODO CORRECT THIS
+                                style: const TextStyle(fontSize: 14),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                          : const SizedBox.shrink(),
+                    ),
+                    // DescriptionTitle(value: appL10n(context)!.casting),
+                    // const SizedBox(height: 10),
+                    /*Padding(
+                      padding: const EdgeInsets.all(25),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: List.generate(
+                            book.cast?.length ?? 0,
+                                (index) => Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Column(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 40,
+                                    backgroundImage: NetworkImage(
+                                        book.cast![index].picture),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 10, top: 10),
+                                    child: Text(
+                                      book.cast![index].name,
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+*/                  ],
+                ),
+              );
+            }));
   }
 }

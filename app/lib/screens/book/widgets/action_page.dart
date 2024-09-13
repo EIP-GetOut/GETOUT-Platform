@@ -2,27 +2,28 @@
 ** Copyright GETOUT SAS - All Rights Reserved
 ** Unauthorized copying of this file, via any medium is strictly prohibited
 ** Proprietary and confidential
-** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
+** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:getout/screens/home/bloc/liked_movies/liked_movies_bloc.dart';
-import 'package:getout/screens/home/bloc/movies/movies_event.dart';
-import 'package:getout/screens/home/bloc/saved_movies/saved_movies_bloc.dart';
-import 'package:getout/screens/home/bloc/watched_movies/watched_movies_bloc.dart';
-import 'package:getout/screens/movie/bloc/movie_bloc.dart';
+import 'package:getout/screens/home/bloc/liked_books/liked_books_bloc.dart';
+import 'package:getout/screens/home/bloc/books/books_event.dart';
+import 'package:getout/screens/home/bloc/saved_books/saved_books_bloc.dart';
+import 'package:getout/screens/home/bloc/watched_books/watched_books_bloc.dart';
+import 'package:getout/screens/book/bloc/book_bloc.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/tools/app_l10n.dart';
 
-class ActionsPageMovie extends StatelessWidget {
-  const ActionsPageMovie({super.key});
+
+class ActionsPageBook extends StatelessWidget {
+  const ActionsPageBook({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final movie = context.read<MovieBloc>().state.movie;
+    final book = context.read<BookBloc>().state.book;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -36,25 +37,25 @@ class ActionsPageMovie extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () async {
-                        if (movie.seen == true) {
-                          await context.read<MovieBloc>()
-                              .movieService
-                              .removeSeenMovie(
-                              AddMovieRequest(id: movie.id!));
+                        if (book.read == true) {
+                          await context.read<BookBloc>()
+                              .bookService
+                              .removeReadBook(
+                              AddBookRequest(id: book.id!));
                         } else {
                           await context
-                              .read<MovieBloc>()
-                              .movieService
-                              .addSeenMovie(
-                              AddMovieRequest(id: movie.id!));
+                              .read<BookBloc>()
+                              .bookService
+                              .addReadBook(
+                              AddBookRequest(id: book.id!));
                         }
                         if (!context.mounted) return;
-                        context.read<MovieBloc>().add(CreateInfoMovieRequest(id: movie.id!));
-                        context.read<WatchedMoviesHydratedBloc>().add(const GenerateMoviesRequest());
+                        context.read<BookBloc>().add(CreateInfoBookRequest(id: book.id!));
+                        context.read<WatchedBooksHydratedBloc>().add(const GenerateBooksRequest());
                         showCustomSnackBar(
                             context: context,
                             color: Colors.green,
-                            message: 'Le film a bien été ${movie.seen == false ?'ajouté à': 'retiré de'} vos films vus',
+                            message: 'Le livre a bien été ${book.read == false ?'ajouté à': 'retiré de'} vos livres lus',
                             icon: Icons.check_circle_rounded);
                         //watch
                         Navigator.pop(context);
@@ -66,7 +67,7 @@ class ActionsPageMovie extends StatelessWidget {
                           width: 10,
                         ), // Icons.visibility_off
                         Text(
-                            movie.seen != null && movie.seen!
+                            book.read != null && book.read!
                                 ? appL10n(context)!.remove_seen
                                 : appL10n(context)!.add_seen,
                             style: const TextStyle(
@@ -78,26 +79,26 @@ class ActionsPageMovie extends StatelessWidget {
                     ),
                     InkWell(
                         onTap: () async {
-                          if (movie.liked == true) {
+                          if (book.liked == true) {
                             await context
-                                .read<MovieBloc>()
-                                .movieService
-                                .removeLikedMovie(
-                                AddMovieRequest(id: movie.id!));
+                                .read<BookBloc>()
+                                .bookService
+                                .removeLikedBook(
+                                AddBookRequest(id: book.id!));
                           } else {
                             await context
-                                .read<MovieBloc>()
-                                .movieService
-                                .addLikedMovie(
-                                AddMovieRequest(id: movie.id!));
+                                .read<BookBloc>()
+                                .bookService
+                                .addLikedBook(
+                                AddBookRequest(id: book.id!));
                           }
                           if (!context.mounted) return;
-                          context.read<MovieBloc>().add(CreateInfoMovieRequest(id: movie.id!));
-                          context.read<LikedMoviesHydratedBloc>().add(const GenerateMoviesRequest());
+                          context.read<BookBloc>().add(CreateInfoBookRequest(id: book.id!));
+                          context.read<LikedBooksHydratedBloc>().add(const GenerateBooksRequest());
                           showCustomSnackBar(
                               context: context,
                               color: Colors.green,
-                              message: 'Le film a bien été ${movie.liked == false ?'ajouté à': 'retiré de'} vos films aimés',
+                              message: 'Le livre a bien été ${book.liked == false ?'ajouté à': 'retiré de'} vos livres aimés',
                               icon: Icons.check_circle_rounded);
                           Navigator.pop(context);
                         },
@@ -111,7 +112,7 @@ class ActionsPageMovie extends StatelessWidget {
                             width: 10,
                           ), // IIcons.favorite_outlined
                           Text(
-                              movie.liked != null && movie.liked!
+                              book.liked != null && book.liked!
                                   ? appL10n(context)!.dislike
                                   : appL10n(context)!.like,
                               style: const TextStyle(
@@ -122,28 +123,28 @@ class ActionsPageMovie extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () async {
-                        if (movie.wishlisted == true) {
+                        if (book.wishlisted == true) {
                           await context
-                              .read<MovieBloc>()
-                              .movieService
-                              .removeWishListedMovie(
-                              AddMovieRequest(id: movie.id!));
+                              .read<BookBloc>()
+                              .bookService
+                              .removeWishListedBook(
+                              AddBookRequest(id: book.id!));
                         } else {
                           await context
-                              .read<MovieBloc>()
-                              .movieService
-                              .addWishListedMovie(
-                              AddMovieRequest(id: movie.id!));
+                              .read<BookBloc>()
+                              .bookService
+                              .addWishListedBook(
+                              AddBookRequest(id: book.id!));
                         }
                         if (!context.mounted) return;
                         context
-                            .read<MovieBloc>()
-                            .add(CreateInfoMovieRequest(id: movie.id!));
-                        context.read<SavedMoviesHydratedBloc>().add(const GenerateMoviesRequest());
+                            .read<BookBloc>()
+                            .add(CreateInfoBookRequest(id: book.id!));
+                        context.read<SavedBooksHydratedBloc>().add(const GenerateBooksRequest());
                         showCustomSnackBar(
                             context: context,
                             color: Colors.green,
-                            message: 'Le film a bien été ${movie.wishlisted == false ?'ajouté à': 'retiré de'} vos films en cours',
+                            message: 'Le livre a bien été ${book.wishlisted == false ?'ajouté à': 'retiré de'} vos livres en cours',
                             icon: Icons.check_circle_rounded);
                         Navigator.pop(context);
                       },
@@ -155,7 +156,7 @@ class ActionsPageMovie extends StatelessWidget {
                           width: 10,
                         ), // I
                         Text(
-                            movie.wishlisted != null && movie.wishlisted!
+                            book.wishlisted != null && book.wishlisted!
                                 ? appL10n(context)!.remove_watchlist
                                 : appL10n(context)!.add_watchlist,
                             style: const TextStyle(
@@ -167,26 +168,26 @@ class ActionsPageMovie extends StatelessWidget {
                     ),
                     InkWell(
                         onTap: () async {
-                          if (movie.disliked == false) {
+                          if (book.disliked == false) {
                             await context
-                                .read<MovieBloc>()
-                                .movieService
-                                .addDislikedMovie(
-                                AddMovieRequest(id: movie.id!));
+                                .read<BookBloc>()
+                                .bookService
+                                .addDislikedBook(
+                                AddBookRequest(id: book.id!));
                           } else {
                             await context
-                                .read<MovieBloc>()
-                                .movieService
-                                .removeDislikedMovie(
-                                AddMovieRequest(id: movie.id!));
+                                .read<BookBloc>()
+                                .bookService
+                                .removeDislikedBook(
+                                AddBookRequest(id: book.id!));
                           }
                           if (!context.mounted) return;
-                          context.read<MovieBloc>().add(CreateInfoMovieRequest(id: movie.id!));
-                          context.read<LikedMoviesHydratedBloc>().add(const GenerateMoviesRequest());
+                          context.read<BookBloc>().add(CreateInfoBookRequest(id: book.id!));
+                          context.read<LikedBooksHydratedBloc>().add(const GenerateBooksRequest());
                           showCustomSnackBar(
                               context: context,
                               color: Colors.green,
-                              message: 'Le film a bien été ${movie.disliked == false ?'retiré de': 'restituer à'} vos prochaines recommendations.',
+                              message: 'Le livre a bien été ${book.disliked == false ?'retiré de': 'restituer à'} vos prochaines recommandations.',
                               icon: Icons.check_circle_rounded);
                           Navigator.pop(context);
                         },
@@ -200,7 +201,7 @@ class ActionsPageMovie extends StatelessWidget {
                             width: 10,
                           ), // I
                           Text(
-                              movie.disliked != null && movie.disliked!
+                              book.disliked != null && book.disliked!
                                   ? appL10n(context)!.interested
                                   : appL10n(context)!.not_interested,
                               style: const TextStyle(

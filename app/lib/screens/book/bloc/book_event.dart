@@ -27,12 +27,13 @@ class InfoBookResponse extends BookEvent {
       this.releaseDate,
       this.voteAverage,
       this.pageCount,
+      this.genres,
       this.authorsPicture,
-      this.liked,
-      this.disliked,
-      this.bookLink,
-      this.wishlisted,
-      this.read,
+      this.liked, // Isn't send by the API
+      this.disliked, // Isn't send by the API
+      this.bookLink, // Isn't send by the API
+      this.wishlisted, // Isn't send by the API
+      this.read, // Isn't send by the API
       this.id,
       required this.statusCode});
 
@@ -43,6 +44,7 @@ class InfoBookResponse extends BookEvent {
   final String? posterPath;
   final String? backdropPath;
   final String? releaseDate;
+  final List<dynamic>? genres;
   final int? voteAverage;
   final int? pageCount;
   final bool? liked;
