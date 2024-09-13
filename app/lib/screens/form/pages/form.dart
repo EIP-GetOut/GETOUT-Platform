@@ -124,7 +124,7 @@ class Forms extends StatelessWidget {
                     .then((final FormResponseModel value) {
                   if (!value.isSuccessful && context.mounted) {
                     readContext
-                        .add(const EmitEvent(status: FormStatus.loading));
+                        .add(const EmitEvent(status: FormStatus.viewingPlatform));
                     return showSnackBar(
                         context, appL10n(context)!.error_unknown);
                   }
