@@ -231,5 +231,6 @@
   "discover_app": "Découvrir l'application",
   "confirm": "Confirmer",
 
-  "form_validator": "Veuillez sélectionner au moins une case"
+  "form_empty": "Veuillez sélectionner au moins une case",
+  "form_too_much": "Veuillez sélectionner moins de 3 cases"
 }

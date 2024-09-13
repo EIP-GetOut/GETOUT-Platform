@@ -17,39 +17,38 @@ import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/tools.dart';
 
 class MovieGenres extends StatelessWidget {
-  const MovieGenres({super.key});
+  final BuildContext formContext;
+
+  const MovieGenres({required this.formContext, super.key});
 
   @override
-  Widget build(BuildContext context)
-  {
-    return BlocBuilder<FormBloc, FormStates>(builder: (context, state)
-    {
-      context.read<FormBloc>().add(const EmitEvent(status: FormStatus.movieGenres));
-      return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          SizedBox(height: Tools.heightFactor(context, 0.03)),
-          PageTitle(
-            title: appL10n(context)!.movie_genres,
-            description: appL10n(context)!.form_description,
-          ),
-          SizedBox(height: Tools.heightFactor(context, 0.06)),
-          SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: const ProgressBar(total: 3, current: 2)),
-          SizedBox(height: Tools.heightFactor(context, 0.05)),
-          Expanded(
-            child: Padding(
+  Widget build(BuildContext context) {
+    formContext
+        .read<FormBloc>()
+        .add(const EmitEvent(status: FormStatus.movieGenres));
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(height: Tools.heightFactor(context, 0.03)),
+        PageTitle(
+          title: appL10n(context)!.movie_genres,
+          description: appL10n(context)!.form_description,
+        ),
+        SizedBox(height: Tools.heightFactor(context, 0.06)),
+        SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: const ProgressBar(total: 3, current: 2)),
+        SizedBox(height: Tools.heightFactor(context, 0.05)),
+        Expanded(
+          child: Padding(
               padding: const EdgeInsets.only(bottom: 65.0),
               child: FormCheckbox(
-                checkboxList: context.read<FormBloc>().state.movieGenres,
+                checkboxList: formContext.read<FormBloc>().state.movieGenres,
                 checkboxImages: null,
                 event: const MovieGenresEvent(key: ''),
-              )
-            ),
-          )
-        ],
-      );
-    });
+              )),
+        )
+      ],
+    );
   }
 }

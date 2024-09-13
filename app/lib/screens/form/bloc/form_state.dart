@@ -14,6 +14,7 @@ enum FormStatus {
   movieGenres,
   viewingPlatform,
   endForm,
+  loading,
   error
 }
 
@@ -24,6 +25,7 @@ extension FormStatusX on FormStatus {
   bool get isMovieGenres => this == FormStatus.movieGenres;
   bool get isViewingPlatform => this == FormStatus.viewingPlatform;
   bool get isEndForm => this == FormStatus.endForm;
+  bool get isLoading => this == FormStatus.loading;
   bool get isError => this == FormStatus.error;
 }
 

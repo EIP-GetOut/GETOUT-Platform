@@ -12,8 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/screens/book/bloc/book_bloc.dart';
 import 'package:getout/screens/book/pages/book.dart';
 import 'package:getout/tools/app_l10n.dart';
-import 'package:getout/widgets/loading.dart';
-import 'package:getout/widgets/object_loading_error_widget.dart';
+import 'package:getout/widgets/transition_page.dart';
+import 'package:getout/screens/movie/pages/movie_shimmer.dart';
 
 class BookWidget extends StatelessWidget {
   const BookWidget({super.key});
@@ -23,12 +23,19 @@ class BookWidget extends StatelessWidget {
     return BlocBuilder<BookBloc, BookState>(
       builder: (context, state) {
         if (state.status.isSuccess) {
-          return BookSuccessWidget(book: state.book);
+          return const BookSuccessWidget();
         } else {
           if (state.status.isLoading) {
-            return const Center(child: LoadingPage());
+            return const MovieSuccessShimmer();
           } else if (state.status.isError) {
-            return ObjectLoadingErrorWidget(object: appL10n(context)!.the_book.toLowerCase());
+            return TransitionPage(
+                title: appL10n(context)!.error_unknown_short,
+                description: appL10n(context)!.error_unknown_description,
+                image: 'assets/images/draw/error.svg',
+                buttonText: appL10n(context)!.error_ok,
+                nextPage: () => {
+                  Navigator.pop(context),
+                });
           } else {
             return const SizedBox();
           }

@@ -31,9 +31,9 @@ class NewEmailPage extends StatelessWidget {
                   Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                       child: EditEmailField()),
-                  Padding(
+/*                  Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                      child: EditConfirmEmailField()),
+                      child: EditConfirmEmailField()),*/
                   Padding(
                       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                       child: EditPasswordField()),

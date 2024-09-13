@@ -104,7 +104,7 @@ class MovieSuccessWidget extends StatelessWidget {
                         value: BlocProvider.of<WatchedMoviesHydratedBloc>(context),
                         child: const FractionallySizedBox(
                           heightFactor: 0.9,
-                          child: ActionsPage())))));
+                          child: ActionsPageMovie())))));
                       });
                   })
               )

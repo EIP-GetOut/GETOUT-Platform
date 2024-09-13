@@ -7,13 +7,14 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:getout/tools/app_l10n.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/settings/services/service.dart';
 import 'package:getout/bloc/session/session_event.dart';
 import 'package:getout/bloc/session/session_bloc.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/tools/app_l10n.dart';
+import 'package:getout/tools/tools.dart';
 
 void showAlertDialog(BuildContext context) {
   final SettingService service = SettingService();
@@ -72,6 +73,7 @@ class DeleteAccountPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SvgPicture.asset('assets/images/icon/trash.svg'),
+                  SizedBox(width: Tools.widthFactor(context, 0.065)),
                   Text(
                     appL10n(context)!.delete_account,
                     style: TextStyle(
@@ -79,6 +81,7 @@ class DeleteAccountPage extends StatelessWidget {
                             (MediaQuery.of(context).size.width > 400) ? 20 : 12,
                         color: const Color.fromRGBO(236, 0, 0, 1.0)),
                   ),
+                  const Expanded(child: SizedBox()),
                   const Icon(Icons.arrow_forward_ios_rounded,
                       color: Colors.black54),
                 ])));

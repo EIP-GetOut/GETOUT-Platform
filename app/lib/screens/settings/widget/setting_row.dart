@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/svg.dart';
 
+import 'package:getout/tools/tools.dart';
+
 enum Important {
   simple,
   warning,
@@ -32,7 +34,7 @@ class SettingRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-        height: MediaQuery.of(context).size.height * 0.06,
+        height: Tools.heightFactor(context, 0.06),
         color: (important == Important.important)
             ? const Color.fromRGBO(255, 82, 65, 0.4)
             : Colors.white,
@@ -42,9 +44,10 @@ class SettingRow extends StatelessWidget {
                   context, MaterialPageRoute(builder: (context) => page));
             },
             child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   (image != null) ? SvgPicture.asset(image!) : const SizedBox(),
+                  SizedBox(width: Tools.widthFactor(context, 0.065)),
                   Text(value,
                       style: TextStyle(
                           fontSize:
@@ -54,6 +57,7 @@ class SettingRow extends StatelessWidget {
                           color: (important == Important.warning)
                               ? Colors.red
                               : Colors.black87)),
+                  const Expanded(child: SizedBox()),
                   const Icon(Icons.arrow_forward_ios_rounded,
                       color: Colors.black54),
                 ])));

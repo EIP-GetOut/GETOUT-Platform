@@ -27,15 +27,6 @@ import 'package:getout/global.dart' as globals;
 class Forms extends StatelessWidget {
   const Forms({super.key});
 
-  static const List<Widget> pages = [
-    // SocialMediaSpentTime(),
-    // InterestChoices(),
-    BookGenres(),
-    MovieGenres(),
-    ViewingPlatform(),
-    EndForm(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final PageController pageController = PageController();
@@ -45,30 +36,45 @@ class Forms extends StatelessWidget {
       child: BlocBuilder<FormBloc, FormStates>(builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            leading:
-                (context.read<FormBloc>().state.status != FormStatus.endForm)
-                    ? IconButton(
-                        icon: const Icon(Icons.arrow_back),
-                        onPressed: () {
-                          pageController.previousPage(
-                            duration: const Duration(milliseconds: 200),
-                            curve: Curves.easeInOut,
-                          );
-                        },
-                      )
-                    : null,
+            leading: _backButton(pageController, state, context),
           ),
           body: PageView(
-            controller: pageController,
-            physics: const NeverScrollableScrollPhysics(),
-            children: pages,
-          ),
-          floatingActionButton: _nextButton(pageController),
+              controller: pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: [
+                // SocialMediaSpentTime(),
+                // InterestChoices(),
+                BookGenres(formContext: context),
+                MovieGenres(formContext: context),
+                ViewingPlatform(formContext: context),
+                EndForm(formContext: context),
+              ]),
+          floatingActionButton: _nextButton(pageController, context),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
         );
       }),
     );
+  }
+
+  Widget _backButton(final PageController pageController,
+      final FormStates state, final BuildContext context) {
+    final bool isEdit = (globals.session?['preferences'] != null);
+
+    return IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () {
+          if (!isEdit ||
+              (state.status != FormStatus.endForm && // last page
+                  state.status != FormStatus.bookGenres && // first page
+                  state.status != FormStatus.loading)) {
+            pageController.previousPage(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOut);
+          } else {
+            Navigator.pop(context);
+          }
+        });
   }
 
   String _getButtonLabel(
@@ -83,72 +89,63 @@ class Forms extends StatelessWidget {
     return appL10n(context)!.next;
   }
 
-  Widget _nextButton(final PageController pageController) {
+  Widget _nextButton(
+      final PageController pageController, final BuildContext context) {
     final bool isEdit = (globals.session?['preferences'] != null);
+    final FormStatus status = context.read<FormBloc>().state.status;
+    final FormBloc readContext = context.read<FormBloc>();
 
-    return BlocBuilder<FormBloc, FormStates>(builder: (context, state) {
-      return DefaultButton(
-          title: _getButtonLabel(
-              context.read<FormBloc>().state.status, isEdit, context),
-          onPressed: () {
-            if (
-                /*(context.read<FormBloc>().state.status == FormStatus.interestChoices &&
-                    !context.read<FormBloc>().state.interest.containsValue(true)) ||*/
-                (context.read<FormBloc>().state.status ==
-                            FormStatus.bookGenres &&
-                        !context
-                            .read<FormBloc>()
-                            .state
-                            .bookGenres
-                            .containsValue(true)) ||
-                    (context.read<FormBloc>().state.status ==
-                            FormStatus.movieGenres &&
-                        !context
-                            .read<FormBloc>()
-                            .state
-                            .movieGenres
-                            .containsValue(true)) ||
-                    (context.read<FormBloc>().state.status ==
-                            FormStatus.viewingPlatform &&
-                        !context
-                            .read<FormBloc>()
-                            .state
-                            .viewingPlatform
-                            .containsValue(true))) {
-              showSnackBar(context, appL10n(context)!.form_validator);
-            } else if (context.read<FormBloc>().state.status ==
-                FormStatus.viewingPlatform) {
-              FormServices()
-                  .sendPreferences(FormRequestModel.fillFormRequest(
-                      movieGenres: context.read<FormBloc>().state.movieGenres,
-                      bookGenres: context.read<FormBloc>().state.bookGenres,
-                      viewingPlatform:
-                          context.read<FormBloc>().state.viewingPlatform))
-                  .then((final FormResponseModel value) {
-                if (!value.isSuccessful && context.mounted) {
-                  return showSnackBar(context, appL10n(context)!.error_unknown);
+    return (status == FormStatus.loading)
+        ? const CircularProgressIndicator()
+        : DefaultButton(
+            title: _getButtonLabel(readContext.state.status, isEdit, context),
+            onPressed: () {
+              if ((status == FormStatus.bookGenres &&
+                      !readContext.state.bookGenres.containsValue(true)) ||
+                  (status == FormStatus.movieGenres &&
+                      !readContext.state.movieGenres.containsValue(true)) ||
+                  (status == FormStatus.viewingPlatform &&
+                      !readContext.state.viewingPlatform.containsValue(true))) {
+                showSnackBar(context, appL10n(context)!.form_empty);
+              } else if ((status == FormStatus.bookGenres &&
+                  readContext.state.bookGenres.values.where((value) => value == true).length > 3) ||
+                  (status == FormStatus.movieGenres &&
+                      readContext.state.movieGenres.values.where((value) => value == true).length > 3) ||
+                  (status == FormStatus.viewingPlatform &&
+                      readContext.state.viewingPlatform.values.where((value) => value == true).length > 3)) {
+                showSnackBar(context, appL10n(context)!.form_too_much);
+              } else if (status == FormStatus.viewingPlatform) {
+                readContext.add(const EmitEvent(status: FormStatus.loading));
+                FormServices()
+                    .sendPreferences(FormRequestModel.fillFormRequest(
+                        movieGenres: readContext.state.movieGenres,
+                        bookGenres: readContext.state.bookGenres,
+                        viewingPlatform: readContext.state.viewingPlatform))
+                    .then((final FormResponseModel value) {
+                  if (!value.isSuccessful && context.mounted) {
+                    readContext
+                        .add(const EmitEvent(status: FormStatus.viewingPlatform));
+                    return showSnackBar(
+                        context, appL10n(context)!.error_unknown);
+                  }
+                  if (context.mounted) {
+                    readContext
+                        .add(const EmitEvent(status: FormStatus.endForm));
+                    pageController.nextPage(
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeInOut);
+                  }
+                });
+              } else if (status == FormStatus.endForm) {
+                if (isEdit) {
+                  Navigator.pop(context);
                 }
-                if (context.mounted) {
-                  context
-                      .read<FormBloc>()
-                      .add(const EmitEvent(status: FormStatus.endForm));
-                  pageController.nextPage(
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeInOut);
-                }
-              });
-            } else if (context.read<FormBloc>().state.status ==
-                FormStatus.endForm) {
-              if (isEdit) {
-                Navigator.pop(context);
+                context.read<SessionBloc>().add(const SessionRequest());
+              } else {
+                pageController.nextPage(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeInOut);
               }
-              context.read<SessionBloc>().add(const SessionRequest());
-            } else {
-              pageController.nextPage(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeInOut);
-            }
-          });
-    });
+            });
   }
 }
