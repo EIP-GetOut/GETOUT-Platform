@@ -33,19 +33,22 @@ class EditEmail extends StatelessWidget {
 
     return BlocProvider(
       create: (context) => EditEmailBloc(),
-      child: BlocBuilder<EditEmailBloc, EditEmailStates>(builder: (context, state) {
+      child: BlocBuilder<EditEmailBloc, EditEmailStates>(
+          builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {
-                pageController.previousPage(
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeInOut,
-                );
-              },
-            )
-          ),
+              leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              if (pageController.page == 0) {
+                Navigator.pop(context);
+              }
+              pageController.previousPage(
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOut,
+              );
+            },
+          )),
           body: Column(
             children: [
               PageTitle(
@@ -63,54 +66,58 @@ class EditEmail extends StatelessWidget {
               ),
             ],
           ),
-          floatingActionButton: _nextButton(pageController),
+          floatingActionButton: _nextButton(pageController, context),
           floatingActionButtonLocation:
-          FloatingActionButtonLocation.centerFloat,
+              FloatingActionButtonLocation.centerFloat,
         );
       }),
     );
   }
 
-  Widget _nextButton(final PageController pageController) {
+  Widget _nextButton(
+      final PageController pageController, final BuildContext context) {
+    final EditEmailBloc readContext = context.read<EditEmailBloc>();
 
-    return BlocBuilder<EditEmailBloc, EditEmailStates>(builder: (context, state) {
-      // const CircularProgressIndicator()
-      return DefaultButton(
-          title: appL10n(context)!.confirm,
-          onPressed: () {
-            if (context.read<EditEmailBloc>().state.status
-                  == EditEmailStatus.newEmail && context.read<EditEmailBloc>().state.isEverythingGood) {
-              EditEmailServices().sendNewEmail(EditEmailRequestModel(email: context.read<EditEmailBloc>().state.newEmail, password: context.read<EditEmailBloc>().state.password))
-                  .then((final EditEmailResponseModel value) {
-                if (!value.isSuccessful && context.mounted) {
-                  return showSnackBar(context, appL10n(context)!.error_unknown);
-                }
-                if (context.mounted) {
-                  context
-                      .read<EditEmailBloc>()
-                      .add(const EmitEvent(status: EditEmailStatus.verificationEmail));
-                  pageController.nextPage(
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeInOut);
-                }
-              });
-            } else if (context.read<EditEmailBloc>().state.status ==
-                EditEmailStatus.verificationEmail) {
-              EditEmailServices().emailVerified(EmailVerificationRequestModel(code: context.read<EditEmailBloc>().state.code))
-                  .then((final EmailVerificationResponseModel value) {
-                      if (!value.isSuccessful && context.mounted) {
-                        return showSnackBar(context, appL10n(context)!.error_unknown);
-                      }
-                      if (context.mounted) {
-                        Navigator.pop(context);
-                      }
-              });
-            } else {
-              /*if (context.mounted) {
+    // const CircularProgressIndicator()
+    return DefaultButton(
+        title: appL10n(context)!.confirm,
+        onPressed: () {
+          if (readContext.state.status == EditEmailStatus.newEmail &&
+              readContext.state.isEverythingGood) {
+            EditEmailServices()
+                .sendNewEmail(EditEmailRequestModel(
+                    email: readContext.state.newEmail,
+                    password: readContext.state.password))
+                .then((final EditEmailResponseModel value) {
+              if (!value.isSuccessful && context.mounted) {
+                return showSnackBar(context, appL10n(context)!.error_unknown);
+              }
+              if (context.mounted) {
+                readContext.add(
+                    const EmitEvent(status: EditEmailStatus.verificationEmail));
+                pageController.nextPage(
+                    duration: const Duration(milliseconds: 200),
+                    curve: Curves.easeInOut);
+              }
+            });
+          } else if (readContext.state.status ==
+              EditEmailStatus.verificationEmail) {
+            EditEmailServices()
+                .emailVerified(
+                    EmailVerificationRequestModel(code: readContext.state.code))
+                .then((final EmailVerificationResponseModel value) {
+              if (!value.isSuccessful && context.mounted) {
+                return showSnackBar(context, appL10n(context)!.error_unknown);
+              }
+              if (context.mounted) {
+                Navigator.pop(context);
+              }
+            });
+          } else {
+            /*if (context.mounted) {
                 return showSnackBar(context, appL10n(context)!.error_unknown);
               }*/
-            }
-          });
-    });
+          }
+        });
   }
 }
