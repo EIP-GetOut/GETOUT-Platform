@@ -37,7 +37,11 @@ class RecommendedMoviesState extends Equatable {
               id: element['id'],
               title: element['title'],
               posterPath: element['posterPath'],
-              overview: element['synopsis']))
+              overview: element['synopsis'],
+              releaseDate: element['releaseDate'],
+              averageRating: element['averageRating'],
+              genres: element['genres']
+          ))
         });
     return RecommendedMoviesState(
         recommendedMovies: movies,
@@ -47,11 +51,14 @@ class RecommendedMoviesState extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       'recommended_movies': recommendedMovies
-          .map((book) => {
-                'id': book.id,
-                'title': book.title,
-                'posterPath': book.posterPath,
-                'overview': book.overview,
+          .map((movie) => {
+                'id': movie.id,
+                'title': movie.title,
+                'posterPath': movie.posterPath,
+                'overview': movie.overview,
+                'releaseDate': movie.releaseDate,
+                'averageRating': movie.averageRating,
+                'genres': movie.genres
               })
           .toList(),
       'recommended_movies_status': statusToString[status],

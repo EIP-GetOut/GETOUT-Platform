@@ -43,11 +43,18 @@ class BookPreview extends BooksEvent {
       {required this.id,
       required this.title,
       required this.posterPath,
-      required this.overview});
+      required this.overview,
+      this.releaseDate,
+      this.averageRating,
+      this.genres});
   final String id;
   final String title;
   final String? posterPath;
   final String? overview;
+  final String? releaseDate;
+  final dynamic averageRating;
+  final List<dynamic>? genres;
+
 }
 
 typedef GenerateBooksResponse = List<BookPreview>;
