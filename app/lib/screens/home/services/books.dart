@@ -35,11 +35,16 @@ class BooksService extends ServiceTemplate {
         ));
       }
       response.data.forEach((elem) {
+       List<dynamic>? genres = elem['categories']?.toString().replaceAll('[', '').replaceAll(']', '').split(',');
+       if (genres!= null && genres.length > 3) genres.sublist(0, 2);
         result.add(BookPreview(
             id: elem['id'],
             title: elem['title'],
             posterPath: elem['posterPath'],
-            overview: elem['description']));
+            overview: elem['description'],
+            releaseDate: elem['releaseDate'],
+            averageRating: elem['averageRating'],
+            genres: genres));
       });
     } on DioException catch (dioException) {
       if (dioException.response != null && dioException.response?.statusCode != null) {

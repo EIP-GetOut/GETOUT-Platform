@@ -155,33 +155,6 @@ class RecommendedMoviesSuccessWidget extends StatelessWidget {
             });
           }).toList(),
         ),
-        /*Expanded(
-                child: ListView(
-                    controller: movieController,
-                    scrollDirection: Axis.horizontal,
-                    children: List.generate(movies.length, (index) {
-                      return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => BlocProvider.value(
-                                        value: BlocProvider.of<
-                                            LikedMoviesHydratedBloc>(context),
-                                        child: BlocProvider.value(
-                                            value: BlocProvider.of<
-                                                    SavedMoviesHydratedBloc>(
-                                                context),
-                                            child: BlocProvider.value(
-                                                value: BlocProvider.of<
-                                                        WatchedMoviesHydratedBloc>(
-                                                    context),
-                                                child: Movie(movies[index].id))))));
-                          },
-                          child: MoviePreviewWidget(
-                              posterPath: movies[index].posterPath,
-                              title: movies[index].title));
-                    }))),*/
       ],
     ));
   }

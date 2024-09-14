@@ -55,7 +55,6 @@ class MoviesService extends ServiceTemplate {
       return Future.error(
           Exception('Unknown error:  ${dioException.toString()}'));
     } catch (error) {
-      print(error);
       return Future.error(Exception('Unknown error:  ${error.toString()}'));
     }
     return result;

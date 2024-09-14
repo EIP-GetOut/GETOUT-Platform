@@ -52,7 +52,7 @@ class MoviePreview extends MoviesEvent {
   final String? posterPath;
   final String? overview;
   final String? releaseDate;
-  final double? averageRating;
+  final dynamic averageRating;
   final List<dynamic>? genres;
 }
 

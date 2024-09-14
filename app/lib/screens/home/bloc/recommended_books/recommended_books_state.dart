@@ -37,7 +37,11 @@ class RecommendedBooksState extends Equatable {
               id: element['id'],
               title: element['title'],
               posterPath: element['posterPath'],
-              overview: element['overview']))
+              overview: element['overview'],
+              releaseDate: element['releaseDate'],
+              averageRating: element['averageRating'],
+              genres: element['genres'],
+          ))
         });
     return RecommendedBooksState(
         recommendedBooks: books,
@@ -52,6 +56,9 @@ class RecommendedBooksState extends Equatable {
                 'title': book.title,
                 'posterPath': book.posterPath,
                 'overview': book.overview,
+                'releaseDate': book.releaseDate,
+                'averageRating': book.averageRating,
+                'genres': book.genres
               })
           .toList(),
       'recommended_books_status': statusToString[status],
