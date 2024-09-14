@@ -38,8 +38,13 @@ class MoviesService extends ServiceTemplate {
             id: elem['id'],
             title: elem['title'],
             posterPath: elem['posterPath'],
-            overview: elem['description']));
+            overview: elem['description'],
+            releaseDate: elem['releaseDate'],
+            averageRating: elem['averageRating'],
+            genres: elem['genres'],
+        ));
       });
+
     } on DioException catch (dioException) {
       if (dioException.response != null &&
           dioException.response?.statusCode != null) {
@@ -50,6 +55,7 @@ class MoviesService extends ServiceTemplate {
       return Future.error(
           Exception('Unknown error:  ${dioException.toString()}'));
     } catch (error) {
+      print(error);
       return Future.error(Exception('Unknown error:  ${error.toString()}'));
     }
     return result;

@@ -43,11 +43,17 @@ class MoviePreview extends MoviesEvent {
       {required this.id,
       required this.title,
       required this.posterPath,
-      required this.overview});
+      required this.overview,
+      this.averageRating,
+      this.releaseDate,
+      this.genres});
   final int id;
   final String title;
   final String? posterPath;
   final String? overview;
+  final String? releaseDate;
+  final double? averageRating;
+  final List<dynamic>? genres;
 }
 
 typedef GenerateMoviesResponse = List<MoviePreview>;
