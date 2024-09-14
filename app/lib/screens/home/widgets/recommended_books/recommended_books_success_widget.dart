@@ -130,23 +130,23 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
                                               overflow: TextOverflow.ellipsis)),
                                       const SizedBox(height: 10),
                                       Row(children: [
-                                        if (book.averageRating != null)
+                                        if (book.averageRating != null) ...[
                                           const Icon(Icons.star_outlined,
                                               color: Colors.white, size: 20),
-                                        if (book.averageRating != null)
                                           Text(book.averageRating!.toString(),
                                               style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.white,
                                                 fontFamily: 'Poppins',
                                               )),
-                                        if (book.averageRating != null)
+                                        ],
+                                        if (book.averageRating != null &&
+                                            book.releaseDate != null) ...[
                                           const SizedBox(width: 4),
-                                        if (book.averageRating != null)
                                           const Icon(Icons.circle,
                                               color: Colors.white, size: 5),
-                                        if (book.averageRating != null)
                                           const SizedBox(width: 4),
+                                        ],
                                         if (book.releaseDate != null)
                                           Text(
                                               book.releaseDate!.substring(0, 4),
@@ -164,11 +164,12 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
                                             padding:
                                                 const EdgeInsets.only(top: 8),
                                             child: Wrap(
-                                              spacing: 8.0,
-                                              runSpacing: 4.0,
-                                              children: book.genres!
-                                                  .map((tag) => Tag(text: tag))
-                                                  .toList())),
+                                                spacing: 8.0,
+                                                runSpacing: 4.0,
+                                                children: book.genres!
+                                                    .map(
+                                                        (tag) => Tag(text: tag))
+                                                    .toList())),
                                     ]),
                               )),
                         ],

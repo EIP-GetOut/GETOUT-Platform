@@ -36,7 +36,7 @@ class BooksService extends ServiceTemplate {
       }
       response.data.forEach((elem) {
        List<dynamic>? genres = elem['categories']?.toString().replaceAll('[', '').replaceAll(']', '').split(',');
-       if (genres!= null && genres.length > 3) genres.sublist(0, 2);
+       if (genres!= null && genres.length > 2) genres = genres.sublist(0, 2);
         result.add(BookPreview(
             id: elem['id'],
             title: elem['title'],

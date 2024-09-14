@@ -109,26 +109,26 @@ class RecommendedMoviesSuccessWidget extends StatelessWidget {
                                           fontFamily: 'Poppins',
                                           overflow: TextOverflow.ellipsis)),
                                   const SizedBox(height: 4),
+
                                   ///averageRating + releaseDate
                                   Row(children: [
-                                    if (movie.averageRating != null)
+                                    if (movie.averageRating != null) ...[
                                       const Icon(Icons.star_outlined,
                                           color: Colors.white, size: 20),
-                                    if (movie.averageRating != null)
                                       Text(movie.averageRating!.toString(),
                                           style: const TextStyle(
                                             fontSize: 14,
                                             color: Colors.white,
                                             fontFamily: 'Poppins',
                                           )),
-                                    if (movie.averageRating != null)
+                                    ],
+                                    if (movie.averageRating != null &&
+                                        movie.releaseDate != null) ...[
                                       const SizedBox(width: 4),
-                                    if (movie.releaseDate != null &&
-                                        movie.averageRating != null)
                                       const Icon(Icons.circle,
                                           color: Colors.white, size: 5),
-                                    if (movie.releaseDate != null)
                                       const SizedBox(width: 4),
+                                    ],
                                     if (movie.releaseDate != null)
                                       Text(movie.releaseDate!.substring(0, 4),
                                           style: const TextStyle(
@@ -137,8 +137,10 @@ class RecommendedMoviesSuccessWidget extends StatelessWidget {
                                             fontFamily: 'Poppins',
                                           )),
                                   ]),
+
                                   ///movieGenres
-                                  if (movie.genres != null && movie.genres!.isNotEmpty)
+                                  if (movie.genres != null &&
+                                      movie.genres!.isNotEmpty)
                                     Padding(
                                         padding: const EdgeInsets.only(top: 8),
                                         child: Wrap(
