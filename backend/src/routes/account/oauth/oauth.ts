@@ -54,7 +54,7 @@ const rulesPost = [
 router.post('/account/oauth', rulesPost, validate, logApiRequest, (req: Request, res: Response) => {
   loginWithGoogle(req.body).then(async (code: StatusCodes) => {
     if (code === StatusCodes.OK) {
-      logger.info(`Account successfully logged in${req.body.email != null ? `: ${req.body.email}` : ' !'}`)
+      logger.info(`Account successfully logged in ${req.body.email ?? ''} !`)
     } else {
       logger.info(`Account's email or password is incorrect: ${req.body.email != null || req.body.githubCode}`)
     }

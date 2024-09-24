@@ -10,6 +10,7 @@ import { Router } from 'express'
 import { body } from 'express-validator'
 import { StatusCodes, getReasonPhrase } from 'http-status-codes'
 
+import caching from '@services/middlewares/caching'
 import { logApiRequest } from '@services/middlewares/logging'
 import validate from '@services/middlewares/validator'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
@@ -32,7 +33,7 @@ const router = Router()
  *       "500":
  *         description: Internal server error.
  */
-router.get('/news', logApiRequest, (_req: Request, res: Response) => {
+router.get('/news', caching(10 * 60), logApiRequest, (_req: Request, res: Response) => {
   getNews().then((news: News[]) => {
     return res.status(StatusCodes.OK).json(news)
   }).catch(handleErrorOnRoute(res))
