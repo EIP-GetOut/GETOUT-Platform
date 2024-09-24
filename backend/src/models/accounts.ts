@@ -30,7 +30,7 @@ async function getAccountsCreatedPastWeek (): Promise<number> {
 }
 
 async function getAccounts (page: number): Promise<any> {
-  return await appDataSource.getRepository(Account).find({ take: 50, skip: (page - 1) * 50 }).then(async (accounts: Account []) => {
+  return await appDataSource.getRepository(Account).find({ take: 50, skip: (page - 1) * 50, relations: ['role'] }).then(async (accounts: Account []) => {
     return {
       list: accounts,
       accountCreatedLastWeek: await getAccountsCreatedPastWeek()
@@ -45,7 +45,6 @@ async function getAccounts (page: number): Promise<any> {
 }
 
 async function deleteAccountById (uuid: UUID): Promise<void> {
-  // logger.warn(JSON.stringify(uuid, null, 2))
   const accountRepository = appDataSource.getRepository(Account)
   await findEntity<Account>(Account, { id: uuid }).then(async (foundAccount: Account | null) => {
     if (foundAccount == null) {
