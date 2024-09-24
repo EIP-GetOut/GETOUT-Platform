@@ -52,6 +52,9 @@ router.get('/permission/:permissionName', rules, validate, logApiRequest, (req: 
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return
   }
+  if (req.session.account?.role?.permissions == null) {
+    return res.status(StatusCodes.OK).send(false)
+  }
   accoutHasPermission(req.session.account.role.permissions, req.params.permissionName).then((hasPermission) => {
     return res.status(StatusCodes.OK).send(hasPermission)
   }).catch(handleErrorOnRoute(res))
