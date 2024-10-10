@@ -38,15 +38,18 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
         child: Column(
       children: [
         TitleWidget(
-            asset: 'fire', title: appL10n(context)!.book_recommendations),
-        const SizedBox(height: 10),
+            asset: 'fire',
+            title: appL10n(context)!.book_recommendations,
+            isBooks: true),
+        const SizedBox(height: 20),
         CarouselSlider(
           options: CarouselOptions(
-            height: 200.0,
+            height: 250.0,
             autoPlay: true,
             autoPlayInterval: const Duration(seconds: 10),
             aspectRatio: 1.0,
             enlargeCenterPage: true,
+            viewportFraction: 0.9,
           ),
           items: books.map((book) {
             return Builder(builder: (BuildContext context) {
@@ -122,9 +125,9 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
 //                                mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
                                       Text(book.title,
-                                          maxLines: 2,
+                                          maxLines: 3,
                                           style: const TextStyle(
-                                              fontSize: 14,
+                                              fontSize: 22,
                                               color: Colors.white,
                                               fontFamily: 'Poppins',
                                               overflow: TextOverflow.ellipsis)),
@@ -151,12 +154,13 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
                                           Text(
                                               book.releaseDate!.substring(0, 4),
                                               style: const TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.white,
-                                                fontFamily: 'Poppins',
-                                              )),
+                                                  fontSize: 20,
+                                                  color: Colors.white,
+                                                  fontFamily: 'Poppins',
+                                                  fontWeight:
+                                                      FontWeight.normal)),
                                       ]),
-
+                                      const SizedBox(height: 10),
                                       ///bookGenres
                                       if (book.genres != null &&
                                           book.genres!.isNotEmpty)

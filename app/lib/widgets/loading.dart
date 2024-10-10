@@ -14,32 +14,10 @@ class LoadingPage extends StatelessWidget {
   const LoadingPage({super.key});
 
   @override
-  Widget build(BuildContext context)
-  {
-    return Column(
-      children: [
-        SizedBox(height: Tools.heightFactor(context, 0.3)),
-        Row(children: [
-          SizedBox(width: Tools.widthFactor(context,0.1)),
-          SizedBox(
-              height: Tools.heightFactor(context, 0.13),
-              width: Tools.widthFactor(context, 0.27),
-              child: Image.asset('assets/images/logo/getout.png')),
-          SizedBox(width: Tools.widthFactor(context, 0.04)),
-          SizedBox(
-              height: Tools.heightFactor(context, 0.1),
-              width: Tools.widthFactor(context, 0.45),
-              child: Image.asset('assets/images/other/text_getout.png'))
-        ]),
-        SizedBox(height: Tools.heightFactor(context, 0.08)),
-        const SizedBox(
-          height: 85,
-          width: 85,
-          child: CircularProgressIndicator(
-            backgroundColor: Color.fromARGB(255, 255, 255, 255),
-          ),
-        )
-      ],
-    );
+  Widget build(BuildContext context) {
+    return SizedBox(
+        height: Tools.heightFactor(context, 0.5),
+        width: Tools.widthFactor(context, 0.5),
+        child: Image.asset('assets/images/logo/getout.png'));
   }
 }

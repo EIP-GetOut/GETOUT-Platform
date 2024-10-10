@@ -37,8 +37,8 @@ class RecommendedMoviesSuccessWidget extends StatelessWidget {
         child: Column(
       children: [
         TitleWidget(
-            asset: 'fire', title: appL10n(context)!.movie_recommendations),
-        const SizedBox(height: 10),
+            asset: 'fire', title: appL10n(context)!.movie_recommendations, isBooks: false),
+        const SizedBox(height: 20),
         CarouselSlider(
           options: CarouselOptions(
             height: 250.0,

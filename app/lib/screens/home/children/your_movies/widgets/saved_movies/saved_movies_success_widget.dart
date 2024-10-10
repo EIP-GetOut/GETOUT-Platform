@@ -37,7 +37,8 @@ class SavedMoviesSuccessWidget extends StatelessWidget {
             TitleWidget(
                 asset: 'party',
                 title: 'Vos films en cours',
-                length: movies.length),
+                length: movies.length,
+                isBooks: false),
             Expanded(
                 child: ListView(
                     controller: movieController,

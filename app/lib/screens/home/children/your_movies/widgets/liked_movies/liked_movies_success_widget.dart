@@ -39,7 +39,7 @@ class LikedMoviesSuccessWidget extends StatelessWidget {
             TitleWidget(
                 asset: 'heart',
                 title: appL10n(context)!.like_movies_title,
-                length: movies.length),
+                length: movies.length, isBooks: false),
             Expanded(
                 child: ListView(
                     controller: movieController,

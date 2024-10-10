@@ -33,8 +33,11 @@ class SavedBooksSuccessWidget extends StatelessWidget {
         height: 300,
         child: Column(
       children: [
+        const SizedBox(height: 20),
         TitleWidget(
-            asset: 'party', title: 'Vos livres en cours', length: books.length),
+            asset: 'party', title: 'Vos livres en cours', length: books.length, isBooks: true),
+        const SizedBox(height: 20),
+
         Expanded(
             child: ListView(
                 controller: bookController,
