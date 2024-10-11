@@ -15,59 +15,36 @@ import 'package:getout/bloc/session/session_event.dart';
 import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/tools.dart';
-
-void showAlertDialog(BuildContext context) {
-  final SettingService service = SettingService();
-
-  Widget cancelButton = TextButton(
-    child: const Text('Annuler'),
-    onPressed: () {
-      Navigator.pop(context);
-    },
-  );
-  Widget continueButton = TextButton(
-      child: const Text('Supprimer son compte'),
-      onPressed: () async {
-        try {
-          await service.deleteAccount();
-          if (context.mounted) {
-            context.read<SessionBloc>().add(const DisconnectRequest());
-            Navigator.pop(context);
-            Navigator.pop(context);
-          }
-        } catch (e) {
-          // print(e);
-        }
-      });
-
-  AlertDialog alert = AlertDialog(
-    title: const Text('Suppression de compte'),
-    content: const Text('Êtes-vous sûr de vouloir supprimer votre compte ?'),
-    actions: [
-      cancelButton,
-      continueButton,
-    ],
-  );
-
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
-}
+import 'package:getout/widgets/alert.dart';
 
 class DeleteAccountPage extends StatelessWidget {
   const DeleteAccountPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    SettingService service = SettingService();
+
     return Container(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         height: MediaQuery.of(context).size.height * 0.06,
         child: InkWell(
             onTap: () {
-              return showAlertDialog(context);
+              return showAlertDialog(
+                  context,
+                  'Supprimer son compte',
+                  'Suppresion de compte',
+                  'Êtes-vous sûr de vouloir supprimer votre compte ?', () {
+                try {
+                  service.deleteAccount();
+                  if (context.mounted) {
+                    context.read<SessionBloc>().add(const DisconnectRequest());
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  }
+                } catch (e) {
+                  // print(e);
+                }
+              });
             },
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -24,35 +24,36 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<StoryNewsBloc, StoryNewsState>(builder: (context, state) {
+    return BlocBuilder<StoryNewsBloc, StoryNewsState>(
+        builder: (context, state) {
       return SingleChildScrollView(
           child: Padding(
               padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
               child: Column(
                 children: [
                   const RefreshTimeCard(),
-                  Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SpentTimeCard(
-                              title: appL10n(context)!.total_book,
-                              icon: Icons.book,
-                              number:
-                                  '${globals.session?['totalPagesRead']} pages'),
-                          const SizedBox(width: 30),
-                          SpentTimeCard(
-                              title: appL10n(context)!.total_movie,
-                              icon: Icons.movie,
-                              number: durationFormat('',
-                                  globals.session?['spentMinutesWatching'])),
-                        ],
-                      )),
+                  const SizedBox(height: 10),
+                  Row(
+                    // crossAxisAlignment: CrossAxisAlignment.center,
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SpentTimeCard(
+                          title: appL10n(context)!.total_book,
+                          icon: Icons.book,
+                          number:
+                              '${globals.session?['totalPagesRead']} pages'),
+                      const SizedBox(width: 10),
+                      SpentTimeCard(
+                          title: appL10n(context)!.total_movie,
+                          icon: Icons.movie,
+                          number: durationFormat(
+                              '', globals.session?['spentMinutesWatching'])),
+                    ],
+                  ),
                   const Padding(
-                      padding: EdgeInsets.only(top: 10), child: NewsCard()),
-                    const Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 10),
+                      child: NewsCard()),
+                  const Padding(
                       padding: EdgeInsets.only(bottom: 20),
                       child: StoryNewsCard())
                 ],
