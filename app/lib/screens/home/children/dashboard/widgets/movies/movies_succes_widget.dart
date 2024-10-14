@@ -25,14 +25,17 @@ class MoviesSuccessWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PageController movieController =
-    PageController(viewportFraction: 0.1, initialPage: 0);
+        PageController(viewportFraction: 0.1, initialPage: 0);
 
     return Expanded(
         child: Column(
       children: [
         TitleWidget(
-            asset: 'popcorn', title: appL10n(context)!.movie_recommendations, length: movies.length,isBooks: false),
-        const Padding(padding: EdgeInsets.only(top: 10)),
+            asset: 'popcorn',
+            title: appL10n(context)!.movie_recommendations,
+            length: movies.length,
+            isBooks: false),
+        const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
         Expanded(
             child: ListView(
                 controller: movieController,
@@ -46,9 +49,9 @@ class MoviesSuccessWidget extends StatelessWidget {
                                 builder: (context) => Movie(movies[index].id)));
                       },
                       child: MoviePreviewWidget(
-                          posterPath: movies[index].posterPath,
-                          title: movies[index].title,
-                          ));
+                        posterPath: movies[index].posterPath,
+                        title: movies[index].title,
+                      ));
                 }))),
       ],
     ));

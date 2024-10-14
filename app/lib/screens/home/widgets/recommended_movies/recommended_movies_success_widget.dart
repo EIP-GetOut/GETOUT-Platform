@@ -48,6 +48,7 @@ class RecommendedMoviesSuccessWidget extends StatelessWidget {
             autoPlayInterval: const Duration(seconds: 10),
             aspectRatio: 1.0,
             enlargeCenterPage: true,
+            viewportFraction: 0.9,
           ),
           items: movies.map((movie) {
             return Builder(builder: (BuildContext context) {
