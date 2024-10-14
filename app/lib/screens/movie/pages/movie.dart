@@ -44,73 +44,73 @@ class MovieSuccessWidget extends StatelessWidget {
     }
 
     Widget buildCoverImage() => Container(
-          decoration: const BoxDecoration(
-            border: Border(
-                // bottom: BorderSide(
-                //   color: Color.fromRGBO(213, 86, 65, 0.992),
-                //   width: 10.0,
-                // ),
-                ),
+        decoration: const BoxDecoration(
+          border: Border(
+              // bottom: BorderSide(
+              //   color: Color.fromRGBO(213, 86, 65, 0.992),
+              //   width: 10.0,
+              // ),
+              ),
+        ),
+        child: Stack(alignment: Alignment.center, children: [
+          Image.network(
+            imageUrl,
+            // color: const Color.fromRGBO(150, 150, 150, 255).withOpacity(1),
+            colorBlendMode: BlendMode.modulate,
+            width: double.infinity,
+            fit: BoxFit.cover,
+            height: 200,
           ),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Image.network(
-                imageUrl,
-                // color: const Color.fromRGBO(150, 150, 150, 255).withOpacity(1),
-                colorBlendMode: BlendMode.modulate,
-                width: double.infinity,
-                fit: BoxFit.cover,
-                height: 200,
-              ),
-              Positioned.fill(
-                  child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                child: Container(
-                  color: Colors.black.withOpacity(
-                      0.5), // Couleur transparente pour que le flou soit visible
-                ),
-              )),
-              Positioned(
-                top: 40,
-                right: 50,
-                child: IconButton(
-                  icon: const Icon(Icons.share),
-                  color: Colors.white,
-                  onPressed: () async {
-                    Share.share(
-                        "Regarde ce film que j'ai trouvé grâce à Getout ! https://www.themoviedb.org/movie/${movie.id}");
-                  },
-                ),
-              ),
-              Positioned(
-                top: 40,
-                right: 0,
-                child: IconButton(
+          Positioned.fill(
+              child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+            child: Container(
+              color: Colors.black.withOpacity(
+                  0.5), // Couleur transparente pour que le flou soit visible
+            ),
+          )),
+          Positioned(
+            top: 40,
+            right: 50,
+            child: IconButton(
+              icon: const Icon(Icons.share),
+              color: Colors.white,
+              onPressed: () async {
+                Share.share(
+                    "Regarde ce film que j'ai trouvé grâce à Getout ! https://www.themoviedb.org/movie/${movie.id}");
+              },
+            ),
+          ),
+          Positioned(
+              top: 40,
+              right: 0,
+              child: IconButton(
                   icon: const Icon(Icons.more_vert),
                   iconSize: 30,
                   color: Colors.white,
                   onPressed: () async {
                     showModalBottomSheet(
-                      context: context,
-                      builder: (ctx) {
-                      return BlocProvider.value(
-                        value: BlocProvider.of<MovieBloc>(context),
-                        child: BlocProvider.value(
-                        value: BlocProvider.of<LikedMoviesHydratedBloc>(context),
-                        child: BlocProvider.value(
-                        value: BlocProvider.of<SavedMoviesHydratedBloc>(context),
-                        child: BlocProvider.value(
-                        value: BlocProvider.of<WatchedMoviesHydratedBloc>(context),
-                        child: const FractionallySizedBox(
-                          heightFactor: 0.9,
-                          child: ActionsPageMovie())))));
-                      });
-                  })
-              )
-            ]
-          )
-        );
+                        context: context,
+                        builder: (ctx) {
+                          return BlocProvider.value(
+                              value: BlocProvider.of<MovieBloc>(context),
+                              child: BlocProvider.value(
+                                  value:
+                                      BlocProvider.of<LikedMoviesHydratedBloc>(
+                                          context),
+                                  child: BlocProvider.value(
+                                      value: BlocProvider.of<
+                                          SavedMoviesHydratedBloc>(context),
+                                      child: BlocProvider.value(
+                                          value: BlocProvider.of<
+                                                  WatchedMoviesHydratedBloc>(
+                                              context),
+                                          child: const FractionallySizedBox(
+                                              heightFactor: 0.9,
+                                              child: ActionsPageMovie())))));
+                        });
+                  }))
+        ]));
 
     Widget buildLittleImage() => GestureDetector(
         onTap: () =>
@@ -157,12 +157,15 @@ class MovieSuccessWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Text(
-                      movie.title ?? 'N/A',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          fontSize: 22, fontWeight: FontWeight.bold),
-                    ),
+                    Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, bottom: 10),
+                        child: Text(
+                          movie.title ?? 'N/A',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.bold),
+                        )),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
