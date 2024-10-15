@@ -26,6 +26,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Future mapEventToState(LoginEvent event, Emitter<LoginState> emit) async
   {
+    final LoginResponseModel? loginResponse;
+
     if (event is LoginEmailChanged) {
       emit(state.copyWith(email: event.email));
     } else if (event is LoginPasswordChanged) {
@@ -33,14 +35,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } else if (event is LoginSubmitted) {
       emit(state.copyWith(status: Status.loading));
 
-      try {
-        await service?.login(LoginRequestModel(
-          email: state.email,
-          password: state.password,
-        ));
+      loginResponse = await service?.login(LoginRequestModel(
+        email: state.email,
+        password: state.password,
+      ));
+      if (loginResponse == null) {
+        emit(state.copyWith(status: Status.error, statusCode: HttpStatus.APP_ERROR));
+      } else if (loginResponse.statusCode != LoginResponseModel.success) {
+        emit(state.copyWith(status: Status.error, statusCode: loginResponse.statusCode));
+      } else {
         emit(state.copyWith(status: Status.success));
-      } catch (e) {
-        emit(state.copyWith(status: Status.error, exception: e));
       }
     }
   }

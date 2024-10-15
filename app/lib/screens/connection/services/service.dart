@@ -8,7 +8,6 @@
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
-import 'package:flutter/foundation.dart';
 
 import 'package:getout/constants/api_path.dart';
 
@@ -21,6 +20,7 @@ import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/email_verified/bloc/email_verified_bloc.dart';
 
+import 'package:getout/constants/http_status.dart';
 import 'package:getout/global.dart' as globals;
 
 /**
@@ -35,8 +35,8 @@ class ConnectionService extends _ConnectionService<SignService, ForgotPasswordSe
     g = ForgotPasswordService();
   }
   //Dashboard
-  Future<void> login(LoginRequestModel request) => t.login(request);
-  Future<void> register(RegisterRequestModel request) => t.register(request);
+  Future<LoginResponseModel> login(LoginRequestModel request) => t.login(request);
+  Future<RegisterResponseModel> register(RegisterRequestModel request) => t.register(request);
   Future<void> checkEmail(CheckEmailRequestModel request) => g.checkEmail(request);
   Future<void> newPassword(NewPasswordRequestModel request) => g.sendNewPassword(request);
   Future<void> emailVerified(EmailVerifiedRequestModel request) => t.emailVerified(request);

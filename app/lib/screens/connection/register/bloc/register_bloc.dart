@@ -26,6 +26,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   Future mapEventToState(RegisterEvent event, Emitter<RegisterState> emit) async
   {
+    final RegisterResponseModel? registerResponse;
+
     if (event is RegisterEmailChanged) {
       emit(state.copyWith(email: event.email));
     } else if (event is RegisterPasswordChanged) {
@@ -41,17 +43,19 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     } else if (event is RegisterSubmitted) {
       emit(state.copyWith(status: Status.loading));
 
-      try {
-        await service?.register(RegisterRequestModel(
-          email: state.email,
-          password: state.password,
-          firstName: state.firstName,
-          lastName: state.lastName,
-          birthDate: state.birthDate,
-        ));
+      registerResponse = await service?.register(RegisterRequestModel(
+        email: state.email,
+        password: state.password,
+        firstName: state.firstName,
+        lastName: state.lastName,
+        birthDate: state.birthDate,
+      ));
+      if (registerResponse == null) {
+        emit(state.copyWith(status: Status.error, statusCode: HttpStatus.APP_ERROR));
+      } else if (registerResponse.statusCode != RegisterResponseModel.success) {
+        emit(state.copyWith(status: Status.error, statusCode: registerResponse.statusCode));
+      } else {
         emit(state.copyWith(status: Status.success));
-      } catch (e) {
-        emit(state.copyWith(status: Status.error));
       }
     }
   }
