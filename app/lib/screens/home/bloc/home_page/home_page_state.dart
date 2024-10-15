@@ -9,7 +9,7 @@ part of 'home_page_bloc.dart';
 
 class HomePageState extends Equatable {
   const HomePageState({
-    this.idx = 0,
+    this.idx = 1,
   });
 
   final int idx;

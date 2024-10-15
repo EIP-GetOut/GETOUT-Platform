@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PageController pageController = PageController();
+    final PageController pageController = PageController(initialPage: 0);
     final ScrollController movieController = ScrollController();
     final ScrollController bookController = ScrollController();
 

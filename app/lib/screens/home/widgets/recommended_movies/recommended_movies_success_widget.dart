@@ -105,7 +105,7 @@ class RecommendedMoviesSuccessWidget extends StatelessWidget {
                                 children: <Widget>[
                                   ///title
                                   Text(movie.title,
-                                      maxLines: 1,
+                                      maxLines: 3,
                                       style: const TextStyle(
                                           fontSize: 20,
                                           color: Colors.white,
