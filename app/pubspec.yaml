@@ -36,7 +36,7 @@ dependencies:
   shimmer: 3.0.0
   flutter_switch: ^0.3.2
   flutter_phoenix: ^1.1.1
-  share_plus: ^10.0.2
+  share_plus: ^10.0.3
 
   html: ^0.15.4
   ### Data
@@ -61,6 +61,7 @@ dependencies:
   flutter_svg: ^2.0.10+1
 
   ### Notifications
+
   flutter_local_notifications: ^17.2.3
   permission_handler: ^11.3.1
   is_first_run: ^1.0.0

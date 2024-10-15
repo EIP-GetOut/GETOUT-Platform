@@ -22,8 +22,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final PageController pageController = PageController();
-      final PageController pageController = PageController(initialPage: 1);
+    final PageController pageController = PageController(initialPage: 0);
+    final ScrollController movieController = ScrollController();
+    final ScrollController bookController = ScrollController();
 
     globals.notificationsServices.askForActiveNotifications();
     return BlocBuilder<HomePageBloc, HomePageState>(builder: (context, state) {
@@ -34,10 +35,12 @@ class HomePage extends StatelessWidget {
               onPageChanged: (index) {
                 context.read<HomePageBloc>().add(HomePageToIdx(index));
               },
-              children: const <Widget>[
-                YourMoviesPage(),
-                Dashboard(),
-                YourBooksPage(),
+              children: <Widget>[
+                Dashboard(pageController: pageController,
+                    movieController: movieController,
+                    bookController: bookController),
+                YourMoviesPage(scrollController: movieController),
+                YourBooksPage(scrollController: bookController),
               ]),
           bottomNavigationBar:
               HomeNavBarWidget(pageController: pageController, idx: state.idx));
