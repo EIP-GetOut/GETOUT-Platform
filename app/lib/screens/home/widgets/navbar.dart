@@ -13,9 +13,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:getout/screens/home/bloc/home_page/home_page_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
 
-
 class HomeNavBarWidget extends StatelessWidget {
-  const HomeNavBarWidget({super.key, required this.pageController, required this.idx});
+  const HomeNavBarWidget(
+      {super.key, required this.pageController, required this.idx});
 
   final PageController pageController;
   final int idx;
@@ -34,16 +34,6 @@ class HomeNavBarWidget extends StatelessWidget {
         child: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
-                icon: SvgPicture.asset('assets/images/icon/home.svg',
-                    width: 40,
-                    colorFilter: const ColorFilter.mode(
-                        Colors.black26, BlendMode.srcIn)),
-                activeIcon: SvgPicture.asset('assets/images/icon/home.svg',
-                    width: 40,
-                    colorFilter: ColorFilter.mode(
-                        Theme.of(context).primaryColor, BlendMode.srcIn)),
-                label: appL10n(context)!.dashboard),
-            BottomNavigationBarItem(
                 icon: SvgPicture.asset('assets/images/icon/movie.svg',
                     width: 40,
                     colorFilter: const ColorFilter.mode(
@@ -53,6 +43,16 @@ class HomeNavBarWidget extends StatelessWidget {
                     colorFilter: ColorFilter.mode(
                         Theme.of(context).primaryColor, BlendMode.srcIn)),
                 label: appL10n(context)!.movie),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset('assets/images/icon/home.svg',
+                    width: 40,
+                    colorFilter: const ColorFilter.mode(
+                        Colors.black26, BlendMode.srcIn)),
+                activeIcon: SvgPicture.asset('assets/images/icon/home.svg',
+                    width: 40,
+                    colorFilter: ColorFilter.mode(
+                        Theme.of(context).primaryColor, BlendMode.srcIn)),
+                label: appL10n(context)!.dashboard),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset('assets/images/icon/book.svg',
                     width: 40,
@@ -83,9 +83,9 @@ class HomeNavBarWidget extends StatelessWidget {
           },
           showUnselectedLabels: true,
           selectedLabelStyle:
-          const TextStyle(fontFamily: 'Urbanist', fontSize: 16),
+              const TextStyle(fontFamily: 'Urbanist', fontSize: 16),
           unselectedLabelStyle:
-          const TextStyle(fontFamily: 'Urbanist', fontSize: 12),
+              const TextStyle(fontFamily: 'Urbanist', fontSize: 12),
           unselectedItemColor: Colors.black26,
           selectedItemColor: Colors.red,
           currentIndex: idx,

@@ -21,21 +21,28 @@ class SpentTimeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
+        child: SizedBox(
+      width: 190,
       child: Card.outlined(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-              color: Theme.of(context).primaryColor,
-              width: 2),
-          borderRadius: BorderRadius.circular(25),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(20), child:
-          Column(children: [
-            Text(title, style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.w500)),
-            Icon(icon, color:  Theme.of(context).primaryColor, size: 30),
-            Text(number, style: TextStyle(color: Theme.of(context).primaryColor, fontWeight: FontWeight.w500)),
-          ],)
-        )),
-    );
+          shape: RoundedRectangleBorder(
+            side: BorderSide(color: Theme.of(context).primaryColor, width: 2),
+            borderRadius: BorderRadius.circular(25),
+          ),
+          child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  Text(title,
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.w500)),
+                  Icon(icon, color: Theme.of(context).primaryColor, size: 30),
+                  Text(number,
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.w500)),
+                ],
+              ))),
+    ));
   }
 }

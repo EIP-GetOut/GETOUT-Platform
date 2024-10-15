@@ -32,7 +32,7 @@ class BooksSuccessWidget extends StatelessWidget {
             child: Column(
               children: [
                 TitleWidget(
-                    asset: 'books', title: appL10n(context)!.book_recommendations, length: books.length),
+                    asset: 'books', title: appL10n(context)!.book_recommendations, length: books.length, isBooks: true),
                 const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
                 Expanded(
                     child: ListView(

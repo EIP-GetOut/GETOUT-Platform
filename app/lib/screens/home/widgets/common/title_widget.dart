@@ -13,11 +13,14 @@ class TitleWidget extends StatelessWidget {
     required this.title,
     required this.asset,
     this.length,
+    required this.isBooks,
+
   });
 
   final String title;
   final String asset;
   final int? length;
+  final bool isBooks;
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +43,14 @@ class TitleWidget extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   )),
             ),
-            if (length != null) Text('$length  ',
+        if (length != null) Padding(padding: const EdgeInsets.only(right: 30), child:     Text(isBooks ? '$length livres' : '$length films',
             style: const TextStyle(
               color: Color(0xFF565656),
-              fontSize: 22,
+              fontSize: 15,
               fontFamily: 'Urbanist',
               fontWeight: FontWeight.bold,
-            )),
+            )),),
+         
         ]);
   }
 }

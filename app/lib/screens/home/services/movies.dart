@@ -13,8 +13,7 @@ class MoviesService extends ServiceTemplate {
 
   MoviesService() {
     dio.interceptors.add(CookieManager(PersistCookieJar(
-        ignoreExpires: true,
-        storage: FileStorage(globals.cookiePath))));
+        ignoreExpires: true, storage: FileStorage(globals.cookiePath))));
     dio.options.headers = ({'Content-Type': 'application/json'});
   }
 
@@ -35,10 +34,14 @@ class MoviesService extends ServiceTemplate {
       }
       response.data.forEach((elem) {
         result.add(MoviePreview(
-            id: elem['id'],
-            title: elem['title'],
-            posterPath: elem['posterPath'],
-            overview: elem['description']));
+          id: elem['id'],
+          title: elem['title'],
+          posterPath: elem['posterPath'],
+          overview: elem['description'],
+          releaseDate: elem['releaseDate'],
+          averageRating: elem['averageRating'],
+          genres: elem['genres'],
+        ));
       });
     } on DioException catch (dioException) {
       if (dioException.response != null &&
@@ -77,7 +80,8 @@ class MoviesService extends ServiceTemplate {
   Future<dynamic> getLikedMoviesId(GenerateMoviesRequest request) async {
     final Response? response;
 
-    response = await dio.get('${ApiConstants.rootApiPath}/account/$_id/likedMovies',
+    response =
+        await dio.get('${ApiConstants.rootApiPath}/account/$_id/likedMovies',
             options: Options(headers: {
               'Content-Type': 'application/json',
             }));
@@ -114,7 +118,8 @@ class MoviesService extends ServiceTemplate {
   Future<dynamic> getSavedMoviesId(GenerateMoviesRequest request) async {
     dynamic data;
 
-    final response = await dio.get('${ApiConstants.rootApiPath}/account/$_id/watchlist',
+    final response =
+        await dio.get('${ApiConstants.rootApiPath}/account/$_id/watchlist',
             options: Options(headers: {
               'Content-Type': 'application/json',
             }));
@@ -155,10 +160,11 @@ class MoviesService extends ServiceTemplate {
   Future<dynamic> getWatchedMoviesId(GenerateMoviesRequest request) async {
     dynamic data;
 
-    final response = await dio.get('${ApiConstants.rootApiPath}/account/$_id/seenMovies',
-        options: Options(headers: {
-          'Content-Type': 'application/json',
-        }));
+    final response =
+        await dio.get('${ApiConstants.rootApiPath}/account/$_id/seenMovies',
+            options: Options(headers: {
+              'Content-Type': 'application/json',
+            }));
 
     if (response.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
@@ -202,7 +208,8 @@ class MoviesService extends ServiceTemplate {
     try {
       StoryNewsResponse result =
           const StoryNewsResponse(statusCode: HttpStatus.APP_ERROR);
-      final response = await dio.get('${ApiConstants.rootApiPath}${ApiConstants.dailyInfo}');
+      final response =
+          await dio.get('${ApiConstants.rootApiPath}${ApiConstants.dailyInfo}');
       if (response.statusCode == HttpStatus.OK) {
         result = StoryNewsResponse(
           statusCode: response.statusCode ?? 500,
@@ -225,11 +232,12 @@ class MoviesService extends ServiceTemplate {
     DateTime now = DateTime.now();
     int dayOfYear = int.parse('${now.month}${now.day}');
     int index = 0;
-    try {
 
+    try {
       NewsResponse result =
           const NewsResponse(statusCode: HttpStatus.APP_ERROR);
-      final response = await dio.get('${ApiConstants.rootApiPath}${ApiConstants.dailyNews}');
+      final response =
+          await dio.get('${ApiConstants.rootApiPath}${ApiConstants.dailyNews}');
       if (response.statusCode == HttpStatus.OK) {
         index = dayOfYear % 5;
         result = NewsResponse(

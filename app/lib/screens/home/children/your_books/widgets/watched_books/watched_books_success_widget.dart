@@ -38,7 +38,9 @@ class WatchedBooksSuccessWidget extends StatelessWidget {
             TitleWidget(
                 asset: 'party',
                 title: appL10n(context)!.watched_books,
-                length: books.length),
+                length: books.length, isBooks: true),
+        const SizedBox(height: 20),
+
             Expanded(
                 child: ListView(
                     controller: bookController,
