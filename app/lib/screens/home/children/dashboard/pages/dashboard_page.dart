@@ -63,7 +63,7 @@ class DashboardPage extends StatelessWidget {
                       GestureDetector(
                           onTap: () => {
                                 pageController.animateToPage(2,
-                                    duration: Duration(milliseconds: 600),
+                                    duration: Duration(milliseconds: 300),
                                     curve: Curves.linearToEaseOut).then((_) =>
                                 bookController.animateTo(20000,
                                 duration: Duration(milliseconds: 600),
