@@ -71,14 +71,27 @@ class BirthDateField extends StatelessWidget {
                       return null;
                     },
                     onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
+                        DateTime? pickedDate = await showDatePicker(
                           context: context,
                           locale: const Locale('fr', 'FR'),
                           initialDate: DateTime.now(),
                           firstDate: DateTime.now()
                               .subtract(const Duration(days: 365 * 150)),
-                          lastDate: DateTime.now());
-
+                          lastDate: DateTime.now(),
+                            builder: (context, child) {
+                            // Had to override text theme "bodyLarge" to modify
+                            // the color of the text when you select a date manually
+                            return Theme(data: Theme.of(context).copyWith(
+                                textTheme: TextTheme(
+                                  bodyLarge: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                    fontFamily: 'Poppins',
+                                  ),
+                                )
+                            ), child: child!);
+                            });
                       if (pickedDate != null) {
                         String formattedDate =
                             DateFormat('dd/MM/yyyy').format(pickedDate);

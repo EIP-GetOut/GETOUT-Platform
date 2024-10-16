@@ -47,7 +47,7 @@ class DashboardPage extends StatelessWidget {
                     children: [
                       GestureDetector(
                           onTap: () => {
-                                pageController.animateToPage(1,
+                                pageController.animateToPage(0,
                                     duration: Duration(milliseconds: 300),
                                     curve: Curves.linearToEaseOut).then((_) =>
                                     movieController.animateTo(20000,
