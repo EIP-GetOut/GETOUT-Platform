@@ -55,12 +55,11 @@ class MovieService {
     InfoMovieResponse result =
         const InfoMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
-    /// TODO need to put that in a try catch
-    final response = await dio.get(
-        '${ApiConstants.rootApiPath}${ApiConstants.getInfoMoviePath}/${request.id}',);
     try {
-      if (response.statusCode != HttpStatus.OK) {
-        return InfoMovieResponse(statusCode: response.statusCode ?? 500);
+      final Response response = await dio.get(
+        '${ApiConstants.rootApiPath}${ApiConstants.getInfoMoviePath}/${request.id}',);
+      if (response.statusCode != InfoMovieResponse.success) {
+        return InfoMovieResponse(statusCode: response.statusCode ?? HttpStatus.APP_ERROR);
       }
       final dynamic data = response.data;
 
@@ -76,18 +75,24 @@ class MovieService {
           duration: (data['duration'].toString() == '0') ? 'N/A' : data['duration'],
           cast: parseCast(data['cast']),
           director: parseDirector(data['director']),
-          statusCode: response.statusCode ?? 500,
+          statusCode: response.statusCode ?? HttpStatus.APP_ERROR,
           liked: globals.session?['likedMovies'].toString().contains(request.id.toString()),
           disliked: globals.session?['dislikedMovies'].toString().contains(request.id.toString()),
           wishlisted: globals.session?['watchlist'].toString().contains(request.id.toString()),
           seen: globals.session?['seenMovies'].toString().contains(request.id.toString()),
           id: request.id);
-    } catch (error) {
-      if (error.toString() == 'Connection reset by peer' ||
-          error.toString() ==
-              'Connection closed before full header was received') {
-        return const InfoMovieResponse(statusCode: HttpStatus.NO_INTERNET);
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return InfoMovieResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return InfoMovieResponse(statusCode: dioException.response!.statusCode!);
       }
+    } catch (error) {
       return result;
     }
     return result;
@@ -98,26 +103,30 @@ class MovieService {
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      final response = await dio.post(
+      final Response response = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedMoviePath}',
           data: {
             'movieId': request.id
           });
-      if (response.statusCode != HttpStatus.CREATED) {
-        return AddMovieResponse(statusCode: response.statusCode ?? 500);
-      }
-
       result = AddMovieResponse(
-        statusCode: response.statusCode ?? 500,
+        statusCode: response.statusCode ?? HttpStatus.APP_ERROR,
       );
       await globals.sessionManager.getSession();
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return AddMovieResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return AddMovieResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 
   Future<AddMovieResponse> removeLikedMovie(AddMovieRequest request) async {
@@ -127,21 +136,25 @@ class MovieService {
     try {
       final response = await dio.delete(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedMoviePath}/${request.id}',);
-      if (response.statusCode != HttpStatus.OK) {
-        return AddMovieResponse(statusCode: response.statusCode ?? 500);
-      }
-
       result = AddMovieResponse(
-        statusCode: response.statusCode ?? 500,
+        statusCode: response.statusCode ?? HttpStatus.APP_ERROR,
       );
       await globals.sessionManager.getSession();
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return AddMovieResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return AddMovieResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 
   Future<AddMovieResponse> removeDislikedMovie(AddMovieRequest request) async {
@@ -152,22 +165,25 @@ class MovieService {
       final response = await dio.delete(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addDislikedMoviePath}/${request.id}',
       );
-      if (response.statusCode != HttpStatus.OK) {
-        return AddMovieResponse(statusCode: response.statusCode ?? 500);
-      }
-
       result = AddMovieResponse(
-        statusCode: response.statusCode ?? 500,
+        statusCode: response.statusCode ?? HttpStatus.APP_ERROR,
       );
-
       await globals.sessionManager.getSession();
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return AddMovieResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return AddMovieResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 
   Future<AddMovieResponse> addDislikedMovie(AddMovieRequest request) async {
@@ -180,22 +196,25 @@ class MovieService {
           data: {
             'movieId': request.id
           });
-
-      if (response.statusCode != HttpStatus.CREATED) {
-        return AddMovieResponse(statusCode: response.statusCode ?? 500);
-      }
-
       result = AddMovieResponse(
-        statusCode: response.statusCode ?? 500,
+        statusCode: response.statusCode ?? HttpStatus.APP_ERROR,
       );
-
       await globals.sessionManager.getSession();
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return AddMovieResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return AddMovieResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 
   Future<AddMovieResponse> addWishListedMovie(AddMovieRequest request) async {
@@ -211,22 +230,28 @@ class MovieService {
       if (response.statusCode != HttpStatus.CREATED) {
         return AddMovieResponse(statusCode: response.statusCode ?? 500);
       }
-
       result = AddMovieResponse(
-        statusCode: response.statusCode ?? 500,
+        statusCode: response.statusCode ?? HttpStatus.APP_ERROR,
       );
       await globals.sessionManager.getSession();
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return AddMovieResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return AddMovieResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 
-  Future<AddMovieResponse> removeWishListedMovie(
-      AddMovieRequest request) async {
+  Future<AddMovieResponse> removeWishListedMovie(AddMovieRequest request) async {
     AddMovieResponse result =
         const AddMovieResponse(statusCode: HttpStatus.APP_ERROR);
 
@@ -234,21 +259,25 @@ class MovieService {
       final response = await dio.delete(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.watchlistPath}/${request.id}',
           );
-      if (response.statusCode != HttpStatus.OK) {
-        return AddMovieResponse(statusCode: response.statusCode ?? 500);
-      }
-
       result = AddMovieResponse(
-        statusCode: response.statusCode ?? 500,
+        statusCode: response.statusCode ?? HttpStatus.APP_ERROR,
       );
       await globals.sessionManager.getSession();
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return AddMovieResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return AddMovieResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 
   Future<AddMovieResponse> addSeenMovie(AddMovieRequest request) async {
@@ -261,21 +290,25 @@ class MovieService {
           data: {
             'movieId': request.id
           });
-      if (response.statusCode != HttpStatus.CREATED) {
-        return AddMovieResponse(statusCode: response.statusCode ?? 500);
-      }
-
       result = AddMovieResponse(
-        statusCode: response.statusCode ?? 500,
+        statusCode: response.statusCode ?? HttpStatus.APP_ERROR,
       );
       await globals.sessionManager.getSession();
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return AddMovieResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return AddMovieResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 
   Future<AddMovieResponse> removeSeenMovie(AddMovieRequest request) async {
@@ -286,20 +319,24 @@ class MovieService {
       final response = await dio.delete(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.seenMoviesPath}/${request.id}',
           );
-      if (response.statusCode != HttpStatus.OK) {
-        return AddMovieResponse(statusCode: response.statusCode ?? 500);
-      }
-
       result = AddMovieResponse(
-        statusCode: response.statusCode ?? 500,
+        statusCode: response.statusCode ?? HttpStatus.APP_ERROR,
       );
       await globals.sessionManager.getSession();
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return AddMovieResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return AddMovieResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 }

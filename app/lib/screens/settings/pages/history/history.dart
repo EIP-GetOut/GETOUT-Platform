@@ -27,7 +27,7 @@ class HistoryPage extends StatelessWidget {
             children: [
               const PageTitle(
                 title: 'Historique', /// TODO : Add in l10n
-                description: 'Retrouvez ici votre historiques de recommandation',
+                description: 'Retrouvez ici votre historique de recommandation',
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.04),
               Expanded(

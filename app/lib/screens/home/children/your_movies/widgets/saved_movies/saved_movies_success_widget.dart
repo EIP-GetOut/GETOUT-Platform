@@ -37,11 +37,12 @@ class SavedMoviesSuccessWidget extends StatelessWidget {
             const SizedBox(height: 20),
             TitleWidget(
                 asset: 'party',
-                title: 'Vos films en cours',
+                title: 'Les films que vous voulez voir',
                 length: movies.length,
                 isBooks: false),
             const SizedBox(height: 20),
-            Expanded(
+            movies.isNotEmpty
+                ? Expanded(
                 child: ListView(
                     controller: movieController,
                     scrollDirection: Axis.horizontal,
@@ -67,7 +68,18 @@ class SavedMoviesSuccessWidget extends StatelessWidget {
                           child: MoviePreviewWidget(
                               posterPath: movies[index].posterPath,
                               title: movies[index].title));
-                    }))),
+                    })))
+                : const Padding(
+                padding: EdgeInsets.only(left: 20, right: 20),
+                child: Text(
+                    'Ajoutez de nouveaux films a votre liste pour les voir afficher ici',
+                    maxLines: 2,
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 0, 0, 0),
+                      fontSize: 15,
+                      fontFamily: 'Urbanist',
+                      fontWeight: FontWeight.bold,
+                    )))
           ],
         ));
   }

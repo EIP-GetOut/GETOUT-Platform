@@ -31,8 +31,6 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final PageController bookController =
-    //    PageController(viewportFraction: 0.1, initialPage: 0);
 
     return SizedBox(
         child: Column(
@@ -117,12 +115,10 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
                               alignment: Alignment.topLeft,
                               child: Container(
                                 width:
-                                    MediaQuery.of(context).size.width * 2 / 5,
-                                padding: const EdgeInsets.all(16.0),
+                                    MediaQuery.of(context).size.width * 0.5,
+                                padding: const EdgeInsets.all(18.0),
                                 child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-//                                mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Text(book.title,
                                           maxLines: 3,
@@ -132,24 +128,6 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
                                               fontFamily: 'Poppins',
                                               overflow: TextOverflow.ellipsis)),
                                       const SizedBox(height: 10),
-                                      Row(children: [
-                                        if (book.averageRating != null) ...[
-                                          const Icon(Icons.star_outlined,
-                                              color: Colors.white, size: 20),
-                                          Text(book.averageRating!.toString(),
-                                              style: const TextStyle(
-                                                fontSize: 12,
-                                                color: Colors.white,
-                                                fontFamily: 'Poppins',
-                                              )),
-                                        ],
-                                        if (book.averageRating != null &&
-                                            book.releaseDate != null) ...[
-                                          const SizedBox(width: 4),
-                                          const Icon(Icons.circle,
-                                              color: Colors.white, size: 5),
-                                          const SizedBox(width: 4),
-                                        ],
                                         if (book.releaseDate != null)
                                           Text(
                                               book.releaseDate!.substring(0, 4),
@@ -159,9 +137,7 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
                                                   fontFamily: 'Poppins',
                                                   fontWeight:
                                                       FontWeight.normal)),
-                                      ]),
                                       const SizedBox(height: 10),
-                                      ///bookGenres
                                       if (book.genres != null &&
                                           book.genres!.isNotEmpty)
                                         Padding(

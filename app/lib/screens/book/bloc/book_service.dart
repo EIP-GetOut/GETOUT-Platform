@@ -5,17 +5,15 @@
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
 
-import 'package:cookie_jar/cookie_jar.dart';
-import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:cookie_jar/cookie_jar.dart';
+import 'package:html/parser.dart'; // pour utiliser parseFragment()
+import 'package:dio/dio.dart';
 
 import 'package:getout/screens/book/bloc/book_bloc.dart';
 import 'package:getout/constants/api_path.dart';
 import 'package:getout/constants/http_status.dart';
-
 import 'package:getout/global.dart' as globals;
-
-import 'package:html/parser.dart'; // pour utiliser parseFragment()
 
 class BookService {
   final String userId = globals.session?['id'].toString() ?? '';
@@ -46,15 +44,10 @@ class BookService {
     InfoBookResponse result =
         const InfoBookResponse(statusCode: HttpStatus.APP_ERROR);
 
-    /// TODO need to put that in a try catch
-    final response = await dio.get(
-        '${ApiConstants.rootApiPath}${ApiConstants.getInfoBookPath}/${request.id}',
-    );
     try {
-      if (response.statusCode != InfoBookResponse.success) {
-        return InfoBookResponse(statusCode: response.statusCode ?? 500);
-      }
-
+      final Response response = await dio.get(
+        '${ApiConstants.rootApiPath}${ApiConstants.getInfoBookPath}/${request.id}',
+      );
       final dynamic data = response.data;
       result = InfoBookResponse(
           title: data['title'] ?? 'Aucun titre',
@@ -73,14 +66,22 @@ class BookService {
           wishlisted: globals.session?['readingList'].toString().contains(request.id.toString()),
           read: globals.session?['readBooks'].toString().contains(request.id.toString()),
           id: data['id'],
-          statusCode: response.statusCode ?? 500);
+          statusCode: response.statusCode ?? HttpStatus.APP_ERROR);
+    }  on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return InfoBookResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return InfoBookResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 
   Future<AddBookResponse> addLikedBook(AddBookRequest request) async {
@@ -88,27 +89,29 @@ class BookService {
         const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      final response = await dio.post(
+      final Response response = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedBookPath}',
           data: {
             'bookId': request.id
           });
-      if (response.statusCode != HttpStatus.CREATED) {
-        return AddBookResponse(statusCode: response.statusCode ?? 500);
-      }
-
       result = AddBookResponse(
-        statusCode: response.statusCode ?? 500,
-      );
-
+          statusCode: response.statusCode ?? HttpStatus.APP_ERROR);
       await globals.sessionManager.getSession();
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return AddBookResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return AddBookResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 
   Future<AddBookResponse> removeLikedBook(AddBookRequest request) async {
@@ -116,24 +119,27 @@ class BookService {
         const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      final response = await dio.delete(
+      final Response response = await dio.delete(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedBookPath}/${request.id}',
       );
-      if (response.statusCode != HttpStatus.OK) {
-        return AddBookResponse(statusCode: response.statusCode ?? 500);
-      }
-
       result = AddBookResponse(
-        statusCode: response.statusCode ?? 500,
-      );
+          statusCode: response.statusCode ?? HttpStatus.APP_ERROR);
       await globals.sessionManager.getSession();
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return AddBookResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return AddBookResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 
   Future<AddBookResponse> removeDislikedBook(AddBookRequest request) async {
@@ -141,25 +147,28 @@ class BookService {
         const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      final response = await dio.delete(
+      final Response response = await dio.delete(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addDislikedBookPath}/${request.id}',
       );
-      if (response.statusCode != HttpStatus.OK) {
-        return AddBookResponse(statusCode: response.statusCode ?? 500);
-      }
-
       result = AddBookResponse(
-        statusCode: response.statusCode ?? 500,
+        statusCode: response.statusCode ?? HttpStatus.APP_ERROR,
       );
-
       await globals.sessionManager.getSession();
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return AddBookResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return AddBookResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 
   Future<AddBookResponse> addDislikedBook(AddBookRequest request) async {
@@ -167,27 +176,29 @@ class BookService {
         const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      final response = await dio.post(
+      final Response response = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addDislikedBookPath}',
           data: {
             'bookId': request.id
           });
-
-      if (response.statusCode != HttpStatus.CREATED) {
-        return AddBookResponse(statusCode: response.statusCode ?? 500);
-      }
-
       result = AddBookResponse(
-        statusCode: response.statusCode ?? 500,
-      );
-
+        statusCode: response.statusCode ?? HttpStatus.APP_ERROR);
       await globals.sessionManager.getSession();
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return AddBookResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return AddBookResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 
   Future<AddBookResponse> addWishListedBook(AddBookRequest request) async {
@@ -200,21 +211,25 @@ class BookService {
           data: {
             'bookId': request.id
           });
-      if (response.statusCode != HttpStatus.CREATED) {
-        return AddBookResponse(statusCode: response.statusCode ?? 500);
-      }
-
       result = AddBookResponse(
-        statusCode: response.statusCode ?? 500,
+        statusCode: response.statusCode ?? HttpStatus.APP_ERROR,
       );
       await globals.sessionManager.getSession();
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return AddBookResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return AddBookResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 
   Future<AddBookResponse> removeWishListedBook(AddBookRequest request) async {
@@ -222,24 +237,27 @@ class BookService {
         const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      final response = await dio.delete(
+      final Response response = await dio.delete(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.readingPath}/${request.id}',
       );
-      if (response.statusCode != AddBookResponse.success) {
-        return AddBookResponse(statusCode: response.statusCode ?? 500);
-      }
-
       result = AddBookResponse(
-        statusCode: response.statusCode ?? 500,
-      );
+        statusCode: response.statusCode ?? HttpStatus.APP_ERROR);
       await globals.sessionManager.getSession();
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return AddBookResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return AddBookResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 
   Future<AddBookResponse> addReadBook(AddBookRequest request) async {
@@ -247,26 +265,29 @@ class BookService {
         const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      final response = await dio.post(
+      final Response response = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.readBooksPath}',
           data: {
             'bookId': request.id
           });
-      if (response.statusCode != HttpStatus.CREATED) {
-        return AddBookResponse(statusCode: response.statusCode ?? 500);
-      }
-
       result = AddBookResponse(
-        statusCode: response.statusCode ?? 500,
-      );
+        statusCode: response.statusCode ?? HttpStatus.APP_ERROR);
       await globals.sessionManager.getSession();
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return AddBookResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return AddBookResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 
   Future<AddBookResponse> removeReadBook(AddBookRequest request) async {
@@ -277,20 +298,23 @@ class BookService {
       final response = await dio.delete(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.readBooksPath}/${request.id}',
       );
-      if (response.statusCode != AddBookResponse.success) {
-        return AddBookResponse(statusCode: response.statusCode ?? 500);
-      }
-
       result = AddBookResponse(
-        statusCode: response.statusCode ?? 500,
-      );
+        statusCode: response.statusCode ?? HttpStatus.APP_ERROR);
       await globals.sessionManager.getSession();
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return AddBookResponse(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return result;
+      } else {
+        return AddBookResponse(statusCode: dioException.response!.statusCode!);
+      }
+    } catch (error) {
       return result;
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (dioError) {
-      rethrow;
     }
+    return result;
   }
 }

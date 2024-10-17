@@ -26,7 +26,7 @@ class AccountInfo extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                           fontSize: (MediaQuery.of(context).size.width > 400)
-                              ? 30
+                              ? 20
                               : 16,
                           color: Theme.of(context).primaryColor)),
                   Text(globals.session?['email'],
@@ -34,7 +34,7 @@ class AccountInfo extends StatelessWidget {
                       style: TextStyle(
                           fontWeight: FontWeight.w400,
                           fontSize: (MediaQuery.of(context).size.width > 400)
-                              ? 20
+                              ? 18
                               : 12,
                           color: Colors.black87)),
                 ]),

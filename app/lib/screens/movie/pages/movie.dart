@@ -35,7 +35,6 @@ class MovieSuccessWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final movie = context.read<MovieBloc>().state.movie;
     final String releaseDate = movie.releaseDate ?? '';
-
     String imageUrl =
         'https://image.tmdb.org/t/p/w600_and_h900_bestv2${movie.posterPath}';
 
@@ -207,7 +206,7 @@ class MovieSuccessWidget extends StatelessWidget {
                     ),
                     movie.genres != null && movie.genres!.isNotEmpty
                         ? Padding(
-                            padding: const EdgeInsets.all(15.0),
+                            padding: const EdgeInsets.all(16),
                             child: Wrap(
                               spacing: 8.0,
                               runSpacing: 4.0,

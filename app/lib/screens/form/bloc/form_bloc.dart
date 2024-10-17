@@ -39,11 +39,6 @@ class FormBloc extends Bloc<FormEvent, FormStates> {
     }
   }
 
- /* void emitEvent(FormStatus status)
-  {
-    add(EmitEvent(status: status));
-  }*/
-
   // movieCodes is dynamic because session['preferences']['moviesGenres'] is a List<dynamic>
   static List<String> movieCodesToGenres(final List<dynamic> movieCodes)
   {

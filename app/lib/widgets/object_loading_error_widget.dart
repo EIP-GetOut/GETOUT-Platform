@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import 'package:boxicons/boxicons.dart';
 import 'package:getout/tools/app_l10n.dart';
+import 'package:getout/widgets/transition_page.dart';
 
 //todo responsiveclass ObjectLoadingErrorWidget extends StatelessWidget {
  class ObjectLoadingErrorWidget extends StatelessWidget {
@@ -25,17 +26,14 @@ import 'package:getout/tools/app_l10n.dart';
         children: [
           const Icon(Boxicons.bx_error, size: 40, color: Colors.red),
           const SizedBox(width: 10), // Add some space between the icon and the text
-          Expanded(
-            child: Text(
-              appL10n(context)!.error_loading(object),
-              textAlign: TextAlign.justify,
-              style: const TextStyle(
-                fontSize: 12,
-                color: Colors.red,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
+          TransitionPage(
+                    title: appL10n(context)!.error_unknown_short,
+                    description: appL10n(context)!.error_unknown_description,
+                    image: 'assets/images/draw/error.svg',
+                    buttonText: appL10n(context)!.error_ok,
+                    nextPage: () => {
+                          Navigator.pop(context),
+                        }),
         ],
       ),
     );

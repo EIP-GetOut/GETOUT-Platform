@@ -72,7 +72,7 @@ class AddBookResponse extends BookEvent {
 
   final int statusCode;
 
-  static const int success = HttpStatus.OK;
+  static const int success = HttpStatus.CREATED;
 }
 
 class Person extends BookEvent {
