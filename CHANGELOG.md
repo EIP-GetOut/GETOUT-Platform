@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v1.0.0...v1.0.1) (2024-10-17)
+
+
+### Bug Fixes
+
+* :bug: package-lock.json sync ([a2f0e06](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a2f0e061c52dfe801d807df343e4aa427aa5a18f))
+
 ## [1.0.0](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.7.1...v1.0.0) (2024-10-17)
 
 
