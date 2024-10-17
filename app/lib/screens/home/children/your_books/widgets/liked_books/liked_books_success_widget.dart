@@ -36,7 +36,9 @@ class LikedBooksSuccessWidget extends StatelessWidget {
         child: Column(
       children: [
         TitleWidget(
-            asset: 'heart', title: appL10n(context)!.like_books_title, length: books.length),
+            asset: 'heart', title: appL10n(context)!.like_books_title, length: books.length, isBooks: true),
+        const SizedBox(height: 20),
+
         Expanded(
             child: ListView(
                 controller: bookController,

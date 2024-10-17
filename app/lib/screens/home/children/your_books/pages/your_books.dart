@@ -13,12 +13,14 @@ import 'package:getout/screens/home/children/your_books/widgets/watched_books/wa
 import 'package:getout/screens/home/widgets/recommended_books/recommended_books_widget.dart';
 
 class YourBooksPage extends StatelessWidget {
-  const YourBooksPage({super.key});
+  final ScrollController scrollController;
+  const YourBooksPage({super.key, required this.scrollController});
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-        child: Padding(
+    return SingleChildScrollView(
+        controller: scrollController,
+        child: const Padding(
         padding: EdgeInsets.only(top: 30.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

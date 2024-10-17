@@ -147,12 +147,15 @@ class BookSuccessWidget extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Text(
+                    Padding(
+                        padding: const EdgeInsets.only(
+                            left: 20, right: 20, bottom: 10),
+                        child: Text(
                       book.title ?? 'N/A',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                           fontSize: 22, fontWeight: FontWeight.bold),
-                    ),
+                    )),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,

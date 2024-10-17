@@ -87,8 +87,21 @@ const addBookToDislikedBooks = async (accountId: UUID, bookId: string): Promise<
   })
 }
 
-const addBookToReadBooks = async (accountId: UUID, bookId: string): Promise<string[]> =>
-  await addBookToList(accountId, bookId, 'readBooks')
+const addBookToReadBooks = async (accountId: UUID, bookId: string): Promise<string[]> => {
+  return await addBookToList(accountId, bookId, 'readBooks').then(async (readBooks: string []) => {
+    return await removeBookFromReadingList(accountId, bookId).then(async (readBooks: string[]) => {
+      await modifyAccount(accountId, { readBooks })
+    }).then(() => {
+      return readBooks
+    }).catch((err: AppError) => {
+      if (err instanceof BookNotInListError) {
+        return readBooks
+      } else {
+        throw err
+      }
+    })
+  })
+}
 
 const removeBookFromReadingList = async (accountId: UUID, bookId: string): Promise<string[]> =>
   await removeBookFromList(accountId, bookId, 'readingList')

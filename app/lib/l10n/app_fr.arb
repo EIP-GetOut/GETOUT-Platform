@@ -72,26 +72,26 @@
   "@_HOMEPAGE": {},
 
   "homepage_title": "Bienvenue !",
-  "homepage_subtitle": "La productivité à portée de main",
+  "homepage_subtitle": "Des alternatives à portée de main",
   "you_saved": "Vous avez économisé",
   "see_more": "voir plus >",
   "description": "Description",
   "summary": "Résumé",
   "refresh": "Rafraichissement de vos recommandations dans ",
   "story_news": "Le saviez-vous ?",
-  "total_movie": "Total Film",
-  "total_book": "Total Livre",
+  "total_movie": "Heures vues",
+  "total_book": "Page lues",
 
   "@_DASHBOARD": {},
 
-  "dashboard": "Principale",
+  "dashboard": "Accueil",
   "movie_recommendations": "Les films que vous allez aimer",
   "book_recommendations": "Les livres qui vous passionneront",
   "any_recommendations": "Nos recommandations pour vous",
 
   "@_MOVIES": {},
 
-  "movie": "Film",
+  "movie": "Films",
   "movies": "les films",
   "the_movie": "Le film",
   "your_movies": "Vos films",
@@ -121,7 +121,7 @@
 
   "@_BOOKS": {},
 
-  "book": "Livre",
+  "book": "Livres",
   "books": "les livres",
   "the_book": "Le livre",
   "your_books": "Vos livres",

@@ -8,8 +8,8 @@
 import { type Request, type Response, Router } from 'express'
 import { StatusCodes } from 'http-status-codes'
 
+import caching from '@services/middlewares/caching'
 import logger, { logApiRequest } from '@services/middlewares/logging'
-import validate from '@services/middlewares/validator'
 import { getMovie } from '@services/tmdb/getMovie'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
@@ -56,7 +56,7 @@ const router = Router()
  *         description: Internal server error.
  */
 
-router.get('/movie/:id', validate, logApiRequest, (req: Request, res: Response) => {
+router.get('/movie/:id', caching(24 * 60 * 60), logApiRequest, (req: Request, res: Response) => {
   getMovie(parseInt(req.params.id)).then((movie: any) => {
     logger.info(`Successfully retreived movie ${req.params.id}: ${JSON.stringify(movie, null, 2)}`)
     res.status(StatusCodes.OK).json({ ...movie })

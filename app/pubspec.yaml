@@ -1,6 +1,5 @@
 name: getout
-description: Official GetOut's mobile application.
-
+description: "Connect to reality"
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -8,14 +7,19 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
-# Both the version aimport 'package:flutter_switch/flutter_switch.dart';S versioning at
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.5 <3.0.0'
+  sdk: ^3.5.3
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -26,16 +30,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  shimmer: 3.0.0
-  flutter_switch: ^0.3.2
-  flutter_phoenix: ^1.1.1
-  share_plus: ^10.0.2
-
   flutter_localizations:
     sdk: flutter
 
+  shimmer: 3.0.0
+  flutter_switch: ^0.3.2
+  flutter_phoenix: ^1.1.1
+  share_plus: ^10.0.3
+
   html: ^0.15.4
-### Data
+  ### Data
   intl: ^0.19.0
   flutter_bloc: ^8.1.6
   bloc: ^8.1.4
@@ -45,29 +49,29 @@ dependencies:
   path_provider: ^2.1.4
   flutter_localization: ^0.2.2
 
-### Network
+
+  ### Network
   dio: ^5.7.0
   cookie_jar: ^4.0.8
   dio_cookie_manager: ^3.1.1
 
-### Icons/Images
-  cupertino_icons: ^1.0.8 # Use with the CupertinoIcons class for iOS style icons.
+  ### Icons/Images
+  cupertino_icons: ^1.0.8  # Use with the CupertinoIcons class for iOS style icons.
   boxicons: ^2.1.3
   flutter_svg: ^2.0.10+1
 
-### Notifications
-  flutter_local_notifications: ^17.2.2
+  ### Notifications
+
+  flutter_local_notifications: ^17.2.3
   permission_handler: ^11.3.1
   is_first_run: ^1.0.0
   timezone: ^0.9.4
 
-### UI
+  ### UI
   auto_size_text: ^3.0.0
   carousel_slider: ^5.0.0
-  url_launcher: ^6.3.0
+  url_launcher: ^6.3.1
   provider: ^6.1.2
-
-#  flutter_json: ^0.0.2
 
 dev_dependencies:
   flutter_test:
@@ -78,21 +82,25 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^4.0.0
-  flutter_launcher_icons: ^0.13.1
+  flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.1
+  # flutter_native_splash: ^2.4.1 # Not used
 
-flutter_icons:
-  image_path: "assets/images/logo/getout_launch.png"
+flutter_launcher_icons:
+  android: true
   ios: true
-  remove_alpha_ios: true
+  image_path: "assets/images/logo/getout_launch.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
-  android:
-        adaptive_icon_background: "#000000"
-        adaptive_icon_foreground: "assets/images/logo/getout_launch.png"
-        adaptive_icon_maskable: true
+  image_path_android: "assets/images/logo/getout_launch.png"
+  adaptive_icon_background: "assets/images/logo/getout_launch.png" # only available for Android 8.0 devices and above
+  adaptive_icon_foreground: "assets/images/logo/getout_launch.png" # only available for Android 8.0 devices and above
+  adaptive_icon_monochrome: "assets/images/logo/getout_launch.png" # only available for Android 13 devices and above
+  adaptive_icon_foreground_inset: 16 # only available for Android 8.0 devices and above
   web:
     generate: true
     image_path: "assets/images/logo/getout_launch.png"
+    background_color: "#d75842"
+    theme_color: "#d75842"
   windows:
     generate: true
     image_path: "assets/images/logo/getout_launch.png"
@@ -100,6 +108,30 @@ flutter_icons:
   macos:
     generate: true
     image_path: "assets/images/logo/getout_launch.png"
+
+#flutter_icons:
+#  image_path: "assets/images/logo/getout.png"
+#  ios: true
+#  remove_alpha_ios: true
+#  min_sdk_android: 21 # android min sdk min:16, default 21
+#  android:
+#    adaptive_icon_background: "#d75842"
+#    adaptive_icon_foreground: "assets/images/logo/getout.png"
+#    adaptive_icon_maskable: true
+#    icon_size: 48 # min:48, max:256, default: 48
+#  web:
+#    generate: true
+#    image_path: "assets/images/logo/getout.png"
+#    icon_size: 100 # min:48, max:256, default: 48
+#  windows:
+#    generate: true
+#    image_path: "assets/images/logo/getout.png"
+#    icon_size: 100 # min:48, max:256, default: 48
+#  macos:
+#    generate: true
+#    image_path: "assets/images/logo/getout.png"
+#    icon_size: 100 # min:48, max:256, default: 48
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -115,14 +147,14 @@ flutter:
 
   assets:
     - assets/
-#    Draw:
+    #    Draw:
     - assets/images/draw/astronaut.svg
     - assets/images/draw/form_complete.svg
     - assets/images/draw/woman.png
     - assets/images/draw/email_verified_complete.svg
     - assets/images/draw/question.png
     - assets/images/draw/error.svg
-#    Icon:
+    #    Icon:
     - assets/images/icon/bell(notification).svg
     - assets/images/icon/book.svg
     - assets/images/icon/disconnect.svg
@@ -139,7 +171,7 @@ flutter:
     - assets/images/icon/profile_picture.png
     - assets/images/icon/setting.svg
     - assets/images/icon/trash.svg
-#    Logo:
+    #    Logo:
     - assets/images/logo/cinema.png
     - assets/images/logo/DVD.png
     - assets/images/logo/VOD.png
@@ -149,56 +181,56 @@ flutter:
     - assets/images/logo/apple_tv+.png
     - assets/images/logo/mycanal.png
     - assets/images/logo/autre_sources.png
-    - assets/images/logo/full_getout.png
+    # - assets/images/logo/full_getout.png
     - assets/images/logo/getout.png
     - assets/images/logo/google.png # not used yet
-#    Other:
+    #    Other:
     - assets/images/other/split.png
     - assets/images/other/text_getout.png
 
   fonts:
-  - family: Poppins
-    fonts:
-      - asset: assets/fonts/Poppins/Poppins-BlackItalic.ttf
-      - asset: assets/fonts/Poppins/Poppins-Black.ttf
-      - asset: assets/fonts/Poppins/Poppins-BoldItalic.ttf
-      - asset: assets/fonts/Poppins/Poppins-Bold.ttf
-      - asset: assets/fonts/Poppins/Poppins-ExtraBoldItalic.ttf
-      - asset: assets/fonts/Poppins/Poppins-ExtraBold.ttf
-      - asset: assets/fonts/Poppins/Poppins-ExtraLightItalic.ttf
-      - asset: assets/fonts/Poppins/Poppins-ExtraLight.ttf
-      - asset: assets/fonts/Poppins/Poppins-Italic.ttf
-      - asset: assets/fonts/Poppins/Poppins-LightItalic.ttf
-      - asset: assets/fonts/Poppins/Poppins-Light.ttf
-      - asset: assets/fonts/Poppins/Poppins-MediumItalic.ttf
-      - asset: assets/fonts/Poppins/Poppins-Medium.ttf
-      - asset: assets/fonts/Poppins/Poppins-Regular.ttf
-      - asset: assets/fonts/Poppins/Poppins-SemiBoldItalic.ttf
-      - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf
-      - asset: assets/fonts/Poppins/Poppins-ThinItalic.ttf
-      - asset: assets/fonts/Poppins/Poppins-Thin.ttf
-  - family: Urbanist
-    fonts:
-      - asset: assets/fonts/Urbanist/Urbanist-Italic-VariableFont_wght.ttf
-      - asset: assets/fonts/Urbanist/Urbanist-VariableFont_wght.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-Black.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-BlackItalic.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-Bold.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-BoldItalic.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-ExtraBold.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-ExtraBoldItalic.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-ExtraLight.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-ExtraLightItalic.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-Italic.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-Light.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-LightItalic.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-Medium.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-MediumItalic.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-Regular.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-SemiBold.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-SemiBoldItalic.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-Thin.ttf
-      - asset: assets/fonts/Urbanist/static/Urbanist-ThinItalic.ttf
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins/Poppins-BlackItalic.ttf
+        - asset: assets/fonts/Poppins/Poppins-Black.ttf
+        - asset: assets/fonts/Poppins/Poppins-BoldItalic.ttf
+        - asset: assets/fonts/Poppins/Poppins-Bold.ttf
+        - asset: assets/fonts/Poppins/Poppins-ExtraBoldItalic.ttf
+        - asset: assets/fonts/Poppins/Poppins-ExtraBold.ttf
+        - asset: assets/fonts/Poppins/Poppins-ExtraLightItalic.ttf
+        - asset: assets/fonts/Poppins/Poppins-ExtraLight.ttf
+        - asset: assets/fonts/Poppins/Poppins-Italic.ttf
+        - asset: assets/fonts/Poppins/Poppins-LightItalic.ttf
+        - asset: assets/fonts/Poppins/Poppins-Light.ttf
+        - asset: assets/fonts/Poppins/Poppins-MediumItalic.ttf
+        - asset: assets/fonts/Poppins/Poppins-Medium.ttf
+        - asset: assets/fonts/Poppins/Poppins-Regular.ttf
+        - asset: assets/fonts/Poppins/Poppins-SemiBoldItalic.ttf
+        - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf
+        - asset: assets/fonts/Poppins/Poppins-ThinItalic.ttf
+        - asset: assets/fonts/Poppins/Poppins-Thin.ttf
+    - family: Urbanist
+      fonts:
+        - asset: assets/fonts/Urbanist/Urbanist-Italic-VariableFont_wght.ttf
+        - asset: assets/fonts/Urbanist/Urbanist-VariableFont_wght.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-Black.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-BlackItalic.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-Bold.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-BoldItalic.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-ExtraBold.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-ExtraBoldItalic.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-ExtraLight.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-ExtraLightItalic.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-Italic.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-Light.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-LightItalic.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-Medium.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-MediumItalic.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-Regular.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-SemiBold.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-SemiBoldItalic.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-Thin.ttf
+        - asset: assets/fonts/Urbanist/static/Urbanist-ThinItalic.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -206,10 +238,10 @@ flutter:
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
+  # https://flutter.dev/to/resolution-aware-images
 
   # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
+  # https://flutter.dev/to/asset-from-package
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
@@ -229,4 +261,4 @@ flutter:
   #         weight: 700
   #
   # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages
+  # see https://flutter.dev/to/font-from-package

@@ -9,13 +9,12 @@ part of 'service.dart';
 
 class HistoryService extends ServiceTemplate {
   final String _id = (globals.session != null) ? globals.session!['id'].toString() : '';
-  final Dio dio = Dio();
+  final Dio dio = Dio(globals.dioOptions);
 
   HistoryService() {
     dio.interceptors.add(CookieManager(PersistCookieJar(
         ignoreExpires: true,
         storage: FileStorage(globals.cookiePath))));
-    dio.options.headers = ({'Content-Type': 'application/json'});
   }
 
 
@@ -24,7 +23,7 @@ class HistoryService extends ServiceTemplate {
     try { /// TODO we need to do something prettier
       final response = await dio.get(
           '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedBooksHistoryPath}',
-          options: Options(headers: {'Content-Type': 'application/json'}));
+      );
       if (response.statusCode != HttpStatus.OK) {
         return Future.error(Exception(
           'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
@@ -61,7 +60,7 @@ class HistoryService extends ServiceTemplate {
     try { /// TODO we need to do something prettier
       final response = await dio.get(
           '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedMoviesHistoryPath}',
-          options: Options(headers: {'Content-Type': 'application/json'}));
+      );
       if (response.statusCode != HttpStatus.OK) {
         return Future.error(Exception(
           'Error ${response.statusCode} while fetching books: ${response.statusMessage}',

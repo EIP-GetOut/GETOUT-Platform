@@ -62,6 +62,7 @@ class HttpStatus {
   static const int INSUFFICIENT_STORAGE = 507;
   static const int NETWORK_AUTHENTICATION_REQUIRED = 511;
   static const int NO_INTERNET = 599;
+  static const int APP_TIMEOUT = 2;
   static const int APP_ERROR = 1;
 
   Map<int, String> statusCodeMessages = {
@@ -118,6 +119,7 @@ class HttpStatus {
     GATEWAY_TIMEOUT: 'Gateway Timeout',
     HTTP_VERSION_NOT_SUPPORTED: 'HTTP Version Not Supported',
     NO_INTERNET: 'No internet connection',
+    APP_TIMEOUT: 'Request Timeout',
     APP_ERROR: 'The application has encountered an unknown error. Please try again later',
   };
 

@@ -29,23 +29,40 @@ class EmailVerifiedBloc extends Bloc<EmailVerifiedEvent, EmailVerifiedState> {
 
   Future mapEventToState(
       EmailVerifiedEvent event, Emitter<EmailVerifiedState> emit) async {
+    final EmailVerifiedResponseModel? emailVerifiedResponse;
+    final EmailVerifiedResendResponseModel? evrResponse;
+
     if (event is EmailVerifiedCodeChanged) {
       emit(state.copyWith(code: event.code));
     } else if (event is EmailVerifiedResend) {
-      try {
-        await service?.emailVerifiedResend();
-      } catch (e) {
-        emit(state.copyWith(status: Status.error, exception: e));
+
+      if (service == null) {
+        emit(state.copyWith(status: Status.error, statusCode: HttpStatus.APP_ERROR));
+        return;
       }
+      evrResponse = await service?.emailVerifiedResend();
+      if (evrResponse == null) {
+        emit(state.copyWith(status: Status.error, statusCode: HttpStatus.APP_ERROR));
+      } else if (evrResponse.statusCode != EmailVerifiedResendResponseModel.success) {
+        emit(state.copyWith(status: Status.error, statusCode: evrResponse.statusCode));
+      } else {
+        emit(state.copyWith(status: Status.success));
+      }
+
     } else if (event is EmailVerifiedSubmitted) {
       emit(state.copyWith(status: Status.loading));
-
-      try {
-        await service
-            ?.emailVerified(EmailVerifiedRequestModel(code: state.code));
+      if (service == null) {
+        emit(state.copyWith(status: Status.error, statusCode: HttpStatus.APP_ERROR));
+        return;
+      }
+      emailVerifiedResponse = await service
+          ?.emailVerified(EmailVerifiedRequestModel(code: state.code));
+      if (emailVerifiedResponse == null) {
+        emit(state.copyWith(status: Status.error, statusCode: HttpStatus.APP_ERROR));
+      } else if (emailVerifiedResponse.statusCode != EmailVerifiedResponseModel.success) {
+        emit(state.copyWith(status: Status.error, statusCode: emailVerifiedResponse.statusCode));
+      } else {
         emit(state.copyWith(status: Status.success));
-      } catch (e) {
-        emit(state.copyWith(status: Status.error, exception: e));
       }
     }
   }

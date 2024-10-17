@@ -9,14 +9,12 @@ part of 'service.dart';
 
 class BooksService extends ServiceTemplate {
   final String _id = (globals.session != null) ? globals.session!['id'].toString() : '';
-  final Dio dio = Dio();
+  final Dio dio = Dio(globals.dioOptions);
 
   BooksService() {
     dio.interceptors.add(CookieManager(PersistCookieJar(
         ignoreExpires: true,
         storage: FileStorage(globals.cookiePath))));
-    dio.options.headers = ({'Content-Type': 'application/json'});
-
   }
 
   /// RECOMMENDED
@@ -35,11 +33,16 @@ class BooksService extends ServiceTemplate {
         ));
       }
       response.data.forEach((elem) {
+       List<dynamic>? genres = elem['categories']?.toString().replaceAll('[', '').replaceAll(']', '').split(',');
+       if (genres!= null && genres.length > 2) genres = genres.sublist(0, 2);
         result.add(BookPreview(
             id: elem['id'],
             title: elem['title'],
             posterPath: elem['posterPath'],
-            overview: elem['description']));
+            overview: elem['description'],
+            releaseDate: elem['releaseDate'],
+            averageRating: elem['averageRating'],
+            genres: genres));
       });
     } on DioException catch (dioException) {
       if (dioException.response != null && dioException.response?.statusCode != null) {
@@ -77,12 +80,9 @@ class BooksService extends ServiceTemplate {
   }
 
   Future<dynamic> getLikedBooksId(GenerateBooksRequest request) async {
-    final Response? response;
-
-    response = await dio.get('${ApiConstants.rootApiPath}/account/$_id/likedBooks',
-            options: Options(headers: {
-              'Content-Type': 'application/json',
-            }));
+    /// TODO need to be put in a try catch
+    final Response response =
+    await dio.get('${ApiConstants.rootApiPath}/account/$_id/likedBooks');
     if (response.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
         'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
@@ -112,22 +112,16 @@ class BooksService extends ServiceTemplate {
   }
 
   Future<dynamic> getSavedBooksId(GenerateBooksRequest request) async {
-    dynamic data;
-
+    /// TODO need to be put in a try catch
     final response = await dio
-        .get('${ApiConstants.rootApiPath}/account/$_id/readinglist',
-            options: Options(headers: {
-              'Content-Type': 'application/json',
-            }));
+        .get('${ApiConstants.rootApiPath}/account/$_id/readinglist');
+
     if (response.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
         'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
       ));
     }
-
-    data = response.data;
-
-    return data;
+    return response.data;
   }
 
   /// WATCHED
@@ -151,22 +145,15 @@ class BooksService extends ServiceTemplate {
   }
 
   Future<dynamic> getWatchedBooksId(GenerateBooksRequest request) async {
-    dynamic data;
-
+    /// TODO need to be put in a try catch
     final response = await dio
-        .get('${ApiConstants.rootApiPath}/account/$_id/readBooks',
-        options: Options(headers: {
-          'Content-Type': 'application/json',
-        }));
+        .get('${ApiConstants.rootApiPath}/account/$_id/readBooks');
     if (response.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
         'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
       ));
     }
-
-    data = response.data;
-
-    return data;
+    return response.data;
   }
 
   //Info
@@ -174,9 +161,9 @@ class BooksService extends ServiceTemplate {
     BookStatusResponse result =
         const BookStatusResponse(statusCode: HttpStatus.APP_ERROR);
 
+    /// TODO need to be put in a try catch
     final Response response = await dio.get(
-        '${ApiConstants.rootApiPath}${ApiConstants.getInfoBookPath}/$book',
-        options: Options(headers: {'Content-Type': 'application/json'}));
+        '${ApiConstants.rootApiPath}${ApiConstants.getInfoBookPath}/$book');
     try {
       if (response.statusCode != MovieStatusResponse.success) {
         return const BookStatusResponse(

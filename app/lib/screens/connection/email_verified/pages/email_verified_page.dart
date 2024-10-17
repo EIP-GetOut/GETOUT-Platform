@@ -9,7 +9,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dio/dio.dart';
 
 import 'package:getout/screens/connection/email_verified/bloc/email_verified_bloc.dart';
 import 'package:getout/screens/connection/email_verified/pages/email_verified_success_page.dart';
@@ -35,10 +34,10 @@ class EmailVerifiedPage extends StatelessWidget {
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, state) {
         if (state.status.isError) {
-          if (state.exception is DioException &&
-              (state.exception as DioException).response!.statusCode ==
-                  HttpStatus.FORBIDDEN) {
+          if (state.statusCode == HttpStatus.FORBIDDEN) {
             showSnackBar(context, appL10n(context)!.code_incorrect);
+          } else if (state.statusCode == HttpStatus.APP_TIMEOUT) {
+            showSnackBar(context, 'Timeout'); /// TODO create a timeout message
           } else {
             showSnackBar(context, appL10n(context)!.error_unknown);
           }

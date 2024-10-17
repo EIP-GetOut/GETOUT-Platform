@@ -2,6 +2,7 @@ import requests
 import random
 from utils import formated_print
 from langdetect import detect
+import asyncio
 
 NB_BOOKS = 100
 BOOKS_BY_GENRES_WEIGHT = 0.45
@@ -44,41 +45,44 @@ def extractBookInfo(book: dict, existing_book_ids: set, bookread: list) -> dict:
     return None
 
 
-def getBooksByCriteria(bookread: list, search_key: str, values: list, booksPool: list, weight: float) -> list:
-    booksPoolByCriteria = []
-    existing_book_ids = {book['id'] for book in booksPool}
+async def fetchBooksConcurrently(paramsArray):
+    tasks = [asyncio.to_thread(fetchBook, params) for params in paramsArray]
+    resultsArray = await asyncio.gather(*tasks)
+    return resultsArray
 
-    for value in values:
-        criteria_books = []
+def getBooksByCriteria(bookread: list, search_key: str, genres: list, booksPool: list, weight: float) -> list:
+    existing_book_ids = {book['id'] for book in booksPool}
+    paramsArray = []
+    booksPoolByCriteria = []
+    booksPoolFiltered = []
+
+    for genre in genres:
         start_index = 0
 
-        while len(criteria_books) < NB_BOOKS:
+        for _ in range(3):
             params = {
-                'q': f'{search_key}:{value}',
+                'q': f'{search_key}:{genre}',
                 'maxResults': 40,
                 'startIndex': start_index,
                 'langRestrict': 'fr',
                 'printType': 'books'
             }
-            books = fetchBook(params)
-            if not books:
-                break
-
-            for book in books:
-                book_data = extractBookInfo(book, existing_book_ids, bookread)
-                if book_data:
-                    criteria_books.append(book_data)
-                    existing_book_ids.add(book_data['id'])
-
-                if len(criteria_books) >= NB_BOOKS:
-                    break
-
+            paramsArray.append(params)
             start_index += 40
 
-        booksPoolByCriteria.extend(criteria_books)
-        random.shuffle(booksPoolByCriteria)
-        if len(booksPoolByCriteria) > int(NB_BOOKS * weight):
-            booksPoolByCriteria = booksPoolByCriteria[:int(NB_BOOKS * weight)]
+
+    resultsArray = asyncio.run(fetchBooksConcurrently(paramsArray))
+    for bookList in resultsArray:
+        for book in bookList:
+            book_data = extractBookInfo(book, existing_book_ids, bookread)
+            if book_data:
+                booksPoolFiltered.append(book_data)
+                existing_book_ids.add(book_data['id'])
+        booksPoolByCriteria.extend(booksPoolFiltered)
+
+    random.shuffle(booksPoolByCriteria)
+    if len(booksPoolByCriteria) > int(NB_BOOKS * weight):
+        booksPoolByCriteria = booksPoolByCriteria[:int(NB_BOOKS * weight)]
 
     return booksPoolByCriteria
 
@@ -99,6 +103,7 @@ def getRandomBooks(bookread: list, booksPool: list) -> list:
 
     while len(booksPoolRandom) < NB_BOOKS:
         params = {
+            'q': '=',
             'maxResults': 40,
             'startIndex': start_index,
             'langRestrict': 'fr',
@@ -126,8 +131,10 @@ def getRandomBooks(bookread: list, booksPool: list) -> list:
 def getBooksPool(parameters: dict) -> list:
     booksPool = []
     booksPool.extend(getBooksByGenres(parameters["readBooks"], parameters["genres"], booksPool, BOOKS_BY_GENRES_WEIGHT))
-    booksPool.extend(getBooksByGenres(parameters["readBooks"], parameters["likedGenres"], booksPool, BOOKS_BY_GENRES_LIKED_WEIGHT))
-    booksPool.extend(getBooksByAuthors(parameters["readBooks"], parameters["favouriteWriters"], booksPool))
+    if parameters["likedGenres"] is not None and len(parameters["likedGenres"]) > 5:
+        booksPool.extend(getBooksByGenres(parameters["readBooks"], parameters["likedGenres"], booksPool, BOOKS_BY_GENRES_LIKED_WEIGHT))
+    if parameters["favouriteWriters"] is not None:
+        booksPool.extend(getBooksByAuthors(parameters["readBooks"], parameters["favouriteWriters"], booksPool))
     if len(booksPool) < NB_BOOKS:
         booksPool.extend(getRandomBooks(parameters["readBooks"], booksPool))
     return booksPool

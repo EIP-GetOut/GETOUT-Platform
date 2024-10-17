@@ -12,6 +12,8 @@ def formatMovieList(movieList: list[dict]) -> list[dict]:
         # TODO : include director
         # director = next((crew for crew in movie.get("credits", {}).get("crew", []) if crew['job'] == 'Director'), None)
 
+        if movie.get("backdrop_path") is None:
+            continue
         filteredMovie = {
             "id": movie.get("id"),
             "title": movie.get("title"),

@@ -11,6 +11,7 @@ import { StatusCodes } from 'http-status-codes'
 
 import validate from '@middlewares/validator'
 
+import caching from '@services/middlewares/caching'
 import { logApiRequest } from '@services/middlewares/logging'
 import { AuthenticationError } from '@services/utils/customErrors'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
@@ -47,7 +48,7 @@ const rules = [
  *       500:
  *         description: Internal server error.
  */
-router.get('/permission/:permissionName', rules, validate, logApiRequest, (req: Request, res: Response) => {
+router.get('/permission/:permissionName', rules, validate, caching(24 * 60 * 60), logApiRequest, (req: Request, res: Response) => {
   if (req.session.account?.id == null) {
     handleErrorOnRoute(res)(new AuthenticationError('User must be connected.'))
     return

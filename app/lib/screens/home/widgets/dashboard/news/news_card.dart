@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/tools/launch_webview.dart';
 import 'package:getout/screens/home/widgets/dashboard/news/news_bloc.dart';
+import 'package:getout/widgets/alert.dart';
 
 class NewsCard extends StatelessWidget {
   const NewsCard({super.key});
@@ -18,27 +19,33 @@ class NewsCard extends StatelessWidget {
     return BlocBuilder<NewsBloc, NewsState>(builder: (context, state) {
       return Center(
           child: GestureDetector(
-              onTap: state.news.url != '' ? () => launchWebView(
-                  state.news.url) : () => {},
+              onTap: state.news.url != ''
+                  ? () => showAlertDialog(
+                      context,
+                      'Aller vers le site',
+                      'Redirection',
+                      'Êtes-vous sûr de vouloir être redirigé vers un site externe ?',
+                      () => launchWebView(state.news.url))
+                  : () => {},
               child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ),
                 child: Stack(children: <Widget>[
                   ClipRRect(
-                      borderRadius: BorderRadius.circular(25),
-                      child: state.news.picture != ''
+                    borderRadius: BorderRadius.circular(25),
+                    child: state.news.picture != ''
                         ? Image.network(
                             '${state.news.picture}',
                             fit: BoxFit.cover,
-                            height: 400,
+                            height: 300,
                             width: 500,
                             color: const Color.fromARGB(19, 56, 56, 56)
-                                .withOpacity(1),
+                                .withOpacity(0.9),
                             colorBlendMode: BlendMode.modulate,
                           )
                         : Container(
-                            height: 400,
+                            height: 300,
                             width: 500,
                             color: const Color.fromARGB(255, 21, 21, 21),
                           ),

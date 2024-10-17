@@ -16,13 +16,12 @@ import 'package:getout/global.dart' as globals;
 part 'edit_email_model.dart';
 
 class EditEmailServices {
-  final Dio dio = Dio();
+  final Dio dio = Dio(globals.dioOptions);
 
   EditEmailServices() {
     dio.interceptors.add(CookieManager(PersistCookieJar(
         ignoreExpires: true,
         storage: FileStorage(globals.cookiePath))));
-    dio.options.headers = ({'Content-Type': 'application/json'});
   }
 
   Future<EditEmailResponseModel> sendNewEmail(final EditEmailRequestModel request) async
@@ -35,16 +34,22 @@ class EditEmailServices {
     try {
       Response dioResponse = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.changeEmailPath}',
-          // data: preferences,
-          options: Options(headers: {'Content-Type': 'application/json'}));
+      );
       response = EditEmailResponseModel(statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
     } on DioException catch (dioException) {
-      if (dioException.response != null && dioException.response?.statusCode != null) {
-        response = EditEmailResponseModel(
-            statusCode: dioException.response?.statusCode ?? HttpStatus.APP_ERROR);
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return EditEmailResponseModel(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return response;
+      } else {
+        return EditEmailResponseModel(
+            statusCode: dioException.response!.statusCode!);
       }
     } catch (dioError) {
-      response = const EditEmailResponseModel(statusCode: HttpStatus.APP_ERROR);
+      return response;
     }
     return response;
   }
@@ -58,13 +63,19 @@ class EditEmailServices {
           .post('${ApiConstants.rootApiPath}${ApiConstants.verifyEmailPath}',
           data: {
             'code': int.parse(request.code),
-          },
-          options: Options(headers: {'Content-Type': 'application/json'}));
+          });
       response = EmailVerificationResponseModel(statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
     } on DioException catch (dioException) {
-      if (dioException.response != null && dioException.response?.statusCode != null) {
-        response = EmailVerificationResponseModel(
-            statusCode: dioException.response?.statusCode ?? HttpStatus.APP_ERROR);
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return EmailVerificationResponseModel(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return response;
+      } else {
+        return EmailVerificationResponseModel(
+            statusCode: dioException.response!.statusCode!);
       }
     } catch (error) {
       return response;
@@ -76,7 +87,7 @@ class EditEmailServices {
     try {
       await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.verifyEmailResendPath}',
-          options: Options(headers: {'Content-Type': 'application/json'}));
+      );
     } on DioException {
       // add "catch (dioError)" for debugging
       rethrow;

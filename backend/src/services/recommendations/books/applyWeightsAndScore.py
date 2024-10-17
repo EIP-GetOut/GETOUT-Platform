@@ -43,21 +43,21 @@ def recommend_books_with_parameters(parameters, books):
         score = 0
         for i in range(len(book["genres"])):
             if book["genres"][i] in parameters["genres"]:
-                score += 1.0
+                score += 0.9
         for i in range(len(book["genres"])):
             if liked_genres[0] and book["genres"][i] in parameters["likedGenres"]:
                 score += 0.5
         for i in range(len(book["genres"])):
             if disliked_genres[0] and book["genres"][i] in parameters["dislikedGenres"]:
-                score -= 0.5
+                score -= 0.4
         book_year = extract_year_from_date(book["date"])
         if book_year is not None:
             if favourite_epoch and is_in_decade(book_year, favourite_epoch):
                 score += 0.3
             elif least_favourite_epoch and is_in_decade(book_year, least_favourite_epoch):
-                score -= 0.3
+                score -= 0.2
         if favourite_author[0] and book["author"] in parameters["favouriteWriters"]:
-            score += 0.4
+            score += 0.5
         return score
 
 

@@ -17,7 +17,7 @@ const router = Router()
 
 router.get('/sessions', logApiRequest, (req: Request, res: Response) => {
   getSessions(req.sessionStore).then(async (nbSessions: any) => {
-    logger.info('Successfully retreived the number of user connected')
+    logger.info('Successfully retreived the number of user connected.')
     return res.status(StatusCodes.OK).json({ nbSessions })
   }).catch(handleErrorOnRoute(res))
 })

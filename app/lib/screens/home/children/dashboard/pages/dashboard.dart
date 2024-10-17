@@ -16,7 +16,11 @@ import 'package:getout/widgets/transition_page.dart';
 import 'package:getout/tools/app_l10n.dart';
 
 class Dashboard extends StatelessWidget {
-  const Dashboard({super.key});
+  final PageController pageController;
+  final ScrollController movieController;
+  final ScrollController bookController;
+
+  const Dashboard({super.key, required this.pageController, required this.movieController, required this.bookController});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +51,9 @@ class Dashboard extends StatelessWidget {
           });
           return const SizedBox.shrink();
         } else {
-          return const DashboardPage();
+          return DashboardPage(pageController: pageController ,
+              movieController: movieController,
+              bookController: bookController);
         }
       },
     );

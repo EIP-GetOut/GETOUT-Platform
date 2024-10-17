@@ -38,7 +38,9 @@ class WatchedMoviesSuccessWidget extends StatelessWidget {
             TitleWidget(
                 asset: 'heart',
                 title: appL10n(context)!.watch_movies_title,
-                length: movies.length),
+                length: movies.length,
+                isBooks: false),
+            const SizedBox(height: 20),
             Expanded(
                 child: ListView(
                     controller: movieController,
@@ -50,12 +52,17 @@ class WatchedMoviesSuccessWidget extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => BlocProvider.value(
-                                        value: BlocProvider.of<LikedMoviesHydratedBloc>(context),
+                                        value: BlocProvider.of<
+                                            LikedMoviesHydratedBloc>(context),
                                         child: BlocProvider.value(
-                                        value: BlocProvider.of<SavedMoviesHydratedBloc>(context),
-                                        child: BlocProvider.value(
-                                        value: BlocProvider.of<WatchedMoviesHydratedBloc>(context),
-                                        child: Movie(movies[index].id))))));
+                                            value: BlocProvider.of<
+                                                    SavedMoviesHydratedBloc>(
+                                                context),
+                                            child: BlocProvider.value(
+                                                value: BlocProvider.of<
+                                                        WatchedMoviesHydratedBloc>(
+                                                    context),
+                                                child: Movie(movies[index].id))))));
                           },
                           child: MoviePreviewWidget(
                               posterPath: movies[index].posterPath,
