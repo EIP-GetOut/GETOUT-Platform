@@ -68,8 +68,8 @@ class ActionsPageBook extends StatelessWidget {
                         ), // Icons.visibility_off
                         Text(
                             book.read != null && book.read!
-                                ? appL10n(context)!.remove_seen
-                                : appL10n(context)!.add_seen,
+                                ? appL10n(context)!.remove_read
+                                : appL10n(context)!.add_read,
                             style: const TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.w500))
                       ]),
