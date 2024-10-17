@@ -5,6 +5,7 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>, Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -15,8 +16,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:getout/tools/app_l10n.dart';
-import 'package:getout/widgets/transition_page.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -26,19 +25,17 @@ import 'package:getout/screens/connection/services/service.dart';
 import 'package:getout/screens/connection/email_verified/bloc/email_verified_provider.dart';
 import 'package:getout/screens/home/bloc/home_provider.dart';
 import 'package:getout/screens/form/pages/form.dart';
-import 'package:getout/widgets/object_loading_error_widget.dart';
 import 'package:getout/bloc/session/session_service.dart';
 import 'package:getout/bloc/session/session_event.dart';
 import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/observer.dart';
 import 'package:getout/bloc/theme/bloc.dart';
+import 'package:getout/widgets/transition_page.dart';
 import 'package:getout/widgets/loading.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/global.dart' as globals;
-
-import 'dart:async';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

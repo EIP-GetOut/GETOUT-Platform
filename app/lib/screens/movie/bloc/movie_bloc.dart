@@ -27,16 +27,12 @@ class MovieBloc extends Bloc<MovieEvent, MovieState> {
   void _mapGetMovieEventToState(
       CreateInfoMovieRequest event, Emitter<MovieState> emit) async {
     emit(state.copyWith(status: MovieStatus.loading));
-    try {
-      final InfoMovieResponse movie = await movieService.getInfoMovie(event);
-      emit(
-        state.copyWith(
-          status: MovieStatus.success,
-          movie: movie,
-        ),
-      );
-    } catch (error) {
-      emit(state.copyWith(status: MovieStatus.error));
+    final InfoMovieResponse movie = await movieService.getInfoMovie(event);
+
+    if (movie.statusCode == InfoMovieResponse.success) {
+      emit(state.copyWith(status: MovieStatus.success, movie: movie));
+    } else {
+      emit(state.copyWith(status: MovieStatus.error, movie: movie));
     }
   }
 }
