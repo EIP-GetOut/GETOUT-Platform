@@ -9,12 +9,11 @@ part of 'service.dart';
 
 class MoviesService extends ServiceTemplate {
   final String _id = globals.session?['id'].toString() ?? '';
-  final Dio dio = Dio();
+  final Dio dio = Dio(globals.dioOptions);
 
   MoviesService() {
     dio.interceptors.add(CookieManager(PersistCookieJar(
         ignoreExpires: true, storage: FileStorage(globals.cookiePath))));
-    dio.options.headers = ({'Content-Type': 'application/json'});
   }
 
   // RECOMMEND
@@ -23,9 +22,8 @@ class MoviesService extends ServiceTemplate {
     GenerateMoviesResponse result = [];
 
     try {
-      final response = await dio.get(
-          '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedMoviesPath}',
-          options: Options(headers: {'Content-Type': 'application/json'}));
+      final Response response = await dio.get(
+          '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedMoviesPath}',);
 
       if (response.statusCode != HttpStatus.OK) {
         return Future.error(Exception(
@@ -78,13 +76,10 @@ class MoviesService extends ServiceTemplate {
   }
 
   Future<dynamic> getLikedMoviesId(GenerateMoviesRequest request) async {
-    final Response? response;
+    /// TODO need to be put in a try catch
+    final Response response =
+        await dio.get('${ApiConstants.rootApiPath}/account/$_id/likedMovies');
 
-    response =
-        await dio.get('${ApiConstants.rootApiPath}/account/$_id/likedMovies',
-            options: Options(headers: {
-              'Content-Type': 'application/json',
-            }));
     if (response.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
         'Error ${response.statusCode} while fetching movies: ${response.statusMessage}',
@@ -116,13 +111,9 @@ class MoviesService extends ServiceTemplate {
   }
 
   Future<dynamic> getSavedMoviesId(GenerateMoviesRequest request) async {
-    dynamic data;
-
+    /// TODO need to be put in a try catch
     final response =
-        await dio.get('${ApiConstants.rootApiPath}/account/$_id/watchlist',
-            options: Options(headers: {
-              'Content-Type': 'application/json',
-            }));
+        await dio.get('${ApiConstants.rootApiPath}/account/$_id/watchlist');
 
     if (response.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
@@ -130,9 +121,7 @@ class MoviesService extends ServiceTemplate {
       ));
     }
 
-    data = response.data;
-
-    return data;
+    return response.data;
   }
 
   // WATCHED
@@ -158,23 +147,15 @@ class MoviesService extends ServiceTemplate {
   }
 
   Future<dynamic> getWatchedMoviesId(GenerateMoviesRequest request) async {
-    dynamic data;
-
+    /// TODO need to be put in a try catch
     final response =
-        await dio.get('${ApiConstants.rootApiPath}/account/$_id/seenMovies',
-            options: Options(headers: {
-              'Content-Type': 'application/json',
-            }));
-
+        await dio.get('${ApiConstants.rootApiPath}/account/$_id/seenMovies');
     if (response.statusCode != HttpStatus.OK) {
       return Future.error(Exception(
         'Error ${response.statusCode} while fetching movies: ${response.statusMessage}',
       ));
     }
-
-    data = response.data;
-
-    return data;
+    return response.data;
   }
 
   //Info
@@ -182,9 +163,9 @@ class MoviesService extends ServiceTemplate {
     MovieStatusResponse result =
         const MovieStatusResponse(statusCode: HttpStatus.APP_ERROR);
 
+    /// TODO Erwan -> Inès why is it outside the try catch ?
     final Response response = await dio.get(
-        '${ApiConstants.rootApiPath}${ApiConstants.getInfoMoviePath}/$movie',
-        options: Options(headers: {'Content-Type': 'application/json'}));
+        '${ApiConstants.rootApiPath}${ApiConstants.getInfoMoviePath}/$movie');
     try {
       if (response.statusCode != MovieStatusResponse.success) {
         return const MovieStatusResponse(

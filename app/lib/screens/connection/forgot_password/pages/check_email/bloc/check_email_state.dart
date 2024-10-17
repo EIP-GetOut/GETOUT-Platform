@@ -10,23 +10,23 @@ part of 'check_email_bloc.dart';
 class CheckEmailState extends Equatable {
   final String email;
   final Status status;
-  final Object? exception;
+  final int? statusCode;
   bool get isEmailEmpty => email.isNotEmpty;
 
-  const CheckEmailState({required this.email, this.status = Status.initial, this.exception});
+  const CheckEmailState({required this.email, this.status = Status.initial, this.statusCode});
 
   CheckEmailState copyWith({
     String? email,
     Status? status,
-    Object? exception
+    int? statusCode
   }) {
     return CheckEmailState(
       email: email ?? this.email,
       status: status ?? this.status,
-      exception: exception ?? this.exception
+        statusCode: statusCode ?? this.statusCode
     );
   }
 
   @override
-  List<Object?> get props => [email, status, exception];
+  List<Object?> get props => [email, status, statusCode];
 }

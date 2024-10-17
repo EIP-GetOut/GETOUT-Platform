@@ -5,6 +5,8 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>, Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'package:dio/dio.dart';
+
 import 'package:getout/bloc/session/session_service.dart';
 import 'package:getout/screens/settings/pages/notifications/notifications.dart';
 
@@ -13,8 +15,6 @@ import 'package:getout/screens/settings/pages/notifications/notifications.dart';
    - handle real type
    - add session.isNull method
    */
-
-//String? globalEmail;
 
 NotificationsServices notificationsServices = NotificationsServices();
 
@@ -25,3 +25,10 @@ bool isCookieSet = false;
 Map<String, dynamic>? session;
 
 SessionService sessionManager = SessionService();
+
+final BaseOptions dioOptions = BaseOptions(
+  connectTimeout: Duration(minutes: 1),
+  receiveTimeout: Duration(minutes: 1),
+  sendTimeout: Duration(minutes: 1),
+  headers: ({'Content-Type': 'application/json'})
+);
