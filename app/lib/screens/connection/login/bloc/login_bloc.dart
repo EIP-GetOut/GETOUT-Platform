@@ -8,8 +8,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/connection/services/service.dart';
+import 'package:getout/constants/http_status.dart';
 import 'package:getout/tools/status.dart';
 
 part 'login_event.dart';
@@ -34,7 +34,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(state.copyWith(password: event.password));
     } else if (event is LoginSubmitted) {
       emit(state.copyWith(status: Status.loading));
-
+      if (service == null) {
+        emit(state.copyWith(status: Status.error, statusCode: HttpStatus.APP_ERROR));
+        return;
+      }
       loginResponse = await service?.login(LoginRequestModel(
         email: state.email,
         password: state.password,

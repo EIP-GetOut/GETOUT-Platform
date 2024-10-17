@@ -22,7 +22,7 @@ class SignService extends ServiceTemplate {
         const LoginResponseModel(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      Response dioResponse =
+      final Response dioResponse =
           await dio.post('${ApiConstants.rootApiPath}${ApiConstants.loginPath}',
               data: {
                 'email': request.email,
@@ -53,7 +53,7 @@ class SignService extends ServiceTemplate {
     const RegisterResponseModel(statusCode: HttpStatus.APP_ERROR);
 
     try {
-      Response dioResponse =
+      final Response dioResponse =
       await dio.post('${ApiConstants.rootApiPath}${ApiConstants.registerPath}',
           data: {
             'email': request.email,
@@ -82,30 +82,60 @@ class SignService extends ServiceTemplate {
     return response;
   }
 
-  Future<void> emailVerified(final EmailVerifiedRequestModel request) async {
+  Future<EmailVerifiedResponseModel> emailVerified(final EmailVerifiedRequestModel request) async {
+    EmailVerifiedResponseModel response =
+    const EmailVerifiedResponseModel(statusCode: HttpStatus.APP_ERROR);
+
     try {
-      await dio.post(
+      final Response dioResponse = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.verifyEmailPath}',
           data: {
             'code': int.parse(request.code),
           });
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
+      response = EmailVerifiedResponseModel(
+          statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return EmailVerifiedResponseModel(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return response;
+      } else {
+        return EmailVerifiedResponseModel(
+            statusCode: dioException.response!.statusCode!);
+      }
     } catch (error) {
-      rethrow;
+      return response;
     }
+    return response;
   }
 
-  Future<void> emailVerifiedResend() async {
+  Future<EmailVerifiedResendResponseModel> emailVerifiedResend() async {
+    EmailVerifiedResendResponseModel response =
+    const EmailVerifiedResendResponseModel(statusCode: HttpStatus.APP_ERROR);
+
     try {
-      await dio.post(
+      final Response dioResponse = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.verifyEmailResendPath}');
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
+      response = EmailVerifiedResendResponseModel(
+          statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return EmailVerifiedResendResponseModel(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return response;
+      } else {
+        return EmailVerifiedResendResponseModel(
+            statusCode: dioException.response!.statusCode!);
+      }
     } catch (error) {
-      rethrow;
+      return response;
     }
+    return response;
   }
 }

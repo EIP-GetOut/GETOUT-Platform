@@ -8,8 +8,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/connection/services/service.dart';
+import 'package:getout/constants/http_status.dart';
 import 'package:getout/tools/status.dart';
 
 part 'register_event.dart';
@@ -42,7 +42,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(state.copyWith(birthDate: event.birthDate));
     } else if (event is RegisterSubmitted) {
       emit(state.copyWith(status: Status.loading));
-
+      if (service == null) {
+        emit(state.copyWith(status: Status.error, statusCode: HttpStatus.APP_ERROR));
+        return;
+      }
       registerResponse = await service?.register(RegisterRequestModel(
         email: state.email,
         password: state.password,

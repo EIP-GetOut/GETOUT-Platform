@@ -17,20 +17,19 @@ part 'edit_password_model.dart';
 
 class EditPasswordServices {
 
-  final Dio dio = Dio();
+  final Dio dio = Dio(globals.dioOptions);
 
   EditPasswordServices() {
     dio.interceptors.add(CookieManager(PersistCookieJar(
         ignoreExpires: true,
         storage: FileStorage(globals.cookiePath))));
-    dio.options.headers = ({'Content-Type': 'application/json'});
   }
 
 
   Future<EditPasswordResponseModel> sendNewPassword(final EditPasswordRequestModel request) async
   {
     EditPasswordResponseModel response = const EditPasswordResponseModel(statusCode: HttpStatus.APP_ERROR);
-    dynamic dioResponse; // dynamic because dio can return a DioError or a Response
+    Response dioResponse;
 
     if (globals.session == null) {
       return response;
@@ -42,15 +41,22 @@ class EditPasswordServices {
             'password': request.oldPassword,
             'newPassword': request.newPassword
           },
-          options: Options(headers: {'Content-Type': 'application/json'}));
+      );
       response = EditPasswordResponseModel(statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
     } on DioException catch (dioException) {
-      if (dioException.response != null && dioException.response?.statusCode != null) {
-        response = EditPasswordResponseModel(
-            statusCode: dioException.response?.statusCode ?? HttpStatus.APP_ERROR);
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return EditPasswordResponseModel(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return response;
+      } else {
+        return EditPasswordResponseModel(
+            statusCode: dioException.response!.statusCode!);
       }
     } catch (dioError) {
-      response = const EditPasswordResponseModel(statusCode: HttpStatus.APP_ERROR);
+      return response;
     }
     return response;
   }
