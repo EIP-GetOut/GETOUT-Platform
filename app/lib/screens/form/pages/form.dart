@@ -11,8 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:getout/screens/form/services/form_services.dart';
 import 'package:getout/screens/form/pages/viewing_platform.dart';
-// import 'package:getout/screens/form/pages/social_media_time.dart';
-// import 'package:getout/screens/form/pages/interest_choices.dart';
 import 'package:getout/screens/form/pages/book_genre.dart';
 import 'package:getout/screens/form/pages/movie_genres.dart';
 import 'package:getout/screens/form/pages/end_form.dart';
@@ -22,10 +20,12 @@ import 'package:getout/widgets/fields/widgets/default_button.dart';
 import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/session/session_event.dart';
 import 'package:getout/tools/app_l10n.dart';
-import 'package:getout/global.dart' as globals;
 
 class Forms extends StatelessWidget {
-  const Forms({super.key});
+
+  final bool isEdit;
+
+  const Forms({super.key, required this.isEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +42,6 @@ class Forms extends StatelessWidget {
               controller: pageController,
               physics: const NeverScrollableScrollPhysics(),
               children: [
-                // SocialMediaSpentTime(),
-                // InterestChoices(),
                 BookGenres(formContext: context),
                 MovieGenres(formContext: context),
                 ViewingPlatform(formContext: context),
@@ -59,7 +57,6 @@ class Forms extends StatelessWidget {
 
   Widget _backButton(final PageController pageController,
       final FormStates state, final BuildContext context) {
-    final bool isEdit = (globals.session?['preferences'] != null);
 
     return IconButton(
         icon: const Icon(Icons.arrow_back),
@@ -77,8 +74,7 @@ class Forms extends StatelessWidget {
         });
   }
 
-  String _getButtonLabel(
-      final FormStatus status, final bool isEdit, BuildContext context) {
+  String _getButtonLabel(final FormStatus status, BuildContext context) {
     if (status == FormStatus.endForm && isEdit) {
       return appL10n(context)!.back_to_settings;
     } else if (status == FormStatus.endForm) {
@@ -91,14 +87,13 @@ class Forms extends StatelessWidget {
 
   Widget _nextButton(
       final PageController pageController, final BuildContext context) {
-    final bool isEdit = (globals.session?['preferences'] != null);
     final FormStatus status = context.read<FormBloc>().state.status;
     final FormBloc readContext = context.read<FormBloc>();
 
     return (status == FormStatus.loading)
         ? const CircularProgressIndicator()
         : DefaultButton(
-            title: _getButtonLabel(readContext.state.status, isEdit, context),
+            title: _getButtonLabel(readContext.state.status, context),
             onPressed: () {
               if ((status == FormStatus.bookGenres &&
                       !readContext.state.bookGenres.containsValue(true)) ||

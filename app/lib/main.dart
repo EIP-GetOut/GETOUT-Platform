@@ -16,6 +16,7 @@ import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:getout/tools/app_l10n.dart';
+import 'package:getout/widgets/transition_page.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -36,7 +37,6 @@ import 'package:getout/widgets/loading.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/global.dart' as globals;
-import 'package:getout/widgets/transition_page.dart';
 
 import 'dart:async';
 
@@ -104,39 +104,41 @@ class MainPage extends StatelessWidget {
         ],
         //supportedLocales: AppLocalizations.supportedLocales,
         theme: themeData,
-        home: BlocBuilder<SessionBloc, SessionState>(builder: (context, state) {
-          if (state.status.emailNotVerified) {
-            return const EmailVerifiedProvider();
-          } else if (state.status.isFound) {
-            return const HomeProvider();
-          } else if (state.status.isFoundWithoutPreferences) {
-            return const Forms();
-          } else if (state.status.isLoading) {
-            return const ColoredBox(
-                color: Colors.white, child: Center(child: LoadingPage()));
-          } else if (state.status.isError) {
-            /// TODO : Add a retry button
-            return TransitionPage(
-                title: appL10n(context)!.error_unknown_short,
-                description: appL10n(context)!.error_unknown_description,
-                image: 'assets/images/draw/error.svg',
-                buttonText: appL10n(context)!.error_ok,
-                nextPage: () => {
-                      Phoenix.rebirth(context),
-                    });
-          } else if (state.status.isNotFound) {
-            return const ConnectionProvider();
-          } else {
-            return TransitionPage(
-                title: appL10n(context)!.error_unknown_short,
-                description: appL10n(context)!.error_unknown_description,
-                image: 'assets/images/draw/error.svg',
-                buttonText: appL10n(context)!.error_ok,
-                nextPage: () => {
-                      Phoenix.rebirth(context),
-                    });
-          }
-        }),
+        home: BlocBuilder<SessionBloc, SessionState>(
+          builder: (context, state) {
+            if (state.status.emailNotVerified) {
+              return const EmailVerifiedProvider();
+            } else if (state.status.isFound) {
+              return const HomeProvider();
+            } else if (state.status.isFoundWithoutPreferences) {
+              return const Forms(isEdit: false);
+            } else if (state.status.isLoading) {
+              return const ColoredBox(
+                  color: Colors.white, child: Center(child: LoadingPage()));
+            } else if (state.status.isError) {
+              /// TODO : Add a retry button
+              return TransitionPage(
+                  title: appL10n(context)!.error_unknown_short,
+                  description: appL10n(context)!.error_unknown_description,
+                  image: 'assets/images/draw/error.svg',
+                  buttonText: appL10n(context)!.error_ok,
+                  nextPage: () => {
+                    Phoenix.rebirth(context),
+                  });
+            } else if (state.status.isNotFound) {
+              return const ConnectionProvider();
+            } else {
+              return TransitionPage(
+                  title: appL10n(context)!.error_unknown_short,
+                  description: appL10n(context)!.error_unknown_description,
+                  image: 'assets/images/draw/error.svg',
+                  buttonText: appL10n(context)!.error_ok,
+                  nextPage: () => {
+                    Phoenix.rebirth(context),
+                  });
+            }
+          },
+        ),
       );
     });
   }
