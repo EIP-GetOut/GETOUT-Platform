@@ -109,7 +109,7 @@ class MainPage extends StatelessWidget {
             } else if (state.status.isFound) {
               return const HomeProvider();
             } else if (state.status.isFoundWithoutPreferences) {
-              return const Forms();
+              return const Forms(isEdit: false);
             } else if (state.status.isLoading) {
               return const ColoredBox(
                   color: Colors.white, child: Center(child: LoadingPage()));
