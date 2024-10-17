@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.7.1...v1.0.0) (2024-10-17)
+
+
+### Features
+
+* :sparkles: optimized and improved book recommendations algorithm ([a11f942](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a11f9427fb71f4621364309c8793172f4b2da247))
+* **app:** :sparkles: add alert when click redirect to extern link, change cinema icon, add some padding ([05e8a83](https://github.com/EIP-GetOut/GETOUT-Platform/commit/05e8a83be1d05032a46fa7275bd30923233a25fc))
+* **app:** :sparkles: add rate, date, genres ([79fc14a](https://github.com/EIP-GetOut/GETOUT-Platform/commit/79fc14aacd6d0fa4042ed7d673ce7fd8d1c13bdd))
+* **app:** :sparkles: handle book genres, releaseDate, averageRating ([e92c7fb](https://github.com/EIP-GetOut/GETOUT-Platform/commit/e92c7fba96045f32e149bb5d948781f8feb021f4))
+* **app:** :sparkles: timeSpend redirect to  readBooks & watchMovies. ([#106](https://github.com/EIP-GetOut/GETOUT-Platform/issues/106)) ([c7d55d6](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c7d55d63ddb862b68212ece41afe1800b6841f0a))
+* **backend:** :sparkles: caching all api routes that can be cached without creating conflicts ([26a1b67](https://github.com/EIP-GetOut/GETOUT-Platform/commit/26a1b6701f6978be2f9758cd0d7fad1537626c08))
+* **backend:** :sparkles: including role in users details ([476b03f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/476b03f4816e178c3d92a28cf4e800937e53aaba))
+
+
+### Bug Fixes
+
+* :bug: permissions route when account has no role ([2586c48](https://github.com/EIP-GetOut/GETOUT-Platform/commit/2586c489d77758b340c2a7869d7c0eb9644e8c68))
+* :bug: removing content from seen / read list when it's added to reading / watch list ([6061e33](https://github.com/EIP-GetOut/GETOUT-Platform/commit/6061e336b65ba4005376cb9a950dab5e23834039))
+* **app:** :arrow_up: updating ALL Android files and dependencies ([a5835b2](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a5835b207a502009e3091b4d76ff590b923501ca))
+* **app:** :art: clean code ([c2e60f2](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c2e60f2f6afc36b820af4e48d2730b3cb2d7fd8e))
+* **app:** :lipstick: fix animation time (same as movie) while going on book page from dashboard/timeSpent. ([3293413](https://github.com/EIP-GetOut/GETOUT-Platform/commit/3293413fa33e2b22674856b69ef1c3d00157bf03))
+* **app:** :lipstick: text color of when you select a birth date manually ([e63ae0e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/e63ae0e41c5b567153e868b6501b87d83e2d3015))
+* **app:** :pencil2: fix typo ([a9ff6e4](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a9ff6e4a26734ca586bd5f6ff23f781dd8f247f6))
+* **app:** fix dashboard page at the center ([a282e13](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a282e130f513f3ddd45bebd400b550de86f47898))
+
+
+### Refactors
+
+* **backend:** changed error log in tmdb service ([a91904d](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a91904d6c98172726ed81662d116c765805a88a7))
+* **backend:** now refactoring movies without backdrop path ([3ec428c](https://github.com/EIP-GetOut/GETOUT-Platform/commit/3ec428cca3a12cc8f7190284bf46ba0fa717068e))
+
+
+### UI Updates
+
+* **app:** :lipstick: Change old icon by new one, change carrousel size, add some padding (try to make ui same as figma) ([60dc607](https://github.com/EIP-GetOut/GETOUT-Platform/commit/60dc607f4f278f78bce1db611a04c9f2d00334ca))
+* **app:** :lipstick: Change some quote by better one, readapt some padding ([44b1a2a](https://github.com/EIP-GetOut/GETOUT-Platform/commit/44b1a2afb200f4f81f6dc97c31ee258cf01ef135))
+* **app:** :lipstick: channge elements positions in bottom navbar, add some paddings ([43dabc7](https://github.com/EIP-GetOut/GETOUT-Platform/commit/43dabc7606cab3d311ab115cf2b7502504903b90))
+
 ### [0.6.5](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.6.4...v0.6.5) (2024-09-11)
 
 
