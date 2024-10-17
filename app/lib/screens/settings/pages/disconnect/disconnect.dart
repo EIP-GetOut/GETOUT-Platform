@@ -70,7 +70,7 @@ class DisconnectPage extends StatelessWidget {
             onTap: () {
               return showAlertDialog(context);
             },
-            child: Row(
+            child: Padding( padding : const EdgeInsets.only(right: 15.0, left: 15.0), child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SvgPicture.asset('assets/images/icon/disconnect.svg'),
@@ -79,12 +79,12 @@ class DisconnectPage extends StatelessWidget {
                     appL10n(context)!.disconnect,
                     style: TextStyle(
                         fontSize:
-                            (MediaQuery.of(context).size.width > 400) ? 20 : 12,
+                            (MediaQuery.of(context).size.width > 400) ? 18 : 12,
                         color: const Color.fromRGBO(236, 0, 0, 1.0)),
                   ),
                   const Expanded(child: SizedBox()),
                   const Icon(Icons.arrow_forward_ios_rounded,
                       color: Colors.black54),
-                ])));
+                ]))));
   }
 }
