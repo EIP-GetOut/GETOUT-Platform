@@ -9,6 +9,7 @@ import { type Request, type Response } from 'express'
 import { Router } from 'express'
 import { StatusCodes } from 'http-status-codes'
 
+import caching from '@services/middlewares/caching'
 import { logApiRequest } from '@services/middlewares/logging'
 
 const router = Router()
@@ -66,7 +67,7 @@ function getDailyInfo (): DailyInfo {
   return LIST_OF_DAILY_INFOS[daysIntoYear % LIST_OF_DAILY_INFOS.length]
 }
 
-router.get('/daily-info', logApiRequest, (req: Request, res: Response) => {
+router.get('/daily-info', caching(12 * 60 * 60), logApiRequest, (req: Request, res: Response) => {
   const dailyInfo: DailyInfo = getDailyInfo()
   return res.status(StatusCodes.OK).send(dailyInfo)
 })

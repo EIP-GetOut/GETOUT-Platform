@@ -84,8 +84,20 @@ const addMovieToDislikedMovies = async (accountId: UUID, movieId: number): Promi
     })
   })
 }
-const addMovieToSeenMovies = async (accountId: UUID, movieId: number): Promise<number[]> =>
-  await addMovieToList(accountId, movieId, 'seenMovies')
+
+const addMovieToSeenMovies = async (accountId: UUID, movieId: number): Promise<number[]> => {
+  return await addMovieToList(accountId, movieId, 'seenMovies').then(async (seenMovies: number []) => {
+    return await removeMovieFromWatchlist(accountId, movieId).then((watchlist: number[]) => {
+      return seenMovies
+    }).catch((err: AppError) => {
+      if (err instanceof MovieNotInListError) {
+        return seenMovies
+      } else {
+        throw err
+      }
+    })
+  })
+}
 
 const removeMovieFromWatchlist = async (accountId: UUID, movieId: number): Promise<number[]> =>
   await removeMovieFromList(accountId, movieId, 'watchlist')

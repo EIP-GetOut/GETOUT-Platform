@@ -98,7 +98,7 @@ async function getMovie (id: number): Promise<MovieResponse> {
   }).then((movieResponse: Partial<MovieResponse>) => {
     for (const [key, value] of Object.entries(movieResponse)) {
       if (value == null) {
-        throw new ApiError(`Value of property ${key} is missing in TMDB response.`)
+        throw new ApiError(`Value of property ${key} is missing in TMDB response for movie ${movieResponse.id}.`)
       }
     }
     const res = (movieResponse as MovieResponse)

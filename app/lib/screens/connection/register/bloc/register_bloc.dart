@@ -8,8 +8,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/connection/services/service.dart';
+import 'package:getout/constants/http_status.dart';
 import 'package:getout/tools/status.dart';
 
 part 'register_event.dart';
@@ -26,6 +26,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   Future mapEventToState(RegisterEvent event, Emitter<RegisterState> emit) async
   {
+    final RegisterResponseModel? registerResponse;
+
     if (event is RegisterEmailChanged) {
       emit(state.copyWith(email: event.email));
     } else if (event is RegisterPasswordChanged) {
@@ -40,18 +42,23 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(state.copyWith(birthDate: event.birthDate));
     } else if (event is RegisterSubmitted) {
       emit(state.copyWith(status: Status.loading));
-
-      try {
-        await service?.register(RegisterRequestModel(
-          email: state.email,
-          password: state.password,
-          firstName: state.firstName,
-          lastName: state.lastName,
-          birthDate: state.birthDate,
-        ));
+      if (service == null) {
+        emit(state.copyWith(status: Status.error, statusCode: HttpStatus.APP_ERROR));
+        return;
+      }
+      registerResponse = await service?.register(RegisterRequestModel(
+        email: state.email,
+        password: state.password,
+        firstName: state.firstName,
+        lastName: state.lastName,
+        birthDate: state.birthDate,
+      ));
+      if (registerResponse == null) {
+        emit(state.copyWith(status: Status.error, statusCode: HttpStatus.APP_ERROR));
+      } else if (registerResponse.statusCode != RegisterResponseModel.success) {
+        emit(state.copyWith(status: Status.error, statusCode: registerResponse.statusCode));
+      } else {
         emit(state.copyWith(status: Status.success));
-      } catch (e) {
-        emit(state.copyWith(status: Status.error));
       }
     }
   }

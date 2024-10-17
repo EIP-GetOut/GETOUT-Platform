@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dio/dio.dart';
 
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/connection/forgot_password/pages/new_password/bloc/new_password_bloc.dart';
@@ -23,7 +22,7 @@ import 'package:getout/widgets/fields/widgets/default_button.dart';
 class NewPasswordPage extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final PageController pageController;
-  static int tries = 0;
+  static int tries = 0; /// TODO static seems weird
 
   NewPasswordPage({super.key, required this.pageController});
 
@@ -38,10 +37,7 @@ class NewPasswordPage extends StatelessWidget {
           listenWhen: (previous, current) => previous.status != current.status,
           listener: (context, state) {
             if (state.status.isError) {
-              if (state.exception is DioException &&
-                  (state.exception as DioException).response != null &&
-                  (state.exception as DioException).response!.statusCode ==
-                      HttpStatus.FORBIDDEN) {
+              if (state.statusCode == HttpStatus.FORBIDDEN) {
                 tries += 1;
                 if (tries >= 3) {
                   Navigator.pop(context);
@@ -50,15 +46,12 @@ class NewPasswordPage extends StatelessWidget {
                 } else {
                   showSnackBar(context, appL10n(context)!.code_incorrect);
                 }
-              } else if (state.exception is DioException &&
-                  (state.exception as DioException).response != null &&
-                  (state.exception as DioException).response!.statusCode ==
-                      HttpStatus.BAD_REQUEST) {
-                showSnackBar(context,
-                    appL10n(context)!.password_old);
+              } else if (state.statusCode == HttpStatus.BAD_REQUEST) {
+                showSnackBar(context, appL10n(context)!.password_old);
+              } else if (state.statusCode == HttpStatus.APP_TIMEOUT) {
+                showSnackBar(context, 'Timeout'); /// TODO create a timeout message
               } else {
-                showSnackBar(context,
-                    appL10n(context)!.error_unknown);
+                showSnackBar(context, appL10n(context)!.error_unknown);
               }
             }
             if (state.status.isSuccess) {

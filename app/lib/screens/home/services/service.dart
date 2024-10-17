@@ -17,7 +17,6 @@ import 'package:getout/screens/home/bloc/movies/movies_event.dart';
 import 'package:getout/screens/home/widgets/dashboard/story_news/story_news_bloc.dart';
 import 'package:getout/screens/home/widgets/dashboard/news/news_bloc.dart';
 
-part 'dashboard.dart';
 part 'books.dart';
 part 'movies.dart';
 

@@ -11,7 +11,7 @@ const options = {
   swaggerDefinition: {
     info: {
       title: 'GETOUT\'s API',
-      version: '1.0.0',
+      version: '1.0.1',
       description: 'Documentation of the API routes for the "GETOUT" application.'
     }
   },

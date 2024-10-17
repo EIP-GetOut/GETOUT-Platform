@@ -19,13 +19,12 @@ import 'package:html/parser.dart'; // pour utiliser parseFragment()
 
 class BookService {
   final String userId = globals.session?['id'].toString() ?? '';
-  final Dio dio = Dio();
+  final Dio dio = Dio(globals.dioOptions);
 
   BookService() {
     dio.interceptors.add(CookieManager(PersistCookieJar(
         ignoreExpires: true,
         storage: FileStorage(globals.cookiePath))));
-    dio.options.headers = ({'Content-Type': 'application/json'});
   }
 
   PersonList parseAuthor(final castData) {
@@ -46,9 +45,11 @@ class BookService {
 
     InfoBookResponse result =
         const InfoBookResponse(statusCode: HttpStatus.APP_ERROR);
+
+    /// TODO need to put that in a try catch
     final response = await dio.get(
         '${ApiConstants.rootApiPath}${ApiConstants.getInfoBookPath}/${request.id}',
-        options: Options(headers: {'Content-Type': 'application/json'}));
+    );
     try {
       if (response.statusCode != InfoBookResponse.success) {
         return InfoBookResponse(statusCode: response.statusCode ?? 500);
@@ -89,10 +90,9 @@ class BookService {
     try {
       final response = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedBookPath}',
-          options: Options(
-            headers: {'Content-Type': 'application/json'},
-          ),
-          data: {'bookId': request.id});
+          data: {
+            'bookId': request.id
+          });
       if (response.statusCode != HttpStatus.CREATED) {
         return AddBookResponse(statusCode: response.statusCode ?? 500);
       }
@@ -118,9 +118,6 @@ class BookService {
     try {
       final response = await dio.delete(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedBookPath}/${request.id}',
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-        ),
       );
       if (response.statusCode != HttpStatus.OK) {
         return AddBookResponse(statusCode: response.statusCode ?? 500);
@@ -146,9 +143,6 @@ class BookService {
     try {
       final response = await dio.delete(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addDislikedBookPath}/${request.id}',
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-        ),
       );
       if (response.statusCode != HttpStatus.OK) {
         return AddBookResponse(statusCode: response.statusCode ?? 500);
@@ -175,10 +169,9 @@ class BookService {
     try {
       final response = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addDislikedBookPath}',
-          options: Options(
-            headers: {'Content-Type': 'application/json'},
-          ),
-          data: {'bookId': request.id});
+          data: {
+            'bookId': request.id
+          });
 
       if (response.statusCode != HttpStatus.CREATED) {
         return AddBookResponse(statusCode: response.statusCode ?? 500);
@@ -204,10 +197,9 @@ class BookService {
     try {
       final response = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.readingPath}',
-          options: Options(
-            headers: {'Content-Type': 'application/json'},
-          ),
-          data: {'bookId': request.id});
+          data: {
+            'bookId': request.id
+          });
       if (response.statusCode != HttpStatus.CREATED) {
         return AddBookResponse(statusCode: response.statusCode ?? 500);
       }
@@ -232,9 +224,7 @@ class BookService {
     try {
       final response = await dio.delete(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.readingPath}/${request.id}',
-          options: Options(
-            headers: {'Content-Type': 'application/json'},
-          ));
+      );
       if (response.statusCode != AddBookResponse.success) {
         return AddBookResponse(statusCode: response.statusCode ?? 500);
       }
@@ -259,10 +249,9 @@ class BookService {
     try {
       final response = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.readBooksPath}',
-          options: Options(
-            headers: {'Content-Type': 'application/json'},
-          ),
-          data: {'bookId': request.id});
+          data: {
+            'bookId': request.id
+          });
       if (response.statusCode != HttpStatus.CREATED) {
         return AddBookResponse(statusCode: response.statusCode ?? 500);
       }
@@ -287,9 +276,7 @@ class BookService {
     try {
       final response = await dio.delete(
           '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.readBooksPath}/${request.id}',
-          options: Options(
-            headers: {'Content-Type': 'application/json'},
-          ));
+      );
       if (response.statusCode != AddBookResponse.success) {
         return AddBookResponse(statusCode: response.statusCode ?? 500);
       }

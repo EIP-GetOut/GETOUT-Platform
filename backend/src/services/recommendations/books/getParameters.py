@@ -8,69 +8,46 @@
 import json
 from collections import Counter
 import asyncio
+import requests
+import re
 
-def fetchBookDetails(Book_id):
-    # tmdb = TMDb()
-    # tmdb.api_key = os.getenv("Book_DB_KEY")
-    # tmdb.language = 'fr'
-    # BookApi = Book()
-    # BookApi.language = 'fr'
-
-    # Book = BookApi.details(Book_id)
-    # writer = next((member for member in Book['casts'].get('crew', []) if member.get('job') == 'Director'), None)
-
-    # filteredBook = {
-    #     "id": Book.get("id"),
-    #     "title": Book.get("title"),
-    #     "genres": [genre['id'] for genre in Book.get("genres", [])],
-    #     "releaseDate": Book.get("release_date"),
-    #     "writer": writer['name']
-    # }
-    filteredBook = []
-    return filteredBook
+API_URL = "https://www.googleapis.com/books/v1/volumes/"
 
 
-async def getBooksDetailsConcurrently(Books):
-    # tasks = [asyncio.to_thread(fetchBookDetails, id) for id in Books]
-    # bookDetails = await asyncio.gather(*tasks)
-    return [{
-        "id": 1,
-        "title": "Book 1",
-        "genres": ["Science Fiction", "Adventure"],
-        "releaseDate": "2015-06-12",
-        "writer": "Author A"
-    },
-    {
-        "id": 2,
-        "title": "Book 2",
-        "genres": ["Historical Fiction", "Drama"],
-        "releaseDate": "2017-09-20",
-        "writer": "Author B"
-    },
-    {
-        "id": 3,
-        "title": "Book 3",
-        "genres": ["Science Fiction"],
-        "releaseDate": "2018-11-05",
-        "writer": "Author C"
-    },
-    {
-        "id": 4,
-        "title": "Book 4",
-        "genres": ["Adventure", "Fantasy"],
-        "releaseDate": "2020-02-10",
-        "writer": "Author D"
-    },
-    {
-        "id": 5,
-        "title": "Book 5",
-        "genres": ["Romance", "Historical Fiction"],
-        "releaseDate": "2021-04-25",
-        "writer": "Author A"
-    }]
+def fetchBookDetails(bookId):
+    try:
+        response = requests.get(API_URL + bookId)
+        response.raise_for_status()
+
+        fullVolume = response.json()
+        book = fullVolume.get('volumeInfo')
+
+        if book.get('categories') is None:
+            genre = []
+        else:
+            genre = [re.search(r'\b[a-zA-Z0-9]+\b', book.get('categories')[0]).group()]
+        filteredBook = {
+            "id": fullVolume.get("id"),
+            "title": book.get("title"),
+            "genres": genre,
+            "releaseDate": book.get("publishedDate"),
+            "writer": book.get('authors')[0]
+        }
+        return filteredBook
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching books: {e}")
+        return None
+
+
+
+async def getBooksDetailsConcurrently(booksIds):
+    tasks = [asyncio.to_thread(fetchBookDetails, id) for id in booksIds]
+    booksDetails = await asyncio.gather(*tasks)
+    result = [x for x in booksDetails if x is not None]
+    return result
 
 def getLikedBooksParameters(parameters: dict) -> dict:
-    if not isinstance(parameters.get("likedBooks"), list):
+    if not isinstance(parameters.get("likedBooks"), list) and len(parameters.get("likedBooks")) > 5:
         raise ValueError("Expected 'likedBooks' to be a list")
     data = asyncio.run(getBooksDetailsConcurrently(parameters["likedBooks"]))
     genres = []
@@ -99,7 +76,7 @@ def getLikedBooksParameters(parameters: dict) -> dict:
 
 
 def getDislikedBooksParameters(parameters: dict) -> dict:
-    if not isinstance(parameters.get("dislikedBooks"), list):
+    if not isinstance(parameters.get("dislikedBooks"), list) and len(parameters.get("dislikedBooks")) > 5:
         raise ValueError("Expected 'dislikedBooks' to be a list")
     data = asyncio.run(getBooksDetailsConcurrently(parameters["dislikedBooks"]))
     genres = []
@@ -128,6 +105,8 @@ def getDislikedBooksParameters(parameters: dict) -> dict:
 
 
 def getLikedAutorsParameters(parameters: dict) -> dict:
+    if not isinstance(parameters.get("likedBooks"), list) and len(parameters.get("likedBooks")) > 5:
+        raise ValueError("Expected 'likedBooks' to be a list")
     data = asyncio.run(getBooksDetailsConcurrently(parameters["likedBooks"]))
     directors = []
     if not isinstance(data, list):
@@ -152,6 +131,8 @@ def getLikedAutorsParameters(parameters: dict) -> dict:
     return parameters
 
 def getLikedDecadesParameters(parameters: dict) -> dict:
+    if not isinstance(parameters.get("likedBooks"), list) and len(parameters.get("likedBooks")) > 5:
+        raise ValueError("Expected 'likedBooks' to be a list")
     data = asyncio.run(getBooksDetailsConcurrently(parameters["likedBooks"]))
     decades = []
     if not isinstance(data, list):
@@ -160,7 +141,7 @@ def getLikedDecadesParameters(parameters: dict) -> dict:
         if isinstance(item, dict):
             releaseDate = item.get("releaseDate")
             if isinstance(releaseDate, str) and len(releaseDate) >= 4:
-                year = int(releaseDate[:4])
+                year = int(releaseDate)
                 decade = (year // 10) * 10
                 decades.append(decade)
             else:
@@ -179,6 +160,8 @@ def getLikedDecadesParameters(parameters: dict) -> dict:
 
 
 def getDislikedDecadesParameters(parameters: dict) -> dict:
+    if not isinstance(parameters.get("dislikedBooks"), list) and len(parameters.get("dislikedBooks")) > 5:
+        raise ValueError("Expected 'dislikedBooks' to be a list")
     data = asyncio.run(getBooksDetailsConcurrently(parameters["dislikedBooks"]))
     decades = []
     if not isinstance(data, list):

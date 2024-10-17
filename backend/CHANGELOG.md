@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.7.1](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.7.0...v0.7.1) (2024-09-13)
+
+
+### Features
+
+* **app:** :sparkles: carrousel recommendations movie & book. ([52275bf](https://github.com/EIP-GetOut/GETOUT-Platform/commit/52275bf9685b15fdb6d716f182924c6bd876ffaa))
+* **app:** :sparkles: form have a loading button + 3 choices limit ([#99](https://github.com/EIP-GetOut/GETOUT-Platform/issues/99)) ([fec69f0](https://github.com/EIP-GetOut/GETOUT-Platform/commit/fec69f09f95452e67fea52354fb17de7e39dd8c4))
+* **app:** ✨ book details new UI ([#100](https://github.com/EIP-GetOut/GETOUT-Platform/issues/100)) ([7779b7f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/7779b7f64992eee3e35f13cbc151d84cac3946f4))
+
+
+### Bug Fixes
+
+* **app:** :art: typo ([c5b08f7](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c5b08f7974c65d0a977de9b651f71545d80fbb43))
+* **app:** :bug: form loading come back to a normal button after failing ([eff2f59](https://github.com/EIP-GetOut/GETOUT-Platform/commit/eff2f59e93675abcb4bd553b8892827b7121284a))
+
 ## [0.7.0](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v0.6.5...v0.7.0) (2024-09-12)
 
 

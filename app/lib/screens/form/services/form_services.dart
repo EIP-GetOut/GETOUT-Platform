@@ -17,12 +17,11 @@ import 'package:getout/global.dart' as globals;
 part 'form_model.dart';
 
 class FormServices {
-  final Dio dio = Dio();
+  final Dio dio = Dio(globals.dioOptions);
   FormServices() {
     dio.interceptors.add(CookieManager(PersistCookieJar(
         ignoreExpires: true,
         storage: FileStorage(globals.cookiePath))));
-    dio.options.headers = ({'Content-Type': 'application/json'});
   }
 
   Future<FormResponseModel> sendPreferences(final FormRequestModel request) async
@@ -33,7 +32,7 @@ class FormServices {
       'booksGenres': request.bookGenres,
       'platforms': request.viewingPlatform
     };
-    dynamic dioResponse; // dynamic because dio can return a DioError or a Response
+    Response dioResponse;
 
     if (globals.session == null) {
       return response;
@@ -42,22 +41,29 @@ class FormServices {
       if (globals.session?['preferences'] == null) {
         dioResponse = await dio.post(
             '${ApiConstants.rootApiPath}${ApiConstants.preferencesApiPath}',
-            data: preferences,
-            options: Options(headers: {'Content-Type': 'application/json'}));
+            data: preferences
+        );
       } else {
         dioResponse = await dio.put(
             '${ApiConstants.rootApiPath}${ApiConstants.preferencesApiPath}',
-            data: preferences,
-            options: Options(headers: {'Content-Type': 'application/json'}));
+            data: preferences
+        );
       }
-      if (dioResponse == HttpStatus.OK || dioResponse == HttpStatus.CREATED) {
+      if (dioResponse.statusCode == HttpStatus.OK || dioResponse.statusCode == HttpStatus.CREATED) {
         globals.session?['preferences'] = preferences;
       }
       response = FormResponseModel(statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
     } on DioException catch (dioException) {
-      if (dioException.response != null && dioException.response?.statusCode != null) {
-        response = FormResponseModel(
-            statusCode: dioException.response?.statusCode ?? HttpStatus.APP_ERROR);
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return FormResponseModel(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return response;
+      } else {
+        return FormResponseModel(
+            statusCode: dioException.response!.statusCode!);
       }
     } catch (dioError) {
       response = const FormResponseModel(statusCode: HttpStatus.APP_ERROR);

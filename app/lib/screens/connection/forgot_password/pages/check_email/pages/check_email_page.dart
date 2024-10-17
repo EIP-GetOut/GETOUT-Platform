@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dio/dio.dart';
 
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/screens/connection/forgot_password/pages/check_email/bloc/check_email_bloc.dart';
@@ -36,17 +35,11 @@ class CheckEmailPage extends StatelessWidget {
           listenWhen: (previous, current) => previous.status != current.status,
           listener: (context, state) {
             if (state.status.isError) {
-              if (state.exception is DioException &&
-                  (state.exception as DioException).response != null) {
-                switch (
-                    (state.exception as DioException).response!.statusCode) {
-                  case HttpStatus.INTERNAL_SERVER_ERROR:
-                    showSnackBar(context, appL10n(context)!.email_validator);
-                    break;
-                  case HttpStatus.UNPROCESSABLE_ENTITY:
-                    showSnackBar(context, appL10n(context)!.email_validator);
-                    break;
-                }
+             if (state.statusCode == HttpStatus.INTERNAL_SERVER_ERROR ||
+                        state.statusCode == HttpStatus.UNPROCESSABLE_ENTITY) {
+                showSnackBar(context, appL10n(context)!.email_validator);
+              } else if (state.statusCode == HttpStatus.APP_TIMEOUT) {
+                showSnackBar(context, 'Timeout'); /// TODO create a timeout message
               } else {
                 showSnackBar(context, appL10n(context)!.error_unknown);
               }
