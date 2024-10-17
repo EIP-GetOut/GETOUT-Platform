@@ -76,19 +76,23 @@ class MoviesService extends ServiceTemplate {
   }
 
   Future<dynamic> getLikedMoviesId(GenerateMoviesRequest request) async {
-    /// TODO need to be put in a try catch
-    final Response response =
-        await dio.get('${ApiConstants.rootApiPath}/account/$_id/likedMovies');
+    try {
+      final Response response =
+      await dio.get('${ApiConstants.rootApiPath}/account/$_id/likedMovies');
 
-    if (response.statusCode != HttpStatus.OK) {
-      return Future.error(Exception(
-        'Error ${response.statusCode} while fetching movies: ${response.statusMessage}',
-      ));
+      if (response.statusCode != HttpStatus.OK) {
+        return Future.error(Exception(
+          'Error ${response.statusCode} while fetching movies: ${response
+              .statusMessage}',
+        ));
+      }
+      return response.data;
+    } on DioException {
+      return;
+    } catch (error) {
+      return;
     }
-    return response.data;
   }
-
-  /// SAVED
 
   Future<GenerateMoviesResponse> getSavedMovies(
       GenerateMoviesRequest request) async {
@@ -111,17 +115,23 @@ class MoviesService extends ServiceTemplate {
   }
 
   Future<dynamic> getSavedMoviesId(GenerateMoviesRequest request) async {
-    /// TODO need to be put in a try catch
-    final response =
-        await dio.get('${ApiConstants.rootApiPath}/account/$_id/watchlist');
 
-    if (response.statusCode != HttpStatus.OK) {
-      return Future.error(Exception(
-        'Error ${response.statusCode} while fetching movies: ${response.statusMessage}',
-      ));
+    try {
+      final Response response =
+      await dio.get('${ApiConstants.rootApiPath}/account/$_id/watchlist');
+
+      if (response.statusCode != HttpStatus.OK) {
+        return Future.error(Exception(
+          'Error ${response.statusCode} while fetching movies: ${response
+              .statusMessage}',
+        ));
+      }
+      return response.data;
+    } on DioException {
+      return;
+    } catch (error) {
+      return;
     }
-
-    return response.data;
   }
 
   // WATCHED
@@ -147,15 +157,21 @@ class MoviesService extends ServiceTemplate {
   }
 
   Future<dynamic> getWatchedMoviesId(GenerateMoviesRequest request) async {
-    /// TODO need to be put in a try catch
-    final response =
-        await dio.get('${ApiConstants.rootApiPath}/account/$_id/seenMovies');
-    if (response.statusCode != HttpStatus.OK) {
-      return Future.error(Exception(
-        'Error ${response.statusCode} while fetching movies: ${response.statusMessage}',
-      ));
+    try {
+      final Response response =
+      await dio.get('${ApiConstants.rootApiPath}/account/$_id/seenMovies');
+      if (response.statusCode != HttpStatus.OK) {
+        return Future.error(Exception(
+          'Error ${response.statusCode} while fetching movies: ${response
+              .statusMessage}',
+        ));
+      }
+      return response.data;
+    }  on DioException {
+      return;
+    } catch (error) {
+      return;
     }
-    return response.data;
   }
 
   //Info
@@ -163,10 +179,9 @@ class MoviesService extends ServiceTemplate {
     MovieStatusResponse result =
         const MovieStatusResponse(statusCode: HttpStatus.APP_ERROR);
 
-    /// TODO Erwan -> Inès why is it outside the try catch ?
-    final Response response = await dio.get(
-        '${ApiConstants.rootApiPath}${ApiConstants.getInfoMoviePath}/$movie');
     try {
+      final Response response = await dio.get(
+          '${ApiConstants.rootApiPath}${ApiConstants.getInfoMoviePath}/$movie');
       if (response.statusCode != MovieStatusResponse.success) {
         return const MovieStatusResponse(
             statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
@@ -186,10 +201,10 @@ class MoviesService extends ServiceTemplate {
   }
 
   Future<StoryNewsResponse> getInfoStoryNews() async {
+    StoryNewsResponse result =
+      const StoryNewsResponse(statusCode: HttpStatus.APP_ERROR);
     try {
-      StoryNewsResponse result =
-          const StoryNewsResponse(statusCode: HttpStatus.APP_ERROR);
-      final response =
+      final Response response =
           await dio.get('${ApiConstants.rootApiPath}${ApiConstants.dailyInfo}');
       if (response.statusCode == HttpStatus.OK) {
         result = StoryNewsResponse(
@@ -210,13 +225,12 @@ class MoviesService extends ServiceTemplate {
   }
 
   Future<NewsResponse> getInfoNews() async {
+    NewsResponse result = const NewsResponse(statusCode: HttpStatus.APP_ERROR);
     DateTime now = DateTime.now();
     int dayOfYear = int.parse('${now.month}${now.day}');
     int index = 0;
 
     try {
-      NewsResponse result =
-          const NewsResponse(statusCode: HttpStatus.APP_ERROR);
       final response =
           await dio.get('${ApiConstants.rootApiPath}${ApiConstants.dailyNews}');
       if (response.statusCode == HttpStatus.OK) {

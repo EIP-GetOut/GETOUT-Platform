@@ -54,7 +54,7 @@ class ActionsPageMovie extends StatelessWidget {
                         showCustomSnackBar(
                             context: context,
                             color: Colors.green,
-                            message: 'Le film a bien été ${movie.seen == false ?'ajouté à': 'retiré de'} vos films vus',
+                            message: 'Le film a bien été ${movie.seen == false ?'ajouté à': 'retiré de'} vos films à voir',
                             icon: Icons.check_circle_rounded);
                         //watch
                         Navigator.pop(context);

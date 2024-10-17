@@ -25,6 +25,7 @@ class ActionsPageBook extends StatelessWidget {
   Widget build(BuildContext context) {
     final book = context.read<BookBloc>().state.book;
 
+    /// TODO cut parts and put it in new functions
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Padding(
@@ -68,8 +69,8 @@ class ActionsPageBook extends StatelessWidget {
                         ), // Icons.visibility_off
                         Text(
                             book.read != null && book.read!
-                                ? appL10n(context)!.remove_seen
-                                : appL10n(context)!.add_seen,
+                                ? appL10n(context)!.remove_read
+                                : appL10n(context)!.add_read,
                             style: const TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.w500))
                       ]),
@@ -79,6 +80,7 @@ class ActionsPageBook extends StatelessWidget {
                     ),
                     InkWell(
                         onTap: () async {
+                          if (!context.mounted) return;
                           if (book.liked == true) {
                             await context
                                 .read<BookBloc>()
@@ -91,14 +93,19 @@ class ActionsPageBook extends StatelessWidget {
                                 .bookService
                                 .addLikedBook(
                                 AddBookRequest(id: book.id!));
-                          }
+                            }
                           if (!context.mounted) return;
-                          context.read<BookBloc>().add(CreateInfoBookRequest(id: book.id!));
-                          context.read<LikedBooksHydratedBloc>().add(const GenerateBooksRequest());
+                          context.read<BookBloc>().add(
+                              CreateInfoBookRequest(id: book.id!));
+                          context.read<LikedBooksHydratedBloc>().add(
+                              const GenerateBooksRequest());
                           showCustomSnackBar(
                               context: context,
                               color: Colors.green,
-                              message: 'Le livre a bien été ${book.liked == false ?'ajouté à': 'retiré de'} vos livres aimés',
+                              message: 'Le livre a bien été ${book.liked ==
+                                  false
+                                  ? 'ajouté à'
+                                  : 'retiré de'} vos livres aimés',
                               icon: Icons.check_circle_rounded);
                           Navigator.pop(context);
                         },

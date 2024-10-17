@@ -57,7 +57,7 @@ class SettingsPage extends StatelessWidget {
                 iconData: Icons.public_outlined,
                 value: appL10n(context)!.select_language),*/
             TitleRow(value: appL10n(context)!.other),
-            SettingRow(page: const Forms(), image : 'assets/images/icon/setting.svg', value: appL10n(context)!.select_preferences),
+            SettingRow(page: const Forms(isEdit: true), image : 'assets/images/icon/setting.svg', value: appL10n(context)!.select_preferences),
             SettingRow(page: const HistoryProvider(), image: 'assets/images/icon/history.svg', value: appL10n(context)!.history),
             const NotificationsPage(value: 'Notifications'),
             //TitleRow(value: appL10n(context)!.more),
