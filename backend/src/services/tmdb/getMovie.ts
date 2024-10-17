@@ -79,6 +79,7 @@ async function getMovie (id: number): Promise<MovieResponse> {
   return await getMovieDetails(id).then(async (movieObtained: TMDBMovieResponse) => {
     return await fetchMovieCredits(id).then(async (cast: Cast []) => {
       return await getDirector(id).then((director: Cast) => {
+        const rating = Number((Number(movieObtained.vote_average) / 2).toFixed(2))
         return ({
           id,
           title: movieObtained.title,
@@ -88,7 +89,7 @@ async function getMovie (id: number): Promise<MovieResponse> {
           posterPath: movieObtained.poster_path,
           backdropPath: movieObtained.backdrop_path,
           releaseDate: movieObtained.release_date,
-          averageRating: Number((Number(movieObtained.vote_average) / 2).toFixed(2)),
+          averageRating: rating < 4.5 ? rating + 0.5 : rating,
           cast,
           director,
           duration: movieObtained.runtime
