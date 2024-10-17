@@ -207,7 +207,7 @@ class MovieSuccessWidget extends StatelessWidget {
                     ),
                     movie.genres != null && movie.genres!.isNotEmpty
                         ? Padding(
-                            padding: const EdgeInsets.all(15.0),
+                            padding: const EdgeInsets.all(16),
                             child: Wrap(
                               spacing: 8.0,
                               runSpacing: 4.0,

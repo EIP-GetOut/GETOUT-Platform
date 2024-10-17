@@ -46,7 +46,7 @@ class DeleteAccountPage extends StatelessWidget {
                 }
               });
             },
-            child: Row(
+            child: Padding( padding : const EdgeInsets.only(right: 15.0, left: 15.0), child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SvgPicture.asset('assets/images/icon/trash.svg'),
@@ -55,12 +55,12 @@ class DeleteAccountPage extends StatelessWidget {
                     appL10n(context)!.delete_account,
                     style: TextStyle(
                         fontSize:
-                            (MediaQuery.of(context).size.width > 400) ? 20 : 12,
+                            (MediaQuery.of(context).size.width > 400) ? 18 : 12,
                         color: const Color.fromRGBO(236, 0, 0, 1.0)),
                   ),
                   const Expanded(child: SizedBox()),
                   const Icon(Icons.arrow_forward_ios_rounded,
                       color: Colors.black54),
-                ])));
+                ]))));
   }
 }

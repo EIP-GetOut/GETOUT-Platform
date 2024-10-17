@@ -13,7 +13,6 @@ from getBooksPool import getBooksPool
 from applyWeightsAndScore import applyWeightsAndScore
 from filterBooksPool import filterBooksPool
 
-
 def recommendBooks(account: dict) -> list:
     parameters = getParameters(account)
     booksPool = getBooksPool(parameters)

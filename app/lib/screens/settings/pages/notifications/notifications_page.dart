@@ -28,14 +28,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
     return Column(children: [
           Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-              child: Row(
+              child: Padding( padding : const EdgeInsets.only(right: 15.0, left: 15.0), child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SvgPicture.asset('assets/images/icon/bell(notification).svg'),
                     SizedBox(width: Tools.widthFactor(context, 0.065)),
                     Text(widget.value,
                         style:
-                            TextStyle(fontSize: 20, color: Colors.grey[800])),
+                            TextStyle(fontSize: 18, color: Colors.grey[800])),
                     const Expanded(child: SizedBox()),
                     FlutterSwitch(
                       height: 35.0,
@@ -57,7 +57,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                         }
                       },
                     ),
-                  ]))
+                  ])))
         ]);
   }
 }

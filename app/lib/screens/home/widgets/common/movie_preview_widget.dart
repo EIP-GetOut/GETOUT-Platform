@@ -21,7 +21,7 @@ class MoviePreviewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(10.0),
+      margin: const EdgeInsets.only(right: 30.0, left: 30.0),
       width: 100,
       height: 100,
       child: SingleChildScrollView(

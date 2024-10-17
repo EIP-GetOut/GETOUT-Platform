@@ -11,8 +11,8 @@ import { StatusCodes } from 'http-status-codes'
 import logger from '@middlewares/logging'
 
 import { getBook } from '@services/googlebooks/getBook'
+import caching from '@services/middlewares/caching'
 import { logApiRequest } from '@services/middlewares/logging'
-import validate from '@services/middlewares/validator'
 import { handleErrorOnRoute } from '@services/utils/handleRouteError'
 
 const router = Router()
@@ -57,7 +57,7 @@ const router = Router()
  *         description: Internal server error.
  */
 
-router.get('/book/:id', validate, logApiRequest, (req: Request, res: Response) => {
+router.get('/book/:id', caching(24 * 60 * 60), logApiRequest, (req: Request, res: Response) => {
   getBook(req.params.id, true).then(async (book: any) => {
     logger.info(`Successfully retreived book ${req.params.id}: ${JSON.stringify(book, null, 2)}`)
     return res.status(StatusCodes.OK).json({ ...book })

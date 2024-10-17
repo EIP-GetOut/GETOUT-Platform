@@ -10,10 +10,10 @@ import 'package:flutter/services.dart';
 
 import 'package:getout/screens/settings/settings.dart';
 
-import 'package:getout/tools/app_l10n.dart';
+// import 'package:getout/tools/app_l10n.dart';
 
 class HomeAppBarWidget extends AppBar {
-  HomeAppBarWidget({super.key, required BuildContext context})
+  HomeAppBarWidget({super.key, required BuildContext context, required String title, required String subtitle})
       : super(
           systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarColor: Colors.transparent,
@@ -30,11 +30,13 @@ class HomeAppBarWidget extends AppBar {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Padding(
                       padding: const EdgeInsets.only(left: 20),
-                      child: Text(appL10n(context)!.homepage_title,
+                      // appL10n(context)!.homepage_title
+                      child: Text(title,
                           style: Theme.of(context).textTheme.titleLarge)),
                   Padding(
+                      // appL10n(context)!.homepage_subtitle
                       padding: const EdgeInsets.only(left: 20),
-                      child: Text(appL10n(context)!.homepage_subtitle,
+                      child: Text(subtitle,
                           style: Theme.of(context).textTheme.displayMedium)),
                 ])
               ],

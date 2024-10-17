@@ -43,7 +43,7 @@ class SettingRow extends StatelessWidget {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => page));
             },
-            child: Row(
+            child: Padding(padding: const EdgeInsets.only(right: 15.0, left: 15.0), child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   (image != null) ? SvgPicture.asset(image!) : const SizedBox(),
@@ -52,7 +52,7 @@ class SettingRow extends StatelessWidget {
                       style: TextStyle(
                           fontSize:
                               (MediaQuery.of(context).size.width > 400)
-                                  ? 20
+                                  ? 18
                                   : 12,
                           color: (important == Important.warning)
                               ? Colors.red
@@ -60,6 +60,6 @@ class SettingRow extends StatelessWidget {
                   const Expanded(child: SizedBox()),
                   const Icon(Icons.arrow_forward_ios_rounded,
                       color: Colors.black54),
-                ])));
+                ]))));
   }
 }
