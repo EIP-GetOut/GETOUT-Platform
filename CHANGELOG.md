@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.2](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v1.0.1...v1.0.2) (2024-10-17)
+
+
+### Features
+
+* **app:** :sparkles: improving book and movie request ([ff1b052](https://github.com/EIP-GetOut/GETOUT-Platform/commit/ff1b052ab43dfe76e9ae9f043d41694676fbcb25))
+
+
+### Bug Fixes
+
+* **app:** :adhesive_bandage: fix merge conflict ([a72babb](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a72babb40acd420a5e99326ce0201bc24665b9a1))
+* **app:** :ambulance: black screen when first connection ([309d34d](https://github.com/EIP-GetOut/GETOUT-Platform/commit/309d34d50f37d9ef03ebf52a6545a197d7517091))
+* **app:** :pencil2: typo in your books / your movies ([5224e85](https://github.com/EIP-GetOut/GETOUT-Platform/commit/5224e85597d124c9bbac90e7203a9f621dba84dc))
+* **app:** :pencil2: typo in your books / your movies ([a8c31b7](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a8c31b7d3029294dc2d434192346bfe65bdd3c58))
+* **backend:** :bug: date first four letters books recommendations ([2d0a52f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/2d0a52f955a4f035a0cc1a0c846f75e0a9c49efd))
+* **backend:** :bug: remove useless prints ([8ea6194](https://github.com/EIP-GetOut/GETOUT-Platform/commit/8ea6194e464edfd45471edc1852f333bb8943bc6))
+
+
+### UI Updates
+
+* **app:** :lipstick: update ui and paddings ([cf5b218](https://github.com/EIP-GetOut/GETOUT-Platform/commit/cf5b218cb6bf3b483ec2cfa81d4d3b841c05ab91))
+
+
+### Refactors
+
+* **backend:** bumped movies ratings ([5ca9c45](https://github.com/EIP-GetOut/GETOUT-Platform/commit/5ca9c457071036370376f159e7bca8bca6c9ba2e))
+
 ### [1.0.1](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v1.0.0...v1.0.1) (2024-10-17)
 
 
