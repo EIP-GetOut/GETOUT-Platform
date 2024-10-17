@@ -11,7 +11,7 @@ class LoginState extends Equatable {
   final String email;
   final String password;
   final Status status;
-  final Object? exception;
+  final int? statusCode;
   bool get isEmailEmpty => email.isNotEmpty;
   bool get isPasswordEmpty => password.isNotEmpty;
 
@@ -19,23 +19,23 @@ class LoginState extends Equatable {
     this.email = '',
     this.password = '',
     this.status = Status.initial,
-    this.exception,
+    this.statusCode,
   });
 
   LoginState copyWith({
     String? email,
     String? password,
     Status? status,
-    Object? exception
+    int? statusCode
   }) {
     return LoginState(
       email: email ?? this.email,
       password: password ?? this.password,
       status: status ?? this.status,
-      exception: exception ?? this.exception
+      statusCode: statusCode ?? this.statusCode
     );
   }
 
   @override
-  List<Object?> get props => [email, password, status, exception];
+  List<Object?> get props => [email, password, status, statusCode];
 }

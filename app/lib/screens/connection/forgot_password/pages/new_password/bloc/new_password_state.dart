@@ -12,7 +12,7 @@ class NewPasswordState extends Equatable {
   final String password;
   final String confirmPassword;
   final Status status;
-  final Object? exception;
+  final int? statusCode;
   bool get isPasswordEmpty => password.isNotEmpty;
   bool get isPasswordLength => password.length >= 8;
   // ignore: prefer_single_quotes
@@ -26,7 +26,7 @@ class NewPasswordState extends Equatable {
     this.password = '',
     this.confirmPassword = '',
     this.status = Status.initial,
-    this.exception
+    this.statusCode
   });
 
   NewPasswordState copyWith({
@@ -34,17 +34,17 @@ class NewPasswordState extends Equatable {
     String? password,
     String? confirmPassword,
     Status? status,
-    Object? exception
+    int? statusCode
   }) {
     return NewPasswordState(
       code: code ?? this.code,
       password: password ?? this.password,
       confirmPassword: confirmPassword ?? this.confirmPassword,
       status: status ?? this.status,
-      exception: exception ?? this.exception
+      statusCode: statusCode ?? this.statusCode
     );
   }
 
   @override
-  List<Object?> get props => [code, password, confirmPassword, status, exception];
+  List<Object?> get props => [code, password, confirmPassword, status, statusCode];
 }

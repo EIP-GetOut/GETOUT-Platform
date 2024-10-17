@@ -20,6 +20,13 @@ class EmailVerifiedResponseModel {
   final int statusCode;
 }
 
+class EmailVerifiedResendResponseModel {
+  const EmailVerifiedResendResponseModel({required this.statusCode});
+
+  static const int success = HttpStatus.OK;
+  final int statusCode;
+}
+
 abstract class EmailVerifiedEvent extends Equatable {
   const EmailVerifiedEvent();
 }

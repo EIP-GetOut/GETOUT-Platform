@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dio/dio.dart';
 
 import 'package:getout/screens/connection/register/widgets/fields.dart';
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
@@ -35,12 +34,10 @@ class RegisterPage extends StatelessWidget {
                 previous.status != current.status,
             listener: (context, state) {
               if (state.status.isError) {
-                if (state.exception is DioException &&
-                    (state.exception as DioException).response != null &&
-                    (state.exception as DioException).response!.statusCode ==
-                        HttpStatus.CONFLICT) {
-                  showSnackBar(context,
-                      appL10n(context)!.email_already_exists);
+                if (state.statusCode == HttpStatus.CONFLICT) {
+                  showSnackBar(context, appL10n(context)!.email_already_exists);
+                } else if (state.statusCode == HttpStatus.APP_TIMEOUT) {
+                  showSnackBar(context, 'Timeout'); /// TODO create a timeout message
                 } else {
                   showSnackBar(context, appL10n(context)!.error_unknown);
                 }

@@ -9,13 +9,12 @@ part of 'service.dart';
 
 class SessionService extends ServiceTemplate {
 //  final String _id = (globals.session != null) ? globals.session!['id'].toString() : '';
-  final Dio dio = Dio();
+  final Dio dio = Dio(globals.dioOptions);
 
   SessionService() {
     dio.interceptors.add(CookieManager(PersistCookieJar(
         ignoreExpires: true,
         storage: FileStorage(globals.cookiePath))));
-    dio.options.headers = ({'Content-Type': 'application/json'});
   }
 
 
@@ -25,7 +24,7 @@ class SessionService extends ServiceTemplate {
       ///
       final response = await dio.delete(
           '${ApiConstants.rootApiPath}/account',
-          options: Options(headers: {'Content-Type': 'application/json'}));
+          );
 
       if (response.statusCode != HttpStatus.OK) {
         return Future.error(Exception(
@@ -58,9 +57,6 @@ class SessionService extends ServiceTemplate {
     try {
       final response = await dio.post(
         '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/logout',
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-        ),
       );
       if (response.statusCode != HttpStatus.NO_CONTENT) {
         return Future.error(Exception(
@@ -81,9 +77,6 @@ class SessionService extends ServiceTemplate {
     try {
       final response = await dio.delete(
         '${ApiConstants.rootApiPath}/account',
-        options: Options(
-          headers: {'Content-Type': 'application/json'},
-        ),
       );
       if (response.statusCode != HttpStatus.NO_CONTENT) {
         return Future.error(Exception(

@@ -8,47 +8,74 @@
 part of 'service.dart';
 
 class ForgotPasswordService extends ServiceTemplate {
-  final Dio dio = Dio();
+  final Dio dio = Dio(globals.dioOptions);
 
   ForgotPasswordService() {
     dio.interceptors.add(CookieManager(PersistCookieJar(
         ignoreExpires: true,
         storage: FileStorage(globals.cookiePath))));
-    dio.options.headers = ({'Content-Type': 'application/json'});
   }
 
-  Future<void> checkEmail(final CheckEmailRequestModel request) async
+  Future<CheckEmailResponseModel> checkEmail(final CheckEmailRequestModel request) async
   {
+    CheckEmailResponseModel response =
+    const CheckEmailResponseModel(statusCode: HttpStatus.APP_ERROR);
+
     try {
-      await dio.post(
+      final Response dioResponse = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.resetPasswordEmailPath}',
           data: {
             'email': request.email,
-          },
-          options: Options(headers: {'Content-Type': 'application/json'}));
-    } on DioException { // add "catch (dioError)" for debugging
-      rethrow;
+          });
+      response = CheckEmailResponseModel(
+          statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return CheckEmailResponseModel(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return response;
+      } else {
+        return CheckEmailResponseModel(
+            statusCode: dioException.response!.statusCode!);
+      }
     } catch (error) {
-      rethrow;
+      return response;
     }
+    return response;
   }
 
-  Future<void> sendNewPassword(final NewPasswordRequestModel request) async
+  Future<NewPasswordResponseModel> sendNewPassword(final NewPasswordRequestModel request) async
   {
+    NewPasswordResponseModel response =
+    const NewPasswordResponseModel(statusCode: HttpStatus.APP_ERROR);
+
     try {
-      await dio.post(
+      final Response dioResponse = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.resetPasswordNewPasswordPath}',
           data: {
             'newPassword' : request.password,
             'code': int.parse(request.code)
-            // ,
-            // 'password' : 'Charles',
-          },
-          options: Options(headers: {'Content-Type': 'application/json'}));
-    } on DioException { // add "catch (dioError)" for debugging
-      rethrow;
+          });
+      response = NewPasswordResponseModel(
+          statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return NewPasswordResponseModel(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return response;
+      } else {
+        return NewPasswordResponseModel(
+            statusCode: dioException.response!.statusCode!);
+      }
     } catch (error) {
-      rethrow;
+      return response;
     }
+    return response;
   }
 }

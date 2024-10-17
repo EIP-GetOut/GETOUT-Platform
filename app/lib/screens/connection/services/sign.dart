@@ -8,80 +8,134 @@
 part of 'service.dart';
 
 class SignService extends ServiceTemplate {
-  final Dio dio = Dio();
+
+  final Dio dio = Dio(globals.dioOptions);
+
   SignService() {
     dio.interceptors.add(CookieManager(PersistCookieJar(
-        ignoreExpires: true,
-        storage: FileStorage(globals.cookiePath))));
-    dio.options.headers = ({'Content-Type': 'application/json'});
+        ignoreExpires: true, storage: FileStorage(globals.cookiePath))));
   }
 
-  Future<void> login(final LoginRequestModel request) async {
+  Future<LoginResponseModel> login(final LoginRequestModel request) async
+  {
+    LoginResponseModel response =
+        const LoginResponseModel(statusCode: HttpStatus.APP_ERROR);
+
     try {
-      await dio.post('${ApiConstants.rootApiPath}${ApiConstants.loginPath}',
+      final Response dioResponse =
+          await dio.post('${ApiConstants.rootApiPath}${ApiConstants.loginPath}',
               data: {
                 'email': request.email,
                 'password': request.password,
-              },
-              options: Options(headers: {'Content-Type': 'application/json'}));
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (dioError) {
-      //todo
-      if (kDebugMode) {
-        print(dioError);
+              });
+      response = LoginResponseModel(
+          statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return LoginResponseModel(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return response;
+      } else {
+        return LoginResponseModel(
+            statusCode: dioException.response!.statusCode!);
       }
-      rethrow;
+    } catch (error) {
+      return response;
     }
+    return response;
   }
 
-  Future<void> register(final RegisterRequestModel request) async {
+  Future<RegisterResponseModel> register(final RegisterRequestModel request) async {
+    RegisterResponseModel response =
+    const RegisterResponseModel(statusCode: HttpStatus.APP_ERROR);
+
     try {
-      await dio
-          .post('${ApiConstants.rootApiPath}${ApiConstants.registerPath}',
-              data: {
-                'email': request.email,
-                'password': request.password,
-                'firstName': request.firstName,
-                'lastName': request.lastName,
-                'bornDate': request.birthDate,
-              },
-              options: Options(headers: {'Content-Type': 'application/json'}));
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
+      final Response dioResponse =
+      await dio.post('${ApiConstants.rootApiPath}${ApiConstants.registerPath}',
+          data: {
+            'email': request.email,
+            'password': request.password,
+            'firstName': request.firstName,
+            'lastName': request.lastName,
+            'bornDate': request.birthDate,
+          });
+      response = RegisterResponseModel(
+          statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return RegisterResponseModel(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return response;
+      } else {
+        return RegisterResponseModel(
+            statusCode: dioException.response!.statusCode!);
+      }
     } catch (error) {
-      rethrow;
+      return response;
     }
+    return response;
   }
 
-  Future<void> emailVerified(final EmailVerifiedRequestModel request) async {
+  Future<EmailVerifiedResponseModel> emailVerified(final EmailVerifiedRequestModel request) async {
+    EmailVerifiedResponseModel response =
+    const EmailVerifiedResponseModel(statusCode: HttpStatus.APP_ERROR);
+
     try {
-      await dio
-          .post('${ApiConstants.rootApiPath}${ApiConstants.verifyEmailPath}',
-              data: {
-                'code': int.parse(request.code),
-              },
-              options: Options(headers: {'Content-Type': 'application/json'}));
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
+      final Response dioResponse = await dio.post(
+          '${ApiConstants.rootApiPath}${ApiConstants.verifyEmailPath}',
+          data: {
+            'code': int.parse(request.code),
+          });
+      response = EmailVerifiedResponseModel(
+          statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return EmailVerifiedResponseModel(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return response;
+      } else {
+        return EmailVerifiedResponseModel(
+            statusCode: dioException.response!.statusCode!);
+      }
     } catch (error) {
-      rethrow;
+      return response;
     }
+    return response;
   }
 
-  Future<void> emailVerifiedResend() async {
+  Future<EmailVerifiedResendResponseModel> emailVerifiedResend() async {
+    EmailVerifiedResendResponseModel response =
+    const EmailVerifiedResendResponseModel(statusCode: HttpStatus.APP_ERROR);
+
     try {
-      await dio.post(
-          '${ApiConstants.rootApiPath}${ApiConstants.verifyEmailResendPath}',
-          options: Options(headers: {'Content-Type': 'application/json'}));
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
+      final Response dioResponse = await dio.post(
+          '${ApiConstants.rootApiPath}${ApiConstants.verifyEmailResendPath}');
+      response = EmailVerifiedResendResponseModel(
+          statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
+    } on DioException catch (dioException) {
+      if (dioException.type == DioExceptionType.connectionTimeout ||
+          dioException.type == DioExceptionType.receiveTimeout ||
+          dioException.type == DioExceptionType.sendTimeout) {
+        return EmailVerifiedResendResponseModel(statusCode: HttpStatus.APP_TIMEOUT);
+      } else if (dioException.response == null ||
+          dioException.response!.statusCode == null) {
+        return response;
+      } else {
+        return EmailVerifiedResendResponseModel(
+            statusCode: dioException.response!.statusCode!);
+      }
     } catch (error) {
-      rethrow;
+      return response;
     }
+    return response;
   }
 }

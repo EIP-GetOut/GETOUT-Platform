@@ -10,27 +10,27 @@ part of 'email_verified_bloc.dart';
 class EmailVerifiedState extends Equatable {
   final String code;
   final Status status;
-  final Object? exception;
+  final int? statusCode;
   bool get isCodeValid => code.isNotEmpty;
 
   const EmailVerifiedState({
     this.code = '',
     this.status = Status.initial,
-    this.exception
+    this.statusCode
   });
 
   EmailVerifiedState copyWith({
     String? code,
     Status? status,
-    Object? exception
+    int? statusCode
   }) {
     return EmailVerifiedState(
       code: code ?? this.code,
       status: status ?? this.status,
-      exception: exception ?? this.exception
+        statusCode: statusCode ?? this.statusCode
     );
   }
 
   @override
-  List<Object?> get props => [code, status, exception];
+  List<Object?> get props => [code, status, statusCode];
 }
