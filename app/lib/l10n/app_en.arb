@@ -108,6 +108,8 @@
   "director": "Director(s)",
   "casting": "Casting",
 
+  "add_read": "add to read",
+  "remove_read": "remove from read",
   "add_seen": "Add to views",
   "remove_seen": "Remove from views",
   "like": "I like",
