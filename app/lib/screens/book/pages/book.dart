@@ -160,22 +160,6 @@ class BookSuccessWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(Icons.star),
-                            const SizedBox(width: 2),
-                            Text(
-                              book.voteAverage != null
-                                  ? book.voteAverage.toString()
-                                  : 'N/A',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
                         const SizedBox(width: 10),
                         Text(
                           releaseDate != '' ? releaseDate.split('-')[0] : '',
@@ -201,7 +185,6 @@ class BookSuccessWidget extends StatelessWidget {
                           spacing: 8.0,
                           runSpacing: 4.0,
                           children: [tagList()[0]],
-
                         ))
                         : const SizedBox.shrink(),
                     Padding(

@@ -5,6 +5,7 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>, Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -24,19 +25,17 @@ import 'package:getout/screens/connection/services/service.dart';
 import 'package:getout/screens/connection/email_verified/bloc/email_verified_provider.dart';
 import 'package:getout/screens/home/bloc/home_provider.dart';
 import 'package:getout/screens/form/pages/form.dart';
-import 'package:getout/widgets/object_loading_error_widget.dart';
 import 'package:getout/bloc/session/session_service.dart';
 import 'package:getout/bloc/session/session_event.dart';
 import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/observer.dart';
 import 'package:getout/bloc/theme/bloc.dart';
+import 'package:getout/widgets/transition_page.dart';
 import 'package:getout/widgets/loading.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/global.dart' as globals;
-
-import 'dart:async';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,7 +48,7 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   Directory appDocDir = await getApplicationDocumentsDirectory();
   globals.cookiePath = '${appDocDir.path}/.cookies/';
-    runApp(Phoenix(child: const MainProvider()));
+  runApp(Phoenix(child: const MainProvider()));
 }
 
 class MainProvider extends StatelessWidget {
@@ -109,23 +108,31 @@ class MainPage extends StatelessWidget {
             } else if (state.status.isFound) {
               return const HomeProvider();
             } else if (state.status.isFoundWithoutPreferences) {
-              return const Forms();
+              return const Forms(isEdit: false);
             } else if (state.status.isLoading) {
               return const ColoredBox(
                   color: Colors.white, child: Center(child: LoadingPage()));
             } else if (state.status.isError) {
               /// TODO : Add a retry button
-              return ColoredBox(
-                  color: Colors.white,
-                  child: ObjectLoadingErrorWidget(
-                      object: appL10n(context)!.your_account));
+              return TransitionPage(
+                  title: appL10n(context)!.error_unknown_short,
+                  description: appL10n(context)!.error_unknown_description,
+                  image: 'assets/images/draw/error.svg',
+                  buttonText: appL10n(context)!.error_ok,
+                  nextPage: () => {
+                    Phoenix.rebirth(context),
+                  });
             } else if (state.status.isNotFound) {
               return const ConnectionProvider();
             } else {
-              return ColoredBox(
-                  color: Colors.red,
-                  child: ObjectLoadingErrorWidget(
-                      object: appL10n(context)!.your_account));
+              return TransitionPage(
+                  title: appL10n(context)!.error_unknown_short,
+                  description: appL10n(context)!.error_unknown_description,
+                  image: 'assets/images/draw/error.svg',
+                  buttonText: appL10n(context)!.error_ok,
+                  nextPage: () => {
+                    Phoenix.rebirth(context),
+                  });
             }
           },
         ),

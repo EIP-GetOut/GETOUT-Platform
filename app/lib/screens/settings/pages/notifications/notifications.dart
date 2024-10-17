@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 import 'package:is_first_run/is_first_run.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -67,14 +68,16 @@ class NotificationsServices {
 
     NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
-    await flutterLocalNotificationsPlugin.periodicallyShow(
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
         'GetOut',
         "Hey, tu t'ennuies ? Viens découvrir de nouvelles activités !",
         // RepeatInterval.daily,
         // pour la demo il faut utiliser :
-        RepeatInterval.daily,
-        notificationDetails);
+        tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
+        notificationDetails,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime);
     isActive = true;
     saveIsActiveValueInCache();
   }

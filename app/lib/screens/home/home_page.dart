@@ -29,7 +29,8 @@ class HomePage extends StatelessWidget {
     globals.notificationsServices.askForActiveNotifications();
     return BlocBuilder<HomePageBloc, HomePageState>(builder: (context, state) {
       return Scaffold(
-          appBar: HomeAppBarWidget(context: context),
+          // appBar: HomeAppBarWidget(context: context),
+          appBar: buildAppBar(state.idx, context),
           body: PageView(
               controller: pageController,
               onPageChanged: (index) {
@@ -45,5 +46,34 @@ class HomePage extends StatelessWidget {
           bottomNavigationBar:
               HomeNavBarWidget(pageController: pageController, idx: state.idx));
     });
+  }
+}
+
+PreferredSizeWidget? buildAppBar(int currentIndex, BuildContext context) {
+  switch (currentIndex) {
+    case 0:
+      return HomeAppBarWidget(
+          context: context,
+          title: 'Vos films',
+          subtitle:
+              'Découvrez vos recommandations');
+    case 1:
+      return HomeAppBarWidget(
+          context: context,
+          title: 'Bienvenue',
+          subtitle: 'Des alternatives à portée de main');
+
+    case 2:
+      return HomeAppBarWidget(
+          context: context,
+          title: 'Vos livres',
+          subtitle:
+              'Découvrez vos recommandations');
+
+    default:
+      return HomeAppBarWidget(
+          context: context,
+          title: 'Bienvenue',
+          subtitle: 'Des alternatives à portée de main');
   }
 }

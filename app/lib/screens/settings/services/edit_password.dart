@@ -25,17 +25,15 @@ class EditPasswordServices {
         storage: FileStorage(globals.cookiePath))));
   }
 
-
   Future<EditPasswordResponseModel> sendNewPassword(final EditPasswordRequestModel request) async
   {
     EditPasswordResponseModel response = const EditPasswordResponseModel(statusCode: HttpStatus.APP_ERROR);
-    Response dioResponse;
 
     if (globals.session == null) {
       return response;
     }
     try {
-      dioResponse = await dio.post(
+      Response dioResponse = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.changePasswordPath}',
           data: {
             'password': request.oldPassword,

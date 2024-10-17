@@ -5,9 +5,9 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>
 */
 
+import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
-import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 
 import 'package:getout/constants/http_status.dart';
 import 'package:getout/constants/api_path.dart';
@@ -81,18 +81,5 @@ class EditEmailServices {
       return response;
     }
     return response;
-  }
-
-  Future<void> emailVerifiedResend() async {
-    try {
-      await dio.post(
-          '${ApiConstants.rootApiPath}${ApiConstants.verifyEmailResendPath}',
-      );
-    } on DioException {
-      // add "catch (dioError)" for debugging
-      rethrow;
-    } catch (error) {
-      rethrow;
-    }
   }
 }
