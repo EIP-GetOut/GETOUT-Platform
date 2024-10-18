@@ -26,16 +26,11 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   void _mapGetBookEventToState(
       CreateInfoBookRequest event, Emitter<BookState> emit) async {
     emit(state.copyWith(status: BookStatus.loading));
-    try {
-      final InfoBookResponse book = await bookService.getInfoBook(event);
-      emit(
-        state.copyWith(
-          status: BookStatus.success,
-          book: book,
-        ),
-      );
-    } catch (error) {
-      emit(state.copyWith(status: BookStatus.error));
+    final InfoBookResponse book = await bookService.getInfoBook(event);
+    if (book.statusCode == InfoBookResponse.success) {
+      emit(state.copyWith(status: BookStatus.success, book: book));
+    } else {
+      emit(state.copyWith(status: BookStatus.error, book: book));
     }
   }
 }

@@ -22,10 +22,9 @@ class BooksService extends ServiceTemplate {
       GenerateBooksRequest request) async {
     GenerateBooksResponse result = [];
 
-    try { /// TODO we need to do something prettier
-      final response = await dio.get(
-          '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedBooksPath}',
-          options: Options(headers: {'Content-Type': 'application/json'}));
+    try {
+      final Response response = await dio.get(
+        '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedBooksPath}',);
 
       if (response.statusCode != HttpStatus.OK) {
         return Future.error(Exception(
@@ -80,15 +79,21 @@ class BooksService extends ServiceTemplate {
   }
 
   Future<dynamic> getLikedBooksId(GenerateBooksRequest request) async {
-    /// TODO need to be put in a try catch
-    final Response response =
-    await dio.get('${ApiConstants.rootApiPath}/account/$_id/likedBooks');
-    if (response.statusCode != HttpStatus.OK) {
-      return Future.error(Exception(
-        'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
-      ));
+    try {
+      final Response response =
+      await dio.get('${ApiConstants.rootApiPath}/account/$_id/likedBooks');
+      if (response.statusCode != HttpStatus.OK) {
+        return Future.error(Exception(
+          'Error ${response.statusCode} while fetching books: ${response
+              .statusMessage}',
+        ));
+      }
+      return response.data;
+    } on DioException {
+      return;
+    } catch (error) {
+      return;
     }
-    return response.data;
   }
 
   /// SAVED
@@ -112,16 +117,21 @@ class BooksService extends ServiceTemplate {
   }
 
   Future<dynamic> getSavedBooksId(GenerateBooksRequest request) async {
-    /// TODO need to be put in a try catch
-    final response = await dio
-        .get('${ApiConstants.rootApiPath}/account/$_id/readinglist');
-
-    if (response.statusCode != HttpStatus.OK) {
-      return Future.error(Exception(
-        'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
-      ));
+    try {
+      final Response response = await dio
+          .get('${ApiConstants.rootApiPath}/account/$_id/readinglist');
+      if (response.statusCode != HttpStatus.OK) {
+        return Future.error(Exception(
+          'Error ${response.statusCode} while fetching books: ${response
+              .statusMessage}',
+        ));
+      }
+      return response.data;
+    } on DioException {
+      return;
+    } catch (error) {
+      return;
     }
-    return response.data;
   }
 
   /// WATCHED
@@ -145,15 +155,21 @@ class BooksService extends ServiceTemplate {
   }
 
   Future<dynamic> getWatchedBooksId(GenerateBooksRequest request) async {
-    /// TODO need to be put in a try catch
-    final response = await dio
-        .get('${ApiConstants.rootApiPath}/account/$_id/readBooks');
-    if (response.statusCode != HttpStatus.OK) {
-      return Future.error(Exception(
-        'Error ${response.statusCode} while fetching books: ${response.statusMessage}',
-      ));
+    try {
+      final Response response = await dio
+          .get('${ApiConstants.rootApiPath}/account/$_id/readBooks');
+      if (response.statusCode != HttpStatus.OK) {
+        return Future.error(Exception(
+          'Error ${response.statusCode} while fetching books: ${response
+              .statusMessage}',
+        ));
+      }
+      return response.data;
+    } on DioException {
+      return;
+    } catch (error) {
+      return;
     }
-    return response.data;
   }
 
   //Info
@@ -162,9 +178,9 @@ class BooksService extends ServiceTemplate {
         const BookStatusResponse(statusCode: HttpStatus.APP_ERROR);
 
     /// TODO need to be put in a try catch
-    final Response response = await dio.get(
-        '${ApiConstants.rootApiPath}${ApiConstants.getInfoBookPath}/$book');
     try {
+      final Response response = await dio.get(
+          '${ApiConstants.rootApiPath}${ApiConstants.getInfoBookPath}/$book');
       if (response.statusCode != MovieStatusResponse.success) {
         return const BookStatusResponse(
             statusCode: HttpStatus.INTERNAL_SERVER_ERROR);
