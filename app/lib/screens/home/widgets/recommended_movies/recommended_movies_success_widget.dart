@@ -118,7 +118,7 @@ class RecommendedMoviesSuccessWidget extends StatelessWidget {
                                     if (movie.averageRating != null) ...[
                                       const Icon(Icons.star_outlined,
                                           color: Colors.white, size: 20),
-                                      Text(movie.averageRating!.toString(),
+                                      Text(movie.averageRating!.toStringAsFixed(1),
                                           style: const TextStyle(
                                             fontSize: 14,
                                             color: Colors.white,

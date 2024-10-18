@@ -177,7 +177,7 @@ class MovieSuccessWidget extends StatelessWidget {
                             const SizedBox(width: 2),
                             Text(
                               movie.voteAverage != null
-                                  ? movie.voteAverage.toString()
+                                  ? ((movie.voteAverage! * 10).roundToDouble() / 10).toString()
                                   : 'N/A',
                               style: const TextStyle(
                                 fontSize: 16,

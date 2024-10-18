@@ -78,7 +78,7 @@ class HomeNavBarWidget extends StatelessWidget {
           onTap: (int value) => {
             context.read<HomePageBloc>().add(HomePageToIdx(value)),
             pageController.animateToPage(value,
-                duration: const Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 1),
                 curve: Curves.easeIn),
           },
           showUnselectedLabels: true,

@@ -69,9 +69,10 @@ class RefreshTimeCard extends StatelessWidget {
         builder: (context, timerNotifier, child) {
           return Center(
             child: Card.outlined(
+              color: Colors.black26,
               shape: RoundedRectangleBorder(
-                side: BorderSide(color: Theme.of(context).primaryColor, width: 2),
-                borderRadius: BorderRadius.circular(25),
+                side: BorderSide(color: Colors.white, width: 2),
+                borderRadius: BorderRadius.circular(16),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -79,7 +80,7 @@ class RefreshTimeCard extends StatelessWidget {
                   ListTile(
                     leading: Icon(
                       Icons.access_time_filled,
-                      color: Theme.of(context).primaryColor,
+                      color: Colors.white,
                       size: 30,
                     ),
                     title: ValueListenableBuilder<int>(
@@ -89,7 +90,7 @@ class RefreshTimeCard extends StatelessWidget {
                           durationFormatSeconds(
                               appL10n(context)!.refresh, remainingSeconds),
                           style: TextStyle(
-                              color: Theme.of(context).primaryColor,
+                              color: Colors.white,
                               fontWeight: FontWeight.w500,
                               fontSize: 18),
                         );
