@@ -108,9 +108,7 @@ class Forms extends StatelessWidget {
               } else if ((status == FormStatus.bookGenres &&
                   readContext.state.bookGenres.values.where((value) => value == true).length > 3) ||
                   (status == FormStatus.movieGenres &&
-                      readContext.state.movieGenres.values.where((value) => value == true).length > 3) ||
-                  (status == FormStatus.viewingPlatform &&
-                      readContext.state.viewingPlatform.values.where((value) => value == true).length > 3)) {
+                      readContext.state.movieGenres.values.where((value) => value == true).length > 3)) {
                 showSnackBar(context, appL10n(context)!.form_too_much);
               } else if (status == FormStatus.viewingPlatform) {
                 readContext.add(const EmitEvent(status: FormStatus.loading));
