@@ -41,7 +41,8 @@ class WatchedMoviesSuccessWidget extends StatelessWidget {
                 length: movies.length,
                 isBooks: false),
             const SizedBox(height: 20),
-            Expanded(
+            movies.isNotEmpty ?
+              Expanded(
                 child: ListView(
                     controller: movieController,
                     scrollDirection: Axis.horizontal,
@@ -67,7 +68,18 @@ class WatchedMoviesSuccessWidget extends StatelessWidget {
                           child: MoviePreviewWidget(
                               posterPath: movies[index].posterPath,
                               title: movies[index].title));
-                    }))),
+                    })))
+                : const Padding(
+                padding: EdgeInsets.only(left: 20, right: 20),
+                child: Text(
+                    'Ajoutez un film au film vu pour le voir ici',
+                    maxLines: 2,
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 0, 0, 0),
+                      fontSize: 15,
+                      fontFamily: 'Urbanist',
+                      fontWeight: FontWeight.bold,
+                    )))
           ],
         ));
   }

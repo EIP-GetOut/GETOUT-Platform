@@ -57,6 +57,10 @@ class Forms extends StatelessWidget {
   Widget _backButton(final PageController pageController,
       final FormStates state, final BuildContext context) {
 
+    if (!isEdit && state.status == FormStatus.bookGenres) {
+      return SizedBox();
+    }
+
     return IconButton(
         icon: const Icon(Icons.arrow_back),
         onPressed: () {

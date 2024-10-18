@@ -36,13 +36,13 @@ class SavedBooksSuccessWidget extends StatelessWidget {
           const SizedBox(height: 20),
           TitleWidget(
               asset: 'party',
-              title: 'Vos livres en cours',
+              title: 'Les livres que vous voulez lire',
               length: books.length,
               isBooks: true),
           const SizedBox(height: 20),
-          Expanded(
-              child: books.isNotEmpty
-                  ? ListView(
+        books.isNotEmpty
+            ? Expanded(
+              child: ListView(
                       controller: bookController,
                       scrollDirection: Axis.horizontal,
                       children: List.generate(books.length, (index) {
@@ -67,19 +67,19 @@ class SavedBooksSuccessWidget extends StatelessWidget {
                             child: BookPreviewWidget(
                                 posterPath: books[index].posterPath,
                                 title: books[index].title));
-                      }))
+                      })))
                   : const Padding(
                       padding: EdgeInsets.only(left: 20, right: 20),
                       child: Expanded(
                           child: Text(
-                              'Ajoutez de nouveaux livres à votre liste pour les afficher ici',
+                              'Ajoutez un livre à votre liste pour le voir ici',
                               maxLines: 2,
                               style: TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0),
                                 fontSize: 15,
                                 fontFamily: 'Urbanist',
                                 fontWeight: FontWeight.bold,
-                              )))))
+                              ))))
         ]));
   }
 }
