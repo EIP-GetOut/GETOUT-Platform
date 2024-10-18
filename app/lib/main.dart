@@ -23,8 +23,8 @@ import 'package:getout/screens/connection/bloc/connection_provider.dart';
 import 'package:getout/screens/connection/services/service.dart';
 import 'package:getout/screens/connection/email_verified/bloc/email_verified_provider.dart';
 import 'package:getout/screens/home/bloc/home_provider.dart';
+import 'package:getout/widgets/transition_page.dart';
 import 'package:getout/screens/form/pages/form.dart';
-import 'package:getout/widgets/object_loading_error_widget.dart';
 import 'package:getout/bloc/session/session_service.dart';
 import 'package:getout/bloc/session/session_event.dart';
 import 'package:getout/bloc/session/session_bloc.dart';
@@ -49,7 +49,7 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   Directory appDocDir = await getApplicationDocumentsDirectory();
   globals.cookiePath = '${appDocDir.path}/.cookies/';
-    runApp(Phoenix(child: const MainProvider()));
+  runApp(Phoenix(child: const MainProvider()));
 }
 
 class MainProvider extends StatelessWidget {
@@ -115,17 +115,25 @@ class MainPage extends StatelessWidget {
                   color: Colors.white, child: Center(child: LoadingPage()));
             } else if (state.status.isError) {
               /// TODO : Add a retry button
-              return ColoredBox(
-                  color: Colors.white,
-                  child: ObjectLoadingErrorWidget(
-                      object: appL10n(context)!.your_account));
+              return TransitionPage(
+                  title: appL10n(context)!.error_unknown_short,
+                  description: appL10n(context)!.error_unknown_description,
+                  image: 'assets/images/draw/error.svg',
+                  buttonText: appL10n(context)!.error_ok,
+                  nextPage: () => {
+                        Phoenix.rebirth(context),
+                      });
             } else if (state.status.isNotFound) {
               return const ConnectionProvider();
             } else {
-              return ColoredBox(
-                  color: Colors.red,
-                  child: ObjectLoadingErrorWidget(
-                      object: appL10n(context)!.your_account));
+              return TransitionPage(
+                  title: appL10n(context)!.error_unknown_short,
+                  description: appL10n(context)!.error_unknown_description,
+                  image: 'assets/images/draw/error.svg',
+                  buttonText: appL10n(context)!.error_ok,
+                  nextPage: () => {
+                        Phoenix.rebirth(context),
+                      });
             }
           },
         ),
