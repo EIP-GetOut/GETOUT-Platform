@@ -20,14 +20,14 @@ import '../../global.dart';
 class SessionService {
 
   Future<SessionStatusResponse> getSession() async {
-    Dio dio = Dio();
+    Dio dio = Dio(globals.dioOptions);
     dio.interceptors.add(CookieManager(PersistCookieJar(
         ignoreExpires: true,
         storage: FileStorage(cookiePath))));
     dio.options.headers = ({'Content-Type': 'application/json'});
 
     try {
-      final response = await dio.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
+      final Response response = await dio.get('${ApiConstants.rootApiPath}${ApiConstants.session}');
       if (response.statusCode == HttpStatus.OK) {
         if (response.data['account'] != null) {
           globals.session = response.data['account'];
