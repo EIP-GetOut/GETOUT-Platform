@@ -72,7 +72,7 @@ class SavedBooksSuccessWidget extends StatelessWidget {
                       padding: EdgeInsets.only(left: 20, right: 20),
                       child: Expanded(
                           child: Text(
-                              'Ajoutez de nouveaux livres à la readlist pour les afficher ici',
+                              'Ajoutez de nouveaux livres à votre liste pour les afficher ici',
                               maxLines: 2,
                               style: TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0),

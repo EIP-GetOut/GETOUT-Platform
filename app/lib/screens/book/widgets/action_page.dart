@@ -17,7 +17,6 @@ import 'package:getout/screens/book/bloc/book_bloc.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/tools/app_l10n.dart';
 
-
 class ActionsPageBook extends StatelessWidget {
   const ActionsPageBook({super.key});
 
@@ -68,8 +67,8 @@ class ActionsPageBook extends StatelessWidget {
                         ), // Icons.visibility_off
                         Text(
                             book.read != null && book.read!
-                                ? appL10n(context)!.remove_seen
-                                : appL10n(context)!.add_seen,
+                                ? appL10n(context)!.remove_read
+                                : appL10n(context)!.add_read,
                             style: const TextStyle(
                                 fontSize: 25, fontWeight: FontWeight.w500))
                       ]),

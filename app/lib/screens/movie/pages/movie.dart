@@ -35,7 +35,6 @@ class MovieSuccessWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final movie = context.read<MovieBloc>().state.movie;
     final String releaseDate = movie.releaseDate ?? '';
-
     String imageUrl =
         'https://image.tmdb.org/t/p/w600_and_h900_bestv2${movie.posterPath}';
 
