@@ -26,6 +26,9 @@ async function sendInactivityEmails (): Promise<void> {
     .getMany()
 
   inactiveAccounts.forEach((account) => {
+    if (account.inactivityEmailSent) {
+      return
+    }
     sendInactivityEmail(account).then(async () => {
       logger.info(`Inactivity email sent to: ${account.email}`)
       account.inactivityEmailSent = true
