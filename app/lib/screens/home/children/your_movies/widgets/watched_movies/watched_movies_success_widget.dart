@@ -67,7 +67,8 @@ class WatchedMoviesSuccessWidget extends StatelessWidget {
                           },
                           child: MoviePreviewWidget(
                               posterPath: movies[index].posterPath,
-                              title: movies[index].title));
+                              title: movies[index].title,
+                              index: index));
                     })))
                 : const Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),

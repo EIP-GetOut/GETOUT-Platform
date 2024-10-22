@@ -22,38 +22,48 @@ class MoviesSuccessWidget extends StatelessWidget {
     required this.movies,
   });
 
-  @override
-  Widget build(BuildContext context) {
-    final PageController movieController =
-        PageController(viewportFraction: 0.1, initialPage: 0);
+@override
+Widget build(BuildContext context) {
+  final PageController movieController =
+      PageController(viewportFraction: 0.1, initialPage: 0);
 
-    return Expanded(
-        child: Column(
+  return Expanded(
+    child: Column(
       children: [
         TitleWidget(
-            asset: 'popcorn',
-            title: appL10n(context)!.movie_recommendations,
-            length: movies.length,
-            isBooks: false),
+          asset: 'popcorn',
+          title: appL10n(context)!.movie_recommendations,
+          length: movies.length,
+          isBooks: false,
+        ),
         const Padding(padding: EdgeInsets.symmetric(vertical: 10)),
-        Expanded(
-            child: ListView(
-                controller: movieController,
-                scrollDirection: Axis.horizontal,
-                children: List.generate(5, (index) {
-                  return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => Movie(movies[index].id)));
-                      },
-                      child: MoviePreviewWidget(
-                        posterPath: movies[index].posterPath,
-                        title: movies[index].title,
-                      ));
-                }))),
+        SizedBox(
+          height: 15,
+          child: ListView(
+            controller: movieController,
+            scrollDirection: Axis.horizontal,
+            children: List.generate(5, (index) {
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Movie(movies[index].id),
+                    ),
+                  );
+                },
+                child: MoviePreviewWidget(
+                  posterPath: movies[index].posterPath,
+                  title: movies[index].title,
+                  index: index,
+                ),
+              );
+            }),
+          ),
+        ),
       ],
-    ));
-  }
+    ),
+  );
+}
+
 }
