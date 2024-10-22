@@ -8,11 +8,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:timezone/data/latest.dart' as tz;
-import 'package:is_first_run/is_first_run.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/*
 class NotificationsServices {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -103,4 +101,74 @@ class NotificationsServices {
        isActive = isActiveFromCache;
      }
    }
+}
+*/
+
+class NotificationsServices2 {
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+  bool? isNotificationPermit;
+
+  NotificationsServices2() {
+    InitializationSettings initializationSettings = InitializationSettings(
+        android: const AndroidInitializationSettings(
+            '@drawable/ic_launcher_monochrome'), // mipmap/ic_launcher : take the image set of when the app is launched
+        iOS: const DarwinInitializationSettings());
+
+    flutterLocalNotificationsPlugin.initialize(initializationSettings).then((_) {
+      requestPermission();
+    });
+  }
+
+  Future<bool?> requestPermission() async {
+    if (isNotificationPermit == null && await getNotificationCacheValue() == null) {
+      isNotificationPermit = await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestNotificationsPermission();
+      saveNotificationCacheValue();
+    }
+    return isNotificationPermit;
+  }
+
+  void showNotification() async {
+    if (isNotificationPermit == false ||
+        isNotificationPermit == null) {
+      return;
+    }
+    AndroidNotificationDetails androidPlatformChannelSpecifics =
+        AndroidNotificationDetails(
+            'new_recommendation', 'New recommendation',
+            icon: '@drawable/ic_launcher_monochrome',
+            color: const Color(0xFFD55641),
+            importance: Importance.max,
+            playSound: false,
+            //sound: RawResourceAndroidNotificationSound(''),
+            priority: Priority.max);
+
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      'GetOut',
+      'Arrêtes de scroller !!!',
+      NotificationDetails(android: androidPlatformChannelSpecifics),
+      // payload: 'Notification Payload',
+    );
+  }
+
+  void saveNotificationCacheValue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    if (isNotificationPermit != null) {
+      isNotificationPermit!
+          ? prefs.setBool('isNotificationPermit', true)
+          : prefs.setBool('isNotificationPermit', false);
+    }
+  }
+
+  Future<bool?> getNotificationCacheValue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    isNotificationPermit = prefs.getBool('isNotificationPermit');
+    return isNotificationPermit;
+  }
 }

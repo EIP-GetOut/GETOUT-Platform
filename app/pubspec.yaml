@@ -63,8 +63,8 @@ dependencies:
   ### Notifications
 
   flutter_local_notifications: ^17.2.3
-  permission_handler: ^11.3.1
-  is_first_run: ^1.0.0
+  # permission_handler: ^11.3.1
+  # is_first_run: ^1.0.0
   timezone: ^0.9.4
 
   ### UI
@@ -92,9 +92,9 @@ flutter_launcher_icons:
   image_path: "assets/images/logo/getout_launch.png"
   min_sdk_android: 21 # android min sdk min:16, default 21
   image_path_android: "assets/images/logo/getout_launch.png"
-  adaptive_icon_background: "assets/images/logo/getout_launch.png" # only available for Android 8.0 devices and above
-  adaptive_icon_foreground: "assets/images/logo/getout_launch.png" # only available for Android 8.0 devices and above
-  adaptive_icon_monochrome: "assets/images/logo/getout_launch.png" # only available for Android 13 devices and above
+  adaptive_icon_background: "assets/images/logo/white_background.png" # only available for Android 8.0 devices and above
+  adaptive_icon_foreground: "assets/images/logo/getout_launch_no_bg.png" # only available for Android 8.0 devices and above
+  adaptive_icon_monochrome: "assets/images/logo/getout_launch_mono.png" # only available for Android 13 devices and above
   adaptive_icon_foreground_inset: 16 # only available for Android 8.0 devices and above
   web:
     generate: true
@@ -181,9 +181,10 @@ flutter:
     - assets/images/logo/apple_tv+.png
     - assets/images/logo/mycanal.png
     - assets/images/logo/autre_sources.png
-    # - assets/images/logo/full_getout.png
     - assets/images/logo/getout.png
-    - assets/images/logo/google.png # not used yet
+    - assets/images/logo/getout_launch.png
+    - assets/images/logo/getout_launch_mono.png
+    # - assets/images/logo/google.png # not used yet
     #    Other:
     - assets/images/other/split.png
     - assets/images/other/text_getout.png

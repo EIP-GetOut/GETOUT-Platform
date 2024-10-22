@@ -70,16 +70,15 @@ class SavedBooksSuccessWidget extends StatelessWidget {
                       })))
                   : const Padding(
                       padding: EdgeInsets.only(left: 20, right: 20),
-                      child: Expanded(
-                          child: Text(
-                              'Ajoutez un livre à votre liste pour le voir ici',
-                              maxLines: 2,
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 0, 0, 0),
-                                fontSize: 15,
-                                fontFamily: 'Urbanist',
-                                fontWeight: FontWeight.bold,
-                              ))))
+                      child: Text(
+                          'Ajoutez un livre à votre liste pour le voir ici',
+                          maxLines: 2,
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 0, 0, 0),
+                            fontSize: 15,
+                            fontFamily: 'Urbanist',
+                            fontWeight: FontWeight.bold,
+                          )))
         ]));
   }
 }

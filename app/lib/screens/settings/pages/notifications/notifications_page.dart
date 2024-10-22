@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
-import 'package:getout/global.dart' as globals;
 import 'package:getout/tools/tools.dart';
 // import 'package:getout/tools/app_l10n.dart';
 
@@ -43,18 +42,18 @@ class _NotificationsPageState extends State<NotificationsPage> {
                       padding: 6.0,
                       toggleSize: 20.0,
                       borderRadius: 20.0,
-                      value: globals.notificationsServices.isActive,
+                      value: false, // globals.notificationsServices.isActive,
                       activeColor: const Color.fromRGBO(213, 86, 65, 1),
                       onToggle: (val) {
                         setState(() {
-                          globals.notificationsServices.isActive = val;
+                          // globals.notificationsServices.isActive = val;
                         });
-                        globals.notificationsServices.isActive = val;
-                        if (val == false) {
+                        // globals.notificationsServices.isActive = val;
+                        /*if (val == false) {
                           globals.notificationsServices.stopNotif();
                         } else {
                           globals.notificationsServices.sendNotif();
-                        }
+                        }*/
                       },
                     ),
                   ]))

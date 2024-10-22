@@ -40,7 +40,8 @@ class WatchedBooksSuccessWidget extends StatelessWidget {
                 title: appL10n(context)!.watched_books,
                 length: books.length, isBooks: true),
         const SizedBox(height: 20),
-        books.isNotEmpty ? Expanded(
+        books.isNotEmpty
+            ? Expanded(
                 child: ListView(
                     controller: bookController,
                     scrollDirection: Axis.horizontal,
@@ -64,16 +65,15 @@ class WatchedBooksSuccessWidget extends StatelessWidget {
                     })))
                     : const Padding(
                     padding: EdgeInsets.only(left: 20, right: 20),
-                    child: Expanded(
-                        child: Text(
-                            'Ajoutez un livre aux livres lus pour le voir ici',
-                            maxLines: 2,
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 0, 0, 0),
-                              fontSize: 15,
-                              fontFamily: 'Urbanist',
-                              fontWeight: FontWeight.bold,
-                            ))))
+                    child: Text(
+                        'Ajoutez un livre aux livres lus pour le voir ici',
+                        maxLines: 2,
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 0, 0, 0),
+                          fontSize: 15,
+                          fontFamily: 'Urbanist',
+                          fontWeight: FontWeight.bold,
+                        )))
     ]));
   }
 }

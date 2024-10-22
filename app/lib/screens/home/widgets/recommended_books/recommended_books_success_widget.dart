@@ -130,20 +130,11 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
                                       if (book.releaseDate != null)
                                         Text(book.releaseDate!.substring(0, 4),
                                             style: const TextStyle(
-                                              fontSize: 20,
-                                              color: Colors.white,
-                                              fontFamily: 'Poppins',
-                                            )),
-                                      if (book.releaseDate != null)
-                                        Text(book.releaseDate!.substring(0, 4),
-                                            style: const TextStyle(
                                                 fontSize: 20,
                                                 color: Colors.white,
                                                 fontFamily: 'Poppins',
                                                 fontWeight: FontWeight.normal)),
                                       const SizedBox(height: 10),
-
-                                      ///bookGenres
                                       if (book.genres != null &&
                                           book.genres!.isNotEmpty)
                                         Padding(
