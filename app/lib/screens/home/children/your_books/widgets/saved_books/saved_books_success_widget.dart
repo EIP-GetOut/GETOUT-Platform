@@ -33,7 +33,6 @@ class SavedBooksSuccessWidget extends StatelessWidget {
     return SizedBox(
         height: 300,
         child: Column(children: [
-          const SizedBox(height: 20),
           TitleWidget(
               asset: 'party',
               title: 'Les livres que vous voulez lire',
@@ -66,7 +65,8 @@ class SavedBooksSuccessWidget extends StatelessWidget {
                             },
                             child: BookPreviewWidget(
                                 posterPath: books[index].posterPath,
-                                title: books[index].title));
+                                title: books[index].title,
+                                isLast: index == books.length - 1 ? true : false));
                       }))
                  )
               : const Padding(

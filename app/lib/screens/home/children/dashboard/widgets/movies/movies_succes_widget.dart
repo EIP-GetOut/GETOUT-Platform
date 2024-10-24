@@ -55,7 +55,7 @@ Widget build(BuildContext context) {
                 child: MoviePreviewWidget(
                   posterPath: movies[index].posterPath,
                   title: movies[index].title,
-                  index: index,
+                  isLast: index == movies.length - 1 ? true : false,
                 ),
               );
             }),

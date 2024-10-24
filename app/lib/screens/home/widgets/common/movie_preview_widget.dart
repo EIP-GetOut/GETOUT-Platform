@@ -13,16 +13,16 @@ class MoviePreviewWidget extends StatelessWidget {
       {super.key,
       required this.posterPath,
       required this.title,
-      required this.index});
+      required this.isLast});
 
   final String? posterPath;
   final String title;
-  final int index;
+  final bool isLast;
 
   @override
 Widget build(BuildContext context) {
   return Container(
-    margin: EdgeInsets.only(left: 20.0, right: index == 4 ? 20 : 0),
+    margin: EdgeInsets.only(left: 20.0, right: isLast ? 20 : 0),
     width: 105,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -61,7 +61,8 @@ class WatchedBooksSuccessWidget extends StatelessWidget {
                           },
                           child: BookPreviewWidget(
                               posterPath: books[index].posterPath,
-                              title: books[index].title));
+                              title: books[index].title,
+                              isLast: index == books.length - 1 ? true : false));
                     })))
             : const Padding(
             padding: EdgeInsets.only(left: 20, right: 20),
