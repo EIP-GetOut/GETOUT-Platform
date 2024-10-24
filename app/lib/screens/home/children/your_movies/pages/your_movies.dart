@@ -19,12 +19,18 @@ class YourMoviesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      controller: scrollController,
+        controller: scrollController,
         child: const Padding(
-        padding: EdgeInsets.only(top: 30.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [RecommendedMoviesWidget(), SavedMoviesWidget(), LikedMoviesWidget(), WatchedMoviesWidget()],
-        )));
+            padding: EdgeInsets.only(top: 30.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RecommendedMoviesWidget(),
+                SizedBox(height: 20),
+                SavedMoviesWidget(),
+                LikedMoviesWidget(),
+                WatchedMoviesWidget()
+              ],
+            )));
   }
 }

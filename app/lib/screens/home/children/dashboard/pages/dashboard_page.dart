@@ -35,55 +35,72 @@ class DashboardPage extends StatelessWidget {
     return BlocBuilder<StoryNewsBloc, StoryNewsState>(
         builder: (context, state) {
       return SingleChildScrollView(
-          child: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-              child: Column(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: Column(
+            children: [
+              const RefreshTimeCard(),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment
+                    .spaceBetween,
                 children: [
-                  const RefreshTimeCard(),
-                  const SizedBox(height: 10),
-                  Row(
-                    //crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                          onTap: () => {
-                                pageController.animateToPage(0,
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.linearToEaseOut).then((_) =>
-                                    movieController.animateTo(20000,
-                                        duration: Duration(milliseconds: 600),
-                                        curve: Curves.easeIn))
-                              },
-                          child: SpentTimeCard(
-                              title: appL10n(context)!.total_movie,
-                              icon: Icons.movie,
-                              number: durationFormat('',
-                                  globals.session?['spentMinutesWatching']))),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                          onTap: () => {
-                                pageController.animateToPage(2,
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.linearToEaseOut).then((_) =>
-                                bookController.animateTo(20000,
-                                duration: Duration(milliseconds: 600),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => {
+                        pageController
+                            .animateToPage(0,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.linearToEaseOut)
+                            .then((_) => movieController.animateTo(20000,
+                                duration: const Duration(milliseconds: 600),
                                 curve: Curves.easeIn))
-                              },
-                          child: SpentTimeCard(
-                              title: appL10n(context)!.total_book,
-                              icon: Icons.book,
-                              number:
-                                  '${globals.session?['totalPagesRead']} pages')),
-                    ],
+                      },
+                      child: SpentTimeCard(
+                        title: appL10n(context)!.total_movie,
+                        icon: Icons.movie,
+                        number: durationFormat(
+                            '', globals.session?['spentMinutesWatching']),
+                      ),
+                    ),
                   ),
-                  const Padding(
-                      padding: EdgeInsets.only(top: 10, bottom: 10),
-                      child: NewsCard()),
-                  const Padding(
-                      padding: EdgeInsets.only(bottom: 20),
-                      child: StoryNewsCard())
+
+                  const SizedBox(
+                    width: 10,
+                  ),
+
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => {
+                        pageController
+                            .animateToPage(2,
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.linearToEaseOut)
+                            .then((_) => bookController.animateTo(20000,
+                                duration: const Duration(milliseconds: 600),
+                                curve: Curves.easeIn))
+                      },
+                      child: SpentTimeCard(
+                        title: appL10n(context)!.total_book,
+                        icon: Icons.book,
+                        number: '${globals.session?['totalPagesRead']} pages',
+                      ),
+                    ),
+                  ),
                 ],
-              )));
+              ),
+              const Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: NewsCard(),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 20),
+                child: StoryNewsCard(),
+              ),
+            ],
+          ),
+        ),
+      );
     });
   }
 }

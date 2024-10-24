@@ -34,7 +34,7 @@ class SavedMoviesSuccessWidget extends StatelessWidget {
         height: 300,
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            // const SizedBox(height: 20),
             TitleWidget(
                 asset: 'party',
                 title: 'Les films que vous voulez voir',
