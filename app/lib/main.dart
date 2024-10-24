@@ -36,6 +36,9 @@ import 'package:getout/widgets/loading.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/global.dart' as globals;
+import 'package:getout/tools/timer_notifier.dart';
+import 'dart:math';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -75,7 +78,16 @@ class MainProvider extends StatelessWidget {
                       sessionService: context.read<SessionService>(),
                     )..add(const SessionRequest())),
           ],
-          child: const MainPage(),
+          child: ChangeNotifierProvider<TimerNotifier>(
+            create: (context) {
+              final initialTime = min<int>(
+                globals.session?['secondsBeforeNextMovieRecommendation'] ?? 0,
+                globals.session?['secondsBeforeNextBookRecommendation'] ?? 0,
+              );
+              return TimerNotifier(initialTime);
+            },
+            child: const MainPage(), // Garde le reste de l'application intact
+          ),
         ));
   }
 }
@@ -120,8 +132,8 @@ class MainPage extends StatelessWidget {
                   image: 'assets/images/draw/error.svg',
                   buttonText: appL10n(context)!.error_ok,
                   nextPage: () => {
-                    Phoenix.rebirth(context),
-                  });
+                        Phoenix.rebirth(context),
+                      });
             } else if (state.status.isNotFound) {
               return const ConnectionProvider();
             } else {
@@ -131,8 +143,8 @@ class MainPage extends StatelessWidget {
                   image: 'assets/images/draw/error.svg',
                   buttonText: appL10n(context)!.error_ok,
                   nextPage: () => {
-                    Phoenix.rebirth(context),
-                  });
+                        Phoenix.rebirth(context),
+                      });
             }
           },
         ),
