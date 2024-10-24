@@ -30,58 +30,74 @@ class SavedMoviesSuccessWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final PageController movieController =
         PageController(viewportFraction: 0.1, initialPage: 0);
-    return SizedBox(
-        height: 300,
-        child: Column(
-          children: [
-            // const SizedBox(height: 20),
-            TitleWidget(
-                asset: 'party',
-                title: 'Les films que vous voulez voir',
-                length: movies.length,
-                isBooks: false),
-            const SizedBox(height: 20),
-            movies.isNotEmpty
-                ? Expanded(
-                child: ListView(
-                    controller: movieController,
-                    scrollDirection: Axis.horizontal,
-                    children: List.generate(movies.length, (index) {
-                      return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => BlocProvider.value(
-                                        value: BlocProvider.of<
-                                            LikedMoviesHydratedBloc>(context),
-                                        child: BlocProvider.value(
+    return movies.isNotEmpty
+        ? SizedBox(
+            height: 300,
+            child: Column(
+              children: [
+                // const SizedBox(height: 20),
+                TitleWidget(
+                    asset: 'party',
+                    title: 'Les films que vous voulez voir',
+                    length: movies.length,
+                    isBooks: false),
+                const SizedBox(height: 20),
+
+                Expanded(
+                    child: ListView(
+                        controller: movieController,
+                        scrollDirection: Axis.horizontal,
+                        children: List.generate(movies.length, (index) {
+                          return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => BlocProvider.value(
                                             value: BlocProvider.of<
-                                                    SavedMoviesHydratedBloc>(
+                                                    LikedMoviesHydratedBloc>(
                                                 context),
                                             child: BlocProvider.value(
                                                 value: BlocProvider.of<
-                                                        WatchedMoviesHydratedBloc>(
+                                                        SavedMoviesHydratedBloc>(
                                                     context),
-                                                child: Movie(movies[index].id))))));
-                          },
-                          child: MoviePreviewWidget(
-                              posterPath: movies[index].posterPath,
-                              title: movies[index].title,
-                              isLast: index == movies.length - 1 ? true : false));
-                    })))
-                : const Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
+                                                child: BlocProvider.value(
+                                                    value: BlocProvider.of<
+                                                        WatchedMoviesHydratedBloc>(context),
+                                                    child: Movie(movies[index].id))))));
+                              },
+                              child: MoviePreviewWidget(
+                                  posterPath: movies[index].posterPath,
+                                  title: movies[index].title,
+                                  isLast: index == movies.length - 1
+                                      ? true
+                                      : false));
+                        })))
+              ],
+            ),
+          )
+        : SizedBox(
+            height: 100,
+            child: Column(children: [
+              TitleWidget(
+                  asset: 'party',
+                  title: 'Les films que vous voulez voir',
+                  length: movies.length,
+                  isBooks: false),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Text(
-                    'Ajoutez de nouveaux films a votre liste pour les voir afficher ici',
-                    maxLines: 2,
-                    style: TextStyle(
-                      color: Color.fromARGB(255, 0, 0, 0),
-                      fontSize: 15,
-                      fontFamily: 'Urbanist',
-                      fontWeight: FontWeight.bold,
-                    )))
-          ],
-        ));
+                  'Il semblerait que votre liste soit vide.',
+                  textAlign: TextAlign.center, // Centre le texte
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    fontSize: 15,
+                    fontFamily: 'Urbanist',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
+            ]));
   }
 }

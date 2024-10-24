@@ -154,6 +154,7 @@ flutter:
     - assets/images/draw/email_verified_complete.svg
     - assets/images/draw/question.png
     - assets/images/draw/error.svg
+    - assets/images/draw/movie.png
     #    Icon:
     - assets/images/icon/bell(notification).svg
     - assets/images/icon/book.svg
