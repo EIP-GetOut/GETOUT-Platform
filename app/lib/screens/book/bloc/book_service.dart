@@ -169,7 +169,6 @@ class BookService {
       result = AddBookResponse(
         statusCode: response.statusCode ?? HttpStatus.APP_ERROR,
       );
-          statusCode: response.statusCode ?? HttpStatus.APP_ERROR);
 
       await globals.sessionManager.getSession();
     } on DioException catch (dioException) {

@@ -31,7 +31,6 @@ import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/observer.dart';
 import 'package:getout/bloc/theme/bloc.dart';
-import 'package:getout/widgets/transition_page.dart';
 import 'package:getout/widgets/loading.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
