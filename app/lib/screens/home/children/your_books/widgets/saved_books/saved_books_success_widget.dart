@@ -67,19 +67,18 @@ class SavedBooksSuccessWidget extends StatelessWidget {
                             child: BookPreviewWidget(
                                 posterPath: books[index].posterPath,
                                 title: books[index].title));
-                      }))
-                 )
-              : const Padding(
-              padding: EdgeInsets.only(left: 20, right: 20),
-              child: Text(
-                  'Ajoutez de nouveaux livres a votre liste pour les voir afficher ici',
-                  maxLines: 2,
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 0, 0, 0),
-                    fontSize: 15,
-                    fontFamily: 'Urbanist',
-                    fontWeight: FontWeight.bold,
-                  )))
+                      })))
+                  : const Padding(
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      child: Text(
+                          'Ajoutez un livre à votre liste pour le voir ici',
+                          maxLines: 2,
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 0, 0, 0),
+                            fontSize: 15,
+                            fontFamily: 'Urbanist',
+                            fontWeight: FontWeight.bold,
+                          )))
         ]));
   }
 }

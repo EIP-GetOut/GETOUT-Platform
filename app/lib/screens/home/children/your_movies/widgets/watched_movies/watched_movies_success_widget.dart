@@ -41,8 +41,8 @@ class WatchedMoviesSuccessWidget extends StatelessWidget {
                 length: movies.length,
                 isBooks: false),
             const SizedBox(height: 20),
-            movies.isNotEmpty ?
-            Expanded(
+            movies.isNotEmpty
+                ? Expanded(
                 child: ListView(
                     controller: movieController,
                     scrollDirection: Axis.horizontal,
@@ -72,7 +72,7 @@ class WatchedMoviesSuccessWidget extends StatelessWidget {
                 : const Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: Text(
-                    'Ajouter aux films vu un film pour les voir afficher ici',
+                    'Ajoutez un film au film vu pour le voir ici',
                     maxLines: 2,
                     style: TextStyle(
                       color: Color.fromARGB(255, 0, 0, 0),

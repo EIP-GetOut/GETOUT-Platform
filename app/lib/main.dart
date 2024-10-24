@@ -5,7 +5,6 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>, Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -18,12 +17,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 import 'package:getout/screens/connection/bloc/connection_provider.dart';
 import 'package:getout/screens/connection/services/service.dart';
 import 'package:getout/screens/connection/email_verified/bloc/email_verified_provider.dart';
 import 'package:getout/screens/home/bloc/home_provider.dart';
+import 'package:getout/widgets/transition_page.dart';
 import 'package:getout/screens/form/pages/form.dart';
 import 'package:getout/bloc/session/session_service.dart';
 import 'package:getout/bloc/session/session_event.dart';
@@ -39,7 +39,7 @@ import 'package:getout/global.dart' as globals;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Permission.storage.request();
+  // await Permission.storage.request();
   HydratedBloc.storage = await HydratedStorage.build(
       storageDirectory: kIsWeb
           ? HydratedStorage.webStorageDirectory

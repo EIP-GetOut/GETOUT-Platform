@@ -29,7 +29,8 @@ class BookService {
     PersonList castList = [];
     for (final author in castData) {
       String? name = author ?? 'Auteur inconnu';
-      String picture = 'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg';
+      String picture =
+          'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg';
 
       if (name != null) {
         castList.add(Person(name: name, picture: picture));
@@ -40,34 +41,46 @@ class BookService {
   }
 
   Future<InfoBookResponse> getInfoBook(CreateInfoBookRequest request) async {
-
     InfoBookResponse result =
         const InfoBookResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
       final Response response = await dio.get(
-        '${ApiConstants.rootApiPath}${ApiConstants.getInfoBookPath}/${request.id}',
+        '${ApiConstants.rootApiPath}${ApiConstants.getInfoBookPath}/${request
+            .id}',
       );
+
       final dynamic data = response.data;
       result = InfoBookResponse(
           title: data['title'] ?? 'Aucun titre',
-          overview: data['description'] != null ? parseFragment(data['description']).text :
-              'Pas de description disponible',
-          posterPath: data['posterPath'] ?? 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fgijoe.fandom.com%2Fwiki%2FVoid_Rivals_TPB_02&psig=AOvVaw3WPQ4SmYRlwda4umtwa8I0&ust=1723725563604000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJjmlaPA9IcDFQAAAAAdAAAAABAE',
-          backdropPath: data['backdropPath'] ?? 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fgijoe.fandom.com%2Fwiki%2FVoid_Rivals_TPB_02&psig=AOvVaw3WPQ4SmYRlwda4umtwa8I0&ust=1723725563604000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJjmlaPA9IcDFQAAAAAdAAAAABAE',
+          overview: data['description'] != null
+              ? parseFragment(data['description']).text
+              : 'Pas de description disponible',
+          posterPath: data['posterPath'] ??
+              'https://www.google.com/url?sa=i&url=https%3A%2F%2Fgijoe.fandom.com%2Fwiki%2FVoid_Rivals_TPB_02&psig=AOvVaw3WPQ4SmYRlwda4umtwa8I0&ust=1723725563604000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJjmlaPA9IcDFQAAAAAdAAAAABAE',
+          backdropPath: data['backdropPath'] ??
+              'https://www.google.com/url?sa=i&url=https%3A%2F%2Fgijoe.fandom.com%2Fwiki%2FVoid_Rivals_TPB_02&psig=AOvVaw3WPQ4SmYRlwda4umtwa8I0&ust=1723725563604000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCJjmlaPA9IcDFQAAAAAdAAAAABAE',
           releaseDate: data['releaseDate'] ?? 'Pas de date',
           voteAverage: data['averageRating'],
           pageCount: data['pageCount'] ?? 0,
           bookLink: data['link'] ?? '',
           genres: data['categories'] ?? [],
           authorsPicture: parseAuthor(data['authors']),
-          liked: globals.session?['likedBooks'].toString().contains(request.id.toString()),
-          disliked: globals.session?['dislikedBooks'].toString().contains(request.id.toString()),
-          wishlisted: globals.session?['readingList'].toString().contains(request.id.toString()),
-          read: globals.session?['readBooks'].toString().contains(request.id.toString()),
+          liked: globals.session?['likedBooks']
+              .toString()
+              .contains(request.id.toString()),
+          disliked: globals.session?['dislikedBooks']
+              .toString()
+              .contains(request.id.toString()),
+          wishlisted: globals.session?['readingList']
+              .toString()
+              .contains(request.id.toString()),
+          read: globals.session?['readBooks']
+              .toString()
+              .contains(request.id.toString()),
           id: data['id'],
           statusCode: response.statusCode ?? HttpStatus.APP_ERROR);
-    }  on DioException catch (dioException) {
+    } on DioException catch (dioException) {
       if (dioException.type == DioExceptionType.connectionTimeout ||
           dioException.type == DioExceptionType.receiveTimeout ||
           dioException.type == DioExceptionType.sendTimeout) {
@@ -86,16 +99,17 @@ class BookService {
 
   Future<AddBookResponse> addLikedBook(AddBookRequest request) async {
     AddBookResponse result =
-        const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
+    const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
       final Response response = await dio.post(
-          '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedBookPath}',
-          data: {
-            'bookId': request.id
-          });
+          '${ApiConstants.rootApiPath}${ApiConstants
+              .accountPath}/$userId${ApiConstants.addLikedBookPath}',
+          data: {'bookId': request.id});
+
       result = AddBookResponse(
           statusCode: response.statusCode ?? HttpStatus.APP_ERROR);
+
       await globals.sessionManager.getSession();
     } on DioException catch (dioException) {
       if (dioException.type == DioExceptionType.connectionTimeout ||
@@ -116,11 +130,13 @@ class BookService {
 
   Future<AddBookResponse> removeLikedBook(AddBookRequest request) async {
     AddBookResponse result =
-        const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
+    const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
       final Response response = await dio.delete(
-        '${ApiConstants.rootApiPath}${ApiConstants.accountPath}/$userId${ApiConstants.addLikedBookPath}/${request.id}',
+        '${ApiConstants.rootApiPath}${ApiConstants
+            .accountPath}/$userId${ApiConstants.addLikedBookPath}/${request
+            .id}',
       );
       result = AddBookResponse(
           statusCode: response.statusCode ?? HttpStatus.APP_ERROR);
@@ -144,7 +160,7 @@ class BookService {
 
   Future<AddBookResponse> removeDislikedBook(AddBookRequest request) async {
     AddBookResponse result =
-        const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
+    const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
       final Response response = await dio.delete(
@@ -153,6 +169,8 @@ class BookService {
       result = AddBookResponse(
         statusCode: response.statusCode ?? HttpStatus.APP_ERROR,
       );
+          statusCode: response.statusCode ?? HttpStatus.APP_ERROR);
+
       await globals.sessionManager.getSession();
     } on DioException catch (dioException) {
       if (dioException.type == DioExceptionType.connectionTimeout ||
@@ -173,7 +191,7 @@ class BookService {
 
   Future<AddBookResponse> addDislikedBook(AddBookRequest request) async {
     AddBookResponse result =
-        const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
+    const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
       final Response response = await dio.post(
@@ -203,7 +221,7 @@ class BookService {
 
   Future<AddBookResponse> addWishListedBook(AddBookRequest request) async {
     AddBookResponse result =
-        const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
+    const AddBookResponse(statusCode: HttpStatus.APP_ERROR);
 
     try {
       final response = await dio.post(

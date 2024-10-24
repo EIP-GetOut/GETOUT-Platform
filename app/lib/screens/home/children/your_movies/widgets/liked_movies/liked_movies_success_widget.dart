@@ -42,8 +42,8 @@ class LikedMoviesSuccessWidget extends StatelessWidget {
                 length: movies.length,
                 isBooks: false),
             const SizedBox(height: 20),
-            movies.isNotEmpty ?
-            Expanded(
+            movies.isNotEmpty
+                ? Expanded(
                 child: ListView(
                     controller: movieController,
                     scrollDirection: Axis.horizontal,

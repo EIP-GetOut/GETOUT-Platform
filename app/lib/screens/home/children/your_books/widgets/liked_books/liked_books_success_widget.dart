@@ -38,8 +38,8 @@ class LikedBooksSuccessWidget extends StatelessWidget {
         TitleWidget(
             asset: 'heart', title: appL10n(context)!.like_books_title, length: books.length, isBooks: true),
         const SizedBox(height: 20),
-        books.isNotEmpty ?
-        Expanded(
+        books.isNotEmpty
+            ? Expanded(
             child: ListView(
                 controller: bookController,
                 scrollDirection: Axis.horizontal,
@@ -60,12 +60,11 @@ class LikedBooksSuccessWidget extends StatelessWidget {
                       child: BookPreviewWidget(
                           posterPath: books[index].posterPath,
                           title: books[index].title));
-                }))
-                )
+                })))
             : const Padding(
             padding: EdgeInsets.only(left: 20, right: 20),
             child: Text(
-                'Aimer de nouveaux livres pour les voir afficher ici',
+                'Aimez un livre pour le voir ici',
                 maxLines: 2,
                 style: TextStyle(
                   color: Color.fromARGB(255, 0, 0, 0),

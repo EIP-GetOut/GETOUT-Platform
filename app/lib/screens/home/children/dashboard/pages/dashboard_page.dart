@@ -42,7 +42,6 @@ class DashboardPage extends StatelessWidget {
                   const RefreshTimeCard(),
                   const SizedBox(height: 10),
                   Row(
-                    //crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(

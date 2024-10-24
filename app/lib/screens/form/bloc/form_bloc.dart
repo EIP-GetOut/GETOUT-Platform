@@ -18,8 +18,6 @@ class FormBloc extends Bloc<FormEvent, FormStates> {
   FormBloc() : super(const FormStates())
   {
     on<EmitEvent>((event, emit) => emit(state.copyWith(status: event.status)));
-    // on<SocialMediaTimeEvent>((event, emit) => emit(state.copyWith(time: event.time)));
-    // on<InterestChoicesEvent>(_interestChoices);
     on<BookGenresEvent>(_bookGenresEvent);
     on<MovieGenresEvent>(_movieGenresEvent);
     on<ViewingPlatformEvent>(_viewingPlatformEvent);
@@ -55,12 +53,6 @@ class FormBloc extends Bloc<FormEvent, FormStates> {
     return bookCodes.map((code) => genreByCode[code] ?? 'Unknown').toList();
   }
 
-  /*void _interestChoices(InterestChoicesEvent interestChoices, Emitter<FormStates> emit) async
-  {
-    Map<String, bool> interestList = Map.from(state.interest);
-    interestList[interestChoices.key] = !interestList[interestChoices.key]!;
-    emit(state.copyWith(interest: interestList));
-  }*/
 
   void _bookGenresEvent(BookGenresEvent bookGenresEvent, Emitter<FormStates> emit) async
   {

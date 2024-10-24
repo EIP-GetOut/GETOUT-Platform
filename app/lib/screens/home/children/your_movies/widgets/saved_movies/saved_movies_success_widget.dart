@@ -72,7 +72,7 @@ class SavedMoviesSuccessWidget extends StatelessWidget {
                 : const Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: Text(
-                    'Ajoutez de nouveaux films a votre liste pour les voir afficher ici',
+                    'Ajoutez un film a votre liste pour les voir ici',
                     maxLines: 2,
                     style: TextStyle(
                       color: Color.fromARGB(255, 0, 0, 0),

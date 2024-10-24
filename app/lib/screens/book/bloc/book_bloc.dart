@@ -26,9 +26,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
   void _mapGetBookEventToState(
       CreateInfoBookRequest event, Emitter<BookState> emit) async {
     emit(state.copyWith(status: BookStatus.loading));
-
     final InfoBookResponse book = await bookService.getInfoBook(event);
-
     if (book.statusCode == InfoBookResponse.success) {
       emit(state.copyWith(status: BookStatus.success, book: book));
     } else {

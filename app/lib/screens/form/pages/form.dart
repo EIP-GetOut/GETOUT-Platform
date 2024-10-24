@@ -22,7 +22,6 @@ import 'package:getout/bloc/session/session_event.dart';
 import 'package:getout/tools/app_l10n.dart';
 
 class Forms extends StatelessWidget {
-
   final bool isEdit;
 
   const Forms({super.key, required this.isEdit});
@@ -108,9 +107,7 @@ class Forms extends StatelessWidget {
               } else if ((status == FormStatus.bookGenres &&
                   readContext.state.bookGenres.values.where((value) => value == true).length > 3) ||
                   (status == FormStatus.movieGenres &&
-                      readContext.state.movieGenres.values.where((value) => value == true).length > 3) ||
-                  (status == FormStatus.viewingPlatform &&
-                      readContext.state.viewingPlatform.values.where((value) => value == true).length > 3)) {
+                      readContext.state.movieGenres.values.where((value) => value == true).length > 3)) {
                 showSnackBar(context, appL10n(context)!.form_too_much);
               } else if (status == FormStatus.viewingPlatform) {
                 readContext.add(const EmitEvent(status: FormStatus.loading));
