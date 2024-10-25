@@ -41,7 +41,7 @@ Widget build(BuildContext context) {
             title,
             style: Theme.of(context).textTheme.titleSmall,
             maxLines: 2,
-            overflow: TextOverflow.ellipsis, // Limite les lignes pour éviter les débordements
+            overflow: TextOverflow.ellipsis, 
           ),
         ),
       ],

@@ -56,10 +56,6 @@ Future<void> main() async {
 class MainProvider extends StatelessWidget {
   const MainProvider({super.key});
 
-  // block to refresh the session every 15 seconds
-  /*final Timer? timer = Timer.periodic(const Duration(seconds: 15),
-      (Timer t) async => await globals.sessionManager.getSession());*/
-
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
@@ -85,7 +81,7 @@ class MainProvider extends StatelessWidget {
               );
               return TimerNotifier(initialTime);
             },
-            child: const MainPage(), // Garde le reste de l'application intact
+            child: const MainPage(),
           ),
         ));
   }
@@ -124,7 +120,6 @@ class MainPage extends StatelessWidget {
               return const ColoredBox(
                   color: Colors.white, child: Center(child: LoadingPage()));
             } else if (state.status.isError) {
-              /// TODO : Add a retry button
               return TransitionPage(
                   title: appL10n(context)!.error_unknown_short,
                   description: appL10n(context)!.error_unknown_description,

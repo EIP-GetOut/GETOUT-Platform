@@ -89,7 +89,7 @@ class SavedMoviesSuccessWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 20, right: 20),
                 child: Text(
                   'Il semblerait que votre liste soit vide.',
-                  textAlign: TextAlign.center, // Centre le texte
+                  textAlign: TextAlign.center, 
                   style: const TextStyle(
                     color: Color.fromARGB(255, 0, 0, 0),
                     fontSize: 15,
