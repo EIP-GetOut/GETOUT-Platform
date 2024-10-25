@@ -8,7 +8,6 @@
 import 'package:dio/dio.dart';
 
 import 'package:getout/bloc/session/session_service.dart';
-import 'package:getout/screens/settings/pages/notifications/notifications.dart';
 
 /*Todo:
    - create anything not global (bloc/class)
@@ -16,7 +15,7 @@ import 'package:getout/screens/settings/pages/notifications/notifications.dart';
    - add session.isNull method
    */
 
-NotificationsServices notificationsServices = NotificationsServices();
+//NotificationsServices notificationsServices = NotificationsServices();
 
 String? cookiePath;
 bool isCookieSet = false;

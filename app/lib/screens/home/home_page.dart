@@ -9,13 +9,13 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:getout/screens/settings/pages/notifications/notifications.dart';
 import 'package:getout/screens/home/bloc/home_page/home_page_bloc.dart';
-import 'package:getout/screens/home/widgets/header.dart';
 import 'package:getout/screens/home/children/dashboard/pages/dashboard.dart';
 import 'package:getout/screens/home/children/your_books/pages/your_books.dart';
 import 'package:getout/screens/home/children/your_movies/pages/your_movies.dart';
 import 'package:getout/screens/home/widgets/navbar.dart';
-import 'package:getout/global.dart' as globals;
+import 'package:getout/screens/home/widgets/header.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -26,7 +26,9 @@ class HomePage extends StatelessWidget {
     final ScrollController movieController = ScrollController();
     final ScrollController bookController = ScrollController();
 
-    globals.notificationsServices.askForActiveNotifications();
+    final NotificationsServices2 notificationsServices = NotificationsServices2();
+    notificationsServices.showNotification();
+    //globals.notificationsServices.askForActiveNotifications();
     return BlocBuilder<HomePageBloc, HomePageState>(builder: (context, state) {
       return Scaffold(
           // appBar: HomeAppBarWidget(context: context),
