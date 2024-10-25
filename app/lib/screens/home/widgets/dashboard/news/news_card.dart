@@ -43,6 +43,27 @@ class NewsCard extends StatelessWidget {
                             color: const Color.fromARGB(19, 56, 56, 56)
                                 .withOpacity(0.9),
                             colorBlendMode: BlendMode.modulate,
+                            loadingBuilder: (context, child, loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child; // L'image est chargée, donc retourne l'image
+                              }
+                              return SizedBox(
+                                height: 300,
+                                width: 500,
+                                child: Container(
+                                  height: 300,
+                                  width: 500,
+                                  color: const Color.fromARGB(255, 21, 21, 21),
+                                ),
+                              );
+                            },
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                height: 300,
+                                width: 500,
+                                color: const Color.fromARGB(255, 21, 21, 21),
+                              );
+                            },
                           )
                         : Container(
                             height: 300,

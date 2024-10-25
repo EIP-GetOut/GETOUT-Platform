@@ -35,6 +35,9 @@ import 'package:getout/widgets/loading.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/global.dart' as globals;
+import 'package:getout/tools/timer_notifier.dart';
+import 'dart:math';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,10 +56,6 @@ Future<void> main() async {
 class MainProvider extends StatelessWidget {
   const MainProvider({super.key});
 
-  // block to refresh the session every 15 seconds
-  /*final Timer? timer = Timer.periodic(const Duration(seconds: 15),
-      (Timer t) async => await globals.sessionManager.getSession());*/
-
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
@@ -74,7 +73,16 @@ class MainProvider extends StatelessWidget {
                       sessionService: context.read<SessionService>(),
                     )..add(const SessionRequest())),
           ],
-          child: const MainPage(),
+          child: ChangeNotifierProvider<TimerNotifier>(
+            create: (context) {
+              final initialTime = min<int>(
+                globals.session?['secondsBeforeNextMovieRecommendation'] ?? 0,
+                globals.session?['secondsBeforeNextBookRecommendation'] ?? 0,
+              );
+              return TimerNotifier(initialTime);
+            },
+            child: const MainPage(),
+          ),
         ));
   }
 }
@@ -112,15 +120,14 @@ class MainPage extends StatelessWidget {
               return const ColoredBox(
                   color: Colors.white, child: Center(child: LoadingPage()));
             } else if (state.status.isError) {
-              /// TODO : Add a retry button
               return TransitionPage(
                   title: appL10n(context)!.error_unknown_short,
                   description: appL10n(context)!.error_unknown_description,
                   image: 'assets/images/draw/error.svg',
                   buttonText: appL10n(context)!.error_ok,
                   nextPage: () => {
-                    Phoenix.rebirth(context),
-                  });
+                        Phoenix.rebirth(context),
+                      });
             } else if (state.status.isNotFound) {
               return const ConnectionProvider();
             } else {
@@ -130,8 +137,8 @@ class MainPage extends StatelessWidget {
                   image: 'assets/images/draw/error.svg',
                   buttonText: appL10n(context)!.error_ok,
                   nextPage: () => {
-                    Phoenix.rebirth(context),
-                  });
+                        Phoenix.rebirth(context),
+                      });
             }
           },
         ),

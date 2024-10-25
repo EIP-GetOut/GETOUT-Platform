@@ -46,10 +46,12 @@ class DashboardPage extends StatelessWidget {
                     children: [
                       GestureDetector(
                           onTap: () => {
-                                pageController.animateToPage(0,
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.linearToEaseOut).then((_) =>
-                                    movieController.animateTo(20000,
+                                pageController
+                                    .animateToPage(0,
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.linearToEaseOut)
+                                    .then((_) => movieController.animateTo(
+                                        20000,
                                         duration: Duration(milliseconds: 600),
                                         curve: Curves.easeIn))
                               },
@@ -61,12 +63,13 @@ class DashboardPage extends StatelessWidget {
                       const SizedBox(width: 10),
                       GestureDetector(
                           onTap: () => {
-                                pageController.animateToPage(2,
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.linearToEaseOut).then((_) =>
-                                bookController.animateTo(20000,
-                                duration: Duration(milliseconds: 600),
-                                curve: Curves.easeIn))
+                                pageController
+                                    .animateToPage(2,
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.linearToEaseOut)
+                                    .then((_) => bookController.animateTo(20000,
+                                        duration: Duration(milliseconds: 600),
+                                        curve: Curves.easeIn))
                               },
                           child: SpentTimeCard(
                               title: appL10n(context)!.total_book,
