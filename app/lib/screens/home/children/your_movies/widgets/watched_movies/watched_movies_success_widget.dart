@@ -31,18 +31,18 @@ class WatchedMoviesSuccessWidget extends StatelessWidget {
     final PageController movieController =
         PageController(viewportFraction: 0.1, initialPage: 0);
 
-    return SizedBox(
-        height: 300,
-        child: Column(
-          children: [
-            TitleWidget(
-                asset: 'heart',
-                title: appL10n(context)!.watch_movies_title,
-                length: movies.length,
-                isBooks: false),
-            const SizedBox(height: 20),
-            movies.isNotEmpty
-                ? Expanded(
+    return movies.isNotEmpty
+        ? SizedBox(
+            height: 300,
+            child: Column(
+              children: [
+                TitleWidget(
+                    asset: 'heart',
+                    title: appL10n(context)!.watch_movies_title,
+                    length: movies.length,
+                    isBooks: false),
+                const SizedBox(height: 20),
+                Expanded(
                     child: ListView(
                         controller: movieController,
                         scrollDirection: Axis.horizontal,
@@ -72,31 +72,31 @@ class WatchedMoviesSuccessWidget extends StatelessWidget {
                                       ? true
                                       : false));
                         })))
-                : SizedBox(
-                    height: 100,
-                    child: Column(children: [
-                      // const SizedBox(height: 20),
-                      TitleWidget(
-                          asset: 'party',
-                          title: 'Les films que vous voulez voir',
-                          length: movies.length,
-                          isBooks: false),
-                      const SizedBox(height: 20),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20, right: 20),
-                        child: Text(
-                          'Il semblerait que votre liste soit vide.',
-                          textAlign: TextAlign.center, // Centre le texte
-                          style: const TextStyle(
-                            color: Color.fromARGB(255, 0, 0, 0),
-                            fontSize: 15,
-                            fontFamily: 'Urbanist',
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      )
-                    ]))
-          ],
-        ));
+              ],
+            ))
+        : SizedBox(
+            height: 100,
+            child: Column(children: [
+              // const SizedBox(height: 20),
+              TitleWidget(
+                  asset: 'party',
+                  title: 'Les films que vous voulez voir',
+                  length: movies.length,
+                  isBooks: false),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Text(
+                  'Il semblerait que votre liste soit vide.',
+                  textAlign: TextAlign.center, // Centre le texte
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    fontSize: 15,
+                    fontFamily: 'Urbanist',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
+            ]));
   }
 }

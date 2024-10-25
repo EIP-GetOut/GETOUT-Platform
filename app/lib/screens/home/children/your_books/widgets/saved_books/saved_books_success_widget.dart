@@ -30,17 +30,17 @@ class SavedBooksSuccessWidget extends StatelessWidget {
     final PageController bookController =
         PageController(viewportFraction: 0.1, initialPage: 0);
 
-    return SizedBox(
-        height: 300,
-        child: Column(children: [
-          TitleWidget(
-              asset: 'party',
-              title: 'Les livres que vous voulez lire',
-              length: books.length,
-              isBooks: true),
-          const SizedBox(height: 20),
-          books.isNotEmpty
-              ? Expanded(
+    return books.isNotEmpty
+        ? SizedBox(
+            height: 300,
+            child: Column(children: [
+              TitleWidget(
+                  asset: 'party',
+                  title: 'Les livres que vous voulez lire',
+                  length: books.length,
+                  isBooks: true),
+              const SizedBox(height: 20),
+              Expanded(
                   child: ListView(
                       controller: bookController,
                       scrollDirection: Axis.horizontal,
@@ -69,29 +69,29 @@ class SavedBooksSuccessWidget extends StatelessWidget {
                                 isLast:
                                     index == books.length - 1 ? true : false));
                       })))
-              : SizedBox(
-                  height: 100,
-                  child: Column(children: [
-                    TitleWidget(
-                        asset: 'party',
-                        title: 'Les films que vous voulez voir',
-                        length: books.length,
-                        isBooks: false),
-                    const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 20),
-                      child: Text(
-                        'Il semblerait que votre liste soit vide.',
-                        textAlign: TextAlign.center, // Centre le texte
-                        style: const TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0),
-                          fontSize: 15,
-                          fontFamily: 'Urbanist',
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    )
-                  ]))
-        ]));
+            ]))
+        : SizedBox(
+            height: 100,
+            child: Column(children: [
+              TitleWidget(
+                  asset: 'party',
+                  title: 'Les livres que vous voulez lire',
+                  length: books.length,
+                  isBooks: false),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: Text(
+                  'Il semblerait que votre liste soit vide.',
+                  textAlign: TextAlign.center, // Centre le texte
+                  style: const TextStyle(
+                    color: Color.fromARGB(255, 0, 0, 0),
+                    fontSize: 15,
+                    fontFamily: 'Urbanist',
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
+            ]));
   }
 }
