@@ -21,6 +21,9 @@ import 'package:getout/tools/launch_webview.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/widgets/tag.dart';
 
+import 'package:flutter_svg/svg.dart';
+import 'package:getout/tools/tools.dart';
+
 class BookSuccessWidget extends StatelessWidget {
   const BookSuccessWidget({super.key});
 
@@ -32,82 +35,88 @@ class BookSuccessWidget extends StatelessWidget {
 
     String imageUrl = book.posterPath ?? '';
 
-   List<Tag> tagList() {
+    List<Tag> tagList() {
       return book.genres!.map((tag) => Tag(text: tag.split('/')[0])).toList();
     }
 
-
     Widget buildCoverImage() => Container(
         decoration: const BoxDecoration(
-          border: Border(
-          ),
+          border: Border(),
         ),
-        child: Stack(
-            alignment: Alignment.center,
-            children: [
-              Image.network(
-                imageUrl,
-                // color: const Color.fromRGBO(150, 150, 150, 255).withOpacity(1),
-                colorBlendMode: BlendMode.modulate,
-                width: double.infinity,
-                fit: BoxFit.cover,
-                height: 200,
-              ),
-              Positioned.fill(
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                    child: Container(
-                      color: Colors.black.withOpacity(
-                          0.5), // Couleur transparente pour que le flou soit visible
-                    ),
-                  )),
-              Positioned(
-                top: 40,
-                right: 50,
-                child: IconButton(
-                  icon: const Icon(Icons.share),
+        child: Stack(alignment: Alignment.center, children: [
+          Image.network(
+            imageUrl,
+            // color: const Color.fromRGBO(150, 150, 150, 255).withOpacity(1),
+            colorBlendMode: BlendMode.modulate,
+            width: double.infinity,
+            fit: BoxFit.cover,
+            height: 200,
+          ),
+          Positioned.fill(
+              child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+            child: Container(
+              color: Colors.black.withOpacity(
+                  0.5), // Couleur transparente pour que le flou soit visible
+            ),
+          )),
+          Positioned(
+              top: 50,
+              right: 115,
+              child: GestureDetector(
+                onTap: () {
+                  launchWebView(
+                      'https://play.google.com/store/books/details?id=${book.id}&source=gbs_api');
+                },
+                child: SvgPicture.asset('assets/images/icon/external.svg',
+                    width: Tools.widthFactor(context, 0.07)),
+              )),
+          Positioned(
+            top: 40,
+            right: 50,
+            child: IconButton(
+              icon: const Icon(Icons.share),
+              color: Colors.white,
+              onPressed: () async {
+                Share.share(
+                    "Regarde ce livre que j'ai trouvé grâce à Getout ! ${book.bookLink}");
+              },
+            ),
+          ),
+          Positioned(
+              top: 40,
+              right: 0,
+              child: IconButton(
+                  icon: const Icon(Icons.more_vert),
+                  iconSize: 30,
                   color: Colors.white,
                   onPressed: () async {
-                    Share.share(
-                        "Regarde ce livre que j'ai trouvé grâce à Getout ! ${book.bookLink}");
-                  },
-                ),
-              ),
-              Positioned(
-                  top: 40,
-                  right: 0,
-                  child: IconButton(
-                      icon: const Icon(Icons.more_vert),
-                      iconSize: 30,
-                      color: Colors.white,
-                      onPressed: () async {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (ctx) {
-                              return BlocProvider.value(
-                                  value: BlocProvider.of<BookBloc>(context),
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (ctx) {
+                          return BlocProvider.value(
+                              value: BlocProvider.of<BookBloc>(context),
+                              child: BlocProvider.value(
+                                  value:
+                                      BlocProvider.of<LikedBooksHydratedBloc>(
+                                          context),
                                   child: BlocProvider.value(
-                                      value: BlocProvider.of<LikedBooksHydratedBloc>(context),
+                                      value: BlocProvider.of<
+                                          SavedBooksHydratedBloc>(context),
                                       child: BlocProvider.value(
-                                          value: BlocProvider.of<SavedBooksHydratedBloc>(context),
-                                          child: BlocProvider.value(
-                                              value: BlocProvider.of<WatchedBooksHydratedBloc>(context),
-                                              child: const FractionallySizedBox(
-                                                  heightFactor: 0.9,
-                                                  child: ActionsPageBook())))));
-                            });
-                      })
-              )
-            ]
-        )
-    );
+                                          value: BlocProvider.of<
+                                                  WatchedBooksHydratedBloc>(
+                                              context),
+                                          child: const FractionallySizedBox(
+                                              heightFactor: 0.9,
+                                              child: ActionsPageBook())))));
+                        });
+                  }))
+        ]));
 
-    Widget buildLittleImage() => GestureDetector(
-        onTap: () =>
-            launchWebView('https://play.google.com/store/books/details?id=${book.id}&source=gbs_api'),
-        child: ClipRRect(
+    Widget buildLittleImage() => ClipRRect(
             borderRadius: BorderRadius.circular(20),
-            child: Image.network(imageUrl, height: 300)));
+            child: Image.network(imageUrl, height: 300));
 
     return Center(
         child: ValueListenableBuilder<bool>(
@@ -132,7 +141,7 @@ class BookSuccessWidget extends StatelessWidget {
                           alignment: Alignment.topLeft,
                           child: Padding(
                             padding:
-                            const EdgeInsets.only(bottom: 300, right: 340),
+                                const EdgeInsets.only(bottom: 300, right: 340),
                             child: IconButton(
                               icon: const Icon(
                                 Icons.arrow_back,
@@ -151,11 +160,11 @@ class BookSuccessWidget extends StatelessWidget {
                         padding: const EdgeInsets.only(
                             left: 20, right: 20, bottom: 10),
                         child: Text(
-                      book.title ?? 'N/A',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          fontSize: 22, fontWeight: FontWeight.bold),
-                    )),
+                          book.title ?? 'N/A',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                              fontSize: 22, fontWeight: FontWeight.bold),
+                        )),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -169,7 +178,8 @@ class BookSuccessWidget extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        Text('${book.pageCount} pages',
+                        Text(
+                          '${book.pageCount} pages',
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontSize: 16,
@@ -180,12 +190,12 @@ class BookSuccessWidget extends StatelessWidget {
                     ),
                     book.genres != null && book.genres!.isNotEmpty
                         ? Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Wrap(
-                          spacing: 8.0,
-                          runSpacing: 4.0,
-                          children: [tagList()[0]],
-                        ))
+                            padding: const EdgeInsets.all(15.0),
+                            child: Wrap(
+                              spacing: 8.0,
+                              runSpacing: 4.0,
+                              children: [tagList()[0]],
+                            ))
                         : const SizedBox.shrink(),
                     Padding(
                       padding: const EdgeInsets.all(25.0),
@@ -215,7 +225,7 @@ class BookSuccessWidget extends StatelessWidget {
                                     },
                                     child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                       children: [
                                         Icon(
                                             isExpandedValue
@@ -238,25 +248,27 @@ class BookSuccessWidget extends StatelessWidget {
                       padding: const EdgeInsets.all(25),
                       child: book.authorsPicture != null
                           ? SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Column(
-                          children: [
-                            CircleAvatar(
-                              radius: 40,
-                              backgroundImage:
-                              NetworkImage(book.authorsPicture![0].picture),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  bottom: 10, top: 10),
-                              child: Text(
-                                book.authorsPicture![0].name, /// TODO CORRECT THIS
-                                style: const TextStyle(fontSize: 14),
+                              scrollDirection: Axis.horizontal,
+                              child: Column(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 40,
+                                    backgroundImage: NetworkImage(
+                                        book.authorsPicture![0].picture),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 10, top: 10),
+                                    child: Text(
+                                      book.authorsPicture![0].name,
+
+                                      /// TODO CORRECT THIS
+                                      style: const TextStyle(fontSize: 14),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                      )
+                            )
                           : const SizedBox.shrink(),
                     ),
                     // DescriptionTitle(value: appL10n(context)!.casting),
@@ -292,7 +304,8 @@ class BookSuccessWidget extends StatelessWidget {
                         ),
                       ),
                     )
-*/                  ],
+*/
+                  ],
                 ),
               );
             }));

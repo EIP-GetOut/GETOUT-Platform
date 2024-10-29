@@ -6,10 +6,12 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+
 import 'package:getout/screens/home/bloc/watched_movies/watched_movies_bloc.dart';
 
 import 'package:getout/widgets/description_title.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getout/screens/home/bloc/liked_movies/liked_movies_bloc.dart';
 import 'package:getout/screens/home/bloc/saved_movies/saved_movies_bloc.dart';
 
@@ -19,6 +21,8 @@ import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/duration_format.dart';
 import 'package:getout/widgets/tag.dart';
 import 'package:getout/widgets/actions_page.dart';
+
+import 'package:getout/tools/tools.dart';
 import 'package:getout/tools/launch_webview.dart';
 
 import 'package:share_plus/share_plus.dart';
@@ -69,6 +73,16 @@ class MovieSuccessWidget extends StatelessWidget {
             ),
           )),
           Positioned(
+              top: 50,
+              right: 115,
+              child: GestureDetector(
+                onTap: () {
+                  launchWebView('https://www.themoviedb.org/movie/${movie.id}');
+                },
+                child: SvgPicture.asset('assets/images/icon/external.svg',
+                    width: Tools.widthFactor(context, 0.07)),
+              )),
+          Positioned(
             top: 40,
             right: 50,
             child: IconButton(
@@ -76,7 +90,7 @@ class MovieSuccessWidget extends StatelessWidget {
               color: Colors.white,
               onPressed: () async {
                 Share.share(
-                    "Regarde ce film que j'ai trouvé grâce à Getout ! https://www.themoviedb.org/movie/${movie.id}");
+                    "Regardes ce film que j'ai trouvé grâce à Getout ! https://www.themoviedb.org/movie/${movie.id}");
               },
             ),
           ),
@@ -108,15 +122,12 @@ class MovieSuccessWidget extends StatelessWidget {
                                               heightFactor: 0.9,
                                               child: ActionsPageMovie())))));
                         });
-                  }))
+                  })),
         ]));
 
-    Widget buildLittleImage() => GestureDetector(
-        onTap: () =>
-            launchWebView('https://www.themoviedb.org/movie/${movie.id}'),
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.network(imageUrl, height: 300)));
+    Widget buildLittleImage() => ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: Image.network(imageUrl, height: 300));
 
     return Center(
         child: ValueListenableBuilder<bool>(

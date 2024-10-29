@@ -171,6 +171,7 @@ flutter:
     - assets/images/icon/profile_picture.png
     - assets/images/icon/setting.svg
     - assets/images/icon/trash.svg
+    - assets/images/icon/external.svg
     #    Logo:
     - assets/images/logo/cinema.png
     - assets/images/logo/DVD.png
