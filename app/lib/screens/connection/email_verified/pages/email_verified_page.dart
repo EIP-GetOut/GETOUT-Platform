@@ -50,9 +50,6 @@ class EmailVerifiedPage extends StatelessWidget {
       },
       child: Scaffold(
           resizeToAvoidBottomInset: true,
-          appBar: AppBar(
-            leading: const BackButton(),
-          ),
           body: SingleChildScrollView(
               child: Form(
             key: _formKey,

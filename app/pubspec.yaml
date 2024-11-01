@@ -36,9 +36,9 @@ dependencies:
   shimmer: 3.0.0
   flutter_switch: ^0.3.2
   flutter_phoenix: ^1.1.1
-  share_plus: ^10.0.3
+  share_plus: ^10.1.1
 
-  html: ^0.15.4
+  html: ^0.15.5
   ### Data
   intl: ^0.19.0
   flutter_bloc: ^8.1.6
@@ -46,7 +46,7 @@ dependencies:
   hydrated_bloc: ^9.1.5
   equatable: ^2.0.5
   shared_preferences: ^2.3.2
-  path_provider: ^2.1.4
+  path_provider: ^2.1.5
   flutter_localization: ^0.2.2
 
 
@@ -58,11 +58,11 @@ dependencies:
   ### Icons/Images
   cupertino_icons: ^1.0.8  # Use with the CupertinoIcons class for iOS style icons.
   boxicons: ^2.1.3
-  flutter_svg: ^2.0.10+1
+  flutter_svg: ^2.0.11
 
   ### Notifications
 
-  flutter_local_notifications: ^17.2.3
+  flutter_local_notifications: ^17.2.4
   # permission_handler: ^11.3.1
   # is_first_run: ^1.0.0
   timezone: ^0.9.4
@@ -160,6 +160,7 @@ flutter:
     - assets/images/icon/disconnect.svg
     - assets/images/icon/email.svg
     - assets/images/icon/fire.png
+    - assets/images/icon/form.svg
     - assets/images/icon/heart.png
     - assets/images/icon/history.svg
     - assets/images/icon/home.svg

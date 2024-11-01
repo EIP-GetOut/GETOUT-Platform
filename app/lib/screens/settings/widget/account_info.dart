@@ -6,6 +6,8 @@
 */
 
 import 'package:flutter/material.dart';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:getout/global.dart' as globals;
 
 class AccountInfo extends StatelessWidget {
@@ -22,13 +24,12 @@ class AccountInfo extends StatelessWidget {
             Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('${globals.session?['firstName']} ${globals.session?['lastName']}'.toLowerCase(),
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                          fontSize: (MediaQuery.of(context).size.width > 400)
-                              ? 20
-                              : 16,
-                          color: Theme.of(context).primaryColor)),
+                AutoSizeText('${globals.session?['firstName']} ${globals.session?['lastName']}'.toLowerCase(),
+                maxLines: 2,
+                minFontSize: 28.0,
+                maxFontSize: 40.0,
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor)),
                   Text(globals.session?['email'],
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(

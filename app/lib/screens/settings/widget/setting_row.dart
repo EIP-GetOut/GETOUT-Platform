@@ -46,7 +46,7 @@ class SettingRow extends StatelessWidget {
             child: Padding(padding: const EdgeInsets.only(right: 15.0, left: 15.0), child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  (image != null) ? SvgPicture.asset(image!) : const SizedBox(),
+                  (image != null) ? SvgPicture.asset(image!, width: 33) : const SizedBox(),
                   SizedBox(width: Tools.widthFactor(context, 0.065)),
                   Text(value,
                       style: TextStyle(
