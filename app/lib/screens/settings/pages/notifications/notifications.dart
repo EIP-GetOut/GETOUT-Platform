@@ -78,7 +78,7 @@ class NotificationsServices {
       'GetOut',
       'Arrêtes de scroller !!!',
       tz.TZDateTime.now(tz.local)
-          .add(Duration(seconds: 20)),
+          .add(Duration(seconds: timeBeforeNotification)),
       NotificationDetails(
         android: AndroidNotificationDetails(
             'new_recommendation', 'New recommendation',
