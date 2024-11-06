@@ -60,7 +60,6 @@ class SettingsPage extends StatelessWidget {
             SettingRow(page: const Forms(isEdit: true), image : 'assets/images/icon/form.svg', value: appL10n(context)!.select_preferences),
             SettingRow(page: const HistoryProvider(), image: 'assets/images/icon/history.svg', value: appL10n(context)!.history),
             const NotificationsPage(value: 'Recommandations'),
-            const NotificationsPage(value: 'GetOut'),
             //TitleRow(value: appL10n(context)!.more),
             /*todo SettingRow(
                 page: const SizedBox(),
