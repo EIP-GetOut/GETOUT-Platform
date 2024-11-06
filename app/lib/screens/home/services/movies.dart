@@ -23,7 +23,8 @@ class MoviesService extends ServiceTemplate {
 
     try {
       final Response response = await dio.get(
-          '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedMoviesPath}',);
+        '${ApiConstants.rootApiPath}/account/$_id${ApiConstants.recommendedMoviesPath}'
+      );
 
       if (response.statusCode != HttpStatus.OK) {
         return Future.error(Exception(
@@ -133,8 +134,6 @@ class MoviesService extends ServiceTemplate {
       return;
     }
   }
-
-  // WATCHED
 
   Future<GenerateMoviesResponse> getWatchedMovies(
       GenerateMoviesRequest request) async {

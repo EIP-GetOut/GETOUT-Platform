@@ -70,7 +70,7 @@ class RecommendedMoviesSuccessWidget extends StatelessWidget {
                   },
                   child: Container(
                       width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 0),
                       child: Stack(
                         children: [
                           Align(
@@ -118,7 +118,7 @@ class RecommendedMoviesSuccessWidget extends StatelessWidget {
                                     if (movie.averageRating != null) ...[
                                       const Icon(Icons.star_outlined,
                                           color: Colors.white, size: 20),
-                                      Text(movie.averageRating!.toString(),
+                                      Text(movie.averageRating!.toStringAsFixed(1),
                                           style: const TextStyle(
                                             fontSize: 14,
                                             color: Colors.white,

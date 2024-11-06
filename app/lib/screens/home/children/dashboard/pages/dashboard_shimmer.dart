@@ -20,16 +20,16 @@ class DashboardShimmer extends StatelessWidget {
           children: [
             ShimmerRefreshTimeCard(),
             SizedBox(height: 10),
-            ShimmerNewsCard(),
-            SizedBox(height: 10),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ShimmerSpentTimeCard(),
-                SizedBox(width: 30),
-                ShimmerSpentTimeCard(),
+                Expanded(child: ShimmerSpentTimeCard()),
+                SizedBox(width: 10),
+                Expanded(child: ShimmerSpentTimeCard()),
               ],
             ),
+            SizedBox(height: 10),
+            ShimmerNewsCard(),
             SizedBox(height: 20),
             ShimmerStoryNewsCard(),
           ],
@@ -55,11 +55,13 @@ class ShimmerRefreshTimeCard extends StatelessWidget {
         child: const Padding(
           padding: EdgeInsets.all(20),
           child: ListTile(
-            leading: Icon(Icons.access_time_filled, size: 30, color: Colors.grey),
+            leading:
+                Icon(Icons.access_time_filled, size: 30, color: Colors.grey),
             title: SizedBox(
               width: double.infinity,
               height: 20,
-              child: DecoratedBox(decoration: BoxDecoration(color: Colors.grey)),
+              child:
+                  DecoratedBox(decoration: BoxDecoration(color: Colors.grey)),
             ),
           ),
         ),

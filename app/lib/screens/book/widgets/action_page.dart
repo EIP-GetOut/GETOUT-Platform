@@ -17,7 +17,6 @@ import 'package:getout/screens/book/bloc/book_bloc.dart';
 import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/tools/app_l10n.dart';
 
-
 class ActionsPageBook extends StatelessWidget {
   const ActionsPageBook({super.key});
 

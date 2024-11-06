@@ -70,7 +70,7 @@ class RecommendedBooksSuccessWidget extends StatelessWidget {
                   },
                   child: Container(
                       width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 0.0),
                       child: Stack(
                         children: [
                           Align(

@@ -5,7 +5,6 @@
 ** Wrote by Erwan Cariou <erwan1.cariou@epitech.eu>, Perry Chouteau <perry.chouteau@epitech.eu>
 */
 
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -18,12 +17,13 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 import 'package:getout/screens/connection/bloc/connection_provider.dart';
 import 'package:getout/screens/connection/services/service.dart';
 import 'package:getout/screens/connection/email_verified/bloc/email_verified_provider.dart';
 import 'package:getout/screens/home/bloc/home_provider.dart';
+import 'package:getout/widgets/transition_page.dart';
 import 'package:getout/screens/form/pages/form.dart';
 import 'package:getout/bloc/session/session_service.dart';
 import 'package:getout/bloc/session/session_event.dart';
@@ -31,15 +31,17 @@ import 'package:getout/bloc/session/session_bloc.dart';
 import 'package:getout/bloc/locale/bloc.dart';
 import 'package:getout/bloc/observer.dart';
 import 'package:getout/bloc/theme/bloc.dart';
-import 'package:getout/widgets/transition_page.dart';
 import 'package:getout/widgets/loading.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/status.dart';
 import 'package:getout/global.dart' as globals;
+import 'package:getout/tools/timer_notifier.dart';
+import 'dart:math';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Permission.storage.request();
+  // await Permission.storage.request();
   HydratedBloc.storage = await HydratedStorage.build(
       storageDirectory: kIsWeb
           ? HydratedStorage.webStorageDirectory
@@ -53,10 +55,6 @@ Future<void> main() async {
 
 class MainProvider extends StatelessWidget {
   const MainProvider({super.key});
-
-  // block to refresh the session every 15 seconds
-  /*final Timer? timer = Timer.periodic(const Duration(seconds: 15),
-      (Timer t) async => await globals.sessionManager.getSession());*/
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +73,16 @@ class MainProvider extends StatelessWidget {
                       sessionService: context.read<SessionService>(),
                     )..add(const SessionRequest())),
           ],
-          child: const MainPage(),
+          child: ChangeNotifierProvider<TimerNotifier>(
+            create: (context) {
+              final initialTime = min<int>(
+                globals.session?['secondsBeforeNextMovieRecommendation'] ?? 0,
+                globals.session?['secondsBeforeNextBookRecommendation'] ?? 0,
+              );
+              return TimerNotifier(initialTime);
+            },
+            child: const MainPage(),
+          ),
         ));
   }
 }
@@ -113,15 +120,14 @@ class MainPage extends StatelessWidget {
               return const ColoredBox(
                   color: Colors.white, child: Center(child: LoadingPage()));
             } else if (state.status.isError) {
-              /// TODO : Add a retry button
               return TransitionPage(
                   title: appL10n(context)!.error_unknown_short,
                   description: appL10n(context)!.error_unknown_description,
                   image: 'assets/images/draw/error.svg',
                   buttonText: appL10n(context)!.error_ok,
                   nextPage: () => {
-                    Phoenix.rebirth(context),
-                  });
+                        Phoenix.rebirth(context),
+                      });
             } else if (state.status.isNotFound) {
               return const ConnectionProvider();
             } else {
@@ -131,8 +137,8 @@ class MainPage extends StatelessWidget {
                   image: 'assets/images/draw/error.svg',
                   buttonText: appL10n(context)!.error_ok,
                   nextPage: () => {
-                    Phoenix.rebirth(context),
-                  });
+                        Phoenix.rebirth(context),
+                      });
             }
           },
         ),

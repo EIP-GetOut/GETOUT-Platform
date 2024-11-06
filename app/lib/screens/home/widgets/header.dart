@@ -29,13 +29,13 @@ class HomeAppBarWidget extends AppBar {
               children: [
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Padding(
-                      padding: const EdgeInsets.only(left: 20),
+                      padding: const EdgeInsets.only(left: 15),
                       // appL10n(context)!.homepage_title
                       child: Text(title,
                           style: Theme.of(context).textTheme.titleLarge)),
                   Padding(
                       // appL10n(context)!.homepage_subtitle
-                      padding: const EdgeInsets.only(left: 20),
+                      padding: const EdgeInsets.only(left: 15),
                       child: Text(subtitle,
                           style: Theme.of(context).textTheme.displayMedium)),
                 ])

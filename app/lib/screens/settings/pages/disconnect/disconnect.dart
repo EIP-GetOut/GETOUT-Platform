@@ -73,7 +73,7 @@ class DisconnectPage extends StatelessWidget {
             child: Padding( padding : const EdgeInsets.only(right: 15.0, left: 15.0), child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SvgPicture.asset('assets/images/icon/disconnect.svg'),
+                  SvgPicture.asset('assets/images/icon/disconnect.svg', width: 33),
                   SizedBox(width: Tools.widthFactor(context, 0.065)),
                   Text(
                     appL10n(context)!.disconnect,
