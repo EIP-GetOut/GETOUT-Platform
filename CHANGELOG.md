@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.3](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v1.0.2...v1.0.3) (2024-11-07)
+
+
+### Features
+
+* **app:** :lipstick: :recycle: updating settings UI + new  notification system ([eb073f8](https://github.com/EIP-GetOut/GETOUT-Platform/commit/eb073f8e2c4903895dc43c66fff8c73ee4e30637))
+* **app:** :lipstick: updating settings page UI (+ updating some packages) ([fa311e7](https://github.com/EIP-GetOut/GETOUT-Platform/commit/fa311e7bd7aa013dabcae59669cd38c2e3cdf229))
+* **app:** :sparkles: add a message when list is empty ([0135068](https://github.com/EIP-GetOut/GETOUT-Platform/commit/01350687ea99dd3c9224b7312292c945d35601e6))
+* **app:** :sparkles: add a message when list is empty ([4b4597b](https://github.com/EIP-GetOut/GETOUT-Platform/commit/4b4597bf5b256edd4ee97118f783e5ef2c191c39))
+* **app:** :sparkles: add an external link icon to redirect to imdb / google books ([a88dfd6](https://github.com/EIP-GetOut/GETOUT-Platform/commit/a88dfd697dde692500e47eb9c9507828bce7c14a))
+* **app:** ✨ improving book and movie reques ([6d7818c](https://github.com/EIP-GetOut/GETOUT-Platform/commit/6d7818c0c979e90a0ffc70d11b788a63b00ea722))
+
+
+### Bug Fixes
+
+* **app:** :adhesive_bandage: fix merge conflict ([146fcf6](https://github.com/EIP-GetOut/GETOUT-Platform/commit/146fcf6287f938db64a4b8298878f62b80ef6914))
+* **app:** :bug: an error was displayed due to listTitle size (infinite widget) ([6f3c8e1](https://github.com/EIP-GetOut/GETOUT-Platform/commit/6f3c8e1a04b8971f02b7b265e84b40a73228d657))
+* **app:** :bug: fixing bad merge files ([d2d3703](https://github.com/EIP-GetOut/GETOUT-Platform/commit/d2d3703f3330cb11514c6b5e838ee2680047f1a5))
+* **app:** :bug: timer was reset at each page change ([438778b](https://github.com/EIP-GetOut/GETOUT-Platform/commit/438778b8930aecd3a70e927f7df09632b927a2fe))
+* **app:** :construction: notification are now lighter (remove 2 packages) ([b9cdff3](https://github.com/EIP-GetOut/GETOUT-Platform/commit/b9cdff3b001dab310a750f5d2bce3d3c3a853300))
+* **app:** :lipstick: edit paddings (dashboard and shimmerDasboard), fix image uri error ([766c861](https://github.com/EIP-GetOut/GETOUT-Platform/commit/766c8611fc5819c500f14ea0741d91d63e908f09))
+* **app:** :lipstick: remove some useless padding and space, add space (right) for last element of the list ([9a28d96](https://github.com/EIP-GetOut/GETOUT-Platform/commit/9a28d9663aa6b9d88fb5e498b4ecf3a7f7187343))
+* **app:** :sparkles: fix fpoint, notif & form [crash] ([f8e8753](https://github.com/EIP-GetOut/GETOUT-Platform/commit/f8e87531395c8b31d4fc0b82786e4098a051fa3c))
+* **app:** 🚑 black screen when first connection <erwan> ([638c82d](https://github.com/EIP-GetOut/GETOUT-Platform/commit/638c82d9417c9dbabd21e388ba360565d57842d8))
+* **app:** put time before new notification to the same as new recommendation ([2c2577b](https://github.com/EIP-GetOut/GETOUT-Platform/commit/2c2577b7ad9aee1ebfb0894b177b5195f38aab8f))
+* **backend:** :bug: inactivity email sent ([82c6b7d](https://github.com/EIP-GetOut/GETOUT-Platform/commit/82c6b7db4aed498bdd9ad8e5322cf018a94f53b9))
+
+
+### UI Updates
+
+* **app:** :art: remove useless comments and assets ([89684f4](https://github.com/EIP-GetOut/GETOUT-Platform/commit/89684f4e009b5828f1a852c7f98ad9a2a6034024))
+* **app:** :lipstick: changie padding for movies ([8d4be95](https://github.com/EIP-GetOut/GETOUT-Platform/commit/8d4be9567eff23d289348029c2eb370d3e6ae268))
+
 ### [1.0.2](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v1.0.1...v1.0.2) (2024-10-17)
 
 
