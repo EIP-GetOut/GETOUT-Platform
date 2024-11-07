@@ -12,18 +12,20 @@ class BookPreviewWidget extends StatelessWidget {
     super.key,
     required this.posterPath,
     required this.title,
+    required this.isLast
     // required this.overview,
   });
 
   final String? posterPath;
   // final String? overview;
   final String title;
+  final bool isLast;
 
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 30.0, left: 30.0),
+    margin: EdgeInsets.only(left: 20.0, right: isLast ? 20 : 0),
       width: 100,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         ClipRRect(

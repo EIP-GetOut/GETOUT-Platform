@@ -25,25 +25,23 @@ class MovieService {
         storage: FileStorage(globals.cookiePath))));
   }
 
-
   PersonList parseCast(final castData) {
     PersonList castList = [];
 
-        for (final actor in castData) {
-          String? name = actor['name'] ?? 'Acteur inconnue';
-          String picture = actor['picture'] ??
-              'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg';
+    for (final actor in castData) {
+      String? name = actor['name'] ?? 'Acteur inconnue';
+      String picture = actor['picture'] ??
+          'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg';
 
-          if (name != null) {
-            castList.add(Person(name: name, picture: picture));
-          }
-        }
+      if (name != null) {
+        castList.add(Person(name: name, picture: picture));
+      }
+    }
 
     return castList;
   }
 
   Person parseDirector(final directorData) {
-
     String name = directorData['name'] ?? 'Réalisateur inconnue';
     String picture = directorData['picture'] ??
         'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg';
@@ -65,14 +63,16 @@ class MovieService {
 
       result = InfoMovieResponse(
           title: data['title'] ?? 'Titre inconnue',
-          overview:
-              data['synopsis'] ?? 'Pas de description disponible',
-          posterPath: data['posterPath'] ?? 'https://media.comicbook.com/files/img/default-movie.png',
-          backdropPath: data['backdropPath'] ?? 'https://media.comicbook.com/files/img/default-movie.png',
+          overview: data['synopsis'] ?? 'Pas de description disponible',
+          posterPath: data['posterPath'] ??
+              'https://media.comicbook.com/files/img/default-movie.png',
+          backdropPath: data['backdropPath'] ??
+              'https://media.comicbook.com/files/img/default-movie.png',
           releaseDate: data['releaseDate'],
           voteAverage: data['averageRating'],
           genres: data['genres'],
-          duration: (data['duration'].toString() == '0') ? 'N/A' : data['duration'],
+          duration:
+              (data['duration'].toString() == '0') ? 'N/A' : data['duration'],
           cast: parseCast(data['cast']),
           director: parseDirector(data['director']),
           statusCode: response.statusCode ?? HttpStatus.APP_ERROR,

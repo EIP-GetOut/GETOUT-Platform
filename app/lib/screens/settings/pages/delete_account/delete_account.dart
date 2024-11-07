@@ -49,7 +49,7 @@ class DeleteAccountPage extends StatelessWidget {
             child: Padding( padding : const EdgeInsets.only(right: 15.0, left: 15.0), child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SvgPicture.asset('assets/images/icon/trash.svg'),
+                  SvgPicture.asset('assets/images/icon/trash.svg', width: 33),
                   SizedBox(width: Tools.widthFactor(context, 0.065)),
                   Text(
                     appL10n(context)!.delete_account,

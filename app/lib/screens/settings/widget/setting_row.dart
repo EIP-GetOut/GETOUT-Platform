@@ -43,23 +43,25 @@ class SettingRow extends StatelessWidget {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => page));
             },
-            child: Padding(padding: const EdgeInsets.only(right: 15.0, left: 15.0), child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  (image != null) ? SvgPicture.asset(image!) : const SizedBox(),
-                  SizedBox(width: Tools.widthFactor(context, 0.065)),
-                  Text(value,
-                      style: TextStyle(
-                          fontSize:
-                              (MediaQuery.of(context).size.width > 400)
-                                  ? 18
-                                  : 12,
-                          color: (important == Important.warning)
-                              ? Colors.red
-                              : Colors.black87)),
-                  const Expanded(child: SizedBox()),
-                  const Icon(Icons.arrow_forward_ios_rounded,
-                      color: Colors.black54),
+            child: Padding(
+                padding: const EdgeInsets.only(right: 15.0, left: 15.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    (image != null) ? SvgPicture.asset(image!, width: 33) : const SizedBox(),
+                    SizedBox(width: Tools.widthFactor(context, 0.065)),
+                    Text(value,
+                        style: TextStyle(
+                            fontSize:
+                                (MediaQuery.of(context).size.width > 400)
+                                    ? 18
+                                    : 12,
+                            color: (important == Important.warning)
+                                ? Colors.red
+                                : Colors.black87)),
+                    const Expanded(child: SizedBox()),
+                    const Icon(Icons.arrow_forward_ios_rounded,
+                        color: Colors.black54),
                 ]))));
   }
 }

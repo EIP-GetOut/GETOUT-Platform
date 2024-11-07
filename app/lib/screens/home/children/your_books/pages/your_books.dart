@@ -20,11 +20,15 @@ class YourBooksPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         controller: scrollController,
-        child: const Padding(
-        padding: EdgeInsets.only(top: 30.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [RecommendedBooksWidget(), SavedBooksWidget(), LikedBooksWidget(), WatchedBooksWidget()],
-        )));
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                RecommendedBooksWidget(),
+                SizedBox(height: 20),
+                SavedBooksWidget(),
+                LikedBooksWidget(),
+                WatchedBooksWidget()
+              ],
+            ));
   }
 }
