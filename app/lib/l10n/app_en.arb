@@ -219,7 +219,8 @@
   "notifications_recommendations": "Notifications recommandations",
   "recommendations": "Recommendations",
 
-  "history": "See history",
+  "history": "History",
+  "see_history": "See history",
   "other": "Other",
   "support": "Support",
 
