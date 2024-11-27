@@ -112,7 +112,7 @@ const removeMovieFromSeenMovies = async (accountId: UUID, movieId: number): Prom
   await removeMovieFromList(accountId, movieId, 'seenMovies')
 
 async function getRecommendation (movieId: number): Promise<any> {
-  return await moviedb.movieRecommendations({ id: movieId })
+  return await moviedb.movieRecommendations({ id: movieId, language: 'fr-FR' })
 }
 
 export {

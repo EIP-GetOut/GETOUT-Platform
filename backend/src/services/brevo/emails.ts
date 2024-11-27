@@ -69,12 +69,12 @@ async function sendWelcomeEmail (account: Account): ReturnType<TransactionalEmai
   })
 }
 
-async function sendEmailVerificationEmail (account: Account, code: number): ReturnType<TransactionalEmailsApi['sendTransacEmail']> {
+async function sendEmailVerificationEmail (account: Account, code: number, isNewEmail: boolean = false): ReturnType<TransactionalEmailsApi['sendTransacEmail']> {
   const params = {
     fullName: `${account.firstName} ${account.lastName}`,
     code: code.toString()
   }
-  return await sendEmailWithBrevo(12, account.email, params).catch((err: Error) => {
+  return await sendEmailWithBrevo(12, isNewEmail ? account.newEmail! : account.email, params).catch((err: Error) => {
     throw new EmailSendError(`Error while sending email verification email to ${account.email}: ${err.message}.`)
   })
 }

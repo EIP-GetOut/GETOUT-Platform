@@ -7,12 +7,12 @@
 
 import { UUID } from 'crypto'
 import {
-  Entity,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
   Column,
-  ManyToOne
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
 } from 'typeorm'
 
 import { Preferences } from '@models/account/preferences.interface'
@@ -47,6 +47,9 @@ export class Account {
 
   @Column('timestamp', { nullable: true, default: null })
     emailVerificationExpiration: Date | null = null
+
+  @Column('varchar', { length: 64, nullable: true, default: null })
+    newEmail?: string | null = null
 
   @Column({ length: 32, nullable: true })
     firstName?: string

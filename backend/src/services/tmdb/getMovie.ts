@@ -35,7 +35,7 @@ export interface MovieResponse {
 }
 
 async function fetchMovieCredits (movieId: number): Promise<Cast []> {
-  return await moviedb.movieCredits({ id: movieId }).then((credits: any) => {
+  return await moviedb.movieCredits({ id: movieId, language: 'fr-FR' }).then((credits: any) => {
     return credits.cast?.slice(0, 5).map((person: any) => ({
       name: person.name,
       picture: ((person.profile_path ?? '').length > 0)
@@ -48,7 +48,7 @@ async function fetchMovieCredits (movieId: number): Promise<Cast []> {
 }
 
 async function getDirector (movieId: number): Promise<any> {
-  return await moviedb.movieCredits({ id: movieId }).then((credits: TMDBCreditsResponse) => {
+  return await moviedb.movieCredits({ id: movieId, language: 'fr-FR' }).then((credits: TMDBCreditsResponse) => {
     const director = credits.crew?.find(member => member.job === 'Director')
     if (director?.name == null) {
       throw new ApiError(`Error whiled obtaining movie ${movieId}'s director: director not found.`)
@@ -68,7 +68,7 @@ async function getDirector (movieId: number): Promise<any> {
 }
 
 async function getMovieDetails (id: number): Promise<TMDBMovieResponse> {
-  return await moviedb.movieInfo(id).then((value: TMDBMovieResponse) => {
+  return await moviedb.movieInfo({ id, language: 'fr-FR' }).then((value: TMDBMovieResponse) => {
     return value
   }).catch((err: Error) => {
     throw new ApiError(`Error whiled obtaining movie ${id}'s infos (${err.name}: ${err.message}).`)

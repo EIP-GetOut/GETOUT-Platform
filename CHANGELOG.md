@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.4](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v1.0.3...v1.0.4) (2024-11-27)
+
+
+### Features
+
+* **backend:** :spakles: changeEmail routes ([36b619c](https://github.com/EIP-GetOut/GETOUT-Platform/commit/36b619c508538017e72da22ce9ad305cf88dca9f))
+
+
+### Refactors
+
+* **backend:** :recycle: switch language of movies fetching in node backend to french ([fb8efa6](https://github.com/EIP-GetOut/GETOUT-Platform/commit/fb8efa6e62902fed977212ca1240d35e6eee4a15))
+
 ### [1.0.3](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v1.0.2...v1.0.3) (2024-11-07)
 
 
