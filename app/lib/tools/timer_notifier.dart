@@ -10,11 +10,7 @@ import 'package:getout/global.dart' as globals;
 
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-import 'package:getout/global.dart' as globals;
-import 'dart:async';
-import 'dart:math'; // Pour min<int>
-import 'dart:io';
+import 'dart:math';
 
 class TimerNotifier extends ChangeNotifier {
   late ValueNotifier<int> _timeNotifier;
@@ -30,7 +26,7 @@ class TimerNotifier extends ChangeNotifier {
   ValueNotifier<int> get timeNotifier => _timeNotifier;
 
   void _startTimer() {
-    _timer?.cancel(); // Annule le timer s'il existe déjà
+    _timer?.cancel();
     int elapsedTime = 0;
 
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -48,22 +44,16 @@ class TimerNotifier extends ChangeNotifier {
   }
 
   Future<void> restartTimerIfZero() async {
-    print(globals.session);
     if (_timeNotifier.value == 0) {
-      // sleep(const Duration(seconds: 5));
-      print('value == 0');
       await globals.sessionManager.getSession(); // Récupère la session mise à jour
 
-      // Calcule la nouvelle valeur minimale
       int newInitialTime = min<int>(
         globals.session?['secondsBeforeNextMovieRecommendation'] ?? 0,
         globals.session?['secondsBeforeNextBookRecommendation'] ?? 0,
       );
       
-      // newInitialTime += 30;
-      // Mets à jour _initialTime et redémarre le timer
       _initialTime = newInitialTime;
-      _timeNotifier.value = _initialTime; // Mets aussi à jour l'affichage
+      _timeNotifier.value = _initialTime;
       _startTimer();
     }
   }
