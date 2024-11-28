@@ -7,6 +7,7 @@
 
 part of 'history_bloc.dart';
 
+
 class HistoryState extends Equatable {
   const HistoryState({
     this.status = Status.initial,
