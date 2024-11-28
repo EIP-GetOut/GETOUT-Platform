@@ -13,8 +13,10 @@ import 'package:getout/screens/settings/pages/edit_email/new_email.dart';
 import 'package:getout/screens/settings/pages/edit_email/email_verification.dart';
 import 'package:getout/screens/settings/services/edit_email.dart';
 import 'package:getout/screens/settings/bloc/edit_email/edit_email_bloc.dart';
-import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/widgets/fields/widgets/default_button.dart';
+import 'package:getout/widgets/show_snack_bar.dart';
+import 'package:getout/bloc/session/session_bloc.dart';
+import 'package:getout/bloc/session/session_event.dart';
 import 'package:getout/widgets/page_title.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/tools.dart';
@@ -111,6 +113,7 @@ class EditEmail extends StatelessWidget {
                 return showSnackBar(context, appL10n(context)!.error_unknown);
               }
               if (context.mounted) {
+                context.read<SessionBloc>().add(const SessionRequest());
                 Navigator.pop(context);
               }
             });
