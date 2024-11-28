@@ -132,28 +132,7 @@ class EditEmailField extends StatelessWidget {
           }
         },
         onChanged: (value) => context.read<EditEmailBloc>().add(
-            NewEmailEvent(newEmail: value, confirmEmail: '', password: ''),
-            ),
-      );
-    });
-  }
-}
-
-class EditConfirmEmailField extends StatelessWidget {
-  const EditConfirmEmailField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<EditEmailBloc, EditEmailStates>(
-        builder: (context, state) {
-      return DefaultField(
-        title: appL10n(context)!.confirm_email.toUpperCase(),
-        mandatory: true,
-        label: appL10n(context)!.confirm_email_hint,
-        validator: (value) =>
-            state.isConfirmEmailGood ? null : appL10n(context)!.email_matching,
-        onChanged: (value) => context.read<EditEmailBloc>().add(
-          NewEmailEvent(newEmail: '', confirmEmail: value, password: ''),
+            NewEmailEvent(newEmail: value),
             ),
       );
     });

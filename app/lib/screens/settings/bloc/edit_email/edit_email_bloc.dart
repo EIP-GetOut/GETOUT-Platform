@@ -16,7 +16,7 @@ class EditEmailBloc extends Bloc<EditEmailEvent, EditEmailStates> {
   EditEmailBloc() : super(const EditEmailStates())
   {
     on<EmitEvent>((event, emit) => emit(state.copyWith(status: event.status)));
-    on<NewEmailEvent>((event, emit) => emit(state.copyWith(newEmail: event.newEmail, password: event.password, confirmEmail: event.confirmEmail)));
+    on<NewEmailEvent>((event, emit) => emit(state.copyWith(newEmail: event.newEmail)));
     on<VerificationEmailEvent>((event, emit) => emit(state.copyWith(code: event.code)));
     on<ErrorEvent>((event, emit) => emit(state.copyWith()));
   }

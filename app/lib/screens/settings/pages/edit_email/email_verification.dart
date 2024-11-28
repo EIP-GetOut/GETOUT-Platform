@@ -14,11 +14,11 @@ import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/tools/app_l10n.dart';
 
 class EmailVerificationPage extends StatelessWidget {
-  const EmailVerificationPage({super.key});
+  const EmailVerificationPage({super.key, required this.formKey});
+  final GlobalKey<FormState> formKey;
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     final ValueNotifier<bool> enabledResend = ValueNotifier<bool>(true);
 
     return Scaffold(
@@ -48,9 +48,6 @@ class EmailVerificationPage extends StatelessWidget {
                                   Timer(const Duration(seconds: 10), () {
                                     enabledResend.value = true;
                                   });
-                                  /*context
-                                      .read<EditEmailBloc>()
-                                      .add(EmailVerifiedResend());*/
                                   showSnackBar(
                                       context,
                                       appL10n(context)!

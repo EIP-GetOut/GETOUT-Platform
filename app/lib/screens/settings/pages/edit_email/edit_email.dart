@@ -22,14 +22,15 @@ import 'package:getout/tools/tools.dart';
 class EditEmail extends StatelessWidget {
   const EditEmail({super.key});
 
-  static const List<Widget> pages = [
-    NewEmailPage(),
-    EmailVerificationPage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final PageController pageController = PageController();
+    GlobalKey<FormState> newEmailFormKey = GlobalKey<FormState>();
+    GlobalKey<FormState> codeFormKey = GlobalKey<FormState>();
+    List<Widget> pages = [
+      NewEmailPage(formKey: newEmailFormKey),
+      EmailVerificationPage(formKey: codeFormKey),
+    ];
 
     return BlocProvider(
       create: (context) => EditEmailBloc(),
@@ -66,7 +67,7 @@ class EditEmail extends StatelessWidget {
               ),
             ],
           ),
-          floatingActionButton: _nextButton(pageController, context),
+          floatingActionButton: _nextButton(pageController, context, newEmailFormKey, codeFormKey),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
         );
@@ -75,19 +76,19 @@ class EditEmail extends StatelessWidget {
   }
 
   Widget _nextButton(
-      final PageController pageController, final BuildContext context) {
+      final PageController pageController, final BuildContext context,
+      final GlobalKey<FormState> newEmailFormKey,
+      final GlobalKey<FormState> codeFormKey) {
     final EditEmailBloc readContext = context.read<EditEmailBloc>();
-
     // const CircularProgressIndicator()
     return DefaultButton(
         title: appL10n(context)!.confirm,
         onPressed: () {
           if (readContext.state.status == EditEmailStatus.newEmail &&
-              readContext.state.isEverythingGood) {
+              newEmailFormKey.currentState!.validate()) {
             EditEmailServices()
                 .sendNewEmail(EditEmailRequestModel(
-                    email: readContext.state.newEmail,
-                    password: readContext.state.password))
+                    email: context.read<EditEmailBloc>().state.newEmail))
                 .then((final EditEmailResponseModel value) {
               if (!value.isSuccessful && context.mounted) {
                 return showSnackBar(context, appL10n(context)!.error_unknown);
@@ -101,7 +102,7 @@ class EditEmail extends StatelessWidget {
               }
             });
           } else if (readContext.state.status ==
-              EditEmailStatus.verificationEmail) {
+              EditEmailStatus.verificationEmail && codeFormKey.currentState!.validate()) {
             EditEmailServices()
                 .emailVerified(
                     EmailVerificationRequestModel(code: readContext.state.code))
@@ -114,9 +115,9 @@ class EditEmail extends StatelessWidget {
               }
             });
           } else {
-            /*if (context.mounted) {
+            if (context.mounted) {
                 return showSnackBar(context, appL10n(context)!.error_unknown);
-              }*/
+              }
           }
         });
   }

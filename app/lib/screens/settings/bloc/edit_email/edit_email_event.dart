@@ -25,13 +25,11 @@ class EmitEvent extends EditEmailEvent {
 
 class NewEmailEvent extends EditEmailEvent {
   final String newEmail;
-  final String confirmEmail;
-  final String password;
 
-  const NewEmailEvent({required this.newEmail, required this.confirmEmail, required this.password});
+  const NewEmailEvent({required this.newEmail});
 
   @override
-  List<Object?> get props => [newEmail, confirmEmail, password];
+  List<Object?> get props => [newEmail];
 }
 
 class VerificationEmailEvent extends EditEmailEvent {
