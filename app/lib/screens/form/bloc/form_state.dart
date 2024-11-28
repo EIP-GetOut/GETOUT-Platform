@@ -14,6 +14,7 @@ enum FormStatus {
   movieGenres,
   viewingPlatform,
   endForm,
+  tutorial,
   loading,
   error
 }
