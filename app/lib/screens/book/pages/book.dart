@@ -30,6 +30,8 @@ class BookSuccessWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ValueNotifier<bool> isExpanded = ValueNotifier<bool>(false);
+    final ValueNotifier<bool> showExpandButton = ValueNotifier<bool>(false);
+    final GlobalKey textKey = GlobalKey(); // Ajout du GlobalKey
     final book = context.read<BookBloc>().state.book;
     final String releaseDate = book.releaseDate ?? '';
 
@@ -38,6 +40,23 @@ class BookSuccessWidget extends StatelessWidget {
     List<Tag> tagList() {
       return book.genres!.map((tag) => Tag(text: tag.split('/')[0])).toList();
     }
+
+    void checkTextOverflow() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final RenderBox? textBox =
+            textKey.currentContext?.findRenderObject() as RenderBox?;
+        if (textBox != null) {
+          const int maxLines = 8;
+          final double maxHeight =
+              maxLines * 20.0; // Approximation: 20px par ligne
+          if (textBox.size.height > maxHeight) {
+            showExpandButton.value = true;
+          }
+        }
+      });
+    }
+
+    checkTextOverflow();
 
     Widget buildCoverImage() => Container(
         decoration: const BoxDecoration(
@@ -115,8 +134,8 @@ class BookSuccessWidget extends StatelessWidget {
         ]));
 
     Widget buildLittleImage() => ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Image.network(imageUrl, height: 300));
+        borderRadius: BorderRadius.circular(20),
+        child: Image.network(imageUrl, height: 300));
 
     return Center(
         child: ValueListenableBuilder<bool>(
@@ -209,32 +228,44 @@ class BookSuccessWidget extends StatelessWidget {
                                   Text(
                                     book.overview ??
                                         appL10n(context)!.no_description,
+                                    key: textKey, // Clé pour mesurer le texte
                                     textAlign: TextAlign.justify,
-                                    overflow: isExpandedValue
+                                    maxLines: isExpanded.value ? null : 8,
+                                       overflow: isExpanded.value
                                         ? TextOverflow.visible
                                         : TextOverflow.ellipsis,
-                                    maxLines: isExpandedValue ? null : 8,
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      isExpanded.value = !isExpanded.value;
+                                  ValueListenableBuilder<bool>(
+                                    valueListenable: showExpandButton,
+                                    builder: (context, showButton, child) {
+                                      return showButton
+                                          ? GestureDetector(
+                                              onTap: () {
+                                                isExpanded.value =
+                                                    !isExpanded.value;
+                                              },
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    isExpanded.value
+                                                        ? Icons
+                                                            .keyboard_arrow_up
+                                                        : Icons
+                                                            .keyboard_arrow_down,
+                                                    size: 40.0,
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          : const SizedBox.shrink();
                                     },
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                            isExpandedValue
-                                                ? Icons.keyboard_arrow_up
-                                                : Icons.keyboard_arrow_down,
-                                            size: 40.0),
-                                      ],
-                                    ),
-                                  ),
+                                  )
                                 ],
                               );
                             },

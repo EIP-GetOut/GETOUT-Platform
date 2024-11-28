@@ -141,7 +141,7 @@ def getLikedDecadesParameters(parameters: dict) -> dict:
         if isinstance(item, dict):
             releaseDate = item.get("releaseDate")
             if isinstance(releaseDate, str) and len(releaseDate) >= 4:
-                year = int(releaseDate)
+                year = int(releaseDate[:4])
                 decade = (year // 10) * 10
                 decades.append(decade)
             else:

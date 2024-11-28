@@ -12,6 +12,9 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:getout/screens/home/bloc/home_page/home_page_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
+import 'package:getout/tools/timer_notifier.dart';
+
+import 'package:provider/provider.dart';
 
 class HomeNavBarWidget extends StatelessWidget {
   const HomeNavBarWidget(
@@ -22,6 +25,9 @@ class HomeNavBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    TimerNotifier timerNotifier;
+
     return Container(
         decoration: const BoxDecoration(
           boxShadow: <BoxShadow>[
@@ -77,10 +83,13 @@ class HomeNavBarWidget extends StatelessWidget {
           elevation: 20,
           onTap: (int value) => {
             context.read<HomePageBloc>().add(HomePageToIdx(value)),
+            timerNotifier = Provider.of<TimerNotifier>(context, listen: false),
+            timerNotifier.restartTimerIfZero(), // Redémarre seulement si le timer est à 0
             pageController.animateToPage(value,
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.easeIn),
           },
+          
           showUnselectedLabels: true,
           selectedLabelStyle:
               const TextStyle(fontFamily: 'Urbanist', fontSize: 16),

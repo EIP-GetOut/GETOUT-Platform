@@ -18,6 +18,7 @@ def formatMovieList(movieList: list[dict]) -> list[dict]:
             "id": movie.get("id"),
             "title": movie.get("title"),
             "genres": movie.get("genre_ids", []),
+            # "rating": movie.get("vote_average"),
             "releaseDate": movie.get("release_date"),
             "director": movie.get("director", None)
         }

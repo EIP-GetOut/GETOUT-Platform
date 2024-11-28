@@ -40,10 +40,11 @@ async function generateEmailVerificationCode (email: string): Promise<number> {
   })
 }
 
-async function accountIsAllowedToVerifyEmail (accountId: UUID, code: number): Promise<boolean> {
+async function accountIsAllowedToVerifyEmail (accountId: UUID, code: number, isNewEmail: boolean = false): Promise<boolean> {
   return await findEntity<Account>(Account, { id: accountId }).then((account: Account | null) => {
     return (
       account != null &&
+      (!isNewEmail || (isNewEmail && account?.newEmail != null)) &&
       code === account.emailVerificationCode &&
       account.emailVerificationExpiration != null &&
       Date.now() < new Date(account.emailVerificationExpiration).getTime()
