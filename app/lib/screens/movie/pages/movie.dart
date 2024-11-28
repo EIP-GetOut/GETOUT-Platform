@@ -49,7 +49,7 @@ class MovieSuccessWidget extends StatelessWidget {
           const int maxLines = 8;
           final double maxHeight =
               maxLines * 20.0; // Approximation: 20px par ligne
-          if (textBox.size.height > maxHeight) {
+          if (textBox.size.height >= maxHeight) {
             showExpandButton.value = true;
           }
         }

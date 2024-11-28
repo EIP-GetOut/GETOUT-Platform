@@ -49,7 +49,7 @@ class BookSuccessWidget extends StatelessWidget {
           const int maxLines = 8;
           final double maxHeight =
               maxLines * 20.0; // Approximation: 20px par ligne
-          if (textBox.size.height > maxHeight) {
+          if (textBox.size.height >= maxHeight) {
             showExpandButton.value = true;
           }
         }
@@ -231,7 +231,7 @@ class BookSuccessWidget extends StatelessWidget {
                                     key: textKey, // Clé pour mesurer le texte
                                     textAlign: TextAlign.justify,
                                     maxLines: isExpanded.value ? null : 8,
-                                       overflow: isExpanded.value
+                                    overflow: isExpanded.value
                                         ? TextOverflow.visible
                                         : TextOverflow.ellipsis,
                                     style: const TextStyle(
