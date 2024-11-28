@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.5](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v1.0.4...v1.0.5) (2024-11-28)
+
+
+### Features
+
+* **app:** :lipstick: edit titles in history's page and notification name ([ad4a8f4](https://github.com/EIP-GetOut/GETOUT-Platform/commit/ad4a8f4931da2420d42c68abeec9696b58d5bdda))
+* **app:** :lipstick: loading page when access to history ([1cd10ea](https://github.com/EIP-GetOut/GETOUT-Platform/commit/1cd10ea9ee8d1296887c4c3b4db18141dc20f69b))
+* **app:** :sparkles: add reload timer ([0b44e8e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/0b44e8e508c3a55c1e1acd437533a45efcbf058d))
+* **app:** :sparkles: adding change email feature for the third time ([4f3b5b6](https://github.com/EIP-GetOut/GETOUT-Platform/commit/4f3b5b699124a60a444907225fee723b2a2e3920))
+* **app:** :sparkles: remove arrow if description lines are < 8 ([765fe26](https://github.com/EIP-GetOut/GETOUT-Platform/commit/765fe26796fc7800162e1c6e157ee094b6560f6d))
+* **app:** :sparkles: tutorial page after the form ([c4084a5](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c4084a5ca49c195cd7c14f80943932452db8be40))
+
+
+### Bug Fixes
+
+* **app:** :bug: fix flutter analyze ([caf3d8f](https://github.com/EIP-GetOut/GETOUT-Platform/commit/caf3d8f8a27c6e18c6b552047f742bd7962f928e))
+* **app:** :bug: merge erased books arrow ([f4dc219](https://github.com/EIP-GetOut/GETOUT-Platform/commit/f4dc219e8ad2e4cd15158405a12073b5c7955300))
+* **app:** :bug: notifications sytem / permissions ([f9e97a3](https://github.com/EIP-GetOut/GETOUT-Platform/commit/f9e97a320d089e55b330de5313094c0f26770ace))
+* **app:** :bug: updating email in settings after you change your email ([999637c](https://github.com/EIP-GetOut/GETOUT-Platform/commit/999637cd687cb7a227f69575a2c6e83825016c68))
+* **app:** :lipstick: edit icons ([218cd2e](https://github.com/EIP-GetOut/GETOUT-Platform/commit/218cd2e6eafbd075e70a33cf406155bb6bfcf94d))
+* **app:** :sparkles: fix errors homepage. ([b89cc7a](https://github.com/EIP-GetOut/GETOUT-Platform/commit/b89cc7a39c25954a25278a7264f3f8326c8827c7))
+* **app:** :sparkles: update carroussel on change. ([1a30cc6](https://github.com/EIP-GetOut/GETOUT-Platform/commit/1a30cc674e25784ac4cf161daf0c1c7bdb7677d3))
+* **app:** :typo: error ([c004a74](https://github.com/EIP-GetOut/GETOUT-Platform/commit/c004a74f54f259ae0ea5c63473d7d02efc77a2fa))
+* **app:** :typo: fix typo ([66ed405](https://github.com/EIP-GetOut/GETOUT-Platform/commit/66ed4057adf873fe2ab327dac2cc80677ad8e7b2))
+* **app:** book and movie desc's arrrows ([9ff7327](https://github.com/EIP-GetOut/GETOUT-Platform/commit/9ff73278f789c1699a5c1c54cab690cadfbc34fb))
+* **app:** multiple fix for beta ([cad9e08](https://github.com/EIP-GetOut/GETOUT-Platform/commit/cad9e0861b03076662b67e52871df3e85e006521))
+
 ### [1.0.4](https://github.com/EIP-GetOut/GETOUT-Platform/compare/v1.0.3...v1.0.4) (2024-11-27)
 
 
