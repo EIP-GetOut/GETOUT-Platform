@@ -114,6 +114,7 @@ class EditEmail extends StatelessWidget {
               }
               if (context.mounted) {
                 context.read<SessionBloc>().add(const SessionRequest());
+                // globals.session?['email'] = 'a';
                 Navigator.pop(context);
               }
             });

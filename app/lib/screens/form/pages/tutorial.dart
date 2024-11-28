@@ -41,15 +41,17 @@ class Tutorial extends StatelessWidget {
                   width: Tools.widthFactor(context, 0.84),
                   child: Column(
                     children: [
-                      Text('Chaque jour, vous recevrez 5 recommandations par catégorie : 5 livres et 5 films.',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'Poppins',
-                      )),
+                      Text('Chaque jour, vous recevrez 5 recommandations de livres et de films.',
+                          textAlign: TextAlign.justify,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'Poppins',
+                          )),
                       SizedBox(height: Tools.heightFactor(context, 0.02)),
-                      Text('Vous pouvez indiquer si vous avez aimé(e) ou non ces suggestions, les ajouter à votre liste de souhaits ou à votre liste des films/livres déjà vus/lus.',
+                      Text('Vous pouvez indiquer si vous avez aimé ou non ces suggestions, les ajouter à votre liste, et indiquer si vous avez les avez déjà vu, cela permettra d\'affiner vos prochaines recommandations !',
+                          textAlign: TextAlign.justify,
                           style: const TextStyle(
                             fontSize: 20,
                             color: Colors.black,
@@ -61,9 +63,6 @@ class Tutorial extends StatelessWidget {
                 ),
               ),
             ),
-            /*SizedBox(height: Tools.heightFactor(context, 0.05)),
-            SvgPicture.asset('assets/images/draw/form_complete.svg',
-                width: Tools.widthFactor(context, 1)),*/
           ],
         ),
       ),

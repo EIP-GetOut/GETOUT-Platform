@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 
 import 'package:getout/widgets/fields/email_field.dart';
 
+import 'package:getout/widgets/fields/password_field.dart';
+
 class NewEmailPage extends StatelessWidget {
   const NewEmailPage({super.key, required this.formKey});
   final GlobalKey<FormState> formKey;
@@ -24,6 +26,9 @@ class NewEmailPage extends StatelessWidget {
             Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 child: EditEmailField()),
+            Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                child: EditPasswordField()),
           ],
         ),
       ),

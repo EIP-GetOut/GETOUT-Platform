@@ -23,6 +23,15 @@ class EmitEvent extends EditEmailEvent {
   List<Object?> get props => [status];
 }
 
+class NewEmailPasswordEvent extends EditEmailEvent {
+  final String password;
+
+  const NewEmailPasswordEvent({required this.password});
+
+  @override
+  List<Object?> get props => [password];
+}
+
 class NewEmailEvent extends EditEmailEvent {
   final String newEmail;
 

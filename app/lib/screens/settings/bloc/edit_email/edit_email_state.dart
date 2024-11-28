@@ -28,30 +28,35 @@ class EditEmailStates extends Equatable {
   final EditEmailStatus status;
   final String newEmail;
   final String code;
+  final String password;
   bool get isCodeValid => code.isNotEmpty;
   bool get isEmailEmpty => newEmail.isNotEmpty;
   bool get isEmailValid => RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+').hasMatch(newEmail);
   bool get isNewEmailDifferent => newEmail != globals.session?['email'];
+  bool get isPasswordEmpty => password.isNotEmpty;
   bool get isEmailGood => isEmailEmpty && isEmailValid && isNewEmailDifferent;
 
   const EditEmailStates({
     this.status = EditEmailStatus.newEmail,
     this.newEmail = '',
+    this.password = '',
     this.code = '',
   });
 
   @override
   List<Object?> get props =>
-      [status, newEmail, code];
+      [status, newEmail, password, code];
 
   EditEmailStates copyWith({
     EditEmailStatus? status,
     String? newEmail,
     String? code,
+    String? password,
   }) {
     return EditEmailStates(
       status: status ?? this.status,
       newEmail: newEmail ?? this.newEmail,
+      password: password ?? this.password,
       code: code ?? this.code,
     );
   }

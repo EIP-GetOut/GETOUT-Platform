@@ -13,6 +13,7 @@ import 'package:getout/screens/connection/forgot_password/pages/new_password/blo
 import 'package:getout/screens/connection/register/bloc/register_bloc.dart';
 import 'package:getout/screens/connection/login/bloc/login_bloc.dart';
 import 'package:getout/screens/settings/bloc/edit_password/edit_password_bloc.dart';
+import 'package:getout/screens/settings/bloc/edit_email/edit_email_bloc.dart';
 import 'package:getout/widgets/fields/widgets/default_field.dart';
 import 'package:getout/tools/app_l10n.dart';
 
@@ -252,5 +253,27 @@ class ForgotPasswordConfirmField extends StatelessWidget {
                 ForgotPasswordConfirmPasswordChanged(confirmPassword: value),
               ));
     });
+  }
+}
+
+class EditPasswordField extends StatelessWidget {
+  const EditPasswordField({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<EditEmailBloc, EditEmailStates>(
+        builder: (context, state) {
+          return DefaultField(
+            isPassword: true,
+            title: appL10n(context)!.password.toUpperCase(),
+            mandatory: true,
+            label: appL10n(context)!.password_hint,
+            validator: (value) => state.isPasswordEmpty
+                ? null
+                : appL10n(context)!.password_empty,
+            onChanged: (value) => context.read<EditEmailBloc>().add(
+              NewEmailPasswordEvent(password: value),
+            ),
+          );
+        });
   }
 }
