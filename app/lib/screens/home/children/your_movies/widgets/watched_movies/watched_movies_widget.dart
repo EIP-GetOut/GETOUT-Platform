@@ -32,7 +32,7 @@ class WatchedMoviesWidget extends StatelessWidget {
             return const Center(child: Center(child: CircularProgressIndicator(backgroundColor: Color.fromARGB(0, 255, 5, 5))));
 
           } else if (state.status.isError) {
-            return ObjectLoadingErrorWidget(object: appL10n(context)!.liked_movies);
+            return ObjectLoadingErrorWidget(object: appL10n(context)!.watched_movies);
           } else {
             return const SizedBox();
           }
