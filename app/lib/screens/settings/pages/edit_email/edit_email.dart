@@ -13,8 +13,10 @@ import 'package:getout/screens/settings/pages/edit_email/new_email.dart';
 import 'package:getout/screens/settings/pages/edit_email/email_verification.dart';
 import 'package:getout/screens/settings/services/edit_email.dart';
 import 'package:getout/screens/settings/bloc/edit_email/edit_email_bloc.dart';
-import 'package:getout/widgets/show_snack_bar.dart';
 import 'package:getout/widgets/fields/widgets/default_button.dart';
+import 'package:getout/widgets/show_snack_bar.dart';
+import 'package:getout/bloc/session/session_bloc.dart';
+import 'package:getout/bloc/session/session_event.dart';
 import 'package:getout/widgets/page_title.dart';
 import 'package:getout/tools/app_l10n.dart';
 import 'package:getout/tools/tools.dart';
@@ -22,14 +24,15 @@ import 'package:getout/tools/tools.dart';
 class EditEmail extends StatelessWidget {
   const EditEmail({super.key});
 
-  static const List<Widget> pages = [
-    NewEmailPage(),
-    EmailVerificationPage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final PageController pageController = PageController();
+    GlobalKey<FormState> newEmailFormKey = GlobalKey<FormState>();
+    GlobalKey<FormState> codeFormKey = GlobalKey<FormState>();
+    List<Widget> pages = [
+      NewEmailPage(formKey: newEmailFormKey),
+      EmailVerificationPage(formKey: codeFormKey),
+    ];
 
     return BlocProvider(
       create: (context) => EditEmailBloc(),
@@ -66,7 +69,7 @@ class EditEmail extends StatelessWidget {
               ),
             ],
           ),
-          floatingActionButton: _nextButton(pageController, context),
+          floatingActionButton: _nextButton(pageController, context, newEmailFormKey, codeFormKey),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
         );
@@ -75,19 +78,19 @@ class EditEmail extends StatelessWidget {
   }
 
   Widget _nextButton(
-      final PageController pageController, final BuildContext context) {
+      final PageController pageController, final BuildContext context,
+      final GlobalKey<FormState> newEmailFormKey,
+      final GlobalKey<FormState> codeFormKey) {
     final EditEmailBloc readContext = context.read<EditEmailBloc>();
-
     // const CircularProgressIndicator()
     return DefaultButton(
         title: appL10n(context)!.confirm,
         onPressed: () {
           if (readContext.state.status == EditEmailStatus.newEmail &&
-              readContext.state.isEverythingGood) {
+              newEmailFormKey.currentState!.validate()) {
             EditEmailServices()
                 .sendNewEmail(EditEmailRequestModel(
-                    email: readContext.state.newEmail,
-                    password: readContext.state.password))
+                    email: context.read<EditEmailBloc>().state.newEmail))
                 .then((final EditEmailResponseModel value) {
               if (!value.isSuccessful && context.mounted) {
                 return showSnackBar(context, appL10n(context)!.error_unknown);
@@ -101,7 +104,7 @@ class EditEmail extends StatelessWidget {
               }
             });
           } else if (readContext.state.status ==
-              EditEmailStatus.verificationEmail) {
+              EditEmailStatus.verificationEmail && codeFormKey.currentState!.validate()) {
             EditEmailServices()
                 .emailVerified(
                     EmailVerificationRequestModel(code: readContext.state.code))
@@ -110,13 +113,15 @@ class EditEmail extends StatelessWidget {
                 return showSnackBar(context, appL10n(context)!.error_unknown);
               }
               if (context.mounted) {
+                context.read<SessionBloc>().add(const SessionRequest());
+                // globals.session?['email'] = 'a';
                 Navigator.pop(context);
               }
             });
           } else {
-            /*if (context.mounted) {
+            if (context.mounted) {
                 return showSnackBar(context, appL10n(context)!.error_unknown);
-              }*/
+              }
           }
         });
   }

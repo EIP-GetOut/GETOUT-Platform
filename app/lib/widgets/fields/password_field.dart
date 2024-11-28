@@ -258,23 +258,22 @@ class ForgotPasswordConfirmField extends StatelessWidget {
 
 class EditPasswordField extends StatelessWidget {
   const EditPasswordField({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<EditEmailBloc, EditEmailStates>(
         builder: (context, state) {
-      return DefaultField(
-        isPassword: true,
-        title: appL10n(context)!.password.toUpperCase(),
-        mandatory: true,
-        label: appL10n(context)!.password_hint,
-        validator: (value) => state.isPasswordEmpty
-            ? null
-            : appL10n(context)!.password_empty,
-        onChanged: (value) => context.read<EditEmailBloc>().add(
-          NewEmailEvent(newEmail: '', confirmEmail: '', password: value),
+          return DefaultField(
+            isPassword: true,
+            title: appL10n(context)!.password.toUpperCase(),
+            mandatory: true,
+            label: appL10n(context)!.password_hint,
+            validator: (value) => state.isPasswordEmpty
+                ? null
+                : appL10n(context)!.password_empty,
+            onChanged: (value) => context.read<EditEmailBloc>().add(
+              NewEmailPasswordEvent(password: value),
             ),
-      );
-    });
+          );
+        });
   }
 }

@@ -34,6 +34,9 @@ class EditEmailServices {
     try {
       Response dioResponse = await dio.post(
           '${ApiConstants.rootApiPath}${ApiConstants.changeEmailPath}',
+        data: {
+          'email': request.email,
+        },
       );
       response = EditEmailResponseModel(statusCode: dioResponse.statusCode ?? HttpStatus.APP_ERROR);
     } on DioException catch (dioException) {
@@ -60,7 +63,7 @@ class EditEmailServices {
 
     try {
       Response dioResponse = await dio
-          .post('${ApiConstants.rootApiPath}${ApiConstants.verifyEmailPath}',
+          .post('${ApiConstants.rootApiPath}${ApiConstants.changeEmailValidatePath}',
           data: {
             'code': int.parse(request.code),
           });

@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getout/screens/form/pages/tutorial.dart';
 
 import 'package:getout/screens/form/services/form_services.dart';
 import 'package:getout/screens/form/pages/viewing_platform.dart';
@@ -45,6 +46,7 @@ class Forms extends StatelessWidget {
                 MovieGenres(formContext: context),
                 ViewingPlatform(formContext: context),
                 EndForm(formContext: context),
+                Tutorial(formContext: context)
               ]),
           floatingActionButton: _nextButton(pageController, context),
           floatingActionButtonLocation:
@@ -79,7 +81,7 @@ class Forms extends StatelessWidget {
   String _getButtonLabel(final FormStatus status, BuildContext context) {
     if (status == FormStatus.endForm && isEdit) {
       return appL10n(context)!.back_to_settings;
-    } else if (status == FormStatus.endForm) {
+    } else if (status == FormStatus.tutorial) {
       return appL10n(context)!.discover_app;
     } else if (status == FormStatus.viewingPlatform) {
       return appL10n(context)!.confirm;
@@ -131,10 +133,10 @@ class Forms extends StatelessWidget {
                         curve: Curves.easeInOut);
                   }
                 });
-              } else if (status == FormStatus.endForm) {
-                if (isEdit) {
-                  Navigator.pop(context);
-                }
+              } else if (status == FormStatus.endForm && isEdit) {
+                context.read<SessionBloc>().add(const SessionRequest());
+                Navigator.pop(context);
+              } else if (status == FormStatus.tutorial) {
                 context.read<SessionBloc>().add(const SessionRequest());
               } else {
                 pageController.nextPage(
