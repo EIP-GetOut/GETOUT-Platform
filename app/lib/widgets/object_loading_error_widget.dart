@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 
 import 'package:boxicons/boxicons.dart';
 import 'package:getout/tools/app_l10n.dart';
-import 'package:getout/widgets/transition_page.dart';
 
 //todo responsiveclass ObjectLoadingErrorWidget extends StatelessWidget {
  class ObjectLoadingErrorWidget extends StatelessWidget {
