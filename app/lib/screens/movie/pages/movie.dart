@@ -4,27 +4,21 @@
 ** Proprietary and confidential
 ** Wrote by Inès Maaroufi <ines.maaroufi@epitech.eu>
 */
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:getout/screens/home/bloc/watched_movies/watched_movies_bloc.dart';
-
 import 'package:getout/widgets/description_title.dart';
 import 'package:getout/screens/home/bloc/liked_movies/liked_movies_bloc.dart';
 import 'package:getout/screens/home/bloc/saved_movies/saved_movies_bloc.dart';
-
 import 'package:getout/screens/movie/bloc/movie_bloc.dart';
 import 'package:getout/tools/app_l10n.dart';
-
 import 'package:getout/tools/duration_format.dart';
 import 'package:getout/widgets/tag.dart';
 import 'package:getout/widgets/actions_page.dart';
-
 import 'package:getout/tools/tools.dart';
 import 'package:getout/tools/launch_webview.dart';
-
 import 'package:share_plus/share_plus.dart';
 
 import 'dart:ui';
@@ -32,8 +26,9 @@ import 'dart:ui';
 class MovieSuccessWidget extends StatelessWidget {
   MovieSuccessWidget({super.key});
 
-//  final InfoMovieResponse movie;
   final ValueNotifier<bool> isExpanded = ValueNotifier<bool>(false);
+  final ValueNotifier<bool> showExpandButton = ValueNotifier<bool>(false);
+  final GlobalKey _textKey = GlobalKey(); // Ajout du GlobalKey
 
   @override
   Widget build(BuildContext context) {
@@ -46,19 +41,30 @@ class MovieSuccessWidget extends StatelessWidget {
       return movie.genres!.map((tag) => Tag(text: tag)).toList();
     }
 
+    void checkTextOverflow() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final RenderBox? textBox =
+            _textKey.currentContext?.findRenderObject() as RenderBox?;
+        if (textBox != null) {
+          const int maxLines = 8;
+          final double maxHeight =
+              maxLines * 20.0; // Approximation: 20px par ligne
+          if (textBox.size.height > maxHeight) {
+            showExpandButton.value = true;
+          }
+        }
+      });
+    }
+
+    checkTextOverflow();
+
     Widget buildCoverImage() => Container(
         decoration: const BoxDecoration(
-          border: Border(
-              // bottom: BorderSide(
-              //   color: Color.fromRGBO(213, 86, 65, 0.992),
-              //   width: 10.0,
-              // ),
-              ),
+          border: Border(),
         ),
         child: Stack(alignment: Alignment.center, children: [
           Image.network(
             imageUrl,
-            // color: const Color.fromRGBO(150, 150, 150, 255).withOpacity(1),
             colorBlendMode: BlendMode.modulate,
             width: double.infinity,
             fit: BoxFit.cover,
@@ -68,8 +74,7 @@ class MovieSuccessWidget extends StatelessWidget {
               child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
             child: Container(
-              color: Colors.black.withOpacity(
-                  0.5), // Couleur transparente pour que le flou soit visible
+              color: Colors.black.withOpacity(0.5),
             ),
           )),
           Positioned(
@@ -236,32 +241,44 @@ class MovieSuccessWidget extends StatelessWidget {
                                   Text(
                                     movie.overview ??
                                         appL10n(context)!.no_description,
+                                    key: _textKey, // Clé pour mesurer le texte
                                     textAlign: TextAlign.justify,
-                                    overflow: isExpandedValue
+                                    maxLines: isExpanded.value ? null : 8,
+                                    overflow: isExpanded.value
                                         ? TextOverflow.visible
                                         : TextOverflow.ellipsis,
-                                    maxLines: isExpandedValue ? null : 8,
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      isExpanded.value = !isExpanded.value;
+                                  ValueListenableBuilder<bool>(
+                                    valueListenable: showExpandButton,
+                                    builder: (context, showButton, child) {
+                                      return showButton
+                                          ? GestureDetector(
+                                              onTap: () {
+                                                isExpanded.value =
+                                                    !isExpanded.value;
+                                              },
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    isExpanded.value
+                                                        ? Icons
+                                                            .keyboard_arrow_up
+                                                        : Icons
+                                                            .keyboard_arrow_down,
+                                                    size: 40.0,
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          : const SizedBox.shrink();
                                     },
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                            isExpandedValue
-                                                ? Icons.keyboard_arrow_up
-                                                : Icons.keyboard_arrow_down,
-                                            size: 40.0),
-                                      ],
-                                    ),
-                                  ),
+                                  )
                                 ],
                               );
                             },
@@ -269,6 +286,7 @@ class MovieSuccessWidget extends StatelessWidget {
                         ],
                       ),
                     ),
+                    // Reste de la description et du casting
                     DescriptionTitle(value: appL10n(context)!.director),
                     const SizedBox(height: 10),
                     Padding(
