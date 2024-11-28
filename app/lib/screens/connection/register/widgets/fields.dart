@@ -65,6 +65,10 @@ class BirthDateField extends StatelessWidget {
                           .subtract(const Duration(days: 365 * 13)))) {
                         return appL10n(context)!.too_young;
                       }
+                      if (date.isBefore(DateTime.now()
+                          .subtract(const Duration(days: 365 * 120)))) {
+                        return 'Rentrez une date de naissance valide';
+                      }
                       context.read<RegisterBloc>().add(
                             RegisterBirthDateChanged(birthDate: value),
                           );

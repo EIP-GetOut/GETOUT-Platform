@@ -27,8 +27,7 @@ class NotificationsServices {
         iOS: const DarwinInitializationSettings());
 
     tz_data.initializeTimeZones();
-    flutterLocalNotificationsPlugin
-        .initialize(initializationSettings);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
   Future<void> initNotification() async {
@@ -54,7 +53,8 @@ class NotificationsServices {
       isNotificationPermit = true;
     } else if (permission == PermissionStatus.denied) {
       isNotificationPermit = false;
-    } else { // permission can be "permanentlyDenied"
+    } else {
+      // permission can be "permanentlyDenied"
       return null;
     }
     isNotificationEnable = isNotificationPermit!;
@@ -76,7 +76,7 @@ class NotificationsServices {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       0,
       'GetOut',
-      'Arrêtes de scroller !!!',
+      'Nouvelles recommandations disponibles !',
       tz.TZDateTime.now(tz.local)
           .add(Duration(seconds: timeBeforeNotification)),
       NotificationDetails(
@@ -129,9 +129,9 @@ class NotificationsServices {
   Future<void> saveEnableNotification() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      isNotificationEnable
-          ? prefs.setBool('isNotificationEnable', true)
-          : prefs.setBool('isNotificationEnable', false);
+    isNotificationEnable
+        ? prefs.setBool('isNotificationEnable', true)
+        : prefs.setBool('isNotificationEnable', false);
   }
 
   Future<bool?> getEnableNotificationCache() async {

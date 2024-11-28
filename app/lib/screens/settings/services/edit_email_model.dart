@@ -9,18 +9,16 @@ part of 'edit_email.dart';
 
 class EditEmailRequestModel {
   final String email;
-  final String password;
 
   const EditEmailRequestModel({
     required this.email,
-    required this.password,
   });
 }
 
 class EditEmailResponseModel {
   final int statusCode;
   bool get isSuccessful =>
-      statusCode == HttpStatus.OK;
+      statusCode == HttpStatus.NO_CONTENT;
 
   const EditEmailResponseModel({required this.statusCode});
 }
@@ -35,6 +33,6 @@ class EmailVerificationResponseModel {
   const EmailVerificationResponseModel({required this.statusCode});
 
   bool get isSuccessful =>
-      statusCode == HttpStatus.OK;
+      statusCode == HttpStatus.NO_CONTENT;
   final int statusCode;
 }

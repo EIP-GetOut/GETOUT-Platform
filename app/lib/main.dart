@@ -37,7 +37,7 @@ import 'package:getout/tools/status.dart';
 import 'package:getout/global.dart' as globals;
 import 'package:getout/tools/timer_notifier.dart';
 import 'dart:math';
-import 'package:provider/provider.dart';
+ import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

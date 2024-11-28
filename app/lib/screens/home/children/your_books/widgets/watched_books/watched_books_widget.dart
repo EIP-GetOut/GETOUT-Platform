@@ -32,7 +32,7 @@ class WatchedBooksWidget extends StatelessWidget {
             return const Center(child: Center(child: CircularProgressIndicator(backgroundColor: Color.fromARGB(0, 255, 5, 5))));
 
           } else if (state.status.isError) {
-            return ObjectLoadingErrorWidget(object: appL10n(context)!.saved_books);
+            return ObjectLoadingErrorWidget(object: appL10n(context)!.watched_books);
           } else {
             return const SizedBox();
           }
