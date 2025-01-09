@@ -1,27 +1,27 @@
-# Tests unitaires
+# Unit Tests
 
-Le projet utilise **Jest** et **Supertest** pour réaliser des tests unitaires. Ces tests permettent de vérifier des parties spécifiques du code, comme les routes ou des fonctions isolées.
+The project uses **Jest** and **Supertest** to perform unit tests. These tests help verify specific parts of the code, such as routes or isolated functions.
 
-## Emplacement des tests
+## Test Location
 
-Les tests unitaires sont situés dans le dossier suivant :
+Unit tests are located in the following directory:  
 `/backend/tests`
 
-## Comment exécuter les tests
+## How to Run the Tests
 
-1. Installez les dépendances nécessaires avec la commande suivante :
+1. Install the required dependencies with the following command:  
    ```bash
    npm install
    ```
 
-2. Exécutez les tests unitaires en lançant le script Bash :
+2. Run the unit tests using the Bash script:  
    ```bash
    ./run-unit-tests
    ```
 
-## Exemple de fichier de test
+## Example Test File
 
-Voici un exemple de fichier de test pour tester les routes utilisateur :
+Here is an example of a test file for testing user routes:
 
 ```typescript
 import { expect, it } from '@jest/globals';
@@ -45,20 +45,20 @@ void describe('User Routes', () => {
 });
 ```
 
-### Structure d'un test unitaire
+### Structure of a Unit Test
 
-1. **Importer les modules nécessaires** :
-   Utilisez `@jest/globals` pour les assertions et `supertest` pour simuler des requêtes HTTP.
+1. **Import the necessary modules**:  
+   Use `@jest/globals` for assertions and `supertest` to simulate HTTP requests.
 
-2. **Créer une suite de tests** :
-   Utilisez `describe` pour regrouper plusieurs tests relatifs à une même fonctionnalité.
+2. **Create a test suite**:  
+   Use `describe` to group multiple tests related to the same feature.
 
-3. **Définir les cas de test individuels** :
-   Utilisez `it` pour décrire chaque cas de test et définir le comportement attendu, par exemple :
-   - Vérifier que la route `/` retourne un code `200`.
-   - Vérifier qu'une route inexistante retourne un code `404`.
+3. **Define individual test cases**:  
+   Use `it` to describe each test case and define the expected behavior, for example:
+   - Verify that the `/` route returns a `200` status code.
+   - Verify that a nonexistent route returns a `404` status code.
 
-4. **Exécuter les requêtes HTTP** :
-   Utilisez `request(app)` pour simuler une requête et validez les résultats avec `expect`.
+4. **Execute HTTP requests**:  
+   Use `request(app)` to simulate a request and validate the results with `expect`.
 
-En suivant cet exemple, vous pouvez écrire vos propres tests pour d'autres fonctionnalités.
+By following this example, you can write your own tests for other features.
